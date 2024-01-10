@@ -14,5 +14,26 @@
     </head>
     <body>
         <jsp:include page="include/header.jsp"/>
+        <section class="menu-section">
+            <div class="menu-section-content">
+                <div class="menu-section-content-categories">
+                    <div class="menu-section-content-categories-unit">
+                        <i class="fa-solid fa-list"></i><span>Danh mục nổi bật</span>
+                        <span class="menu-section-drop-list"><i class="fa-solid fa-caret-down"></i></span>
+                    </div>
+                    <ul>
+                        <li>hi</li>
+                        <li>hi</li>
+                        <li>hi</li>
+                        <li>hi</li>
+                        <li>hi</li>
+                        <li>hi</li>
+                    </ul>
+                </div>
+                <div class="menu-section-content-search">
+                     
+                </div>
+            </div>
+        </section>
     </body>
 </html>
