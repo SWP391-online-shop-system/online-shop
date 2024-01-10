@@ -19,19 +19,25 @@
                 <div class="menu-section-content-categories">
                     <div class="menu-section-content-categories-unit">
                         <i class="fa-solid fa-list"></i><span>Danh mục nổi bật</span>
-                        <span class="menu-section-drop-list"><i class="fa-solid fa-caret-down"></i></span>
+                        <span class="menu-section-drop-list"><i></i></span>
                     </div>
-                    <ul>
-                        <li>hi</li>
-                        <li>hi</li>
-                        <li>hi</li>
-                        <li>hi</li>
-                        <li>hi</li>
-                        <li>hi</li>
+                    <ul id="menu-list">
+                        <li><a href="#">hi</a></li>
+                        <li><a href="#">hi</a></li>
+                        <li><a href="#">hi</a></li>
+                        <li><a href="#">hi</a></li>
+                        <li><a href="#">hi</a></li>
+                        <li><a href="#">hi</a></li>
                     </ul>
                 </div>
                 <div class="menu-section-content-search">
-                     
+                    <div class="menu-section-content-search-form">
+                        <form action="#">
+                            <input type="text" placeholder="Bạn cần tìm gì?"/>
+                            <button type="submit" class="site-btn">Tìm kiếm</button>
+                        </form>
+                    </div>
+                    <div class="menu-section-content-search-phone"></div>
                 </div>
             </div>
         </section>
