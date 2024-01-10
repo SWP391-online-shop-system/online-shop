@@ -264,10 +264,9 @@ a{
 .menu-section-content-categories ul {
     border: 2px solid #ebebeb;
     padding-left: 0px;
+    margin-top: 10px;
     padding-bottom: 5px;
     width: 266px;
-    visibility: hidden;
-    opacity: 0;
 }
 .menu-section-content-categories ul li {
     list-style: none;
@@ -279,7 +278,4 @@ a{
 .menu-section-content-categories ul li:hover {
     background: #7fad39;
     color: white;
-}
-.menu-section-content-categories:active{
-    
 }
