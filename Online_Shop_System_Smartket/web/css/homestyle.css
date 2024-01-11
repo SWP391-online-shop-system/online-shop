@@ -6,6 +6,9 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/CascadeStyleSheet.css
     Created on : Jan 10, 2024, 12:47:52 AM
     Author     : admin
 */
+html{
+    overflow-x: hidden;
+}
 .header{
     font-family: math;
 }
@@ -233,6 +236,8 @@ a{
 .menu-section-content-search{
     flex: 0 0 75%;
     max-width: 75%;
+    height: 79px;
+    margin-bottom: 20px;
 }
 .menu-section-content-categories-unit{
     background: #7fad39;
@@ -333,4 +338,102 @@ a{
 }
 .search-phone-content{
     overflow: hidden;
+}
+.mySwiper{
+    max-width: 1200px;
+    margin: 0 auto;
+}
+.swiper-wrapper img{
+    width: 100%;
+    max-height: 500px;
+    object-fit: cover;
+}
+.menu-section-slider{
+    height: 431px;
+    width: 88%;
+    display: flex;
+}
+.slider{
+    border-radius: 10px;
+    margin-top: 15px;
+}
+.slides{
+    width: 500%;
+    height: 500px;
+    display: flex;
+    overflow: hidden;
+}
+.slides input{
+    display: none;
+}
+.slide{
+    width: 10%;
+    transition: 2s;
+}
+.slide img{
+    width: 900px;
+    height: 350px;
+    object-fit: fill;
+}
+.navigation-manual{
+    position: absolute;
+    width: 800px;
+    margin-top: -184px;
+    display: flex;
+    justify-content: center;
+}
+.manual-btn{
+    border: 2px solid #40D3DC;
+    padding: 5px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: 1s;
+}
+
+.manual-btn:not(:last-child){
+    margin-right: 40px;
+}
+.manual-btn:hover{
+    background: #40D3DC;
+}
+#radio1:checked ~ .first{
+    margin-left: 0;
+}
+#radio2:checked ~ .first{
+    margin-left: -10%;
+}
+#radio3:checked ~ .first{
+    margin-left: -20%;
+}
+#radio4:checked ~ .first{
+    margin-left: -30%;
+}
+.navigation-auto{
+    position: absolute;
+    display: flex;
+    width: 800px;
+    justify-content: center;
+    margin-top: 460px;
+    opacity: 0;
+}
+.navigation-auto div{
+    border: 2px solid #40D3DC;
+    padding: 5px;
+    border-radius: 10px;
+    transition: 1s;
+}
+.navigation-auto div:not(:last-child){
+    margin-right: 40px;
+}
+#radio1:checked ~ .navigation-auto .auto-btn1{
+    background: #40D3DC;
+}
+#radio2:checked ~ .navigation-auto .auto-btn2{
+    background: #40D3DC;
+}
+#radio3:checked ~ .navigation-auto .auto-btn3{
+    background: #40D3DC;
+}
+#radio4:checked ~ .navigation-auto .auto-btn4{
+    background: #40D3DC;
 }
