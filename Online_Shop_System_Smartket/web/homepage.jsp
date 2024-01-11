@@ -38,6 +38,8 @@
                         </form>
                     </div>
                     <div class="menu-section-content-search-phone">
+                        <div class="search-phone-icon"></div>
+                        <div class="search-phone-content"></div>
                     </div>
                 </div>
             </div>
