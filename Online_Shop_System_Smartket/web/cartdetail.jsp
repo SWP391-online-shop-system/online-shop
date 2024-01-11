@@ -10,6 +10,7 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
          <link rel="stylesheet" href="css/homestyle.css"/>
+         <link rel="shortcut icon" href="images/logo/logo.png" type="image/png">
          <script src="https://kit.fontawesome.com/ac74b86ade.js" crossorigin="anonymous"></script>
         <title>Giỏ Hàng</title>
     </head>

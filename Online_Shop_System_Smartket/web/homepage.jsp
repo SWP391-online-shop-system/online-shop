@@ -11,6 +11,7 @@
     <head>
         <script src="https://kit.fontawesome.com/ac74b86ade.js" crossorigin="anonymous"></script>
         <link rel="stylesheet" href="css/homestyle.css"/>
+        <link rel="shortcut icon" href="images/logo/logo.png" type="image/png">
     </head>
     <body>
         <jsp:include page="include/header.jsp"/>
