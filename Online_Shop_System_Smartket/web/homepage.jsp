@@ -38,9 +38,15 @@
                         </form>
                     </div>
                     <div class="menu-section-content-search-phone">
-                        <div class="search-phone-icon"></div>
-                        <div class="search-phone-content"></div>
+                        <div class="search-phone-icon">
+                            <i class="fa-solid fa-phone"></i>
+                        </div>
+                        <div class="search-phone-content">
+                            <h5>+84 99.999.999</h5>
+                            <span>Hỗ trợ người dùng</span>
+                        </div>
                     </div>
+                    
                 </div>
             </div>
         </section>

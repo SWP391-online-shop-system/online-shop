@@ -21,10 +21,6 @@ a{
     background: #f1f0f0;
     height: 48px;
 }
-.header-email-title{
-
-
-}
 .header-title-left{
     flex: 0 0 50%;
     max-width: 50%;
@@ -106,6 +102,7 @@ a{
 .header-content{
     display: flex;
     flex-wrap: wrap;
+    height: 130px;
 }
 .header-content-logo img{
     height: 135px;
@@ -264,7 +261,7 @@ a{
 .menu-section-content-categories ul {
     border: 2px solid #ebebeb;
     padding-left: 0px;
-    margin-top: 10px;
+    margin-top: 3px;
     padding-bottom: 5px;
     width: 266px;
 }
@@ -278,4 +275,62 @@ a{
 .menu-section-content-categories ul li:hover {
     background: #7fad39;
     color: white;
+}
+.menu-section-content-search-form{
+    width: 610px;
+    height: 50px;
+    border: 1px solid #ebebeb;
+    position: relative;
+    float: left;
+}
+.menu-section-content-search-form input{
+    width: 70%;
+    border: none;
+    height: 48px;
+    font-size: 18px;
+    color: #4c4b4b;
+    padding-left: 20px;
+
+}
+.menu-section-content-search-form input:focus{
+    outline: none;
+}
+.menu-section-content-search-form button{
+    position: absolute;
+    right: 0;
+    top: -1px;
+    height: 50px;
+}
+.site-btn{
+    font-size: 16px;
+    color: #ffffff;
+    font-weight: 600;
+    text-transform: uppercase;
+    display: inline-block;
+    padding: 13px 30px 12px;
+    background: #7fad39;
+    border: none;
+}
+.search-phone-icon{
+    font-size: 18px;
+    color: #7fad39;
+    height: 50px;
+    width: 50px;
+    background: #f5f5f5;
+    line-height: 50px;
+    text-align: center;
+    border-radius: 50%;
+    float: left;
+    margin-right: 15px;
+    margin-top: 25px;
+}
+.menu-section-content-search-phone{
+    float: right;
+    font-size: 17px;
+    margin-top: -29px;
+    padding-left: -100px;
+    margin-right: 64px;
+}
+.search-phone-content{
+    overflow: hidden;
 }
