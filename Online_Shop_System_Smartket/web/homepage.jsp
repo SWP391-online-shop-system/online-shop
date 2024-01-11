@@ -37,7 +37,8 @@
                             <button type="submit" class="site-btn">Tìm kiếm</button>
                         </form>
                     </div>
-                    <div class="menu-section-content-search-phone"></div>
+                    <div class="menu-section-content-search-phone">
+                    </div>
                 </div>
             </div>
         </section>
