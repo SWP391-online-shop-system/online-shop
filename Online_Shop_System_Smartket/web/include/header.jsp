@@ -30,7 +30,82 @@
                 <a href="#">Về chúng tôi</a>
             </div>
             <div class="header-title-right-login">
-                <a href="#"><i class="fa-solid fa-user"></i><span>Đăng nhập</span></a>
+                <!DOCTYPE html>
+                <html lang="en">
+                    <head>
+                        <meta charset="UTF-8">
+                        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+                        <title>Login Pop-up </title>
+                        <link rel="stylesheet" href="css/login.css"/>
+                    </head>
+                    <body>
+                        <button id="show-login">Đăng nhập</button>
+                        <!-- Login Pop-up Form -->
+                        <div class="popup" id="loginPopup">
+                            <div class="close-btn" onclick="togglePopup('loginPopup')">x</div>
+                            <div class="form">
+                                <h2>Log in</h2>
+                                <div class="form-element">
+                                    <label for="email">Email</label>
+                                    <input type="text" id="email" placeholder="Enter email">
+                                </div>
+                                <div class="form-element">
+                                    <label for="password">Password</label>
+                                    <input type="password" id="password" placeholder="Enter password">
+                                </div>
+                                <div class="form-element">
+                                    <button type="submit" value="Login">Login</button>
+                                </div>
+                                <div class="form-element">
+                                    <button id="showSignup" onclick="togglePopup('signupPopup')">Register</button>
+                                </div>
+                                <div class="form-element">
+                                    <a href="#">Forgot password?</a>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Registration Pop-up Form -->
+                        <div class="popup" id="signupPopup">
+                            <div class="close-btn" onclick="togglePopup('signupPopup')">x</div>
+                            <div class="form">
+                                <h2>Register</h2>
+                                <div class="form-element">
+                                    <label for="registerEmail">Full name</label>
+                                    <input type="text" id="registerFullname" placeholder="Enter full name">
+                                </div>
+                                <div class="form-element">
+                                    <label for="registerEmail">Gender</label>
+                                    <select name="Gender">
+                                        <option value="Male">Male</option>
+                                        <option value="Female">Female</option>
+                                    </select>
+                                </div>
+                                <div class="form-element">
+                                    <label for="registerEmail">Email</label>
+                                    <input type="text" id="registerEmail" placeholder="Enter email">
+                                </div>
+                                <div class="form-element">
+                                    <label for="registerPassword">Password</label>
+                                    <input type="password" id="registerPassword" placeholder="Enter password">
+                                </div>
+                                <div class="form-element">
+                                    <label for="registerEmail">Mobile</label>
+                                    <input type="text" id="registerMobile" placeholder="Enter phone number">
+                                </div>
+                                <div class="form-element">
+                                    <label for="registerEmail">Address</label>
+                                    <input type="text" id="registerAddress" placeholder="Enter Address">
+                                </div>
+                                <div class="form-element">
+                                    <button type="submit" value="Register">Register</button>
+                                </div>
+                            </div>
+                        </div>
+                    </body>
+                    <script src="js/login.js">
+                        
+                    </script>
+                </html>
             </div>
         </div>
     </div>
