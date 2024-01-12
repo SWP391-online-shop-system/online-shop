@@ -28,19 +28,32 @@
                                     <div class="col align-self-center text-right text-muted">3 items</div>
                                 </div>
                             </div>    
-                            
-                                <div class="row main">
-                                    <div class="col"><img class="img-fluid" src="https://i.imgur.com/1GrakTl.jpg"></div>
-                                    <div class="col">
-                                        <div>Shirt</div>
-                                        <div>Cotton T-shirt</div>
-                                    </div>
-                                    <div class="col">
-                                        <a href="#">-</a><a href="#" class="border">1</a><a href="#">+</a>
-                                    </div>
-                                    <div class="col">&euro; 44.00 <span class="close">&#10005;</span></div>
-                                </div>
-                            
+
+                            <div class="row main">
+                                <!--                                    <div class="col"><img class="img-fluid" src="https://i.imgur.com/1GrakTl.jpg"></div>
+                                                                    <div class="col">
+                                                                        <div>Shirt</div>
+                                                                        <div>Cotton T-shirt</div>
+                                                                    </div>
+                                                                    <div class="col">
+                                                                        <a href="#">-</a><a href="#" class="border">1</a><a href="#">+</a>
+                                                                    </div>
+                                                                    <div class="col">&euro; 44.00 <span class="close">&#10005;</span></div>-->
+                                <%
+                                    String cartItems = "";
+                                    Cookie[] cookies = request.getCookies();
+                                    if (cookies != null) {
+                                        for (Cookie cookie : cookies) {
+                                            if (cookie.getName().equals("cartItems")) {
+                                                cartItems = cookie.getValue();
+                                                break;
+                                            }
+                                        }
+                                    }
+                                %>
+                                <<h1><%=cartItems%></h1>
+                            </div>
+
 
                             <div class="back-to-shop"><a href="#">&leftarrow;</a><span class="text-muted">Trở Về</span></div>
                         </div>
@@ -80,13 +93,13 @@
 
             <script>
                 document.querySelector("#show-voucher").addEventListener("click", function () {
-                    document.querySelector(".popup").style.display="block";
+                    document.querySelector(".popup").style.display = "block";
                     document.querySelector(".popup").classList.add("active");
                     document.getElementById("body").classList.add("blurred-background");
                 });
                 document.querySelector(".popup .close-btn").addEventListener("click", function () {
 //                    document.querySelector(".popup").classList.remove("active");
-                    document.querySelector(".popup").style.display="none";
+                    document.querySelector(".popup").style.display = "none";
                     document.getElementById("body").classList.remove("blurred-background");
                 });
             </script>
