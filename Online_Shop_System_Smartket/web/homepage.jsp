@@ -28,6 +28,8 @@
                                 <li><a href="#">Lorem Ipsum</a></li>
                                 <li><a href="#">Lorem Ipsum</a></li>
                                 <li><a href="#">Lorem Ipsum</a></li>
+                                <li><a href="#">Lorem Ipsum</a></li>
+                                <li><a href="#">Lorem Ipsum</a></li>
                             </ul>
                             <span class="menu-section-drop-list"><i></i></span>
                         </div>
@@ -91,7 +93,8 @@
                         <div class="menu-section-content-categories-1">
                             <div class="menu-section-content-categories-unit-1">
                                 <i class="fa-solid fa-list"></i>
-                                <label for="touch-1"><span class="content-title-2">TẤT CẢ DANH MỤC</span></label>               
+                                <label for="touch-1"><span class="content-title-2">TẤT CẢ DANH MỤC</span>
+                                    <i class="fa-solid fa-angle-down" style="float: right;margin-top: -18px;margin-right: 6px;font-size: 19px;"></i></label>               
                                 <input type="checkbox" id="touch-1"> 
                                 <ul class="sider-menu-1">
                                     <li><a href="#">Lorem Ipsum</a></li> 
@@ -106,91 +109,90 @@
                             <div class="product-card-content">
                                 <div class="nft">
                                     <div class='main'>
-                                        <img class='tokenImage' src="https://images.unsplash.com/photo-1621075160523-b936ad96132a?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80" alt="NFT" />
-                                        <h2>Kibertopiks #4269</h2>
-                                        <div class='tokenInfo'>
-                                            <div class="price">
-                                                <ins>◘</ins>
-                                                <p>0.031 ETH</p>
-                                            </div>
-                                            <div class="duration">
-                                                <ins>◷</ins>
-                                                <p>11 days left</p>
-                                            </div>
-                                        </div>
-                                        <hr />
-                                        <div class='creator'>
-                                            <div class='wrapper'>
-                                                <img src="https://images.unsplash.com/photo-1620121692029-d088224ddc74?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1932&q=80" alt="Creator" />
-                                            </div>
-                                            <p><ins>Creation of</ins> Kiberbash</p>
+                                        <a href="#"><img class='tokenImage' src="images/product/tulanhpanasonic.jpg" alt="Not found" />
+                                            <div class="product-content-name">Tủ lạnh Panasonic</div></a>
+                                        <div class="price-product">250000</div>
+                                        <div class="product-buy-section">
+                                            <div class="product-cart"><img src="images/cart/cart.png" alt="alt"/></div>
+                                            <div class="product-buy"><img src="images/cart/bag.png" alt="alt"/><span>MUA NGAY</span></div>
                                         </div>
                                     </div>
                                 </div>
                                 <div class="nft">
                                     <div class='main'>
-                                        <img class='tokenImage' src="https://images.unsplash.com/photo-1621075160523-b936ad96132a?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80" alt="NFT" />
-                                        <h2>Kibertopiks #4269</h2>
-                                        <div class='tokenInfo'>
-                                            <div class="price">
-                                                <ins>◘</ins>
-                                                <p>0.031 ETH</p>
-                                            </div>
-                                            <div class="duration">
-                                                <ins>◷</ins>
-                                                <p>11 days left</p>
-                                            </div>
-                                        </div>
-                                        <hr />
-                                        <div class='creator'>
-                                            <div class='wrapper'>
-                                                <img src="https://images.unsplash.com/photo-1620121692029-d088224ddc74?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1932&q=80" alt="Creator" />
-                                            </div>
-                                            <p><ins>Creation of</ins> Kiberbash</p>
+                                        <a href="#"><img class='tokenImage' src="images/product/tulanhpanasonic.jpg" alt="Not found" />
+                                            <div class="product-content-name">Tủ lạnh Panasonic</div></a>
+                                        <div class="price-product">250000</div>
+                                        <div class="product-buy-section">
+                                            <div class="product-cart"><img src="images/cart/cart.png" alt="alt"/></div>
+                                            <div class="product-buy"><img src="images/cart/bag.png" alt="alt"/><span>MUA NGAY</span></div>
                                         </div>
                                     </div>
                                 </div>
                                 <div class="nft">
                                     <div class='main'>
-                                        <img class='tokenImage' src="https://images.unsplash.com/photo-1621075160523-b936ad96132a?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80" alt="NFT" />
-                                        <h2>Kibertopiks #4269</h2>
-                                        <div class='tokenInfo'>
-                                            <div class="price">
-                                                <ins>◘</ins>
-                                                <p>0.031 ETH</p>
-                                            </div>
-                                            <div class="duration">
-                                                <ins>◷</ins>
-                                                <p>11 days left</p>
-                                            </div>
+                                        <a href="#"><img class='tokenImage' src="images/product/tulanhpanasonic.jpg" alt="Not found" />
+                                            <div class="product-content-name">Tủ lạnh Panasonic</div></a>
+                                        <div class="price-product">250000</div>
+                                        <div class="product-buy-section">
+                                            <div class="product-cart"><img src="images/cart/cart.png" alt="alt"/></div>
+                                            <div class="product-buy"><img src="images/cart/bag.png" alt="alt"/><span>MUA NGAY</span></div>
                                         </div>
-                                        <hr />
-                                        <div class='creator'>
-                                            <div class='wrapper'>
-                                                <img src="https://images.unsplash.com/photo-1620121692029-d088224ddc74?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1932&q=80" alt="Creator" />
-                                            </div>
-                                            <p><ins>Creation of</ins> Kiberbash</p>
+                                    </div>
+                                </div>
+                                <div class="nft">
+                                    <div class='main'>
+                                        <a href="#"><img class='tokenImage' src="images/product/tulanhpanasonic.jpg" alt="Not found" />
+                                            <div class="product-content-name">Tủ lạnh Panasonic</div></a>
+                                        <div class="price-product">250000</div>
+                                        <div class="product-buy-section">
+                                            <div class="product-cart"><img src="images/cart/cart.png" alt="alt"/></div>
+                                            <div class="product-buy"><img src="images/cart/bag.png" alt="alt"/><span>MUA NGAY</span></div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="nft">
+                                    <div class='main'>
+                                        <a href="#"><img class='tokenImage' src="images/product/tulanhpanasonic.jpg" alt="Not found" />
+                                            <div class="product-content-name">Tủ lạnh Panasonic</div></a>
+                                        <div class="price-product">250000</div>
+                                        <div class="product-buy-section">
+                                            <div class="product-cart"><img src="images/cart/cart.png" alt="alt"/></div>
+                                            <div class="product-buy"><img src="images/cart/bag.png" alt="alt"/><span>MUA NGAY</span></div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="nft">
+                                    <div class='main'>
+                                        <a href="#"><img class='tokenImage' src="images/product/tulanhpanasonic.jpg" alt="Not found" />
+                                            <div class="product-content-name">Tủ lạnh Panasonic</div></a>
+                                        <div class="price-product">250000</div>
+                                        <div class="product-buy-section">
+                                            <div class="product-cart"><img src="images/cart/cart.png" alt="alt"/></div>
+                                            <div class="product-buy"><img src="images/cart/bag.png" alt="alt"/><span>MUA NGAY</span></div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
+                        <div class="newest-product-section">
+                            <div class="content-title4">SẢN PHẨM MỚI NHẤT</div>
+                            <div></div>
+                        </div>
                     </div>
                 </div>
-            </div>
-        </div>
-    </section>
-</body>
-<script type="text/javascript">
-    var counter = 1;
-    setInterval(function () {
-        document.getElementById('radio' + counter).checked = true;
-        counter++;
-        console.log(counter);
-        if (counter == 5) {
-            counter = 1;
-        }
-    }, 5000);
+        </section>
+    </body>
+    <script type="text/javascript">
+        var counter = 1;
+        setInterval(function () {
+            document.getElementById('radio' + counter).checked = true;
+            counter++;
+            console.log(counter);
+            if (counter == 5) {
+                counter = 1;
+            }
+        }, 5000);
 
-</script>
+    </script>
 </html>

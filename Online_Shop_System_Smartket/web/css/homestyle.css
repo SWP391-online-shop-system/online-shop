@@ -248,12 +248,10 @@ a{
     background: #7fad39;
     cursor: pointer;
     height: 35px;
+    margin-top: 70px;
     padding: 5px;
     width: 240px;
-    position: sticky;
     top: 10px;
-    bottom: 20px;
-    z-index: 3;
 }
 .menu-section-content-categories-unit i {
     font-size: 23px;
@@ -275,6 +273,7 @@ a{
 }
 .menu-section-content-categories ul {
     padding-left: 2px;
+    height: auto;
     margin-top: 13px;
     padding-bottom: 0px;
     width: 236px;
@@ -284,6 +283,7 @@ a{
     padding: 12px 0px;
     font-size: 19px;
     letter-spacing: 1px;
+    background: #effaded1;
     text-align: center;
     font-weight: 100;
 }
@@ -441,6 +441,7 @@ a{
 }
 .menu-section-feature-content{
     display: flex;
+    flex-wrap: wrap;
 }
 
 .feature-content{
@@ -449,11 +450,12 @@ a{
     max-width: 70%;
 }
 .content-title{
-    color: #86a359;
+    color: #e5b223;
     font-family: 'Roboto', sans-serif;
-    font-size: 20px;
+    font-size: 23px;
     font-weight: 600;
     margin: 0 auto 30px;
+    padding-right: 50px;
     text-align: center;
     text-transform: uppercase;
     position: relative;
@@ -498,7 +500,7 @@ a{
     clear:both;
     width:100%;
     height:0px;
-    overflow: hidden;
+    /*overflow: hidden;*/
     text-align: center;
     transition: height .4s ease;
 }
@@ -554,7 +556,7 @@ a{
     color: white;
 }
 .menu-section-content-categories-unit-1{
-    background: #7fad39;
+    background: #e5b223;
     cursor: pointer;
     margin-left: 15px;
     height: 35px;
@@ -621,14 +623,13 @@ a{
 
 /*Product list*/
 .nft{
-        user-select: none;
+    user-select: none;
     max-width: 223px;
-    max-height: 305px;
-    margin: 9px 30px 10px 35px;
+    max-height: 288px;
+    margin: 9px 47px 15px 13px;
     border: 1px solid #ffffff22;
-    background-color: #282c34;
-    background: linear-gradient(0deg, rgb(76 234 55) 0%, rgba(17,0,32,.5) 100%);
-    box-shadow: 0 7px 20px 5px #00000088;
+    background: linear-gradient(325deg, #ffa500e6, #68bd6bba, #82d282);
+    box-shadow: 0 0px 20px 5px #adad8a63;
     border-radius: 0.7rem;
     backdrop-filter: blur(7px);
     -webkit-backdrop-filter: blur(7px);
@@ -644,14 +645,15 @@ a{
         text-decoration: none;
     }
     .main{
-        background: linear-gradient(325deg, #ffa500e6, #c579ede0, #82d282);
+        background: linear-gradient(325deg, #ffa500e6, #68bd6bba, #82d282);
         display: flex;
         flex-direction: column;
         width: 90%;
         padding: 1rem;
         .tokenImage{
             border-radius: 0.5rem;
-            height: 181px;
+            width: 194px;
+            height: 175px;
             margin-right: 7px;
             object-fit: cover;
         }
@@ -719,7 +721,7 @@ a{
         box-shadow: 0 0 100px 40px #ffffff08;
         top: -10%;
         left: -100%;
-        transform: rotate(30deg);
+        transform: rotate(-45deg);
         height: 60rem;
         transition: .7s all;
     }
@@ -740,4 +742,164 @@ a{
 .product-card-content{
     display: flex;
     flex-wrap: wrap;
+}
+.content-title-3 {
+    float: right;
+    margin-top: -38px;
+    margin-right: 6px;
+    font-size: 19px;
+}
+.price-product{
+    padding-top: 2px;
+    font-size: 19px;
+    color: #ffd004;
+    width: 167px;
+    height: 24px;
+    text-align: center;
+    font-family: monospace;
+    margin-top: 3px;
+    margin-left: 11px;
+    background: #0087b9bd;
+    border-radius: 6px;
+}
+.product-content-name{
+    font-size: 19px;
+    margin-top: 5px;
+    color: whitesmoke;
+    letter-spacing: 1px;
+    margin-left: -8px;
+}
+.product-cart img{
+    margin-bottom: -5px;
+    width: 24px;
+    height: 23px;
+    margin-right: 4px;
+}
+.product-buy-section{
+    display: flex;
+    flex-wrap: wrap;
+    margin-top: 4px;
+}
+.product-buy{
+    padding-left: 11px;
+    padding-right: 11px;
+    background: #2e85dfe8;
+    border-radius: 7px;
+    padding-top: 3px;
+    margin-left: 12px;
+    height: 26px;
+    cursor: pointer;
+}
+.product-buy img{
+    margin-bottom: -5px;
+    width: 24px;
+    height: 23px;
+    margin-right: 4px;
+
+}
+.product-buy span{
+    font-size: 13px;
+}
+.product-buy:hover{
+    color: whitesmoke;
+}
+.product-cart{
+    padding-left: 11px;
+    padding-right: 11px;
+    background: #2e85dfe8;
+    border-radius: 7px;
+    padding-top: 3px;
+    margin-left: 7px;
+    height: 26px;
+    cursor: pointer;
+}
+.content-title4{
+    color: #e5b223;
+    font-family: 'Roboto', sans-serif;
+    font-size: 23px;
+    font-weight: 600;
+    margin: 0 auto 30px;
+    margin-left: 610px;
+    margin-top: 20px;
+    padding-right: 95px;
+    text-align: center;
+    text-transform: uppercase;
+    position: relative;
+    z-index: 3;
+}
+.content-title4:before{
+    content: " ";
+    position: absolute;
+    background: #fff0;
+    bottom: -6px;
+    width: 130px;
+    height: 30px;
+    z-index: -1;
+    left: 50%;
+    margin-left: -65px;
+}
+.content-title4:after{
+    content: " ";
+    position: absolute;
+    border: 1px solid #f5f5f5;
+    bottom: 7px;
+    left: -291px;
+    width: 232%;
+    height: 0;
+    z-index: -2;
+}
+.newest-product-section{
+    display: block;
+}
+/*---------------------
+  Categories
+-----------------------*/
+
+.categories__item {
+    height: 270px;
+    position: relative;
+}
+
+.categories__item h5 {
+    position: absolute;
+    left: 0;
+    width: 100%;
+    padding: 0 20px;
+    bottom: 20px;
+    text-align: center;
+}
+
+.categories__item h5 a {
+    font-size: 18px;
+    color: #1c1c1c;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    padding: 12px 0 10px;
+    background: #ffffff;
+    display: block;
+}
+
+.categories__slider .col-lg-3 {
+    max-width: 100%;
+}
+
+.categories__slider.owl-carousel .owl-nav button {
+    font-size: 18px;
+    color: #1c1c1c;
+    height: 70px;
+    width: 30px;
+    line-height: 70px;
+    text-align: center;
+    border: 1px solid #ebebeb;
+    position: absolute;
+    left: -35px;
+    top: 50%;
+    -webkit-transform: translateY(-35px);
+    background: #ffffff;
+}
+
+.categories__slider.owl-carousel .owl-nav button.owl-next {
+    left: auto;
+    right: -35px;
 }
