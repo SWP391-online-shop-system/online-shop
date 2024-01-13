@@ -175,14 +175,154 @@
                                 </div>
                             </div>
                         </div>
+                        <!--HOTTEST PRODUCT-->
                         <div class="newest-product-section">
                             <div class="content-title4">SẢN PHẨM MỚI NHẤT</div>
-                            <div></div>
+                            <section class="product"> 
+                                <button class="pre-btn"><img src="images/slider/arrow.png" alt=""></button>
+                                <button class="nxt-btn"><img src="images/slider/arrow.png" alt=""></button>
+                                <div class="product-container">
+                                    <div class="product-card">      
+                                        <div id="container1">  
+                                            <div class="product-details">
+                                                <div class="product-details-title">
+                                                    <div class="detail-name">TV LG 55'INCH</div><div class="detail-price">250,000</div>
+                                                </div>
+                                                <div class="product-details-title1">
+                                                    <span class="hint-star star">
+                                                        <i class="fa fa-star" aria-hidden="true"></i>
+                                                        <i class="fa fa-star" aria-hidden="true"></i>
+                                                        <i class="fa fa-star" aria-hidden="true"></i>
+                                                        <i class="fa fa-star" aria-hidden="true"></i>
+                                                        <i class="fa fa-star-o" aria-hidden="true"></i>
+                                                    </span>
+                                                    <div class="detail-buy">
+                                                        <div class="product-buy-section">
+                                                            <div class="product-cart"><img src="images/cart/cart.png" alt="alt"/></div>
+                                                            <div class="product-buy"><img src="images/cart/bag.png" alt="alt"/><span>MUA NGAY</span></div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                            </div>
+                                            <div><img class="product-image2" src="images/product/tvlg.jpg" alt="alt"/></div>
+                                        </div>
+                                    </div>
+                                    <div class="product-card">      
+                                        <div id="container1">  
+                                            <div class="product-details">
+                                                <div class="product-details-title">
+                                                    <div class="detail-name">TV LG 55'INCH</div><div class="detail-price">250,000</div>
+                                                </div>
+                                                <div class="product-details-title1">
+                                                    <span class="hint-star star">
+                                                        <i class="fa fa-star" aria-hidden="true"></i>
+                                                        <i class="fa fa-star" aria-hidden="true"></i>
+                                                        <i class="fa fa-star" aria-hidden="true"></i>
+                                                        <i class="fa fa-star" aria-hidden="true"></i>
+                                                        <i class="fa fa-star-o" aria-hidden="true"></i>
+                                                    </span>
+                                                    <div class="detail-buy">
+                                                        <div class="product-buy-section">
+                                                            <div class="product-cart"><img src="images/cart/cart.png" alt="alt"/></div>
+                                                            <div class="product-buy"><img src="images/cart/bag.png" alt="alt"/><span>MUA NGAY</span></div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                            </div>
+                                            <div><img class="product-image2" src="images/product/tvlg.jpg" alt="alt"/></div>
+                                        </div>
+                                    </div>
+                                    <div class="product-card">      
+                                        <div id="container1">  
+                                            <div class="product-details">
+                                                <div class="product-details-title">
+                                                    <div class="detail-name">TV LG 55'INCH</div><div class="detail-price">250,000</div>
+                                                </div>
+                                                <div class="product-details-title1">
+                                                    <span class="hint-star star">
+                                                        <i class="fa fa-star" aria-hidden="true"></i>
+                                                        <i class="fa fa-star" aria-hidden="true"></i>
+                                                        <i class="fa fa-star" aria-hidden="true"></i>
+                                                        <i class="fa fa-star" aria-hidden="true"></i>
+                                                        <i class="fa fa-star-o" aria-hidden="true"></i>
+                                                    </span>
+                                                    <div class="detail-buy">
+                                                        <div class="product-buy-section">
+                                                            <div class="product-cart"><img src="images/cart/cart.png" alt="alt"/></div>
+                                                            <div class="product-buy"><img src="images/cart/bag.png" alt="alt"/><span>MUA NGAY</span></div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                            </div>
+                                            <div><img class="product-image2" src="images/product/tvlg.jpg" alt="alt"/></div>
+                                        </div>
+                                    </div>
+                                    <div class="product-card">      
+                                        <div id="container1">  
+                                            <div class="product-details">
+                                                <div class="product-details-title">
+                                                    <div class="detail-name">TV LG 55'INCH</div><div class="detail-price">250,000</div>
+                                                </div>
+                                                <div class="product-details-title1">
+                                                    <span class="hint-star star">
+                                                        <i class="fa fa-star" aria-hidden="true"></i>
+                                                        <i class="fa fa-star" aria-hidden="true"></i>
+                                                        <i class="fa fa-star" aria-hidden="true"></i>
+                                                        <i class="fa fa-star" aria-hidden="true"></i>
+                                                        <i class="fa fa-star-o" aria-hidden="true"></i>
+                                                    </span>
+                                                    <div class="detail-buy">
+                                                        <div class="product-buy-section">
+                                                            <div class="product-cart"><img src="images/cart/cart.png" alt="alt"/></div>
+                                                            <div class="product-buy"><img src="images/cart/bag.png" alt="alt"/><span>MUA NGAY</span></div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                            </div>
+                                            <div><img class="product-image2" src="images/product/tvlg.jpg" alt="alt"/></div>
+                                        </div>
+                                    </div>
+                                    <div class="product-card">      
+                                        <div id="container1">  
+                                            <div class="product-details">
+                                                <div class="product-details-title">
+                                                    <div class="detail-name">TV LG 55'INCH</div><div class="detail-price">250,000</div>
+                                                </div>
+                                                <div class="product-details-title1">
+                                                    <span class="hint-star star">
+                                                        <i class="fa fa-star" aria-hidden="true"></i>
+                                                        <i class="fa fa-star" aria-hidden="true"></i>
+                                                        <i class="fa fa-star" aria-hidden="true"></i>
+                                                        <i class="fa fa-star" aria-hidden="true"></i>
+                                                        <i class="fa fa-star-o" aria-hidden="true"></i>
+                                                    </span>
+                                                    <div class="detail-buy">
+                                                        <div class="product-buy-section">
+                                                            <div class="product-cart"><img src="images/cart/cart.png" alt="alt"/></div>
+                                                            <div class="product-buy"><img src="images/cart/bag.png" alt="alt"/><span>MUA NGAY</span></div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                            </div>
+                                            <div><img class="product-image2" src="images/product/tvlg.jpg" alt="alt"/></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </section>
+                        </div>
+                        <div class="menu-blog-section">
+                            <div class="content-title5">Bài viết xu hướng</div>
                         </div>
                     </div>
                 </div>
         </section>
     </body>
+    <script src="js/script.js"></script>
     <script type="text/javascript">
         var counter = 1;
         setInterval(function () {
