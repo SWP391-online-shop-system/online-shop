@@ -40,10 +40,11 @@
                     </div>
                     <div class="menu-section-content-search-phone"></div>
                 </div>
-                <a href="cart?service=addcart&proid=1&quantity=1">Product 1      </a><br/>
-                <a href="cart?service=addcart&proid=2&quantity=1">Product 2      </a><br/>
-                <a href="cart?service=addcart&proid=3&quantity=1">Product 3      </a><br/>
+               
             </div>
         </section>
+         <a href="cart?service=addcart&proid=1&quantity=1">Product 1</a><br/>
+                <a href="cart?service=addcart&proid=2&quantity=1">Product 2</a><br/>
+                <a href="cart?service=addcart&proid=3&quantity=1">Product 3</a><br/>
     </body>
 </html>

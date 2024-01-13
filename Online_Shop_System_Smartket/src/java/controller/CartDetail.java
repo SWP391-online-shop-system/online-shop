@@ -12,6 +12,7 @@ import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import java.util.Arrays;
 
 /**
  *
@@ -36,6 +37,12 @@ public class CartDetail extends HttpServlet {
             /* TODO output your page here. You may use following sample code. */
 //            response.sendRedirect("cartdetail.jsp");
             String service = request.getParameter("service");
+            if (service == null) {
+                service = "showcart";
+            }
+            if (service.equals("showcart")) {
+                response.sendRedirect("cartdetail.jsp");
+            }
             if (service.equals("addcart")) {
                 String proid = request.getParameter("proid");
                 String quantity_raw = request.getParameter("quantity");
@@ -56,21 +63,40 @@ public class CartDetail extends HttpServlet {
                 // Định dạng có thể là một chuỗi được phân cách (ví dụ: productId1:2,productId2:1)
                 // Bạn có thể tìm kiếm và cập nhật sản phẩm tương ứng.
                 // Thêm hoặc cập nhật sản phẩm trong giỏ hàng
-                if (!cartItems.contains(proid)) {
-                    cartItems += proid + ":" + quantity + ",";
-                } else {
-                    // Cập nhật số lượng nếu sản phẩm đã tồn tại
-                    String[] items = cartItems.split(",");
-                    for (int i = 0; i < items.length; i++) {
-                        if (items[i].startsWith(proid)) {
-                            String[] parts = items[i].split(":");
-                            int newQuantity = Integer.parseInt(parts[1]) + quantity;
-                            items[i] = proid + ":" + newQuantity;
-                            break;
-                        }
+//                if (!cartItems.contains(proid)) {
+//                    cartItems += proid + ":" + quantity + "_";
+//                } else {
+//                    // Cập nhật số lượng nếu sản phẩm đã tồn tại
+//                    String[] items = cartItems.split("_");
+//                    for (int i = 0; i < items.length; i++) {
+//                        if (items[i].startsWith(proid)) {
+//                            String[] parts = items[i].split(":");
+//                            int newQuantity = Integer.parseInt(parts[1]) + quantity;
+//                            items[i] = proid + ":" + newQuantity +"_";
+//                            break;
+//                        }
+//                    }
+//                    cartItems = String.join("_", items);
+//                }
+                String[] items = cartItems.split("_");
+                boolean found = false;
+                for (int i = 0; i < items.length; i++) {
+                    if (items[i].startsWith(proid)) {
+                        String[] parts = items[i].split(":");
+                        int newQuantity = Integer.parseInt(parts[1]) + quantity;
+                        items[i] = proid + ":" + newQuantity;
+                        found = true;
+                        break;
                     }
-                    cartItems = String.join(",", items);
                 }
+
+                if (!found) {
+                    items = Arrays.copyOf(items, items.length + 1);
+                    items[items.length - 1] = proid + ":" + quantity + "_";
+                }
+
+// Nối mảng thành chuỗi
+                cartItems = String.join("_", items);
 
                 // Lưu thông tin giỏ hàng vào cookie
                 Cookie cartCookie = new Cookie("cartItems", cartItems);
