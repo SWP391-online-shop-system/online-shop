@@ -198,21 +198,20 @@
                                                     </span>
                                                     <div class="detail-buy">
                                                         <div class="product-buy-section">
-                                                            <div class="product-cart"><img src="images/cart/cart.png" alt="alt"/></div>
-                                                            <div class="product-buy"><img src="images/cart/bag.png" alt="alt"/><span>MUA NGAY</span></div>
+                                                            <a href="#"><div class="product-cart"><img src="images/cart/cart.png" alt="alt"/></div></a>
+                                                            <a href="#"><div class="product-buy"><img src="images/cart/bag.png" alt="alt"/><span>MUA NGAY</span></div></a>
                                                         </div>
                                                     </div>
                                                 </div>
-
                                             </div>
-                                            <div><img class="product-image2" src="images/product/tvlg.jpg" alt="alt"/></div>
+                                            <a href="#"><div><img class="product-image2" src="images/product/lgtv1.png" alt="alt"/></div></a>
                                         </div>
                                     </div>
                                     <div class="product-card">      
                                         <div id="container1">  
                                             <div class="product-details">
                                                 <div class="product-details-title">
-                                                    <div class="detail-name">TV LG 55'INCH</div><div class="detail-price">250,000</div>
+                                                    <div class="detail-name">Combo Nhat Thong Tuyet Diamond</div><div class="detail-price">250,000</div>
                                                 </div>
                                                 <div class="product-details-title1">
                                                     <span class="hint-star star">
@@ -231,7 +230,7 @@
                                                 </div>
 
                                             </div>
-                                            <div><img class="product-image2" src="images/product/tvlg.jpg" alt="alt"/></div>
+                                            <div><img class="product-image2" src="images/product/combo1.jpg" alt="alt"/></div>
                                         </div>
                                     </div>
                                     <div class="product-card">      
@@ -315,8 +314,49 @@
                                 </div>
                             </section>
                         </div>
-                        <div class="menu-blog-section">
-                            <div class="content-title5">Bài viết xu hướng</div>
+                    </div>
+                    <div class="menu-blog-section">
+                        <div class="content-title5">Bài viết xu hướng</div>
+                        <div class="card-container">
+                            <a href="#">
+                                <div class="card card-3">
+                                    <div class="card-img"><img src="images/product/lgtv1.png" alt="alt"/></div>
+                                    <div class="card-info">
+                                        <div class="card-about">
+                                            <a class="card-tag tag-deals"><i class="fa-regular fa-comment"></i>190</a>
+                                            <div class="card-time"><i style="margin-right: 3px;" class="fa-regular fa-calendar"></i>5/27/2018</div>
+                                        </div>
+                                        <h1 class="card-title">Apple is having big Sale for the first time</h1>
+                                        <div class="card-creator">by <a href="">Timur Mirzoyev</a></div>
+                                    </div>
+                                </div>
+                            </a>
+                            <a href="#">
+                                <div class="card card-3">
+                                    <div class="card-img"><img src="images/product/lgtv1.png" alt="alt"/></div>
+                                    <div class="card-info">
+                                        <div class="card-about">
+                                            <a class="card-tag tag-deals"><i class="fa-regular fa-comment"></i>190</a>
+                                            <div class="card-time"><i style="margin-right: 3px;" class="fa-regular fa-calendar"></i>5/27/2018</div>
+                                        </div>
+                                        <h1 class="card-title">Apple is having big Sale for the first time</h1>
+                                        <div class="card-creator">by <a href="">Timur Mirzoyev</a></div>
+                                    </div>
+                                </div>
+                            </a>
+                            <a href="#">
+                                <div class="card card-3">
+                                    <div class="card-img"><img src="images/product/lgtv1.png" alt="alt"/></div>
+                                    <div class="card-info">
+                                        <div class="card-about">
+                                            <a class="card-tag tag-deals"><i class="fa-regular fa-comment"></i>190</a>
+                                            <div class="card-time"><i style="margin-right: 3px;" class="fa-regular fa-calendar"></i>5/27/2018</div>
+                                        </div>
+                                        <h1 class="card-title">Apple is having big Sale for the first time</h1>
+                                        <div class="card-creator">by <a href="">Timur Mirzoyev</a></div>
+                                    </div>
+                                </div>
+                            </a>
                         </div>
                     </div>
                 </div>
