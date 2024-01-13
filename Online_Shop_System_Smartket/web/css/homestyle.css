@@ -647,7 +647,7 @@ a{
         text-decoration: none;
     }
     .main{
-        background: linear-gradient(325deg, #ffa500e6, #68bd6bba, #82d282);
+        background: #86e7ca8f;
         display: flex;
         flex-direction: column;
         width: 90%;

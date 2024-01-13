@@ -105,7 +105,7 @@
                             </div>
                         </div>
                         <div class="feature-content">
-                            <div class="content-title">SẢN PHẨM NỔI BẬT</div>
+                            <div class="content-title">SẢN PHẨM MỚI NHẤT</div>
                             <div class="product-card-content">
                                 <div class="nft">
                                     <div class='main'>
@@ -177,7 +177,7 @@
                         </div>
                         <!--HOTTEST PRODUCT-->
                         <div class="newest-product-section">
-                            <div class="content-title4">SẢN PHẨM MỚI NHẤT</div>
+                            <div class="content-title4">SẢN PHẨM NỔI BẬT</div>
                             <section class="product"> 
                                 <button class="pre-btn"><img src="images/slider/arrow.png" alt=""></button>
                                 <button class="nxt-btn"><img src="images/slider/arrow.png" alt=""></button>
@@ -323,7 +323,7 @@
                                     <div class="card-img"><img src="images/product/lgtv1.png" alt="alt"/></div>
                                     <div class="card-info">
                                         <div class="card-about">
-                                            <a class="card-tag tag-deals"><i class="fa-regular fa-comment"></i>190</a>
+                                            <a class="card-tag tag-deals"><i class="fa-regular fa-eye"></i>190</a>
                                             <div class="card-time"><i style="margin-right: 3px;" class="fa-regular fa-calendar"></i>5/27/2018</div>
                                         </div>
                                         <h1 class="card-title">Apple is having big Sale for the first time</h1>
@@ -336,7 +336,7 @@
                                     <div class="card-img"><img src="images/product/lgtv1.png" alt="alt"/></div>
                                     <div class="card-info">
                                         <div class="card-about">
-                                            <a class="card-tag tag-deals"><i class="fa-regular fa-comment"></i>190</a>
+                                            <a class="card-tag tag-deals"><i class="fa-regular fa-eye"></i></i>190</a>
                                             <div class="card-time"><i style="margin-right: 3px;" class="fa-regular fa-calendar"></i>5/27/2018</div>
                                         </div>
                                         <h1 class="card-title">Apple is having big Sale for the first time</h1>
@@ -349,7 +349,7 @@
                                     <div class="card-img"><img src="images/product/lgtv1.png" alt="alt"/></div>
                                     <div class="card-info">
                                         <div class="card-about">
-                                            <a class="card-tag tag-deals"><i class="fa-regular fa-comment"></i>190</a>
+                                            <a class="card-tag tag-deals"><i class="fa-regular fa-eye"></i>190</a>
                                             <div class="card-time"><i style="margin-right: 3px;" class="fa-regular fa-calendar"></i>5/27/2018</div>
                                         </div>
                                         <h1 class="card-title">Apple is having big Sale for the first time</h1>
