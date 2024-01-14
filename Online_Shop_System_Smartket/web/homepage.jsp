@@ -113,8 +113,8 @@
                                             <div class="product-content-name">Tủ lạnh Panasonic</div></a>
                                         <div class="price-product">250000</div>
                                         <div class="product-buy-section">
-                                            <div class="product-cart"><img src="images/cart/cart.png" alt="alt"/></div>
-                                            <div class="product-buy"><img src="images/cart/bag.png" alt="alt"/><span>MUA NGAY</span></div>
+                                            <div class="product-cart"><a href="#"><img src="images/cart/cart.png" alt="alt"/></a></div>
+                                            <div class="product-buy"><a href="#"><img src="images/cart/bag.png" alt="alt"/><span>MUA NGAY</span></div></a>
                                         </div>
                                     </div>
                                 </div>
@@ -124,8 +124,8 @@
                                             <div class="product-content-name">Tủ lạnh Panasonic</div></a>
                                         <div class="price-product">250000</div>
                                         <div class="product-buy-section">
-                                            <div class="product-cart"><img src="images/cart/cart.png" alt="alt"/></div>
-                                            <div class="product-buy"><img src="images/cart/bag.png" alt="alt"/><span>MUA NGAY</span></div>
+                                            <div class="product-cart"><a href="#"><img src="images/cart/cart.png" alt="alt"/></a></div>
+                                            <div class="product-buy"><a href="#"><img src="images/cart/bag.png" alt="alt"/><span>MUA NGAY</span></div></a>
                                         </div>
                                     </div>
                                 </div>
@@ -135,8 +135,8 @@
                                             <div class="product-content-name">Tủ lạnh Panasonic</div></a>
                                         <div class="price-product">250000</div>
                                         <div class="product-buy-section">
-                                            <div class="product-cart"><img src="images/cart/cart.png" alt="alt"/></div>
-                                            <div class="product-buy"><img src="images/cart/bag.png" alt="alt"/><span>MUA NGAY</span></div>
+                                            <div class="product-cart"><a href="#"><img src="images/cart/cart.png" alt="alt"/></a></div>
+                                            <div class="product-buy"><a href="#"><img src="images/cart/bag.png" alt="alt"/><span>MUA NGAY</span></div></a>
                                         </div>
                                     </div>
                                 </div>
@@ -146,8 +146,8 @@
                                             <div class="product-content-name">Tủ lạnh Panasonic</div></a>
                                         <div class="price-product">250000</div>
                                         <div class="product-buy-section">
-                                            <div class="product-cart"><img src="images/cart/cart.png" alt="alt"/></div>
-                                            <div class="product-buy"><img src="images/cart/bag.png" alt="alt"/><span>MUA NGAY</span></div>
+                                            <div class="product-cart"><a href="#"><img src="images/cart/cart.png" alt="alt"/></a></div>
+                                            <div class="product-buy"><a href="#"><img src="images/cart/bag.png" alt="alt"/><span>MUA NGAY</span></div></a>
                                         </div>
                                     </div>
                                 </div>
@@ -157,8 +157,8 @@
                                             <div class="product-content-name">Tủ lạnh Panasonic</div></a>
                                         <div class="price-product">250000</div>
                                         <div class="product-buy-section">
-                                            <div class="product-cart"><img src="images/cart/cart.png" alt="alt"/></div>
-                                            <div class="product-buy"><img src="images/cart/bag.png" alt="alt"/><span>MUA NGAY</span></div>
+                                            <div class="product-cart"><a href="#"><img src="images/cart/cart.png" alt="alt"/></a></div>
+                                            <div class="product-buy"><a href="#"><img src="images/cart/bag.png" alt="alt"/><span>MUA NGAY</span></div></a>
                                         </div>
                                     </div>
                                 </div>
@@ -168,8 +168,8 @@
                                             <div class="product-content-name">Tủ lạnh Panasonic</div></a>
                                         <div class="price-product">250000</div>
                                         <div class="product-buy-section">
-                                            <div class="product-cart"><img src="images/cart/cart.png" alt="alt"/></div>
-                                            <div class="product-buy"><img src="images/cart/bag.png" alt="alt"/><span>MUA NGAY</span></div>
+                                            <div class="product-cart"><a href="#"><img src="images/cart/cart.png" alt="alt"/></a></div>
+                                            <div class="product-buy"><a href="#"><img src="images/cart/bag.png" alt="alt"/><span>MUA NGAY</span></div></a>
                                         </div>
                                     </div>
                                 </div>
@@ -318,20 +318,7 @@
                     <div class="menu-blog-section">
                         <div class="content-title5">Bài viết xu hướng</div>
                         <div class="card-container">
-                            <a href="#">
-                                <div class="card card-3">
-                                    <div class="card-img"><img src="images/product/lgtv1.png" alt="alt"/></div>
-                                    <div class="card-info">
-                                        <div class="card-about">
-                                            <a class="card-tag tag-deals"><i class="fa-regular fa-eye"></i>190</a>
-                                            <div class="card-time"><i style="margin-right: 3px;" class="fa-regular fa-calendar"></i>5/27/2018</div>
-                                        </div>
-                                        <h1 class="card-title">Apple is having big Sale for the first time</h1>
-                                        <div class="card-creator">by <a href="">Timur Mirzoyev</a></div>
-                                    </div>
-                                </div>
-                            </a>
-                            <a href="#">
+                            <a href="hi">
                                 <div class="card card-3">
                                     <div class="card-img"><img src="images/product/lgtv1.png" alt="alt"/></div>
                                     <div class="card-info">
@@ -339,28 +326,100 @@
                                             <a class="card-tag tag-deals"><i class="fa-regular fa-eye"></i></i>190</a>
                                             <div class="card-time"><i style="margin-right: 3px;" class="fa-regular fa-calendar"></i>5/27/2018</div>
                                         </div>
-                                        <h1 class="card-title">Apple is having big Sale for the first time</h1>
+                                        <h1 class="card-title"><a href="hi">Apple is having big Sale for the first time</a></h1>
                                         <div class="card-creator">by <a href="">Timur Mirzoyev</a></div>
                                     </div>
                                 </div>
                             </a>
-                            <a href="#">
+                            <a href="hi">
                                 <div class="card card-3">
                                     <div class="card-img"><img src="images/product/lgtv1.png" alt="alt"/></div>
                                     <div class="card-info">
                                         <div class="card-about">
-                                            <a class="card-tag tag-deals"><i class="fa-regular fa-eye"></i>190</a>
+                                            <a class="card-tag tag-deals"><i class="fa-regular fa-eye"></i></i>190</a>
                                             <div class="card-time"><i style="margin-right: 3px;" class="fa-regular fa-calendar"></i>5/27/2018</div>
                                         </div>
-                                        <h1 class="card-title">Apple is having big Sale for the first time</h1>
+                                        <h1 class="card-title"><a href="hi">Apple is having big Sale for the first time</a></h1>
+                                        <div class="card-creator">by <a href="">Timur Mirzoyev</a></div>
+                                    </div>
+                                </div>
+                            </a>
+                            <a href="hi">
+                                <div class="card card-3">
+                                    <div class="card-img"><img src="images/product/lgtv1.png" alt="alt"/></div>
+                                    <div class="card-info">
+                                        <div class="card-about">
+                                            <a class="card-tag tag-deals"><i class="fa-regular fa-eye"></i></i>190</a>
+                                            <div class="card-time"><i style="margin-right: 3px;" class="fa-regular fa-calendar"></i>5/27/2018</div>
+                                        </div>
+                                        <h1 class="card-title"><a href="hi">Apple is having big Sale for the first time</a></h1>
                                         <div class="card-creator">by <a href="">Timur Mirzoyev</a></div>
                                     </div>
                                 </div>
                             </a>
                         </div>
                     </div>
+                    <a href="#"><div class="more-detail">Xem thêm</div></a>
                 </div>
         </section>
+        <footer>
+            <div class="container">
+                <div class="row">
+                    <div class="col" id="company">
+                        <img src="images/logo/logo.png" alt="" class="logo">
+                        <p>
+                            công ty Smartket Việt Nam, 54 Liễu Giai, quận Ba Đình, Hà Nội 
+                        </p>
+                        <div class="social">
+                            <a href="#"><i class="fab fa-facebook"></i></a>
+                            <a href="#"><i class="fa-brands fa-x-twitter"></i></a>
+                        </div>
+                    </div>
+
+
+                    <div class="col" id="services">
+                        <h3>Dịch vụ</h3>
+                        <div class="links">
+                            <a href="#">Tuyển dụng</a>
+                            <a href="#">Quảng cáo</a>
+                            <a href="#">Chính sách</a>
+                        </div>
+                    </div>
+
+                    <div class="col" id="useful-links">
+                        <h3>Đường dẫn</h3>
+                        <div class="links">
+                            <a href="#">Về chúng tôi</a>
+                            <a href="#">Danh mục</a>
+                            <a href="#">Tin tức</a>
+                            <a href="#">Hỗ trợ</a>
+                        </div>
+                    </div>
+
+                    <div class="col" id="contact">
+                        <h3>Liên hệ</h3>
+                        <div class="contact-details">
+                            <i class="fa-regular fa-envelope"></i>
+                            <p>Smartket@gmail.com</p>
+                        </div>
+                        <div class="contact-details">
+                            <i class="fa fa-phone"></i>
+                            <p>+84 99.999.999</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="form">
+                        <form action="">
+                            <input type="text" placeholder="Email here...">
+                            <button><i class="fa fa-paper-plane"></i></button>
+                        </form>
+                    </div>
+                </div>
+
+            </div>
+        </footer>
     </body>
     <script src="js/script.js"></script>
     <script type="text/javascript">
