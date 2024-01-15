@@ -44,23 +44,23 @@
                         <div class="popup" id="loginPopup">
                             <div class="close-btn" onclick="togglePopup('loginPopup')">x</div>
                             <div class="form">
-                                <h2>Log in</h2>
+                                <h2>Đăng nhập</h2>
                                 <div class="form-element">
                                     <label for="email">Email</label>
-                                    <input type="text" id="email" placeholder="Enter email">
+                                    <input type="text" id="email" placeholder="Nhập email">
                                 </div>
                                 <div class="form-element">
-                                    <label for="password">Password</label>
-                                    <input type="password" id="password" placeholder="Enter password">
+                                    <label for="password">Mật khẩu</label>
+                                    <input type="password" id="password" placeholder="Nhập mật khẩu">
                                 </div>
                                 <div class="form-element">
-                                    <button type="submit" value="Login">Login</button>
+                                    <button type="submit" value="Login">Đăng nhập</button>
                                 </div>
                                 <div class="form-element">
-                                    <button id="showSignup" onclick="togglePopup('signupPopup')">Register</button>
+                                    <button id="showSignup" onclick="togglePopup('signupPopup')">Đăng kí</button>
                                 </div>
                                 <div class="form-element">
-                                    <a href="#">Forgot password?</a>
+                                    <a href="#">Quên mật khẩu?</a>
                                 </div>
                             </div>
                         </div>
@@ -68,36 +68,40 @@
                         <div class="popup" id="signupPopup">
                             <div class="close-btn" onclick="togglePopup('signupPopup')">x</div>
                             <div class="form">
-                                <h2>Register</h2>
+                                <h2>Đăng kí</h2>
                                 <div class="form-element">
-                                    <label for="registerEmail">Full name</label>
-                                    <input type="text" id="registerFullname" placeholder="Enter full name">
+                                    <label for="registerEmail">Họ và tên</label>
+                                    <input type="text" id="registerFullname" placeholder="Nhập họ và tên">
                                 </div>
                                 <div class="form-element">
-                                    <label for="registerEmail">Gender</label>
+                                    <label for="registerEmail">Giới tính</label>
                                     <select name="Gender">
-                                        <option value="Male">Male</option>
-                                        <option value="Female">Female</option>
+                                        <option value="Male">Nam</option>
+                                        <option value="Female">Nữ</option>
                                     </select>
                                 </div>
-                                <div class="form-element">
+                                <div class="form-element" style="margin-top: 28px;">
                                     <label for="registerEmail">Email</label>
-                                    <input type="text" id="registerEmail" placeholder="Enter email">
+                                    <input type="text" id="registerEmail" placeholder="Nhập email">
                                 </div>
                                 <div class="form-element">
-                                    <label for="registerPassword">Password</label>
-                                    <input type="password" id="registerPassword" placeholder="Enter password">
+                                    <label for="registerPassword">Mật khẩu</label>
+                                    <input type="password" id="registerPassword" placeholder="Nhập mật khẩu">
                                 </div>
                                 <div class="form-element">
-                                    <label for="registerEmail">Mobile</label>
-                                    <input type="text" id="registerMobile" placeholder="Enter phone number">
+                                    <label for="registerPassword">Nhập lại mật khẩu</label>
+                                    <input type="password" id="registerRePassword" placeholder="Nhập lại mật khẩu">
                                 </div>
                                 <div class="form-element">
-                                    <label for="registerEmail">Address</label>
-                                    <input type="text" id="registerAddress" placeholder="Enter Address">
+                                    <label for="registerEmail">Số điện thoại</label>
+                                    <input type="text" id="registerMobile" placeholder="Nhập số điện thoại">
                                 </div>
                                 <div class="form-element">
-                                    <button type="submit" value="Register">Register</button>
+                                    <label for="registerEmail">Địa chỉ</label>
+                                    <input type="text" id="registerAddress" placeholder="Nhập địa chỉ">
+                                </div>
+                                <div class="form-element">
+                                    <button type="submit" value="Register">Đăng kí</button>
                                 </div>
                             </div>
                         </div>
