@@ -21,14 +21,14 @@ public class DAOCart extends DBConnect {
 
     public int insertCartByPrepared(Cart cart) {
         int n = 0;
-        String sql = "INSERT INTO [dbo].[Cart]\n"
-                + "           ([UserID]\n"
-                + "           ,[ProductID]\n"
-                + "           ,[Quantity])\n"
-                + "     VALUES\n"
-                + "           (?\n"
-                + "           ,?\n"
-                + "           ,?)";
+        String sql = "INSERT INTO `restaurant`.`cart`\n"
+                + "(`UserID`,\n"
+                + "`ProductID`,\n"
+                + "`Quantity`)\n"
+                + "VALUES\n"
+                + "(?,\n"
+                + "?,\n"
+                + "?);";
         try {
             PreparedStatement pre = conn.prepareStatement(sql);
             pre.setInt(1, cart.getUserId());
@@ -43,8 +43,8 @@ public class DAOCart extends DBConnect {
 
     public int deleteCart(int userID, int proID) {
         int n = 0;
-        String sql = "DELETE FROM [dbo].[Cart]\n" +
-        "      WHERE UserID = ? and ProductID = ?";
+        String sql = "DELETE FROM `restaurant`.`cart`\n"
+                + "WHERE `UserID` = ? and `ProductID` = ? ;";
 
         try {
             PreparedStatement pre = conn.prepareStatement(sql);
@@ -57,10 +57,11 @@ public class DAOCart extends DBConnect {
 
         return n;
     }
+
     public int deleteAllCart(int userID) {
         int n = 0;
-        String sql = "DELETE FROM [dbo].[Cart]\n" +
-        "      WHERE UserID = ?";
+        String sql = "DELETE FROM `restaurant`.`cart`\n"
+                + "WHERE `UserID` = ? ;";
 
         try {
             PreparedStatement pre = conn.prepareStatement(sql);
@@ -74,11 +75,12 @@ public class DAOCart extends DBConnect {
 
     public int updateCart(Cart cart, int oldid) {
         int n = 0;
-        String sql = "UPDATE [dbo].[Cart]\n"
-                + "   SET [UserID] = ?\n"
-                + "      ,[ProductID] = ?\n"
-                + "      ,[Quantity] = ?\n"
-                + " WHERE UserID = ?";
+        String sql = "UPDATE `restaurant`.`cart`\n"
+                + "SET\n"
+                + "`UserID` = ?,\n"
+                + "`ProductID` = ?,\n"
+                + "`Quantity` = ?\n"
+                + "WHERE `UserID` = ?;";
         try {
             // number ? = number fields
             // index of ? start is 1
@@ -94,13 +96,15 @@ public class DAOCart extends DBConnect {
         return n;
 
     }
-        public int updateCartByUserAndPro(Cart cart, int oldid,int proid) {
+
+    public int updateCartByUserAndPro(Cart cart, int oldid, int proid) {
         int n = 0;
-        String sql = "UPDATE [dbo].[Cart]\n"
-                + "   SET [UserID] = ?\n"
-                + "      ,[ProductID] = ?\n"
-                + "      ,[Quantity] = ?\n"
-                + " WHERE UserID = ? and ProductID = ?";
+        String sql = "UPDATE `restaurant`.`cart`\n"
+                + "SET\n"
+                + "`UserID` = ?,\n"
+                + "`ProductID` = ?,\n"
+                + "`Quantity` = ?\n"
+                + "WHERE `UserID` = ? and `ProductID` = ? ;";
         try {
             PreparedStatement pre = conn.prepareStatement(sql);
             pre.setInt(1, cart.getUserId());
@@ -142,14 +146,14 @@ public class DAOCart extends DBConnect {
         // Kiểm tra xem sản phẩm đã tồn tại trong giỏ hàng của người dùng chưa
         // Viết truy vấn SQL tương ứng để kiểm tra
         DAOCart dao = new DAOCart();
-        String sql = "select * from Cart where UserID =" + userID + " and ProductID =" + productID;
+        String sql = "select * from `restaurant`.`cart` where `UserID` =" + userID + " and `ProductID` =" + productID;
         Vector<Cart> vector = dao.getCart(sql);
         // Trả về true nếu tồn tại, ngược lại trả về false
         return !vector.isEmpty();
     }
 
     public Cart getCartByUser(int userID, int productID) {
-        String sql = "select * from Cart where UserID =" + userID + " and ProductID =" + productID;
+        String sql = "select * from `restaurant`.`cart` where `UserID` =" + userID + " and `ProductID` =" + productID;
         DAOCart dao = new DAOCart();
         Vector<Cart> vector = dao.getCart(sql);
         return vector.firstElement();
