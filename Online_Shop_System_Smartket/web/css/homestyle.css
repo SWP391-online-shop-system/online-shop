@@ -633,7 +633,7 @@ a{
     max-height: 288px;
     margin: 9px 47px 15px 13px;
     border: 1px solid #ffffff22;
-    background: linear-gradient(325deg, #ffa500e6, #68bd6bba, #82d282);
+    background: white;
     box-shadow: 0 0px 20px 5px #adad8a63;
     border-radius: 0.7rem;
     backdrop-filter: blur(7px);
@@ -650,7 +650,6 @@ a{
         text-decoration: none;
     }
     .main{
-        background: #86e7ca8f;
         display: flex;
         flex-direction: column;
         width: 90%;
@@ -770,7 +769,7 @@ a{
 .product-content-name{
     font-size: 19px;
     margin-top: 5px;
-    color: whitesmoke;
+    color: #180f0f;
     letter-spacing: 1px;
     margin-left: -8px;
 }
