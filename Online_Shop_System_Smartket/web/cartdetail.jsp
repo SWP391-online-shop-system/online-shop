@@ -42,15 +42,6 @@ String cartItems = "";
                             </div>    
 
                             <div class="row main">
-                                <!--                                    <div class="col"><img class="img-fluid" src="https://i.imgur.com/1GrakTl.jpg"></div>
-                                                                    <div class="col">
-                                                                        <div>Shirt</div>
-                                                                        <div>Cotton T-shirt</div>
-                                                                    </div>
-                                                                    <div class="col">
-                                                                        <a href="#">-</a><a href="#" class="border">1</a><a href="#">+</a>
-                                                                    </div>
-                                                                    <div class="col">&euro; 44.00 <span class="close">&#10005;</span></div>-->
                                 <h1><%=cartItems%></h1>
                             </div>
 
