@@ -14,13 +14,10 @@
         <meta name="keywords" content="Male_Fashion, unica, creative, html">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <meta http-equiv="X-UA-Compatible" content="ie=edge">
-        <title>Male-Fashion | Template</title>
-
-        <!-- Google Font -->
-        <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@300;400;600;700;800;900&display=swap"
-              rel="stylesheet">
+        <title>San pham</title>
 
         <!-- Css Styles -->
+        <link rel="stylesheet" href="css/css_header/header.css" type="text/css">
         <link rel="stylesheet" href="css/css_productList/bootstrap.min.css" type="text/css">
         <link rel="stylesheet" href="css/css_productList/font-awesome.min.css" type="text/css">
         <link rel="stylesheet" href="css/css_productList/elegant-icons.css" type="text/css">
@@ -29,7 +26,7 @@
         <link rel="stylesheet" href="css/css_productList/owl.carousel.min.css" type="text/css">
         <link rel="stylesheet" href="css/css_productList/slicknav.min.css" type="text/css">
         <link rel="stylesheet" href="css/css_productList/style.css" type="text/css">
-        <link rel="stylesheet" href="css/css_header/header.css" type="text/css">
+        <link rel="stylesheet" href="css/css_footer/footer.css" type="text/css">
         <script src="https://kit.fontawesome.com/ac74b86ade.js" crossorigin="anonymous"></script>
 
     </head>
@@ -52,7 +49,7 @@
                                 <div class="accordion" id="accordionExample">
                                     <div class="card">
                                         <div class="card-heading">
-                                            <a data-toggle="collapse" data-target="#collapseOne">Categories</a>
+                                            <a data-toggle="collapse" data-target="#collapseOne">Danh mục</a>
                                         </div>
                                         <div id="collapseOne" class="collapse show" data-parent="#accordionExample">
                                             <div class="card-body">
@@ -74,24 +71,7 @@
                                     </div>
                                     <div class="card">
                                         <div class="card-heading">
-                                            <a data-toggle="collapse" data-target="#collapseTwo">Branding</a>
-                                        </div>
-                                        <div id="collapseTwo" class="collapse show" data-parent="#accordionExample">
-                                            <div class="card-body">
-                                                <div class="shop__sidebar__brand">
-                                                    <ul>
-                                                        <li><a href="#">Louis Vuitton</a></li>
-                                                        <li><a href="#">Chanel</a></li>
-                                                        <li><a href="#">Hermes</a></li>
-                                                        <li><a href="#">Gucci</a></li>
-                                                    </ul>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="card">
-                                        <div class="card-heading">
-                                            <a data-toggle="collapse" data-target="#collapseThree">Filter Price</a>
+                                            <a data-toggle="collapse" data-target="#collapseThree">Lọc theo giá tiền</a>
                                         </div>
                                         <div id="collapseThree" class="collapse show" data-parent="#accordionExample">
                                             <div class="card-body">
@@ -104,79 +84,6 @@
                                                         <li><a href="#">$200.00 - $250.00</a></li>
                                                         <li><a href="#">250.00+</a></li>
                                                     </ul>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="card">
-                                        <div class="card-heading">
-                                            <a data-toggle="collapse" data-target="#collapseFour">Size</a>
-                                        </div>
-                                        <div id="collapseFour" class="collapse show" data-parent="#accordionExample">
-                                            <div class="card-body">
-                                                <div class="shop__sidebar__size">
-                                                    <label for="xs">xs
-                                                        <input type="radio" id="xs">
-                                                    </label>
-                                                    <label for="sm">s
-                                                        <input type="radio" id="sm">
-                                                    </label>
-                                                    <label for="md">m
-                                                        <input type="radio" id="md">
-                                                    </label>
-                                                    <label for="xl">xl
-                                                        <input type="radio" id="xl">
-                                                    </label>
-                                                    <label for="2xl">2xl
-                                                        <input type="radio" id="2xl">
-                                                    </label>
-                                                    <label for="xxl">xxl
-                                                        <input type="radio" id="xxl">
-                                                    </label>
-                                                    <label for="3xl">3xl
-                                                        <input type="radio" id="3xl">
-                                                    </label>
-                                                    <label for="4xl">4xl
-                                                        <input type="radio" id="4xl">
-                                                    </label>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="card">
-                                        <div class="card-heading">
-                                            <a data-toggle="collapse" data-target="#collapseFive">Colors</a>
-                                        </div>
-                                        <div id="collapseFive" class="collapse show" data-parent="#accordionExample">
-                                            <div class="card-body">
-                                                <div class="shop__sidebar__color">
-                                                    <label class="c-1" for="sp-1">
-                                                        <input type="radio" id="sp-1">
-                                                    </label>
-                                                    <label class="c-2" for="sp-2">
-                                                        <input type="radio" id="sp-2">
-                                                    </label>
-                                                    <label class="c-3" for="sp-3">
-                                                        <input type="radio" id="sp-3">
-                                                    </label>
-                                                    <label class="c-4" for="sp-4">
-                                                        <input type="radio" id="sp-4">
-                                                    </label>
-                                                    <label class="c-5" for="sp-5">
-                                                        <input type="radio" id="sp-5">
-                                                    </label>
-                                                    <label class="c-6" for="sp-6">
-                                                        <input type="radio" id="sp-6">
-                                                    </label>
-                                                    <label class="c-7" for="sp-7">
-                                                        <input type="radio" id="sp-7">
-                                                    </label>
-                                                    <label class="c-8" for="sp-8">
-                                                        <input type="radio" id="sp-8">
-                                                    </label>
-                                                    <label class="c-9" for="sp-9">
-                                                        <input type="radio" id="sp-9">
-                                                    </label>
                                                 </div>
                                             </div>
                                         </div>
@@ -208,7 +115,6 @@
                             <div class="row">
                                 <div class="col-lg-6 col-md-6 col-sm-6">
                                     <div class="shop__product__option__left">
-                                        <p>Showing 1–12 of 126 results</p>
                                     </div>
                                 </div>
                                 <div class="col-lg-6 col-md-6 col-sm-6">
@@ -226,7 +132,8 @@
                         <div class="row">
                             <div class="col-lg-4 col-md-6 col-sm-6">
                                 <div class="product__item">
-                                    <div class="product__item__pic set-bg" data-setbg="img/product/product-2.jpg">
+                                    <div class="product__item__pic set-bg">
+                                        <img src="images/product/lgtv1.png" alt="alt"/>
                                         <ul class="product__hover">
                                             <li><a href="#"><img src="img/icon/heart.png" alt=""></a></li>
                                             <li><a href="#"><img src="img/icon/compare.png" alt=""> <span>Compare</span></a>
@@ -667,66 +574,59 @@
         <!-- Shop Section End -->
 
         <!-- Footer Section Begin -->
-        <footer class="footer">
-            <div class="container">
-                <div class="row">
-                    <div class="col-lg-3 col-md-6 col-sm-6">
-                        <div class="footer__about">
-                            <div class="footer__logo">
-                                <a href="#"><img src="img/footer-logo.png" alt=""></a>
-                            </div>
-                            <p>The customer is at the heart of our unique business model, which includes design.</p>
-                            <a href="#"><img src="img/payment.png" alt=""></a>
+        <footer class="footer_1">
+            <div class="container_1" style="height: 270px;padding-top: 28px;">
+                <div class="row_1">
+                    <div class="col_1" id="company">
+                        <img src="images/logo/logo.png" alt="" class="logo_1">
+                        <p style="font-family: poppins;font-size: 15px;color: white;">
+                            công ty Smartket Việt Nam, 54 Liễu Giai, quận Ba Đình, Hà Nội 
+                        </p>
+                        <div class="social_1">
+                            <a href="#"><i class="fab fa-facebook"></i></a>
+                            <a href="#"><i class="fa-brands fa-x-twitter"></i></a>
                         </div>
                     </div>
-                    <div class="col-lg-2 offset-lg-1 col-md-3 col-sm-6">
-                        <div class="footer__widget">
-                            <h6>Shopping</h6>
-                            <ul>
-                                <li><a href="#">Clothing Store</a></li>
-                                <li><a href="#">Trending Shoes</a></li>
-                                <li><a href="#">Accessories</a></li>
-                                <li><a href="#">Sale</a></li>
-                            </ul>
+
+
+                    <div class="col_1" id="services">
+                        <h3 class="footer_title_1">Dịch vụ</h3>
+                        <div class="links_1">
+                            <a href="#">Tuyển dụng</a>
+                            <a href="#">Quảng cáo</a>
+                            <a href="#">Chính sách</a>
                         </div>
                     </div>
-                    <div class="col-lg-2 col-md-3 col-sm-6">
-                        <div class="footer__widget">
-                            <h6>Shopping</h6>
-                            <ul>
-                                <li><a href="#">Contact Us</a></li>
-                                <li><a href="#">Payment Methods</a></li>
-                                <li><a href="#">Delivary</a></li>
-                                <li><a href="#">Return & Exchanges</a></li>
-                            </ul>
+
+                    <div class="col_1" id="useful-links" style="margin-left: 50px;margin-right: 50px;">
+                        <h3 class="footer_title_1">Đường dẫn</h3>
+                        <div class="links_1">
+                            <a href="#">Về chúng tôi</a>
+                            <a href="#">Danh mục</a>
+                            <a href="#">Tin tức</a>
+                            <a href="#">Hỗ trợ</a>
                         </div>
                     </div>
-                    <div class="col-lg-3 offset-lg-1 col-md-6 col-sm-6">
-                        <div class="footer__widget">
-                            <h6>NewLetter</h6>
-                            <div class="footer__newslatter">
-                                <p>Be the first to know about new arrivals, look books, sales & promos!</p>
-                                <form action="#">
-                                    <input type="text" placeholder="Your email">
-                                    <button type="submit"><span class="icon_mail_alt"></span></button>
-                                </form>
-                            </div>
+
+                    <div class="col_1" id="contact">
+                        <h3 class="footer_title_1">Liên hệ</h3>
+                        <div class="contact-details_1">
+                            <i class="fa-regular fa-envelope"></i>
+                            <p style="color: white;">Smartket@gmail.com</p>
+                        </div>
+                        <div class="contact-details_1">
+                            <i class="fa fa-phone"></i>
+                            <p style="color: white;">+84 99.999.999</p>
                         </div>
                     </div>
                 </div>
-                <div class="row">
-                    <div class="col-lg-12 text-center">
-                        <div class="footer__copyright__text">
-                            <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
-                            <p>Copyright ©
-                                <script>
-                                    document.write(new Date().getFullYear());
-                                </script>2020
-                                All rights reserved | This template is made with <i class="fa fa-heart-o"
-                                                                                    aria-hidden="true"></i> by <a href="https://colorlib.com" target="_blank">Colorlib</a>
-                            </p>
-                            <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
-                        </div>
+
+                <div class="row_1">
+                    <div class="form_1" style="margin-top: -56px;">
+                        <form action="">
+                            <input class="email-input_1" style="height: 40px;" type="text" placeholder="Email here...">
+                            <button class="email-button_1" style="height: 43px;padding-top: 10px;"><i class="fa fa-paper-plane"></i></button>
+                        </form>
                     </div>
                 </div>
             </div>
@@ -742,6 +642,7 @@
                 </form>
             </div>
         </div>
+
         <!-- Search End -->
 
         <!-- Js Plugins -->

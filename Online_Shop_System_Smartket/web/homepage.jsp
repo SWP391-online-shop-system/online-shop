@@ -361,7 +361,7 @@
                             </a>
                         </div>
                     </div>
-                    <a href="#"><div class="more-detail">Xem thêm</div></a>
+                    <a href="#"><div class="more-detail_1">Xem thêm</div></a>
                 </div>
         </section>
         <jsp:include page="include/footer.jsp"/>
