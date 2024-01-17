@@ -21,18 +21,6 @@
             <section>
                 <div class="card">
                     <div class="row">
-                        <%
-String cartItems = "";
-                            Cookie[] cookies = request.getCookies();
-                            if (cookies!= null) {
-                                for (Cookie cookie : cookies) {
-                                    if (cookie.getName().equals("cartItems")) {
-                                        cartItems = cookie.getValue();
-                                        break;
-                                    }
-                                }
-                                if(cartItems.contains("_")){
-                        %>
                         <div class=" cart">
                             <div class="title">
                                 <div class="row">
@@ -51,7 +39,7 @@ String cartItems = "";
                                                                         <a href="#">-</a><a href="#" class="border">1</a><a href="#">+</a>
                                                                     </div>
                                                                     <div class="col">&euro; 44.00 <span class="close">&#10005;</span></div>-->
-                                <h1><%=cartItems%></h1>
+                                
                             </div>
 
 
@@ -73,14 +61,6 @@ String cartItems = "";
                             </div>
                             <button class="btn">CHECKOUT</button>
                         </div>
-                        <%
-                            
-                        } else {
-                            
-                        %>
-                        <h1>Không có sản phẩm nào được chọn</h1>
-                        <%}
-}%>
                     </div>
 
                 </div>
