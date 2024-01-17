@@ -16,7 +16,7 @@
         <link rel="stylesheet" href="css/css_header/header.css"/>
     </head>
     <body>
-        <%--<jsp:include page="include/header.jsp"/>--%>
+        <jsp:include page="include/header.jsp"/>
         <section class="menu-section">
             <div class="menu-section-title">
                 <div class="menu-section-content">
