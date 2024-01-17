@@ -14,7 +14,7 @@
         <link rel="shortcut icon" href="images/logo/logo.png" type="image/png">
     </head>
     <body>
-        <jsp:include page="include/header.jsp"/>
+        <%--<jsp:include page="include/header.jsp"/>--%>
         <section class="menu-section">
             <div class="menu-section-content">
                 <div class="menu-section-content-categories">
