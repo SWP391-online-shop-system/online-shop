@@ -51,7 +51,7 @@
                     </ul>
                 </li>
                 <li><a href="#">Blog</a></li>
-                <li><a href="#">Tài khoản</a></li>
+                <li><a href="profileUser.jsp">Tài khoản</a></li>
             </ul>
         </div>
         <div class="header-content-right-menu">
