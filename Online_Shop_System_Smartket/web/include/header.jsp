@@ -45,7 +45,7 @@
                 <li>
                     <a href="#">Trang</a>
                     <ul class="header-content-menu-drop-down">
-                        <li><a href="#">Giỏ hàng của tôi</a></li>
+                        <li><a href="cart">Giỏ hàng của tôi</a></li>
                         <li><a href="#">Đơn hàng của tôi</a></li>
                         <li><a href="#">Voucher của tôi</a></li>
                     </ul>
@@ -58,7 +58,7 @@
             <ul>
                 <li> <a href="#" title="Voucher của tôi"><i class="fa-solid fa-ticket"></i></a></li>
                 <li class="margin-unit"><a href="#" title="Đơn hàng của tôi"><i class="fa-solid fa-file-invoice-dollar"></i></i></a></li>
-                <li><a href="#" title="Giỏ hàng của tôi"><i class="fa-solid fa-cart-shopping"></i></a></li>
+                <li><a href="cart" title="Giỏ hàng của tôi"><i class="fa-solid fa-cart-shopping"></i></a></li>
             </ul>
         </div>
     </div>
