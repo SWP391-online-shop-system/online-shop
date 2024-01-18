@@ -6,6 +6,9 @@
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@page import="model.DAOProduct" %>
+<%@page import="java.util.Vector" %>
+<%@page import="view.Product" %>
 <!DOCTYPE html> 
 <html>
     <head>
@@ -184,11 +187,19 @@
                                 <button class="pre-btn"><img src="images/slider/arrow.png" alt=""></button>
                                 <button class="nxt-btn"><img src="images/slider/arrow.png" alt=""></button>
                                 <div class="product-container">
-                                    <div class="product-card">      
+                                    <%
+                                    DAOProduct dao = new DAOProduct();
+                                    Product p = new Product();
+                                    Vector<Product> list = dao.getProduct("select * from Product limit 5");
+                                    for(Product pro: list) {
+                                    p.setProductDescription(pro.getProductDescription().replace("]", "<br>") );
+                                    %>
+
+                                    <div class="product-card">    
                                         <div id="container1">  
                                             <div class="product-details">
                                                 <div class="product-details-title">
-                                                    <div class="detail-name">TV LG 55'INCH</div><div class="detail-price">250,000</div>
+                                                    <div class="detail-name"><%=pro.getProductName()%></div><div class="detail-price"><%=pro.getUnitPrice()%></div>
                                                 </div>
                                                 <div class="product-details-title1">
                                                     <span class="hint-star star">
@@ -209,110 +220,7 @@
                                             <a href="#"><div><img class="product-image2" src="images/product/lgtv1.png" alt="alt"/></div></a>
                                         </div>
                                     </div>
-                                    <div class="product-card">      
-                                        <div id="container1">  
-                                            <div class="product-details">
-                                                <div class="product-details-title">
-                                                    <div class="detail-name">Combo Nhat Thong Tuyet Diamond</div><div class="detail-price">250,000</div>
-                                                </div>
-                                                <div class="product-details-title1">
-                                                    <span class="hint-star star">
-                                                        <i class="fa fa-star" aria-hidden="true"></i>
-                                                        <i class="fa fa-star" aria-hidden="true"></i>
-                                                        <i class="fa fa-star" aria-hidden="true"></i>
-                                                        <i class="fa fa-star" aria-hidden="true"></i>
-                                                        <i class="fa fa-star-o" aria-hidden="true"></i>
-                                                    </span>
-                                                    <div class="detail-buy">
-                                                        <div class="product-buy-section">
-                                                            <div class="product-cart"><img src="images/cart/cart.png" alt="alt"/></div>
-                                                            <div class="product-buy"><img src="images/cart/bag.png" alt="alt"/><span>MUA NGAY</span></div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-
-                                            </div>
-                                            <div><img class="product-image2" src="images/product/combo1.jpg" alt="alt"/></div>
-                                        </div>
-                                    </div>
-                                    <div class="product-card">      
-                                        <div id="container1">  
-                                            <div class="product-details">
-                                                <div class="product-details-title">
-                                                    <div class="detail-name">TV LG 55'INCH</div><div class="detail-price">250,000</div>
-                                                </div>
-                                                <div class="product-details-title1">
-                                                    <span class="hint-star star">
-                                                        <i class="fa fa-star" aria-hidden="true"></i>
-                                                        <i class="fa fa-star" aria-hidden="true"></i>
-                                                        <i class="fa fa-star" aria-hidden="true"></i>
-                                                        <i class="fa fa-star" aria-hidden="true"></i>
-                                                        <i class="fa fa-star-o" aria-hidden="true"></i>
-                                                    </span>
-                                                    <div class="detail-buy">
-                                                        <div class="product-buy-section">
-                                                            <div class="product-cart"><img src="images/cart/cart.png" alt="alt"/></div>
-                                                            <div class="product-buy"><img src="images/cart/bag.png" alt="alt"/><span>MUA NGAY</span></div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-
-                                            </div>
-                                            <div><img class="product-image2" src="images/product/tvlg.jpg" alt="alt"/></div>
-                                        </div>
-                                    </div>
-                                    <div class="product-card">      
-                                        <div id="container1">  
-                                            <div class="product-details">
-                                                <div class="product-details-title">
-                                                    <div class="detail-name">TV LG 55'INCH</div><div class="detail-price">250,000</div>
-                                                </div>
-                                                <div class="product-details-title1">
-                                                    <span class="hint-star star">
-                                                        <i class="fa fa-star" aria-hidden="true"></i>
-                                                        <i class="fa fa-star" aria-hidden="true"></i>
-                                                        <i class="fa fa-star" aria-hidden="true"></i>
-                                                        <i class="fa fa-star" aria-hidden="true"></i>
-                                                        <i class="fa fa-star-o" aria-hidden="true"></i>
-                                                    </span>
-                                                    <div class="detail-buy">
-                                                        <div class="product-buy-section">
-                                                            <div class="product-cart"><img src="images/cart/cart.png" alt="alt"/></div>
-                                                            <div class="product-buy"><img src="images/cart/bag.png" alt="alt"/><span>MUA NGAY</span></div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-
-                                            </div>
-                                            <div><img class="product-image2" src="images/product/tvlg.jpg" alt="alt"/></div>
-                                        </div>
-                                    </div>
-                                    <div class="product-card">      
-                                        <div id="container1">  
-                                            <div class="product-details">
-                                                <div class="product-details-title">
-                                                    <div class="detail-name">TV LG 55'INCH</div><div class="detail-price">250,000</div>
-                                                </div>
-                                                <div class="product-details-title1">
-                                                    <span class="hint-star star">
-                                                        <i class="fa fa-star" aria-hidden="true"></i>
-                                                        <i class="fa fa-star" aria-hidden="true"></i>
-                                                        <i class="fa fa-star" aria-hidden="true"></i>
-                                                        <i class="fa fa-star" aria-hidden="true"></i>
-                                                        <i class="fa fa-star-o" aria-hidden="true"></i>
-                                                    </span>
-                                                    <div class="detail-buy">
-                                                        <div class="product-buy-section">
-                                                            <div class="product-cart"><img src="images/cart/cart.png" alt="alt"/></div>
-                                                            <div class="product-buy"><img src="images/cart/bag.png" alt="alt"/><span>MUA NGAY</span></div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-
-                                            </div>
-                                            <div><img class="product-image2" src="images/product/tvlg.jpg" alt="alt"/></div>
-                                        </div>
-                                    </div>
+                                    <%}%>
                                 </div>
                             </section>
                         </div>
@@ -364,6 +272,7 @@
                     <a href="#"><div class="more-detail_1">Xem thêm</div></a>
                 </div>
         </section>
+        <div><%=p.getProductDescription()%></div>
         <jsp:include page="include/footer.jsp"/>
     </body>
     <script src="js/script.js"></script>
