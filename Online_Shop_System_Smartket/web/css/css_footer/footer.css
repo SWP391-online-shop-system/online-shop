@@ -1,0 +1,168 @@
+/*
+Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/CascadeStyleSheet.css to edit this template
+*/
+/* 
+    Created on : Jan 17, 2024, 2:55:35 PM
+    Author     : admin
+*/
+
+footer{
+    background-color: #050505cc;
+    position: relative;
+    width: 100%;
+    margin-top: 30px;
+}
+a{
+    text-decoration: none;
+    color: black;
+}
+.container_1 {
+    max-width: 1140px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    height: 263px;
+}
+.row_1{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.col_1{
+    min-width: 250px;
+    color:#f2f2f2f2;
+    font-family: poppins;
+    padding:0 2rem;
+    height: 202px;
+}
+.footer_title_1{
+    color:#f2f2f2f2;
+    font-family: poppins;
+    font-size: 23px;
+}
+.email-input_1{
+    width: 198px;
+    height: 12px;
+}
+.email-button_1{
+    width: 55px;
+    height: 43px;
+}
+.col_1 .logo_1{
+    width: 176px;
+    margin-bottom: -19px;
+    margin-top: 10px;
+}
+.col_1 h3{
+    color:#ff014fff;
+    margin-bottom: 20px;
+    position: relative;
+    cursor: pointer;
+}
+.col_1 h3::after{
+    content: '';
+    height:3px;
+    width:0px;
+    background-color: #ff014fff;
+    position: absolute;
+    bottom: 0;
+    left:0;
+    transition: 0.3s ease;
+
+}
+.col_1 h3:hover::after{
+    width:30px
+}
+.col_1 .social_1 a i{
+    color:#ff014fff;
+    margin-top:2rem;
+    margin-right: 5px;
+    transition: 0.3s ease;
+}
+.col_1 .social_1 a i:hover{
+    transform: scale(1.5);
+    filter:grayscale(25);
+}
+.col_1 .links_1 a{
+    display: block;
+    text-decoration: none;
+    color:#f2f2f2;
+    margin-bottom: 5px;
+    position: relative;
+    transition: 0.3s ease;
+}
+.col_1 .links_1 a::before{
+    content:'';
+    height: 16px;
+    width:3px;
+    position: absolute;
+    top:5px;
+    left:-10px;
+    background-color: #ff014fff;
+    transition: 0.5s ease;
+    opacity: 0;
+}
+.col_1 .links_1 a:hover::before{
+    opacity: 1;
+}
+.col_1 .links_1 a:hover{
+    transform: translateX(-8px);
+    color:#ff014fff;
+}
+.col_1 .contact-details_1{
+    display: inline-flex;
+    justify-content: space-between;
+    height: 44px;
+}
+.col_1 .contact-details_1 i{
+    margin-right:15px;
+}
+.row_1 .form_1{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 2rem 0;
+    margin-top: -44px;
+}
+.row_1 .form_1 input{
+    background-color: #1a1c20ff;
+    border:0;
+    outline:none;
+    padding:14px 20px;
+    border-radius: 6px;
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
+}
+.form_1 button{
+    padding:14px 20px;
+    border:0;
+    border-radius: 6px;
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
+    background-color: #ff014fff;
+}
+.more-detail_1{
+    text-align: center;
+    margin: 0 auto;
+    font-size: 16px;
+    margin-top: -130px;
+    padding: 10px;
+    margin-bottom: 38px;
+    width: 68px;
+    height: 17px;
+    color: white;
+    background: #62a962;
+    border-radius: 10px;
+    transition: 0.5 ease;
+}
+.more-detail_1:hover{
+    transform: scale(1.1);
+    cursor: pointer;
+}
+.contact-details_1 p{
+    margin-top: -2px;
+}
