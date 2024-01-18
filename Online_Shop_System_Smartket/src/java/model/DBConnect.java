@@ -23,7 +23,7 @@ public class DBConnect {
             }
     }
     public DBConnect() {
-        this("jdbc:mysql://localhost:3306/restaurant", "root", "12345678");
+        this("jdbc:mysql://localhost:3306/Online_Shop_System", "root", "12345678");
     }
     public ResultSet getData(String sql){
         ResultSet rs = null;
@@ -39,6 +39,16 @@ public class DBConnect {
         return rs;
     }
     public static void main(String[] args) {
-        new DBConnect();
+//        new DBConnect();
+//        DBConnect db = new DBConnect();
+//        ResultSet rs = db.getData("SELECT * FROM Cart AS c JOIN Product AS p ON c.ProductID = p.ProductID where c.UserID = 1;");
+//        try {
+//            while (rs.next()) {                
+//                System.out.println(rs.getInt(1));
+//                System.out.println(rs.getString(5));
+//                System.out.println(rs.getString(7));
+//            }
+//        } catch (SQLException e) {
+//        }
     }
 }
