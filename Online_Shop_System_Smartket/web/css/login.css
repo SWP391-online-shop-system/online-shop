@@ -49,12 +49,13 @@ body {
     
 }
 .popup.active {
-    top: 70%;
+    top: 54%;
     opacity: 1;
     transform: translate(-50%,-50%) scale(1);
     transition: top 0ms ease-in-out 0ms,
                 opacity 200ms ease-in-out 0ms,
                 transform 200ms ease-in-out 0ms;
+    z-index: 3;
 }
 .popup .close-btn {
     position: absolute;

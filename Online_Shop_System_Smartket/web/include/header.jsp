@@ -4,6 +4,7 @@
     Author     : admin
 --%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"  %>
 <div class="header">
     <div class="header-title">
         <div class="header-title-left">
@@ -38,76 +39,117 @@
                         <title>Login Pop-up </title>
                         <link rel="stylesheet" href="css/login.css"/>
                     </head>
-                    <body>
+                    <body> 
+                        <%
+                            String message = (String)request.getAttribute("message");
+                            String messagesu = (String)request.getAttribute("messageSignUp");
+                        %>
+                        <c:if test="${sessionScope.account.roleID == 5}">
+                        <a href="#">ADMIN</a>
+                        </c:if>
+                        <c:if test="${sessionScope.account.roleID == 4}">
+                        <a href="#">SALE MANAGER</a>
+                        </c:if>
+                        <c:if test="${sessionScope.account.roleID == 3}">
+                        <a href="#">SALE</a>
+                        </c:if>
+                        <c:if test="${sessionScope.account.roleID == 2}">
+                        <a href="#">Marketing</a>
+                        </c:if>
+                        <c:if test="${sessionScope.account != null}">
+                            Hello ${sessionScope.account.email}
+                            <a href="logout">Đăng xuất</a>
+                        </c:if>
+                        <c:if test="${sessionScope.account == null}">
                         <button id="show-login">Đăng nhập</button>
+                        </c:if>
                         <!-- Login Pop-up Form -->
-                        <div class="popup" id="loginPopup">
-                            <div class="close-btn" onclick="togglePopup('loginPopup')">x</div>
-                            <div class="form">
-                                <h2>Đăng nhập</h2>
-                                <div class="form-element">
-                                    <label for="email">Email</label>
-                                    <input type="text" id="email" placeholder="Nhập email">
-                                </div>
-                                <div class="form-element">
-                                    <label for="password">Mật khẩu</label>
-                                    <input type="password" id="password" placeholder="Nhập mật khẩu">
-                                </div>
-                                <div class="form-element">
-                                    <button type="submit" value="Login">Đăng nhập</button>
-                                </div>
-                                <div class="form-element">
-                                    <button id="showSignup" onclick="togglePopup('signupPopup')">Đăng kí</button>
-                                </div>
-                                <div class="form-element">
-                                    <a href="#">Quên mật khẩu?</a>
+                        <form action="loginURL" method="post">
+                            <div class="popup ${requestScope.activeLogin}" id="loginPopup">
+                                <div class="close-btn" onclick="togglePopup('loginPopup')">x</div>
+                                <div class="form">
+                                    <h2>Đăng nhập</h2>
+                                    <p class="text-danger" style="
+                                       color: red;
+                                       font-size: 20px;
+                                       font-weight: 700;
+                                       text-align: left;"><%=(message == null) ? "" : message%></p>
+                                    <div class="form-element">
+                                        <label for="email">Email</label>
+                                        <input type="text" id="email" name="email" placeholder="Nhập email" required 
+                                               oninvalid="this.setCustomValidity('Vui lòng điền thông tin này')" 
+                                               oninput="setCustomValidity('')">
+                                    </div>
+                                    <div class="form-element">
+                                        <label for="password">Mật khẩu</label>
+                                        <input type="password" id="pass" name="pass" placeholder="Nhập mật khẩu" required 
+                                               oninvalid="this.setCustomValidity('Vui lòng điền thông tin này')" 
+                                               oninput="setCustomValidity('')">
+                                    </div>
+                                    <div class="form-element">
+                                        <button type="submit" >Đăng nhập</button>
+                                    </div>
+                                    <div class="form-element">
+                                        <button id="showSignup" onclick="togglePopup('signupPopup')">Đăng kí</button>
+                                    </div>
+                                    <div class="form-element">
+                                        <a href="#">Quên mật khẩu?</a>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
+                        </form>
+
                         <!-- Registration Pop-up Form -->
-                        <div class="popup" id="signupPopup">
-                            <div class="close-btn" onclick="togglePopup('signupPopup')">x</div>
-                            <div class="form">
-                                <h2>Đăng kí</h2>
-                                <div class="form-element">
-                                    <label for="registerEmail">Họ và tên</label>
-                                    <input type="text" id="registerFullname" placeholder="Nhập họ và tên">
-                                </div>
-                                <div class="form-element">
-                                    <label for="registerEmail">Giới tính</label>
-                                    <select name="Gender">
-                                        <option value="Male">Nam</option>
-                                        <option value="Female">Nữ</option>
-                                    </select>
-                                </div>
-                                <div class="form-element" style="margin-top: 28px;">
-                                    <label for="registerEmail">Email</label>
-                                    <input type="text" id="registerEmail" placeholder="Nhập email">
-                                </div>
-                                <div class="form-element">
-                                    <label for="registerPassword">Mật khẩu</label>
-                                    <input type="password" id="registerPassword" placeholder="Nhập mật khẩu">
-                                </div>
-                                <div class="form-element">
-                                    <label for="registerPassword">Nhập lại mật khẩu</label>
-                                    <input type="password" id="registerRePassword" placeholder="Nhập lại mật khẩu">
-                                </div>
-                                <div class="form-element">
-                                    <label for="registerEmail">Số điện thoại</label>
-                                    <input type="text" id="registerMobile" placeholder="Nhập số điện thoại">
-                                </div>
-                                <div class="form-element">
-                                    <label for="registerEmail">Địa chỉ</label>
-                                    <input type="text" id="registerAddress" placeholder="Nhập địa chỉ">
-                                </div>
-                                <div class="form-element">
-                                    <button type="submit" value="Register">Đăng kí</button>
+                        <form action="signupURL" method="post">
+                            <div class="popup ${requestScope.activeSignUp}" id="signupPopup">
+                                <div class="close-btn" onclick="togglePopup('signupPopup')">x</div>
+                                <div class="form">
+                                    <h2>Đăng kí</h2>
+                                    <div class="form-element">
+                                        <label for="registerEmail">Họ</label>
+                                        <input type="text" name="rFName" placeholder="Nhập họ" required 
+                                               oninvalid="this.setCustomValidity('Vui lòng điền thông tin này')" 
+                                               oninput="setCustomValidity('')">
+                                    </div>
+                                    <div class="form-element">
+                                        <label for="registerEmail">Tên</label>
+                                        <input type="text" name="rLName" placeholder="Nhập Tên" required
+                                               oninvalid="this.setCustomValidity('Vui lòng điền thông tin này')" 
+                                               oninput="setCustomValidity('')">
+                                    </div>
+                                    <div class="form-element" style="margin-top: 28px;">
+                                        <label for="registerEmail">Email</label>
+                                        <input type="text" name="remail" placeholder="Nhập email"required
+                                               oninvalid="this.setCustomValidity('Vui lòng điền thông tin này')" 
+                                               oninput="setCustomValidity('')">
+                                    </div>
+                                    <div class="form-element">
+                                        <label for="registerPassword">Mật khẩu</label>
+                                        <input type="password" name="rpass" placeholder="Nhập mật khẩu" required
+                                               oninvalid="this.setCustomValidity('Vui lòng điền thông tin này')" 
+                                               oninput="setCustomValidity('')">
+                                    </div>
+                                    <div class="form-element">
+                                        <label for="registerPassword">Nhập lại mật khẩu</label>
+                                        <input type="password" name="rrepass" placeholder="Nhập lại mật khẩu" required
+                                               oninvalid="this.setCustomValidity('Vui lòng điền thông tin này')" 
+                                               oninput="setCustomValidity('')">
+                                    </div>
+                                    <p class="text-danger" style="
+                                       color: red;
+                                       font-size: 20px;
+                                       font-weight: 700;
+                                       text-align: left;"><%=(messagesu == null) ? "" : messagesu%></p>
+                                    <div class="form-element">
+                                        <button type="submit" >Đăng kí</button>
+                                    </div>
+                                    Ðã có tài khoản<a id="loginAfterRegister">Đăng nhập ngay</a>
                                 </div>
                             </div>
-                        </div>
+                        </form>
                     </body>
                     <script src="js/login.js">
-                        
+
                     </script>
                 </html>
             </div>
