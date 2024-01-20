@@ -8,6 +8,7 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/CascadeStyleSheet.css
 */
 html{
     overflow-x: hidden;
+    height: 100%;
 }
 .header{
     font-family: math;
@@ -414,7 +415,7 @@ a{
 }
 
 #touch-1:checked + .sider-menu-1 {
-    height: 300px;
+    height: 450px;
 }
 .sider-menu-1{
     background: #e8e8e89c;
@@ -609,7 +610,7 @@ a{
     background: #2e85dfe8;
     border-radius: 7px;
     padding-top: 3px;
-    margin-left: 7px;
+    margin-left: 6px;
     height: 26px;
     cursor: pointer;
 }
