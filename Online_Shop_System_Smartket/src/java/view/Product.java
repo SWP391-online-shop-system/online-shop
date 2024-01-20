@@ -84,6 +84,7 @@ public class Product {
     public void setUnitDiscount(int UnitDiscount) {
         this.UnitDiscount = UnitDiscount;
     }
+
     public String getCreateDate() {
         return CreateDate;
     }
@@ -106,6 +107,48 @@ public class Product {
 
     public void setTotalStock(int TotalStock) {
         this.TotalStock = TotalStock;
+    }
+
+    public String convertStar(int totalRate) {
+        String result = "";
+        switch (totalRate) {
+            case 1:
+                result = "<i class=\"fa fa-star\" aria-hidden=\"true\"></i>\n"
+                        + "<i class=\"fa fa-star-o\" aria-hidden=\"true\"></i>\n"
+                        + "<i class=\"fa fa-star-o\" aria-hidden=\"true\"></i>\n"
+                        + "<i class=\"fa fa-star-o\" aria-hidden=\"true\"></i>\n"
+                        + "<i class=\"fa fa-star-o\" aria-hidden=\"true\"></i>";
+                break;
+            case 2:
+                result = "<i class=\"fa fa-star\" aria-hidden=\"true\"></i>\n"
+                        + "<i class=\"fa fa-star\" aria-hidden=\"true\"></i>\n"
+                        + "<i class=\"fa fa-star-o\" aria-hidden=\"true\"></i>\n"
+                        + "<i class=\"fa fa-star-o\" aria-hidden=\"true\"></i>\n"
+                        + "<i class=\"fa fa-star-o\" aria-hidden=\"true\"></i>";
+                break;
+            case 3:
+                result = "<i class=\"fa fa-star\" aria-hidden=\"true\"></i>\n"
+                        + "<i class=\"fa fa-star\" aria-hidden=\"true\"></i>\n"
+                        + "<i class=\"fa fa-star\" aria-hidden=\"true\"></i>\n"
+                        + "<i class=\"fa fa-star-o\" aria-hidden=\"true\"></i>\n"
+                        + "<i class=\"fa fa-star-o\" aria-hidden=\"true\"></i>";
+                break;
+            case 4:
+                result = "<i class=\"fa fa-star\" aria-hidden=\"true\"></i>\n"
+                        + "<i class=\"fa fa-star\" aria-hidden=\"true\"></i>\n"
+                        + "<i class=\"fa fa-star\" aria-hidden=\"true\"></i>\n"
+                        + "<i class=\"fa fa-star\" aria-hidden=\"true\"></i>\n"
+                        + "<i class=\"fa fa-star-o\" aria-hidden=\"true\"></i>";
+                break;
+            case 5:
+                result = "<i class=\"fa fa-star\" aria-hidden=\"true\"></i>\n"
+                        + "<i class=\"fa fa-star\" aria-hidden=\"true\"></i>\n"
+                        + "<i class=\"fa fa-star\" aria-hidden=\"true\"></i>\n"
+                        + "<i class=\"fa fa-star\" aria-hidden=\"true\"></i>\n"
+                        + "<i class=\"fa fa-star\" aria-hidden=\"true\"></i>";
+                break;
+        }
+        return result;
     }
 
     @Override

@@ -49,8 +49,8 @@
                     </div>
                     <div class="menu-section-content-search">
                         <div class="menu-section-content-search-form">
-                            <form action="#">
-                                <input type="text" placeholder="Bạn cần tìm gì?"/>
+                            <form action="searchPageURL" method="GET">
+                                <input name="keyWord" type="text" placeholder="Bạn cần tìm gì?"/>
                                 <button type="submit" class="site-btn">Tìm kiếm</button>
                             </form>
                         </div>
@@ -123,17 +123,18 @@
                             <div class="content-title">SẢN PHẨM MỚI NHẤT</div>
                             <div class="product-card-content">
                                 <%
-                                ResultSet rsFeatureProduct = dao.getData("select * from product as p join productImage as pi "
+                                ResultSet rsNewProduct = dao.getData("select * from product as p join productImage as pi "
                                         + "on p.ProductID = pi.ProductID "
                                         + "where pi.ProductURL like '%_1%' "
-                                        + "order by p.CreateDate desc limit 6");
+                                        + "order by p.CreateDate desc limit 6 ");
                                 
-                                while(rsFeatureProduct.next()) {%>
+                                while(rsNewProduct.next()) {%>
                                 <div class="nft">
+                                    <div class="brand-info">new</div>
                                     <div class='main'>
-                                        <a href="#"><img class='tokenImage' src="<%=rsFeatureProduct.getString(12)%>" alt="Not found" />
-                                            <div class="product-content-name"><%=rsFeatureProduct.getString(2)%></div></a>
-                                        <div class="price-product"><%=df.format(rsFeatureProduct.getDouble(6))%><span>đ</span></div>
+                                        <a href="#"><img class='tokenImage' src="<%=rsNewProduct.getString(12)%>" alt="Not found" />
+                                            <div class="product-content-name"><%=rsNewProduct.getString(2)%></div></a>
+                                        <div class="price-product"><%=df.format(rsNewProduct.getDouble(6))%><span>đ</span></div>
                                         <div class="product-buy-section">
                                             <div class="product-cart"><a href="#"><img src="images/cart/cart.png" alt="alt"/></a></div>
                                             <div class="product-buy"><a href="#"><img src="images/cart/bag.png" alt="alt"/><span>MUA NGAY</span></div></a>
@@ -150,19 +151,27 @@
                                 <button class="pre-btn"><img src="images/slider/arrow.png" alt=""></button>
                                 <button class="nxt-btn"><img src="images/slider/arrow.png" alt=""></button>
                                 <div class="product-container">
+                                    <%
+                                ResultSet rsFeatureProduct = dao.getData("select * from product as p join productImage as pi "
+                                        + "on p.ProductID = pi.ProductID "
+                                        + "where pi.ProductURL like '%_1%' "
+                                        + "order by p.TotalRate desc limit 6;");
+                                
+                                while(rsFeatureProduct.next()) {%>
                                     <div class="product-card">    
                                         <div id="container1">  
                                             <div class="product-details">
                                                 <div class="product-details-title">
-                                                    <div class="detail-name">Pin eveready</div><div class="detail-price">1000</div>
+                                                    <div class="detail-name"><%=rsFeatureProduct.getString(2)%></div>
+                                                    <div class="detail-price"><%=df.format(rsFeatureProduct.getDouble(6))%></div>
                                                 </div>
                                                 <div class="product-details-title1">
                                                     <span class="hint-star star">
-                                                        <i class="fa fa-star" aria-hidden="true"></i>
-                                                        <i class="fa fa-star" aria-hidden="true"></i>
-                                                        <i class="fa fa-star" aria-hidden="true"></i>
-                                                        <i class="fa fa-star" aria-hidden="true"></i>
-                                                        <i class="fa fa-star-o" aria-hidden="true"></i>
+                                                        <%int totalRate = (int)rsFeatureProduct.getInt(9);
+                                                          Product product = new Product();
+                                                          String result = product.convertStar(totalRate);
+                                                        %>
+                                                        <%=result%>
                                                     </span>
                                                     <div class="detail-buy">
                                                         <div class="product-buy-section">
@@ -172,34 +181,10 @@
                                                     </div>
                                                 </div>
                                             </div>
-                                            <a href="#"><div><img class="product-image2" src="images/product/diengiadung/pineveready_1.jpg" alt="alt"/></div></a>
+                                            <a href="#"><div><img class="product-image2" src="<%=rsFeatureProduct.getString(12)%>" alt="alt"/></div></a>
                                         </div>
                                     </div>
-                                    <div class="product-card">    
-                                        <div id="container1">  
-                                            <div class="product-details">
-                                                <div class="product-details-title">
-                                                    <div class="detail-name">Pin everready</div><div class="detail-price">1000</div>
-                                                </div>
-                                                <div class="product-details-title1">
-                                                    <span class="hint-star star">
-                                                        <i class="fa fa-star" aria-hidden="true"></i>
-                                                        <i class="fa fa-star" aria-hidden="true"></i>
-                                                        <i class="fa fa-star" aria-hidden="true"></i>
-                                                        <i class="fa fa-star" aria-hidden="true"></i>
-                                                        <i class="fa fa-star-o" aria-hidden="true"></i>
-                                                    </span>
-                                                    <div class="detail-buy">
-                                                        <div class="product-buy-section">
-                                                            <a href="#"><div class="product-cart"><img src="images/cart/cart.png" alt="alt"/></div></a>
-                                                            <a href="#"><div class="product-buy"><img src="images/cart/bag.png" alt="alt"/><span>MUA NGAY</span></div></a>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <a href="#"><div><img class="product-image2" src="images/product/diengiadung/pineveready_1.jpg" alt="alt"/></div></a>
-                                        </div>
-                                    </div>
+                                    <%}%>
                                 </div>
                             </section>
                         </div>
