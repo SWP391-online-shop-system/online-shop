@@ -36,12 +36,12 @@
     </div>
     <div class="header-content">
         <div class="header-content-logo">
-            <a href="#"><img src="images/logo/logo.png"alt="404"/></a>
+            <a href="HomePageURL"><img src="images/logo/logo.png"alt="404"/></a>
         </div>
         <div class="header-content-menu">
             <ul>
-                <li class="active"><a href="#">Trang chủ</a></li>
-                <li><a href="#">Mua hàng</a></li>
+                <li class="active"><a href="HomePageURL">Trang chủ</a></li>
+                <li><a href="ProductListURL">Mua hàng</a></li>
                 <li>
                     <a href="#">Trang</a>
                     <ul class="header-content-menu-drop-down">
