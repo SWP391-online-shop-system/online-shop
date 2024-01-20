@@ -15,8 +15,6 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.util.Vector;
 import model.DAOCart;
 
 /**
@@ -42,14 +40,15 @@ public class CartController extends HttpServlet {
             HttpSession session = request.getSession();
             String service = request.getParameter("service");
             DAOCart dao = new DAOCart();
-//            User user = (User) session.getAttribute("account");
-//            int userID = user.getUserID();
-            int userID = 1;
+            User user = (User) session.getAttribute("account");
+            int userID = user.getUserID();
             if (service == null) {
                 service = "showCart";
             }
             if (service.equals("showCart")) {
-                ResultSet rs = dao.getData("SELECT * FROM Cart AS c JOIN Product AS p ON c.ProductID = p.ProductID where c.UserID = " + userID + ";");
+                ResultSet rs = dao.getData("SELECT * FROM Cart AS c JOIN Product AS p ON c.ProductID = p.ProductID\n"
+                        + "join ProductImage as pi on p.ProductID = pi.ProductID\n"
+                        + "where c.UserID = " + userID + " and pi.ProductURL like '%_1%';");
                 if (rs == null) {
 //                    message = "No product";
                     out.print("<p>NoPRODUCT</p>");
@@ -96,9 +95,9 @@ public class CartController extends HttpServlet {
                 String pid_raw = request.getParameter("proid");
                 int pid = Integer.parseInt(pid_raw);
                 Cart cart = dao.getCartByUser(userID, pid);
-                if(cart.getQuantity()<=1){
+                if (cart.getQuantity() <= 1) {
                     int n = dao.deleteCart(userID, pid);
-                    
+
                 }
                 cart.setQuantity(cart.getQuantity() - 1);
                 int n = dao.updateCartByUserAndPro(cart, userID, pid);

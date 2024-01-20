@@ -28,124 +28,89 @@
         %>
         <div id="body">
             <jsp:include page="include/header.jsp"/>
-            <section>
+            <section style="display: flex">
+                <aside>
+                    <p> Menu </p>
+                    <div class="menu-section-content-search-form" style="margin-bottom: 20px;">
+                        <form action="#">
+                            <input type="text" placeholder="Bạn cần tìm gì?" style="width: 67%;border-radius: 7px;padding: 8px 2px 8px 6px;"/>
+                            <button type="submit" class="search-btn">Tìm kiếm</button>
+                        </form>
+                    </div>
+                    <a href="homepage.jsp"><i class="fa fa-home"></i> Trang Chủ</a>
+                </aside>
                 <div class="card">
                     <div class="row">
                         <div class=" cart">
                             <table style="width: 100%; height: 100%; font-weight: normal;">
-                                <!--                                <div class="title">
-                                                                    <div class="row">
-                                                                        <div class="col"><h4><b>Giỏ hàng</b></h4></div>
-                                                                    </div>
-                                                                    <div class="row" style="font-weight: normal;">
-                                                                        <div class="col"><p>Ảnh Sản Phẩm</p></div>
-                                                                        <div class="col"><p>Tên Sản Phẩm</p></div>
-                                                                        <div class="col"><p>Số Lượng Sản Phẩm</p></div>
-                                                                        <div class="col"><p>Giá Tiền 1 Đơn Vị</p></div>
-                                                                        <div class="col"><p>Giá Tiền Sản Phẩm</p></div>
-                                                                    </div>
-                                                                </div>    -->
                                 <thead>
                                     <tr>
-                                        <td style="text-align: center;font-weight: bolder;font-size: medium;">Ảnh Sản Phẩm</td>
-                                        <td style="text-align: center;font-weight: bolder;font-size: medium;">Tên Sản Phẩm</td>
-                                        <td style="text-align: center;font-weight: bolder;font-size: medium;">Số Lượng Sản Phẩm</td>
-                                        <td style="text-align: center;font-weight: bolder;font-size: medium;">Giá Tiền 1 Đơn Vị</td>
-                                        <td style="text-align: center;font-weight: bolder;font-size: medium;">Giá Tiền Sản Phẩm</td>
+                                        <td style="text-align: center;font-weight: bolder;font-size: medium;padding-bottom: 30px;">Ảnh Sản Phẩm</td>
+                                        <td style="text-align: center;font-weight: bolder;font-size: medium;padding-bottom: 30px;">Tên Sản Phẩm</td>
+                                        <td style="text-align: center;font-weight: bolder;font-size: medium;padding-bottom: 30px;">Số Lượng</td>
+                                        <td style="text-align: center;font-weight: bolder;font-size: medium;padding-bottom: 30px;">Giá Tiền</td>
+                                        <td style="text-align: center;font-weight: bolder;font-size: medium;padding-bottom: 30px;">Thành Tiền</td>
                                     </tr>
                                 </thead>
                                 <tbody>
-
-
-                                    <!--                                    <div class="col"><img class="img-fluid" src="https://i.imgur.com/1GrakTl.jpg"></div>
-                                                                        <div class="col">
-                                                                            <div>Shirt</div>
-                                                                            <div>Cotton T-shirt</div>
-                                                                        </div>
-                                                                        <div class="col">
-                                                                            <a href="#">-</a><a href="#" class="border">1</a><a href="#">+</a>
-                                                                        </div>
-                                                                        <div class="col">&euro; 44.00 <span class="close">&#10005;</span></div>-->
                                     <%
-                        
-                            try {
+                                     try {
                                         while (rs.next()) {
                                         double unitPrice = rs.getDouble("UnitPrice");
-                                        double totalunitprice = unitPrice*rs.getInt(3);
-                                        totalprice += rs.getInt(3)*unitPrice;
+                                        double totalunitprice = unitPrice*rs.getInt("Quantity");
+                                        totalprice += rs.getInt("Quantity")*unitPrice;
                                     %>
                                     <tr>
-                                        <!-- <div class="col"><img class="img-fluid" src="https://i.imgur.com/1GrakTl.jpg"></div>-->
-                                        <td class="col"></td>
+                                        <td class="col"><img class="img-fluid" src="<%=rs.getString("ProductURL")%>"></td>
 
-                                        <td class="col"><%=rs.getString(5)%></td>
-                                        <td class="col"><a href="CartURL?service=decquantity&proid=<%=rs.getInt("ProductID")%>">-</a><a href="#" class="border"><%=rs.getInt(3)%></a><a href="CartURL?service=incquantity&proid=<%=rs.getInt("ProductID")%>">+</a></td>
-                                        <td class="col"><%=decimalFormat.format(unitPrice)%>Đ</td>            
-                                        <td class="col"><%=decimalFormat.format(totalunitprice)%>Đ</td>
+                                        <td class="col"><%=rs.getString("ProductName")%></td>
+                                        <td class="col">
+                                            <div style="display: flex;">
+                                                <div class="change-quantity"><a href="CartURL?service=decquantity&proid=<%=rs.getInt("ProductID")%>">-</a></div>
+                                                <a href="#" class="border"><%=rs.getInt("Quantity")%></a>
+                                                <div class="change-quantity"><a href="CartURL?service=incquantity&proid=<%=rs.getInt("ProductID")%>">+</a></div>
+                                            </div>
+                                        </td>
+                                        <td class="col"><%=decimalFormat.format(unitPrice)%>đ</td>            
+                                        <td class="col"><%=decimalFormat.format(totalunitprice)%>đ</td>
                                         <td class="col">
                                             <a href="CartURL?service=deleteCart&proid=<%=rs.getInt("ProductID")%>"><i class="fa fa-times" style="color: red"></i></a>
                                         </td>
                                     </tr>
-                                    <%      }
-                        
-                                rs.close(); 
-                                } catch (SQLException e) {
-                                 e.printStackTrace();
-                                }
+                                    <%}         
+                                        rs.close(); 
+                                        } catch (SQLException e) {
+                                         e.printStackTrace();
+                                        }
                                     %>
-
-
                                 </tbody>
                             </table>
-
-                            <div class="back-to-shop"><a href="homepage.jsp">&leftarrow; Trở Về</a></div>
+                            <div>
+                                <a href="CartURL?service=deleteAllCart"><i class="fa fa-trash"></i></a>Xóa Tất Cả Sản Phẩm
+                            </div>
                         </div>
                         <div class="summary">
                             <hr>
                             <div class="row" style="border-top: 1px solid rgba(0,0,0,.1); padding: 2vh 0;">
                                 <div class="col">Tổng Đơn Hàng</div>
-                                <div class="col text-right"><%=decimalFormat.format(totalprice)%>Đ</div>
+                                <div class="col text-right"><%=decimalFormat.format(totalprice)%>đ</div>
                             </div>
-                            <div class="row">
-                                <!--                                <div class="col" style="padding-left:0;">ITEMS 3</div>
-                                                                <div class="col text-right">&euro; 132.00</div>-->
-                            </div>
-                            <p>Mã Giảm Giá</p>
-                            <button class="btn btnvoucher" id="show-voucher">Chọn Mã Giảm Giá</button>
-
                             <button class="btn">Thanh Toán</button>
                         </div>
                     </div>
-
-                </div>
+                </div>        
             </section> 
         </div>
-        <div>
-            <div class="popup">
-                <div class="close-btn">X</div>
-                <div class="form">
-                    <h2>Mã Giảm Giá</h2>
-                    <div class="form-element">
-                        <label for="email">Không Có Mã Giảm Giá Nào</label>                                        
-                    </div>
-
-
-                </div>
-            </div>
-
-            <script>
-                document.querySelector("#show-voucher").addEventListener("click", function () {
-                    document.querySelector(".popup").style.display = "block";
-                    document.querySelector(".popup").classList.add("active");
-                    document.getElementById("body").classList.add("blurred-background");
-                });
-                document.querySelector(".popup .close-btn").addEventListener("click", function () {
-//                    document.querySelector(".popup").classList.remove("active");
-                    document.querySelector(".popup").style.display = "none";
-                    document.getElementById("body").classList.remove("blurred-background");
-                });
-            </script>
-        </div>
-
+        <script>
+            document.querySelector("#show-voucher").addEventListener("click", function () {
+                document.querySelector(".popup").style.display = "block";
+                document.querySelector(".popup").classList.add("active");
+                document.getElementById("body").classList.add("blurred-background");
+            });
+            document.querySelector(".popup .close-btn").addEventListener("click", function () {
+                document.querySelector(".popup").style.display = "none";
+                document.getElementById("body").classList.remove("blurred-background");
+            });
+        </script>
     </body>
 </html>
