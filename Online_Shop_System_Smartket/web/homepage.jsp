@@ -7,8 +7,12 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page import="model.DAOProduct" %>
+<%@page import="model.DAOCategories" %>
 <%@page import="java.util.Vector" %>
 <%@page import="view.Product" %>
+<%@page import="view.Categories" %>
+<%@page import="java.sql.ResultSet"%>
+<%@page import="java.text.DecimalFormat" %>
 <!DOCTYPE html> 
 <html>
     <head>
