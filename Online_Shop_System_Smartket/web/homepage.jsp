@@ -123,15 +123,17 @@
                             <div class="content-title">SẢN PHẨM MỚI NHẤT</div>
                             <div class="product-card-content">
                                 <%
-                                Vector<Product> featureProductList = dao.getProduct("select * from product order by CreateDate desc limit 6");
-                                for(Product featurePro: featureProductList) {
+                                ResultSet rsFeatureProduct = dao.getData("select * from product as p join productImage as pi "
+                                        + "on p.ProductID = pi.ProductID "
+                                        + "where pi.ProductURL like '%_1%' "
+                                        + "order by p.CreateDate desc limit 6");
                                 
-                                %>
+                                while(rsFeatureProduct.next()) {%>
                                 <div class="nft">
                                     <div class='main'>
-                                        <a href="#"><img class='tokenImage' src="images/product/diengiadung/quathopvinawind_1.jpg" alt="Not found" />
-                                            <div class="product-content-name"><%=featurePro.getProductName()%></div></a>
-                                        <div class="price-product"><%=df.format(featurePro.getUnitPrice())%></div>
+                                        <a href="#"><img class='tokenImage' src="<%=rsFeatureProduct.getString(12)%>" alt="Not found" />
+                                            <div class="product-content-name"><%=rsFeatureProduct.getString(2)%></div></a>
+                                        <div class="price-product"><%=df.format(rsFeatureProduct.getDouble(6))%><span>đ</span></div>
                                         <div class="product-buy-section">
                                             <div class="product-cart"><a href="#"><img src="images/cart/cart.png" alt="alt"/></a></div>
                                             <div class="product-buy"><a href="#"><img src="images/cart/bag.png" alt="alt"/><span>MUA NGAY</span></div></a>

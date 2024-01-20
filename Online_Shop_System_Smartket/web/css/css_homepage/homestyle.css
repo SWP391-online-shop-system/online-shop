@@ -453,8 +453,8 @@ a{
         padding: 1rem;
         .tokenImage{
             border-radius: 0.5rem;
-            width: 194px;
-            height: 175px;
+            width: 175px;
+            height: 151px;
             margin-right: 7px;
             object-fit: cover;
         }
@@ -553,22 +553,22 @@ a{
 .price-product{
     padding-top: 2px;
     font-size: 19px;
-    color: #ffd004;
+    color: #dcff00;
     width: 167px;
     height: 24px;
     text-align: center;
-    font-family: monospace;
     margin-top: 3px;
     margin-left: 11px;
     background: #0087b9bd;
     border-radius: 6px;
 }
 .product-content-name{
-    font-size: 19px;
+    font-size: 16px;
     margin-top: 5px;
     color: #180f0f;
     letter-spacing: 1px;
     margin-left: -8px;
+    height: 40px;
 }
 .product-cart img{
     margin-bottom: -5px;
