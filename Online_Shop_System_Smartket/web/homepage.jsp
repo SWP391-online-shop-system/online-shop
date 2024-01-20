@@ -16,6 +16,7 @@
 <!DOCTYPE html> 
 <html>
     <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <script src="https://kit.fontawesome.com/ac74b86ade.js" crossorigin="anonymous"></script>
         <script src="https://cdn.jsdelivr.net/npm/swiper/swiper-bundle.min.js"></script>
         <link rel="stylesheet" href="css/css_homepage/homestyle.css"/>
@@ -24,6 +25,8 @@
     </head>
     <body>
         <jsp:include page="include/header.jsp"/>
+        <%DecimalFormat df = new DecimalFormat("###,###");
+            df.setMaximumFractionDigits(8);%>
         <section class="menu-section">
             <div class="menu-section-title">
                 <div class="menu-section-content">
@@ -32,13 +35,14 @@
                             <i class="fa-solid fa-list"></i>
                             <label for="touch"><span class="content-title1">DANH MỤC NỔI BẬT</span></label>               
                             <input type="checkbox" id="touch"> 
+
                             <ul class="sider-menu">
-                                <li><a href="#">Lorem Ipsum</a></li> 
-                                <li><a href="#">Lorem Ipsum</a></li>
-                                <li><a href="#">Lorem Ipsum</a></li>
-                                <li><a href="#">Lorem Ipsum</a></li>
-                                <li><a href="#">Lorem Ipsum</a></li>
-                                <li><a href="#">Lorem Ipsum</a></li>
+                                <%
+                                    DAOProduct dao = new DAOProduct();
+                                ResultSet rs = dao.getData("SELECT c.CategoryName, AVG(p.TotalRate) FROM Product AS p JOIN Categories AS c ON c.CategoryID = p.ProductID GROUP BY c.CategoryName ORDER BY AVG(p.TotalRate) DESC LIMIT 3");
+                                while(rs.next()) {%>
+                                <li><a href="#"><%=rs.getString(1)%></a></li> 
+                                    <%}%>
                             </ul>
                             <span class="menu-section-drop-list"><i></i></span>
                         </div>
@@ -106,82 +110,35 @@
                                     <i class="fa-solid fa-angle-down" style="float: right;margin-top: -18px;margin-right: 6px;font-size: 19px;"></i></label>               
                                 <input type="checkbox" id="touch-1"> 
                                 <ul class="sider-menu-1">
-                                    <li><a href="#">Lorem Ipsum</a></li> 
-                                    <li><a href="#">Lorem Ipsum</a></li>
-                                    <li><a href="#">Lorem Ipsum</a></li>
-                                    <li><a href="#">Lorem Ipsum</a></li>
+                                    <%
+                                    DAOCategories daoCate = new DAOCategories();
+                                    Vector<Categories> CateList = daoCate.getCategories("select * from Categories");
+                                    for(Categories cate: CateList){%>
+                                    <li><a href="#"><%=cate.getCategoryName()%></a></li> 
+                                        <%}%>
                                 </ul>
                             </div>
                         </div>
                         <div class="feature-content">
                             <div class="content-title">SẢN PHẨM MỚI NHẤT</div>
                             <div class="product-card-content">
+                                <%
+                                Vector<Product> featureProductList = dao.getProduct("select * from product order by CreateDate desc limit 6");
+                                for(Product featurePro: featureProductList) {
+                                
+                                %>
                                 <div class="nft">
                                     <div class='main'>
-                                        <a href="#"><img class='tokenImage' src="images/product/tulanhpanasonic.jpg" alt="Not found" />
-                                            <div class="product-content-name">Tủ lạnh Panasonic</div></a>
-                                        <div class="price-product">250000</div>
+                                        <a href="#"><img class='tokenImage' src="images/product/diengiadung/quathopvinawind_1.jpg" alt="Not found" />
+                                            <div class="product-content-name"><%=featurePro.getProductName()%></div></a>
+                                        <div class="price-product"><%=df.format(featurePro.getUnitPrice())%></div>
                                         <div class="product-buy-section">
                                             <div class="product-cart"><a href="#"><img src="images/cart/cart.png" alt="alt"/></a></div>
                                             <div class="product-buy"><a href="#"><img src="images/cart/bag.png" alt="alt"/><span>MUA NGAY</span></div></a>
                                         </div>
                                     </div>
                                 </div>
-                                <div class="nft">
-                                    <div class='main'>
-                                        <a href="#"><img class='tokenImage' src="images/product/tulanhpanasonic.jpg" alt="Not found" />
-                                            <div class="product-content-name">Tủ lạnh Panasonic</div></a>
-                                        <div class="price-product">250000</div>
-                                        <div class="product-buy-section">
-                                            <div class="product-cart"><a href="#"><img src="images/cart/cart.png" alt="alt"/></a></div>
-                                            <div class="product-buy"><a href="#"><img src="images/cart/bag.png" alt="alt"/><span>MUA NGAY</span></div></a>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="nft">
-                                    <div class='main'>
-                                        <a href="#"><img class='tokenImage' src="images/product/tulanhpanasonic.jpg" alt="Not found" />
-                                            <div class="product-content-name">Tủ lạnh Panasonic</div></a>
-                                        <div class="price-product">250000</div>
-                                        <div class="product-buy-section">
-                                            <div class="product-cart"><a href="#"><img src="images/cart/cart.png" alt="alt"/></a></div>
-                                            <div class="product-buy"><a href="#"><img src="images/cart/bag.png" alt="alt"/><span>MUA NGAY</span></div></a>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="nft">
-                                    <div class='main'>
-                                        <a href="#"><img class='tokenImage' src="images/product/tulanhpanasonic.jpg" alt="Not found" />
-                                            <div class="product-content-name">Tủ lạnh Panasonic</div></a>
-                                        <div class="price-product">250000</div>
-                                        <div class="product-buy-section">
-                                            <div class="product-cart"><a href="#"><img src="images/cart/cart.png" alt="alt"/></a></div>
-                                            <div class="product-buy"><a href="#"><img src="images/cart/bag.png" alt="alt"/><span>MUA NGAY</span></div></a>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="nft">
-                                    <div class='main'>
-                                        <a href="#"><img class='tokenImage' src="images/product/tulanhpanasonic.jpg" alt="Not found" />
-                                            <div class="product-content-name">Tủ lạnh Panasonic</div></a>
-                                        <div class="price-product">250000</div>
-                                        <div class="product-buy-section">
-                                            <div class="product-cart"><a href="#"><img src="images/cart/cart.png" alt="alt"/></a></div>
-                                            <div class="product-buy"><a href="#"><img src="images/cart/bag.png" alt="alt"/><span>MUA NGAY</span></div></a>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="nft">
-                                    <div class='main'>
-                                        <a href="#"><img class='tokenImage' src="images/product/tulanhpanasonic.jpg" alt="Not found" />
-                                            <div class="product-content-name">Tủ lạnh Panasonic</div></a>
-                                        <div class="price-product">250000</div>
-                                        <div class="product-buy-section">
-                                            <div class="product-cart"><a href="#"><img src="images/cart/cart.png" alt="alt"/></a></div>
-                                            <div class="product-buy"><a href="#"><img src="images/cart/bag.png" alt="alt"/><span>MUA NGAY</span></div></a>
-                                        </div>
-                                    </div>
-                                </div>
+                                <%}%>
                             </div>
                         </div>
                         <!--HOTTEST PRODUCT-->
@@ -191,19 +148,11 @@
                                 <button class="pre-btn"><img src="images/slider/arrow.png" alt=""></button>
                                 <button class="nxt-btn"><img src="images/slider/arrow.png" alt=""></button>
                                 <div class="product-container">
-                                    <%
-                                    DAOProduct dao = new DAOProduct();
-                                    Product p = new Product();
-                                    Vector<Product> list = dao.getProduct("select * from Product limit 5");
-                                    for(Product pro: list) {
-                                    p.setProductDescription(pro.getProductDescription().replace("]", "<br>") );
-                                    %>
-
                                     <div class="product-card">    
                                         <div id="container1">  
                                             <div class="product-details">
                                                 <div class="product-details-title">
-                                                    <div class="detail-name"><%=pro.getProductName()%></div><div class="detail-price"><%=pro.getUnitPrice()%></div>
+                                                    <div class="detail-name">Pin eveready</div><div class="detail-price">1000</div>
                                                 </div>
                                                 <div class="product-details-title1">
                                                     <span class="hint-star star">
@@ -221,10 +170,34 @@
                                                     </div>
                                                 </div>
                                             </div>
-                                            <a href="#"><div><img class="product-image2" src="images/product/lgtv1.png" alt="alt"/></div></a>
+                                            <a href="#"><div><img class="product-image2" src="images/product/diengiadung/pineveready_1.jpg" alt="alt"/></div></a>
                                         </div>
                                     </div>
-                                    <%}%>
+                                    <div class="product-card">    
+                                        <div id="container1">  
+                                            <div class="product-details">
+                                                <div class="product-details-title">
+                                                    <div class="detail-name">Pin everready</div><div class="detail-price">1000</div>
+                                                </div>
+                                                <div class="product-details-title1">
+                                                    <span class="hint-star star">
+                                                        <i class="fa fa-star" aria-hidden="true"></i>
+                                                        <i class="fa fa-star" aria-hidden="true"></i>
+                                                        <i class="fa fa-star" aria-hidden="true"></i>
+                                                        <i class="fa fa-star" aria-hidden="true"></i>
+                                                        <i class="fa fa-star-o" aria-hidden="true"></i>
+                                                    </span>
+                                                    <div class="detail-buy">
+                                                        <div class="product-buy-section">
+                                                            <a href="#"><div class="product-cart"><img src="images/cart/cart.png" alt="alt"/></div></a>
+                                                            <a href="#"><div class="product-buy"><img src="images/cart/bag.png" alt="alt"/><span>MUA NGAY</span></div></a>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <a href="#"><div><img class="product-image2" src="images/product/diengiadung/pineveready_1.jpg" alt="alt"/></div></a>
+                                        </div>
+                                    </div>
                                 </div>
                             </section>
                         </div>
@@ -234,7 +207,7 @@
                         <div class="card-container">
                             <a href="hi">
                                 <div class="card card-3">
-                                    <div class="card-img"><img src="images/product/lgtv1.png" alt="alt"/></div>
+                                    <div class="card-img"><img src="images/product/diengiadung/beplau_1.jpg" alt="alt"/></div>
                                     <div class="card-info">
                                         <div class="card-about">
                                             <a class="card-tag tag-deals"><i class="fa-regular fa-eye"></i></i>190</a>
@@ -247,7 +220,7 @@
                             </a>
                             <a href="hi">
                                 <div class="card card-3">
-                                    <div class="card-img"><img src="images/product/lgtv1.png" alt="alt"/></div>
+                                    <div class="card-img"><img src="images/product/diengiadung/beplau_1.jpg" alt="alt"/></div>
                                     <div class="card-info">
                                         <div class="card-about">
                                             <a class="card-tag tag-deals"><i class="fa-regular fa-eye"></i></i>190</a>
@@ -260,7 +233,7 @@
                             </a>
                             <a href="hi">
                                 <div class="card card-3">
-                                    <div class="card-img"><img src="images/product/lgtv1.png" alt="alt"/></div>
+                                    <div class="card-img"><img src="images/product/diengiadung/beplau_1.jpg" alt="alt"/></div>
                                     <div class="card-info">
                                         <div class="card-about">
                                             <a class="card-tag tag-deals"><i class="fa-regular fa-eye"></i></i>190</a>
@@ -276,7 +249,6 @@
                     <a href="#"><div class="more-detail_1">Xem thêm</div></a>
                 </div>
         </section>
-        <div><%=p.getProductDescription()%></div>
         <jsp:include page="include/footer.jsp"/>
     </body>
     <script src="js/script.js"></script>
