@@ -10,22 +10,22 @@ package view;
  */
 public class ProductImage {
 
-    private String ProductID;
+    private int ProductID;
     private String ProductURL;
 
     public ProductImage() {
     }
 
-    public ProductImage(String ProductID, String ProductURL) {
+    public ProductImage(int ProductID, String ProductURL) {
         this.ProductID = ProductID;
         this.ProductURL = ProductURL;
     }
 
-    public String getProductID() {
+    public int getProductID() {
         return ProductID;
     }
 
-    public void setProductID(String ProductID) {
+    public void setProductID(int ProductID) {
         this.ProductID = ProductID;
     }
 
