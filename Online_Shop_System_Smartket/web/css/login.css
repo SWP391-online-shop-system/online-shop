@@ -84,6 +84,15 @@ body {
     display: flex;
     color: #222;
 }
+.popup .form .form-element input[type="email"]{
+    margin-top: 5px;
+    display: block;
+    width: 100%;
+    padding: 10px;
+    outline: none;
+    border: 1px solid #aaa;
+    border-radius: 5px;
+}
 .popup .form .form-element input[type="text"]{
     margin-top: 5px;
     display: block;

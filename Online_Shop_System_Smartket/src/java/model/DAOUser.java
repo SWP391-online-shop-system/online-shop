@@ -88,6 +88,38 @@ public class DAOUser extends DBConnect {
         }
     }
 
+    public User getUserByEmail(String Email) {
+
+        String sql = "select * from user where Email ='" + Email + "'";
+        try {
+            PreparedStatement st = conn.prepareStatement(sql);
+            ResultSet rs = st.executeQuery();
+            while (rs.next()) {
+                User pro = new User(
+                        rs.getInt(1),
+                        rs.getString(2),
+                        rs.getString(3),
+                        rs.getString(4),
+                        rs.getString(5),
+                        rs.getString(6),
+                        rs.getBoolean(7),
+                        rs.getString(8),
+                        rs.getString(9),
+                        rs.getString(10),
+                        rs.getString(11),
+                        rs.getBoolean(12),
+                        rs.getInt(13),
+                        rs.getInt(14)
+                );
+                return pro;
+            }
+        } catch (SQLException e) {
+            System.out.println(e);
+        }
+        System.out.println("null");
+        return null;
+    }
+
     public int deleteUser(int id) {
         int n = 0;
         String sql = "DELETE FROM `online_shop_system`.`user`\n"
@@ -225,7 +257,7 @@ public class DAOUser extends DBConnect {
     }
 
     public User checkAccountExist(String email) {
-        String sql = "select * from user where email = ?";
+        String sql = "select * from user where email = '?'";
         try {
             PreparedStatement pre = conn.prepareStatement(sql);
             pre.setString(1, email);

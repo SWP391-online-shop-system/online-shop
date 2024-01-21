@@ -36,7 +36,7 @@
                     <head>
                         <meta charset="UTF-8">
                         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-                        <title>Login Pop-up </title>
+                        <title>Smarket</title>
                         <link rel="stylesheet" href="css/login.css"/>
                     </head>
                     <body> 
@@ -76,8 +76,8 @@
                                        text-align: left;"><%=(message == null) ? "" : message%></p>
                                     <div class="form-element">
                                         <label for="email">Email</label>
-                                        <input type="text" id="email" name="email" placeholder="Nhập email" required 
-                                               oninvalid="this.setCustomValidity('Vui lòng điền thông tin này')" 
+                                        <input type="email" id="email" name="email" placeholder="Nhập email" required 
+                                               oninvalid="this.setCustomValidity('Vui lòng điền thông tin này và bao gồm @')" 
                                                oninput="setCustomValidity('')">
                                     </div>
                                     <div class="form-element">
@@ -101,6 +101,7 @@
 
                         <!-- Registration Pop-up Form -->
                         <form action="signupURL" method="post">
+                            <input type="hidden" name="service" value="signupRegister">
                             <div class="popup ${requestScope.activeSignUp}" id="signupPopup">
                                 <div class="close-btn" onclick="togglePopup('signupPopup')">x</div>
                                 <div class="form">
@@ -119,8 +120,8 @@
                                     </div>
                                     <div class="form-element" style="margin-top: 28px;">
                                         <label for="registerEmail">Email</label>
-                                        <input type="text" name="remail" placeholder="Nhập email"required
-                                               oninvalid="this.setCustomValidity('Vui lòng điền thông tin này')" 
+                                        <input type="email" name="remail" placeholder="Nhập email"required
+                                               oninvalid="this.setCustomValidity('Vui lòng điền thông tin này và bao gồm @')" 
                                                oninput="setCustomValidity('')">
                                     </div>
                                     <div class="form-element">

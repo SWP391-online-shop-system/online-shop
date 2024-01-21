@@ -35,22 +35,44 @@ public class ControllerLogin extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         try ( PrintWriter out = response.getWriter()) {
+         out.println("<!DOCTYPE html>");
+            out.println("<html>");
+            out.println("<head>");
+            out.println("<title>Servlet ControllerHomepage</title>");  
+            out.println("</head>");
+            out.println("<body>");
+            out.println("<h1>Check email cua ban</h1>");
+            out.println("</body>");
+            out.println("</html>");
             /* TODO output your page here. You may use following sample code. */
             DAOUser dao = new DAOUser();
             String message = " ";
+            String service = request.getParameter("service");
+            if (service == null) {
+                service = "";
+            }
             HttpSession session = request.getSession();
-                String email = request.getParameter("email");
-                String pass = request.getParameter("pass");
-                User user = dao.check(email, pass);
+            if (service.equals("verify")) {
+                String key = request.getParameter("key");
+                User user = dao.getUserByEmail(key);
                 if (user == null) {
-                    request.setAttribute("activeLogin", "active");
-                    message = "Sai tài khoản hoặc mật khẩu.";
-                    request.setAttribute("message", message);
-                    request.getRequestDispatcher("homepage.jsp").forward(request, response);
+                    message = "Sai email.";
                 } else {
                     session.setAttribute("account", user);
-                    response.sendRedirect("homepage.jsp");
                 }
+            }
+            String email = request.getParameter("email");
+            String pass = request.getParameter("pass");
+            User user = dao.check(email, pass);
+            if (user == null) {
+                request.setAttribute("activeLogin", "active");
+                message = "Sai tài khoản hoặc mật khẩu.";
+                request.setAttribute("message", message);
+                request.getRequestDispatcher("homepage.jsp").forward(request, response);
+            } else {
+                session.setAttribute("account", user);
+                response.sendRedirect("homepage.jsp");
+            }
         }
     }
 
