@@ -8,9 +8,11 @@
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page import="model.DAOProduct" %>
 <%@page import="model.DAOCategories" %>
+<%@page import="model.DAOBlog" %>
 <%@page import="java.util.Vector" %>
 <%@page import="view.Product" %>
 <%@page import="view.Categories" %>
+<%@page import="view.Blog" %>
 <%@page import="java.sql.ResultSet"%>
 <%@page import="java.text.DecimalFormat" %>
 <!DOCTYPE html> 
@@ -41,7 +43,7 @@
                                     DAOProduct dao = new DAOProduct();
                                 ResultSet rs = dao.getData("SELECT c.CategoryName, AVG(p.TotalRate) FROM Product AS p JOIN Categories AS c ON c.CategoryID = p.ProductID GROUP BY c.CategoryName ORDER BY AVG(p.TotalRate) DESC LIMIT 3");
                                 while(rs.next()) {%>
-                                <li><a href="#"><%=rs.getString(1)%></a></li> 
+                                <li><a class="change-hover" href="#"><%=rs.getString(1)%></a></li> 
                                     <%}%>
                             </ul>
                             <span class="menu-section-drop-list"><i></i></span>
@@ -192,6 +194,35 @@
                     <div class="menu-blog-section">
                         <div class="content-title5">Bài viết xu hướng</div>
                         <div class="card-container">
+                            <div class="side-bar-lastest-post">
+                                <div class="content-title6">Bài viết mới</div>
+                                <%
+                                DAOBlog daoBlog = new DAOBlog();
+                                ResultSet rsNewBlog = daoBlog.getData("select * from Blog order by CreateTime desc limit 1");
+                                if(rsNewBlog.next()) {
+                                %>
+                                <div class="card1">
+                                    <a href="blog">
+                                        <div class="card__header1">
+                                            <img src="images/blog/<%=rsNewBlog.getString(5)%>" alt="card__image" class="card__image1" width="600">
+                                        </div>
+                                        <div class="card__body1">
+                                            <div><i style="margin-right: 5px;" class="fa-regular fa-calendar"></i><span><%=rsNewBlog.getString(10)%></span></div>
+                                            <h4><%=rsNewBlog.getString(6)%></h4>
+                                        </div>
+                                        <div class="card__footer1">
+                                            <div class="user1">
+                                                <img src="images/blog_author/<%=rsNewBlog.getString(4)%>" alt="user__image" class="user__image1">
+                                                <div class="user__info1">
+                                                    <h5><%=rsNewBlog.getString(3)%></h5>
+                                                    <small></small>
+                                                </div>
+                                            </div>
+                                        </div>
+                                </div>
+                                </a>
+                                <%}%>
+                            </div>
                             <a href="hi">
                                 <div class="card card-3">
                                     <div class="card-img"><img src="images/product/diengiadung/beplau_1.jpg" alt="alt"/></div>

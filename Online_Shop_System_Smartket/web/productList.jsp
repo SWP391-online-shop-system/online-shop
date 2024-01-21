@@ -8,6 +8,12 @@
 <%@page import="java.text.DecimalFormat" %>
 <%@page import="java.sql.ResultSet"%>
 <%@page import="view.Product"%>
+<%@page import="view.ProductImage"%>
+<%@page import="model.DAOProduct"%>
+<%@page import="model.DAOProductImage"%>
+<%@page import="java.util.Vector" %>
+
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html lang="zxx">
 
@@ -62,7 +68,7 @@
                                                     <ul class="nice-scroll">
                                                         <%ResultSet rsCategory = (ResultSet)request.getAttribute("CategoryResult");
                                                         while(rsCategory.next()) {%>
-                                                        <li><a href="ProductListURL?service=ShowCategory&CategoryID=<%=rsCategory.getInt(1)%>"><%=rsCategory.getString(2)%></a></li>
+                                                        <li><a href="ProductListURL?service=ShowCategory&CategoryID=<%=rsCategory.getInt(1)%>&index=1"><%=rsCategory.getString(2)%></a></li>
                                                             <%}%>
                                                     </ul>
                                                 </div>
@@ -156,31 +162,34 @@
                         </div>
                         <div class="row">
                             <%
-                            ResultSet rsProduct = (ResultSet)request.getAttribute("result");
-                            while(rsProduct.next()) {
+                                DAOProduct dao = new DAOProduct();
+                                DAOProductImage daoImage = new DAOProductImage();
+                            Vector<Product> listProduct = (Vector<Product>)request.getAttribute("listPage");
+                            for(Product list: listProduct){
+                                ProductImage proImage = daoImage.getProductImageByProductID(list.getProductID());
                             %>
                             <div class="col-lg-4 col-md-6 col-sm-6">
                                 <div class="product__item">
                                     <div class="product__item__pic set-bg">
-                                        <img src="<%=rsProduct.getString(12)%>" alt="alt"/>
-                                        <%if(rsProduct.getInt(7) !=0) {%>
+                                        <img src="<%=proImage.getProductURL()%>" alt="alt"/>
+                                        <%if(list.getUnitDiscount()!=0) {%>
                                         <div class="sale-cotification">Sale</div>
                                         <%}%>
                                     </div>
                                     <div class="product__item__text">
-                                        <h6><%=rsProduct.getString(2)%></h6>
+                                        <h6><%=list.getProductName()%></h6>
                                         <a href="#" class="add-cart">+ Thêm vào giỏ</a><a style="margin-left: 136px;" href="#">Mua ngay</a>
                                         <div style="display: flex;">
                                             <div class="rating">
-                                                <%int star = (int)rsProduct.getInt(9);
-                                                Product pro = new Product();
-                                                  String totalRate = pro.convertStar(star);
+                                                <%int star = (int)list.getTotalRate();
+                                                Product pro2 = new Product();
+                                                  String totalRate = pro2.convertStar(star);
                                                 %>
                                                 <%=totalRate%>
                                             </div>
-                                            <div style="color: #0d0d0d;font-weight: 700;font-size: 15px; flex: 0 0 50%"><%=df.format(rsProduct.getDouble(6))%></div>
+                                            <div style="color: #0d0d0d;font-weight: 700;font-size: 15px; flex: 0 0 50%"><%=df.format(list.getUnitPrice())%></div>
                                         </div>
-                                        <%if(rsProduct.getInt(7) !=0) {%>
+                                        <%if(list.getUnitDiscount()!=0) {%>
                                         <div style="color: #0d0d0d;font-weight: 700;font-size: 18px; flex: 0 0 50%">$67.24</div>
                                         <%}%>
                                     </div>
@@ -191,11 +200,12 @@
                         <div class="row">
                             <div class="col-lg-12">
                                 <div class="product__pagination">
-                                    <a class="active" href="#">1</a>
-                                    <a href="#">2</a>
-                                    <a href="#">3</a>
-                                    <span>...</span>
-                                    <a href="#">21</a>
+                                    <c:set value="${requestScope.catename}" var="category"/>
+                                    <div class="paginate"><a style="margin: 0;margin-left: -3px;margin-top: -5px;"><</a></div>
+                                    <c:forEach begin="1" end="${endPage}" var="i">
+                                        <a class="active" href="ProductListURL?CategoryID=${category.categoryID}&index=${i}">${i}</a>
+                                    </c:forEach>
+                                    <div class="paginate"><a style="margin: 0;margin-left: -3px;margin-top: -5px;">></a></div>
                                 </div>
                             </div>
                         </div>
