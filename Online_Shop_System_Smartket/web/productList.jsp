@@ -203,7 +203,7 @@
                                     <c:set value="${requestScope.catename}" var="category"/>
                                     <div class="paginate"><a style="margin: 0;margin-left: -3px;margin-top: -5px;"><</a></div>
                                     <c:forEach begin="1" end="${endPage}" var="i">
-                                        <a class="active" href="ProductListURL?CategoryID=${category.categoryID}&index=${i}">${i}</a>
+                                        <a class="active" href="ProductListURL?service=ShowCategory&CategoryID=${category.categoryID}&index=${i}">${i}</a>
                                     </c:forEach>
                                     <div class="paginate"><a style="margin: 0;margin-left: -3px;margin-top: -5px;">></a></div>
                                 </div>
