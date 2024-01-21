@@ -4,6 +4,8 @@
     Author     : admin
 --%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>  
+
 <div class="header">
     <div class="header-title">
         <div class="header-title-left">
@@ -45,7 +47,7 @@
                 <li>
                     <a href="#">Trang</a>
                     <ul class="header-content-menu-drop-down">
-                        <li><a href="cart">Giỏ hàng của tôi</a></li>
+                        <li><a href="CartURL">Giỏ hàng của tôi</a></li>
                         <li><a href="#">Đơn hàng của tôi</a></li>
                     </ul>
                 </li>
@@ -56,8 +58,16 @@
         <div class="header-content-right-menu">
             <ul>
                 <li class="margin-unit"><a href="#" title="Đơn hàng của tôi"><i class="fa-solid fa-file-invoice-dollar"></i></i></a></li>
-                <li><a href="cart" title="Giỏ hàng của tôi"><i class="fa-solid fa-cart-shopping"></i></a></li>
+                    <%--<c:if test="${sessionScope.account == null}">--%>
+                    <!--<li><a href="#" onclick="alertOpenCart()" title="Giỏ hàng của tôi"><i class="fa-solid fa-cart-shopping"></i></a></li>-->
+                        <%--</c:if>--%>
+                        <li><a href="CartURL" title="Giỏ hàng của tôi"><i class="fa-solid fa-cart-shopping"></i></a></li>
             </ul>
         </div>
     </div>
 </div>
+<script>
+    function alertOpenCart() {
+        alert('Login to open cart');
+    }
+</script>
