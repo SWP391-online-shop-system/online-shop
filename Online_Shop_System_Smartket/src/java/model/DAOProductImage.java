@@ -16,9 +16,8 @@ import view.ProductImage;
  */
 public class DAOProductImage extends DBConnect {
 
-    public Vector<ProductImage> getProductImageByProductID(int ProductID) {
-        Vector<ProductImage> vector = new Vector<>();
-        String sql = "select * from ProductImage where ProductID =?";
+    public ProductImage getProductImageByProductID(int ProductID) {
+        String sql = "select * from ProductImage where ProductID =? and ProductURL like '%_1%'";
         try {
             PreparedStatement st = conn.prepareStatement(sql);
             st.setInt(1, ProductID);
@@ -28,12 +27,11 @@ public class DAOProductImage extends DBConnect {
                         rs.getInt("ProductID"),
                         rs.getString("ProductURL")
                 );
-                vector.add(pro);
-
+                return pro;
             }
         } catch (SQLException e) {
             System.out.println(e);
         }
-        return vector;
+        return null;
     }
 }

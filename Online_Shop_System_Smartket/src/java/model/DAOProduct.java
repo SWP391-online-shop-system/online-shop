@@ -219,13 +219,44 @@ public class DAOProduct extends DBConnect {
         return list;
     }
 
-    public Vector<Product> get6NextByCateId(int ammount, int CateID) {
+    public Vector<Product> get9Next(int ammount) {
         Vector<Product> list = new Vector<>();
-        String sql = "select * from Products \n"
+        String sql = "select * from Product \n"
+                + "order by ProductID \n"
+                + "limit 9 \n"
+                + "offset ?";
+        try {
+            PreparedStatement st = conn.prepareStatement(sql);
+            st.setInt(1, (ammount - 1) * 9);
+            ResultSet rs = st.executeQuery();
+            while (rs.next()) {
+                Product pro = new Product(
+                        rs.getInt("ProductID"),
+                        rs.getString("ProductName"),
+                        rs.getInt("CategoryID"),
+                        rs.getString("ProductDescription"),
+                        rs.getInt("UnitInStock"),
+                        rs.getDouble("UnitPrice"),
+                        rs.getInt("UnitDiscount"),
+                        rs.getString("CreateDate"),
+                        rs.getInt("TotalRate"),
+                        rs.getInt("TotalStock")
+                );
+                list.add(pro);
+            }
+        } catch (SQLException e) {
+            System.out.println(e);
+        }
+        return list;
+    }
+
+    public Vector<Product> get9NextByCateId(int ammount, int CateID) {
+        Vector<Product> list = new Vector<>();
+        String sql = "select * from Product \n"
                 + "Where CategoryID =" + CateID + " \n"
                 + "order by ProductID \n"
-                + "limit ? \n"
-                + "offset 9";
+                + "limit 9 \n"
+                + "offset ?";
         try {
             PreparedStatement st = conn.prepareStatement(sql);
             st.setInt(1, (ammount - 1) * 9);
@@ -252,7 +283,21 @@ public class DAOProduct extends DBConnect {
     }
 
     public int getTotalProductByCateID(int CateID) {
-        String sql = "select count(*) from [Product] where CategoryID=" + CateID;
+        String sql = "select count(*) from Product where CategoryID=" + CateID;
+        try {
+            PreparedStatement st = conn.prepareStatement(sql);
+            ResultSet rs = st.executeQuery();
+            while (rs.next()) {
+                return rs.getInt(1);
+            }
+        } catch (SQLException e) {
+            System.out.println(e);
+        }
+        return 0;
+    }
+
+    public int getTotalProduct() {
+        String sql = "select count(*) from Product";
         try {
             PreparedStatement st = conn.prepareStatement(sql);
             ResultSet rs = st.executeQuery();
