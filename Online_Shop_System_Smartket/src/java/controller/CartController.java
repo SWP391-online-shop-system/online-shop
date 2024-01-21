@@ -50,7 +50,6 @@ public class CartController extends HttpServlet {
                         + "join ProductImage as pi on p.ProductID = pi.ProductID\n"
                         + "where c.UserID = " + userID + " and pi.ProductURL like '%_1%';");
                 if (rs == null) {
-//                    message = "No product";
                     out.print("<p>NoPRODUCT</p>");
                 }
                 request.setAttribute("data", rs);
