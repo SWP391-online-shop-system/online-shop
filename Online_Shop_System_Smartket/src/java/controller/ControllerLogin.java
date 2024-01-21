@@ -68,10 +68,10 @@ public class ControllerLogin extends HttpServlet {
                 request.setAttribute("activeLogin", "active");
                 message = "Sai tài khoản hoặc mật khẩu.";
                 request.setAttribute("message", message);
-                request.getRequestDispatcher("homepage.jsp").forward(request, response);
+                request.getRequestDispatcher("HomePageURL").forward(request, response);
             } else {
                 session.setAttribute("account", user);
-                response.sendRedirect("homepage.jsp");
+                response.sendRedirect("HomePageURL");
             }
         }
     }

@@ -18,6 +18,7 @@
 <!DOCTYPE html> 
 <html>
     <head>
+        <link rel="stylesheet" href="css/login.css"/>
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <script src="https://kit.fontawesome.com/ac74b86ade.js" crossorigin="anonymous"></script>
         <script src="https://cdn.jsdelivr.net/npm/swiper/swiper-bundle.min.js"></script>

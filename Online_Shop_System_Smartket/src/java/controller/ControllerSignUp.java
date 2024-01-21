@@ -60,13 +60,13 @@ public class ControllerSignUp extends HttpServlet {
                 request.setAttribute("activeSignUp", "active");
                 message = "Mật khẩu không khớp, hãy nhập lại";
                 request.setAttribute("messageSignUp", message);
-                request.getRequestDispatcher("homepage.jsp").forward(request, response);
+                request.getRequestDispatcher("HomePageURL").forward(request, response);
             } else {
                 User user = dao.getUserByEmail(remail);
                 if (user == null) {
                     dao.signup(rFName, rLName, rpass, remail);
                 } else {
-                    request.getRequestDispatcher("homepage.jsp").forward(request, response);
+                    request.getRequestDispatcher("HomePageURL").forward(request, response);
                 }
                 User user1 = dao.getUserByEmail(remail);
                 if (user1 == null) {
@@ -74,7 +74,7 @@ public class ControllerSignUp extends HttpServlet {
                 } else {
                     DAOMail daomail=new DAOMail();
                     sendEmail(remail,daomail.GetMaxId());
-                    request.getRequestDispatcher("homepage.jsp").forward(request, response);
+                    request.getRequestDispatcher("HomePageURL").forward(request, response);
                 }
             }
         }
@@ -102,7 +102,7 @@ public class ControllerSignUp extends HttpServlet {
             request.setAttribute("activeSignUp", "active");
             message = "Đăng Ký thành công";
             request.setAttribute("messageSignUp", message);
-            request.getRequestDispatcher("homepage.jsp").forward(request, response);
+            request.getRequestDispatcher("HomePageURL").forward(request, response);
         }
     }
 

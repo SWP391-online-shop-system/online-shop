@@ -61,7 +61,7 @@
                             <a href="logout">Đăng xuất</a>
                         </c:if>
                         <c:if test="${sessionScope.account == null}">
-                        <button id="show-login">Đăng nhập</button>
+                            <button style="border: none; font-size:16px; font-family: math;" id="show-login">Đăng nhập</button>
                         </c:if>
                         <!-- Login Pop-up Form -->
                         <form action="loginURL" method="post">
