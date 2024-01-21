@@ -12,13 +12,15 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import java.sql.ResultSet;
+import model.DAOBlog;
 
 /**
  *
  * @author admin
  */
-@WebServlet(name="ControllerHomepage", urlPatterns={"/HomepageURL"})
-public class ControllerHomepage extends HttpServlet {
+@WebServlet(name="ControllerHomePage", urlPatterns={"/HomePageURL"})
+public class ControllerHomePage extends HttpServlet {
    
     /** 
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code> methods.
@@ -55,8 +57,14 @@ public class ControllerHomepage extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
-        processRequest(request, response);
-    } 
+       DAOBlog daoBLog = new DAOBlog();
+       ResultSet rsNewBlog = daoBLog.getData("select * from Blog order by CreateTime desc limit 1");
+       ResultSet rsFeatureBlog = daoBLog.getData("select * from Blog order by BlogRate desc limit 3");
+       
+       request.setAttribute("rsNewBlog", rsNewBlog);
+       request.setAttribute("rsFeatureBlog", rsFeatureBlog);
+       request.getRequestDispatcher("homepage.jsp").forward(request, response);
+    }
 
     /** 
      * Handles the HTTP <code>POST</code> method.

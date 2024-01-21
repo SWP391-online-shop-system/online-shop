@@ -1,0 +1,257 @@
+/*
+Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/CascadeStyleSheet.css to edit this template
+*/
+/* 
+    Created on : Jan 11, 2024, 2:48:05 PM
+    Author     : trant
+*/
+
+.title{
+    margin-bottom: 5vh;
+}
+.card{
+    margin: 60px auto;
+    max-width: 80%;
+    width: 90%;
+    box-shadow: 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    border-radius: 1rem;
+    border: transparent;
+}
+
+.cart{
+    background-color: #fff;
+    padding: 4vh 5vh;
+    border-bottom-left-radius: 1rem;
+    border-top-left-radius: 1rem;
+    width: 75%;
+}
+.summary{
+    background-color: #72e27a9c;
+    border-top-right-radius: 1rem;
+    border-bottom-right-radius: 1rem;
+    padding: 4vh;
+    color: rgb(65, 65, 65);
+    width: 25%;
+}
+.summary .col-2{
+    padding: 0;
+}
+.summary .col-10
+{
+    padding: 0;
+}
+.row{
+    vertical-align: middle;
+    font-family: sans-serif;
+    font-size: 0.8rem;
+    font-weight: bold;
+    display: flex;
+    margin: 0;
+}
+.title b{
+    font-size: 1.5rem;
+}
+.main{
+    margin: 0;
+    padding: 2vh 0;
+    width: 100%;
+    border: solid 1px;
+}
+.col{
+    padding: 0 1vh;
+    flex: auto;
+    text-align: center;
+    font-size: 20px;
+}
+a{
+    padding: 0 1vh;
+}
+.close{
+    margin-left: auto;
+    font-size: 0.7rem;
+}
+img{
+    width: 9.5rem;
+}
+.back-to-shop{
+    margin-top: 4.5rem;
+}
+input:focus::-webkit-input-placeholder
+{
+    color:transparent;
+}
+.btn{
+    background-color: #000;
+    border-color: #000;
+    color: white;
+    width: 100%;
+    font-size: 0.7rem;
+    margin-top: 4vh;
+    padding: 1vh;
+    border-radius: 0;
+}
+.btnvoucher{
+    margin-top: 0;
+    width: 42%;
+
+}
+.btn:hover{
+    background-color: white;
+    color: black;
+}
+a{
+    color: black;
+    text-decoration: none;
+}
+a:hover{
+    color: black;
+    text-decoration: none;
+}
+.popup {
+    filter: none;
+    position: absolute;
+    top: -150%;
+    left: 50%;
+    opacity: 1;
+    transform: translate(-50%,-50%) scale(1.25);
+    width: 380px;
+    padding: 20px 30px;
+    background: #fff;
+    box-shadow: 2px 2px 5px 5px rgba(0,0,0,0.15);
+    border-radius: 10px;
+    transition: top 0ms ease-in-out 200ms,
+        opacity 200ms ease-in-out 0ms,
+        transform 20ms ease-in-out 0ms;
+
+}
+.popup.active {
+    top: 60%;
+    left: 63%;
+    opacity: 1;
+    transform: translate(-50%,-50%) scale(1);
+    transition: top 0ms ease-in-out 0ms,
+        opacity 200ms ease-in-out 0ms,
+        transform 200ms ease-in-out 0ms;
+}
+.popup .close-btn {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    width: 15px;
+    height: 15px;
+    background: red;
+    color:#eee;
+    text-align: center;
+    line-height: 15px;
+    border-radius: 15px;
+    cursor: pointer;
+}
+
+.blurred-background {
+    filter: blur(5px); /* Điều chỉnh giá trị 5px nếu cần */
+}
+.display-none{
+    display: none;
+}
+
+aside {
+  color: #fff;
+  width: 192px;
+  padding-left: 20px;
+  border-top-right-radius: 80px;
+  border-bottom-right-radius: 80px;
+  font-size: 33px;
+  background-color: #a9edae;
+}
+
+aside a {
+  font-size: 17px;
+  color: black;
+  display: block;
+  padding: 12px;
+  padding-left: 30px;
+  text-decoration: none;
+  -webkit-tap-highlight-color:transparent;
+}
+
+aside a:hover {
+  color: #3f5efb;
+  background: #fff;
+  outline: none;
+  position: relative;
+  background-color: #fff;
+  border-top-left-radius: 20px;
+  border-bottom-left-radius: 20px;
+}
+
+aside a i {
+  margin-right: 5px;
+}
+
+aside a:hover::after {
+  content: "";
+  position: absolute;
+  background-color: transparent;
+  bottom: 100%;
+  right: 0;
+  height: 35px;
+  width: 35px;
+  border-bottom-right-radius: 18px;
+  box-shadow: 0 20px 0 0 #fff;
+}
+
+aside a:hover::before {
+  content: "";
+  position: absolute;
+  background-color: transparent;
+  top: 38px;
+  right: 0;
+  height: 35px;
+  width: 35px;
+  border-top-right-radius: 18px;
+  box-shadow: 0 -20px 0 0 #fff;
+}
+
+aside p {
+  margin: 0;
+  padding: 40px 0;
+  color: black;
+}
+
+.social {
+  height: 0;  
+}
+
+.social i:before {
+  width: 14px;
+  height: 14px;
+  font-size: 14px;
+  position: fixed;
+  color: #fff;
+  background: #0077B5;
+  padding: 10px;
+  border-radius: 50%;
+  top:5px;
+  right:5px;
+}
+.search-btn{
+    border-radius: 4px;
+    background-color: #143a17;
+    color: white;
+    font-size: 12px;
+    width: 94px;
+    height: 31px;
+    border: none;
+}
+.change-quantity{
+    border-radius: 6px;
+    background-color: #c5c7cc;
+    color: wheat;
+    transition: all,0.5s;
+    padding: 0px 5px 0px 4px;
+    margin: 0px 5px 0px 6px;
+}
+.change-quantity:hover{
+    transform: scale(0.9);
+}
