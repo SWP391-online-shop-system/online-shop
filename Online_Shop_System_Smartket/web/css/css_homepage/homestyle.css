@@ -1219,7 +1219,6 @@ a{
                 );
             height: 100%;
         }
-
         .card-about,
         .card-creator {
             opacity: 0;
@@ -1231,7 +1230,6 @@ a{
 
         .card-title {
             color: #ebecf0;
-            // margin-bottom: -40px;
             transform: translate(0,40px);
         }
     }
