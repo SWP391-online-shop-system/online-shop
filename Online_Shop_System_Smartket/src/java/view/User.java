@@ -6,58 +6,74 @@ package view;
 
 /**
  *
- * @author trant
+ * @author HP
  */
 public class User {
     private int userID;
-    private String fullname;
-    private String address;
-    private String phone;
-    private String username;
-    private String password;
-    private int roleid;
-    
+    private String firstName, lastName, address, phoneNumber, dateOfBirth;
+    private Boolean gender;
+    private String userImage, password, email, lastLogin;
+    private Boolean userStatus;
+    private int reportTo, roleID;
 
     public User() {
     }
 
-    public User(int userID, String fullname, String address, String phone, String username, String password, int roleid) {
+    public User(int userID, String firstName, String lastName, String address, String phoneNumber, String dateOfBirth, Boolean gender, String userImage, String password, String email, String lastLogin, Boolean userStatus, int reportTo, int roleID) {
         this.userID = userID;
-        this.fullname = fullname;
+        this.firstName = firstName;
+        this.lastName = lastName;
         this.address = address;
-        this.phone = phone;
-        this.username = username;
+        this.phoneNumber = phoneNumber;
+        this.dateOfBirth = dateOfBirth;
+        this.gender = gender;
+        this.userImage = userImage;
         this.password = password;
-        this.roleid = roleid;
+        this.email = email;
+        this.lastLogin = lastLogin;
+        this.userStatus = userStatus;
+        this.reportTo = reportTo;
+        this.roleID = roleID;
     }
 
-    public User(String fullname, String address, String phone, String username, String password, int roleid) {
-        this.fullname = fullname;
+    public User(String firstName, String lastName, String address, String phoneNumber, String dateOfBirth, Boolean gender, String userImage, String password, String email, String lastLogin, Boolean userStatus, int reportTo, int roleID) {
+        this.firstName = firstName;
+        this.lastName = lastName;
         this.address = address;
-        this.phone = phone;
-        this.username = username;
+        this.phoneNumber = phoneNumber;
+        this.dateOfBirth = dateOfBirth;
+        this.gender = gender;
+        this.userImage = userImage;
         this.password = password;
-        this.roleid = roleid;
+        this.email = email;
+        this.lastLogin = lastLogin;
+        this.userStatus = userStatus;
+        this.reportTo = reportTo;
+        this.roleID = roleID;
     }
-
-    
-
-    
 
     public int getUserID() {
         return userID;
     }
 
-    public void setUserID(int UserID) {
-        this.userID = UserID;
+    public void setUserID(int userID) {
+        this.userID = userID;
     }
 
-    public String getFullname() {
-        return fullname;
+    public String getFirstName() {
+        return firstName;
     }
 
-    public void setFullname(String fullname) {
-        this.fullname = fullname;
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }
+
+    public String getLastName() {
+        return lastName;
+    }
+
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
     }
 
     public String getAddress() {
@@ -68,20 +84,36 @@ public class User {
         this.address = address;
     }
 
-    public String getPhone() {
-        return phone;
+    public String getPhoneNumber() {
+        return phoneNumber;
     }
 
-    public void setPhone(String phone) {
-        this.phone = phone;
+    public void setPhoneNumber(String phoneNumber) {
+        this.phoneNumber = phoneNumber;
     }
 
-    public String getUsername() {
-        return username;
+    public String getDateOfBirth() {
+        return dateOfBirth;
     }
 
-    public void setUsername(String username) {
-        this.username = username;
+    public void setDateOfBirth(String dateOfBirth) {
+        this.dateOfBirth = dateOfBirth;
+    }
+
+    public Boolean isGender() {
+        return gender;
+    }
+
+    public void setGender(Boolean gender) {
+        this.gender = gender;
+    }
+
+    public String getUserImage() {
+        return userImage;
+    }
+
+    public void setUserImage(String userImage) {
+        this.userImage = userImage;
     }
 
     public String getPassword() {
@@ -92,20 +124,49 @@ public class User {
         this.password = password;
     }
 
-    public int getRoleid() {
-        return roleid;
+    public String getEmail() {
+        return email;
     }
 
-    public void setRoleid(int roleid) {
-        this.roleid = roleid;
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getLastLogin() {
+        return lastLogin;
+    }
+
+    public void setLastLogin(String lastLogin) {
+        this.lastLogin = lastLogin;
+    }
+
+    public Boolean isUserStatus() {
+        return userStatus;
+    }
+
+    public void setUserStatus(Boolean userStatus) {
+        this.userStatus = userStatus;
+    }
+
+    public int getReportTo() {
+        return reportTo;
+    }
+
+    public void setReportTo(int reportTo) {
+        this.reportTo = reportTo;
+    }
+
+    public int getRoleID() {
+        return roleID;
+    }
+
+    public void setRoleID(int roleID) {
+        this.roleID = roleID;
     }
 
     @Override
     public String toString() {
-        return "User{" + "UserID=" + userID + ", fullname=" + fullname + ", address=" + address + ", phone=" + phone + ", username=" + username + ", password=" + password + ", roleid=" + roleid + '}';
+        return "User{" + "userID=" + userID + ", firstName=" + firstName + ", lastName=" + lastName + ", address=" + address + ", phoneNumber=" + phoneNumber + ", dateOfBirth=" + dateOfBirth + ", gender=" + gender + ", userImage=" + userImage + ", password=" + password + ", email=" + email + ", lastLogin=" + lastLogin + ", userStatus=" + userStatus + ", reportTo=" + reportTo + ", roleID=" + roleID + '}';
     }
-
-    
-    
     
 }
