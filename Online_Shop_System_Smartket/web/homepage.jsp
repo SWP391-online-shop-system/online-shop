@@ -18,6 +18,7 @@
 <!DOCTYPE html> 
 <html>
     <head>
+        <link rel="stylesheet" href="css/login.css"/>
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <script src="https://kit.fontawesome.com/ac74b86ade.js" crossorigin="anonymous"></script>
         <script src="https://cdn.jsdelivr.net/npm/swiper/swiper-bundle.min.js"></script>
@@ -41,9 +42,9 @@
                             <ul class="sider-menu">
                                 <%
                                     DAOProduct dao = new DAOProduct();
-                                ResultSet rs = dao.getData("SELECT c.CategoryName, AVG(p.TotalRate) FROM Product AS p JOIN Categories AS c ON c.CategoryID = p.ProductID GROUP BY c.CategoryName ORDER BY AVG(p.TotalRate) DESC LIMIT 3");
+                                ResultSet rs = dao.getData("SELECT c.CategoryID, c.CategoryName, AVG(p.TotalRate) FROM Product AS p JOIN Categories AS c ON c.CategoryID = p.CategoryID GROUP BY c.CategoryID ORDER BY AVG(p.TotalRate) DESC LIMIT 3;");
                                 while(rs.next()) {%>
-                                <li><a class="change-hover" href="#"><%=rs.getString(1)%></a></li> 
+                                <li><a class="change-hover" href="ProductListURL?service=ShowCategory&CategoryID=<%=rs.getInt(1)%>&index=1"><%=rs.getString(2)%></a></li> 
                                     <%}%>
                             </ul>
                             <span class="menu-section-drop-list"><i></i></span>
@@ -116,7 +117,7 @@
                                     DAOCategories daoCate = new DAOCategories();
                                     Vector<Categories> CateList = daoCate.getCategories("select * from Categories");
                                     for(Categories cate: CateList){%>
-                                    <li><a href="#"><%=cate.getCategoryName()%></a></li> 
+                                    <li><a href="ProductListURL?service=ShowCategory&CategoryID=<%=cate.getCategoryID()%>&index=1"><%=cate.getCategoryName()%></a></li> 
                                         <%}%>
                                 </ul>
                             </div>
@@ -198,7 +199,7 @@
                                 <div class="content-title6">Bài viết mới</div>
                                 <%
                                 DAOBlog daoBlog = new DAOBlog();
-                                ResultSet rsNewBlog = daoBlog.getData("select * from Blog order by CreateTime desc limit 1");
+                                ResultSet rsNewBlog = (ResultSet)request.getAttribute("rsNewBlog");
                                 if(rsNewBlog.next()) {
                                 %>
                                 <div class="card1">
@@ -223,45 +224,24 @@
                                 </a>
                                 <%}%>
                             </div>
+                            <%
+                             ResultSet rsFeatureBlog = (ResultSet)request.getAttribute("rsFeatureBlog");
+                             while(rsFeatureBlog.next()) {
+                            %>
                             <a href="hi">
                                 <div class="card card-3">
-                                    <div class="card-img"><img src="images/product/diengiadung/beplau_1.jpg" alt="alt"/></div>
+                                    <div class="card-img"><img src="images/blog/<%=rsFeatureBlog.getString(5)%>" alt="alt"/></div>
                                     <div class="card-info">
                                         <div class="card-about">
-                                            <a class="card-tag tag-deals"><i class="fa-regular fa-eye"></i></i>190</a>
-                                            <div class="card-time"><i style="margin-right: 3px;" class="fa-regular fa-calendar"></i>5/27/2018</div>
+                                            <a class="card-tag tag-deals"><i class="fa-regular fa-eye"></i></i><%=rsFeatureBlog.getInt(8)%></a>
+                                            <div class="card-time"><i style="margin-right: 3px;" class="fa-regular fa-calendar"></i><%=rsFeatureBlog.getString(10).substring(0,10)%></div>
                                         </div>
-                                        <h1 class="card-title"><a href="hi">Apple is having big Sale for the first time</a></h1>
-                                        <div class="card-creator">by <a href="">Timur Mirzoyev</a></div>
+                                        <h1 class="card-title"><a style="font-size: 19px;" href="hi"><%=rsFeatureBlog.getString(6)%></a></h1>
+                                        <div class="card-creator">by <a href=""><%=rsFeatureBlog.getString(3)%></a></div>
                                     </div>
                                 </div>
                             </a>
-                            <a href="hi">
-                                <div class="card card-3">
-                                    <div class="card-img"><img src="images/product/diengiadung/beplau_1.jpg" alt="alt"/></div>
-                                    <div class="card-info">
-                                        <div class="card-about">
-                                            <a class="card-tag tag-deals"><i class="fa-regular fa-eye"></i></i>190</a>
-                                            <div class="card-time"><i style="margin-right: 3px;" class="fa-regular fa-calendar"></i>5/27/2018</div>
-                                        </div>
-                                        <h1 class="card-title"><a href="hi">Apple is having big Sale for the first time</a></h1>
-                                        <div class="card-creator">by <a href="">Timur Mirzoyev</a></div>
-                                    </div>
-                                </div>
-                            </a>
-                            <a href="hi">
-                                <div class="card card-3">
-                                    <div class="card-img"><img src="images/product/diengiadung/beplau_1.jpg" alt="alt"/></div>
-                                    <div class="card-info">
-                                        <div class="card-about">
-                                            <a class="card-tag tag-deals"><i class="fa-regular fa-eye"></i></i>190</a>
-                                            <div class="card-time"><i style="margin-right: 3px;" class="fa-regular fa-calendar"></i>5/27/2018</div>
-                                        </div>
-                                        <h1 class="card-title"><a href="hi">Apple is having big Sale for the first time</a></h1>
-                                        <div class="card-creator">by <a href="">Timur Mirzoyev</a></div>
-                                    </div>
-                                </div>
-                            </a>
+                            <%}%>
                         </div>
                     </div>
                     <a href="#"><div class="more-detail_1">Xem thêm</div></a>
