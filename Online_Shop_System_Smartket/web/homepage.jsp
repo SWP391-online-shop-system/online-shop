@@ -198,7 +198,7 @@
                                 <div class="content-title6">Bài viết mới</div>
                                 <%
                                 DAOBlog daoBlog = new DAOBlog();
-                                ResultSet rsNewBlog = daoBlog.getData("select * from Blog order by CreateTime desc limit 1");
+                                ResultSet rsNewBlog = (ResultSet)request.getAttribute("rsNewBlog");
                                 if(rsNewBlog.next()) {
                                 %>
                                 <div class="card1">
@@ -223,45 +223,24 @@
                                 </a>
                                 <%}%>
                             </div>
+                            <%
+                             ResultSet rsFeatureBlog = (ResultSet)request.getAttribute("rsFeatureBlog");
+                             while(rsFeatureBlog.next()) {
+                            %>
                             <a href="hi">
                                 <div class="card card-3">
-                                    <div class="card-img"><img src="images/product/diengiadung/beplau_1.jpg" alt="alt"/></div>
+                                    <div class="card-img"><img src="images/blog/<%=rsFeatureBlog.getString(5)%>" alt="alt"/></div>
                                     <div class="card-info">
                                         <div class="card-about">
-                                            <a class="card-tag tag-deals"><i class="fa-regular fa-eye"></i></i>190</a>
-                                            <div class="card-time"><i style="margin-right: 3px;" class="fa-regular fa-calendar"></i>5/27/2018</div>
+                                            <a class="card-tag tag-deals"><i class="fa-regular fa-eye"></i></i><%=rsFeatureBlog.getInt(8)%></a>
+                                            <div class="card-time"><i style="margin-right: 3px;" class="fa-regular fa-calendar"></i><%=rsFeatureBlog.getString(10).substring(0,10)%></div>
                                         </div>
-                                        <h1 class="card-title"><a href="hi">Apple is having big Sale for the first time</a></h1>
-                                        <div class="card-creator">by <a href="">Timur Mirzoyev</a></div>
+                                        <h1 class="card-title"><a style="font-size: 19px;" href="hi"><%=rsFeatureBlog.getString(6)%></a></h1>
+                                        <div class="card-creator">by <a href=""><%=rsFeatureBlog.getString(3)%></a></div>
                                     </div>
                                 </div>
                             </a>
-                            <a href="hi">
-                                <div class="card card-3">
-                                    <div class="card-img"><img src="images/product/diengiadung/beplau_1.jpg" alt="alt"/></div>
-                                    <div class="card-info">
-                                        <div class="card-about">
-                                            <a class="card-tag tag-deals"><i class="fa-regular fa-eye"></i></i>190</a>
-                                            <div class="card-time"><i style="margin-right: 3px;" class="fa-regular fa-calendar"></i>5/27/2018</div>
-                                        </div>
-                                        <h1 class="card-title"><a href="hi">Apple is having big Sale for the first time</a></h1>
-                                        <div class="card-creator">by <a href="">Timur Mirzoyev</a></div>
-                                    </div>
-                                </div>
-                            </a>
-                            <a href="hi">
-                                <div class="card card-3">
-                                    <div class="card-img"><img src="images/product/diengiadung/beplau_1.jpg" alt="alt"/></div>
-                                    <div class="card-info">
-                                        <div class="card-about">
-                                            <a class="card-tag tag-deals"><i class="fa-regular fa-eye"></i></i>190</a>
-                                            <div class="card-time"><i style="margin-right: 3px;" class="fa-regular fa-calendar"></i>5/27/2018</div>
-                                        </div>
-                                        <h1 class="card-title"><a href="hi">Apple is having big Sale for the first time</a></h1>
-                                        <div class="card-creator">by <a href="">Timur Mirzoyev</a></div>
-                                    </div>
-                                </div>
-                            </a>
+                            <%}%>
                         </div>
                     </div>
                     <a href="#"><div class="more-detail_1">Xem thêm</div></a>
