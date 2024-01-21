@@ -12,7 +12,11 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import java.sql.ResultSet;
+import java.util.Vector;
+import model.DAOCategories;
 import model.DAOProduct;
+import view.Categories;
+import view.Product;
 
 /**
  *
@@ -61,34 +65,70 @@ public class ControllerProductList extends HttpServlet {
             throws ServletException, IOException {
         DAOProduct dao = new DAOProduct();
         String service = request.getParameter("service");
-        //System.out.println("service = "+service);
-        if (service==null) {
+        String CategoryID_raw = request.getParameter("CategoryID");
+        System.out.println("Category_raw = " + CategoryID_raw);
+        if (CategoryID_raw == null || CategoryID_raw.equals("")|| service==null) {
             service = "ShowAllProduct";
+        } else {
+            service = "ShowCategory";
         }
         //Start get All product----------------------------------------------------------------
         if (service.equals("ShowAllProduct")) {
-            ResultSet rsProduct = dao.getData("select * from product as p join productImage as pi "
-                    + "on p.ProductID = pi.ProductID "
-                    + "where pi.ProductURL like '%_1%';");
-            request.setAttribute("result", rsProduct);
+            System.out.println("service = " + service);
+            String index_raw = request.getParameter("index");
+            int index = 1;
+            if (index_raw != null) {
+                index = Integer.parseInt(index_raw);
+            }
+            //paging
+            int count = dao.getTotalProduct();
+            int endPage = count / 9;
+            if (count % 9 != 0) {
+                endPage++;
+            }
+            request.setAttribute("endPage", endPage);
+            Vector<Product> list = dao.get9Next(index);
+            request.setAttribute("listPage", list);
         }
         // End get All Product----------------------------------------------------------------
 
         //Start get Product from CategoryID
         if (service.equals("ShowCategory")) {
-            int CategoryID = Integer.parseInt(request.getParameter("CategoryID"));
-            ResultSet rsProduct = dao.getData("select * from product as p join productImage as pi "
-                    + "on p.ProductID = pi.ProductID "
-                    + "where pi.ProductURL like '%_1%' and p.CategoryID = " + CategoryID);
-            request.setAttribute("result", rsProduct);
+            System.out.println("service = " + service);
+            DAOCategories daoCate = new DAOCategories();
+            String index_raw = request.getParameter("index");
+            int index = 1;
+            if (index_raw != null) {
+                index = Integer.parseInt(index_raw);
+                System.out.println("index = " + index);
+            }
+            //paging
+            int CategoryID = Integer.parseInt(CategoryID_raw);
+            System.out.println("CategoryID = " + CategoryID);
+            Categories cateName = daoCate.getCategoriesById(CategoryID);
+            request.setAttribute("catename", cateName);
+            int count = dao.getTotalProductByCateID(CategoryID);
+            System.out.println("count= " + count);
+            int endPage = count / 9;
+            if (count % 9 != 0) {
+                endPage++;
+            }
+            request.setAttribute("endPage", endPage);
+            Vector<Product> list = dao.get9NextByCateId(index, CategoryID);
+            request.setAttribute("listPage", list);
         }
-        //End get Product from CategoryOD
-
+        //End get Product from CategoryID-------------------------------------------------------
         //Startget All category----------------------------------------------------------------
         ResultSet rsCategory = dao.getData("Select * from Categories");
-        request.setAttribute("CategoryResult", rsCategory);
+
+        request.setAttribute(
+                "CategoryResult", rsCategory);
         //End get All Category----------------------------------------------------------------
-        request.getRequestDispatcher("productList.jsp").forward(request, response);
+
+        //Start Paging
+        //End Paging
+        request.getRequestDispatcher(
+                "productList.jsp").forward(request, response);
     }
 
     /**
