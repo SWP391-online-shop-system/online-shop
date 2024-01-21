@@ -36,27 +36,25 @@
     </div>
     <div class="header-content">
         <div class="header-content-logo">
-            <a href="#"><img src="images/logo/logo.png"alt="404"/></a>
+            <a href="HomePageURL"><img src="images/logo/logo.png"alt="404"/></a>
         </div>
         <div class="header-content-menu">
             <ul>
-                <li class="active"><a href="#">Trang chủ</a></li>
-                <li><a href="#">Mua hàng</a></li>
+                <li class="active"><a href="HomePageURL">Trang chủ</a></li>
+                <li><a href="ProductListURL">Mua hàng</a></li>
                 <li>
                     <a href="#">Trang</a>
                     <ul class="header-content-menu-drop-down">
                         <li><a href="cart">Giỏ hàng của tôi</a></li>
                         <li><a href="#">Đơn hàng của tôi</a></li>
-                        <li><a href="#">Voucher của tôi</a></li>
                     </ul>
                 </li>
                 <li><a href="#">Blog</a></li>
-                <li><a href="#">Tài khoản</a></li>
+                <li><a href="profileUser.jsp">Tài khoản</a></li>
             </ul>
         </div>
         <div class="header-content-right-menu">
             <ul>
-                <li> <a href="#" title="Voucher của tôi"><i class="fa-solid fa-ticket"></i></a></li>
                 <li class="margin-unit"><a href="#" title="Đơn hàng của tôi"><i class="fa-solid fa-file-invoice-dollar"></i></i></a></li>
                 <li><a href="cart" title="Giỏ hàng của tôi"><i class="fa-solid fa-cart-shopping"></i></a></li>
             </ul>

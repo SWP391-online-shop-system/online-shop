@@ -8,13 +8,13 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/CascadeStyleSheet.css
 */
 html{
     overflow-x: hidden;
+    height: 100%;
 }
 .header{
     font-family: math;
 }
 a{
     text-decoration: none;
-    color: black;
 }
 .menu-section{
 
@@ -355,6 +355,10 @@ a{
     background: #7fad39;
     color: white;
 }
+.change-hover: hover{
+    background: #7fad39;
+    color: white;
+}
 .menu-section-content-categories-unit-1{
     background: #e5b223;
     cursor: pointer;
@@ -362,9 +366,8 @@ a{
     height: 35px;
     border-radius: 10px;
     padding: 5px;
+    margin-top: 100px;
     width: 240px;
-    position: sticky;
-    top: 20px;
 }
 .menu-section-content-categories-unit-1 i {
     font-size: 23px;
@@ -414,7 +417,7 @@ a{
 }
 
 #touch-1:checked + .sider-menu-1 {
-    height: 300px;
+    height: 450px;
 }
 .sider-menu-1{
     background: #e8e8e89c;
@@ -423,6 +426,14 @@ a{
 
 
 /*Product list*/
+.brand-info{
+    width: 43px;
+    float: right;
+    height: 20px;
+    color: white;
+    border-radius: 2px;
+    background: red;
+}
 .nft{
     user-select: none;
     max-width: 223px;
@@ -452,8 +463,8 @@ a{
         padding: 1rem;
         .tokenImage{
             border-radius: 0.5rem;
-            width: 194px;
-            height: 175px;
+            width: 163px;
+            height: 137px;
             margin-right: 7px;
             object-fit: cover;
         }
@@ -529,7 +540,7 @@ a{
         border: 1px solid #ffffff44;
         box-shadow: 0 7px 50px 10px #000000aa;
         transform: scale(1.015);
-        filter: brightness(1.3);
+        filter: brightness(1.1);
         ::before{
             filter: brightness(.5);
             top: -100%;
@@ -552,22 +563,22 @@ a{
 .price-product{
     padding-top: 2px;
     font-size: 19px;
-    color: #ffd004;
+    color: #dcff00;
     width: 167px;
     height: 24px;
     text-align: center;
-    font-family: monospace;
     margin-top: 3px;
     margin-left: 11px;
     background: #0087b9bd;
     border-radius: 6px;
 }
 .product-content-name{
-    font-size: 19px;
+    font-size: 16px;
     margin-top: 5px;
     color: #180f0f;
     letter-spacing: 1px;
     margin-left: -8px;
+    height: 40px;
 }
 .product-cart img{
     margin-bottom: -5px;
@@ -609,7 +620,7 @@ a{
     background: #2e85dfe8;
     border-radius: 7px;
     padding-top: 3px;
-    margin-left: 7px;
+    margin-left: 6px;
     height: 26px;
     cursor: pointer;
 }
@@ -803,7 +814,7 @@ a{
     transition: transform .2s;
 }
 .product-image2:hover {
-    transform: scale(1.3);
+    transform: scale(1.1);
 }
 
 .info {
@@ -854,8 +865,9 @@ a{
     z-index: 3;
     margin-top: 30px;
     margin-bottom: 15px;
-    margin-left: 54px;
+    margin-left: 367px;
 }
+
 /*blog section*/
 .product {
     position: relative;
@@ -1070,7 +1082,7 @@ a{
     font-family: math;
 }
 .detail-name{
-    flex: 0 0 60%;
+    flex: 0 0 67%;
 }
 .detail-buy{
     flex:  0 0 60%;
@@ -1098,23 +1110,26 @@ a{
 }
 /*Blog section*/
 .card-container {
-    width: 100%;
-    height: 82vh;
+    width: 115%;
+    height: 90vh;
     display: flex;
     flex-flow: row wrap;
-    justify-content: center;
     align-items: center;
     transition: all 200ms ease-in-out;
 }
-
+.side-bar-lastest-post{
+    flex: 0 0 25%;
+    margin-top: -233px;
+    margin-left: 3px;
+}
 .card {
     align-self: flex-start;
     position: relative;
-    width: 315px;
+    width: 269px;
     height: 80px;
-    min-width: 275px;
+    min-width: 255px;
     margin: 1.25rem 0.75rem;
-    background: #bce7b7;
+    background: #ffffff;
     border-radius: 4px;
     transition: all 300ms ease-in-out;
 
@@ -1140,7 +1155,6 @@ a{
         height: var(--card-img-height);
         top: 0;
     }
-
     .card-info {
         position: relative;
         margin-top: -31px;
@@ -1217,7 +1231,6 @@ a{
 
         .card-title {
             color: #ebecf0;
-            // margin-bottom: -40px;
             transform: translate(0,40px);
         }
     }
@@ -1228,3 +1241,117 @@ a{
     margin-left: 100px;
 }
 /*Footer section*/
+.blog-content img{
+    width: 44%;
+    height: 60%;
+    margin-left: 71px;
+    margin-top: -22px;
+}
+.content-title6{
+    color: #e5b223;
+    font-family: 'Roboto', sans-serif;
+    font-size: 23px;
+    font-weight: 600;
+    margin: 0 auto 30px;
+    padding-right: 50px;
+    text-align: center;
+    text-transform: uppercase;
+    position: relative;
+    z-index: 3;
+    margin-left: 13px;
+}
+.content-title6:before{
+    content: " ";
+    position: absolute;
+    background: #fff0;
+    bottom: -6px;
+    width: 130px;
+    height: 30px;
+    z-index: -1;
+    left: 50%;
+    margin-left: -65px;
+}
+.content-title6:after{
+    content: " ";
+    position: absolute;
+    border: 1px solid #f5f5f5;
+    bottom: 8px;
+    left: 0;
+    width: 100%;
+    height: 0;
+    z-index: -2;
+}
+
+
+
+.container1 {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    max-width: 1200px;
+    margin-block: 2rem;
+    gap: 2rem;
+}
+
+.card__image1 {
+    width: 297px;
+    height: 134px;
+    display: block;
+}
+.user__image1{
+    max-width: 100%;
+    display: block;
+    object-fit: cover;
+}
+.card1 {
+    display: flex;
+    flex-direction: column;
+    height: 297px;
+    width: clamp(18rem, calc(17rem + 2vw), 22rem);
+    overflow: hidden;
+    box-shadow: 0 0.1rem 1rem rgba(0, 0, 0, 0.1);
+    border-radius: 1em;
+    background: #ECE9E6;
+    background: linear-gradient(to right, #FFFFFF, #ECE9E6);
+    margin-left: 42px;
+    transition: all 0.5s;
+}
+.card1:hover{
+    transform: scale(0.97);
+}
+
+.card__body1 {
+    padding: 1rem;
+    display: flex;
+    flex-direction: column;
+    gap: .5rem;
+}
+
+.card__body1 h4 {
+    font-size: 17px;
+    text-transform: capitalize;
+    margin: 0;
+}
+
+.card__footer1 {
+    display: flex;
+    padding: 1rem;
+    margin-top: -11px;
+}
+
+.user1 {
+    display: flex;
+    gap: .5rem;
+}
+
+.user__image1 {
+    border-radius: 50%;
+    margin-top: 8px;
+    border-radius: 50%;
+    width: 45px;
+    height: 40px;
+}
+
+.user__info1 > small {
+    color: #666;
+}

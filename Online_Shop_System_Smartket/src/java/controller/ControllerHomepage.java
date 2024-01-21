@@ -17,8 +17,8 @@ import jakarta.servlet.http.HttpServletResponse;
  *
  * @author admin
  */
-@WebServlet(name="ControllerHomepage", urlPatterns={"/HomepageURL"})
-public class ControllerHomepage extends HttpServlet {
+@WebServlet(name="ControllerHomePage", urlPatterns={"/HomePageURL"})
+public class ControllerHomePage extends HttpServlet {
    
     /** 
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code> methods.
@@ -55,7 +55,7 @@ public class ControllerHomepage extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
-        processRequest(request, response);
+       response.sendRedirect("homepage.jsp");
     } 
 
     /** 
