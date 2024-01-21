@@ -6,9 +6,19 @@
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@page import="model.DAOProduct" %>
+<%@page import="model.DAOCategories" %>
+<%@page import="model.DAOBlog" %>
+<%@page import="java.util.Vector" %>
+<%@page import="view.Product" %>
+<%@page import="view.Categories" %>
+<%@page import="view.Blog" %>
+<%@page import="java.sql.ResultSet"%>
+<%@page import="java.text.DecimalFormat" %>
 <!DOCTYPE html> 
 <html>
     <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <script src="https://kit.fontawesome.com/ac74b86ade.js" crossorigin="anonymous"></script>
         <script src="https://cdn.jsdelivr.net/npm/swiper/swiper-bundle.min.js"></script>
         <link rel="stylesheet" href="css/css_homepage/homestyle.css"/>
@@ -17,6 +27,8 @@
     </head>
     <body>
         <jsp:include page="include/header.jsp"/>
+        <%DecimalFormat df = new DecimalFormat("###,###");
+            df.setMaximumFractionDigits(8);%>
         <section class="menu-section">
             <div class="menu-section-title">
                 <div class="menu-section-content">
@@ -25,21 +37,22 @@
                             <i class="fa-solid fa-list"></i>
                             <label for="touch"><span class="content-title1">DANH MỤC NỔI BẬT</span></label>               
                             <input type="checkbox" id="touch"> 
+
                             <ul class="sider-menu">
-                                <li><a href="#">Lorem Ipsum</a></li> 
-                                <li><a href="#">Lorem Ipsum</a></li>
-                                <li><a href="#">Lorem Ipsum</a></li>
-                                <li><a href="#">Lorem Ipsum</a></li>
-                                <li><a href="#">Lorem Ipsum</a></li>
-                                <li><a href="#">Lorem Ipsum</a></li>
+                                <%
+                                    DAOProduct dao = new DAOProduct();
+                                ResultSet rs = dao.getData("SELECT c.CategoryName, AVG(p.TotalRate) FROM Product AS p JOIN Categories AS c ON c.CategoryID = p.ProductID GROUP BY c.CategoryName ORDER BY AVG(p.TotalRate) DESC LIMIT 3");
+                                while(rs.next()) {%>
+                                <li><a class="change-hover" href="#"><%=rs.getString(1)%></a></li> 
+                                    <%}%>
                             </ul>
                             <span class="menu-section-drop-list"><i></i></span>
                         </div>
                     </div>
                     <div class="menu-section-content-search">
                         <div class="menu-section-content-search-form">
-                            <form action="#">
-                                <input type="text" placeholder="Bạn cần tìm gì?"/>
+                            <form action="searchPageURL" method="GET">
+                                <input name="keyWord" type="text" placeholder="Bạn cần tìm gì?"/>
                                 <button type="submit" class="site-btn">Tìm kiếm</button>
                             </form>
                         </div>
@@ -99,82 +112,38 @@
                                     <i class="fa-solid fa-angle-down" style="float: right;margin-top: -18px;margin-right: 6px;font-size: 19px;"></i></label>               
                                 <input type="checkbox" id="touch-1"> 
                                 <ul class="sider-menu-1">
-                                    <li><a href="#">Lorem Ipsum</a></li> 
-                                    <li><a href="#">Lorem Ipsum</a></li>
-                                    <li><a href="#">Lorem Ipsum</a></li>
-                                    <li><a href="#">Lorem Ipsum</a></li>
+                                    <%
+                                    DAOCategories daoCate = new DAOCategories();
+                                    Vector<Categories> CateList = daoCate.getCategories("select * from Categories");
+                                    for(Categories cate: CateList){%>
+                                    <li><a href="#"><%=cate.getCategoryName()%></a></li> 
+                                        <%}%>
                                 </ul>
                             </div>
                         </div>
                         <div class="feature-content">
                             <div class="content-title">SẢN PHẨM MỚI NHẤT</div>
                             <div class="product-card-content">
+                                <%
+                                ResultSet rsNewProduct = dao.getData("select * from product as p join productImage as pi "
+                                        + "on p.ProductID = pi.ProductID "
+                                        + "where pi.ProductURL like '%_1%' "
+                                        + "order by p.CreateDate desc limit 6 ");
+                                
+                                while(rsNewProduct.next()) {%>
                                 <div class="nft">
+                                    <div class="brand-info">new</div>
                                     <div class='main'>
-                                        <a href="#"><img class='tokenImage' src="images/product/tulanhpanasonic.jpg" alt="Not found" />
-                                            <div class="product-content-name">Tủ lạnh Panasonic</div></a>
-                                        <div class="price-product">250000</div>
+                                        <a href="#"><img class='tokenImage' src="<%=rsNewProduct.getString(12)%>" alt="Not found" />
+                                            <div class="product-content-name"><%=rsNewProduct.getString(2)%></div></a>
+                                        <div class="price-product"><%=df.format(rsNewProduct.getDouble(6))%><span>đ</span></div>
                                         <div class="product-buy-section">
                                             <div class="product-cart"><a href="#"><img src="images/cart/cart.png" alt="alt"/></a></div>
                                             <div class="product-buy"><a href="#"><img src="images/cart/bag.png" alt="alt"/><span>MUA NGAY</span></div></a>
                                         </div>
                                     </div>
                                 </div>
-                                <div class="nft">
-                                    <div class='main'>
-                                        <a href="#"><img class='tokenImage' src="images/product/tulanhpanasonic.jpg" alt="Not found" />
-                                            <div class="product-content-name">Tủ lạnh Panasonic</div></a>
-                                        <div class="price-product">250000</div>
-                                        <div class="product-buy-section">
-                                            <div class="product-cart"><a href="#"><img src="images/cart/cart.png" alt="alt"/></a></div>
-                                            <div class="product-buy"><a href="#"><img src="images/cart/bag.png" alt="alt"/><span>MUA NGAY</span></div></a>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="nft">
-                                    <div class='main'>
-                                        <a href="#"><img class='tokenImage' src="images/product/tulanhpanasonic.jpg" alt="Not found" />
-                                            <div class="product-content-name">Tủ lạnh Panasonic</div></a>
-                                        <div class="price-product">250000</div>
-                                        <div class="product-buy-section">
-                                            <div class="product-cart"><a href="#"><img src="images/cart/cart.png" alt="alt"/></a></div>
-                                            <div class="product-buy"><a href="#"><img src="images/cart/bag.png" alt="alt"/><span>MUA NGAY</span></div></a>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="nft">
-                                    <div class='main'>
-                                        <a href="#"><img class='tokenImage' src="images/product/tulanhpanasonic.jpg" alt="Not found" />
-                                            <div class="product-content-name">Tủ lạnh Panasonic</div></a>
-                                        <div class="price-product">250000</div>
-                                        <div class="product-buy-section">
-                                            <div class="product-cart"><a href="#"><img src="images/cart/cart.png" alt="alt"/></a></div>
-                                            <div class="product-buy"><a href="#"><img src="images/cart/bag.png" alt="alt"/><span>MUA NGAY</span></div></a>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="nft">
-                                    <div class='main'>
-                                        <a href="#"><img class='tokenImage' src="images/product/tulanhpanasonic.jpg" alt="Not found" />
-                                            <div class="product-content-name">Tủ lạnh Panasonic</div></a>
-                                        <div class="price-product">250000</div>
-                                        <div class="product-buy-section">
-                                            <div class="product-cart"><a href="#"><img src="images/cart/cart.png" alt="alt"/></a></div>
-                                            <div class="product-buy"><a href="#"><img src="images/cart/bag.png" alt="alt"/><span>MUA NGAY</span></div></a>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="nft">
-                                    <div class='main'>
-                                        <a href="#"><img class='tokenImage' src="images/product/tulanhpanasonic.jpg" alt="Not found" />
-                                            <div class="product-content-name">Tủ lạnh Panasonic</div></a>
-                                        <div class="price-product">250000</div>
-                                        <div class="product-buy-section">
-                                            <div class="product-cart"><a href="#"><img src="images/cart/cart.png" alt="alt"/></a></div>
-                                            <div class="product-buy"><a href="#"><img src="images/cart/bag.png" alt="alt"/><span>MUA NGAY</span></div></a>
-                                        </div>
-                                    </div>
-                                </div>
+                                <%}%>
                             </div>
                         </div>
                         <!--HOTTEST PRODUCT-->
@@ -184,19 +153,27 @@
                                 <button class="pre-btn"><img src="images/slider/arrow.png" alt=""></button>
                                 <button class="nxt-btn"><img src="images/slider/arrow.png" alt=""></button>
                                 <div class="product-container">
-                                    <div class="product-card">      
+                                    <%
+                                ResultSet rsFeatureProduct = dao.getData("select * from product as p join productImage as pi "
+                                        + "on p.ProductID = pi.ProductID "
+                                        + "where pi.ProductURL like '%_1%' "
+                                        + "order by p.TotalRate desc limit 6;");
+                                
+                                while(rsFeatureProduct.next()) {%>
+                                    <div class="product-card">    
                                         <div id="container1">  
                                             <div class="product-details">
                                                 <div class="product-details-title">
-                                                    <div class="detail-name">TV LG 55'INCH</div><div class="detail-price">250,000</div>
+                                                    <div class="detail-name"><%=rsFeatureProduct.getString(2)%></div>
+                                                    <div class="detail-price"><%=df.format(rsFeatureProduct.getDouble(6))%></div>
                                                 </div>
                                                 <div class="product-details-title1">
                                                     <span class="hint-star star">
-                                                        <i class="fa fa-star" aria-hidden="true"></i>
-                                                        <i class="fa fa-star" aria-hidden="true"></i>
-                                                        <i class="fa fa-star" aria-hidden="true"></i>
-                                                        <i class="fa fa-star" aria-hidden="true"></i>
-                                                        <i class="fa fa-star-o" aria-hidden="true"></i>
+                                                        <%int totalRate = (int)rsFeatureProduct.getInt(9);
+                                                          Product product = new Product();
+                                                          String result = product.convertStar(totalRate);
+                                                        %>
+                                                        <%=result%>
                                                     </span>
                                                     <div class="detail-buy">
                                                         <div class="product-buy-section">
@@ -206,113 +183,10 @@
                                                     </div>
                                                 </div>
                                             </div>
-                                            <a href="#"><div><img class="product-image2" src="images/product/lgtv1.png" alt="alt"/></div></a>
+                                            <a href="#"><div><img class="product-image2" src="<%=rsFeatureProduct.getString(12)%>" alt="alt"/></div></a>
                                         </div>
                                     </div>
-                                    <div class="product-card">      
-                                        <div id="container1">  
-                                            <div class="product-details">
-                                                <div class="product-details-title">
-                                                    <div class="detail-name">Combo Nhat Thong Tuyet Diamond</div><div class="detail-price">250,000</div>
-                                                </div>
-                                                <div class="product-details-title1">
-                                                    <span class="hint-star star">
-                                                        <i class="fa fa-star" aria-hidden="true"></i>
-                                                        <i class="fa fa-star" aria-hidden="true"></i>
-                                                        <i class="fa fa-star" aria-hidden="true"></i>
-                                                        <i class="fa fa-star" aria-hidden="true"></i>
-                                                        <i class="fa fa-star-o" aria-hidden="true"></i>
-                                                    </span>
-                                                    <div class="detail-buy">
-                                                        <div class="product-buy-section">
-                                                            <div class="product-cart"><img src="images/cart/cart.png" alt="alt"/></div>
-                                                            <div class="product-buy"><img src="images/cart/bag.png" alt="alt"/><span>MUA NGAY</span></div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-
-                                            </div>
-                                            <div><img class="product-image2" src="images/product/combo1.jpg" alt="alt"/></div>
-                                        </div>
-                                    </div>
-                                    <div class="product-card">      
-                                        <div id="container1">  
-                                            <div class="product-details">
-                                                <div class="product-details-title">
-                                                    <div class="detail-name">TV LG 55'INCH</div><div class="detail-price">250,000</div>
-                                                </div>
-                                                <div class="product-details-title1">
-                                                    <span class="hint-star star">
-                                                        <i class="fa fa-star" aria-hidden="true"></i>
-                                                        <i class="fa fa-star" aria-hidden="true"></i>
-                                                        <i class="fa fa-star" aria-hidden="true"></i>
-                                                        <i class="fa fa-star" aria-hidden="true"></i>
-                                                        <i class="fa fa-star-o" aria-hidden="true"></i>
-                                                    </span>
-                                                    <div class="detail-buy">
-                                                        <div class="product-buy-section">
-                                                            <div class="product-cart"><img src="images/cart/cart.png" alt="alt"/></div>
-                                                            <div class="product-buy"><img src="images/cart/bag.png" alt="alt"/><span>MUA NGAY</span></div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-
-                                            </div>
-                                            <div><img class="product-image2" src="images/product/tvlg.jpg" alt="alt"/></div>
-                                        </div>
-                                    </div>
-                                    <div class="product-card">      
-                                        <div id="container1">  
-                                            <div class="product-details">
-                                                <div class="product-details-title">
-                                                    <div class="detail-name">TV LG 55'INCH</div><div class="detail-price">250,000</div>
-                                                </div>
-                                                <div class="product-details-title1">
-                                                    <span class="hint-star star">
-                                                        <i class="fa fa-star" aria-hidden="true"></i>
-                                                        <i class="fa fa-star" aria-hidden="true"></i>
-                                                        <i class="fa fa-star" aria-hidden="true"></i>
-                                                        <i class="fa fa-star" aria-hidden="true"></i>
-                                                        <i class="fa fa-star-o" aria-hidden="true"></i>
-                                                    </span>
-                                                    <div class="detail-buy">
-                                                        <div class="product-buy-section">
-                                                            <div class="product-cart"><img src="images/cart/cart.png" alt="alt"/></div>
-                                                            <div class="product-buy"><img src="images/cart/bag.png" alt="alt"/><span>MUA NGAY</span></div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-
-                                            </div>
-                                            <div><img class="product-image2" src="images/product/tvlg.jpg" alt="alt"/></div>
-                                        </div>
-                                    </div>
-                                    <div class="product-card">      
-                                        <div id="container1">  
-                                            <div class="product-details">
-                                                <div class="product-details-title">
-                                                    <div class="detail-name">TV LG 55'INCH</div><div class="detail-price">250,000</div>
-                                                </div>
-                                                <div class="product-details-title1">
-                                                    <span class="hint-star star">
-                                                        <i class="fa fa-star" aria-hidden="true"></i>
-                                                        <i class="fa fa-star" aria-hidden="true"></i>
-                                                        <i class="fa fa-star" aria-hidden="true"></i>
-                                                        <i class="fa fa-star" aria-hidden="true"></i>
-                                                        <i class="fa fa-star-o" aria-hidden="true"></i>
-                                                    </span>
-                                                    <div class="detail-buy">
-                                                        <div class="product-buy-section">
-                                                            <div class="product-cart"><img src="images/cart/cart.png" alt="alt"/></div>
-                                                            <div class="product-buy"><img src="images/cart/bag.png" alt="alt"/><span>MUA NGAY</span></div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-
-                                            </div>
-                                            <div><img class="product-image2" src="images/product/tvlg.jpg" alt="alt"/></div>
-                                        </div>
-                                    </div>
+                                    <%}%>
                                 </div>
                             </section>
                         </div>
@@ -320,45 +194,53 @@
                     <div class="menu-blog-section">
                         <div class="content-title5">Bài viết xu hướng</div>
                         <div class="card-container">
+                            <div class="side-bar-lastest-post">
+                                <div class="content-title6">Bài viết mới</div>
+                                <%
+                                DAOBlog daoBlog = new DAOBlog();
+                                ResultSet rsNewBlog = (ResultSet)request.getAttribute("rsNewBlog");
+                                if(rsNewBlog.next()) {
+                                %>
+                                <div class="card1">
+                                    <a href="blog">
+                                        <div class="card__header1">
+                                            <img src="images/blog/<%=rsNewBlog.getString(5)%>" alt="card__image" class="card__image1" width="600">
+                                        </div>
+                                        <div class="card__body1">
+                                            <div><i style="margin-right: 5px;" class="fa-regular fa-calendar"></i><span><%=rsNewBlog.getString(10)%></span></div>
+                                            <h4><%=rsNewBlog.getString(6)%></h4>
+                                        </div>
+                                        <div class="card__footer1">
+                                            <div class="user1">
+                                                <img src="images/blog_author/<%=rsNewBlog.getString(4)%>" alt="user__image" class="user__image1">
+                                                <div class="user__info1">
+                                                    <h5><%=rsNewBlog.getString(3)%></h5>
+                                                    <small></small>
+                                                </div>
+                                            </div>
+                                        </div>
+                                </div>
+                                </a>
+                                <%}%>
+                            </div>
+                            <%
+                             ResultSet rsFeatureBlog = (ResultSet)request.getAttribute("rsFeatureBlog");
+                             while(rsFeatureBlog.next()) {
+                            %>
                             <a href="hi">
                                 <div class="card card-3">
-                                    <div class="card-img"><img src="images/product/lgtv1.png" alt="alt"/></div>
+                                    <div class="card-img"><img src="images/blog/<%=rsFeatureBlog.getString(5)%>" alt="alt"/></div>
                                     <div class="card-info">
                                         <div class="card-about">
-                                            <a class="card-tag tag-deals"><i class="fa-regular fa-eye"></i></i>190</a>
-                                            <div class="card-time"><i style="margin-right: 3px;" class="fa-regular fa-calendar"></i>5/27/2018</div>
+                                            <a class="card-tag tag-deals"><i class="fa-regular fa-eye"></i></i><%=rsFeatureBlog.getInt(8)%></a>
+                                            <div class="card-time"><i style="margin-right: 3px;" class="fa-regular fa-calendar"></i><%=rsFeatureBlog.getString(10).substring(0,10)%></div>
                                         </div>
-                                        <h1 class="card-title"><a href="hi">Apple is having big Sale for the first time</a></h1>
-                                        <div class="card-creator">by <a href="">Timur Mirzoyev</a></div>
+                                        <h1 class="card-title"><a style="font-size: 19px;" href="hi"><%=rsFeatureBlog.getString(6)%></a></h1>
+                                        <div class="card-creator">by <a href=""><%=rsFeatureBlog.getString(3)%></a></div>
                                     </div>
                                 </div>
                             </a>
-                            <a href="hi">
-                                <div class="card card-3">
-                                    <div class="card-img"><img src="images/product/lgtv1.png" alt="alt"/></div>
-                                    <div class="card-info">
-                                        <div class="card-about">
-                                            <a class="card-tag tag-deals"><i class="fa-regular fa-eye"></i></i>190</a>
-                                            <div class="card-time"><i style="margin-right: 3px;" class="fa-regular fa-calendar"></i>5/27/2018</div>
-                                        </div>
-                                        <h1 class="card-title"><a href="hi">Apple is having big Sale for the first time</a></h1>
-                                        <div class="card-creator">by <a href="">Timur Mirzoyev</a></div>
-                                    </div>
-                                </div>
-                            </a>
-                            <a href="hi">
-                                <div class="card card-3">
-                                    <div class="card-img"><img src="images/product/lgtv1.png" alt="alt"/></div>
-                                    <div class="card-info">
-                                        <div class="card-about">
-                                            <a class="card-tag tag-deals"><i class="fa-regular fa-eye"></i></i>190</a>
-                                            <div class="card-time"><i style="margin-right: 3px;" class="fa-regular fa-calendar"></i>5/27/2018</div>
-                                        </div>
-                                        <h1 class="card-title"><a href="hi">Apple is having big Sale for the first time</a></h1>
-                                        <div class="card-creator">by <a href="">Timur Mirzoyev</a></div>
-                                    </div>
-                                </div>
-                            </a>
+                            <%}%>
                         </div>
                     </div>
                     <a href="#"><div class="more-detail_1">Xem thêm</div></a>
