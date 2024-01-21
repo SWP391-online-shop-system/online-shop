@@ -23,7 +23,7 @@ public class DBConnect {
             }
     }
     public DBConnect() {
-        this("jdbc:mysql://localhost:3306/restaurant", "root", "12345678");
+        this("jdbc:mysql://localhost:3306/Online_Shop_System", "duong", "123456");
     }
     public ResultSet getData(String sql){
         ResultSet rs = null;
