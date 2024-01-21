@@ -135,3 +135,13 @@ body {
 .form-element select {
     float: left;
 }
+#loginAfterRegister {
+    color: red; /* Màu chữ */
+    border-radius: 5px; /* Bo góc */
+    text-decoration: none; /* Bỏ gạch chân khi hover */
+    display: inline-block;
+  }
+
+  #loginAfterRegister:hover {
+    background-color: #45a049; /* Màu nền khi hover */
+  }

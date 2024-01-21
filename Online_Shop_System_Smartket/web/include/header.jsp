@@ -143,7 +143,7 @@
                                     <div class="form-element">
                                         <button type="submit" >Đăng kí</button>
                                     </div>
-                                    Ðã có tài khoản<a id="loginAfterRegister">Đăng nhập ngay</a>
+                                    Ðã có tài khoản?<a id="loginAfterRegister" href="#">Đăng nhập ngay</a>
                                 </div>
                             </div>
                         </form>
