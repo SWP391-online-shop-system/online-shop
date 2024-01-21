@@ -41,7 +41,7 @@
                             <ul class="sider-menu">
                                 <%
                                     DAOProduct dao = new DAOProduct();
-                                ResultSet rs = dao.getData("SELECT c.CategoryID, c.CategoryName, AVG(p.TotalRate) FROM Product AS p JOIN Categories AS c ON c.CategoryID = p.ProductID GROUP BY c.CategoryName ORDER BY AVG(p.TotalRate) DESC LIMIT 3");
+                                ResultSet rs = dao.getData("SELECT c.CategoryID, c.CategoryName, AVG(p.TotalRate) FROM Product AS p JOIN Categories AS c ON c.CategoryID = p.CategoryID GROUP BY c.CategoryID ORDER BY AVG(p.TotalRate) DESC LIMIT 3;");
                                 while(rs.next()) {%>
                                 <li><a class="change-hover" href="ProductListURL?service=ShowCategory&CategoryID=<%=rs.getInt(1)%>&index=1"><%=rs.getString(2)%></a></li> 
                                     <%}%>
