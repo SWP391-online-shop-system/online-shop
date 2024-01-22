@@ -35,7 +35,34 @@ public class ControllerLogin extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         try ( PrintWriter out = response.getWriter()) {
-            /* TODO output your page here. You may use following sample code. */
+            DAOUser dao = new DAOUser();
+            String message = " ";
+            String service = request.getParameter("service");
+            if (service == null) {
+                service = "";
+            }
+            HttpSession session = request.getSession();
+            if (service.equals("verify")) {
+                String key = request.getParameter("key");
+                User user = dao.getUserByEmail(key);
+                if (user == null) {
+                    message = "Sai email.";
+                } else {
+                    session.setAttribute("account", user);
+                }
+            }
+            String email = request.getParameter("email");
+            String pass = request.getParameter("pass");
+            User user = dao.check(email, pass);
+            if (user == null) {
+                request.setAttribute("activeLogin", "active");
+                message = "Sai tài khoản hoặc mật khẩu.";
+                request.setAttribute("message", message);
+                request.getRequestDispatcher("HomePageURL").forward(request, response);
+            } else {
+                session.setAttribute("account", user);
+                response.sendRedirect("HomePageURL");
+            }
         }
     }
 
@@ -65,34 +92,8 @@ public class ControllerLogin extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        DAOUser dao = new DAOUser();
-        String message = " ";
-        String service = request.getParameter("service");
-        if (service == null) {
-            service = "";
-        }
-        HttpSession session = request.getSession();
-        if (service.equals("verify")) {
-            String key = request.getParameter("key");
-            User user = dao.getUserByEmail(key);
-            if (user == null) {
-                message = "Sai email.";
-            } else {
-                session.setAttribute("account", user);
-            }
-        }
-        String email = request.getParameter("email");
-        String pass = request.getParameter("pass");
-        User user = dao.check(email, pass);
-        if (user == null) {
-            request.setAttribute("activeLogin", "active");
-            message = "Sai tài khoản hoặc mật khẩu.";
-            request.setAttribute("message", message);
-            request.getRequestDispatcher("HomePageURL").forward(request, response);
-        } else {
-            session.setAttribute("account", user);
-            response.sendRedirect("HomePageURL");
-        }
+        processRequest(request, response);
+
     }
 
     /**

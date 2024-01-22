@@ -228,7 +228,7 @@ public class DAOUser extends DBConnect {
                 + "    `user`.`ReportTo`,\n"
                 + "    `user`.`RoleID`\n"
                 + "FROM `online_shop_system`.`user`\n"
-                + "where Email = '?' and password = '?';";
+                + "where Email = ? and password = ?";
         try {
             PreparedStatement pre = conn.prepareStatement(sql);
             pre.setString(1, email);
