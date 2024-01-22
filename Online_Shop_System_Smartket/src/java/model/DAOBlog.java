@@ -18,20 +18,20 @@ import view.Blog;
  */
 public class DAOBlog extends DBConnect {
 
-    @Override
-    public ResultSet getData(String sql) {
-        ResultSet rs = null;
-        Statement state;
-        try {
-            state = conn.createStatement(
-                    ResultSet.TYPE_SCROLL_SENSITIVE,
-                    ResultSet.CONCUR_UPDATABLE);
-            rs = state.executeQuery(sql);
-        } catch (SQLException ex) {
-
-        }
-        return rs;
-    }
+//    @Override
+//    public ResultSet getData(String sql) {
+//        ResultSet rs = null;
+//        Statement state;
+//        try {
+//            state = conn.createStatement(
+//                    ResultSet.TYPE_SCROLL_SENSITIVE,
+//                    ResultSet.CONCUR_UPDATABLE);
+//            rs = state.executeQuery(sql);
+//        } catch (SQLException ex) {
+//
+//        }
+//        return rs;
+//    }
 
     public Vector<Blog> getBlog(String sql) {
         Vector<Blog> vector = new Vector<>();
