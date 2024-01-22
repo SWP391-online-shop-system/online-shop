@@ -35,15 +35,6 @@ public class ControllerLogin extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         try ( PrintWriter out = response.getWriter()) {
-         out.println("<!DOCTYPE html>");
-            out.println("<html>");
-            out.println("<head>");
-            out.println("<title>Servlet ControllerHomepage</title>");  
-            out.println("</head>");
-            out.println("<body>");
-            out.println("<h1>Check email cua ban</h1>");
-            out.println("</body>");
-            out.println("</html>");
             /* TODO output your page here. You may use following sample code. */
             DAOUser dao = new DAOUser();
             String message = " ";
