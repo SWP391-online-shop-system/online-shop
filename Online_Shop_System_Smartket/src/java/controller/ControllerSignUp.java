@@ -65,7 +65,11 @@ public class ControllerSignUp extends HttpServlet {
                 User user = dao.getUserByEmail(remail);
                 if (user == null) {
                     dao.signup(rFName, rLName, rpass, remail);
+                    message = "User successfully sign up";
+                    request.setAttribute("msg1", message);
                 } else {
+                    message = "Duplicated user, please try another email!";
+                    request.setAttribute("msg2", message);
                     request.getRequestDispatcher("HomePageURL").forward(request, response);
                 }
                 User user1 = dao.getUserByEmail(remail);

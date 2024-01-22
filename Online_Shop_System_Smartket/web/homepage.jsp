@@ -143,7 +143,7 @@
                                                 <div class="product-cart"><a href="loginURL" onclick="alertOpenCart()"><img src="images/cart/cart.png" alt="alt"/></a></div>
                                                     </c:if>
                                                     <c:if test="${sessionScope.account != null}">
-                                                <div class="product-cart"><a href="CartURL?service=addCart&quan=1&pid=<%=rsNewProduct.getInt(1)%>"><img src="images/cart/cart.png" alt="alt"/></a></div>
+                                                <div class="product-cart"><a href="CartURL?service=addcart&quan=1&pid=<%=rsNewProduct.getInt("ProductID")%>"><img src="images/cart/cart.png" alt="alt"/></a></div>
                                                     </c:if>
                                             <div class="product-buy"><a href="#"><img src="images/cart/bag.png" alt="alt"/><span>MUA NGAY</span></div></a>
                                         </div>
@@ -187,7 +187,7 @@
                                                                 <a href="href="loginURL" onclick="alertOpenCart()"><div class="product-cart"><img src="images/cart/cart.png" alt="alt"/></div></a>
                                                                     </c:if>
                                                                     <c:if test="${sessionScope.account != null}">
-                                                                <a href="href="CartURL?service=addcart&quan=1&pid<%=rsFeatureProduct.getInt(1)%>"><div class="product-cart"><img src="images/cart/cart.png" alt="alt"/></div></a>
+                                                                <a href="href="CartURL?service=addcart&quan=1&pid<%=rsFeatureProduct.getInt("ProductID")%>"><div class="product-cart"><img src="images/cart/cart.png" alt="alt"/></div></a>
                                                                     </c:if>
 
 
