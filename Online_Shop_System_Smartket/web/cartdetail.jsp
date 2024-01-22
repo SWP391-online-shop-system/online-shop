@@ -37,7 +37,7 @@
                             <button type="submit" class="search-btn">Tìm kiếm</button>
                         </form>
                     </div>
-                    <a href="homepage.jsp"><i class="fa fa-home"></i> Trang Chủ</a>
+                    <a href="HomePageURL"><i class="fa fa-home"></i> Trang Chủ</a>
                 </aside>
                 <div class="card">
                     <div class="row">

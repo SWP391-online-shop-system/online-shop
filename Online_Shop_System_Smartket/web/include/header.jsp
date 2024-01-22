@@ -45,16 +45,16 @@
                             String messagesu = (String)request.getAttribute("messageSignUp");
                         %>
                         <c:if test="${sessionScope.account.roleID == 5}">
-                        <a href="#">ADMIN</a>
+                            <a href="#">ADMIN</a>
                         </c:if>
                         <c:if test="${sessionScope.account.roleID == 4}">
-                        <a href="#">SALE MANAGER</a>
+                            <a href="#">SALE MANAGER</a>
                         </c:if>
                         <c:if test="${sessionScope.account.roleID == 3}">
-                        <a href="#">SALE</a>
+                            <a href="#">SALE</a>
                         </c:if>
                         <c:if test="${sessionScope.account.roleID == 2}">
-                        <a href="#">Marketing</a>
+                            <a href="#">Marketing</a>
                         </c:if>
                         <c:if test="${sessionScope.account != null}">
                             Hello ${sessionScope.account.email}
@@ -178,16 +178,18 @@
         <div class="header-content-right-menu">
             <ul>
                 <li class="margin-unit"><a href="#" title="Đơn hàng của tôi"><i class="fa-solid fa-file-invoice-dollar"></i></i></a></li>
-                    <%--<c:if test="${sessionScope.account == null}">--%>
-                    <!--<li><a href="#" onclick="alertOpenCart()" title="Giỏ hàng của tôi"><i class="fa-solid fa-cart-shopping"></i></a></li>-->
-                        <%--</c:if>--%>
-                        <li><a href="CartURL" title="Giỏ hàng của tôi"><i class="fa-solid fa-cart-shopping"></i></a></li>
+                    <c:if test="${sessionScope.account == null}">
+                    <li><a href="loginURL" onclick="alertOpenCart()" title="Giỏ hàng của tôi"><i class="fa-solid fa-cart-shopping"></i></a></li>
+                        </c:if>
+                        <c:if test="${sessionScope.account != null}">
+                    <li><a href="CartURL" title="Giỏ hàng của tôi"><i class="fa-solid fa-cart-shopping"></i></a></li>
+                        </c:if>
             </ul>
         </div>
     </div>
 </div>
 <script>
     function alertOpenCart() {
-        alert('Login to open cart');
+        alert('Đăng nhập để xem giỏ hàng của bạn');
     }
 </script>

@@ -42,6 +42,7 @@ public class CartController extends HttpServlet {
             DAOCart dao = new DAOCart();
             User user = (User) session.getAttribute("account");
             int userID = user.getUserID();
+            System.out.println("userID =" + userID);
             if (service == null) {
                 service = "showCart";
             }
@@ -50,7 +51,6 @@ public class CartController extends HttpServlet {
                         + "join ProductImage as pi on p.ProductID = pi.ProductID\n"
                         + "where c.UserID = " + userID + " and pi.ProductURL like '%_1%';");
                 if (rs == null) {
-                    out.print("<p>NoPRODUCT</p>");
                 }
                 request.setAttribute("data", rs);
                 request.getRequestDispatcher("cartdetail.jsp").forward(request, response);
@@ -64,7 +64,6 @@ public class CartController extends HttpServlet {
                     quantity = 1;
                     int n = dao.insertCartByPrepared(new Cart(userID, pid, quantity));
                     response.sendRedirect("CartURL");
-
                 } else {
                     Cart cart = dao.getCartByUser(userID, pid);
                     cart.setQuantity(cart.getQuantity() + quantity);

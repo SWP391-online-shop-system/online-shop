@@ -139,7 +139,12 @@
                                             <div class="product-content-name"><%=rsNewProduct.getString(2)%></div></a>
                                         <div class="price-product"><%=df.format(rsNewProduct.getDouble(6))%><span>đ</span></div>
                                         <div class="product-buy-section">
-                                            <div class="product-cart"><a href="#"><img src="images/cart/cart.png" alt="alt"/></a></div>
+                                            <c:if test="${sessionScope.account == null}">
+                                                <div class="product-cart"><a href="loginURL" onclick="alertOpenCart()"><img src="images/cart/cart.png" alt="alt"/></a></div>
+                                                    </c:if>
+                                                    <c:if test="${sessionScope.account != null}">
+                                                <div class="product-cart"><a href="CartURL?service=addCart&quan=1&pid=<%=rsNewProduct.getInt(1)%>"><img src="images/cart/cart.png" alt="alt"/></a></div>
+                                                    </c:if>
                                             <div class="product-buy"><a href="#"><img src="images/cart/bag.png" alt="alt"/><span>MUA NGAY</span></div></a>
                                         </div>
                                     </div>
@@ -178,7 +183,14 @@
                                                     </span>
                                                     <div class="detail-buy">
                                                         <div class="product-buy-section">
-                                                            <a href="#"><div class="product-cart"><img src="images/cart/cart.png" alt="alt"/></div></a>
+                                                            <c:if test="${sessionScope.account == null}">
+                                                                <a href="href="loginURL" onclick="alertOpenCart()"><div class="product-cart"><img src="images/cart/cart.png" alt="alt"/></div></a>
+                                                                    </c:if>
+                                                                    <c:if test="${sessionScope.account != null}">
+                                                                <a href="href="CartURL?service=addcart&quan=1&pid<%=rsFeatureProduct.getInt(1)%>"><div class="product-cart"><img src="images/cart/cart.png" alt="alt"/></div></a>
+                                                                    </c:if>
+
+
                                                             <a href="#"><div class="product-buy"><img src="images/cart/bag.png" alt="alt"/><span>MUA NGAY</span></div></a>
                                                         </div>
                                                     </div>
@@ -251,15 +263,17 @@
     </body>
     <script src="js/script.js"></script>
     <script type="text/javascript">
-        var counter = 1;
-        setInterval(function () {
-            document.getElementById('radio' + counter).checked = true;
-            counter++;
-            console.log(counter);
-            if (counter == 5) {
-                counter = 1;
-            }
-        }, 5000);
-
+                                                                    var counter = 1;
+                                                                    setInterval(function () {
+                                                                        document.getElementById('radio' + counter).checked = true;
+                                                                        counter++;
+                                                                        console.log(counter);
+                                                                        if (counter == 5) {
+                                                                            counter = 1;
+                                                                        }
+                                                                    }, 5000);
+                                                                    function alertOpenCart() {
+                                                                        alert('Đăng nhập để xem giỏ hàng của bạn');
+                                                                    }
     </script>
 </html>
