@@ -42,7 +42,6 @@ public class CartController extends HttpServlet {
             DAOCart dao = new DAOCart();
             User user = (User) session.getAttribute("account");
             int userID = user.getUserID();
-            System.out.println("userID =" + userID);
             if (service == null) {
                 service = "showCart";
             }
