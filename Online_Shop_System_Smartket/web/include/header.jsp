@@ -50,7 +50,7 @@
                         <li><a href="#">Voucher của tôi</a></li>
                     </ul>
                 </li>
-                <li><a href="#">Blog</a></li>
+                <li><a href="blog.jsp">Blog</a></li>
                 <li><a href="#">Tài khoản</a></li>
             </ul>
         </div>
