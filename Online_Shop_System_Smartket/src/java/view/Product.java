@@ -1,13 +1,5 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package view;
 
-/**
- *
- * @author admin
- */
 public class Product {
 
     private int ProductID;
@@ -17,7 +9,6 @@ public class Product {
     private int UnitInStock;
     private double UnitPrice;
     private int UnitDiscount;
-    private int ProductImageID;
     private String CreateDate;
     private int TotalRate;
     private int TotalStock;
@@ -25,7 +16,7 @@ public class Product {
     public Product() {
     }
 
-    public Product(int ProductID, String ProductName, int CategoryID, String ProductDescription, int UnitInStock, double UnitPrice, int UnitDiscount, int ProductImageID, String CreateDate, int TotalRate, int TotalStock) {
+    public Product(int ProductID, String ProductName, int CategoryID, String ProductDescription, int UnitInStock, double UnitPrice, int UnitDiscount, String CreateDate, int TotalRate, int TotalStock) {
         this.ProductID = ProductID;
         this.ProductName = ProductName;
         this.CategoryID = CategoryID;
@@ -33,7 +24,6 @@ public class Product {
         this.UnitInStock = UnitInStock;
         this.UnitPrice = UnitPrice;
         this.UnitDiscount = UnitDiscount;
-        this.ProductImageID = ProductImageID;
         this.CreateDate = CreateDate;
         this.TotalRate = TotalRate;
         this.TotalStock = TotalStock;
@@ -95,14 +85,6 @@ public class Product {
         this.UnitDiscount = UnitDiscount;
     }
 
-    public int getProductImageID() {
-        return ProductImageID;
-    }
-
-    public void setProductImageID(int ProductImageID) {
-        this.ProductImageID = ProductImageID;
-    }
-
     public String getCreateDate() {
         return CreateDate;
     }
@@ -127,9 +109,50 @@ public class Product {
         this.TotalStock = TotalStock;
     }
 
-    @Override
-    public String toString() {
-        return "Product{" + "ProductID=" + ProductID + ", ProductName=" + ProductName + ", CategoryID=" + CategoryID + ", ProductDescription=" + ProductDescription + ", UnitInStock=" + UnitInStock + ", UnitPrice=" + UnitPrice + ", UnitDiscount=" + UnitDiscount + ", ProductImageID=" + ProductImageID + ", CreateDate=" + CreateDate + ", TotalRate=" + TotalRate + ", TotalStock=" + TotalStock + '}';
+    public String convertStar(int totalRate) {
+        String result = "";
+        switch (totalRate) {
+            case 1:
+                result = "<i class=\"fa fa-star\" aria-hidden=\"true\"></i>\n"
+                        + "<i class=\"fa fa-star-o\" aria-hidden=\"true\"></i>\n"
+                        + "<i class=\"fa fa-star-o\" aria-hidden=\"true\"></i>\n"
+                        + "<i class=\"fa fa-star-o\" aria-hidden=\"true\"></i>\n"
+                        + "<i class=\"fa fa-star-o\" aria-hidden=\"true\"></i>";
+                break;
+            case 2:
+                result = "<i class=\"fa fa-star\" aria-hidden=\"true\"></i>\n"
+                        + "<i class=\"fa fa-star\" aria-hidden=\"true\"></i>\n"
+                        + "<i class=\"fa fa-star-o\" aria-hidden=\"true\"></i>\n"
+                        + "<i class=\"fa fa-star-o\" aria-hidden=\"true\"></i>\n"
+                        + "<i class=\"fa fa-star-o\" aria-hidden=\"true\"></i>";
+                break;
+            case 3:
+                result = "<i class=\"fa fa-star\" aria-hidden=\"true\"></i>\n"
+                        + "<i class=\"fa fa-star\" aria-hidden=\"true\"></i>\n"
+                        + "<i class=\"fa fa-star\" aria-hidden=\"true\"></i>\n"
+                        + "<i class=\"fa fa-star-o\" aria-hidden=\"true\"></i>\n"
+                        + "<i class=\"fa fa-star-o\" aria-hidden=\"true\"></i>";
+                break;
+            case 4:
+                result = "<i class=\"fa fa-star\" aria-hidden=\"true\"></i>\n"
+                        + "<i class=\"fa fa-star\" aria-hidden=\"true\"></i>\n"
+                        + "<i class=\"fa fa-star\" aria-hidden=\"true\"></i>\n"
+                        + "<i class=\"fa fa-star\" aria-hidden=\"true\"></i>\n"
+                        + "<i class=\"fa fa-star-o\" aria-hidden=\"true\"></i>";
+                break;
+            case 5:
+                result = "<i class=\"fa fa-star\" aria-hidden=\"true\"></i>\n"
+                        + "<i class=\"fa fa-star\" aria-hidden=\"true\"></i>\n"
+                        + "<i class=\"fa fa-star\" aria-hidden=\"true\"></i>\n"
+                        + "<i class=\"fa fa-star\" aria-hidden=\"true\"></i>\n"
+                        + "<i class=\"fa fa-star\" aria-hidden=\"true\"></i>";
+                break;
+        }
+        return result;
     }
 
+    @Override
+    public String toString() {
+        return "Product{" + "ProductID=" + ProductID + ", ProductName=" + ProductName + ", CategoryID=" + CategoryID + ", ProductDescription=" + ProductDescription + ", UnitInStock=" + UnitInStock + ", UnitPrice=" + UnitPrice + ", UnitDiscount=" + UnitDiscount + ", CreateDate=" + CreateDate + ", TotalRate=" + TotalRate + ", TotalStock=" + TotalStock + '}';
+    }
 }

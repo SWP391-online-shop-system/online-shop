@@ -21,7 +21,7 @@ public class DAOCart extends DBConnect {
 
     public int insertCartByPrepared(Cart cart) {
         int n = 0;
-        String sql = "INSERT INTO `restaurant`.`cart`\n"
+        String sql = "INSERT INTO `online_shop_system`.`cart`\n"
                 + "(`UserID`,\n"
                 + "`ProductID`,\n"
                 + "`Quantity`)\n"
@@ -43,7 +43,7 @@ public class DAOCart extends DBConnect {
 
     public int deleteCart(int userID, int proID) {
         int n = 0;
-        String sql = "DELETE FROM `restaurant`.`cart`\n"
+        String sql = "DELETE FROM `online_shop_system`.`cart`\n"
                 + "WHERE `UserID` = ? and `ProductID` = ? ;";
 
         try {
@@ -60,7 +60,7 @@ public class DAOCart extends DBConnect {
 
     public int deleteAllCart(int userID) {
         int n = 0;
-        String sql = "DELETE FROM `restaurant`.`cart`\n"
+        String sql = "DELETE FROM `online_shop_system`.`cart`\n"
                 + "WHERE `UserID` = ? ;";
 
         try {
@@ -75,7 +75,7 @@ public class DAOCart extends DBConnect {
 
     public int updateCart(Cart cart, int oldid) {
         int n = 0;
-        String sql = "UPDATE `restaurant`.`cart`\n"
+        String sql = "UPDATE `online_shop_system`.`cart`\n"
                 + "SET\n"
                 + "`UserID` = ?,\n"
                 + "`ProductID` = ?,\n"
@@ -99,7 +99,7 @@ public class DAOCart extends DBConnect {
 
     public int updateCartByUserAndPro(Cart cart, int oldid, int proid) {
         int n = 0;
-        String sql = "UPDATE `restaurant`.`cart`\n"
+        String sql = "UPDATE `online_shop_system`.`cart`\n"
                 + "SET\n"
                 + "`UserID` = ?,\n"
                 + "`ProductID` = ?,\n"
@@ -121,7 +121,7 @@ public class DAOCart extends DBConnect {
     }
 
     public Vector<Cart> getCart(String sql) {
-        Vector<Cart> vector = new Vector<Cart>();
+        Vector<Cart> vector = new Vector<>();
         try {
             Statement state = conn.createStatement(
                     ResultSet.TYPE_SCROLL_SENSITIVE,
@@ -146,14 +146,14 @@ public class DAOCart extends DBConnect {
         // Kiểm tra xem sản phẩm đã tồn tại trong giỏ hàng của người dùng chưa
         // Viết truy vấn SQL tương ứng để kiểm tra
         DAOCart dao = new DAOCart();
-        String sql = "select * from `restaurant`.`cart` where `UserID` =" + userID + " and `ProductID` =" + productID;
+        String sql = "select * from `online_shop_system`.`cart` where `UserID` =" + userID + " and `ProductID` =" + productID;
         Vector<Cart> vector = dao.getCart(sql);
         // Trả về true nếu tồn tại, ngược lại trả về false
         return !vector.isEmpty();
     }
 
     public Cart getCartByUser(int userID, int productID) {
-        String sql = "select * from `restaurant`.`cart` where `UserID` =" + userID + " and `ProductID` =" + productID;
+        String sql = "select * from `online_shop_system`.`cart` where `UserID` =" + userID + " and `ProductID` =" + productID;
         DAOCart dao = new DAOCart();
         Vector<Cart> vector = dao.getCart(sql);
         return vector.firstElement();
