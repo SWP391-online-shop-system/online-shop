@@ -18,6 +18,7 @@
 <!DOCTYPE html> 
 <html>
     <head>
+        <link rel="stylesheet" href="css/login.css"/>
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <script src="https://kit.fontawesome.com/ac74b86ade.js" crossorigin="anonymous"></script>
         <script src="https://cdn.jsdelivr.net/npm/swiper/swiper-bundle.min.js"></script>
@@ -41,9 +42,9 @@
                             <ul class="sider-menu">
                                 <%
                                     DAOProduct dao = new DAOProduct();
-                                ResultSet rs = dao.getData("SELECT c.CategoryName, AVG(p.TotalRate) FROM Product AS p JOIN Categories AS c ON c.CategoryID = p.ProductID GROUP BY c.CategoryName ORDER BY AVG(p.TotalRate) DESC LIMIT 3");
+                                ResultSet rs = dao.getData("SELECT c.CategoryID, c.CategoryName, AVG(p.TotalRate) FROM Product AS p JOIN Categories AS c ON c.CategoryID = p.CategoryID GROUP BY c.CategoryID ORDER BY AVG(p.TotalRate) DESC LIMIT 3;");
                                 while(rs.next()) {%>
-                                <li><a class="change-hover" href="#"><%=rs.getString(1)%></a></li> 
+                                <li><a class="change-hover" href="ProductListURL?service=ShowCategory&CategoryID=<%=rs.getInt(1)%>&index=1"><%=rs.getString(2)%></a></li> 
                                     <%}%>
                             </ul>
                             <span class="menu-section-drop-list"><i></i></span>
@@ -116,7 +117,7 @@
                                     DAOCategories daoCate = new DAOCategories();
                                     Vector<Categories> CateList = daoCate.getCategories("select * from Categories");
                                     for(Categories cate: CateList){%>
-                                    <li><a href="#"><%=cate.getCategoryName()%></a></li> 
+                                    <li><a href="ProductListURL?service=ShowCategory&CategoryID=<%=cate.getCategoryID()%>&index=1"><%=cate.getCategoryName()%></a></li> 
                                         <%}%>
                                 </ul>
                             </div>
@@ -138,7 +139,12 @@
                                             <div class="product-content-name"><%=rsNewProduct.getString(2)%></div></a>
                                         <div class="price-product"><%=df.format(rsNewProduct.getDouble(6))%><span>đ</span></div>
                                         <div class="product-buy-section">
-                                            <div class="product-cart"><a href="#"><img src="images/cart/cart.png" alt="alt"/></a></div>
+                                            <c:if test="${sessionScope.account == null}">
+                                                <div class="product-cart"><a href="loginURL" onclick="alertOpenCart()"><img src="images/cart/cart.png" alt="alt"/></a></div>
+                                                    </c:if>
+                                                    <c:if test="${sessionScope.account != null}">
+                                                <div class="product-cart"><a href="CartURL?service=addCart&quan=1&pid=<%=rsNewProduct.getInt(1)%>"><img src="images/cart/cart.png" alt="alt"/></a></div>
+                                                    </c:if>
                                             <div class="product-buy"><a href="#"><img src="images/cart/bag.png" alt="alt"/><span>MUA NGAY</span></div></a>
                                         </div>
                                     </div>
@@ -177,7 +183,14 @@
                                                     </span>
                                                     <div class="detail-buy">
                                                         <div class="product-buy-section">
-                                                            <a href="#"><div class="product-cart"><img src="images/cart/cart.png" alt="alt"/></div></a>
+                                                            <c:if test="${sessionScope.account == null}">
+                                                                <a href="href="loginURL" onclick="alertOpenCart()"><div class="product-cart"><img src="images/cart/cart.png" alt="alt"/></div></a>
+                                                                    </c:if>
+                                                                    <c:if test="${sessionScope.account != null}">
+                                                                <a href="href="CartURL?service=addcart&quan=1&pid<%=rsFeatureProduct.getInt(1)%>"><div class="product-cart"><img src="images/cart/cart.png" alt="alt"/></div></a>
+                                                                    </c:if>
+
+
                                                             <a href="#"><div class="product-buy"><img src="images/cart/bag.png" alt="alt"/><span>MUA NGAY</span></div></a>
                                                         </div>
                                                     </div>
@@ -250,15 +263,17 @@
     </body>
     <script src="js/script.js"></script>
     <script type="text/javascript">
-        var counter = 1;
-        setInterval(function () {
-            document.getElementById('radio' + counter).checked = true;
-            counter++;
-            console.log(counter);
-            if (counter == 5) {
-                counter = 1;
-            }
-        }, 5000);
-
+                                                                    var counter = 1;
+                                                                    setInterval(function () {
+                                                                        document.getElementById('radio' + counter).checked = true;
+                                                                        counter++;
+                                                                        console.log(counter);
+                                                                        if (counter == 5) {
+                                                                            counter = 1;
+                                                                        }
+                                                                    }, 5000);
+                                                                    function alertOpenCart() {
+                                                                        alert('Đăng nhập để xem giỏ hàng của bạn');
+                                                                    }
     </script>
 </html>
