@@ -14,7 +14,48 @@ import java.util.logging.Logger;
 import view.User;
 
 /**
- *
+ *public class DAOUser extends DBConnect {
+    public User checkOldpassword(User user,String pass) {
+        String name=user.getUsername();
+        String sql = "Select * from user where email = ? ;";
+        try {
+            PreparedStatement st = conn.prepareStatement(sql);
+            st.setString(1, name);
+            ResultSet rs = st.executeQuery();
+            if (rs.next()) {
+                User a = new User(rs.getString("FirstName")+rs.getString("LastName"),
+                        rs.getString("Address"), 
+                        rs.getString("PhoneNumber"),
+                        rs.getString("Email"),
+                        rs.getString("Password"),
+                        rs.getInt("RoleID"));
+                return a;
+            }
+        } catch (SQLException e) {
+            System.out.println(e);
+        }
+        return null;
+    }
+    void changepassword(User user,String pass){
+         String sql = "UPDATE `online_shop_system`.`user`\n"
+                + "SET\n"
+                + "`UserID` = ?,\n"
+                + "`FirstName` = ?,\n"
+                + "`LastName` = ?,\n"
+                + "`Address` = ?,\n"
+                + "`PhoneNumber` = ?,\n"
+                + "`DateOfBirth` = ?,\n"
+                + "`Gender` = ?,\n"
+                + "`UserImage` =?,\n"
+                + "`Password` = ?,\n"
+                + "`Email` = ?\n"
+                + "`LastLogin` = ?\n"
+                + "`UserStatus` = ?\n"
+                + "`ReportTo` = ?\n"
+                + "`RoleID` = ?\n"
+                + "WHERE `Email` = ?";
+    
+    }
  * @author HP
  */
 public class DAOUser extends DBConnect {
