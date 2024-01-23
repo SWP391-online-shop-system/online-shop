@@ -46,7 +46,6 @@ public class ControllerLogin extends HttpServlet {
             if (service.equals("verify")) {
                 String key = request.getParameter("key");
                 User user = dao.getUserByEmail(key);
-
                 if (user == null) {
                     message = "Sai email.";
                     request.setAttribute("message", message);
@@ -59,18 +58,17 @@ public class ControllerLogin extends HttpServlet {
                 }
             }
             String email = request.getParameter("email");
-        String pass = request.getParameter("pass");
-        User user = dao.check(email, pass);
-
-        if (user == null) {
-            request.setAttribute("activeLogin", "active");
-            message = "Sai tài khoản hoặc mật khẩu.";
-            request.setAttribute("message", message);
-            request.getRequestDispatcher("HomePageURL").forward(request, response);
-        } else {
-            session.setAttribute("account", user);
-            response.sendRedirect("HomePageURL");
-        }
+            String pass = request.getParameter("pass");
+            User user = dao.check(email, pass);
+            if (user == null) {
+                request.setAttribute("activeLogin", "active");
+                message = "Sai tài khoản hoặc mật khẩu.";
+                request.setAttribute("message", message);
+                request.getRequestDispatcher("HomePageURL").forward(request, response);
+            } else {
+                session.setAttribute("account", user);
+                response.sendRedirect("HomePageURL");
+            }
         }
     }
 
@@ -101,6 +99,7 @@ public class ControllerLogin extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         processRequest(request, response);
+
     }
 
     /**
