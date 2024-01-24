@@ -1,9 +1,8 @@
-/*
+    /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
 package view;
-
 /**
  *
  * @author admin
@@ -13,6 +12,7 @@ public class Blog {
     private int BlogID;
     private int UserID;
     private String BlogAuthor;
+    private int CategoryID;
     private String AuthorImage;
     private String BlogImage;
     private String BlogTitle;
@@ -24,10 +24,11 @@ public class Blog {
     public Blog() {
     }
 
-    public Blog(int BlogID, int UserID, String BlogAuthor, String AuthorImage, String BlogImage, String BlogTitle, String BlogContent, int BlogRate, int HiddenStatus, String CreateTime) {
+    public Blog(int BlogID, int UserID, String BlogAuthor, int CategoryID, String AuthorImage, String BlogImage, String BlogTitle, String BlogContent, int BlogRate, int HiddenStatus, String CreateTime) {
         this.BlogID = BlogID;
         this.UserID = UserID;
         this.BlogAuthor = BlogAuthor;
+        this.CategoryID = CategoryID;
         this.AuthorImage = AuthorImage;
         this.BlogImage = BlogImage;
         this.BlogTitle = BlogTitle;
@@ -59,6 +60,14 @@ public class Blog {
 
     public void setBlogAuthor(String BlogAuthor) {
         this.BlogAuthor = BlogAuthor;
+    }
+
+    public int getCategoryID() {
+        return CategoryID;
+    }
+
+    public void setCategoryID(int CategoryID) {
+        this.CategoryID = CategoryID;
     }
 
     public String getAuthorImage() {
@@ -119,7 +128,7 @@ public class Blog {
 
     @Override
     public String toString() {
-        return "Blog{" + "BlogID=" + BlogID + ", UserID=" + UserID + ", BlogAuthor=" + BlogAuthor + ", AuthorImage=" + AuthorImage + ", BlogImage=" + BlogImage + ", BlogTitle=" + BlogTitle + ", BlogContent=" + BlogContent + ", BlogRate=" + BlogRate + ", HiddenStatus=" + HiddenStatus + ", CreateTime=" + CreateTime + '}';
+        return "Blog{" + "BlogID=" + BlogID + ", UserID=" + UserID + ", BlogAuthor=" + BlogAuthor + ", CategoryID=" + CategoryID + ", AuthorImage=" + AuthorImage + ", BlogImage=" + BlogImage + ", BlogTitle=" + BlogTitle + ", BlogContent=" + BlogContent + ", BlogRate=" + BlogRate + ", HiddenStatus=" + HiddenStatus + ", CreateTime=" + CreateTime + '}';
     }
 
 }
