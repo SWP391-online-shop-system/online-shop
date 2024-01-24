@@ -12,7 +12,11 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import java.sql.ResultSet;
+import java.util.Vector;
+import model.DAOCategories;
 import model.DAOProduct;
+import view.Categories;
+import view.Product;
 
 /**
  *
@@ -59,40 +63,42 @@ public class ControllerSearchPage extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        DAOProduct dao = new DAOProduct();
+        DAOCategories daoCate = new DAOCategories();
+        ResultSet rsCategory = dao.getData("Select * from Categories");
+        request.setAttribute("CategoryResult", rsCategory);
         String keyWord = request.getParameter("keyWord");
         if (keyWord.isEmpty()) {
             keyWord = "";
-        }
-        DAOProduct dao = new DAOProduct();
-        ResultSet rsSearchResult = dao.getData("select * from product as p join productImage as pi "
-                + "on p.ProductID = pi.ProductID "
-                + "where p.ProductName like N'%" + keyWord + "%' and pi.ProductURL like '%_1%';");
-        request.setAttribute("result", rsSearchResult);
+            ResultSet rsSearchResult = dao.getData("select * from product as p join productImage as pi "
+                    + "on p.ProductID = pi.ProductID "
+                    + "where pi.ProductURL like '%_1%';");
+            request.setAttribute("result", rsSearchResult);
+        } else {
+            ResultSet rsSearchResult = dao.getData("select * from product as p join productImage as pi "
+                    + "on p.ProductID = pi.ProductID "
+                    + "where p.ProductName like N'%" + keyWord + "%' and pi.ProductURL like '%_1%';");
+            request.setAttribute("result", rsSearchResult);
 
-        //paging
-        String CategoryID_raw = request.getParameter("CategoeyID");
-        int CategoryID = 0;
-        if (CategoryID_raw != null) {
-            CategoryID = Integer.parseInt("CategoryID_raw");
-        }
-        String index_raw = request.getParameter("index");
-        int index = 1;
-        if (index_raw != null) {
-            index = Integer.parseInt(index_raw);
-        }
-        int count = dao.getTotalProductByCateID(CategoryID);
-        int endPage = count / 9;
-        if (count % 9 != 0) {
-            endPage++;
-        }
-        request.setAttribute("endPage", endPage);
-        //get product by CategoryId
-//        Vector<Product> listProduct = dao.get6NextByCateId(index, CategoryID);
+            //paging
+            String index_raw = request.getParameter("index");
+            int index = 1;
+            if (index_raw != null) {
+                index = Integer.parseInt(index_raw);
+            }
+            //paging
+            int count = dao.getTotalProductBySearch(keyWord);
+            int endPage = count / 9;
+            if (count % 9 != 0) {
+                endPage++;
+            }
+            request.setAttribute("endPage", endPage);
+            Vector<Product> list = dao.get9NextBySearch(index, keyWord);
+            request.setAttribute("listPage", list);
 
-        ResultSet rsPaging = dao.getData("SELECT * FROM Product as p join ProductImage as pi "
-                + "on p.ProductID = pi.ProductID\n"
-                + "where pi.ProductURL like '%_1%' ORDER BY p.ProductID asc \n"
-                + "limit" + CategoryID_raw + "offset 0");
+            request.setAttribute("keyWord", keyWord);
+        }
+
         request.getRequestDispatcher("searchPage.jsp").forward(request, response);
     }
 

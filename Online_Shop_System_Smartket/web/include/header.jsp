@@ -12,7 +12,7 @@
                 <li>
                     <div class="header-email">
                         <i class="fa-regular fa-envelope"></i>
-                        <span class="header-email-title">SmartketServices@gmail.com</span>
+                        <span class="header-email-title">SmartketFPT@gmail.com</span>
                     </div>
                 </li>
                 <li>

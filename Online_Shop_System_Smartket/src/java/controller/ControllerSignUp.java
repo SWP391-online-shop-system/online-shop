@@ -70,18 +70,17 @@ public class ControllerSignUp extends HttpServlet {
                 } else {
                     message = "Duplicated user, please try another email!";
                     request.setAttribute("msg2", message);
-                    request.getRequestDispatcher("HomePageURL").forward(request, response);
                 }
                 User user1 = dao.getUserByEmail(remail);
                 if (user1 == null) {
                     message = "Trung email";
                 } else {
-                    DAOMail daomail=new DAOMail();
-                    sendEmail(remail,daomail.GetMaxId());
-                    request.getRequestDispatcher("HomePageURL").forward(request, response);
+                    DAOMail daomail = new DAOMail();
+                    sendEmail(remail, daomail.GetMaxId());
                 }
             }
         }
+        request.getRequestDispatcher("HomePageURL").forward(request, response);
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
@@ -99,7 +98,7 @@ public class ControllerSignUp extends HttpServlet {
         String service = request.getParameter("service");
         String uid_raw = request.getParameter("uid");
         String message;
-        int uid=Integer.parseInt(uid_raw);
+        int uid = Integer.parseInt(uid_raw);
         DAOMail dao = new DAOMail();
         if (service.equals("verify")) {
             dao.changeStatus(uid);
@@ -134,7 +133,7 @@ public class ControllerSignUp extends HttpServlet {
         return "Short description";
     }// </editor-fold>
 
-    public void sendEmail(String emailTo,int userID) {
+    public void sendEmail(String emailTo, int userID) {
         String EMAIL = "ngongochung535@gmail.com";
         String PASSWORD = "gnqp kqdt basb nlxm";
         Properties pro = new Properties();

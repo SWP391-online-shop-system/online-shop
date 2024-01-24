@@ -5,8 +5,14 @@
 --%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@page import="java.text.DecimalFormat"%>
 <%@page import="java.sql.ResultSet"%>
+<%@page import="view.Product"%>
+<%@page import="view.ProductImage"%>
+<%@page import="model.DAOProduct"%>
+<%@page import="model.DAOProductImage"%>
+<%@page import="java.util.Vector" %>
 <!DOCTYPE html>
 <html lang="zxx">
 
@@ -45,7 +51,7 @@
                         <div class="shop__sidebar">
                             <div class="shop__sidebar__search">
                                 <form action="searchPageURL" method="GET">
-                                    <input name="keyWord" type="text" placeholder="Search...">
+                                    <input type="text" name="keyWord" placeholder="Search...">
                                     <button type="submit"><i class="fa-solid fa-magnifying-glass"></i></button>
                                 </form>
                             </div>
@@ -59,15 +65,10 @@
                                             <div class="card-body">
                                                 <div class="shop__sidebar__categories">
                                                     <ul class="nice-scroll">
-                                                        <li><a href="#">Men (20)</a></li>
-                                                        <li><a href="#">Women (20)</a></li>
-                                                        <li><a href="#">Bags (20)</a></li>
-                                                        <li><a href="#">Clothing (20)</a></li>
-                                                        <li><a href="#">Shoes (20)</a></li>
-                                                        <li><a href="#">Accessories (20)</a></li>
-                                                        <li><a href="#">Kids (20)</a></li>
-                                                        <li><a href="#">Kids (20)</a></li>
-                                                        <li><a href="#">Kids (20)</a></li>
+                                                        <%ResultSet rsCategory = (ResultSet)request.getAttribute("CategoryResult");
+                                                        while(rsCategory.next()) {%>
+                                                        <li><a href="ProductListURL?service=ShowCategory&CategoryID=<%=rsCategory.getInt(1)%>&index=1"><%=rsCategory.getString(2)%></a></li>
+                                                            <%}%>
                                                     </ul>
                                                 </div>
                                             </div>
@@ -129,7 +130,6 @@
                                                         <i class="fa fa-star" aria-hidden="true"></i>
                                                         <i class="fa fa-star" aria-hidden="true"></i>
                                                     </a>
-
                                                 </div>
                                             </div>
                                         </div>
@@ -147,11 +147,12 @@
                                 </div>
                                 <div class="col-lg-6 col-md-6 col-sm-6">
                                     <div class="shop__product__option__right">
-                                        <p>Sort by Price:</p>
+                                        <p>Bộ lọc</p>
                                         <select>
-                                            <option value="">Low To High</option>
-                                            <option value="">$0 - $55</option>
-                                            <option value="">$55 - $100</option>
+                                            <option>Giá tăng dần</option>
+                                            <option>Giá giảm dần</option>
+                                            <option>Mới nhất</option>
+                                            <option>Cũ nhất</option>
                                         </select>
                                     </div>
                                 </div>
@@ -160,34 +161,34 @@
                         <div class="result-found-title">Kết quả tìm kiếm</div>
                         <div class="row">
                             <%
-                                ResultSet rsSearchResult = (ResultSet)request.getAttribute("result");
-                                while(rsSearchResult.next()){
+                              DAOProduct dao = new DAOProduct();
+                                DAOProductImage daoImage = new DAOProductImage();
+                            Vector<Product> listProduct = (Vector<Product>)request.getAttribute("listPage");
+                            for(Product list: listProduct){
+                                ProductImage proImage = daoImage.getProductImageByProductID(list.getProductID());
                             %>
                             <div class="col-lg-4 col-md-6 col-sm-6">
                                 <div class="product__item">
                                     <div class="product__item__pic set-bg">
-                                        <img src="<%=rsSearchResult.getString(12)%>" alt="alt"/>
-                                        <ul class="product__hover">
-                                            <li><a href="#"><img src="img/icon/heart.png" alt=""></a></li>
-                                            <li><a href="#"><img src="img/icon/compare.png" alt=""> <span>Compare</span></a>
-                                            </li>
-                                            <li><a href="#"><img src="img/icon/search.png" alt=""></a></li>
-                                        </ul>
+                                        <img src="<%=proImage.getProductURL()%>" alt="alt"/>
+                                        <%if(list.getUnitDiscount()!=0) {%>
+                                        <div class="sale-cotification">Sale</div>
+                                        <%}%>
                                     </div>
                                     <div class="product__item__text">
-                                        <h6><%=rsSearchResult.getString(2)%></h6>
-                                        <a href="#" class="add-cart">+ Add To Cart</a>
+                                        <h6><%=list.getProductName()%></h6>
+                                        <a href="#" class="add-cart">+ Thêm vào giỏ</a><a style="margin-left: 136px;" href="#">Mua ngay</a>
                                         <div style="display: flex;">
                                             <div class="rating">
-                                                <i class="fa fa-star-o"></i>
-                                                <i class="fa fa-star-o"></i>
-                                                <i class="fa fa-star-o"></i>
-                                                <i class="fa fa-star-o"></i>
-                                                <i class="fa fa-star-o"></i>
+                                                <%int star = (int)list.getTotalRate();
+                                                Product pro2 = new Product();
+                                                  String totalRate = pro2.convertStar(star);
+                                                %>
+                                                <%=totalRate%>
                                             </div>
-                                            <div style="color: #0d0d0d;font-weight: 700;font-size: 15px; flex: 0 0 50%"><%=df.format(rsSearchResult.getDouble(6))%></div>
+                                            <div style="color: #0d0d0d;font-weight: 700;font-size: 15px; flex: 0 0 50%"><%=df.format(list.getUnitPrice())%></div>
                                         </div>
-                                        <%if(rsSearchResult.getInt(7)!=0){%>
+                                        <%if(list.getUnitDiscount()!=0) {%>
                                         <div style="color: #0d0d0d;font-weight: 700;font-size: 18px; flex: 0 0 50%">$67.24</div>
                                         <%}%>
                                     </div>
@@ -196,44 +197,16 @@
                             <%}%>
                         </div>
                         <div class="row">
-                            <div class="col-lg-4 col-md-6 col-sm-6">
-                                <div class="product__item">
-                                    <div class="product__item__pic set-bg">
-                                        <img src="images/product/diengiadung/beplau_1.jpg" alt="alt"/>
-                                        <ul class="product__hover">
-                                            <li><a href="#"><img src="img/icon/heart.png" alt=""></a></li>
-                                            <li><a href="#"><img src="img/icon/compare.png" alt=""> <span>Compare</span></a>
-                                            </li>
-                                            <li><a href="#"><img src="img/icon/search.png" alt=""></a></li>
-                                        </ul>
-                                    </div>
-                                    <div class="product__item__text">
-                                        <h6>Đồng hồ treo tường hoa văn</h6>
-                                        <a href="#" class="add-cart">+ Add To Cart</a>
-                                        <div style="display: flex;">
-                                            <div class="rating">
-                                                <i class="fa fa-star-o"></i>
-                                                <i class="fa fa-star-o"></i>
-                                                <i class="fa fa-star-o"></i>
-                                                <i class="fa fa-star-o"></i>
-                                                <i class="fa fa-star-o"></i>
-                                            </div>
-                                            <div style="color: #0d0d0d;font-weight: 700;font-size: 15px; flex: 0 0 50%">$67.24</div>
-                                        </div>
-                                        <div style="color: #0d0d0d;font-weight: 700;font-size: 18px; flex: 0 0 50%">$67.24</div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-lg-12">
-                                <div class="product__pagination">
-                                    <a class="active" href="#">1</a>
-                                    <a href="#">2</a>
-                                    <a href="#">3</a>
-                                    <span>...</span>
-                                    <a href="#">21</a>
-                                </div>
+                            <div class="product__pagination" style="margin: 0 auto;">
+                                <c:set value="${requestScope.keyWord}" var="key"/>
+                                <c:forEach begin="1" end="${endPage}" var="i">
+                                    <c:if test="${requestScope.index == i}">
+                                        <a class="active" style="border: none;background: #4cdc4c;width: 4%;" href="searchPageURL?keyWord=${key}&index=${i}">${i}</a>
+                                    </c:if>
+                                    <c:if test="${requestScope.index != i}">
+                                        <a class="active" href="searchPageURL?keyWord=${key}&index=${i}">${i}</a>
+                                    </c:if>
+                                </c:forEach>
                             </div>
                         </div>
                     </div>
@@ -247,7 +220,7 @@
             <div class="container_1" style="height: 270px;padding-top: 28px;">
                 <div class="row_1">
                     <div class="col_1" id="company">
-                        <img src="images/logo/logo.png" alt="" class="logo_1">
+                        <img style="height: 128px;" src="images/logo/logo.png" alt="" class="logo_1">
                         <p style="font-family: poppins;font-size: 15px;color: white;">
                             công ty Smartket Việt Nam, 54 Liễu Giai, quận Ba Đình, Hà Nội 
                         </p>
@@ -301,16 +274,6 @@
             </div>
         </footer>
         <!-- Footer Section End -->
-
-        <!-- Search Begin -->
-        <div class="search-model">
-            <div class="h-100 d-flex align-items-center justify-content-center">
-                <div class="search-close-switch">+</div>
-                <form class="search-model-form">
-                    <input type="text" id="search-input" placeholder="Search here.....">
-                </form>
-            </div>
-        </div>
 
         <!-- Search End -->
 

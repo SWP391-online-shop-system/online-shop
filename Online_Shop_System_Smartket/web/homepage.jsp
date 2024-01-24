@@ -73,18 +73,20 @@
                                     <input type="radio" name="radio-btn" id="radio2">
                                     <input type="radio" name="radio-btn" id="radio3">
                                     <input type="radio" name="radio-btn" id="radio4">
+                                    <%ResultSet rsSlider = (ResultSet)request.getAttribute("rsSlider");
+                                    int count = 0;
+                                    while(rsSlider.next()) {
+                                    count++;
+                                    if(count == 1) {
+                                    %>
                                     <div class="slide first">
-                                        <a href="#"><img src="images/slider/slide1.png" alt="alt"/></a>
+                                        <a href="<%=rsSlider.getString(2)%>"><img src="images/slider/<%=rsSlider.getString(1)%>" alt="alt"/></a>
                                     </div>
+                                    <%} else {%>
                                     <div class="slide">
-                                        <a href="#"><img src="images/slider/slide2.png" alt="alt"/></a>
+                                        <a href="<%=rsSlider.getString(2)%>"><img src="images/slider/<%=rsSlider.getString(1)%>" alt="alt"/></a>
                                     </div>
-                                    <div class="slide">
-                                        <a href="#"><img src="images/slider/slide3.jpg" alt="alt"/></a>
-                                    </div>
-                                    <div class="slide">
-                                        <a href="#"><img src="images/slider/slide4.jpg" alt="alt"/></a>
-                                    </div>
+                                    <%}}%>
                                     <!-- slide end -->
                                     <!--auto-->
                                     <div class="navigation-auto">
@@ -137,7 +139,11 @@
                                     <div class='main'>
                                         <a href="#"><img class='tokenImage' src="<%=rsNewProduct.getString(12)%>" alt="Not found" />
                                             <div class="product-content-name"><%=rsNewProduct.getString(2)%></div></a>
+                                            <%if(rsNewProduct.getInt(7) != 0) {%>
+                                        <div class="price-product "><img style="width: 21px; height: 20px;" src="images/logo/sale.jpg"/><%=df.format(rsNewProduct.getDouble(6)*(100-rsNewProduct.getInt(7))/100)%>đ</div>
+                                        <%} else {%>
                                         <div class="price-product"><%=df.format(rsNewProduct.getDouble(6))%><span>đ</span></div>
+                                        <%}%>
                                         <div class="product-buy-section">
                                             <c:if test="${sessionScope.account == null}">
                                                 <div class="product-cart"><a href="loginURL" onclick="alertOpenCart()"><img src="images/cart/cart.png" alt="alt"/></a></div>
@@ -164,14 +170,17 @@
                                         + "on p.ProductID = pi.ProductID "
                                         + "where pi.ProductURL like '%_1%' "
                                         + "order by p.TotalRate desc limit 6;");
-                                
                                 while(rsFeatureProduct.next()) {%>
                                     <div class="product-card">    
                                         <div id="container1">  
                                             <div class="product-details">
                                                 <div class="product-details-title">
                                                     <div class="detail-name"><%=rsFeatureProduct.getString(2)%></div>
-                                                    <div class="detail-price"><%=df.format(rsFeatureProduct.getDouble(6))%></div>
+                                                    <%if(rsFeatureProduct.getInt(7) != 0) {%>
+                                                    <div class="detail-price1"><img style="width: 21px; height: 20px;" src="images/logo/sale.jpg"/><%=df.format(rsFeatureProduct.getDouble(6)*(100-rsFeatureProduct.getInt(7))/100)%>đ</div>
+                                                        <%} else {%>
+                                                    <div class="detail-price"><%=df.format(rsFeatureProduct.getDouble(6))%>đ</div>
+                                                    <%}%>
                                                 </div>
                                                 <div class="product-details-title1">
                                                     <span class="hint-star star">
@@ -217,15 +226,15 @@
                                 <div class="card1">
                                     <a href="blog">
                                         <div class="card__header1">
-                                            <img src="images/blog/<%=rsNewBlog.getString(5)%>" alt="card__image" class="card__image1" width="600">
+                                            <img src="images/blog/<%=rsNewBlog.getString(6)%>" alt="card__image" class="card__image1" width="600">
                                         </div>
                                         <div class="card__body1">
-                                            <div><i style="margin-right: 5px;" class="fa-regular fa-calendar"></i><span><%=rsNewBlog.getString(10)%></span></div>
-                                            <h4><%=rsNewBlog.getString(6)%></h4>
+                                            <div><i style="margin-right: 5px;" class="fa-regular fa-calendar"></i><span><%=rsNewBlog.getString(11).substring(0,10)%></span></div>
+                                            <h4><%=rsNewBlog.getString(7)%></h4>
                                         </div>
                                         <div class="card__footer1">
                                             <div class="user1">
-                                                <img src="images/blog_author/<%=rsNewBlog.getString(4)%>" alt="user__image" class="user__image1">
+                                                <img src="images/blog_author/<%=rsNewBlog.getString(5)%>" alt="user__image" class="user__image1">
                                                 <div class="user__info1">
                                                     <h5><%=rsNewBlog.getString(3)%></h5>
                                                     <small></small>
@@ -242,13 +251,13 @@
                             %>
                             <a href="hi">
                                 <div class="card card-3">
-                                    <div class="card-img"><img src="images/blog/<%=rsFeatureBlog.getString(5)%>" alt="alt"/></div>
+                                    <div class="card-img"><img src="images/blog/<%=rsFeatureBlog.getString(6)%>" alt="alt"/></div>
                                     <div class="card-info">
                                         <div class="card-about">
-                                            <a class="card-tag tag-deals"><i class="fa-regular fa-eye"></i></i><%=rsFeatureBlog.getInt(8)%></a>
-                                            <div class="card-time"><i style="margin-right: 3px;" class="fa-regular fa-calendar"></i><%=rsFeatureBlog.getString(10).substring(0,10)%></div>
+                                            <a class="card-tag tag-deals"><i class="fa-regular fa-eye"></i></i><%=rsFeatureBlog.getInt(9)%></a>
+                                            <div class="card-time"><i style="margin-right: 3px;" class="fa-regular fa-calendar"></i><%=rsFeatureBlog.getString(11).substring(0,10)%></div>
                                         </div>
-                                        <h1 class="card-title"><a style="font-size: 19px;" href="hi"><%=rsFeatureBlog.getString(6)%></a></h1>
+                                        <h1 class="card-title"><a style="font-size: 19px;" href="hi"><%=rsFeatureBlog.getString(7)%></a></h1>
                                         <div class="card-creator">by <a href=""><%=rsFeatureBlog.getString(3)%></a></div>
                                     </div>
                                 </div>
@@ -256,24 +265,30 @@
                             <%}%>
                         </div>
                     </div>
-                    <a href="#"><div class="more-detail_1">Xem thêm</div></a>
+                    <div class="more-detail_1" onclick="scrollWin()">Xem thêm</div>
                 </div>
         </section>
         <jsp:include page="include/footer.jsp"/>
     </body>
     <script src="js/script.js"></script>
     <script type="text/javascript">
-                                                                    var counter = 1;
-                                                                    setInterval(function () {
-                                                                        document.getElementById('radio' + counter).checked = true;
-                                                                        counter++;
-                                                                        console.log(counter);
-                                                                        if (counter == 5) {
-                                                                            counter = 1;
-                                                                        }
-                                                                    }, 5000);
-                                                                    function alertOpenCart() {
-                                                                        alert('Đăng nhập để xem giỏ hàng của bạn');
-                                                                    }
+                        counter = 1;
+                        setInterval(function () {
+                            document.getElementById('radio' + counter).checked = true;
+                            counter++;
+                            console.log(counter);
+                            if (counter == 5) {
+                                counter = 1;
+                            }
+                        }, 5000);
+                        function alertOpenCart() {
+                            alert('Đăng nhập để xem giỏ hàng của bạn');
+                        }
+                        function scrollWin() {
+                            window.scrollTo({
+                                top: document.body.scrollHeight / 4,
+                                behavior: 'smooth'
+                            });
+                        }
     </script>
 </html>

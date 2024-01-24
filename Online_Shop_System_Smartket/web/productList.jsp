@@ -51,8 +51,8 @@
                     <div class="col-lg-3">
                         <div class="shop__sidebar">
                             <div class="shop__sidebar__search">
-                                <form action="#">
-                                    <input type="text" placeholder="Search...">
+                                <form action="searchPageURL" method="GET">
+                                    <input name="keyWord" type="text" placeholder="Search...">
                                     <button type="submit"><i class="fa-solid fa-magnifying-glass"></i></button>
                                 </form>
                             </div>
@@ -201,11 +201,14 @@
                             <div class="col-lg-12">
                                 <div class="product__pagination">
                                     <c:set value="${requestScope.catename}" var="category"/>
-                                    <div class="paginate"><a style="margin: 0;margin-left: -3px;margin-top: -5px;"><</a></div>
                                     <c:forEach begin="1" end="${endPage}" var="i">
-                                        <a class="active" href="ProductListURL?service=ShowCategory&CategoryID=${category.categoryID}&index=${i}">${i}</a>
+                                        <c:if test="${requestScope.index == i}">
+                                            <a class="active"  style="border: none;background: #4cdc4c;width: 4%;" href="ProductListURL?service=ShowCategory&CategoryID=${category.categoryID}&index=${i}">${i}</a>
+                                        </c:if>
+                                        <c:if test="${requestScope.index != i}">
+                                            <a class="active" href="ProductListURL?service=ShowCategory&CategoryID=${category.categoryID}&index=${i}">${i}</a>
+                                        </c:if>
                                     </c:forEach>
-                                    <div class="paginate"><a style="margin: 0;margin-left: -3px;margin-top: -5px;">></a></div>
                                 </div>
                             </div>
                         </div>
