@@ -171,7 +171,12 @@
                 <li>
                     <a href="#">Trang</a>
                     <ul class="header-content-menu-drop-down">
-                        <li><a href="CartURL">Giỏ hàng của tôi</a></li>
+                        <c:if test="${sessionScope.account == null}">
+                            <li><a href="loginURL" onclick="alertOpenCart()">Giỏ hàng của tôi</a></li>
+                        </c:if>
+                        <c:if test="${sessionScope.account != null}">
+                            <li><a href="CartURL">Giỏ hàng của tôi</a></li>
+                        </c:if>
                         <li><a href="#">Đơn hàng của tôi</a></li>
                     </ul>
                 </li>
