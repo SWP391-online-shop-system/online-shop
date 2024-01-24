@@ -47,7 +47,7 @@
                             <div class="blog__sidebar__search">
                                 <form action="searchblog">
                                     <input name="txtSearch" type="text" placeholder="Search...">
-                                    <button type="submit"><span class="icon_search"></span></button>
+                                    <button type="submit"><i class="fa-solid fa-magnifying-glass"></i></span></button>
                                 </form>
                             </div>
                             <div class="blog__sidebar__item">
@@ -107,6 +107,5 @@
             </div>
         </section>
         <!-- Blog Section End -->
-        <jsp:include page="include/footer.jsp"/> 
     </body>
 </html>

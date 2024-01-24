@@ -142,7 +142,6 @@
         </div>
     </section>
     <!-- Related Blog Section End -->
-        <jsp:include page="include/footer.jsp"/>
 
 
     </body>

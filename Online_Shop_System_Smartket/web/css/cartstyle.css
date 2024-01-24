@@ -11,7 +11,7 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/CascadeStyleSheet.css
     margin-bottom: 5vh;
 }
 .card{
-    margin: 60px auto;
+    margin: 60px;
     max-width: 80%;
     width: 90%;
     box-shadow: 0 6px 20px 0 rgba(0, 0, 0, 0.19);
@@ -328,8 +328,8 @@ aside p {
     height: 250px;
 }
 .summary .summary-child:last-child{
-    display: table-footer-group;
+    position: sticky;
+    top: 28%;
 }
 .summary-child{
-    display: table-row;
 }
