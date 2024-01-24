@@ -6,6 +6,7 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"  %>
 <div class="header">
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <div class="header-title">
         <div class="header-title-left">
             <ul>
@@ -43,9 +44,11 @@
                         <%
                             String message = (String)request.getAttribute("message");
                             String messagesu = (String)request.getAttribute("messageSignUp");
+                            String msg1 = (String)request.getAttribute("msg1");
                         %>
                         <c:if test="${sessionScope.account.roleID == 5}">
-                            <a href="#">ADMIN</a>
+                            <a href="#"style="margin-right: 50px;">ADMIN</a>
+                            <img style="    width: 30px;height: 30px; margin-right: 13px; margin-bottom: -9px; margin-left: -40px; border-radius: 50%;" src="images/user/default_avatar.jpg" alt="Admin Image">
                         </c:if>
                         <c:if test="${sessionScope.account.roleID == 4}">
                             <a href="#">SALE MANAGER</a>
@@ -57,7 +60,6 @@
                             <a href="#">Marketing</a>
                         </c:if>
                         <c:if test="${sessionScope.account != null}">
-                            Hello ${sessionScope.account.email}
                             <a href="logout">Đăng xuất</a>
                         </c:if>
                         <c:if test="${sessionScope.account == null}">
@@ -87,7 +89,7 @@
                                                oninput="setCustomValidity('')">
                                     </div>
                                     <div class="form-element">
-                                        <button type="submit" >Đăng nhập</button>
+                                        <button type="submit" value="login" >Đăng nhập</button>
                                     </div>
                                     <div class="form-element">
                                         <button id="showSignup" onclick="togglePopup('signupPopup')">Đăng kí</button>
@@ -109,13 +111,13 @@
                                     <div class="form-element">
                                         <label for="registerEmail">Họ</label>
                                         <input type="text" name="rFName" placeholder="Nhập họ" required 
-                                               oninvalid="this.setCustomValidity('Vui lòng điền thông tin này')" 
+                                               pattern="[A-Za-zÀ-ỹ ]+" oninvalid="this.setCustomValidity('Vui lòng điền thông tin này, Không bao gồm số và kí tự đặc biệt')" 
                                                oninput="setCustomValidity('')">
                                     </div>
                                     <div class="form-element">
                                         <label for="registerEmail">Tên</label>
                                         <input type="text" name="rLName" placeholder="Nhập Tên" required
-                                               oninvalid="this.setCustomValidity('Vui lòng điền thông tin này')" 
+                                               pattern="[A-Za-zÀ-ỹ ]+" oninvalid="this.setCustomValidity('Vui lòng điền thông tin này, Không bao gồm số và kí tự đặc biệt')" 
                                                oninput="setCustomValidity('')">
                                     </div>
                                     <div class="form-element" style="margin-top: 28px;">
@@ -127,12 +129,14 @@
                                     <div class="form-element">
                                         <label for="registerPassword">Mật khẩu</label>
                                         <input type="password" name="rpass" placeholder="Nhập mật khẩu" required
+                                               minlength="6" title="Mật khẩu phải chứa từ 6 đến 8 ký tự" 
                                                oninvalid="this.setCustomValidity('Vui lòng điền thông tin này')" 
                                                oninput="setCustomValidity('')">
                                     </div>
                                     <div class="form-element">
                                         <label for="registerPassword">Nhập lại mật khẩu</label>
                                         <input type="password" name="rrepass" placeholder="Nhập lại mật khẩu" required
+                                               title="Mật khẩu phải chứa từ 6 đến 8 ký tự" 
                                                oninvalid="this.setCustomValidity('Vui lòng điền thông tin này')" 
                                                oninput="setCustomValidity('')">
                                     </div>
@@ -179,7 +183,7 @@
             <ul>
                 <li class="margin-unit"><a href="#" title="Đơn hàng của tôi"><i class="fa-solid fa-file-invoice-dollar"></i></i></a></li>
                     <c:if test="${sessionScope.account == null}">
-                    <li><a href="" onclick="alertOpenCart()" id="show-login" title="Giỏ hàng của tôi"><i class="fa-solid fa-cart-shopping"></i></a></li>
+                    <li><a href="loginURL" onclick="alertOpenCart()"title="Giỏ hàng của tôi"><i class="fa-solid fa-cart-shopping"></i></a></li>
                         </c:if>
                         <c:if test="${sessionScope.account != null}">
                     <li><a href="CartURL" title="Giỏ hàng của tôi"><i class="fa-solid fa-cart-shopping"></i></a></li>

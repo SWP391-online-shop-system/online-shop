@@ -35,6 +35,7 @@ public class ControllerLogin extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         try ( PrintWriter out = response.getWriter()) {
+            /* TODO output your page here. You may use following sample code. */
             DAOUser dao = new DAOUser();
             String message = " ";
             String service = request.getParameter("service");
@@ -47,8 +48,13 @@ public class ControllerLogin extends HttpServlet {
                 User user = dao.getUserByEmail(key);
                 if (user == null) {
                     message = "Sai email.";
+                    request.setAttribute("message", message);
+                    request.getRequestDispatcher("HomePageURL").forward(request, response);
+                    return; // Stop further execution
                 } else {
                     session.setAttribute("account", user);
+                    response.sendRedirect("HomePageURL");
+                    return; // Stop further execution
                 }
             }
             String email = request.getParameter("email");
@@ -60,6 +66,7 @@ public class ControllerLogin extends HttpServlet {
                 request.setAttribute("message", message);
                 request.getRequestDispatcher("HomePageURL").forward(request, response);
             } else {
+                dao.updateLastLogin(user.getUserID());
                 session.setAttribute("account", user);
                 response.sendRedirect("HomePageURL");
             }
@@ -78,7 +85,8 @@ public class ControllerLogin extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        request.setAttribute("activeLogin", "active");
+        request.getRequestDispatcher("HomePageURL").forward(request, response);
     }
 
     /**
