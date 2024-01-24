@@ -256,7 +256,7 @@
                             <%}%>
                         </div>
                     </div>
-                    <a href="#"><div class="more-detail_1">Xem thêm</div></a>
+                    <a href="blog"><div class="more-detail_1">Xem thêm</div></a>
                 </div>
         </section>
         <jsp:include page="include/footer.jsp"/>

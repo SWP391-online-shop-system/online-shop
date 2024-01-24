@@ -91,13 +91,13 @@
                             <div class="col-lg-12">
                                 <div class="product__pagination blog__pagination">
                                     <c:if test="${tag>1}">
-                                    <a href="blog?index=${tag-1}"><i class="fa fa-long-arrow-left"></i></a>
+                                    <a href="searchblog?index=${tag-1}&txtSearch=${txtSearch}"><i class="fa fa-long-arrow-left"></i></a>
                                     </c:if>
                                     <c:forEach begin="1" end="${endP}" var="i">
-                                    <a href="blog?index=${i}">${i}</a>
+                                    <a href="searchblog?index=${i}&txtSearch=${txtSearch}">${i}</a>
                                     </c:forEach>
                                     <c:if test="${tag<endP}">
-                                    <a href="blog?index=${tag+1}"><i class="fa fa-long-arrow-right"></i></a>
+                                    <a href="searchblog?index=${tag+1}&txtSearch=${txtSearch}"><i class="fa fa-long-arrow-right"></i></a>
                                     </c:if>
                                 </div>
                             </div>
