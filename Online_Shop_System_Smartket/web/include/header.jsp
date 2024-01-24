@@ -13,7 +13,7 @@
                 <li>
                     <div class="header-email">
                         <i class="fa-regular fa-envelope"></i>
-                        <span class="header-email-title">SmartketServices@gmail.com</span>
+                        <span class="header-email-title">SmartketFPT@gmail.com</span>
                     </div>
                 </li>
                 <li>
@@ -171,13 +171,19 @@
                 <li>
                     <a href="#">Trang</a>
                     <ul class="header-content-menu-drop-down">
-                        <li><a href="CartURL">Giỏ hàng của tôi</a></li>
+                        <c:if test="${sessionScope.account == null}">
+                            <li><a href="loginURL" onclick="alertOpenCart()">Giỏ hàng của tôi</a></li>
+                        </c:if>
+                        <c:if test="${sessionScope.account != null}">
+                            <li><a href="CartURL">Giỏ hàng của tôi</a></li>
+                        </c:if>
                         <li><a href="#">Đơn hàng của tôi</a></li>
                     </ul>
                 </li>
-                <li><a href="#">Blog</a></li>
-                <li><a href="profileUser.jsp">Tài khoản</a></li>
-            </ul>
+                <li><a href="blog">Blog</a></li>
+<c:if test="${sessionScope.account != null}">
+                           <li><a href="profileUser.jsp">Tài khoản</a></li>
+                        </c:if>            </ul>
         </div>
         <div class="header-content-right-menu">
             <ul>

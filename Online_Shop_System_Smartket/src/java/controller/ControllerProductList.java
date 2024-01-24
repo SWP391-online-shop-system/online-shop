@@ -51,7 +51,6 @@ public class ControllerProductList extends HttpServlet {
         }
     }
 
-    // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
      * Handles the HTTP <code>GET</code> method.
      *
@@ -66,8 +65,7 @@ public class ControllerProductList extends HttpServlet {
         DAOProduct dao = new DAOProduct();
         String service = request.getParameter("service");
         String CategoryID_raw = request.getParameter("CategoryID");
-        System.out.println("Category_raw = " + CategoryID_raw);
-        if (CategoryID_raw == null || CategoryID_raw.equals("")|| service==null) {
+        if (CategoryID_raw == null || CategoryID_raw.equals("") || service == null) {
             service = "ShowAllProduct";
         } else {
             service = "ShowCategory";
@@ -89,6 +87,7 @@ public class ControllerProductList extends HttpServlet {
             request.setAttribute("endPage", endPage);
             Vector<Product> list = dao.get9Next(index);
             request.setAttribute("listPage", list);
+            request.setAttribute("index", index);
         }
         // End get All Product----------------------------------------------------------------
 
@@ -100,11 +99,9 @@ public class ControllerProductList extends HttpServlet {
             int index = 1;
             if (index_raw != null) {
                 index = Integer.parseInt(index_raw);
-                System.out.println("index = " + index);
             }
             //paging
             int CategoryID = Integer.parseInt(CategoryID_raw);
-            System.out.println("CategoryID = " + CategoryID);
             Categories cateName = daoCate.getCategoriesById(CategoryID);
             request.setAttribute("catename", cateName);
             int count = dao.getTotalProductByCateID(CategoryID);
@@ -116,13 +113,12 @@ public class ControllerProductList extends HttpServlet {
             request.setAttribute("endPage", endPage);
             Vector<Product> list = dao.get9NextByCateId(index, CategoryID);
             request.setAttribute("listPage", list);
+            request.setAttribute("index", index);
         }
         //End get Product from CategoryID-------------------------------------------------------
         //Startget All category----------------------------------------------------------------
         ResultSet rsCategory = dao.getData("Select * from Categories");
-
-        request.setAttribute(
-                "CategoryResult", rsCategory);
+        request.setAttribute("CategoryResult", rsCategory);
         //End get All Category----------------------------------------------------------------
 
         //Start Paging
