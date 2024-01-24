@@ -130,5 +130,6 @@ public class Blog {
     public String toString() {
         return "Blog{" + "BlogID=" + BlogID + ", UserID=" + UserID + ", BlogAuthor=" + BlogAuthor + ", CategoryID=" + CategoryID + ", AuthorImage=" + AuthorImage + ", BlogImage=" + BlogImage + ", BlogTitle=" + BlogTitle + ", BlogContent=" + BlogContent + ", BlogRate=" + BlogRate + ", HiddenStatus=" + HiddenStatus + ", CreateTime=" + CreateTime + '}';
     }
-
+    
 }
+    

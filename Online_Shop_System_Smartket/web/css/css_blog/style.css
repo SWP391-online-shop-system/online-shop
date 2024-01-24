@@ -141,7 +141,7 @@ ol {
 }
 
 .spad {
-	padding-top: 100px;
+	padding-top: 30px;
 	padding-bottom: 100px;
 }
 
@@ -1046,14 +1046,12 @@ ol {
 
 .breadcrumb__text h2 {
 	font-size: 46px;
-	color: #ffffff;
 	font-weight: 700;
 }
 
 .breadcrumb__option a {
 	display: inline-block;
 	font-size: 16px;
-	color: #ffffff;
 	font-weight: 700;
 	margin-right: 20px;
 	position: relative;
@@ -1065,14 +1063,12 @@ ol {
 	top: 13px;
 	height: 1px;
 	width: 10px;
-	background: #ffffff;
 	content: "";
 }
 
 .breadcrumb__option span {
 	display: inline-block;
 	font-size: 16px;
-	color: #ffffff;
 }
 
 /*---------------------
@@ -2278,7 +2274,7 @@ ol {
 }
 
 .blog__item__pic img {
-	min-width: 100%;
+        height: 216px;
 }
 
 .blog__item__text {
@@ -2432,10 +2428,6 @@ ol {
 	margin-bottom: 20px;
 }
 
-.blog__sidebar__recent__item__pic {
-	float: left;
-	margin-right: 20px;
-}
 
 .blog__sidebar__recent__item__text {
 	overflow: hidden;
@@ -2480,14 +2472,12 @@ ol {
 
 .blog__details__hero__text h2 {
 	font-size: 46px;
-	color: #ffffff;
 	font-weight: 700;
 	margin-bottom: 10px;
 }
 
 .blog__details__hero__text ul li {
 	font-size: 16px;
-	color: #ffffff;
 	list-style: none;
 	display: inline-block;
 	margin-right: 45px;

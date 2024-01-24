@@ -111,12 +111,14 @@ public class DAOUser extends DBConnect {
                         rs.getInt(13),
                         rs.getInt(14)
                 );
+                System.out.println("Not Null");
                 return pro;
+                
             }
         } catch (SQLException e) {
             System.out.println(e);
         }
-        System.out.println("null");
+        System.out.println("null user");
         return null;
     }
 
