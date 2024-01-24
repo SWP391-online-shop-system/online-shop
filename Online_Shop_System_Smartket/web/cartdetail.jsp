@@ -10,6 +10,9 @@
 <%@page import="jakarta.servlet.http.HttpSession" %>
 <%@page import="java.util.Vector,java.sql.SQLException,java.sql.ResultSet" %>
 <%@page import="java.text.DecimalFormat" %>
+<%@page import="view.Categories" %>
+<%@page import="model.DAOCategories" %>
+
 <!DOCTYPE html>
 <html>
     <head>
@@ -23,6 +26,7 @@
     <body>
         <%
            ResultSet rs = (ResultSet)request.getAttribute("data");
+           String message ="";
            DecimalFormat decimalFormat = new DecimalFormat("#,###.#");
            double totalprice = 0;
         %>
@@ -32,12 +36,27 @@
                 <aside>
                     <p> Menu </p>
                     <div class="menu-section-content-search-form" style="margin-bottom: 20px;">
-                        <form action="#">
-                            <input type="text" placeholder="Bạn cần tìm gì?" style="width: 67%;border-radius: 7px;padding: 8px 2px 8px 6px;"/>
+                        <form action="searchPageURL" method="get">
+                            <input name="keyWord" type="text" placeholder="Bạn cần tìm gì?" style="width: 67%;border-radius: 7px;padding: 8px 2px 8px 6px;"/>
                             <button type="submit" class="search-btn">Tìm kiếm</button>
                         </form>
                     </div>
                     <a href="HomePageURL"><i class="fa fa-home"></i> Trang Chủ</a>
+                    <a href="HomePageURL?section=newProduct">Sản Phẩm Mới Nhất</a>
+                    <div class="menu-section-content-categories-unit-1">
+                        <label for="touch-1"><span class="content-title-2">Danh Mục Sản Phẩm</span>
+                            <i class="fa-solid fa-angle-down"></i>
+                        </label>               
+                        <input type="checkbox" id="touch-1"> 
+                        <ul class="sider-menu-1">
+                            <%
+                            DAOCategories daoCate = new DAOCategories();
+                            Vector<Categories> CateList = daoCate.getCategories("select * from Categories");
+                            for(Categories cate: CateList){%>
+                            <li><a href="ProductListURL?service=ShowCategory&CategoryID=<%=cate.getCategoryID()%>&index=1"><%=cate.getCategoryName()%></a></li> 
+                                <%}%>
+                        </ul>
+                    </div>
                 </aside>
                 <div class="card">
                     <div class="row">
@@ -55,12 +74,16 @@
                                 <tbody>
                                     <%
                                      try {
-                                        while (rs.next()) {
+                                     if(!rs.next()){
+                                            message = "Không có sản phẩm nào được chọn";
+                                        }
+                                        do {
                                         double unitPrice = rs.getDouble("UnitPrice");
                                         double totalunitprice = unitPrice*rs.getInt("Quantity");
                                         totalprice += rs.getInt("Quantity")*unitPrice;
                                     %>
                                     <tr>
+
                                         <td class="col"><img class="img-fluid" src="<%=rs.getString("ProductURL")%>"></td>
 
                                         <td class="col"><%=rs.getString("ProductName")%></td>
@@ -77,27 +100,43 @@
                                             <a href="CartURL?service=deleteCart&proid=<%=rs.getInt("ProductID")%>"><i class="fa fa-times" style="color: red"></i></a>
                                         </td>
                                     </tr>
-                                    <%}         
+                                    <%} while (rs.next());         
                                         rs.close(); 
                                         } catch (SQLException e) {
                                          e.printStackTrace();
                                         }
                                     %>
                                 </tbody>
+
+
                             </table>
-                            <div>
+                            <div style="    font-size: 20px;
+                                 font-weight: normal;
+                                 display: flex;
+                                 justify-content: center;">
+                                <%
+                                    if(message == ""){
+                                %>
                                 <a href="CartURL?service=deleteAllCart"><i class="fa fa-trash"></i></a>Xóa Tất Cả Sản Phẩm
+                                    <%} else{%>
+                                <p><%=message%></p>
+                                <%}%>
                             </div>
                         </div>
                         <div class="summary">
                             <hr>
-                            <div class="row" style="border-top: 1px solid rgba(0,0,0,.1); padding: 2vh 0;">
-                                <div class="col">Tổng Đơn Hàng</div>
-                                <div class="col text-right"><%=decimalFormat.format(totalprice)%>đ</div>
-                            </div>
+                            <div class="summary-child">
+                                <div style="bottom: 0">
+                                    <div class="row" style="padding: 2vh 0;">
+                                        <div class="col" style="font-size: 16px;">Tổng Đơn Hàng:</div>
+                                        <div class="col" style="font-size: 18px;"><%=decimalFormat.format(totalprice)%>đ</div>
+                                    </div>
+                                </div>
                             <button class="btn">Thanh Toán</button>
+                            </div>
                         </div>
                     </div>
+
                 </div>        
             </section> 
         </div>

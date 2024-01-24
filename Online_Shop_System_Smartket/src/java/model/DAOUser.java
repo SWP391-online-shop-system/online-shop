@@ -111,12 +111,14 @@ public class DAOUser extends DBConnect {
                         rs.getInt(13),
                         rs.getInt(14)
                 );
+                System.out.println("Not Null");
                 return pro;
+                
             }
         } catch (SQLException e) {
             System.out.println(e);
         }
-        System.out.println("null");
+        System.out.println("null user");
         return null;
     }
 
@@ -228,7 +230,7 @@ public class DAOUser extends DBConnect {
                 + "    `user`.`ReportTo`,\n"
                 + "    `user`.`RoleID`\n"
                 + "FROM `online_shop_system`.`user`\n"
-                + "where Email = '?' and password = '?';";
+                + "where Email = ? and password = ?";
         try {
             PreparedStatement pre = conn.prepareStatement(sql);
             pre.setString(1, email);
@@ -281,6 +283,20 @@ public class DAOUser extends DBConnect {
         } catch (SQLException e) {
         }
         return null;
+    }
+
+    public void updateLastLogin(int userId) {
+        try {
+            String sql = "UPDATE user SET LastLogin = CURRENT_TIMESTAMP WHERE UserID = ?";
+            try ( 
+                PreparedStatement pre = conn.prepareStatement(sql)) {
+                pre.setInt(1, userId);
+                pre.executeUpdate();
+            }
+            // Close the connection
+        } catch (SQLException e) {
+            e.printStackTrace(); // Handle the exception according to your needs
+        }
     }
 
     public static void main(String[] args) {
