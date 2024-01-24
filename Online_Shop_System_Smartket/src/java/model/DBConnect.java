@@ -25,7 +25,7 @@ public class DBConnect {
     }
 
     public DBConnect() {
-        this("jdbc:mysql://localhost:3306/Online_Shop_System", "root", "27062003");
+        this("jdbc:mysql://localhost:3306/Online_Shop_System", "root", "12345678");
     }
 
     public ResultSet getData(String sql) {
