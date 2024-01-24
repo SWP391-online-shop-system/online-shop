@@ -94,7 +94,7 @@
 
         <div id="user" class="tabcontent">
             <h3>Hồ sơ</h3>
-            <form action="ChangepasswordURL" method="post" class="form-container" >
+            <form action="ChangeuserinfoURL" method="post" class="form-container" >
                 ${sessionScope.input}
                 <table border="0" >
                     <tr>
@@ -106,8 +106,8 @@
                         <td>Tên:</td>
                     </tr>
                     <tr>
-                        <td>   <input type="text" name="lastname" value="${sessionScope.account.firstName}"  /></td>
-                        <td>   <input type="text" name="firstname" value="${sessionScope.account.lastName}"  /></td>
+                        <td>   <input type="text" name="lastname" value="${sessionScope.account.lastname}"  /></td>
+                        <td>   <input type="text" name="firstname" value="${sessionScope.account.firstname}"  /></td>
                     </tr>
                     <tr>
                         <td>Email:</td>
