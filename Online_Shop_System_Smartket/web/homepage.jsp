@@ -25,11 +25,14 @@
         <link rel="stylesheet" href="css/css_homepage/homestyle.css"/>
         <link rel="stylesheet" href="css/css_footer/footer.css"/>
         <link rel="stylesheet" href="css/css_header/header.css"/>
+        <link rel="shortcut icon" href="images/logo/logo.png" type="image/png">
     </head>
     <body>
         <jsp:include page="include/header.jsp"/>
         <%DecimalFormat df = new DecimalFormat("###,###");
-            df.setMaximumFractionDigits(8);%>
+            df.setMaximumFractionDigits(8);
+//            String section =(String)request.getAttribute("section");
+            %>
         <section class="menu-section">
             <div class="menu-section-title">
                 <div class="menu-section-content">
@@ -122,7 +125,7 @@
                                 </ul>
                             </div>
                         </div>
-                        <div class="feature-content">
+                        <div class="feature-content" id="newProduct">
                             <div class="content-title">SẢN PHẨM MỚI NHẤT</div>
                             <div class="product-card-content">
                                 <%
@@ -153,7 +156,7 @@
                             </div>
                         </div>
                         <!--HOTTEST PRODUCT-->
-                        <div class="newest-product-section">
+                        <div class="newest-product-section" id="featureProduct">
                             <div class="content-title4">SẢN PHẨM NỔI BẬT</div>
                             <section class="product"> 
                                 <button class="pre-btn"><img src="images/slider/arrow.png" alt=""></button>
@@ -184,10 +187,10 @@
                                                     <div class="detail-buy">
                                                         <div class="product-buy-section">
                                                             <c:if test="${sessionScope.account == null}">
-                                                                <a href="href="loginURL" onclick="alertOpenCart()"><div class="product-cart"><img src="images/cart/cart.png" alt="alt"/></div></a>
+                                                                <a href="loginURL" onclick="alertOpenCart()"><div class="product-cart"><img src="images/cart/cart.png" alt="alt"/></div></a>
                                                                     </c:if>
                                                                     <c:if test="${sessionScope.account != null}">
-                                                                <a href="href="CartURL?service=addcart&quan=1&pid<%=rsFeatureProduct.getInt("ProductID")%>"><div class="product-cart"><img src="images/cart/cart.png" alt="alt"/></div></a>
+                                                                <a href="CartURL?service=addcart&quan=1&pid=<%=rsFeatureProduct.getInt("ProductID")%>"><div class="product-cart"><img src="images/cart/cart.png" alt="alt"/></div></a>
                                                                     </c:if>
 
 
@@ -275,5 +278,17 @@
                                                                     function alertOpenCart() {
                                                                         alert('Đăng nhập để xem giỏ hàng của bạn');
                                                                     }
+                                                                    window.onload = function () {
+                                                                        // Lấy giá trị của tham số section từ URL
+                                                                        var sectionId = '<%=request.getParameter("section") %>';
+
+                                                                        // Nếu sectionId không rỗng, thì cuộn đến phần có id tương ứng
+                                                                        if (sectionId) {
+                                                                            var targetSection = document.getElementById(sectionId);
+                                                                            if (targetSection) {
+                                                                                targetSection.scrollIntoView({behavior: 'smooth'});
+                                                                            }
+                                                                        }
+                                                                    };
     </script>
 </html>

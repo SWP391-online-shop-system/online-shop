@@ -38,7 +38,11 @@ public class ControllerHomePage extends HttpServlet {
             DAOBlog daoBLog = new DAOBlog();
             ResultSet rsNewBlog = daoBLog.getData("select * from Blog order by CreateTime desc limit 1");
             ResultSet rsFeatureBlog = daoBLog.getData("select * from Blog order by BlogRate desc limit 3");
-
+            String section = request.getParameter("section");
+            if(section == null){
+                section = " ";
+            }
+            request.setAttribute("section", section);
             request.setAttribute("rsNewBlog", rsNewBlog);
             request.setAttribute("rsFeatureBlog", rsFeatureBlog);
             request.getRequestDispatcher("homepage.jsp").forward(request, response);
