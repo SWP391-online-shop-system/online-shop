@@ -171,7 +171,7 @@
                         <li><a href="#">Đơn hàng của tôi</a></li>
                     </ul>
                 </li>
-                <li><a href="#">Blog</a></li>
+                <li><a href="blog">Blog</a></li>
                 <li><a href="profileUser.jsp">Tài khoản</a></li>
             </ul>
         </div>
