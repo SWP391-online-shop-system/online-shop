@@ -79,19 +79,12 @@
 </head>
 <body>
     <jsp:include page="include/header.jsp"/>
-
     <section>
-
-
-
         <div class="tab">
             <button class="tablinks" onclick="openCity(event, 'user')" id="defaultOpen">Tài khoản</button>
             <button class="tablinks" onclick="openCity(event, 'avata')">Ảnh đại diện</button>
             <button class="tablinks" onclick="openCity(event, 'password')">Mật khẩu</button>
-
         </div>
-
-
         <div id="user" class="tabcontent">
             <h3>Hồ sơ</h3>
             <form action="ChangeuserinfoURL" method="post" class="form-container" >
@@ -106,57 +99,42 @@
                         <td>Tên:</td>
                     </tr>
                     <tr>
-                        <td>   <input type="text" name="lastname" value="${sessionScope.account.lastname}"  /></td>
-                        <td>   <input type="text" name="firstname" value="${sessionScope.account.firstname}"  /></td>
+                        <td>   <input type="text" name="lastname" value="${sessionScope.account.lastName}"  /></td>
+                        <td>   <input type="text" name="firstname" value="${sessionScope.account.firstName}"  /></td>
                     </tr>
                     <tr>
                         <td>Email:</td>
                         <td>Số điện thoại:</td>
-
-
                     </tr>
                     <tr>
                         <td>   ${sessionScope.account.email}  </td>
                         <td>   <input type="text" name="phonenumber" value="${sessionScope.account.phoneNumber}"  /></td>
-
                     </tr>
                     <tr>
                         <td>Địa chỉ:</td>
                         <td></td>
-
-
                     </tr>
-
                     <tr>
                         <td>   <input type="text" name="address" value="${sessionScope.account.address}"  /></td>
                         <td></td>
-
                     </tr>
                 </table>
                 <button type="submit" >Lưu thay đổi</button>
-
             </form>
-
         </div>
-
-
         <div id="avata" class="tabcontent">
-
             <form action="UploadURL" method="POST" enctype="multipart/form-data">
                 <input name="photo" type= "file"> <br>
                 <button type="submit" >Tải lên</button>
             </form>
         </div>
-
         <div id="password"  class="tabcontent">
             <form action="ChangepasswordURL"  method="post"class="form-container">
-
                 <h3>Thay đổi mật khẩu</h3>
                 ${sessionScope.inputerror} <br> <c:if test="${sessionScope.inputerror == null}">
                     Mật khẩu của bạn phải có ít nhất 6 ký tự, bao gồm cả chữ số, chữ cái và ký tự đặc biệt (!$@%).
                     <br>
                 </c:if>
-
                 <br> Mật khẩu hiện tại*<br>
                 <input type="password" name="oldPassword" value=""  placeholder="Mật khẩu hiện tại" id="myInput1"/>
                 <input type="checkbox" onclick="myFunction1()">Hiển thị mật khẩu<br>
