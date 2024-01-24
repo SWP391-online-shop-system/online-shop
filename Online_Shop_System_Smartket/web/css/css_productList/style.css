@@ -1504,10 +1504,17 @@ ol {
     height: 30px;
     width: 30px;
     border: 1px solid transparent;
+    transition: all 0.5s;
     border-radius: 50%;
     line-height: 30px;
     text-align: center;
     margin-left: 10px;
+}
+.product__pagination a:hover{
+    background: #4cdc4c;
+    border: none;
+    width: 4%;
+    transform: scale(1.1);
 }
 
 .product__pagination a.active {

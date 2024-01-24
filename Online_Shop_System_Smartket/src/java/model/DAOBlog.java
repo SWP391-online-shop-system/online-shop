@@ -18,7 +18,6 @@ import view.Blog;
  */
 public class DAOBlog extends DBConnect {
 
-
     public Vector<Blog> getBlog(String sql) {
         Vector<Blog> vector = new Vector<>();
         try {
@@ -30,6 +29,7 @@ public class DAOBlog extends DBConnect {
                 int BlogID = rs.getInt("BlogID");
                 int UserID = rs.getInt("UserID");
                 String BlogAuthor = rs.getString("BlogAuthor");
+                int CategoryID = rs.getInt("CategoryID");
                 String AuthorImage = rs.getString("AuthorImage");
                 String BlogImage = rs.getString("ProductDescription");
                 String BlogTitle = rs.getString("BlogTitle");
@@ -37,7 +37,7 @@ public class DAOBlog extends DBConnect {
                 int BlogRate = rs.getInt("BlogRate");
                 int HiddenStatus = rs.getInt("HiddenStatus");
                 String CreateTime = rs.getString("CreateTime");
-                Blog blog = new Blog(BlogID, UserID, BlogAuthor,
+                Blog blog = new Blog(BlogID, UserID, BlogAuthor, CategoryID,
                         AuthorImage, BlogImage, BlogTitle, BlogContent,
                         BlogRate, HiddenStatus, CreateTime);
                 vector.add(blog);

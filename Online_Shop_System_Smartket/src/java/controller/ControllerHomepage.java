@@ -35,14 +35,11 @@ public class ControllerHomePage extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         try ( PrintWriter out = response.getWriter()) {
             /* TODO output your page here. You may use following sample code. */
-            DAOBlog daoBLog = new DAOBlog();
-            ResultSet rsNewBlog = daoBLog.getData("select * from Blog order by CreateTime desc limit 1");
-            ResultSet rsFeatureBlog = daoBLog.getData("select * from Blog order by BlogRate desc limit 3");
-            String section = request.getParameter("section");
-            if(section == null){
-                section = " ";
-            }
-            request.setAttribute("section", section);
+            DAOBlog daoBlog = new DAOBlog();
+            ResultSet rsNewBlog = daoBlog.getData("select * from Blog order by CreateTime desc limit 1");
+            ResultSet rsFeatureBlog = daoBlog.getData("select * from Blog order by BlogRate desc limit 3");
+            ResultSet rsSlider = daoBlog.getData("select SliderImage, SliderLink from Slider");
+            request.setAttribute("rsSlider", rsSlider);
             request.setAttribute("rsNewBlog", rsNewBlog);
             request.setAttribute("rsFeatureBlog", rsFeatureBlog);
             request.getRequestDispatcher("homepage.jsp").forward(request, response);

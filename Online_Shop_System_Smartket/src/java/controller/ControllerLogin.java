@@ -48,8 +48,13 @@ public class ControllerLogin extends HttpServlet {
                 User user = dao.getUserByEmail(key);
                 if (user == null) {
                     message = "Sai email.";
+                    request.setAttribute("message", message);
+                    request.getRequestDispatcher("HomePageURL").forward(request, response);
+                    return; // Stop further execution
                 } else {
                     session.setAttribute("account", user);
+                    response.sendRedirect("HomePageURL");
+                    return; // Stop further execution
                 }
             }
             String email = request.getParameter("email");
@@ -61,6 +66,7 @@ public class ControllerLogin extends HttpServlet {
                 request.setAttribute("message", message);
                 request.getRequestDispatcher("HomePageURL").forward(request, response);
             } else {
+                dao.updateLastLogin(user.getUserID());
                 session.setAttribute("account", user);
                 response.sendRedirect("HomePageURL");
             }
@@ -79,7 +85,8 @@ public class ControllerLogin extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        request.setAttribute("activeLogin", "active");
+        request.getRequestDispatcher("HomePageURL").forward(request, response);
     }
 
     /**
@@ -94,6 +101,7 @@ public class ControllerLogin extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         processRequest(request, response);
+
     }
 
     /**
