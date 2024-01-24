@@ -18,12 +18,14 @@ a{
     color: black;
 }
 .header-title{
-    display: flex;
+   display: flex;
     flex-wrap: wrap;
     justify-content: space-between;
     padding: 0px 30px;
     background: #f1f0f0;
-    height: 48px;
+    height: 55px;
+    align-items: flex-end;
+    align-content: center;
 }
 .header-title-left{
     flex: 0 0 50%;

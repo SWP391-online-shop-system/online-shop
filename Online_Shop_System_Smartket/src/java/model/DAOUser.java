@@ -283,6 +283,20 @@ public class DAOUser extends DBConnect {
         return null;
     }
 
+    public void updateLastLogin(int userId) {
+        try {
+            String sql = "UPDATE user SET LastLogin = CURRENT_TIMESTAMP WHERE UserID = ?";
+            try ( 
+                PreparedStatement pre = conn.prepareStatement(sql)) {
+                pre.setInt(1, userId);
+                pre.executeUpdate();
+            }
+            // Close the connection
+        } catch (SQLException e) {
+            e.printStackTrace(); // Handle the exception according to your needs
+        }
+    }
+
     public static void main(String[] args) {
         DAOUser dao = new DAOUser();
         dao.signup("ngo ngoc", "hung2", "123456", "ngongochung@gmail.com");

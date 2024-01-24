@@ -66,6 +66,7 @@ public class ControllerLogin extends HttpServlet {
                 request.setAttribute("message", message);
                 request.getRequestDispatcher("HomePageURL").forward(request, response);
             } else {
+                dao.updateLastLogin(user.getUserID());
                 session.setAttribute("account", user);
                 response.sendRedirect("HomePageURL");
             }
@@ -84,7 +85,8 @@ public class ControllerLogin extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        request.setAttribute("activeLogin", "active");
+        request.getRequestDispatcher("HomePageURL").forward(request, response);
     }
 
     /**
