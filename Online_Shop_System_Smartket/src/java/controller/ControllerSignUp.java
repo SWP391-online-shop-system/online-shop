@@ -67,8 +67,8 @@ public class ControllerSignUp extends HttpServlet {
                     + "                    </svg>\n"
                     + "                </div>\n"
                     + "                <div class=\"text-center\">\n"
-                    + "                    <h1>Thank You !</h1>\n"
-                    + "                    <p>We've send the link to your mail box. Please check! </p>\n"
+                    + "                    <h1>Cảm ơn !</h1>\n"
+                    + "                    <p>Chúng tôi đã gửi email xác nhận ở hòm thư. Bạn hãy kiểm tra </p>\n"
                     + "                </div>\n"
                     + "            </div>"
                     + "</body>");
@@ -107,7 +107,6 @@ public class ControllerSignUp extends HttpServlet {
                     // Send email or perform other necessary actions
                     DAOMail daomail = new DAOMail();
                     sendEmail(remail, daomail.GetMaxId());
-
                 }
             }
         }
@@ -164,12 +163,11 @@ public class ControllerSignUp extends HttpServlet {
     }// </editor-fold>
 
     public void sendEmail(String emailTo, int userID) {
-        String EMAIL = "smarketFPT@gmail.com";
-        String password = "2050379596462d";
-        String username = "73443ffda7a488";
+        String emailFrom = "smartketfpt@gmail.com";
+        String password = "hvdw qdeh rbvg ahox";
         //properties
         Properties pro = new Properties();
-        pro.put("mail.smtp.host", "smtp.mailtrap.io");
+        pro.put("mail.smtp.host", "smtp.gmail.com");
         pro.put("mail.smtp.port", "587");
         pro.put("mail.smtp.auth", "true");
         pro.put("mail.smtp.starttls.enable", "true");
@@ -178,7 +176,7 @@ public class ControllerSignUp extends HttpServlet {
         Authenticator auth = new Authenticator() {
             @Override
             protected PasswordAuthentication getPasswordAuthentication() {
-                return new PasswordAuthentication(username, password);
+                return new PasswordAuthentication(emailFrom, password);
             }
         };
         //workplace
@@ -187,7 +185,7 @@ public class ControllerSignUp extends HttpServlet {
         MimeMessage msg = new MimeMessage(session);
         try {
             msg.addHeader("Content-type", "text/HTML; charset=UTF-8");
-            msg.setFrom(EMAIL);  //nguoi gui
+            msg.setFrom(emailFrom);  //nguoi gui
             msg.setRecipients(Message.RecipientType.TO,
                     InternetAddress.parse(emailTo, false));   //nguoi nhan
 
@@ -206,7 +204,7 @@ public class ControllerSignUp extends HttpServlet {
                     + "        <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">\n"
                     + "    </head>\n"
                     + "    <body>\n"
-                    + "        <a href=\"http://localhost:9999/Smartket/signupURL?service=verify&uid=" + userID + "\" style=\"text-decoration:none; font-size:25px;\">Click vào đây</a>"
+                    + "        <a href=\"http://localhost:9999/Smartket/signupURL?service=verify&uid=" + userID +"\" style=\"text-decoration:none; font-size:25px;\">Click vào đây</a>"
                     + "<span style=\"font-size:25px;\"> để xác nhận đơn đăng nhập của bạn</span>\n"
                     + "    </body>\n"
                     + "</html>\n", "text/html;charset=UTF-8");
