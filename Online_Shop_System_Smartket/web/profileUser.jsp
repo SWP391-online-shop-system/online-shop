@@ -106,8 +106,8 @@
                         <td>Tên:</td>
                     </tr>
                     <tr>
-                        <td>   <input type="text" name="lastname" value="${sessionScope.account.lastname}"  /></td>
-                        <td>   <input type="text" name="firstname" value="${sessionScope.account.firstname}"  /></td>
+                        <td>   <input type="text" name="lastname" value="${sessionScope.account.lastName}"  /></td>
+                        <td>   <input type="text" name="firstname" value="${sessionScope.account.firstName}"  /></td>
                     </tr>
                     <tr>
                         <td>Email:</td>
