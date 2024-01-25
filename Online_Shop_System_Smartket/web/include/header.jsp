@@ -48,19 +48,52 @@
                         %>
                         <c:if test="${sessionScope.account.roleID == 5}">
                             <a href="#"style="margin-right: 50px;">ADMIN</a>
-                            <img style="    width: 30px;height: 30px; margin-right: 13px; margin-bottom: -9px; margin-left: -40px; border-radius: 50%;" src="images/user/default_avatar.jpg" alt="Admin Image">
-                        </c:if>
-                        <c:if test="${sessionScope.account.roleID == 4}">
+                            <a href="profileUser.jsp"><img style="width: 30px;
+                                                           height: 30px;
+                                                           margin-right: -10px;
+                                                           margin-bottom: 2px;
+                                                           margin-left: 7px;
+                                                           border-radius: 50%;" src="images/user/default_avatar.jpg" alt="Admin Image"></a>
+                            </c:if>
+                            <c:if test="${sessionScope.account.roleID == 4}">
                             <a href="#">SALE MANAGER</a>
+                            <a href="profileUser.jsp"><img style="width: 30px;
+                                                           height: 30px;
+                                                           margin-right: -10px;
+                                                           margin-bottom: 2px;
+                                                           margin-left: 7px;
+                                                           border-radius: 50%;" src="images/user/default_avatar.jpg" alt="Admin Image"></a>
+
                         </c:if>
                         <c:if test="${sessionScope.account.roleID == 3}">
                             <a href="#">SALE</a>
+                            <a href="profileUser.jsp"><img style="width: 30px;
+                                                           height: 30px;
+                                                           margin-right: -10px;
+                                                           margin-bottom: 2px;
+                                                           margin-left: 7px;
+                                                           border-radius: 50%;" src="images/user/default_avatar.jpg" alt="Admin Image"></a>
+
                         </c:if>
                         <c:if test="${sessionScope.account.roleID == 2}">
                             <a href="#">Marketing</a>
+                            <a href="profileUser.jsp"><img style="width: 30px;
+                                                           height: 30px;
+                                                           margin-right: -10px;
+                                                           margin-bottom: 2px;
+                                                           margin-left: 7px;
+                                                           border-radius: 50%;" src="images/user/default_avatar.jpg" alt="Admin Image"></a>
+
                         </c:if>
                         <c:if test="${sessionScope.account != null}">
                             <a href="logout">Đăng xuất</a>
+                            <a href="profileUser.jsp"><img style="width: 30px;
+                                                           height: 30px;
+                                                           margin-right: -10px;
+                                                           margin-bottom: 2px;
+                                                           margin-left: 7px;
+                                                           border-radius: 50%;" src="images/user/default_avatar.jpg" alt="Admin Image"></a>
+
                         </c:if>
                         <c:if test="${sessionScope.account == null}">
                             <button href="#" style="border: none; font-size:16px; font-family: math;" id="show-login">Đăng nhập</button>
@@ -173,17 +206,17 @@
                     <ul class="header-content-menu-drop-down">
                         <c:if test="${sessionScope.account == null}">
                             <li><a href="loginURL" onclick="alertOpenCart()">Giỏ hàng của tôi</a></li>
-                        </c:if>
-                        <c:if test="${sessionScope.account != null}">
+                            </c:if>
+                            <c:if test="${sessionScope.account != null}">
                             <li><a href="CartURL">Giỏ hàng của tôi</a></li>
-                        </c:if>
+                            </c:if>
                         <li><a href="#">Đơn hàng của tôi</a></li>
                     </ul>
                 </li>
                 <li><a href="blog">Blog</a></li>
-<c:if test="${sessionScope.account != null}">
-                           <li><a href="profileUser.jsp">Tài khoản</a></li>
-                        </c:if>            </ul>
+                    <c:if test="${sessionScope.account != null}">
+                    <li><a href="profileUser.jsp">Tài khoản</a></li>
+                </c:if>            </ul>
         </div>
         <div class="header-content-right-menu">
             <ul>
