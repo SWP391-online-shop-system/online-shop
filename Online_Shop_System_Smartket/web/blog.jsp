@@ -47,7 +47,7 @@
                             <div class="blog__sidebar__search">
                                 <form action="searchblog">
                                     <input name="txtSearch" type="text" placeholder="Search...">
-                                    <button type="submit"><i class="fa-solid fa-magnifying-glass"></i></span></button>
+                                    <button type="submit"><i class="fa-solid fa-magnifying-glass"></i></span</button>
                                 </form>
                             </div>
                             <div class="blog__sidebar__item">
@@ -79,10 +79,10 @@
                                     <div class="blog__item__text">
                                         <ul>
                                             <li><i class="fa fa-calendar-o"></i> ${pb.createTime}</li>
-                                            <li><i class="fa fa-comment-o"></i> 5</li>
+<!--                                            <li><i class="fa fa-comment-o"></i> 5</li>-->
                                         </ul>
                                         <h5><a href="blogdetail?bid=${pb.blogID}">${pb.blogTitle}</a></h5>
-                                        <p>${pb.blogContent.substring(0, 99)}...</p>
+                                        <p>${pb.blogContent.substring(0,130)}...</p>
                                         <a href="blogdetail?bid=${pb.blogID}" class="blog__btn">Xem thêm<span class="fa fa-long-arrow-right"></span></a>
                                     </div>
                                 </div>

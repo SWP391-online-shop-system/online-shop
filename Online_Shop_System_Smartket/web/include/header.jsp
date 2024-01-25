@@ -5,6 +5,7 @@
 --%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"  %>
+<%@page import="view.User" %>
 <div class="header">
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <div class="header-title">
@@ -48,41 +49,21 @@
                         %>
                         <c:if test="${sessionScope.account.roleID == 5}">
                             <a href="#"style="margin-right: 50px;">ADMIN</a>
-                            <a href="profileUser.jsp"><img style="width: 30px;
-                                                           height: 30px;
-                                                           margin-right: -10px;
-                                                           margin-bottom: 2px;
-                                                           margin-left: 7px;
-                                                           border-radius: 50%;" src="images/user/default_avatar.jpg" alt="Admin Image"></a>
-                            </c:if>
-                            <c:if test="${sessionScope.account.roleID == 4}">
+
+                        </c:if>
+                        <c:if test="${sessionScope.account.roleID == 4}">
                             <a href="#">SALE MANAGER</a>
-                            <a href="profileUser.jsp"><img style="width: 30px;
-                                                           height: 30px;
-                                                           margin-right: -10px;
-                                                           margin-bottom: 2px;
-                                                           margin-left: 7px;
-                                                           border-radius: 50%;" src="images/user/default_avatar.jpg" alt="Admin Image"></a>
+
 
                         </c:if>
                         <c:if test="${sessionScope.account.roleID == 3}">
                             <a href="#">SALE</a>
-                            <a href="profileUser.jsp"><img style="width: 30px;
-                                                           height: 30px;
-                                                           margin-right: -10px;
-                                                           margin-bottom: 2px;
-                                                           margin-left: 7px;
-                                                           border-radius: 50%;" src="images/user/default_avatar.jpg" alt="Admin Image"></a>
+
 
                         </c:if>
                         <c:if test="${sessionScope.account.roleID == 2}">
                             <a href="#">Marketing</a>
-                            <a href="profileUser.jsp"><img style="width: 30px;
-                                                           height: 30px;
-                                                           margin-right: -10px;
-                                                           margin-bottom: 2px;
-                                                           margin-left: 7px;
-                                                           border-radius: 50%;" src="images/user/default_avatar.jpg" alt="Admin Image"></a>
+
 
                         </c:if>
                         <c:if test="${sessionScope.account != null}">
@@ -90,12 +71,11 @@
                             <a href="profileUser.jsp"><img style="width: 30px;
                                                            height: 30px;
                                                            margin-right: -10px;
-                                                           margin-bottom: 2px;
+                                                           margin-bottom: -8px;
                                                            margin-left: 7px;
                                                            border-radius: 50%;" src="images/user/default_avatar.jpg" alt="Admin Image"></a>
-
-                        </c:if>
-                        <c:if test="${sessionScope.account == null}">
+                            </c:if>
+                            <c:if test="${sessionScope.account == null}">
                             <button href="#" style="border: none; font-size:16px; font-family: math;" id="show-login">Đăng nhập</button>
                         </c:if>
                         <!-- Login Pop-up Form -->
@@ -141,23 +121,25 @@
                                 <div class="close-btn" onclick="togglePopup('signupPopup')">x</div>
                                 <div class="form">
                                     <h2>Đăng kí</h2>
+                                    <%User u = (User)request.getAttribute("lastUser");
+                                    if(u == null) {%>
                                     <div class="form-element">
                                         <label for="registerEmail">Họ</label>
                                         <input type="text" name="rFName" placeholder="Nhập họ" required 
                                                pattern="[A-Za-zÀ-ỹ ]+" oninvalid="this.setCustomValidity('Vui lòng điền thông tin này, Không bao gồm số và kí tự đặc biệt')" 
-                                               oninput="setCustomValidity('')">
+                                               oninput="setCustomValidity('')" >
                                     </div>
                                     <div class="form-element">
                                         <label for="registerEmail">Tên</label>
                                         <input type="text" name="rLName" placeholder="Nhập Tên" required
                                                pattern="[A-Za-zÀ-ỹ ]+" oninvalid="this.setCustomValidity('Vui lòng điền thông tin này, Không bao gồm số và kí tự đặc biệt')" 
-                                               oninput="setCustomValidity('')">
+                                               oninput="setCustomValidity('')" >
                                     </div>
                                     <div class="form-element" style="margin-top: 28px;">
                                         <label for="registerEmail">Email</label>
                                         <input type="email" name="remail" placeholder="Nhập email"required
                                                oninvalid="this.setCustomValidity('Vui lòng điền thông tin này và bao gồm @')" 
-                                               oninput="setCustomValidity('')">
+                                               oninput="setCustomValidity('')" >
                                     </div>
                                     <div class="form-element">
                                         <label for="registerPassword">Mật khẩu</label>
@@ -173,6 +155,40 @@
                                                oninvalid="this.setCustomValidity('Vui lòng điền thông tin này')" 
                                                oninput="setCustomValidity('')">
                                     </div>
+                                    <%} else {%>
+                                    <div class="form-element">
+                                        <label for="registerEmail">Họ</label>
+                                        <input type="text" name="rFName" placeholder="Nhập họ" required 
+                                               pattern="[A-Za-zÀ-ỹ ]+" oninvalid="this.setCustomValidity('Vui lòng điền thông tin này, Không bao gồm số và kí tự đặc biệt')" 
+                                               oninput="setCustomValidity('')" value="<%=u.getLastName()%>">
+                                    </div>
+                                    <div class="form-element">
+                                        <label for="registerEmail">Tên</label>
+                                        <input type="text" name="rLName" placeholder="Nhập Tên" required
+                                               pattern="[A-Za-zÀ-ỹ ]+" oninvalid="this.setCustomValidity('Vui lòng điền thông tin này, Không bao gồm số và kí tự đặc biệt')" 
+                                               oninput="setCustomValidity('')" value="<%=u.getFirstName()%>">
+                                    </div>
+                                    <div class="form-element" style="margin-top: 28px;">
+                                        <label for="registerEmail">Email</label>
+                                        <input type="email" name="remail" placeholder="Nhập email"required
+                                               oninvalid="this.setCustomValidity('Vui lòng điền thông tin này và bao gồm @')" 
+                                               oninput="setCustomValidity('')" value="<%=u.getEmail()%>">
+                                    </div>
+                                    <div class="form-element">
+                                        <label for="registerPassword">Mật khẩu</label>
+                                        <input type="password" name="rpass" placeholder="Nhập mật khẩu" required
+                                               minlength="6" title="Mật khẩu phải chứa từ 6 đến 8 ký tự" 
+                                               oninvalid="this.setCustomValidity('Vui lòng điền thông tin này')" 
+                                               oninput="setCustomValidity('')"value="<%=u.getPassword()%>">
+                                    </div>
+                                    <div class="form-element">
+                                        <label for="registerPassword">Nhập lại mật khẩu</label>
+                                        <input type="password" name="rrepass" placeholder="Nhập lại mật khẩu" required
+                                               title="Mật khẩu phải chứa từ 6 đến 8 ký tự" 
+                                               oninvalid="this.setCustomValidity('Vui lòng điền thông tin này')" 
+                                               oninput="setCustomValidity('')"value="<%=u.getRePassword()%>">
+                                    </div>
+                                    <%}%>
                                     <p class="text-danger" style="
                                        color: red;
                                        font-size: 20px;

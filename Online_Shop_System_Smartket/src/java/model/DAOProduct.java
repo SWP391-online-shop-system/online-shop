@@ -219,10 +219,10 @@ public class DAOProduct extends DBConnect {
         return list;
     }
 
-    public Vector<Product> get9Next(int ammount) {
+    public Vector<Product> get9Next(int ammount, String orderBy) {
         Vector<Product> list = new Vector<>();
         String sql = "select * from Product \n"
-                + "order by ProductID \n"
+                + "order by " + orderBy + "\n"
                 + "limit 9 \n"
                 + "offset ?";
         try {
@@ -254,7 +254,7 @@ public class DAOProduct extends DBConnect {
         Vector<Product> list = new Vector<>();
         String sql = "select * from Product \n"
                 + "Where CategoryID =" + CateID + " \n"
-                + "order by ProductID \n"
+                + "order by createDate \n"
                 + "limit 9 \n"
                 + "offset ?";
         try {

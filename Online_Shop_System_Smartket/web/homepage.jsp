@@ -225,7 +225,7 @@
                                 if(rsNewBlog.next()) {
                                 %>
                                 <div class="card1">
-                                    <a href="blog">
+                                    <a href="blogdetail?bid=<%=rsNewBlog.getInt(1)%>">
                                         <div class="card__header1">
                                             <img src="images/blog/<%=rsNewBlog.getString(6)%>" alt="card__image" class="card__image1" width="600">
                                         </div>
@@ -250,15 +250,15 @@
                              ResultSet rsFeatureBlog = (ResultSet)request.getAttribute("rsFeatureBlog");
                              while(rsFeatureBlog.next()) {
                             %>
-                            <a href="hi">
+                            <a href="blogdetail?bid=<%=rsFeatureBlog.getInt(1)%>">
                                 <div class="card card-3">
                                     <div class="card-img"><img src="images/blog/<%=rsFeatureBlog.getString(6)%>" alt="alt"/></div>
                                     <div class="card-info">
                                         <div class="card-about">
-                                            <a class="card-tag tag-deals"><i class="fa-regular fa-eye"></i></i><%=rsFeatureBlog.getInt(9)%></a>
+                                            <a href="blogdetail?bid=<%=rsFeatureBlog.getInt(1)%>" class="card-tag tag-deals"><i class="fa fa-star" aria-hidden="true"></i><%=rsFeatureBlog.getInt(9)%></a>
                                             <div class="card-time"><i style="margin-right: 3px;" class="fa-regular fa-calendar"></i><%=rsFeatureBlog.getString(11).substring(0,10)%></div>
                                         </div>
-                                        <h1 class="card-title"><a style="font-size: 19px;" href="hi"><%=rsFeatureBlog.getString(7)%></a></h1>
+                                        <h1 class="card-title"><a href="blogdetail?bid=<%=rsFeatureBlog.getInt(1)%>" style="font-size: 19px;" href="hi"><%=rsFeatureBlog.getString(7)%></a></h1>
                                         <div class="card-creator">by <a href=""><%=rsFeatureBlog.getString(3)%></a></div>
                                     </div>
                                 </div>

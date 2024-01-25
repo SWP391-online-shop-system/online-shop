@@ -130,7 +130,7 @@
                         <div class="blog__item__text">
                             <ul>
                                 <li><i class="fa fa-calendar-o"></i>${gb.createTime}</li>
-                                <li><i class="fa fa-comment-o"></i> 5</li>
+                                <!--<li><i class="fa fa-comment-o"></i> 5</li>-->
                             </ul>
                             <h5><a href="blogdetail?bid=${gb.blogID}">${gb.blogTitle}</a></h5>
                             <p>${gb.blogContent.substring(0, 99)}...</p>

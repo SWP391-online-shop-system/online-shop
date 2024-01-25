@@ -24,4 +24,4 @@ document.querySelector("#loginAfterRegister").addEventListener("click", function
     document.querySelector("#signupPopup").classList.remove("active");
 });
 
-    
+

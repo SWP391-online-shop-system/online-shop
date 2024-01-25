@@ -88,7 +88,7 @@
         <div id="user" class="tabcontent">
             <h3>Hồ sơ</h3>
             <form action="ChangeuserinfoURL" method="post" class="form-container" >
-                ${sessionScope.input}
+                <div style="color: red;">${sessionScope.input}</div>
                 <table border="0" >
                     <tr>
                         <th></th>
