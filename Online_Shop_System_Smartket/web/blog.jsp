@@ -28,7 +28,7 @@
                     <div class="breadcrumb__text">
                         <h2>Blog</h2>
                         <div class="breadcrumb__option">
-                            <a href="HomePageURL">Home</a>
+                            <a href="HomePageURL">Trang chủ</a>
                             <span>Blog</span>
                         </div>
                     </div>
@@ -51,7 +51,7 @@
                                 </form>
                             </div>
                             <div class="blog__sidebar__item">
-                                <h4>Recent News</h4>
+                                <h4>BLog mới gần đây</h4>
                                 <c:forEach items="${listNB}" var="nb">
                                 <div class="blog__sidebar__recent">
                                     <a href="blogdetail?bid=${nb.blogID}" class="blog__sidebar__recent__item">
@@ -83,7 +83,7 @@
                                         </ul>
                                         <h5><a href="blogdetail?bid=${pb.blogID}">${pb.blogTitle}</a></h5>
                                         <p>${pb.blogContent.substring(0, 99)}...</p>
-                                        <a href="blogdetail?bid=${pb.blogID}" class="blog__btn">READ MORE <span class="fa fa-long-arrow-right"></span></a>
+                                        <a href="blogdetail?bid=${pb.blogID}" class="blog__btn">Xem thêm<span class="fa fa-long-arrow-right"></span></a>
                                     </div>
                                 </div>
                             </div>

@@ -60,7 +60,7 @@
                         </div>
                         <div class="menu-section-content-search-phone">
                             <div class="search-phone-icon">
-                                <i class="fa-solid fa-phone"></i>
+                                <i style="padding-top: 17px" class="fa-solid fa-phone"></i>
                             </div>
                             <div class="search-phone-content">
                                 <h5>+84 99.999.999</h5>
@@ -141,7 +141,7 @@
                                         <a href="#"><img class='tokenImage' src="<%=rsNewProduct.getString(12)%>" alt="Not found" />
                                             <div class="product-content-name"><%=rsNewProduct.getString(2)%></div></a>
                                             <%if(rsNewProduct.getInt(7) != 0) {%>
-                                        <div class="price-product "><img style="width: 21px; height: 20px;" src="images/logo/sale.jpg"/><%=df.format(rsNewProduct.getDouble(6)*(100-rsNewProduct.getInt(7))/100)%>đ</div>
+                                        <div class="price-product "><img style="width: 21px; height: 20px;margin: 0px 3px -2px 0px;" src="images/logo/sale.png"/><%=df.format(rsNewProduct.getDouble(6)*(100-rsNewProduct.getInt(7))/100)%>đ</div>
                                         <%} else {%>
                                         <div class="price-product"><%=df.format(rsNewProduct.getDouble(6))%><span>đ</span></div>
                                         <%}%>
@@ -178,7 +178,7 @@
                                                 <div class="product-details-title">
                                                     <div class="detail-name"><%=rsFeatureProduct.getString(2)%></div>
                                                     <%if(rsFeatureProduct.getInt(7) != 0) {%>
-                                                    <div class="detail-price1"><img style="width: 21px; height: 20px;" src="images/logo/sale.jpg"/><%=df.format(rsFeatureProduct.getDouble(6)*(100-rsFeatureProduct.getInt(7))/100)%>đ</div>
+                                                    <div class="detail-price1"><img style="width: 21px; height: 20px;margin: 0px 4px -4px 0px;" src="images/logo/sale.png"/><%=df.format(rsFeatureProduct.getDouble(6)*(100-rsFeatureProduct.getInt(7))/100)%>đ</div>
                                                         <%} else {%>
                                                     <div class="detail-price"><%=df.format(rsFeatureProduct.getDouble(6))%>đ</div>
                                                     <%}%>

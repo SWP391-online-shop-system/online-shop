@@ -569,7 +569,7 @@ a{
     text-align: center;
     margin-top: 3px;
     margin-left: 11px;
-    background: #0087b9bd;
+    background: #7fc985;
     border-radius: 6px;
 }
 .product-content-name{
@@ -594,7 +594,7 @@ a{
 .product-buy{
     padding-left: 11px;
     padding-right: 10px;
-    background: #2e85dfe8;
+    background: #7fc985;
     border-radius: 7px;
     padding-top: 3px;
     margin-left: 12px;
@@ -617,7 +617,7 @@ a{
 .product-cart{
     padding-left: 11px;
     padding-right: 11px;
-    background: #2e85dfe8;
+    background: #7fc985;
     border-radius: 7px;
     padding-top: 3px;
     margin-left: 6px;
