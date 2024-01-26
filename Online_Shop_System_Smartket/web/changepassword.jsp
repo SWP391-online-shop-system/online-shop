@@ -81,14 +81,13 @@
     <jsp:include page="include/header.jsp"/>
     <section>
         <div class="tab">
-            <button class="tablinks" onclick="openCity(event, 'user')" id="defaultOpen">Tài khoản</button>
+            <button class="tablinks" onclick="openCity(event, 'user')" >Tài khoản</button>
             <button class="tablinks" onclick="openCity(event, 'avata')">Ảnh đại diện</button>
-            <button class="tablinks" onclick="openCity(event, 'password')">Mật khẩu</button>
+            <button class="tablinks" onclick="openCity(event, 'password')"id="defaultOpen">Mật khẩu</button>
         </div>
         <div id="user" class="tabcontent">
             <h3>Hồ sơ</h3>
             <form action="ChangeuserinfoURL" method="post" class="form-container" >
-                <div style="color: red;">${sessionScope.input}</div>
                 <table border="0" >
                     <tr>
                         <th></th>
@@ -131,8 +130,10 @@
         <div id="password"  class="tabcontent">
             <form action="ChangepasswordURL"  method="post"class="form-container">
                 <h3>Thay đổi mật khẩu</h3>
+                ${sessionScope.inputerror}<br><c:if test="${sessionScope.inputerror == null}">
                     Mật khẩu của bạn phải có ít nhất 6 ký tự, bao gồm cả chữ số, chữ cái và ký tự đặc biệt (!$@%).
                     <br>
+                </c:if>
                 <br> Mật khẩu hiện tại*<br>
                 <input type="password" name="oldPassword" value=""  placeholder="Mật khẩu hiện tại" id="myInput1"/>
                 <input type="checkbox" onclick="myFunction1()">Hiển thị mật khẩu<br>
