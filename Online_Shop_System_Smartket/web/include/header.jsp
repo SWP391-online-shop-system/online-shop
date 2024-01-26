@@ -216,7 +216,7 @@
         <div class="header-content-menu">
             <ul>
                 <li class="active"><a href="HomePageURL">Trang chủ</a></li>
-                <li><a href="ProductListURL">Mua hàng</a></li>
+                <li><a href="ProductListURL?service=ShowAllProduct">Mua hàng</a></li>
                 <li>
                     <a href="#">Trang</a>
                     <ul class="header-content-menu-drop-down">

@@ -563,13 +563,13 @@ a{
 .price-product{
     padding-top: 2px;
     font-size: 19px;
-    color: #dcff00;
+    color: #000000;
     width: 167px;
     height: 24px;
     text-align: center;
     margin-top: 3px;
     margin-left: 11px;
-    background: #7fc985;
+    background: #cbffcf;
     border-radius: 6px;
 }
 .product-content-name{
@@ -594,7 +594,7 @@ a{
 .product-buy{
     padding-left: 11px;
     padding-right: 10px;
-    background: #7fc985;
+    background: #cbffcf;
     border-radius: 7px;
     padding-top: 3px;
     margin-left: 12px;
@@ -612,12 +612,12 @@ a{
     font-size: 13px;
 }
 .product-buy span:hover{
-    color: whitesmoke;
+    color: #505f79;
 }
 .product-cart{
     padding-left: 11px;
     padding-right: 11px;
-    background: #7fc985;
+    background: #cbffcf;
     border-radius: 7px;
     padding-top: 3px;
     margin-left: 6px;

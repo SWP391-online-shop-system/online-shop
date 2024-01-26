@@ -250,11 +250,11 @@ public class DAOProduct extends DBConnect {
         return list;
     }
 
-    public Vector<Product> get9NextByCateId(int ammount, int CateID) {
+    public Vector<Product> get9NextByCateId(int ammount, int CateID, String filter) {
         Vector<Product> list = new Vector<>();
         String sql = "select * from Product \n"
                 + "Where CategoryID =" + CateID + " \n"
-                + "order by createDate \n"
+                + "order by " + filter + "\n"
                 + "limit 9 \n"
                 + "offset ?";
         try {
@@ -282,11 +282,11 @@ public class DAOProduct extends DBConnect {
         return list;
     }
 
-    public Vector<Product> get9NextBySearch(int ammount, String key) {
+    public Vector<Product> get9NextBySearch(int ammount, String key, String filter) {
         Vector<Product> list = new Vector<>();
         String sql = "select * from product as p join productImage as pi on p.ProductID = pi.ProductID "
                 + "where p.ProductName like '%" + key + "%'"
-                + " and pi.productURL like '%_1%' limit 9 offset ?;";
+                + " and pi.productURL like '%_1%' order by " + filter + " limit 9 offset ?;";
         try {
             PreparedStatement st = conn.prepareStatement(sql);
             st.setInt(1, (ammount - 1) * 9);

@@ -5,14 +5,15 @@
 --%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
-<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<%@page import="java.text.DecimalFormat"%>
+<%@page import="java.text.DecimalFormat" %>
 <%@page import="java.sql.ResultSet"%>
 <%@page import="view.Product"%>
 <%@page import="view.ProductImage"%>
 <%@page import="model.DAOProduct"%>
 <%@page import="model.DAOProductImage"%>
 <%@page import="java.util.Vector" %>
+
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html lang="zxx">
 
@@ -51,7 +52,7 @@
                         <div class="shop__sidebar">
                             <div class="shop__sidebar__search">
                                 <form action="searchPageURL" method="GET">
-                                    <input type="text" name="keyWord" placeholder="Search...">
+                                    <input name="keyWord" type="text" placeholder="Search...">
                                     <button type="submit"><i class="fa-solid fa-magnifying-glass"></i></button>
                                 </form>
                             </div>
@@ -130,6 +131,7 @@
                                                         <i class="fa fa-star" aria-hidden="true"></i>
                                                         <i class="fa fa-star" aria-hidden="true"></i>
                                                     </a>
+
                                                 </div>
                                             </div>
                                         </div>
@@ -148,67 +150,83 @@
                                 <div class="col-lg-6 col-md-6 col-sm-6">
                                     <div class="shop__product__option__right">
                                         <p>Bộ lọc</p>
-                                        <select>
-                                            <option>Giá tăng dần</option>
-                                            <option>Giá giảm dần</option>
-                                            <option>Mới nhất</option>
-                                            <option>Cũ nhất</option>
-                                        </select>
+                                        <form action="searchPageURL" method="GET">
+                                            <input type="hidden" name="keyWord" value="${requestScope.keyWord}"/>
+                                            <select name="filterChoice" onchange="this.form.submit()">
+                                                <%String filterChoice = (String)request.getAttribute("filterChoice");
+                                                if(filterChoice == null){
+                                                filterChoice = "createDate asc";
+                                                }
+                                                %>
+                                                <option value="createDate asc"<%=(filterChoice.equals("createDate asc")||filterChoice.equals("p.CreateDate asc"))? "selected":""%>>Mới nhất</option>
+                                                <option value="createDate desc"<%=(filterChoice.equals("createDate desc")||filterChoice.equals("p.CreateDate desc"))? "selected":""%>>Cũ nhất</option>
+                                                <option value="priceasc"<%=(filterChoice.equals("priceasc")||filterChoice.equals("(UnitPrice*(100-UnitDiscount)/100) asc"))? "selected":""%>>Giá tăng dần</option>
+                                                <option value="pricedesc"<%=(filterChoice.equals("pricedesc")||filterChoice.equals("(UnitPrice*(100-UnitDiscount)/100) desc"))? "selected":""%>>Giá giảm dần</option>
+                                            </select>
+                                        </form>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                        <div class="result-found-title">Kết quả tìm kiếm</div>
+                        <div>Ket qua tim kiem</div>
                         <div class="row">
                             <%
                               DAOProduct dao = new DAOProduct();
                                 DAOProductImage daoImage = new DAOProductImage();
-                            Vector<Product> listProduct = (Vector<Product>)request.getAttribute("listPage");
-                            for(Product list: listProduct){
-                                ProductImage proImage = daoImage.getProductImageByProductID(list.getProductID());
+                                ResultSet rsPaging = (ResultSet)request.getAttribute("rsPaging");
+                                while(rsPaging.next()) {
                             %>
                             <div class="col-lg-4 col-md-6 col-sm-6">
                                 <div class="product__item">
                                     <div class="product__item__pic set-bg">
-                                        <img src="<%=proImage.getProductURL()%>" alt="alt"/>
-                                        <%if(list.getUnitDiscount()!=0) {%>
+                                        <img src="<%=rsPaging.getString("ProductURL")%>" alt="alt"/>
+                                        <%if(rsPaging.getInt("UnitDiscount")!=0) {%>
                                         <div class="sale-cotification">Sale</div>
                                         <%}%>
                                     </div>
                                     <div class="product__item__text">
-                                        <h6><%=list.getProductName()%></h6>
+                                        <h6><%=rsPaging.getString("ProductName")%></h6>
                                         <a href="#" class="add-cart">+ Thêm vào giỏ</a><a style="margin-left: 136px;" href="#">Mua ngay</a>
                                         <div style="display: flex;">
                                             <div class="rating">
-                                                <%int star = (int)list.getTotalRate();
-                                                Product pro2 = new Product();
+                                                <%int star = (int)rsPaging.getInt("totalRate");
+                                                  Product pro2 = new Product();
                                                   String totalRate = pro2.convertStar(star);
                                                 %>
                                                 <%=totalRate%>
                                             </div>
-                                            <div style="color: red;font-weight: 700;font-size: 15px; flex: 0 0 50%; text-decoration: line-through;"><%=df.format(list.getUnitPrice())%></div>
                                         </div>
-                                        <%if(list.getUnitDiscount()!=0) {%>
-                                        <div style="color: #0d0d0d;font-weight: 700;font-size: 15px; flex: 0 0 50%"><%=df.format(list.getUnitPrice()*(100-list.getUnitDiscount())/100)%></div>
-                                        <%} else {%>
-                                        <div style="color: red;font-weight: 700;font-size: 15px; flex: 0 0 50%; text-decoration: line-through;"><%=df.format(list.getUnitPrice())%></div>
-                                        <%}%>
+                                        <div style="display: flex;">
+                                            <%if(rsPaging.getInt("UnitDiscount")!= 0){%>
+                                            <div style="color: red;font-weight: 700;font-size: 15px; flex: 0 0 50%; text-decoration: line-through;"><%=df.format(rsPaging.getDouble("UnitPrice"))%></div>
+                                            <div style="color: #0d0d0d;font-weight: 700;font-size: 15px; flex: 0 0 50%"><%=df.format(rsPaging.getDouble("UnitPrice")*(100-rsPaging.getInt("UnitDiscount"))/100)%></div>
+                                            <%} else {%>
+                                            <div style="font-weight: 700;
+                                                 font-size: 15px;
+                                                 flex: -2 0 43%;
+                                                 margin-left: 116px;
+                                                 margin-top: -26px;"><%=df.format(rsPaging.getDouble("UnitPrice"))%></div>
+                                            <%}%>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
                             <%}%>
                         </div>
                         <div class="row">
-                            <div class="product__pagination" style="margin: 0 auto;">
-                                <c:set value="${requestScope.keyWord}" var="key"/>
-                                <c:forEach begin="1" end="${endPage}" var="i">
-                                    <c:if test="${requestScope.index == i}">
-                                        <a class="active" style="border: none;background: #4cdc4c;width: 4%;" href="searchPageURL?keyWord=${key}&index=${i}">${i}</a>
-                                    </c:if>
-                                    <c:if test="${requestScope.index != i}">
-                                        <a class="active" href="searchPageURL?keyWord=${key}&index=${i}">${i}</a>
-                                    </c:if>
-                                </c:forEach>
+                            <div class="col-lg-12">
+                                <div class="product__pagination">
+                                    <c:set value="${requestScope.catename}" var="category"/>
+                                    <c:set value="${requestScope.keyWord}" var="keyWord"/>
+                                    <c:forEach begin="1" end="${endPage}" var="i">
+                                        <c:if test="${requestScope.index == i}">
+                                            <a class="active"  style="border: none;background: #4cdc4c;width: 4%;" href="searchPageURL?keyWord=${keyWord}&index=${i}&filterChoice=<%=filterChoice%>"">${i}</a>
+                                        </c:if>
+                                        <c:if test="${requestScope.index != i}">
+                                            <a class="active" href="searchPageURL?keyWord=${keyWord}&index=${i}&filterChoice=<%=filterChoice%>">${i}</a>
+                                        </c:if>
+                                    </c:forEach>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -222,7 +240,9 @@
             <div class="container_1" style="height: 270px;padding-top: 28px;">
                 <div class="row_1">
                     <div class="col_1" id="company">
-                        <img style="height: 128px;" src="images/logo/logo.png" alt="" class="logo_1">
+                        <img style="width: 176px;
+                             margin-bottom: -19px;
+                             margin-top: 10px;height: 136px;" src="images/logo/logo.png" alt="" class="logo_1">
                         <p style="font-family: poppins;font-size: 15px;color: white;">
                             công ty Smartket Việt Nam, 54 Liễu Giai, quận Ba Đình, Hà Nội 
                         </p>
@@ -277,9 +297,21 @@
         </footer>
         <!-- Footer Section End -->
 
+        <!-- Search Begin -->
+        <div class="search-model">
+            <div class="h-100 d-flex align-items-center justify-content-center">
+                <div class="search-close-switch">+</div>
+                <form class="search-model-form">
+                    <input type="text" id="search-input" placeholder="Search here.....">
+                </form>
+            </div>
+        </div>
+
         <!-- Search End -->
 
         <!-- Js Plugins -->
+        <script type="text/javascript">
+        </script>
     </body>
 
 </html>
