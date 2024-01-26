@@ -1416,12 +1416,17 @@ ol {
     background: url("images/logo/arrowUp.png") center / contain no-repeat;
 }
 .shop__product__option__right {
+    margin-left: 184px;
     text-align: right;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
 }
 
 .shop__product__option__right p {
     display: inline-block;
     margin-bottom: 0;
+    margin-right: 10px;
 }
 
 .shop__product__option__right .nice-select {

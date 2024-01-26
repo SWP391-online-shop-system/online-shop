@@ -67,8 +67,8 @@ public class ControllerSignUp extends HttpServlet {
                     + "                    </svg>\n"
                     + "                </div>\n"
                     + "                <div class=\"text-center\">\n"
-                    + "                    <h1>Thank You !</h1>\n"
-                    + "                    <p>We've send the link to your mail box. Please check! </p>\n"
+                    + "                    <h1>Cảm ơn !</h1>\n"
+                    + "                    <p>Chúng tôi đã gửi email xác nhận ở hòm thư. Bạn hãy kiểm tra </p>\n"
                     + "                </div>\n"
                     + "            </div>"
                     + "</body>");
@@ -79,9 +79,10 @@ public class ControllerSignUp extends HttpServlet {
                 String rFName = request.getParameter("rFName");
                 String rLName = request.getParameter("rLName");
                 String remail = request.getParameter("remail");
-                System.out.println("remail = " + remail);
                 String rpass = request.getParameter("rpass");
                 String rrepass = request.getParameter("rrepass");
+                User u = new User(rLName, rFName, remail, rpass, rrepass);
+                request.setAttribute("lastUser", u);
                 User user = dao.getUserByEmail(remail);
                 rFName = rFName.replaceAll("\\s+", " ");
                 rLName = rLName.replaceAll("\\s+", " ");
@@ -104,10 +105,10 @@ public class ControllerSignUp extends HttpServlet {
                     dao.signup(rFName, rLName, rpass, remail);
                     message = "User successfully signed up";
                     request.setAttribute("msg1", message);
+
                     // Send email or perform other necessary actions
                     DAOMail daomail = new DAOMail();
                     sendEmail(remail, daomail.GetMaxId());
-
                 }
             }
         }
@@ -164,12 +165,11 @@ public class ControllerSignUp extends HttpServlet {
     }// </editor-fold>
 
     public void sendEmail(String emailTo, int userID) {
-        String EMAIL = "smarketFPT@gmail.com";
-        String password = "2050379596462d";
-        String username = "73443ffda7a488";
+        String emailFrom = "smartketfpt@gmail.com";
+        String password = "hvdw qdeh rbvg ahox";
         //properties
         Properties pro = new Properties();
-        pro.put("mail.smtp.host", "smtp.mailtrap.io");
+        pro.put("mail.smtp.host", "smtp.gmail.com");
         pro.put("mail.smtp.port", "587");
         pro.put("mail.smtp.auth", "true");
         pro.put("mail.smtp.starttls.enable", "true");
@@ -178,7 +178,7 @@ public class ControllerSignUp extends HttpServlet {
         Authenticator auth = new Authenticator() {
             @Override
             protected PasswordAuthentication getPasswordAuthentication() {
-                return new PasswordAuthentication(username, password);
+                return new PasswordAuthentication(emailFrom, password);
             }
         };
         //workplace
@@ -187,7 +187,7 @@ public class ControllerSignUp extends HttpServlet {
         MimeMessage msg = new MimeMessage(session);
         try {
             msg.addHeader("Content-type", "text/HTML; charset=UTF-8");
-            msg.setFrom(EMAIL);  //nguoi gui
+            msg.setFrom(emailFrom);  //nguoi gui
             msg.setRecipients(Message.RecipientType.TO,
                     InternetAddress.parse(emailTo, false));   //nguoi nhan
 
@@ -204,14 +204,65 @@ public class ControllerSignUp extends HttpServlet {
                     + "        <title>TODO supply a title</title>\n"
                     + "        <meta charset=\"UTF-8\">\n"
                     + "        <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">\n"
+                    + "    <style>\n"
+                    + "        .veryfication-content{\n"
+                    + "            width: 500px;\n"
+                    + "            height: 225px;\n"
+                    + "            margin: 0 auto;\n"
+                    + "            border-radius: 6px;\n"
+                    + "            background:#e5f2e5;\n"
+                    + "        }\n"
+                    + "        .veryfication-logo{\n"
+                    + "            width: 159px;\n"
+                    + "            height: 117px;\n"
+                    + "            margin-left: 34%;\n"
+                    + "            margin-top: 13px;\n"
+                    + "        }\n"
+                    + "        .veryfication-btn{\n"
+                    + "   width: 141px;\n"
+                    + "     height: 25px;\n"
+                    + "    color: white;\n"
+                    + "   background: #26a352;\n"
+                    + "   padding-bottom: -18px;\n"
+                    + "   padding-top: -17px;\n"
+                    + "   border-radius: 9px;\n"
+                    + "   font-size: 17px;\n"
+                    + "  padding: 6px;\n"
+                    + "    font-family: math;\n"
+                    + "   text-align: center;\n"
+                    + "   margin: 0 auto;\n"
+                    + "        }\n"
+                    + "        .veryfication-btn div{\n"
+                    + "        }\n"
+                    + "        .veryfication-btn:hover{\n"
+                    + "            transform: scale(0.95);\n"
+                    + "            cursor: pointer;\n"
+                    + "        }\n"
+                    + "        a{\n"
+                    + "            text-decoration: none;\n"
+                    + "            color: white;\n"
+                    + "        }\n"
+                    + "        .veryfication-remind{\n"
+                    + "            text-align: center;\n"
+                    + "            font-size: 20px;\n"
+                    + "            color: #456c68;\n"
+                    + "            font-weight:700;\n"
+                    + "            font-family: math;\n"
+                    + "            padding-top: 15px;\n"
+                    + "            letter-spacing: 1px;\n"
+                    + "        }\n"
+                    + "    </style>\n"
                     + "    </head>\n"
                     + "    <body>\n"
-                    + "        <a href=\"http://localhost:9999/Smartket/signupURL?service=verify&uid=" + userID + "\" style=\"text-decoration:none; font-size:25px;\">Click vào đây</a>"
-                    + "<span style=\"font-size:25px;\"> để xác nhận đơn đăng nhập của bạn</span>\n"
+                    + "        <div class=\"veryfication-content\">\n"
+                    + "            <div >\n"
+                    + "                <div class=\"veryfication-remind\">Vui lòng xác nhận email của bạn</div>\n"
+                    + "                <div><img class=\"veryfication-logo\"src=\"https://i.imgur.com/GVovat4.png\" alt=\"logo\" title=\"logo\"/></div>\n"
+                    + "                <a href=\"http://localhost:9999/Smartket/signupURL?service=verify&uid=" + userID + "\" ><div class=\"veryfication-btn\">Xác nhận email</div></a>\n"
+                    + "            </div>\n"
+                    + "        </div>\n"
                     + "    </body>\n"
                     + "</html>\n", "text/html;charset=UTF-8");
-
-            //gui email
             Transport.send(msg);
             System.out.println("Email sent successful");
         } catch (MessagingException ex) {

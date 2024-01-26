@@ -12,6 +12,8 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import java.sql.ResultSet;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Vector;
 import model.DAOCategories;
 import model.DAOProduct;
@@ -72,7 +74,6 @@ public class ControllerProductList extends HttpServlet {
         }
         //Start get All product----------------------------------------------------------------
         if (service.equals("ShowAllProduct")) {
-            System.out.println("service = " + service);
             String index_raw = request.getParameter("index");
             int index = 1;
             if (index_raw != null) {
@@ -85,7 +86,7 @@ public class ControllerProductList extends HttpServlet {
                 endPage++;
             }
             request.setAttribute("endPage", endPage);
-            Vector<Product> list = dao.get9Next(index);
+            Vector<Product> list = dao.get9Next(index, "createDate");
             request.setAttribute("listPage", list);
             request.setAttribute("index", index);
         }
@@ -93,7 +94,6 @@ public class ControllerProductList extends HttpServlet {
 
         //Start get Product from CategoryID
         if (service.equals("ShowCategory")) {
-            System.out.println("service = " + service);
             DAOCategories daoCate = new DAOCategories();
             String index_raw = request.getParameter("index");
             int index = 1;
@@ -105,7 +105,6 @@ public class ControllerProductList extends HttpServlet {
             Categories cateName = daoCate.getCategoriesById(CategoryID);
             request.setAttribute("catename", cateName);
             int count = dao.getTotalProductByCateID(CategoryID);
-            System.out.println("count= " + count);
             int endPage = count / 9;
             if (count % 9 != 0) {
                 endPage++;
@@ -115,6 +114,7 @@ public class ControllerProductList extends HttpServlet {
             request.setAttribute("listPage", list);
             request.setAttribute("index", index);
         }
+
         //End get Product from CategoryID-------------------------------------------------------
         //Startget All category----------------------------------------------------------------
         ResultSet rsCategory = dao.getData("Select * from Categories");
@@ -138,7 +138,94 @@ public class ControllerProductList extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        response.setContentType("text/html;charset=UTF-8");
+        String service = request.getParameter("service");
+        if (service.equals("filter")) {
+            String filterChoice = request.getParameter("filterChoice");
+            //orderDate giam dan
+            if (filterChoice.equals("new")) {
+                DAOProduct dao = new DAOProduct();
+                String index_raw = request.getParameter("index");
+                int index = 1;
+                if (index_raw != null) {
+                    index = Integer.parseInt(index_raw);
+                }
+                //paging
+                int count = dao.getTotalProduct();
+                int endPage = count / 9;
+                if (count % 9 != 0) {
+                    endPage++;
+                }
+                request.setAttribute("endPage", endPage);
+                Vector<Product> list = dao.get9Next(index, "createDate desc");
+                request.setAttribute("listPage", list);
+                request.setAttribute("index", index);
+            }
+            //orderDate tang dan
+            if (filterChoice.equals("old")) {
+                DAOProduct dao = new DAOProduct();
+                String index_raw = request.getParameter("index");
+                int index = 1;
+                if (index_raw != null) {
+                    index = Integer.parseInt(index_raw);
+                }
+                //paging
+                int count = dao.getTotalProduct();
+                int endPage = count / 9;
+                if (count % 9 != 0) {
+                    endPage++;
+                }
+                request.setAttribute("endPage", endPage);
+                Vector<Product> list = dao.get9Next(index, "createDate asc");
+                request.setAttribute("listPage", list);
+                request.setAttribute("index", index);
+            }
+            //UnitPrice giam dan
+            if (filterChoice.equals("expensive")) {
+                DAOProduct dao = new DAOProduct();
+                String index_raw = request.getParameter("index");
+                int index = 1;
+                if (index_raw != null) {
+                    index = Integer.parseInt(index_raw);
+                }
+                //paging
+                int count = dao.getTotalProduct();
+                int endPage = count / 9;
+                if (count % 9 != 0) {
+                    endPage++;
+                }
+                request.setAttribute("endPage", endPage);
+                Vector<Product> list = dao.get9Next(index, "(UnitPrice*(100 - UnitDiscount)/100) asc");
+                request.setAttribute("listPage", list);
+                request.setAttribute("index", index);
+            }
+            //UnitPrice tang dan
+            if (filterChoice.equals("cheap")) {
+                DAOProduct dao = new DAOProduct();
+                String index_raw = request.getParameter("index");
+                int index = 1;
+                if (index_raw != null) {
+                    index = Integer.parseInt(index_raw);
+                }
+                //paging
+                int count = dao.getTotalProduct();
+                int endPage = count / 9;
+                if (count % 9 != 0) {
+                    endPage++;
+                }
+                request.setAttribute("endPage", endPage);
+                Vector<Product> list = dao.get9Next(index, "(UnitPrice*(100 - UnitDiscount)/100) desc");
+                request.setAttribute("listPage", list);
+                request.setAttribute("index", index);
+            }
+            request.setAttribute("filterChoice", filterChoice);
+        }
+        //Startget All category----------------------------------------------------------------
+        DAOCategories daoCate = new DAOCategories();
+        ResultSet rsCategory = daoCate.getData("Select * from Categories");
+        request.setAttribute("CategoryResult", rsCategory);
+        //End get All Category----------------------------------------------------------------
+        request.getRequestDispatcher("productList.jsp").forward(request, response);
     }
 
     /**

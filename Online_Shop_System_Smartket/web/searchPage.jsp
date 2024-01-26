@@ -186,10 +186,12 @@
                                                 %>
                                                 <%=totalRate%>
                                             </div>
-                                            <div style="color: #0d0d0d;font-weight: 700;font-size: 15px; flex: 0 0 50%"><%=df.format(list.getUnitPrice())%></div>
+                                            <div style="color: red;font-weight: 700;font-size: 15px; flex: 0 0 50%; text-decoration: line-through;"><%=df.format(list.getUnitPrice())%></div>
                                         </div>
                                         <%if(list.getUnitDiscount()!=0) {%>
-                                        <div style="color: #0d0d0d;font-weight: 700;font-size: 18px; flex: 0 0 50%">$67.24</div>
+                                        <div style="color: #0d0d0d;font-weight: 700;font-size: 15px; flex: 0 0 50%"><%=df.format(list.getUnitPrice()*(100-list.getUnitDiscount())/100)%></div>
+                                        <%} else {%>
+                                        <div style="color: red;font-weight: 700;font-size: 15px; flex: 0 0 50%; text-decoration: line-through;"><%=df.format(list.getUnitPrice())%></div>
                                         <%}%>
                                     </div>
                                 </div>

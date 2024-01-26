@@ -9,12 +9,14 @@ package view;
  * @author HP
  */
 public class User {
+
     private int userID;
     private String firstName, lastName, address, phoneNumber, dateOfBirth;
     private Boolean gender;
     private String userImage, password, email, lastLogin;
     private Boolean userStatus;
     private int reportTo, roleID;
+    private String rePassword;
 
     public User() {
     }
@@ -52,12 +54,28 @@ public class User {
         this.roleID = roleID;
     }
 
+    public User(String firstName, String lastName, String email, String password, String rePassword) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.email = email;
+        this.password = password;
+        this.rePassword = rePassword;
+    }
+
     public int getUserID() {
         return userID;
     }
 
     public void setUserID(int userID) {
         this.userID = userID;
+    }
+
+    public String getRePassword() {
+        return rePassword;
+    }
+
+    public void setRePassword(String rePassword) {
+        this.rePassword = rePassword;
     }
 
     public String getFirstName() {
@@ -168,5 +186,5 @@ public class User {
     public String toString() {
         return "User{" + "userID=" + userID + ", firstName=" + firstName + ", lastName=" + lastName + ", address=" + address + ", phoneNumber=" + phoneNumber + ", dateOfBirth=" + dateOfBirth + ", gender=" + gender + ", userImage=" + userImage + ", password=" + password + ", email=" + email + ", lastLogin=" + lastLogin + ", userStatus=" + userStatus + ", reportTo=" + reportTo + ", roleID=" + roleID + '}';
     }
-    
+
 }

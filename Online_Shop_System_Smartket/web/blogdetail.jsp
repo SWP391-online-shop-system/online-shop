@@ -48,11 +48,11 @@
                         <div class="blog__sidebar__search">
                             <form action="searchblog" method="post">
                                  <input name="txtSearch" type="text" placeholder="Search...">
-                                <button type="submit"><span class="icon_search"></span></button>
+                                 <button type="submit"><i class="fa-solid fa-magnifying-glass"></i></button>
                             </form>
                         </div>
                          <div class="blog__sidebar__item">
-                                <h4>Recent News</h4>
+                                <h4>Blog mới gần đây</h4>
                                 <c:forEach items="${listNB}" var="nb">
                                 <div class="blog__sidebar__recent">
                                     <a href="blogdetail?bid=${nb.blogID}" class="blog__sidebar__recent__item">
@@ -79,11 +79,11 @@
                             <div class="col-lg-6">
                                 <div class="blog__details__author">
                                     <div class="blog__details__author__pic">
-                                        <img src="images/blog/${Bdetail.authorImage}" alt="">
+                                        <img src="images/blog_author/${Bdetail.authorImage}" alt="">
                                     </div>
                                     <div class="blog__details__author__text">
                                         <h6>${Bdetail.blogAuthor}</h6>
-                                        <span>Admin</span>
+                                        <span>tác giả</span>
                                     </div>
                                 </div>
                             </div>
@@ -116,7 +116,7 @@
             <div class="row">
                 <div class="col-lg-12">
                     <div class="section-title related-blog-title">
-                        <h2>Post You May Like</h2>
+                        <h2>Bạn có thể thích</h2>
                     </div>
                 </div>
             </div>
@@ -130,7 +130,7 @@
                         <div class="blog__item__text">
                             <ul>
                                 <li><i class="fa fa-calendar-o"></i>${gb.createTime}</li>
-                                <li><i class="fa fa-comment-o"></i> 5</li>
+                                <!--<li><i class="fa fa-comment-o"></i> 5</li>-->
                             </ul>
                             <h5><a href="blogdetail?bid=${gb.blogID}">${gb.blogTitle}</a></h5>
                             <p>${gb.blogContent.substring(0, 99)}...</p>
@@ -142,7 +142,6 @@
         </div>
     </section>
     <!-- Related Blog Section End -->
-        <jsp:include page="include/footer.jsp"/>
 
 
     </body>

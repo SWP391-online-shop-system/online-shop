@@ -150,12 +150,21 @@
                                 <div class="col-lg-6 col-md-6 col-sm-6">
                                     <div class="shop__product__option__right">
                                         <p>Bộ lọc</p>
-                                        <select>
-                                            <option>Giá tăng dần</option>
-                                            <option>Giá giảm dần</option>
-                                            <option>Mới nhất</option>
-                                            <option>Cũ nhất</option>
-                                        </select>
+                                        <form action="ProductListURL" method="POST">
+                                            <input type="hidden" name="service" value="filter"/>
+                                            <select name="filterChoice" onchange="this.form.submit()">
+                                                <%String filterChoice = (String)request.getAttribute("filterChoice");
+                                                System.out.println("jsp: "+filterChoice);
+                                                if(filterChoice == null){
+                                                filterChoice = "new";
+                                                }
+                                                %>
+                                                <option value="new"<%=filterChoice.equals("new")? "selected":""%>>Mới nhất</option>
+                                                <option value="old"<%=filterChoice.equals("old")? "selected":""%>>Cũ nhất</option>
+                                                <option value="expensive"<%=filterChoice.equals("expensive")? "selected":""%>>Giá tăng dần</option>
+                                                <option value="cheap"<%=filterChoice.equals("cheap")? "selected":""%>>Giá giảm dần</option>
+                                            </select>
+                                        </form>
                                     </div>
                                 </div>
                             </div>
@@ -187,10 +196,14 @@
                                                 %>
                                                 <%=totalRate%>
                                             </div>
-                                            <div style="color: #0d0d0d;font-weight: 700;font-size: 15px; flex: 0 0 50%"><%=df.format(list.getUnitPrice())%></div>
                                         </div>
                                         <%if(list.getUnitDiscount()!=0) {%>
-                                        <div style="color: #0d0d0d;font-weight: 700;font-size: 18px; flex: 0 0 50%">$67.24</div>
+                                        <div style="display: flex;">
+                                            <div style="color: red;font-weight: 700;font-size: 15px; flex: 0 0 50%; text-decoration: line-through;"><%=df.format(list.getUnitPrice())%></div>
+                                            <div style="color: #0d0d0d;font-weight: 700;font-size: 15px; flex: 0 0 50%"><%=df.format(list.getUnitPrice()*(100-list.getUnitDiscount())/100)%></div>
+                                        </div>
+                                        <%} else {%>
+                                        <div style="font-weight: 700;font-size: 15px; flex: 0 0 50%;"><%=df.format(list.getUnitPrice())%></div>
                                         <%}%>
                                     </div>
                                 </div>
@@ -293,6 +306,8 @@
         <!-- Search End -->
 
         <!-- Js Plugins -->
+        <script type="text/javascript">
+        </script>
     </body>
 
 </html>

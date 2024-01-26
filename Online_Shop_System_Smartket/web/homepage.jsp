@@ -60,7 +60,7 @@
                         </div>
                         <div class="menu-section-content-search-phone">
                             <div class="search-phone-icon">
-                                <i class="fa-solid fa-phone"></i>
+                                <i style="padding-top: 17px" class="fa-solid fa-phone"></i>
                             </div>
                             <div class="search-phone-content">
                                 <h5>+84 99.999.999</h5>
@@ -141,7 +141,7 @@
                                         <a href="#"><img class='tokenImage' src="<%=rsNewProduct.getString(12)%>" alt="Not found" />
                                             <div class="product-content-name"><%=rsNewProduct.getString(2)%></div></a>
                                             <%if(rsNewProduct.getInt(7) != 0) {%>
-                                        <div class="price-product "><img style="width: 21px; height: 20px;" src="images/logo/sale.jpg"/><%=df.format(rsNewProduct.getDouble(6)*(100-rsNewProduct.getInt(7))/100)%>đ</div>
+                                        <div class="price-product "><img style="width: 21px; height: 20px;margin: 0px 3px -2px 0px;" src="images/logo/sale.png"/><%=df.format(rsNewProduct.getDouble(6)*(100-rsNewProduct.getInt(7))/100)%>đ</div>
                                         <%} else {%>
                                         <div class="price-product"><%=df.format(rsNewProduct.getDouble(6))%><span>đ</span></div>
                                         <%}%>
@@ -178,7 +178,7 @@
                                                 <div class="product-details-title">
                                                     <div class="detail-name"><%=rsFeatureProduct.getString(2)%></div>
                                                     <%if(rsFeatureProduct.getInt(7) != 0) {%>
-                                                    <div class="detail-price1"><img style="width: 21px; height: 20px;" src="images/logo/sale.jpg"/><%=df.format(rsFeatureProduct.getDouble(6)*(100-rsFeatureProduct.getInt(7))/100)%>đ</div>
+                                                    <div class="detail-price1"><img style="width: 21px; height: 20px;margin: 0px 4px -4px 0px;" src="images/logo/sale.png"/><%=df.format(rsFeatureProduct.getDouble(6)*(100-rsFeatureProduct.getInt(7))/100)%>đ</div>
                                                         <%} else {%>
                                                     <div class="detail-price"><%=df.format(rsFeatureProduct.getDouble(6))%>đ</div>
                                                     <%}%>
@@ -225,7 +225,7 @@
                                 if(rsNewBlog.next()) {
                                 %>
                                 <div class="card1">
-                                    <a href="blog">
+                                    <a href="blogdetail?bid=<%=rsNewBlog.getInt(1)%>">
                                         <div class="card__header1">
                                             <img src="images/blog/<%=rsNewBlog.getString(6)%>" alt="card__image" class="card__image1" width="600">
                                         </div>
@@ -250,15 +250,15 @@
                              ResultSet rsFeatureBlog = (ResultSet)request.getAttribute("rsFeatureBlog");
                              while(rsFeatureBlog.next()) {
                             %>
-                            <a href="hi">
+                            <a href="blogdetail?bid=<%=rsFeatureBlog.getInt(1)%>">
                                 <div class="card card-3">
                                     <div class="card-img"><img src="images/blog/<%=rsFeatureBlog.getString(6)%>" alt="alt"/></div>
                                     <div class="card-info">
                                         <div class="card-about">
-                                            <a class="card-tag tag-deals"><i class="fa-regular fa-eye"></i></i><%=rsFeatureBlog.getInt(9)%></a>
+                                            <a href="blogdetail?bid=<%=rsFeatureBlog.getInt(1)%>" class="card-tag tag-deals"><i class="fa fa-star" aria-hidden="true"></i><%=rsFeatureBlog.getInt(9)%></a>
                                             <div class="card-time"><i style="margin-right: 3px;" class="fa-regular fa-calendar"></i><%=rsFeatureBlog.getString(11).substring(0,10)%></div>
                                         </div>
-                                        <h1 class="card-title"><a style="font-size: 19px;" href="hi"><%=rsFeatureBlog.getString(7)%></a></h1>
+                                        <h1 class="card-title"><a href="blogdetail?bid=<%=rsFeatureBlog.getInt(1)%>" style="font-size: 19px;" href="hi"><%=rsFeatureBlog.getString(7)%></a></h1>
                                         <div class="card-creator">by <a href=""><%=rsFeatureBlog.getString(3)%></a></div>
                                     </div>
                                 </div>

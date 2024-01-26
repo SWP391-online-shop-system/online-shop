@@ -73,9 +73,6 @@ public class ControllerChangepassword extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
-        
-        
-        
         //change password
        String oldPassword = request.getParameter("oldPassword");
        String newPassword = request.getParameter("newPassword");
@@ -100,6 +97,7 @@ session.removeAttribute("inputerror");
         User u= new User(user.getUserID(),user.getFirstName(),user.getLastName(),user.getAddress(),user.getPhoneNumber(),user.getDateOfBirth(),user.isGender(),user.getUserImage(),
         newPassword,user.getEmail(),user.getLastLogin(),user.isUserStatus(),user.getReportTo(),user.getRoleID());
         dao.updateUser(u);
+           System.out.println("Update thnh cong");
         session.setAttribute("inputerror","Thay đổi thành công");
         request.getRequestDispatcher("profileUser.jsp").forward(request, response);
        }
