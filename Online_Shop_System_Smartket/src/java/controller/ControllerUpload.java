@@ -77,7 +77,7 @@ public class ControllerUpload extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         Part photo = request.getPart("photo");
-        String path = "/images/user_avatar/" + photo.getSubmittedFileName();
+        String path = "/images/user/" + photo.getSubmittedFileName();
         String filename = request.getServletContext().getRealPath(path);
         photo.write(filename);
             request.getRequestDispatcher("profileUser.jsp").forward(request, response);
