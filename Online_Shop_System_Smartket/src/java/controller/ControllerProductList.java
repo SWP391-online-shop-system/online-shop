@@ -90,7 +90,7 @@ public class ControllerProductList extends HttpServlet {
             String CategoryID_raw = request.getParameter("CategoryID");
             String filterChoice = request.getParameter("filterChoice");
             if (filterChoice == null) {
-                filterChoice = "createDate asc";
+                filterChoice = "createDate desc";
             }
             if (service == null) {
                 if (CategoryID_raw == null || CategoryID_raw.equals("")) {
@@ -213,7 +213,7 @@ public class ControllerProductList extends HttpServlet {
 
             if (service.equals("filter")) {
                 if (filterChoice == null) {
-                    filterChoice = "createDate asc";
+                    filterChoice = "createDate desc";
                 }
                 System.out.println("in filer: categoryID = " + CategoryID_raw);
                 //orderDate giam dan
@@ -246,7 +246,7 @@ public class ControllerProductList extends HttpServlet {
                         }
                         request.setAttribute("endPage", endPage);
                         ResultSet rsPaging = dao.getData("select * from product as p join ProductImage as pi on p.ProductID = pi.ProductID where pi.ProductURL like '%_1%' \n"
-                                + "and p.UnitPrice between " + minValue + " and " + maxValue + " and p.CategoryID = " + CategoryID_raw + " order by p." + filterChoice + " limit 9 offset " + ((index - 1) * 9));
+                                + "and p.UnitPrice between " + minValue + " and " + maxValue + " and p.CategoryID = " + categoryID + " order by " + filterChoice + " limit 9 offset " + ((index - 1) * 9));
                         request.setAttribute("rsPaging", rsPaging);
                         request.setAttribute("index", index);
                     }
@@ -274,6 +274,7 @@ public class ControllerProductList extends HttpServlet {
                         request.setAttribute("index", index);
                     } else {
                         //paging
+                        System.out.println("in paging of filter createDate desc");
                         int categoryID = Integer.parseInt(CategoryID_raw);
                         int count = dao.getTotalProductByCateID(categoryID, minValue, maxValue);
                         int endPage = count / 9;
@@ -282,7 +283,7 @@ public class ControllerProductList extends HttpServlet {
                         }
                         request.setAttribute("endPage", endPage);
                         ResultSet rsPaging = dao.getData("select * from product as p join ProductImage as pi on p.ProductID = pi.ProductID where pi.ProductURL like '%_1%' \n"
-                                + "and p.UnitPrice between " + minValue + " and " + maxValue + " and p.CategoryID= " + CategoryID_raw + " order by " + filterChoice + " limit 9 offset " + ((index - 1) * 9));
+                                + "and p.UnitPrice between " + minValue + " and " + maxValue + " and p.CategoryID= " + categoryID + " order by " + filterChoice + " limit 9 offset " + ((index - 1) * 9));
                         request.setAttribute("rsPaging", rsPaging);
                         request.setAttribute("index", index);
                     }
@@ -365,6 +366,7 @@ public class ControllerProductList extends HttpServlet {
 
             if (service.equals("price")) {
                 String index_raw = request.getParameter("index");
+                System.out.println("filter chocie in here = " + filterChoice);
                 int index = 1;
                 if (index_raw != null) {
                     index = Integer.parseInt(index_raw);
@@ -398,7 +400,7 @@ public class ControllerProductList extends HttpServlet {
                     }
 
                 }
-                if (filterChoice.equals("CreateDate desc") || filterChoice.equals("p.Create desc")) {
+                if (filterChoice.equals("createDate desc") || filterChoice.equals("p.Create desc")) {
                     filterChoice = "p.CreateDate desc";
                     if (CategoryID_raw == null || CategoryID_raw.equals("")) {
                         int count = dao.getTotalProductByPrice(minValue, maxValue);
@@ -481,6 +483,9 @@ public class ControllerProductList extends HttpServlet {
                         request.setAttribute("index", index);
                     }
                 }
+            }
+            if (service.equals("highestRate")) {
+
             }
             request.setAttribute("oldMaxPrice", maxValue);
             request.setAttribute("oldMinPrice", minValue);
