@@ -77,18 +77,14 @@
                                     </div>
                                     <div class="card">
                                         <div class="card-heading">
-                                            <a data-toggle="collapse" data-target="#collapseThree">Lọc theo giá tiền</a>
+                                            <a data-toggle="collapse" data-target="#collapseThree">Lọc sản phẩm nhanh</a>
                                         </div>
                                         <div id="collapseThree" class="collapse show" data-parent="#accordionExample">
                                             <div class="card-body">
                                                 <div class="shop__sidebar__price">
                                                     <ul>
-                                                        <li><a href="#">$0.00 - $50.00</a></li>
-                                                        <li><a href="#">$50.00 - $100.00</a></li>
-                                                        <li><a href="#">$100.00 - $150.00</a></li>
-                                                        <li><a href="#">$150.00 - $200.00</a></li>
-                                                        <li><a href="#">$200.00 - $250.00</a></li>
-                                                        <li><a href="#">250.00+</a></li>
+                                                        <li><a href="#">Được đánh giá cao</a></li>
+                                                        <li><a href="#">Mới ra mắt</a></li>
                                                     </ul>
                                                 </div>
                                             </div>
@@ -96,42 +92,28 @@
                                     </div>
                                     <div class="card">
                                         <div class="card-heading">
-                                            <a data-toggle="collapse" data-target="#collapseSix">Lọc theo đánh giá</a>
+                                            <a data-toggle="collapse" data-target="#collapseSix">Lọc theo giá tiền</a>
                                         </div>
                                         <div id="collapseSix" class="collapse show" data-parent="#accordionExample">
+                                            <%
+                                            DAOProduct dao = new DAOProduct();
+                                            DAOProductImage daoImage = new DAOProductImage();
+                                            ResultSet rsMax = (ResultSet)request.getAttribute("rsMax");
+                                            ResultSet rsMin = (ResultSet)request.getAttribute("rsMin");
+                                            Double maxPrice = ((rsMax.next())? rsMax.getDouble(6):0);
+                                            Double minPrice = ((rsMin.next())? rsMin.getDouble(6):0);
+                                            %>
                                             <div class="card-body">
-                                                <div class="shop__sidebar__tags">
-                                                    <a href="1"><i class="fa fa-star" aria-hidden="true"></i>
-                                                        <i class="fa fa-star-o" aria-hidden="true"></i>
-                                                        <i class="fa fa-star-o" aria-hidden="true"></i>
-                                                        <i class="fa fa-star-o" aria-hidden="true"></i>
-                                                        <i class="fa fa-star-o" aria-hidden="true"></i>
-                                                    </a>
-                                                    <a href="2"><i class="fa fa-star" aria-hidden="true"></i>
-                                                        <i class="fa fa-star" aria-hidden="true"></i>
-                                                        <i class="fa fa-star-o" aria-hidden="true"></i>
-                                                        <i class="fa fa-star-o" aria-hidden="true"></i>
-                                                        <i class="fa fa-star-o" aria-hidden="true"></i>
-                                                    </a>
-                                                    <a href="3"><i class="fa fa-star" aria-hidden="true"></i>
-                                                        <i class="fa fa-star" aria-hidden="true"></i>
-                                                        <i class="fa fa-star" aria-hidden="true"></i>
-                                                        <i class="fa fa-star-o" aria-hidden="true"></i>
-                                                        <i class="fa fa-star-o" aria-hidden="true"></i>
-                                                    </a>
-                                                    <a href="4"><i class="fa fa-star" aria-hidden="true"></i>
-                                                        <i class="fa fa-star" aria-hidden="true"></i>
-                                                        <i class="fa fa-star" aria-hidden="true"></i>
-                                                        <i class="fa fa-star" aria-hidden="true"></i>
-                                                        <i class="fa fa-star-o" aria-hidden="true"></i>
-                                                    </a>
-                                                    <a href="5"><i class="fa fa-star" aria-hidden="true"></i>
-                                                        <i class="fa fa-star" aria-hidden="true"></i>
-                                                        <i class="fa fa-star" aria-hidden="true"></i>
-                                                        <i class="fa fa-star" aria-hidden="true"></i>
-                                                        <i class="fa fa-star" aria-hidden="true"></i>
-                                                    </a>
-
+                                                <div class="group">
+                                                    <div class="progress1"></div>
+                                                    <div class="range-input">
+                                                        <input class="range-min" max="<%=maxPrice%>" type="range" value="<%=minPrice%>">
+                                                        <input class="range-max" max="<%=maxPrice%>" type="range" value="<%=maxPrice%>">
+                                                    </div>
+                                                    <div class="range-text">
+                                                        <div class="text-min"><%=df.format(minPrice)%></div>
+                                                        <div class="text-max"><%=df.format(maxPrice)%></div>
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
@@ -144,6 +126,12 @@
                         <div class="shop__product__option">
                             <div class="row">
                                 <div class="col-lg-6 col-md-6 col-sm-6">
+                                    <%String key = (String)request.getAttribute("keyWord");
+                                    if(key.equals("")) {%>
+                                    <div style="font-size: 22px; letter-spacing: 1px;">Kết quả tìm kiếm</div>
+                                    <%}else{%>
+                                    <div style="font-size: 22px; letter-spacing: 1px;">Kết quả tìm kiếm cho '${requestScope.keyWord}'</div>
+                                    <%}%>
                                     <div class="shop__product__option__left">
                                     </div>
                                 </div>
@@ -168,7 +156,6 @@
                                 </div>
                             </div>
                         </div>
-                        <div>Ket qua tim kiem</div>
                         <div class="row">
                             <%
                               DAOProduct dao = new DAOProduct();
@@ -306,12 +293,8 @@
                 </form>
             </div>
         </div>
-
-        <!-- Search End -->
-
         <!-- Js Plugins -->
-        <script type="text/javascript">
-        </script>
+        <script src="js/price.js"></script>
     </body>
 
 </html>

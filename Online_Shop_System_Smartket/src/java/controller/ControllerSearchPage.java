@@ -108,8 +108,11 @@ public class ControllerSearchPage extends HttpServlet {
         request.setAttribute("index", index);
         //Startget All category----------------------------------------------------------------
         ResultSet rsCategory = dao.getData("Select * from Categories");
-
         request.setAttribute("CategoryResult", rsCategory);
+        ResultSet rsMax = dao.getData("select * from Product order by (UnitPrice*(100-UnitDiscount)/100) desc limit 1;");
+        ResultSet rsMin = dao.getData("select * from Product order by (UnitPrice*(100-UnitDiscount)/100) asc limit 1;");
+        request.setAttribute("rsMax", rsMax);
+        request.setAttribute("rsMin", rsMin);
         //End get All Category----------------------------------------------------------------
 
         //Start Paging

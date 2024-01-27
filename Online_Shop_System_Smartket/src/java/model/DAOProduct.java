@@ -326,8 +326,8 @@ public class DAOProduct extends DBConnect {
         return 0;
     }
 
-    public int getTotalProductByCateID(int CateID) {
-        String sql = "select count(*) from Product where CategoryID=" + CateID;
+    public int getTotalProductByCateID(int CateID, double min, double max) {
+        String sql = "select count(*) from Product where CategoryID=" + CateID + " and UnitPrice between " + min + " and " + max;
         try {
             PreparedStatement st = conn.prepareStatement(sql);
             ResultSet rs = st.executeQuery();
@@ -340,13 +340,55 @@ public class DAOProduct extends DBConnect {
         return 0;
     }
 
-    public int getTotalProduct() {
-        String sql = "select count(*) from Product";
+    public int getTotalProduct(double min, double max) {
+        String sql = "select count(*) from Product where UnitPrice between " + min + " and " + max;
         try {
             PreparedStatement st = conn.prepareStatement(sql);
             ResultSet rs = st.executeQuery();
             while (rs.next()) {
                 return rs.getInt(1);
+            }
+        } catch (SQLException e) {
+            System.out.println(e);
+        }
+        return 0;
+    }
+
+    public int getTotalProductByPrice(double min, double max) {
+        String sql = "select count(*) from Product where UnitPrice between " + min + " and " + max;
+        try {
+            PreparedStatement st = conn.prepareStatement(sql);
+            ResultSet rs = st.executeQuery();
+            while (rs.next()) {
+                return rs.getInt(1);
+            }
+        } catch (SQLException e) {
+            System.out.println(e);
+        }
+        return 0;
+    }
+
+    public double getMaxUnitPrice() {
+        String sql = "select UnitPrice from Product order by UnitPrice desc limit 1";
+        try {
+            PreparedStatement st = conn.prepareStatement(sql);
+            ResultSet rs = st.executeQuery();
+            while (rs.next()) {
+                return rs.getDouble(1);
+            }
+        } catch (SQLException e) {
+            System.out.println(e);
+        }
+        return 0;
+    }
+
+    public double getMinUnitPrice() {
+        String sql = "select UnitPrice from Product order by UnitPrice asc limit 1 ";
+        try {
+            PreparedStatement st = conn.prepareStatement(sql);
+            ResultSet rs = st.executeQuery();
+            while (rs.next()) {
+                return rs.getDouble(1);
             }
         } catch (SQLException e) {
             System.out.println(e);

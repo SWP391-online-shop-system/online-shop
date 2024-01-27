@@ -26,6 +26,7 @@
         <title>San pham</title>
 
         <!-- Css Styles -->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
         <link rel="stylesheet" href="css/css_header/header.css" type="text/css">
         <link rel="stylesheet" href="css/css_productList/bootstrap.min.css" type="text/css">
         <link rel="stylesheet" href="css/css_productList/font-awesome.min.css" type="text/css">
@@ -77,18 +78,14 @@
                                     </div>
                                     <div class="card">
                                         <div class="card-heading">
-                                            <a data-toggle="collapse" data-target="#collapseThree">Lọc theo giá tiền</a>
+                                            <a data-toggle="collapse" data-target="#collapseThree">Lọc sản phẩm nhanh</a>
                                         </div>
                                         <div id="collapseThree" class="collapse show" data-parent="#accordionExample">
                                             <div class="card-body">
                                                 <div class="shop__sidebar__price">
                                                     <ul>
-                                                        <li><a href="#">$0.00 - $50.00</a></li>
-                                                        <li><a href="#">$50.00 - $100.00</a></li>
-                                                        <li><a href="#">$100.00 - $150.00</a></li>
-                                                        <li><a href="#">$150.00 - $200.00</a></li>
-                                                        <li><a href="#">$200.00 - $250.00</a></li>
-                                                        <li><a href="#">250.00+</a></li>
+                                                        <li><a href="#">Được đánh giá cao</a></li>
+                                                        <li><a href="#">Mới ra mắt</a></li>
                                                     </ul>
                                                 </div>
                                             </div>
@@ -96,42 +93,34 @@
                                     </div>
                                     <div class="card">
                                         <div class="card-heading">
-                                            <a data-toggle="collapse" data-target="#collapseSix">Lọc theo đánh giá</a>
+                                            <a data-toggle="collapse" data-target="#collapseSix">Lọc theo giá tiền</a>
                                         </div>
                                         <div id="collapseSix" class="collapse show" data-parent="#accordionExample">
+                                            <%
+                                            DAOProduct dao = new DAOProduct();
+                                            DAOProductImage daoImage = new DAOProductImage();
+                                            Double oldMinPrice=(Double)request.getAttribute("oldMinPrice");
+                                            Double oldMaxPrice=(Double)request.getAttribute("oldMaxPrice");
+                                            System.out.println("in jsp: oldMaxPrice = "+oldMaxPrice+" and oldMinPrice = "+oldMinPrice);
+                                            Double maxPrice =(Double)request.getAttribute("maxPrice");
+                                            Double minPrice = (Double)request.getAttribute("minPrice");
+                                            System.out.println("in jsp: maxPrice = "+maxPrice+" and minPrice = "+minPrice);
+                                            %>
                                             <div class="card-body">
-                                                <div class="shop__sidebar__tags">
-                                                    <a href="1"><i class="fa fa-star" aria-hidden="true"></i>
-                                                        <i class="fa fa-star-o" aria-hidden="true"></i>
-                                                        <i class="fa fa-star-o" aria-hidden="true"></i>
-                                                        <i class="fa fa-star-o" aria-hidden="true"></i>
-                                                        <i class="fa fa-star-o" aria-hidden="true"></i>
-                                                    </a>
-                                                    <a href="2"><i class="fa fa-star" aria-hidden="true"></i>
-                                                        <i class="fa fa-star" aria-hidden="true"></i>
-                                                        <i class="fa fa-star-o" aria-hidden="true"></i>
-                                                        <i class="fa fa-star-o" aria-hidden="true"></i>
-                                                        <i class="fa fa-star-o" aria-hidden="true"></i>
-                                                    </a>
-                                                    <a href="3"><i class="fa fa-star" aria-hidden="true"></i>
-                                                        <i class="fa fa-star" aria-hidden="true"></i>
-                                                        <i class="fa fa-star" aria-hidden="true"></i>
-                                                        <i class="fa fa-star-o" aria-hidden="true"></i>
-                                                        <i class="fa fa-star-o" aria-hidden="true"></i>
-                                                    </a>
-                                                    <a href="4"><i class="fa fa-star" aria-hidden="true"></i>
-                                                        <i class="fa fa-star" aria-hidden="true"></i>
-                                                        <i class="fa fa-star" aria-hidden="true"></i>
-                                                        <i class="fa fa-star" aria-hidden="true"></i>
-                                                        <i class="fa fa-star-o" aria-hidden="true"></i>
-                                                    </a>
-                                                    <a href="5"><i class="fa fa-star" aria-hidden="true"></i>
-                                                        <i class="fa fa-star" aria-hidden="true"></i>
-                                                        <i class="fa fa-star" aria-hidden="true"></i>
-                                                        <i class="fa fa-star" aria-hidden="true"></i>
-                                                        <i class="fa fa-star" aria-hidden="true"></i>
-                                                    </a>
-
+                                                <div class="group">
+                                                    <form action="ProductListURL" method="GET">
+                                                        <input type="hidden" name="service" value="price"/>
+                                                        <div class="progress1"></div>
+                                                        <div class="range-input">
+                                                            <input name="inputMinPrice" class="range-min" max="<%=maxPrice%>" min="<%=minPrice%>" type="range" value="<%=(oldMinPrice==null ? minPrice : oldMinPrice)%>">
+                                                            <input name="inputMaxPrice" class="range-max" max="<%=maxPrice%>" type="range" value="<%=(oldMaxPrice==null ? maxPrice : oldMaxPrice)%>">
+                                                        </div>
+                                                        <div class="range-text">
+                                                            <div class="text-min"><%=df.format(oldMinPrice==null ? minPrice : oldMinPrice)%></div>
+                                                            <div class="text-max"><%=df.format(oldMaxPrice==null ? maxPrice : oldMaxPrice)%></div>
+                                                        </div>
+                                                        <button class="submit-price-form" type="submit">Lọc</button>
+                                                    </form>
                                                 </div>
                                             </div>
                                         </div>
@@ -153,10 +142,14 @@
                                         <form action="ProductListURL" method="GET">
                                             <c:set value="${requestScope.catename}" var="category"/>
                                             <c:if test="${category == null}">
-                                                <input type="hidden" name="service2" value="filter"/>
+                                                <input type="hidden" name="service" value="filter"/>
+                                            </c:if>
+                                            <c:if test="${((requestScope.maxPrice != requestScope.oldMaxPrice)||(requestScope.minPrice != requestScope.oldMinPrice)) && (requestScope.oldMaxPrice != null && requestScope.oldMinPrice != null)}">
+                                                <input name="inputMinPrice" type="hidden" value="<%=(oldMinPrice==null ? minPrice : oldMinPrice)%>">
+                                                <input name="inputMaxPrice" type="hidden" value="<%=(oldMaxPrice==null ? maxPrice : oldMaxPrice)%>">
                                             </c:if>
                                             <c:if test="${category != null}">
-                                                <input type="hidden" name="service2" value="filter"/>
+                                                <input type="hidden" name="service" value="filter"/>
                                                 <input type="hidden" name="CategoryID" value="${category.categoryID}"/>
                                             </c:if>
                                             <select name="filterChoice" onchange="this.form.submit()">
@@ -177,10 +170,9 @@
                         </div>
                         <div class="row">
                             <%
-                              DAOProduct dao = new DAOProduct();
-                                DAOProductImage daoImage = new DAOProductImage();
                                 ResultSet rsPaging = (ResultSet)request.getAttribute("rsPaging");
-                                while(rsPaging.next()) {
+                                
+                            while(rsPaging.next()) {
                             %>
                             <div class="col-lg-4 col-md-6 col-sm-6">
                                 <div class="product__item">
@@ -222,22 +214,34 @@
                         <div class="row">
                             <div class="col-lg-12">
                                 <div class="product__pagination">
-                                    <c:set value="${requestScope.catename}" var="category"/>
+                                    <c:set value="${requestScope.categoryID}" var="categoryID"/>
                                     <c:forEach begin="1" end="${endPage}" var="i">
-                                        <c:if test="${category==null}">
-                                            <c:if test="${requestScope.index == i}">
-                                                <a class="active"  style="border: none;background: #4cdc4c;width: 4%;" href="ProductListURL?service=ShowAllProduct&service2=filter&index=${i}&filterChoice=<%=filterChoice%>"">${i}</a>
+                                        <c:if test="${categoryID == ''}">
+                                            <!-- Price range is different from begin -->
+                                            <c:if test="${((requestScope.maxPrice != requestScope.oldMaxPrice)||(requestScope.minPrice != requestScope.oldMinPrice)) && (requestScope.oldMaxPrice != null && requestScope.oldMinPrice != null)}">
+                                                <c:if test="${requestScope.index == i}">
+                                                    <a class="active"  style="border: none;background: #4cdc4c;width: 4%;" href="ProductListURL?service=price&index=${i}&filterChoice=<%=filterChoice%>&inputMinPrice=<%=oldMinPrice%>&inputMaxPrice=<%=oldMaxPrice%>">${i}</a>
+                                                </c:if>
+                                                <c:if test="${requestScope.index != i}">
+                                                    <a class="active" href="ProductListURL?service=price&index=${i}&filterChoice=<%=filterChoice%>&inputMinPrice=<%=oldMinPrice%>&inputMaxPrice=<%=oldMaxPrice%>">${i}</a>
+                                                </c:if>
                                             </c:if>
-                                            <c:if test="${requestScope.index != i}">
-                                                <a class="active" href="ProductListURL?service=ShowAllProduct&service2=filter&index=${i}&filterChoice=<%=filterChoice%>">${i}</a>
+
+                                            <c:if test="${((requestScope.maxPrice == requestScope.oldMaxPrice) &&(requestScope.minPrice == requestScope.oldMinPrice))|| (requestScope.oldMinPrice==null && requestScope.oldMaxPrice==null)}">
+                                                <c:if test="${requestScope.index == i}">
+                                                    <a class="active"  style="border: none;background: #4cdc4c;width: 4%;" href="ProductListURL?service=filter&index=${i}&filterChoice=<%=filterChoice%>"">${i}</a>
+                                                </c:if>
+                                                <c:if test="${requestScope.index != i}">
+                                                    <a class="active" href="ProductListURL?service=filter&index=${i}&filterChoice=<%=filterChoice%>">${i}</a>
+                                                </c:if>
                                             </c:if>
                                         </c:if>
-                                        <c:if test="${category!=null}">
+                                        <c:if test="${!(categoryID == '')}">
                                             <c:if test="${requestScope.index == i}">
-                                                <a class="active"  style="border: none;background: #4cdc4c;width: 4%;" href="ProductListURL?service=ShowCategory&CategoryID=${category.categoryID}&index=${i}&filterChoice=<%=filterChoice%>">${i}</a>
+                                                <a class="active"  style="border: none;background: #4cdc4c;width: 4%;" href="ProductListURL?CategoryID=${categoryID}&index=${i}&filterChoice=<%=filterChoice%>">${i}</a>
                                             </c:if>
                                             <c:if test="${requestScope.index != i}">
-                                                <a class="active" href="ProductListURL?service=ShowCategory&CategoryID=${category.categoryID}&index=${i}&filterChoice=<%=filterChoice%>">${i}</a>
+                                                <a class="active" href="ProductListURL?CategoryID=${categoryID}&index=${i}&filterChoice=<%=filterChoice%>">${i}</a>
                                             </c:if>
                                         </c:if>
                                     </c:forEach>
@@ -321,12 +325,7 @@
                 </form>
             </div>
         </div>
-
-        <!-- Search End -->
-
-        <!-- Js Plugins -->
-        <script type="text/javascript">
-        </script>
+        <script src="js/price.js"></script>
     </body>
 
 </html>
