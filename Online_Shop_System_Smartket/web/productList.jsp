@@ -12,6 +12,9 @@
 <%@page import="model.DAOProduct"%>
 <%@page import="model.DAOProductImage"%>
 <%@page import="java.util.Vector" %>
+<%@page import="java.text.DateFormat" %>
+<%@page import="java.text.SimpleDateFormat" %>
+<%@page import="java.util.Date" %>
 
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
@@ -182,6 +185,11 @@
                                         <img src="<%=rsPaging.getString("ProductURL")%>" alt="alt"/>
                                         <%if(rsPaging.getInt("UnitDiscount")!=0) {%>
                                         <div class="sale-cotification">Sale</div>
+                                        <%}%>
+                                        <%  DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+                                            Date date = new Date();
+                                            if(rsPaging.getString("CreateDate").substring(0,10).equals(dateFormat.format(date))){%>
+                                        <div class="sale-cotification">Mới</div>
                                         <%}%>
                                     </div>
                                     <div class="product__item__text">

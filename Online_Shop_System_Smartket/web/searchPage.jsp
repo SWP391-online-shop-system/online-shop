@@ -12,6 +12,9 @@
 <%@page import="model.DAOProduct"%>
 <%@page import="model.DAOProductImage"%>
 <%@page import="java.util.Vector" %>
+<%@page import="java.text.DateFormat" %>
+<%@page import="java.text.SimpleDateFormat" %>
+<%@page import="java.util.Date" %>
 
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
@@ -149,11 +152,11 @@
                                             <select name="filterChoice" onchange="this.form.submit()">
                                                 <%String filterChoice = (String)request.getAttribute("filterChoice");
                                                 if(filterChoice == null){
-                                                filterChoice = "createDate asc";
+                                                filterChoice = "createDate desc";
                                                 }
                                                 %>
-                                                <option value="createDate asc"<%=(filterChoice.equals("createDate asc")||filterChoice.equals("p.CreateDate asc"))? "selected":""%>>Mới nhất</option>
-                                                <option value="createDate desc"<%=(filterChoice.equals("createDate desc")||filterChoice.equals("p.CreateDate desc"))? "selected":""%>>Cũ nhất</option>
+                                                <option value="createDate desc"<%=(filterChoice.equals("createDate desc")||filterChoice.equals("p.CreateDate desc"))? "selected":""%>>Mới nhất</option>
+                                                <option value="createDate asc"<%=(filterChoice.equals("createDate asc")||filterChoice.equals("p.CreateDate asc"))? "selected":""%>>Cũ nhất</option>
                                                 <option value="priceasc"<%=(filterChoice.equals("priceasc")||filterChoice.equals("(UnitPrice*(100-UnitDiscount)/100) asc"))? "selected":""%>>Giá tăng dần</option>
                                                 <option value="pricedesc"<%=(filterChoice.equals("pricedesc")||filterChoice.equals("(UnitPrice*(100-UnitDiscount)/100) desc"))? "selected":""%>>Giá giảm dần</option>
                                             </select>
@@ -173,6 +176,11 @@
                                         <img src="<%=rsPaging.getString("ProductURL")%>" alt="alt"/>
                                         <%if(rsPaging.getInt("UnitDiscount")!=0) {%>
                                         <div class="sale-cotification">Sale</div>
+                                        <%}%>
+                                        <%  DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+                                            Date date = new Date();
+                                            if(rsPaging.getString("CreateDate").substring(0,10).equals(dateFormat.format(date))){%>
+                                        <div class="sale-cotification">Mới</div>
                                         <%}%>
                                     </div>
                                     <div class="product__item__text">

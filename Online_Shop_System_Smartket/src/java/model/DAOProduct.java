@@ -5,6 +5,9 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.Vector;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -408,4 +411,20 @@ public class DAOProduct extends DBConnect {
         }
         return 0;
     }
+
+//    public static void main(String[] args) {
+//        DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+//        Date date = new Date();
+//        System.out.println(dateFormat.format(date));
+//        DAOProduct dao = new DAOProduct();
+//        ResultSet rs = dao.getData("select * from Product");
+//        try {
+//            while (rs.next()) {
+//                String s = rs.getString("CreateDate").substring(0, 10);
+//                System.out.println(s);
+//            }
+//        } catch (SQLException ex) {
+//            Logger.getLogger(DAOProduct.class.getName()).log(Level.SEVERE, null, ex);
+//        }
+//    }
 }
