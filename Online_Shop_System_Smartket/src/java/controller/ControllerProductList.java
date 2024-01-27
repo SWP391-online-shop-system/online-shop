@@ -282,7 +282,7 @@ public class ControllerProductList extends HttpServlet {
                         }
                         request.setAttribute("endPage", endPage);
                         ResultSet rsPaging = dao.getData("select * from product as p join ProductImage as pi on p.ProductID = pi.ProductID where pi.ProductURL like '%_1%' \n"
-                                + "and p.UnitPrice between " + minValue + " and " + maxValue + " and p.CategoryID= " + CategoryID_raw + " order by p." + filterChoice + " limit 9 offset " + ((index - 1) * 9));
+                                + "and p.UnitPrice between " + minValue + " and " + maxValue + " and p.CategoryID= " + CategoryID_raw + " order by " + filterChoice + " limit 9 offset " + ((index - 1) * 9));
                         request.setAttribute("rsPaging", rsPaging);
                         request.setAttribute("index", index);
                     }
@@ -372,57 +372,115 @@ public class ControllerProductList extends HttpServlet {
                 if (filterChoice.equals("createDate asc") || filterChoice.equals("p.CreateDate asc")) {
                     filterChoice = "p.CreateDate asc";
                     //paging
-                    int count = dao.getTotalProductByPrice(minValue, maxValue);
-                    int endPage = count / 9;
-                    if (count % 9 != 0) {
-                        endPage++;
+                    if (CategoryID_raw == null || CategoryID_raw.equals("")) {
+                        int count = dao.getTotalProductByPrice(minValue, maxValue);
+                        int endPage = count / 9;
+                        if (count % 9 != 0) {
+                            endPage++;
+                        }
+                        request.setAttribute("endPage", endPage);
+                        ResultSet rsPaging = dao.getData("select * from product as p join ProductImage as pi on p.ProductID = pi.ProductID where pi.ProductURL like '%_1%' \n"
+                                + "and p.UnitPrice between " + minValue + " and " + maxValue + " order by " + filterChoice + " limit 9 offset " + ((index - 1) * 9));
+                        request.setAttribute("rsPaging", rsPaging);
+                        request.setAttribute("index", index);
+                    } else {
+                        int CategoryID = Integer.parseInt(CategoryID_raw);
+                        int count = dao.getTotalProductByCateID(CategoryID, minValue, maxValue);
+                        int endPage = count / 9;
+                        if (count % 9 != 0) {
+                            endPage++;
+                        }
+                        request.setAttribute("endPage", endPage);
+                        ResultSet rsPaging = dao.getData("select * from product as p join ProductImage as pi on p.ProductID = pi.ProductID where pi.ProductURL like '%_1%' \n"
+                                + "and p.CategoryID = " + CategoryID + " and p.UnitPrice between " + minValue + " and " + maxValue + " order by " + filterChoice + " limit 9 offset " + ((index - 1) * 9));
+                        request.setAttribute("rsPaging", rsPaging);
+                        request.setAttribute("index", index);
                     }
-                    request.setAttribute("endPage", endPage);
-                    ResultSet rsPaging = dao.getData("select * from product as p join ProductImage as pi on p.ProductID = pi.ProductID where pi.ProductURL like '%_1%' \n"
-                            + "and p.UnitPrice between " + minValue + " and " + maxValue + " order by " + filterChoice + " limit 9 offset " + ((index - 1) * 9));
-                    request.setAttribute("rsPaging", rsPaging);
-                    request.setAttribute("index", index);
+
                 }
                 if (filterChoice.equals("CreateDate desc") || filterChoice.equals("p.Create desc")) {
                     filterChoice = "p.CreateDate desc";
-                    int count = dao.getTotalProductByPrice(minValue, maxValue);
-                    int endPage = count / 9;
-                    if (count % 9 != 0) {
-                        endPage++;
+                    if (CategoryID_raw == null || CategoryID_raw.equals("")) {
+                        int count = dao.getTotalProductByPrice(minValue, maxValue);
+                        int endPage = count / 9;
+                        if (count % 9 != 0) {
+                            endPage++;
+                        }
+                        request.setAttribute("endPage", endPage);
+                        ResultSet rsPaging = dao.getData("select * from product as p join ProductImage as pi on p.ProductID = pi.ProductID where pi.ProductURL like '%_1%' \n"
+                                + "and p.UnitPrice between " + minValue + " and " + maxValue + " order by " + filterChoice + " limit 9 offset " + ((index - 1) * 9));
+                        request.setAttribute("rsPaging", rsPaging);
+                        request.setAttribute("index", index);
+                    } else {
+                        int CategoryID = Integer.parseInt(CategoryID_raw);
+                        int count = dao.getTotalProductByCateID(CategoryID, minValue, maxValue);
+                        int endPage = count / 9;
+                        if (count % 9 != 0) {
+                            endPage++;
+                        }
+                        request.setAttribute("endPage", endPage);
+                        ResultSet rsPaging = dao.getData("select * from product as p join ProductImage as pi on p.ProductID = pi.ProductID where pi.ProductURL like '%_1%' \n"
+                                + "and p.CategoryID = " + CategoryID + " and p.UnitPrice between " + minValue + " and " + maxValue + " order by " + filterChoice + " limit 9 offset " + ((index - 1) * 9));
+                        request.setAttribute("rsPaging", rsPaging);
+                        request.setAttribute("index", index);
                     }
-                    request.setAttribute("endPage", endPage);
-                    ResultSet rsPaging = dao.getData("select * from product as p join ProductImage as pi on p.ProductID = pi.ProductID where pi.ProductURL like '%_1%' \n"
-                            + "and p.UnitPrice between " + minValue + " and " + maxValue + " order by " + filterChoice + " limit 9 offset " + ((index - 1) * 9));
-                    request.setAttribute("rsPaging", rsPaging);
-                    request.setAttribute("index", index);
+
                 }
                 if (filterChoice.equals("priceasc") || filterChoice.equals("(UnitPrice*(100-UnitDiscount)/100) asc")) {
                     filterChoice = "(UnitPrice*(100-UnitDiscount)/100) asc";
-                    int count = dao.getTotalProductByPrice(minValue, maxValue);
-                    int endPage = count / 9;
-                    if (count % 9 != 0) {
-                        endPage++;
+                    if (CategoryID_raw == null || CategoryID_raw.equals("")) {
+                        int count = dao.getTotalProductByPrice(minValue, maxValue);
+                        int endPage = count / 9;
+                        if (count % 9 != 0) {
+                            endPage++;
+                        }
+                        request.setAttribute("endPage", endPage);
+                        ResultSet rsPaging = dao.getData("select * from product as p join ProductImage as pi on p.ProductID = pi.ProductID where pi.ProductURL like '%_1%' \n"
+                                + "and p.UnitPrice between " + minValue + " and " + maxValue + " order by " + filterChoice + " limit 9 offset " + ((index - 1) * 9));
+                        request.setAttribute("rsPaging", rsPaging);
+                        request.setAttribute("index", index);
+                    } else {
+                        int CategoryID = Integer.parseInt(CategoryID_raw);
+                        int count = dao.getTotalProductByCateID(CategoryID, minValue, maxValue);
+                        int endPage = count / 9;
+                        if (count % 9 != 0) {
+                            endPage++;
+                        }
+                        request.setAttribute("endPage", endPage);
+                        ResultSet rsPaging = dao.getData("select * from product as p join ProductImage as pi on p.ProductID = pi.ProductID where pi.ProductURL like '%_1%' \n"
+                                + "and p.CategoryID = " + CategoryID + " and p.UnitPrice between " + minValue + " and " + maxValue + " order by " + filterChoice + " limit 9 offset " + ((index - 1) * 9));
+                        request.setAttribute("rsPaging", rsPaging);
+                        request.setAttribute("index", index);
                     }
-                    request.setAttribute("endPage", endPage);
-                    ResultSet rsPaging = dao.getData("select * from product as p join ProductImage as pi on p.ProductID = pi.ProductID where pi.ProductURL like '%_1%' \n"
-                            + "and p.UnitPrice between " + minValue + " and " + maxValue + " order by " + filterChoice + " limit 9 offset " + ((index - 1) * 9));
-                    request.setAttribute("rsPaging", rsPaging);
-                    request.setAttribute("index", index);
+
                 }
                 if (filterChoice.equals("pricedesc") || filterChoice.equals("(UnitPrice*(100-UnitDiscount)/100) desc")) {
                     filterChoice = "(UnitPrice*(100-UnitDiscount)/100) desc";
-                    int count = dao.getTotalProductByPrice(minValue, maxValue);
-                    int endPage = count / 9;
-                    if (count % 9 != 0) {
-                        endPage++;
+                    if (CategoryID_raw == null || CategoryID_raw.equals("")) {
+                        int count = dao.getTotalProductByPrice(minValue, maxValue);
+                        int endPage = count / 9;
+                        if (count % 9 != 0) {
+                            endPage++;
+                        }
+                        request.setAttribute("endPage", endPage);
+                        ResultSet rsPaging = dao.getData("select * from product as p join ProductImage as pi on p.ProductID = pi.ProductID where pi.ProductURL like '%_1%' \n"
+                                + "and p.UnitPrice between " + minValue + " and " + maxValue + " order by " + filterChoice + " limit 9 offset " + ((index - 1) * 9));
+                        request.setAttribute("rsPaging", rsPaging);
+                        request.setAttribute("index", index);
+                    } else {
+                        int CategoryID = Integer.parseInt(CategoryID_raw);
+                        int count = dao.getTotalProductByCateID(CategoryID, minValue, maxValue);
+                        int endPage = count / 9;
+                        if (count % 9 != 0) {
+                            endPage++;
+                        }
+                        request.setAttribute("endPage", endPage);
+                        ResultSet rsPaging = dao.getData("select * from product as p join ProductImage as pi on p.ProductID = pi.ProductID where pi.ProductURL like '%_1%' \n"
+                                + "and p.CategoryID = " + CategoryID + " and p.UnitPrice between " + minValue + " and " + maxValue + " order by " + filterChoice + " limit 9 offset " + ((index - 1) * 9));
+                        request.setAttribute("rsPaging", rsPaging);
+                        request.setAttribute("index", index);
                     }
-                    request.setAttribute("endPage", endPage);
-                    ResultSet rsPaging = dao.getData("select * from product as p join ProductImage as pi on p.ProductID = pi.ProductID where pi.ProductURL like '%_1%' \n"
-                            + "and p.UnitPrice between " + minValue + " and " + maxValue + " order by " + filterChoice + " limit 9 offset " + ((index - 1) * 9));
-                    request.setAttribute("rsPaging", rsPaging);
-                    request.setAttribute("index", index);
                 }
-
             }
             request.setAttribute("oldMaxPrice", maxValue);
             request.setAttribute("oldMinPrice", minValue);

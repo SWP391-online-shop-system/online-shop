@@ -110,6 +110,9 @@
                                                 <div class="group">
                                                     <form action="ProductListURL" method="GET">
                                                         <input type="hidden" name="service" value="price"/>
+                                                        <c:if test="${categoryID != ''}">
+                                                            <input type="hidden" name="CategoryID" value="${categoryID}"/>
+                                                        </c:if>
                                                         <div class="progress1"></div>
                                                         <div class="range-input">
                                                             <input name="inputMinPrice" class="range-min" max="<%=maxPrice%>" min="<%=minPrice%>" type="range" value="<%=(oldMinPrice==null ? minPrice : oldMinPrice)%>">
@@ -140,17 +143,16 @@
                                     <div class="shop__product__option__right">
                                         <p>Bộ lọc</p>
                                         <form action="ProductListURL" method="GET">
-                                            <c:set value="${requestScope.catename}" var="category"/>
-                                            <c:if test="${category == null}">
+                                            <c:if test="${categoryID == ''}">
                                                 <input type="hidden" name="service" value="filter"/>
+                                            </c:if>
+                                            <c:if test="${categoryID != ''}">
+                                                <input type="hidden" name="service" value="filter"/>
+                                                <input type="hidden" name="CategoryID" value="${categoryID}"/>
                                             </c:if>
                                             <c:if test="${((requestScope.maxPrice != requestScope.oldMaxPrice)||(requestScope.minPrice != requestScope.oldMinPrice)) && (requestScope.oldMaxPrice != null && requestScope.oldMinPrice != null)}">
                                                 <input name="inputMinPrice" type="hidden" value="<%=(oldMinPrice==null ? minPrice : oldMinPrice)%>">
                                                 <input name="inputMaxPrice" type="hidden" value="<%=(oldMaxPrice==null ? maxPrice : oldMaxPrice)%>">
-                                            </c:if>
-                                            <c:if test="${category != null}">
-                                                <input type="hidden" name="service" value="filter"/>
-                                                <input type="hidden" name="CategoryID" value="${category.categoryID}"/>
                                             </c:if>
                                             <select name="filterChoice" onchange="this.form.submit()">
                                                 <%String filterChoice = (String)request.getAttribute("filterChoice");
@@ -229,19 +231,19 @@
 
                                             <c:if test="${((requestScope.maxPrice == requestScope.oldMaxPrice) &&(requestScope.minPrice == requestScope.oldMinPrice))|| (requestScope.oldMinPrice==null && requestScope.oldMaxPrice==null)}">
                                                 <c:if test="${requestScope.index == i}">
-                                                    <a class="active"  style="border: none;background: #4cdc4c;width: 4%;" href="ProductListURL?service=filter&index=${i}&filterChoice=<%=filterChoice%>"">${i}</a>
+                                                    <a class="active"  style="border: none;background: #4cdc4c;width: 4%;" href="ProductListURL?service=filter&index=${i}&filterChoice=<%=filterChoice%>&inputMinPrice=<%=oldMinPrice%>&inputMaxPrice=<%=oldMaxPrice%>">${i}</a>
                                                 </c:if>
-                                                <c:if test="${requestScope.index != i}">
-                                                    <a class="active" href="ProductListURL?service=filter&index=${i}&filterChoice=<%=filterChoice%>">${i}</a>
+                                                <c:if test="${requestScope.index != i}">                                                    <a class="active" href="ProductListURL?service=filter&index=${i}&filterChoice=<%=filterChoice%>&inputMinPrice=<%=oldMinPrice%>&inputMaxPrice=<%=oldMaxPrice%>">${i}</a>
+
                                                 </c:if>
                                             </c:if>
                                         </c:if>
-                                        <c:if test="${!(categoryID == '')}">
+                                        <c:if test="${categoryID != ''}">
                                             <c:if test="${requestScope.index == i}">
-                                                <a class="active"  style="border: none;background: #4cdc4c;width: 4%;" href="ProductListURL?CategoryID=${categoryID}&index=${i}&filterChoice=<%=filterChoice%>">${i}</a>
+                                                <a class="active"  style="border: none;background: #4cdc4c;width: 4%;" href="ProductListURL?CategoryID=${categoryID}&index=${i}&filterChoice=<%=filterChoice%>&inputMinPrice=<%=oldMinPrice%>&inputMaxPrice=<%=oldMaxPrice%>">${i}</a>
                                             </c:if>
                                             <c:if test="${requestScope.index != i}">
-                                                <a class="active" href="ProductListURL?CategoryID=${categoryID}&index=${i}&filterChoice=<%=filterChoice%>">${i}</a>
+                                                <a class="active" href="ProductListURL?CategoryID=${categoryID}&index=${i}&filterChoice=<%=filterChoice%>&inputMinPrice=<%=oldMinPrice%>&inputMaxPrice=<%=oldMaxPrice%>">${i}</a>
                                             </c:if>
                                         </c:if>
                                     </c:forEach>
