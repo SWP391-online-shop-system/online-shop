@@ -98,22 +98,26 @@
                                             <%
                                             DAOProduct dao = new DAOProduct();
                                             DAOProductImage daoImage = new DAOProductImage();
-                                            ResultSet rsMax = (ResultSet)request.getAttribute("rsMax");
-                                            ResultSet rsMin = (ResultSet)request.getAttribute("rsMin");
-                                            Double maxPrice = ((rsMax.next())? rsMax.getDouble(6):0);
-                                            Double minPrice = ((rsMin.next())? rsMin.getDouble(6):0);
+                                            Double oldMinPrice=(Double)request.getAttribute("oldMinPrice");
+                                            Double oldMaxPrice=(Double)request.getAttribute("oldMaxPrice");
+                                            Double maxPrice =(Double)request.getAttribute("maxPrice");
+                                            Double minPrice = (Double)request.getAttribute("minPrice");
                                             %>
                                             <div class="card-body">
                                                 <div class="group">
-                                                    <div class="progress1"></div>
-                                                    <div class="range-input">
-                                                        <input class="range-min" max="<%=maxPrice%>" type="range" value="<%=minPrice%>">
-                                                        <input class="range-max" max="<%=maxPrice%>" type="range" value="<%=maxPrice%>">
-                                                    </div>
-                                                    <div class="range-text">
-                                                        <div class="text-min"><%=df.format(minPrice)%></div>
-                                                        <div class="text-max"><%=df.format(maxPrice)%></div>
-                                                    </div>
+                                                    <form action="searchPageURL" method="GET">
+                                                        <input type="hidden" name="keyWord" value="${keyWord}"/>
+                                                        <div class="progress1"></div>
+                                                        <div class="range-input">
+                                                            <input name="inputMinPrice" class="range-min" max="<%=maxPrice%>" min="<%=minPrice%>" type="range" value="<%=(oldMinPrice==null ? minPrice : oldMinPrice)%>">
+                                                            <input name="inputMaxPrice" class="range-max" max="${maxPrice}" type="range" value="<%=(oldMaxPrice==null ? maxPrice : oldMaxPrice)%>">
+                                                        </div>
+                                                        <div class="range-text">
+                                                            <div class="text-min"><%=df.format(oldMinPrice==null ? minPrice : oldMinPrice)%></div>
+                                                            <div class="text-max"><%=df.format(oldMaxPrice==null ? maxPrice : oldMaxPrice)%></div>
+                                                        </div>
+                                                        <button class="submit-price-form" type="submit">Lọc</button>
+                                                    </form>
                                                 </div>
                                             </div>
                                         </div>
@@ -140,6 +144,8 @@
                                         <p>Bộ lọc</p>
                                         <form action="searchPageURL" method="GET">
                                             <input type="hidden" name="keyWord" value="${requestScope.keyWord}"/>
+                                            <input name="inputMinPrice" type="hidden" value="<%=(oldMinPrice==null ? minPrice : oldMinPrice)%>">
+                                            <input name="inputMaxPrice" type="hidden" value="<%=(oldMaxPrice==null ? maxPrice : oldMaxPrice)%>">
                                             <select name="filterChoice" onchange="this.form.submit()">
                                                 <%String filterChoice = (String)request.getAttribute("filterChoice");
                                                 if(filterChoice == null){
@@ -158,8 +164,6 @@
                         </div>
                         <div class="row">
                             <%
-                              DAOProduct dao = new DAOProduct();
-                                DAOProductImage daoImage = new DAOProductImage();
                                 ResultSet rsPaging = (ResultSet)request.getAttribute("rsPaging");
                                 while(rsPaging.next()) {
                             %>
@@ -203,14 +207,13 @@
                         <div class="row">
                             <div class="col-lg-12">
                                 <div class="product__pagination">
-                                    <c:set value="${requestScope.catename}" var="category"/>
                                     <c:set value="${requestScope.keyWord}" var="keyWord"/>
                                     <c:forEach begin="1" end="${endPage}" var="i">
                                         <c:if test="${requestScope.index == i}">
-                                            <a class="active"  style="border: none;background: #4cdc4c;width: 4%;" href="searchPageURL?keyWord=${keyWord}&index=${i}&filterChoice=<%=filterChoice%>"">${i}</a>
+                                            <a class="active"  style="border: none;background: #4cdc4c;width: 4%;" href="searchPageURL?keyWord=${keyWord}&index=${i}&filterChoice=<%=filterChoice%>&inputMinPrice=<%=oldMinPrice%>&inputMaxPrice=<%=oldMaxPrice%>">${i}</a>
                                         </c:if>
                                         <c:if test="${requestScope.index != i}">
-                                            <a class="active" href="searchPageURL?keyWord=${keyWord}&index=${i}&filterChoice=<%=filterChoice%>">${i}</a>
+                                            <a class="active" href="searchPageURL?keyWord=${keyWord}&index=${i}&filterChoice=<%=filterChoice%>&inputMinPrice=<%=oldMinPrice%>&inputMaxPrice=<%=oldMaxPrice%>">${i}</a>
                                         </c:if>
                                     </c:forEach>
                                 </div>
@@ -294,7 +297,7 @@
             </div>
         </div>
         <!-- Js Plugins -->
-        <script src="js/price.js"></script>
+        <script src="js/searchPrice.js"></script>
     </body>
 
 </html>

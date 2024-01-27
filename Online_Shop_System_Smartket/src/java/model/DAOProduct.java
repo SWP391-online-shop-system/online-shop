@@ -15,21 +15,6 @@ import java.util.logging.Logger;
  */
 public class DAOProduct extends DBConnect {
 
-    @Override
-    public ResultSet getData(String sql) {
-        ResultSet rs = null;
-        Statement state;
-        try {
-            state = conn.createStatement(
-                    ResultSet.TYPE_SCROLL_SENSITIVE,
-                    ResultSet.CONCUR_UPDATABLE);
-            rs = state.executeQuery(sql);
-        } catch (SQLException ex) {
-
-        }
-        return rs;
-    }
-
     public Vector<Product> getProduct(String sql) {
         Vector<Product> vector = new Vector<>();
         try {
@@ -312,8 +297,8 @@ public class DAOProduct extends DBConnect {
         return list;
     }
 
-    public int getTotalProductBySearch(String key) {
-        String sql = "select count(*) from Product where ProductName like '%" + key + "%'";
+    public int getTotalProductBySearch(String key, double min, double max) {
+        String sql = "select count(*) from Product where ProductName like '%" + key + "%' and UnitPrice between " + min + " and " + max;
         try {
             PreparedStatement st = conn.prepareStatement(sql);
             ResultSet rs = st.executeQuery();
@@ -384,6 +369,34 @@ public class DAOProduct extends DBConnect {
 
     public double getMinUnitPrice() {
         String sql = "select UnitPrice from Product order by UnitPrice asc limit 1 ";
+        try {
+            PreparedStatement st = conn.prepareStatement(sql);
+            ResultSet rs = st.executeQuery();
+            while (rs.next()) {
+                return rs.getDouble(1);
+            }
+        } catch (SQLException e) {
+            System.out.println(e);
+        }
+        return 0;
+    }
+
+    public double getMaxUnitPriceSearch(String keyWord) {
+        String sql = "select UnitPrice from Product where ProductName like'%" + keyWord + "%' order by UnitPrice desc limit 1";
+        try {
+            PreparedStatement st = conn.prepareStatement(sql);
+            ResultSet rs = st.executeQuery();
+            while (rs.next()) {
+                return rs.getDouble(1);
+            }
+        } catch (SQLException e) {
+            System.out.println(e);
+        }
+        return 0;
+    }
+
+    public double getMinUnitPriceSearch(String keyWord) {
+        String sql = "select UnitPrice from Product where ProductName like'%" + keyWord + "%' order by UnitPrice asc limit 1";
         try {
             PreparedStatement st = conn.prepareStatement(sql);
             ResultSet rs = st.executeQuery();
