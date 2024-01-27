@@ -400,7 +400,7 @@ public class ControllerProductList extends HttpServlet {
                     }
 
                 }
-                if (filterChoice.equals("createDate desc") || filterChoice.equals("p.Create desc")) {
+                if (filterChoice.equals("createDate desc") || filterChoice.equals("p.CreateDate desc")) {
                     filterChoice = "p.CreateDate desc";
                     if (CategoryID_raw == null || CategoryID_raw.equals("")) {
                         int count = dao.getTotalProductByPrice(minValue, maxValue);
