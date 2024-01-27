@@ -356,6 +356,34 @@ public class DAOProduct extends DBConnect {
         return 0;
     }
 
+    public int getTotalProductByRate(int rate, double min, double max) {
+        String sql = "select count(*) from Product where TotalRate = " + rate + " and UnitPrice between " + min + " and " + max;
+        try {
+            PreparedStatement st = conn.prepareStatement(sql);
+            ResultSet rs = st.executeQuery();
+            while (rs.next()) {
+                return rs.getInt(1);
+            }
+        } catch (SQLException e) {
+            System.out.println(e);
+        }
+        return 0;
+    }
+
+    public int getTotalProductByRateAndCategoryID(int rate, int categoryID, double min, double max) {
+        String sql = "select count(*) from Product where TotalRate = " + rate + "and CategoryID = " + categoryID + " and UnitPrice between " + min + " and " + max;
+        try {
+            PreparedStatement st = conn.prepareStatement(sql);
+            ResultSet rs = st.executeQuery();
+            while (rs.next()) {
+                return rs.getInt(1);
+            }
+        } catch (SQLException e) {
+            System.out.println(e);
+        }
+        return 0;
+    }
+
     public double getMaxUnitPrice() {
         String sql = "select UnitPrice from Product order by UnitPrice desc limit 1";
         try {

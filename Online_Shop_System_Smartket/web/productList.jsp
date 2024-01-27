@@ -81,14 +81,56 @@
                                     </div>
                                     <div class="card">
                                         <div class="card-heading">
-                                            <a data-toggle="collapse" data-target="#collapseThree">Lọc sản phẩm nhanh</a>
+                                            <a data-toggle="collapse" data-target="#collapseThree">Lọc theo đánh giá</a>
                                         </div>
                                         <div id="collapseThree" class="collapse show" data-parent="#accordionExample">
                                             <div class="card-body">
                                                 <div class="shop__sidebar__price">
+                                                    <%String TotalRate_raw = (String)request.getAttribute("TotalRate");
+                                                    int TotalRate=0;
+                                                    if(TotalRate_raw==null) {
+                                                        TotalRate = 0;
+                                                       } else {
+                                                       TotalRate = Integer.parseInt(TotalRate_raw);
+                                                        }
+                                                    %>
                                                     <ul>
-                                                        <li><a href="#">Được đánh giá cao</a></li>
-                                                        <li><a href="#">Mới ra mắt</a></li>
+                                                        <li style="<%=TotalRate==5?"background: #0091ff2b;":""%>"><a href="ProductListURL?service=rate&CategoryID=${categoryID}&TotalRate=5&filterChoice=${filterChoice}&inputMinPrice=${oldMinPrice}&inputMaxPrice=${oldMaxPrice}">
+                                                                <i class="fa fa-star" aria-hidden="true"></i>
+                                                                <i class="fa fa-star" aria-hidden="true"></i>
+                                                                <i class="fa fa-star" aria-hidden="true"></i>
+                                                                <i class="fa fa-star" aria-hidden="true"></i>
+                                                                <i class="fa fa-star" aria-hidden="true"></i>
+                                                            </a></li>
+                                                        <li style="<%=TotalRate==4?"background: #0091ff2b;":""%>"><a href="ProductListURL?service=rate&CategoryID=${categoryID}&TotalRate=4&filterChoice=${filterChoice}&inputMinPrice=${oldMinPrice}&inputMaxPrice=${oldMaxPrice}">
+                                                                <i class="fa fa-star" aria-hidden="true"></i>
+                                                                <i class="fa fa-star" aria-hidden="true"></i>
+                                                                <i class="fa fa-star" aria-hidden="true"></i>
+                                                                <i class="fa fa-star" aria-hidden="true"></i>
+                                                                <i class="fa fa-star-o" aria-hidden="true"></i>
+                                                            </a></li>
+                                                        <li style="<%=TotalRate==3 ? "background: #0091ff2b;" : ""%>"><a href="ProductListURL?service=rate&CategoryID=${categoryID}&TotalRate=3&filterChoice=${filterChoice}&inputMinPrice=${oldMinPrice}&inputMaxPrice=${oldMaxPrice}">
+                                                                <i class="fa fa-star" aria-hidden="true"></i>
+                                                                <i class="fa fa-star" aria-hidden="true"></i>
+                                                                <i class="fa fa-star" aria-hidden="true"></i>
+                                                                <i class="fa fa-star-o" aria-hidden="true"></i>
+                                                                <i class="fa fa-star-o" aria-hidden="true"></i>
+                                                            </a></li>
+                                                        <li style="<%=TotalRate==2 ? "background: #0091ff2b;" : ""%>"><a href="ProductListURL?service=rate&CategoryID=${categoryID}&TotalRate=2&filterChoice=${filterChoice}&inputMinPrice=${oldMinPrice}&inputMaxPrice=${oldMaxPrice}">
+                                                                <i class="fa fa-star" aria-hidden="true"></i>
+                                                                <i class="fa fa-star" aria-hidden="true"></i>
+                                                                <i class="fa fa-star-o" aria-hidden="true"></i>
+                                                                <i class="fa fa-star-o" aria-hidden="true"></i>
+                                                                <i class="fa fa-star-o" aria-hidden="true"></i>
+                                                            </a></li>
+                                                        <li style="<%=TotalRate==1 ? "background: #0091ff2b;" : ""%>"><a href="ProductListURL?service=rate&CategoryID=${categoryID}&TotalRate=1&filterChoice=${filterChoice}&inputMinPrice=${oldMinPrice}&inputMaxPrice=${oldMaxPrice}">
+                                                                <i class="fa fa-star" aria-hidden="true"></i>
+                                                                <i class="fa fa-star-o" aria-hidden="true"></i>
+                                                                <i class="fa fa-star-o" aria-hidden="true"></i>
+                                                                <i class="fa fa-star-o" aria-hidden="true"></i>
+                                                                <i class="fa fa-star-o" aria-hidden="true"></i>
+                                                            </a></li>
+
                                                     </ul>
                                                 </div>
                                             </div>
@@ -148,10 +190,12 @@
                                         <form action="ProductListURL" method="GET">
                                             <c:if test="${categoryID == ''}">
                                                 <input type="hidden" name="service" value="filter"/>
+                                                <input type="hidden" name="TotalRate" value="${TotalRate}"/>
                                             </c:if>
                                             <c:if test="${categoryID != ''}">
                                                 <input type="hidden" name="service" value="filter"/>
                                                 <input type="hidden" name="CategoryID" value="${categoryID}"/>
+                                                <input type="hidden" name="TotalRate" value="${TotalRate}"/>
                                             </c:if>
                                             <c:if test="${((requestScope.maxPrice != requestScope.oldMaxPrice)||(requestScope.minPrice != requestScope.oldMinPrice)) && (requestScope.oldMaxPrice != null && requestScope.oldMinPrice != null)}">
                                                 <input name="inputMinPrice" type="hidden" value="<%=(oldMinPrice==null ? minPrice : oldMinPrice)%>">

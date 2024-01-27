@@ -1228,8 +1228,28 @@ ol {
 .shop__sidebar__price ul,
 .shop__sidebar__brand ul {
     height: 304px;
+    margin-left: -33px;
 }
-
+.shop__sidebar__price ul li {
+    width: 140px;
+    background: none;
+    margin-bottom: 10px;
+}
+.shop__sidebar__price ul li i{
+    color: #ffbd49;
+    font-size:14px;
+    margin-right: 4px;
+    margin-left: 3px;
+    transition: all 0.3s;
+}
+.shop__sidebar__price ul li:hover {
+    background: #faf9fa;
+    transform: scale(1.1);
+}
+.shop__sidebar__price ul li:active {
+    background: #faf9fa;
+    transform: scale(1.1);
+}
 .shop__sidebar__categories ul li,
 .shop__sidebar__price ul li,
 .shop__sidebar__brand ul li {
