@@ -363,6 +363,26 @@ public class DAOProduct extends DBConnect {
         return 0;
     }
 
+    public int getTotalTypeAndCategoryIDProduct(String type, int CategoryID, double min, double max) {
+        if (type.equals("showNew")) {
+            type = "CreateDate = curDate()";
+        }
+        if (type.equals("showSale")) {
+            type = "UnitDiscount != 0";
+        }
+        String sql = "select count(*) from Product where " + type + " and CategoryID = " + CategoryID + " and UnitPrice between " + min + " and " + max;
+        try {
+            PreparedStatement st = conn.prepareStatement(sql);
+            ResultSet rs = st.executeQuery();
+            while (rs.next()) {
+                return rs.getInt(1);
+            }
+        } catch (SQLException e) {
+            System.out.println(e);
+        }
+        return 0;
+    }
+
     public int getTotalProductByPrice(double min, double max) {
         String sql = "select count(*) from Product where UnitPrice between " + min + " and " + max;
         try {
@@ -379,6 +399,46 @@ public class DAOProduct extends DBConnect {
 
     public int getTotalProductByRate(int rate, double min, double max) {
         String sql = "select count(*) from Product where TotalRate = " + rate + " and UnitPrice between " + min + " and " + max;
+        try {
+            PreparedStatement st = conn.prepareStatement(sql);
+            ResultSet rs = st.executeQuery();
+            while (rs.next()) {
+                return rs.getInt(1);
+            }
+        } catch (SQLException e) {
+            System.out.println(e);
+        }
+        return 0;
+    }
+
+    public int getTotalTypeAndRateProduct(String type, int totalRate, double min, double max) {
+        if (type.equals("showNew")) {
+            type = "CreateDate = curDate()";
+        }
+        if (type.equals("showSale")) {
+            type = "UnitDiscount != 0";
+        }
+        String sql = "select count(*) from Product where " + type + " and TotalRate = " + totalRate + " and UnitPrice between " + min + " and " + max;
+        try {
+            PreparedStatement st = conn.prepareStatement(sql);
+            ResultSet rs = st.executeQuery();
+            while (rs.next()) {
+                return rs.getInt(1);
+            }
+        } catch (SQLException e) {
+            System.out.println(e);
+        }
+        return 0;
+    }
+
+    public int getTotalTypeAndRateAndCategoryID(String type, int totalRate, int CategoryID, double min, double max) {
+        if (type.equals("showNew")) {
+            type = "CreateDate = curDate()";
+        }
+        if (type.equals("showSale")) {
+            type = "UnitDiscount != 0";
+        }
+        String sql = "select count(*) from Product where " + type + " and TotalRate = " + totalRate + " and CategoryID = " + CategoryID + " and UnitPrice between " + min + " and " + max;
         try {
             PreparedStatement st = conn.prepareStatement(sql);
             ResultSet rs = st.executeQuery();
