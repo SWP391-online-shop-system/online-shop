@@ -80,14 +80,56 @@
                                     </div>
                                     <div class="card">
                                         <div class="card-heading">
-                                            <a data-toggle="collapse" data-target="#collapseThree">Lọc sản phẩm nhanh</a>
+                                            <a data-toggle="collapse" data-target="#collapseThree">Lọc theo đánh giá</a>
                                         </div>
                                         <div id="collapseThree" class="collapse show" data-parent="#accordionExample">
                                             <div class="card-body">
                                                 <div class="shop__sidebar__price">
+                                                    <%String TotalRate_raw = (String)request.getAttribute("TotalRate");
+                                                    int TotalRate=0;
+                                                    if(TotalRate_raw==null || TotalRate_raw.equals("")) {
+                                                        TotalRate = 0;
+                                                       } else {
+                                                       TotalRate = Integer.parseInt(TotalRate_raw);
+                                                        }
+                                                    %>
                                                     <ul>
-                                                        <li><a href="#">Được đánh giá cao</a></li>
-                                                        <li><a href="#">Mới ra mắt</a></li>
+                                                        <li style="<%=TotalRate==5?"background: #0091ff2b;":""%>"><a href="ProductListURL?service=rate&CategoryID=${categoryID}&TotalRate=5&filterChoice=${filterChoice}&inputMinPrice=${oldMinPrice}&inputMaxPrice=${oldMaxPrice}">
+                                                                <i class="fa fa-star" aria-hidden="true"></i>
+                                                                <i class="fa fa-star" aria-hidden="true"></i>
+                                                                <i class="fa fa-star" aria-hidden="true"></i>
+                                                                <i class="fa fa-star" aria-hidden="true"></i>
+                                                                <i class="fa fa-star" aria-hidden="true"></i>
+                                                            </a></li>
+                                                        <li style="<%=TotalRate==4?"background: #0091ff2b;":""%>"><a href="ProductListURL?service=rate&CategoryID=${categoryID}&TotalRate=4&filterChoice=${filterChoice}&inputMinPrice=${oldMinPrice}&inputMaxPrice=${oldMaxPrice}">
+                                                                <i class="fa fa-star" aria-hidden="true"></i>
+                                                                <i class="fa fa-star" aria-hidden="true"></i>
+                                                                <i class="fa fa-star" aria-hidden="true"></i>
+                                                                <i class="fa fa-star" aria-hidden="true"></i>
+                                                                <i class="fa fa-star-o" aria-hidden="true"></i>
+                                                            </a></li>
+                                                        <li style="<%=TotalRate==3 ? "background: #0091ff2b;" : ""%>"><a href="ProductListURL?service=rate&CategoryID=${categoryID}&TotalRate=3&filterChoice=${filterChoice}&inputMinPrice=${oldMinPrice}&inputMaxPrice=${oldMaxPrice}">
+                                                                <i class="fa fa-star" aria-hidden="true"></i>
+                                                                <i class="fa fa-star" aria-hidden="true"></i>
+                                                                <i class="fa fa-star" aria-hidden="true"></i>
+                                                                <i class="fa fa-star-o" aria-hidden="true"></i>
+                                                                <i class="fa fa-star-o" aria-hidden="true"></i>
+                                                            </a></li>
+                                                        <li style="<%=TotalRate==2 ? "background: #0091ff2b;" : ""%>"><a href="ProductListURL?service=rate&CategoryID=${categoryID}&TotalRate=2&filterChoice=${filterChoice}&inputMinPrice=${oldMinPrice}&inputMaxPrice=${oldMaxPrice}">
+                                                                <i class="fa fa-star" aria-hidden="true"></i>
+                                                                <i class="fa fa-star" aria-hidden="true"></i>
+                                                                <i class="fa fa-star-o" aria-hidden="true"></i>
+                                                                <i class="fa fa-star-o" aria-hidden="true"></i>
+                                                                <i class="fa fa-star-o" aria-hidden="true"></i>
+                                                            </a></li>
+                                                        <li style="<%=TotalRate==1 ? "background: #0091ff2b;" : ""%>"><a href="ProductListURL?service=rate&CategoryID=${categoryID}&TotalRate=1&filterChoice=${filterChoice}&inputMinPrice=${oldMinPrice}&inputMaxPrice=${oldMaxPrice}">
+                                                                <i class="fa fa-star" aria-hidden="true"></i>
+                                                                <i class="fa fa-star-o" aria-hidden="true"></i>
+                                                                <i class="fa fa-star-o" aria-hidden="true"></i>
+                                                                <i class="fa fa-star-o" aria-hidden="true"></i>
+                                                                <i class="fa fa-star-o" aria-hidden="true"></i>
+                                                            </a></li>
+
                                                     </ul>
                                                 </div>
                                             </div>
@@ -124,6 +166,9 @@
                                                 </div>
                                             </div>
                                         </div>
+                                        <form action="ProductListURL" method="GET">
+                                            <button class="reset-filter" type="submit">Xóa tất cả</button>
+                                        </form>
                                     </div>
                                 </div>
                             </div>
@@ -178,8 +223,24 @@
                                         <div class="sale-cotification">Sale</div>
                                         <%}%>
                                         <%  DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
-                                            Date date = new Date();
-                                            if(rsPaging.getString("CreateDate").substring(0,10).equals(dateFormat.format(date))){%>
+                                             Calendar calendar = Calendar.getInstance();
+                                             String date1 = null, date2 = null, date3 = null;
+                                             for (int i = 0; i < 3; i++) {
+                                             Date date = calendar.getTime();
+                                             switch (i) {
+                                                     case 0:
+                                                         date1 = dateFormat.format(date);
+                                                         break;
+                                                     case 1:
+                                                         date2 = dateFormat.format(date);
+                                                         break;
+                                                     case 3:
+                                                         date3 = dateFormat.format(date);
+                                                         break;
+                                                         }
+                                                         calendar.add(Calendar.DAY_OF_MONTH, -1);
+                                                         }
+                                             if(rsPaging.getString("CreateDate").substring(0,10).equals(date1) ||rsPaging.getString("CreateDate").substring(0,10).equals(date2)||rsPaging.getString("CreateDate").substring(0,10).equals(date3) ){%>
                                         <div class="sale-cotification">Mới</div>
                                         <%}%>
                                     </div>

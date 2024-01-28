@@ -7,6 +7,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.Vector;
 import java.util.logging.Level;
@@ -342,6 +343,26 @@ public class DAOProduct extends DBConnect {
         return 0;
     }
 
+    public int getTotalTypeProduct(String type, double min, double max) {
+        if (type.equals("showNew")) {
+            type = "CreateDate = curDate()";
+        }
+        if (type.equals("showSale")) {
+            type = "UnitDiscount != 0";
+        }
+        String sql = "select count(*) from Product where " + type + " and UnitPrice between " + min + " and " + max;
+        try {
+            PreparedStatement st = conn.prepareStatement(sql);
+            ResultSet rs = st.executeQuery();
+            while (rs.next()) {
+                return rs.getInt(1);
+            }
+        } catch (SQLException e) {
+            System.out.println(e);
+        }
+        return 0;
+    }
+
     public int getTotalProductByPrice(double min, double max) {
         String sql = "select count(*) from Product where UnitPrice between " + min + " and " + max;
         try {
@@ -371,7 +392,7 @@ public class DAOProduct extends DBConnect {
     }
 
     public int getTotalProductByRateAndCategoryID(int rate, int categoryID, double min, double max) {
-        String sql = "select count(*) from Product where TotalRate = " + rate + "and CategoryID = " + categoryID + " and UnitPrice between " + min + " and " + max;
+        String sql = "select count(*) from Product where TotalRate = " + rate + " and CategoryID = " + categoryID + " and UnitPrice between " + min + " and " + max;
         try {
             PreparedStatement st = conn.prepareStatement(sql);
             ResultSet rs = st.executeQuery();
@@ -442,8 +463,30 @@ public class DAOProduct extends DBConnect {
 
 //    public static void main(String[] args) {
 //        DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
-//        Date date = new Date();
-//        System.out.println(dateFormat.format(date));
+//        Calendar calendar = Calendar.getInstance();
+//        String date1 = null, date2 = null, date3 = null;
+//        for (int i = 0; i < 3; i++) {
+//            // Get the date for the current day
+//            Date date = calendar.getTime();
+//            // Format the date and store it in the corresponding variable
+//            switch (i) {
+//                case 0:
+//
+//                    date1 = dateFormat.format(date);
+//                    break;
+//                case 1:
+//                    date2 = dateFormat.format(date);
+//                    break;
+//                default:
+//                    date3 = dateFormat.format(date);
+//                    break;
+//            }
+//            calendar.add(Calendar.DAY_OF_MONTH, -1);
+//        }
+//        System.out.println(date1);
+//        System.out.println(date2);
+//        System.out.println(date3);
+//        System.out.println();
 //        DAOProduct dao = new DAOProduct();
 //        ResultSet rs = dao.getData("select * from Product");
 //        try {

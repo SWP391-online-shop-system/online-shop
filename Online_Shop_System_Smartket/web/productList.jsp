@@ -15,6 +15,7 @@
 <%@page import="java.text.DateFormat" %>
 <%@page import="java.text.SimpleDateFormat" %>
 <%@page import="java.util.Date" %>
+<%@page import="java.util.Calendar" %>
 
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
@@ -70,9 +71,21 @@
                                             <div class="card-body">
                                                 <div class="shop__sidebar__categories">
                                                     <ul class="nice-scroll">
-                                                        <%ResultSet rsCategory = (ResultSet)request.getAttribute("CategoryResult");
+                                                        <%String service = (String)request.getAttribute("service");%>
+                                                        <li class="unique-li" style="<%=service.equals("showNew")?"background: #0091ff2b; width:190px;":""%>"><a style="color: #f7a749;" href="ProductListURL?type=showNew">Mới ra mắt</a></li>
+                                                        <li class="unique-li" style="<%=service.equals("showSale")?"background: #0091ff2b; width:190px;":""%>"><a style=" color: #f7a749;"href="ProductListURL?type=showSale">Đang giảm giá</a></li>
+                                                            <%
+                                                                int CategoryID = 0;
+                                                                String CategoryID_raw = (String)request.getAttribute("categoryID");
+                                                                if(CategoryID_raw == null || CategoryID_raw.equals("")) {
+                                                                    CategoryID = 0;
+                                                                } else {
+                                                                CategoryID = Integer.parseInt(CategoryID_raw);
+                                                                }
+                                                                ResultSet rsCategory = (ResultSet)request.getAttribute("CategoryResult");
+                                                                System.out.println("in jsp: categoryID  = "+CategoryID);
                                                         while(rsCategory.next()) {%>
-                                                        <li><a href="ProductListURL?service=ShowCategory&CategoryID=<%=rsCategory.getInt(1)%>&index=1"><%=rsCategory.getString(2)%></a></li>
+                                                        <li style="<%=CategoryID==rsCategory.getInt(1) ? "background: #0091ff2b; width:190px;":""%>"><a href="ProductListURL?service=ShowCategory&CategoryID=<%=rsCategory.getInt(1)%>&index=1"><%=rsCategory.getString(2)%></a></li>
                                                             <%}%>
                                                     </ul>
                                                 </div>
@@ -88,7 +101,7 @@
                                                 <div class="shop__sidebar__price">
                                                     <%String TotalRate_raw = (String)request.getAttribute("TotalRate");
                                                     int TotalRate=0;
-                                                    if(TotalRate_raw==null) {
+                                                    if(TotalRate_raw==null || TotalRate_raw.equals("")) {
                                                         TotalRate = 0;
                                                        } else {
                                                        TotalRate = Integer.parseInt(TotalRate_raw);
@@ -158,6 +171,9 @@
                                                         <c:if test="${categoryID != ''}">
                                                             <input type="hidden" name="CategoryID" value="${categoryID}"/>
                                                         </c:if>
+                                                        <c:if test="${TotalRate != ''}">
+                                                            <input type="hidden" name="TotalRate" value="${TotalRate}"/>
+                                                        </c:if>
                                                         <div class="progress1"></div>
                                                         <div class="range-input">
                                                             <input name="inputMinPrice" class="range-min" max="<%=maxPrice%>" min="<%=minPrice%>" type="range" value="<%=(oldMinPrice==null ? minPrice : oldMinPrice)%>">
@@ -172,6 +188,9 @@
                                                 </div>
                                             </div>
                                         </div>
+                                        <form action="ProductListURL" method="GET">
+                                            <button class="reset-filter" type="submit">Xóa tất cả</button>
+                                        </form>
                                     </div>
                                 </div>
                             </div>
@@ -190,11 +209,12 @@
                                         <form action="ProductListURL" method="GET">
                                             <c:if test="${categoryID == ''}">
                                                 <input type="hidden" name="service" value="filter"/>
-                                                <input type="hidden" name="TotalRate" value="${TotalRate}"/>
                                             </c:if>
                                             <c:if test="${categoryID != ''}">
                                                 <input type="hidden" name="service" value="filter"/>
                                                 <input type="hidden" name="CategoryID" value="${categoryID}"/>
+                                            </c:if>
+                                            <c:if test="${TotalRate != ''}">
                                                 <input type="hidden" name="TotalRate" value="${TotalRate}"/>
                                             </c:if>
                                             <c:if test="${((requestScope.maxPrice != requestScope.oldMaxPrice)||(requestScope.minPrice != requestScope.oldMinPrice)) && (requestScope.oldMaxPrice != null && requestScope.oldMinPrice != null)}">
@@ -274,28 +294,28 @@
                                             <!-- Price range is different from begin -->
                                             <c:if test="${((requestScope.maxPrice != requestScope.oldMaxPrice)||(requestScope.minPrice != requestScope.oldMinPrice)) && (requestScope.oldMaxPrice != null && requestScope.oldMinPrice != null)}">
                                                 <c:if test="${requestScope.index == i}">
-                                                    <a class="active"  style="border: none;background: #4cdc4c;width: 4%;" href="ProductListURL?service=price&index=${i}&filterChoice=<%=filterChoice%>&inputMinPrice=<%=oldMinPrice%>&inputMaxPrice=<%=oldMaxPrice%>">${i}</a>
+                                                    <a class="active"  style="border: none;background: #4cdc4c;width: 4%;" href="ProductListURL?service=price&index=${i}&TotalRate=${TotalRate}&filterChoice=<%=filterChoice%>&inputMinPrice=<%=oldMinPrice%>&inputMaxPrice=<%=oldMaxPrice%>">${i}</a>
                                                 </c:if>
                                                 <c:if test="${requestScope.index != i}">
-                                                    <a class="active" href="ProductListURL?service=price&index=${i}&filterChoice=<%=filterChoice%>&inputMinPrice=<%=oldMinPrice%>&inputMaxPrice=<%=oldMaxPrice%>">${i}</a>
+                                                    <a class="active" href="ProductListURL?service=price&index=${i}&TotalRate=${TotalRate}&filterChoice=<%=filterChoice%>&inputMinPrice=<%=oldMinPrice%>&inputMaxPrice=<%=oldMaxPrice%>">${i}</a>
                                                 </c:if>
                                             </c:if>
 
                                             <c:if test="${((requestScope.maxPrice == requestScope.oldMaxPrice) &&(requestScope.minPrice == requestScope.oldMinPrice))|| (requestScope.oldMinPrice==null && requestScope.oldMaxPrice==null)}">
                                                 <c:if test="${requestScope.index == i}">
-                                                    <a class="active"  style="border: none;background: #4cdc4c;width: 4%;" href="ProductListURL?service=filter&index=${i}&filterChoice=<%=filterChoice%>&inputMinPrice=<%=oldMinPrice%>&inputMaxPrice=<%=oldMaxPrice%>">${i}</a>
+                                                    <a class="active"  style="border: none;background: #4cdc4c;width: 4%;" href="ProductListURL?service=filter&index=${i}&TotalRate=${TotalRate}&filterChoice=<%=filterChoice%>&inputMinPrice=<%=oldMinPrice%>&inputMaxPrice=<%=oldMaxPrice%>">${i}</a>
                                                 </c:if>
-                                                <c:if test="${requestScope.index != i}">                                                    <a class="active" href="ProductListURL?service=filter&index=${i}&filterChoice=<%=filterChoice%>&inputMinPrice=<%=oldMinPrice%>&inputMaxPrice=<%=oldMaxPrice%>">${i}</a>
-
+                                                <c:if test="${requestScope.index != i}"> 
+                                                    <a class="active" href="ProductListURL?service=filter&index=${i}&TotalRate=${TotalRate}&filterChoice=<%=filterChoice%>&inputMinPrice=<%=oldMinPrice%>&inputMaxPrice=<%=oldMaxPrice%>">${i}</a>
                                                 </c:if>
                                             </c:if>
                                         </c:if>
                                         <c:if test="${categoryID != ''}">
                                             <c:if test="${requestScope.index == i}">
-                                                <a class="active"  style="border: none;background: #4cdc4c;width: 4%;" href="ProductListURL?CategoryID=${categoryID}&index=${i}&filterChoice=<%=filterChoice%>&inputMinPrice=<%=oldMinPrice%>&inputMaxPrice=<%=oldMaxPrice%>">${i}</a>
+                                                <a class="active"  style="border: none;background: #4cdc4c;width: 4%;" href="ProductListURL?service=filter&CategoryID=${categoryID}&index=${i}&TotalRate=${TotalRate}&filterChoice=<%=filterChoice%>&inputMinPrice=<%=oldMinPrice%>&inputMaxPrice=<%=oldMaxPrice%>">${i}</a>
                                             </c:if>
                                             <c:if test="${requestScope.index != i}">
-                                                <a class="active" href="ProductListURL?CategoryID=${categoryID}&index=${i}&filterChoice=<%=filterChoice%>&inputMinPrice=<%=oldMinPrice%>&inputMaxPrice=<%=oldMaxPrice%>">${i}</a>
+                                                <a class="active" href="ProductListURL?service=filter&CategoryID=${categoryID}&index=${i}&TotalRate=${TotalRate}&filterChoice=<%=filterChoice%>&inputMinPrice=<%=oldMinPrice%>&inputMaxPrice=<%=oldMaxPrice%>">${i}</a>
                                             </c:if>
                                         </c:if>
                                     </c:forEach>

@@ -1227,7 +1227,7 @@ ol {
 .shop__sidebar__categories ul,
 .shop__sidebar__price ul,
 .shop__sidebar__brand ul {
-    height: 304px;
+    height: 353px;
     margin-left: -33px;
 }
 .shop__sidebar__price ul li {
@@ -3993,5 +3993,21 @@ ol {
     transition: all 0.5s;
 }
 .submit-price-form:hover{
+    transform: scale(0.9);
+}
+.unique-li a:hover{
+    font-weight: 600;
+}
+.reset-filter{
+    background: #bfe48d;
+    border: none;
+    border-radius: 4px;
+    width: 138px;
+    margin-top: 16px;
+    color: #3b2b2b;
+    margin-left: 47px;
+    transition: all 0.5s;
+}
+.reset-filter:hover{
     transform: scale(0.9);
 }
