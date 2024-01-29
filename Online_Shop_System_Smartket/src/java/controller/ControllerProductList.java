@@ -133,7 +133,7 @@ public class ControllerProductList extends HttpServlet {
                     rsPaging = dao.getData("select * from product as p join ProductImage as pi on p.ProductID = pi.ProductID where pi.ProductURL like '%_1%' \n"
                             + "and p.UnitPrice between " + minValue + " and " + maxValue + " order by " + filterChoice + " limit 9 offset " + ((index - 1) * 9));
                 } else {
-                       int count = dao.getTotalTypeProduct(type, minValue, maxValue);
+                    int count = dao.getTotalTypeProduct(type, minValue, maxValue);
                     int endPage = count / 9;
                     if (count % 9 != 0) {
                         endPage++;
@@ -327,6 +327,12 @@ public class ControllerProductList extends HttpServlet {
                         } else {
                             if (type == null || type.equals("")) {
                                 int TotalRate = Integer.parseInt(TotalRate_raw);
+                                String resultRate = "";
+                                if (TotalRate == 0) {
+                                    resultRate = "and p.TotalRate between 0 and 5 ";
+                                } else {
+                                    resultRate = "and p.TotalRate =" + TotalRate + " ";
+                                }
                                 int count = dao.getTotalProductByRate(TotalRate, minValue, maxValue);
                                 int endPage = count / 9;
                                 if (count % 9 != 0) {
@@ -334,9 +340,15 @@ public class ControllerProductList extends HttpServlet {
                                 }
                                 request.setAttribute("endPage", endPage);
                                 rsPaging = dao.getData("select * from product as p join ProductImage as pi on p.ProductID = pi.ProductID where pi.ProductURL like '%_1%' \n"
-                                        + "and p.TotalRate = " + TotalRate + " and p.UnitPrice between " + minValue + " and " + maxValue + " order by " + filterChoice + " limit 9 offset " + ((index - 1) * 9));
+                                        + resultRate + "and p.UnitPrice between " + minValue + " and " + maxValue + " order by " + filterChoice + " limit 9 offset " + ((index - 1) * 9));
                             } else {
                                 int TotalRate = Integer.parseInt(TotalRate_raw);
+                                String resultRate = "";
+                                if (TotalRate == 0) {
+                                    resultRate = "and p.TotalRate between 0 and 5 ";
+                                } else {
+                                    resultRate = "and p.TotalRate =" + TotalRate + " ";
+                                }
                                 int count = dao.getTotalTypeAndRateProduct(type, TotalRate, minValue, maxValue);
                                 int endPage = count / 9;
                                 if (count % 9 != 0) {
@@ -345,11 +357,11 @@ public class ControllerProductList extends HttpServlet {
                                 request.setAttribute("endPage", endPage);
                                 if (type.equals("showNew")) {
                                     rsPaging = dao.getData("select * from product as p join ProductImage as pi on p.ProductID = pi.ProductID where pi.ProductURL like '%_1%' \n"
-                                            + "and p.CreateDate = curdate() and p.TotalRate = " + TotalRate + " and p.UnitPrice between " + minValue + " and " + maxValue + " order by " + filterChoice + " limit 9 offset " + ((index - 1) * 9));
+                                            + resultRate + "and p.CreateDate = curdate() and p.UnitPrice between " + minValue + " and " + maxValue + " order by " + filterChoice + " limit 9 offset " + ((index - 1) * 9));
                                 }
                                 if (type.equals("showSale")) {
                                     rsPaging = dao.getData("select * from product as p join ProductImage as pi on p.ProductID = pi.ProductID where pi.ProductURL like '%_1%' \n"
-                                            + "and p.UnitDiscount != 0 and p.TotalRate = " + TotalRate + " and p.UnitPrice between " + minValue + " and " + maxValue + " order by " + filterChoice + " limit 9 offset " + ((index - 1) * 9));
+                                            + resultRate + "and p.UnitDiscount != 0 and p.UnitPrice between " + minValue + " and " + maxValue + " order by " + filterChoice + " limit 9 offset " + ((index - 1) * 9));
                                 }
                             }
                         }
@@ -384,6 +396,12 @@ public class ControllerProductList extends HttpServlet {
                         } else {
                             if (type == null || type.equals("")) {
                                 int TotalRate = Integer.parseInt(TotalRate_raw);
+                                String resultRate = "";
+                                if (TotalRate == 0) {
+                                    resultRate = "and p.TotalRate between 0 and 5 ";
+                                } else {
+                                    resultRate = "and p.TotalRate =" + TotalRate + " ";
+                                }
                                 int count = dao.getTotalProductByRateAndCategoryID(TotalRate, categoryID, minValue, maxValue);
                                 int endPage = count / 9;
                                 if (count % 9 != 0) {
@@ -391,9 +409,15 @@ public class ControllerProductList extends HttpServlet {
                                 }
                                 request.setAttribute("endPage", endPage);
                                 rsPaging = dao.getData("select * from product as p join ProductImage as pi on p.ProductID = pi.ProductID where pi.ProductURL like '%_1%' \n"
-                                        + "and p.TotalRate = " + TotalRate + " and p.UnitPrice between " + minValue + " and " + maxValue + " and p.CategoryID = " + categoryID + " order by " + filterChoice + " limit 9 offset " + ((index - 1) * 9));
+                                        + resultRate + "and p.UnitPrice between " + minValue + " and " + maxValue + " and p.CategoryID = " + categoryID + " order by " + filterChoice + " limit 9 offset " + ((index - 1) * 9));
                             } else {
                                 int TotalRate = Integer.parseInt(TotalRate_raw);
+                                String resultRate = "";
+                                if (TotalRate == 0) {
+                                    resultRate = "and p.TotalRate between 0 and 5 ";
+                                } else {
+                                    resultRate = "and p.TotalRate =" + TotalRate + " ";
+                                }
                                 int count = dao.getTotalTypeAndRateAndCategoryID(type, TotalRate, categoryID, minValue, maxValue);
                                 int endPage = count / 9;
                                 if (count % 9 != 0) {
@@ -402,11 +426,11 @@ public class ControllerProductList extends HttpServlet {
                                 request.setAttribute("endPage", endPage);
                                 if (type.equals("showNew")) {
                                     rsPaging = dao.getData("select * from product as p join ProductImage as pi on p.ProductID = pi.ProductID where pi.ProductURL like '%_1%' \n"
-                                            + "and p.CreateDate = curdate() and p.TotalRate = " + TotalRate + " and p.UnitPrice between " + minValue + " and " + maxValue + " and p.CategoryID = " + categoryID + " order by " + filterChoice + " limit 9 offset " + ((index - 1) * 9));
+                                            + resultRate + "and p.CreateDate = curdate() and p.UnitPrice between " + minValue + " and " + maxValue + " and p.CategoryID = " + categoryID + " order by " + filterChoice + " limit 9 offset " + ((index - 1) * 9));
                                 }
                                 if (type.equals("showSale")) {
                                     rsPaging = dao.getData("select * from product as p join ProductImage as pi on p.ProductID = pi.ProductID where pi.ProductURL like '%_1%' \n"
-                                            + "and p.UnitDiscount != 0 and p.TotalRate = " + TotalRate + " and p.UnitPrice between " + minValue + " and " + maxValue + " and p.CategoryID = " + categoryID + " order by " + filterChoice + " limit 9 offset " + ((index - 1) * 9));
+                                            + resultRate + "and p.UnitDiscount != 0 and p.UnitPrice between " + minValue + " and " + maxValue + " and p.CategoryID = " + categoryID + " order by " + filterChoice + " limit 9 offset " + ((index - 1) * 9));
                                 }
                             }
                         }
@@ -445,6 +469,12 @@ public class ControllerProductList extends HttpServlet {
                         } else {
                             if (type == null || type.equals("")) {
                                 int TotalRate = Integer.parseInt(TotalRate_raw);
+                                String resultRate = "";
+                                if (TotalRate == 0) {
+                                    resultRate = "and p.TotalRate between 0 and 5 ";
+                                } else {
+                                    resultRate = "and p.TotalRate =" + TotalRate + " ";
+                                }
                                 int count = dao.getTotalProductByRate(TotalRate, minValue, maxValue);
                                 int endPage = count / 9;
                                 if (count % 9 != 0) {
@@ -452,9 +482,15 @@ public class ControllerProductList extends HttpServlet {
                                 }
                                 request.setAttribute("endPage", endPage);
                                 rsPaging = dao.getData("select * from product as p join ProductImage as pi on p.ProductID = pi.ProductID where pi.ProductURL like '%_1%' \n"
-                                        + "and p.TotalRate = " + TotalRate + " and p.UnitPrice between " + minValue + " and " + maxValue + " order by " + filterChoice + " limit 9 offset " + ((index - 1) * 9));
+                                        + resultRate + "and p.UnitPrice between " + minValue + " and " + maxValue + " order by " + filterChoice + " limit 9 offset " + ((index - 1) * 9));
                             } else {
                                 int TotalRate = Integer.parseInt(TotalRate_raw);
+                                String resultRate = "";
+                                if (TotalRate == 0) {
+                                    resultRate = "and p.TotalRate between 0 and 5 ";
+                                } else {
+                                    resultRate = "and p.TotalRate =" + TotalRate + " ";
+                                }
                                 int count = dao.getTotalTypeAndRateProduct(type, TotalRate, minValue, maxValue);
                                 int endPage = count / 9;
                                 if (count % 9 != 0) {
@@ -463,11 +499,11 @@ public class ControllerProductList extends HttpServlet {
                                 request.setAttribute("endPage", endPage);
                                 if (type.equals("showNew")) {
                                     rsPaging = dao.getData("select * from product as p join ProductImage as pi on p.ProductID = pi.ProductID where pi.ProductURL like '%_1%' \n"
-                                            + "and p.createDate = curdate() and p.TotalRate = " + TotalRate + " and p.UnitPrice between " + minValue + " and " + maxValue + " order by " + filterChoice + " limit 9 offset " + ((index - 1) * 9));
+                                            + resultRate + "and p.createDate = curdate() and p.UnitPrice between " + minValue + " and " + maxValue + " order by " + filterChoice + " limit 9 offset " + ((index - 1) * 9));
                                 }
                                 if (type.equals("showSale")) {
                                     rsPaging = dao.getData("select * from product as p join ProductImage as pi on p.ProductID = pi.ProductID where pi.ProductURL like '%_1%' \n"
-                                            + "and p.UnitDiscount != 0 and p.TotalRate = " + TotalRate + " and p.UnitPrice between " + minValue + " and " + maxValue + " order by " + filterChoice + " limit 9 offset " + ((index - 1) * 9));
+                                            + resultRate + "and p.UnitDiscount != 0 and p.UnitPrice between " + minValue + " and " + maxValue + " order by " + filterChoice + " limit 9 offset " + ((index - 1) * 9));
                                 }
                             }
 
@@ -503,6 +539,12 @@ public class ControllerProductList extends HttpServlet {
 
                         } else {
                             int TotalRate = Integer.parseInt(TotalRate_raw);
+                            String resultRate = "";
+                            if (TotalRate == 0) {
+                                resultRate = "and p.TotalRate between 0 and 5 ";
+                            } else {
+                                resultRate = "and p.TotalRate =" + TotalRate + " ";
+                            }
                             if (type == null || type.equals("")) {
                                 int count = dao.getTotalProductByRateAndCategoryID(TotalRate, categoryID, minValue, maxValue);
                                 int endPage = count / 9;
@@ -511,7 +553,7 @@ public class ControllerProductList extends HttpServlet {
                                 }
                                 request.setAttribute("endPage", endPage);
                                 rsPaging = dao.getData("select * from product as p join ProductImage as pi on p.ProductID = pi.ProductID where pi.ProductURL like '%_1%' \n"
-                                        + "and p.TotalRate = " + TotalRate + " and p.UnitPrice between " + minValue + " and " + maxValue + " and p.CategoryID= " + categoryID + " order by " + filterChoice + " limit 9 offset " + ((index - 1) * 9));
+                                        + resultRate + "and p.UnitPrice between " + minValue + " and " + maxValue + " and p.CategoryID= " + categoryID + " order by " + filterChoice + " limit 9 offset " + ((index - 1) * 9));
                             } else {
                                 int count = dao.getTotalTypeAndRateAndCategoryID(type, TotalRate, categoryID, minValue, maxValue);
                                 int endPage = count / 9;
@@ -521,11 +563,11 @@ public class ControllerProductList extends HttpServlet {
                                 request.setAttribute("endPage", endPage);
                                 if (type.equals("showNew")) {
                                     rsPaging = dao.getData("select * from product as p join ProductImage as pi on p.ProductID = pi.ProductID where pi.ProductURL like '%_1%' \n"
-                                            + "and p.createDate = curdate() and p.TotalRate = " + TotalRate + " and p.UnitPrice between " + minValue + " and " + maxValue + " and p.CategoryID= " + categoryID + " order by " + filterChoice + " limit 9 offset " + ((index - 1) * 9));
+                                            + resultRate + "and p.createDate = curdate() and p.UnitPrice between " + minValue + " and " + maxValue + " and p.CategoryID= " + categoryID + " order by " + filterChoice + " limit 9 offset " + ((index - 1) * 9));
                                 }
                                 if (type.equals("showSale")) {
                                     rsPaging = dao.getData("select * from product as p join ProductImage as pi on p.ProductID = pi.ProductID where pi.ProductURL like '%_1%' \n"
-                                            + "and p.UnitDiscount != 0 and p.TotalRate = " + TotalRate + " and p.UnitPrice between " + minValue + " and " + maxValue + " and p.CategoryID= " + categoryID + " order by " + filterChoice + " limit 9 offset " + ((index - 1) * 9));
+                                            + resultRate + "and p.UnitDiscount != 0 and p.UnitPrice between " + minValue + " and " + maxValue + " and p.CategoryID= " + categoryID + " order by " + filterChoice + " limit 9 offset " + ((index - 1) * 9));
                                 }
                             }
                         }
@@ -563,6 +605,12 @@ public class ControllerProductList extends HttpServlet {
                         } else {
                             if (type == null || type.equals("")) {
                                 int TotalRate = Integer.parseInt(TotalRate_raw);
+                                String resultRate = "";
+                                if (TotalRate == 0) {
+                                    resultRate = "and p.TotalRate between 0 and 5 ";
+                                } else {
+                                    resultRate = "and p.TotalRate =" + TotalRate + " ";
+                                }
                                 int count = dao.getTotalProductByRate(TotalRate, minValue, maxValue);
                                 int endPage = count / 9;
                                 if (count % 9 != 0) {
@@ -570,9 +618,15 @@ public class ControllerProductList extends HttpServlet {
                                 }
                                 request.setAttribute("endPage", endPage);
                                 rsPaging = dao.getData("select * from product as p join ProductImage as pi on p.ProductID = pi.ProductID where pi.ProductURL like '%_1%' \n"
-                                        + "and p.TotalRate = " + TotalRate + " and p.UnitPrice between " + minValue + " and " + maxValue + " order by (UnitPrice*(100-UnitDiscount)/100) asc limit 9 offset " + ((index - 1) * 9));
+                                        + resultRate + "and p.UnitPrice between " + minValue + " and " + maxValue + " order by (UnitPrice*(100-UnitDiscount)/100) asc limit 9 offset " + ((index - 1) * 9));
                             } else {
                                 int TotalRate = Integer.parseInt(TotalRate_raw);
+                                String resultRate = "";
+                                if (TotalRate == 0) {
+                                    resultRate = "and p.TotalRate between 0 and 5 ";
+                                } else {
+                                    resultRate = "and p.TotalRate =" + TotalRate + " ";
+                                }
                                 int count = dao.getTotalTypeAndRateProduct(type, TotalRate, minValue, maxValue);
                                 int endPage = count / 9;
                                 if (count % 9 != 0) {
@@ -581,11 +635,11 @@ public class ControllerProductList extends HttpServlet {
                                 request.setAttribute("endPage", endPage);
                                 if (type.equals("showNew")) {
                                     rsPaging = dao.getData("select * from product as p join ProductImage as pi on p.ProductID = pi.ProductID where pi.ProductURL like '%_1%' \n"
-                                            + "and p.createDate = curdate() and p.TotalRate = " + TotalRate + " and p.UnitPrice between " + minValue + " and " + maxValue + " order by (UnitPrice*(100-UnitDiscount)/100) asc limit 9 offset " + ((index - 1) * 9));
+                                            + resultRate + "and p.createDate = curdate() and p.UnitPrice between " + minValue + " and " + maxValue + " order by (UnitPrice*(100-UnitDiscount)/100) asc limit 9 offset " + ((index - 1) * 9));
                                 }
                                 if (type.equals("showSale")) {
                                     rsPaging = dao.getData("select * from product as p join ProductImage as pi on p.ProductID = pi.ProductID where pi.ProductURL like '%_1%' \n"
-                                            + "and p.UnitDiscount != 0 and p.TotalRate = " + TotalRate + " and p.UnitPrice between " + minValue + " and " + maxValue + " order by (UnitPrice*(100-UnitDiscount)/100) asc limit 9 offset " + ((index - 1) * 9));
+                                            + resultRate + "and p.UnitDiscount != 0 and p.UnitPrice between " + minValue + " and " + maxValue + " order by (UnitPrice*(100-UnitDiscount)/100) asc limit 9 offset " + ((index - 1) * 9));
                                 }
                             }
 
@@ -621,6 +675,12 @@ public class ControllerProductList extends HttpServlet {
 
                         } else {
                             int TotalRate = Integer.parseInt(TotalRate_raw);
+                            String resultRate = "";
+                            if (TotalRate == 0) {
+                                resultRate = "and p.TotalRate between 0 and 5 ";
+                            } else {
+                                resultRate = "and p.TotalRate =" + TotalRate + " ";
+                            }
                             if (type == null || type.equals("")) {
                                 int count = dao.getTotalProductByRateAndCategoryID(TotalRate, categoryID, minValue, maxValue);
                                 int endPage = count / 9;
@@ -629,7 +689,7 @@ public class ControllerProductList extends HttpServlet {
                                 }
                                 request.setAttribute("endPage", endPage);
                                 rsPaging = dao.getData("select * from product as p join ProductImage as pi on p.ProductID = pi.ProductID where pi.ProductURL like '%_1%' \n"
-                                        + "and p.TotalRate = " + TotalRate + " and p.UnitPrice between " + minValue + " and " + maxValue + " and p.CategoryID= " + CategoryID_raw + " order by (UnitPrice*(100-UnitDiscount)/100) asc limit 9 offset " + ((index - 1) * 9));
+                                        + resultRate + "and p.UnitPrice between " + minValue + " and " + maxValue + " and p.CategoryID= " + CategoryID_raw + " order by (UnitPrice*(100-UnitDiscount)/100) asc limit 9 offset " + ((index - 1) * 9));
                             } else {
                                 int count = dao.getTotalTypeAndRateAndCategoryID(type, TotalRate, categoryID, minValue, maxValue);
                                 int endPage = count / 9;
@@ -639,12 +699,12 @@ public class ControllerProductList extends HttpServlet {
                                 request.setAttribute("endPage", endPage);
                                 if (type.equals("showNew")) {
                                     rsPaging = dao.getData("select * from product as p join ProductImage as pi on p.ProductID = pi.ProductID where pi.ProductURL like '%_1%' \n"
-                                            + "and p.createDate = curdate() and p.TotalRate = " + TotalRate + " and p.UnitPrice between " + minValue + " and " + maxValue + " and p.CategoryID= " + CategoryID_raw + " order by (UnitPrice*(100-UnitDiscount)/100) asc limit 9 offset " + ((index - 1) * 9));
+                                            + resultRate + "and p.createDate = curdate() and p.UnitPrice between " + minValue + " and " + maxValue + " and p.CategoryID= " + CategoryID_raw + " order by (UnitPrice*(100-UnitDiscount)/100) asc limit 9 offset " + ((index - 1) * 9));
                                 }
                                 if (type.equals("showSale")) {
                                     request.setAttribute("endPage", endPage);
                                     rsPaging = dao.getData("select * from product as p join ProductImage as pi on p.ProductID = pi.ProductID where pi.ProductURL like '%_1%' \n"
-                                            + "and p.UnitDiscount != 0 and p.TotalRate = " + TotalRate + " and p.UnitPrice between " + minValue + " and " + maxValue + " and p.CategoryID= " + CategoryID_raw + " order by (UnitPrice*(100-UnitDiscount)/100) asc limit 9 offset " + ((index - 1) * 9));
+                                            + resultRate + "and p.UnitDiscount != 0 and p.UnitPrice between " + minValue + " and " + maxValue + " and p.CategoryID= " + CategoryID_raw + " order by (UnitPrice*(100-UnitDiscount)/100) asc limit 9 offset " + ((index - 1) * 9));
                                 }
                             }
                         }
@@ -683,6 +743,12 @@ public class ControllerProductList extends HttpServlet {
                             }
                         } else {
                             int TotalRate = Integer.parseInt(TotalRate_raw);
+                            String resultRate = "";
+                            if (TotalRate == 0) {
+                                resultRate = "and p.TotalRate between 0 and 5 ";
+                            } else {
+                                resultRate = "and p.TotalRate =" + TotalRate + " ";
+                            }
                             if (type == null || type.equals("")) {
                                 int count = dao.getTotalProductByRate(TotalRate, minValue, maxValue);
                                 int endPage = count / 9;
@@ -691,7 +757,7 @@ public class ControllerProductList extends HttpServlet {
                                 }
                                 request.setAttribute("endPage", endPage);
                                 rsPaging = dao.getData("select * from product as p join ProductImage as pi on p.ProductID = pi.ProductID where pi.ProductURL like '%_1%' \n"
-                                        + "and p.TotalRate = " + TotalRate + " and p.UnitPrice between " + minValue + " and " + maxValue + " order by(UnitPrice*(100-UnitDiscount)/100) desc limit 9 offset " + ((index - 1) * 9));
+                                        + resultRate + "and p.UnitPrice between " + minValue + " and " + maxValue + " order by(UnitPrice*(100-UnitDiscount)/100) desc limit 9 offset " + ((index - 1) * 9));
 
                             } else {
                                 int count = dao.getTotalTypeAndRateProduct(type, TotalRate, minValue, maxValue);
@@ -702,11 +768,11 @@ public class ControllerProductList extends HttpServlet {
                                 request.setAttribute("endPage", endPage);
                                 if (type.equals("showNew")) {
                                     rsPaging = dao.getData("select * from product as p join ProductImage as pi on p.ProductID = pi.ProductID where pi.ProductURL like '%_1%' \n"
-                                            + "and p.createDate = curdate() and p.TotalRate = " + TotalRate + " and p.UnitPrice between " + minValue + " and " + maxValue + " order by(UnitPrice*(100-UnitDiscount)/100) desc limit 9 offset " + ((index - 1) * 9));
+                                            + resultRate + "and p.createDate = curdate() and p.UnitPrice between " + minValue + " and " + maxValue + " order by(UnitPrice*(100-UnitDiscount)/100) desc limit 9 offset " + ((index - 1) * 9));
                                 }
                                 if (type.equals("showSale")) {
                                     rsPaging = dao.getData("select * from product as p join ProductImage as pi on p.ProductID = pi.ProductID where pi.ProductURL like '%_1%' \n"
-                                            + "and p.UnitDiscount != 0 and p.TotalRate = " + TotalRate + " and p.UnitPrice between " + minValue + " and " + maxValue + " order by(UnitPrice*(100-UnitDiscount)/100) desc limit 9 offset " + ((index - 1) * 9));
+                                            + resultRate + "and p.UnitDiscount != 0 and p.UnitPrice between " + minValue + " and " + maxValue + " order by(UnitPrice*(100-UnitDiscount)/100) desc limit 9 offset " + ((index - 1) * 9));
                                 }
                             }
                         }
@@ -740,6 +806,12 @@ public class ControllerProductList extends HttpServlet {
                             }
                         } else {
                             int TotalRate = Integer.parseInt(TotalRate_raw);
+                            String resultRate = "";
+                            if (TotalRate == 0) {
+                                resultRate = "and p.TotalRate between 0 and 5 ";
+                            } else {
+                                resultRate = "and p.TotalRate =" + TotalRate + " ";
+                            }
                             if (type == null || type.equals("")) {
                                 int count = dao.getTotalProductByRateAndCategoryID(TotalRate, categoryID, minValue, maxValue);
                                 int endPage = count / 9;
@@ -748,7 +820,7 @@ public class ControllerProductList extends HttpServlet {
                                 }
                                 request.setAttribute("endPage", endPage);
                                 rsPaging = dao.getData("select * from product as p join ProductImage as pi on p.ProductID = pi.ProductID where pi.ProductURL like '%_1%' \n"
-                                        + "and p.TotalRate = " + TotalRate + " and p.UnitPrice between " + minValue + " and " + maxValue + " and p.CategoryID= " + CategoryID_raw + " order by(UnitPrice*(100-UnitDiscount)/100) desc limit 9 offset " + ((index - 1) * 9));
+                                        + resultRate + "and p.UnitPrice between " + minValue + " and " + maxValue + " and p.CategoryID= " + CategoryID_raw + " order by(UnitPrice*(100-UnitDiscount)/100) desc limit 9 offset " + ((index - 1) * 9));
                             } else {
                                 int count = dao.getTotalTypeAndRateAndCategoryID(type, TotalRate, categoryID, minValue, maxValue);
                                 int endPage = count / 9;
@@ -758,11 +830,11 @@ public class ControllerProductList extends HttpServlet {
                                 request.setAttribute("endPage", endPage);
                                 if (type.equals("showNew")) {
                                     rsPaging = dao.getData("select * from product as p join ProductImage as pi on p.ProductID = pi.ProductID where pi.ProductURL like '%_1%' \n"
-                                            + "and p.createDate = curdate() and p.TotalRate = " + TotalRate + " and p.UnitPrice between " + minValue + " and " + maxValue + " and p.CategoryID= " + CategoryID_raw + " order by(UnitPrice*(100-UnitDiscount)/100) desc limit 9 offset " + ((index - 1) * 9));
+                                            + resultRate + "and p.createDate = curdate() and p.UnitPrice between " + minValue + " and " + maxValue + " and p.CategoryID= " + CategoryID_raw + " order by(UnitPrice*(100-UnitDiscount)/100) desc limit 9 offset " + ((index - 1) * 9));
                                 }
                                 if (type.equals("showSale")) {
                                     rsPaging = dao.getData("select * from product as p join ProductImage as pi on p.ProductID = pi.ProductID where pi.ProductURL like '%_1%' \n"
-                                            + "and p.UnitDiscount != 0 and p.TotalRate = " + TotalRate + " and p.UnitPrice between " + minValue + " and " + maxValue + " and p.CategoryID= " + CategoryID_raw + " order by(UnitPrice*(100-UnitDiscount)/100) desc limit 9 offset " + ((index - 1) * 9));
+                                            + resultRate + "and p.UnitDiscount != 0 and p.UnitPrice between " + minValue + " and " + maxValue + " and p.CategoryID= " + CategoryID_raw + " order by(UnitPrice*(100-UnitDiscount)/100) desc limit 9 offset " + ((index - 1) * 9));
                                 }
                             }
                         }
@@ -812,15 +884,27 @@ public class ControllerProductList extends HttpServlet {
                             }
                         } else {
                             int TotalRate = Integer.parseInt(TotalRate_raw);
+                            String resultRate = "";
+                            if (TotalRate == 0) {
+                                resultRate = "and p.TotalRate between 0 and 5 ";
+                            } else {
+                                resultRate = "and p.TotalRate =" + TotalRate + " ";
+                            }
                             if (type == null || type.equals("")) {
                                 int count = dao.getTotalProductByRate(TotalRate, minValue, maxValue);
                                 int endPage = count / 9;
                                 if (count % 9 != 0) {
                                     endPage++;
                                 }
-                                request.setAttribute("endPage", endPage);
-                                rsPaging = dao.getData("select * from product as p join ProductImage as pi on p.ProductID = pi.ProductID where pi.ProductURL like '%_1%' \n"
-                                        + "and p.TotalRate = " + TotalRate + " and p.UnitPrice between " + minValue + " and " + maxValue + " order by " + filterChoice + " limit 9 offset " + ((index - 1) * 9));
+                                if (TotalRate == 0) {
+                                    request.setAttribute("endPage", endPage);
+                                    rsPaging = dao.getData("select * from product as p join ProductImage as pi on p.ProductID = pi.ProductID where pi.ProductURL like '%_1%' \n"
+                                            + resultRate + " and p.UnitPrice between " + minValue + " and " + maxValue + " order by " + filterChoice + " limit 9 offset " + ((index - 1) * 9));
+                                } else {
+                                    request.setAttribute("endPage", endPage);
+                                    rsPaging = dao.getData("select * from product as p join ProductImage as pi on p.ProductID = pi.ProductID where pi.ProductURL like '%_1%' \n"
+                                            + resultRate + "and p.UnitPrice between " + minValue + " and " + maxValue + " order by " + filterChoice + " limit 9 offset " + ((index - 1) * 9));
+                                }
 
                             } else {
                                 int count = dao.getTotalTypeAndRateProduct(type, TotalRate, minValue, maxValue);
@@ -831,11 +915,11 @@ public class ControllerProductList extends HttpServlet {
                                 request.setAttribute("endPage", endPage);
                                 if (type.equals("showNew")) {
                                     rsPaging = dao.getData("select * from product as p join ProductImage as pi on p.ProductID = pi.ProductID where pi.ProductURL like '%_1%' \n"
-                                            + "and p.CreateDate = curdate() and p.TotalRate = " + TotalRate + " and p.UnitPrice between " + minValue + " and " + maxValue + " order by " + filterChoice + " limit 9 offset " + ((index - 1) * 9));
+                                            + resultRate + "and p.CreateDate = curdate() and p.UnitPrice between " + minValue + " and " + maxValue + " order by " + filterChoice + " limit 9 offset " + ((index - 1) * 9));
                                 }
                                 if (type.equals("showSale")) {
                                     rsPaging = dao.getData("select * from product as p join ProductImage as pi on p.ProductID = pi.ProductID where pi.ProductURL like '%_1%' \n"
-                                            + "and p.UnitDiscount != 0 and p.TotalRate = " + TotalRate + " and p.UnitPrice between " + minValue + " and " + maxValue + " order by " + filterChoice + " limit 9 offset " + ((index - 1) * 9));
+                                            + resultRate + "and p.UnitDiscount != 0 and p.UnitPrice between " + minValue + " and " + maxValue + " order by " + filterChoice + " limit 9 offset " + ((index - 1) * 9));
                                 }
                             }
                         }
@@ -870,6 +954,12 @@ public class ControllerProductList extends HttpServlet {
                             }
                         } else {
                             int TotalRate = Integer.parseInt(TotalRate_raw);
+                            String resultRate = "";
+                            if (TotalRate == 0) {
+                                resultRate = "and p.TotalRate between 0 and 5 ";
+                            } else {
+                                resultRate = "and p.TotalRate =" + TotalRate + " ";
+                            }
                             if (type == null || type.equals("")) {
                                 int count = dao.getTotalProductByRateAndCategoryID(TotalRate, CategoryID, minValue, maxValue);
                                 int endPage = count / 9;
@@ -878,7 +968,8 @@ public class ControllerProductList extends HttpServlet {
                                 }
                                 request.setAttribute("endPage", endPage);
                                 rsPaging = dao.getData("select * from product as p join ProductImage as pi on p.ProductID = pi.ProductID where pi.ProductURL like '%_1%' \n"
-                                        + "and p.TotalRate = " + TotalRate + " and p.CategoryID = " + CategoryID + " and p.UnitPrice between " + minValue + " and " + maxValue + " order by " + filterChoice + " limit 9 offset " + ((index - 1) * 9));
+                                        + resultRate + " and p.CategoryID = " + CategoryID + " and p.UnitPrice between " + minValue + " and " + maxValue + " order by " + filterChoice + " limit 9 offset " + ((index - 1) * 9)
+                                );
 
                             } else {
                                 int count = dao.getTotalTypeAndRateAndCategoryID(type, TotalRate, CategoryID, minValue, maxValue);
@@ -889,11 +980,11 @@ public class ControllerProductList extends HttpServlet {
                                 request.setAttribute("endPage", endPage);
                                 if (type.equals("showNew")) {
                                     rsPaging = dao.getData("select * from product as p join ProductImage as pi on p.ProductID = pi.ProductID where pi.ProductURL like '%_1%' \n"
-                                            + "and p.CreateDate = curdate() and p.TotalRate = " + TotalRate + " and p.CategoryID = " + CategoryID + " and p.UnitPrice between " + minValue + " and " + maxValue + " order by " + filterChoice + " limit 9 offset " + ((index - 1) * 9));
+                                            + resultRate + "and p.CreateDate = curdate() and p.CategoryID = " + CategoryID + " and p.UnitPrice between " + minValue + " and " + maxValue + " order by " + filterChoice + " limit 9 offset " + ((index - 1) * 9));
                                 }
                                 if (type.equals("showSale")) {
                                     rsPaging = dao.getData("select * from product as p join ProductImage as pi on p.ProductID = pi.ProductID where pi.ProductURL like '%_1%' \n"
-                                            + "and p.UnitDiscount != 0 and p.TotalRate = " + TotalRate + " and p.CategoryID = " + CategoryID + " and p.UnitPrice between " + minValue + " and " + maxValue + " order by " + filterChoice + " limit 9 offset " + ((index - 1) * 9));
+                                            + resultRate + "and p.UnitDiscount != 0 and p.CategoryID = " + CategoryID + " and p.UnitPrice between " + minValue + " and " + maxValue + " order by " + filterChoice + " limit 9 offset " + ((index - 1) * 9));
                                 }
                             }
                         }
@@ -933,6 +1024,12 @@ public class ControllerProductList extends HttpServlet {
                             }
                         } else {
                             int TotalRate = Integer.parseInt(TotalRate_raw);
+                            String resultRate = "";
+                            if (TotalRate == 0) {
+                                resultRate = "and p.TotalRate between 0 and 5 ";
+                            } else {
+                                resultRate = "and p.TotalRate =" + TotalRate + " ";
+                            }
                             if (type == null || type.equals("")) {
                                 int count = dao.getTotalProductByRate(TotalRate, minValue, maxValue);
                                 int endPage = count / 9;
@@ -941,7 +1038,7 @@ public class ControllerProductList extends HttpServlet {
                                 }
                                 request.setAttribute("endPage", endPage);
                                 rsPaging = dao.getData("select * from product as p join ProductImage as pi on p.ProductID = pi.ProductID where pi.ProductURL like '%_1%' \n"
-                                        + "and p.TotalRate = " + TotalRate + " and p.UnitPrice between " + minValue + " and " + maxValue + " order by " + filterChoice + " limit 9 offset " + ((index - 1) * 9));
+                                        + resultRate + "and p.UnitPrice between " + minValue + " and " + maxValue + " order by " + filterChoice + " limit 9 offset " + ((index - 1) * 9));
 
                             } else {
                                 int count = dao.getTotalTypeAndRateProduct(type, TotalRate, minValue, maxValue);
@@ -952,11 +1049,11 @@ public class ControllerProductList extends HttpServlet {
                                 request.setAttribute("endPage", endPage);
                                 if (type.equals("showNew")) {
                                     rsPaging = dao.getData("select * from product as p join ProductImage as pi on p.ProductID = pi.ProductID where pi.ProductURL like '%_1%' \n"
-                                            + "and p.CreateDate = curdate() and p.TotalRate = " + TotalRate + " and p.UnitPrice between " + minValue + " and " + maxValue + " order by " + filterChoice + " limit 9 offset " + ((index - 1) * 9));
+                                            + resultRate + "and p.CreateDate = curdate() and p.UnitPrice between " + minValue + " and " + maxValue + " order by " + filterChoice + " limit 9 offset " + ((index - 1) * 9));
                                 }
                                 if (type.equals("showSale")) {
                                     rsPaging = dao.getData("select * from product as p join ProductImage as pi on p.ProductID = pi.ProductID where pi.ProductURL like '%_1%' \n"
-                                            + "and p.UnitDiscount != 0 and p.TotalRate = " + TotalRate + " and p.UnitPrice between " + minValue + " and " + maxValue + " order by " + filterChoice + " limit 9 offset " + ((index - 1) * 9));
+                                            + resultRate + "and p.UnitDiscount != 0 and p.UnitPrice between " + minValue + " and " + maxValue + " order by " + filterChoice + " limit 9 offset " + ((index - 1) * 9));
                                 }
                             }
                         }
@@ -991,7 +1088,14 @@ public class ControllerProductList extends HttpServlet {
                                 }
                             }
                         } else {
+
                             int TotalRate = Integer.parseInt(TotalRate_raw);
+                            String resultRate = "";
+                            if (TotalRate == 0) {
+                                resultRate = "and p.TotalRate between 0 and 5 ";
+                            } else {
+                                resultRate = "and p.TotalRate =" + TotalRate + " ";
+                            }
                             if (type == null || type.equals("")) {
                                 int count = dao.getTotalProductByRateAndCategoryID(TotalRate, CategoryID, minValue, maxValue);
                                 int endPage = count / 9;
@@ -1000,7 +1104,7 @@ public class ControllerProductList extends HttpServlet {
                                 }
                                 request.setAttribute("endPage", endPage);
                                 rsPaging = dao.getData("select * from product as p join ProductImage as pi on p.ProductID = pi.ProductID where pi.ProductURL like '%_1%' \n"
-                                        + "and p.TotalRate =" + TotalRate + " and p.CategoryID = " + CategoryID + " and p.UnitPrice between " + minValue + " and " + maxValue + " order by " + filterChoice + " limit 9 offset " + ((index - 1) * 9));
+                                        + resultRate + " and p.CategoryID = " + CategoryID + " and p.UnitPrice between " + minValue + " and " + maxValue + " order by " + filterChoice + " limit 9 offset " + ((index - 1) * 9));
 
                             } else {
                                 int count = dao.getTotalTypeAndRateAndCategoryID(type, TotalRate, CategoryID, minValue, maxValue);
@@ -1011,11 +1115,11 @@ public class ControllerProductList extends HttpServlet {
                                 request.setAttribute("endPage", endPage);
                                 if (type.equals("showNew")) {
                                     rsPaging = dao.getData("select * from product as p join ProductImage as pi on p.ProductID = pi.ProductID where pi.ProductURL like '%_1%' \n"
-                                            + "and p.CreateDate = curdate() and p.TotalRate =" + TotalRate + " and p.CategoryID = " + CategoryID + " and p.UnitPrice between " + minValue + " and " + maxValue + " order by " + filterChoice + " limit 9 offset " + ((index - 1) * 9));
+                                            + resultRate + "and p.CreateDate = curdate() and p.CategoryID = " + CategoryID + " and p.UnitPrice between " + minValue + " and " + maxValue + " order by " + filterChoice + " limit 9 offset " + ((index - 1) * 9));
                                 }
                                 if (type.equals("showSale")) {
                                     rsPaging = dao.getData("select * from product as p join ProductImage as pi on p.ProductID = pi.ProductID where pi.ProductURL like '%_1%' \n"
-                                            + "and p.UnitDiscount != 0 and p.TotalRate =" + TotalRate + " and p.CategoryID = " + CategoryID + " and p.UnitPrice between " + minValue + " and " + maxValue + " order by " + filterChoice + " limit 9 offset " + ((index - 1) * 9));
+                                            + resultRate + "and p.UnitDiscount != 0 and p.CategoryID = " + CategoryID + " and p.UnitPrice between " + minValue + " and " + maxValue + " order by " + filterChoice + " limit 9 offset " + ((index - 1) * 9));
                                 }
                             }
                         }
@@ -1054,7 +1158,14 @@ public class ControllerProductList extends HttpServlet {
                                 }
                             }
                         } else {
+
                             int TotalRate = Integer.parseInt(TotalRate_raw);
+                            String resultRate = "";
+                            if (TotalRate == 0) {
+                                resultRate = "and p.TotalRate between 0 and 5 ";
+                            } else {
+                                resultRate = "and p.TotalRate =" + TotalRate + " ";
+                            }
                             if (type == null || type.equals("")) {
                                 int count = dao.getTotalProductByRate(TotalRate, minValue, maxValue);
                                 int endPage = count / 9;
@@ -1063,7 +1174,7 @@ public class ControllerProductList extends HttpServlet {
                                 }
                                 request.setAttribute("endPage", endPage);
                                 rsPaging = dao.getData("select * from product as p join ProductImage as pi on p.ProductID = pi.ProductID where pi.ProductURL like '%_1%' \n"
-                                        + "and p.TotalRate = " + TotalRate + " and p.UnitPrice between " + minValue + " and " + maxValue + " order by " + filterChoice + " limit 9 offset " + ((index - 1) * 9));
+                                        + resultRate + "and p.UnitPrice between " + minValue + " and " + maxValue + " order by " + filterChoice + " limit 9 offset " + ((index - 1) * 9));
 
                             } else {
                                 int count = dao.getTotalTypeAndRateProduct(type, TotalRate, minValue, maxValue);
@@ -1074,11 +1185,11 @@ public class ControllerProductList extends HttpServlet {
                                 request.setAttribute("endPage", endPage);
                                 if (type.equals("showNew")) {
                                     rsPaging = dao.getData("select * from product as p join ProductImage as pi on p.ProductID = pi.ProductID where pi.ProductURL like '%_1%' \n"
-                                            + "and p.CreateDate = curdate() and p.TotalRate = " + TotalRate + " and p.UnitPrice between " + minValue + " and " + maxValue + " order by " + filterChoice + " limit 9 offset " + ((index - 1) * 9));
+                                            + resultRate + "and p.CreateDate = curdate() and p.UnitPrice between " + minValue + " and " + maxValue + " order by " + filterChoice + " limit 9 offset " + ((index - 1) * 9));
                                 }
                                 if (type.equals("showSale")) {
                                     rsPaging = dao.getData("select * from product as p join ProductImage as pi on p.ProductID = pi.ProductID where pi.ProductURL like '%_1%' \n"
-                                            + "and p.UnitDiscount != 0 and p.TotalRate = " + TotalRate + " and p.UnitPrice between " + minValue + " and " + maxValue + " order by " + filterChoice + " limit 9 offset " + ((index - 1) * 9));
+                                            + resultRate + "and p.UnitDiscount != 0 and p.UnitPrice between " + minValue + " and " + maxValue + " order by " + filterChoice + " limit 9 offset " + ((index - 1) * 9));
                                 }
                             }
                         }
@@ -1114,6 +1225,12 @@ public class ControllerProductList extends HttpServlet {
                             }
                         } else {
                             int TotalRate = Integer.parseInt(TotalRate_raw);
+                            String resultRate = "";
+                            if (TotalRate == 0) {
+                                resultRate = "and p.TotalRate between 0 and 5 ";
+                            } else {
+                                resultRate = "and p.TotalRate =" + TotalRate + " ";
+                            }
                             if (type == null || type.equals("")) {
                                 int count = dao.getTotalProductByRateAndCategoryID(TotalRate, CategoryID, minValue, maxValue);
                                 int endPage = count / 9;
@@ -1122,7 +1239,7 @@ public class ControllerProductList extends HttpServlet {
                                 }
                                 request.setAttribute("endPage", endPage);
                                 rsPaging = dao.getData("select * from product as p join ProductImage as pi on p.ProductID = pi.ProductID where pi.ProductURL like '%_1%' \n"
-                                        + "and p.TotalRate = " + TotalRate + " and p.CategoryID = " + CategoryID + " and p.UnitPrice between " + minValue + " and " + maxValue + " order by " + filterChoice + " limit 9 offset " + ((index - 1) * 9));
+                                        + resultRate + "and p.CategoryID = " + CategoryID + " and p.UnitPrice between " + minValue + " and " + maxValue + " order by " + filterChoice + " limit 9 offset " + ((index - 1) * 9));
 
                             } else {
                                 int count = dao.getTotalTypeAndRateAndCategoryID(type, TotalRate, CategoryID, minValue, maxValue);
@@ -1133,11 +1250,11 @@ public class ControllerProductList extends HttpServlet {
                                 request.setAttribute("endPage", endPage);
                                 if (type.equals("showNew")) {
                                     rsPaging = dao.getData("select * from product as p join ProductImage as pi on p.ProductID = pi.ProductID where pi.ProductURL like '%_1%' \n"
-                                            + "and p.CreateDate = curdate() and p.TotalRate = " + TotalRate + " and p.CategoryID = " + CategoryID + " and p.UnitPrice between " + minValue + " and " + maxValue + " order by " + filterChoice + " limit 9 offset " + ((index - 1) * 9));
+                                            + resultRate + "and p.CreateDate = curdate() and p.CategoryID = " + CategoryID + " and p.UnitPrice between " + minValue + " and " + maxValue + " order by " + filterChoice + " limit 9 offset " + ((index - 1) * 9));
                                 }
                                 if (type.equals("showSale")) {
                                     rsPaging = dao.getData("select * from product as p join ProductImage as pi on p.ProductID = pi.ProductID where pi.ProductURL like '%_1%' \n"
-                                            + "and p.UnitDiscount != 0 and p.TotalRate = " + TotalRate + " and p.CategoryID = " + CategoryID + " and p.UnitPrice between " + minValue + " and " + maxValue + " order by " + filterChoice + " limit 9 offset " + ((index - 1) * 9));
+                                            + resultRate + "and p.UnitDiscount != 0 and p.CategoryID = " + CategoryID + " and p.UnitPrice between " + minValue + " and " + maxValue + " order by " + filterChoice + " limit 9 offset " + ((index - 1) * 9));
                                 }
                             }
                         }
@@ -1176,6 +1293,12 @@ public class ControllerProductList extends HttpServlet {
                             }
                         } else {
                             int TotalRate = Integer.parseInt(TotalRate_raw);
+                            String resultRate = "";
+                            if (TotalRate == 0) {
+                                resultRate = "and p.TotalRate between 0 and 5 ";
+                            } else {
+                                resultRate = "and p.TotalRate =" + TotalRate + " ";
+                            }
                             if (type == null || type.equals("")) {
                                 int count = dao.getTotalProductByRate(TotalRate, minValue, maxValue);
                                 int endPage = count / 9;
@@ -1184,7 +1307,7 @@ public class ControllerProductList extends HttpServlet {
                                 }
                                 request.setAttribute("endPage", endPage);
                                 rsPaging = dao.getData("select * from product as p join ProductImage as pi on p.ProductID = pi.ProductID where pi.ProductURL like '%_1%' \n"
-                                        + "and p.TotalRate = " + TotalRate + " and p.UnitPrice between " + minValue + " and " + maxValue + " order by " + filterChoice + " limit 9 offset " + ((index - 1) * 9));
+                                        + resultRate + "and p.UnitPrice between " + minValue + " and " + maxValue + " order by " + filterChoice + " limit 9 offset " + ((index - 1) * 9));
 
                             } else {
                                 int count = dao.getTotalTypeAndRateProduct(type, TotalRate, minValue, maxValue);
@@ -1195,11 +1318,11 @@ public class ControllerProductList extends HttpServlet {
                                 request.setAttribute("endPage", endPage);
                                 if (type.equals("showNew")) {
                                     rsPaging = dao.getData("select * from product as p join ProductImage as pi on p.ProductID = pi.ProductID where pi.ProductURL like '%_1%' \n"
-                                            + "and p.CreateDate = curdate() and p.TotalRate = " + TotalRate + " and p.UnitPrice between " + minValue + " and " + maxValue + " order by " + filterChoice + " limit 9 offset " + ((index - 1) * 9));
+                                            + resultRate + "and p.CreateDate = curdate() and p.UnitPrice between " + minValue + " and " + maxValue + " order by " + filterChoice + " limit 9 offset " + ((index - 1) * 9));
                                 }
                                 if (type.equals("showSale")) {
                                     rsPaging = dao.getData("select * from product as p join ProductImage as pi on p.ProductID = pi.ProductID where pi.ProductURL like '%_1%' \n"
-                                            + "and p.UnitDiscount != 0 and p.TotalRate = " + TotalRate + " and p.UnitPrice between " + minValue + " and " + maxValue + " order by " + filterChoice + " limit 9 offset " + ((index - 1) * 9));
+                                            + resultRate + "and p.UnitDiscount != 0 and p.UnitPrice between " + minValue + " and " + maxValue + " order by " + filterChoice + " limit 9 offset " + ((index - 1) * 9));
                                 }
                             }
                         }
@@ -1236,6 +1359,12 @@ public class ControllerProductList extends HttpServlet {
                             }
                         } else {
                             int TotalRate = Integer.parseInt(TotalRate_raw);
+                            String resultRate = "";
+                            if (TotalRate == 0) {
+                                resultRate = "and p.TotalRate between 0 and 5 ";
+                            } else {
+                                resultRate = "and p.TotalRate =" + TotalRate + " ";
+                            }
                             if (type == null || type.equals("")) {
                                 int count = dao.getTotalProductByRateAndCategoryID(TotalRate, CategoryID, minValue, maxValue);
                                 int endPage = count / 9;
@@ -1244,7 +1373,7 @@ public class ControllerProductList extends HttpServlet {
                                 }
                                 request.setAttribute("endPage", endPage);
                                 rsPaging = dao.getData("select * from product as p join ProductImage as pi on p.ProductID = pi.ProductID where pi.ProductURL like '%_1%' \n"
-                                        + "and p.TotalRate = " + TotalRate + " and p.CategoryID = " + CategoryID + " and p.UnitPrice between " + minValue + " and " + maxValue + " order by " + filterChoice + " limit 9 offset " + ((index - 1) * 9));
+                                        + resultRate + "and p.CategoryID = " + CategoryID + " and p.UnitPrice between " + minValue + " and " + maxValue + " order by " + filterChoice + " limit 9 offset " + ((index - 1) * 9));
 
                             } else {
                                 int count = dao.getTotalTypeAndRateAndCategoryID(type, TotalRate, CategoryID, minValue, maxValue);
@@ -1255,11 +1384,11 @@ public class ControllerProductList extends HttpServlet {
                                 if (type.equals("showNew")) {
                                     request.setAttribute("endPage", endPage);
                                     rsPaging = dao.getData("select * from product as p join ProductImage as pi on p.ProductID = pi.ProductID where pi.ProductURL like '%_1%' \n"
-                                            + "and p.CreateDate = curdate() and p.TotalRate = " + TotalRate + " and p.CategoryID = " + CategoryID + " and p.UnitPrice between " + minValue + " and " + maxValue + " order by " + filterChoice + " limit 9 offset " + ((index - 1) * 9));
+                                            + resultRate + "and p.CreateDate = curdate() and p.CategoryID = " + CategoryID + " and p.UnitPrice between " + minValue + " and " + maxValue + " order by " + filterChoice + " limit 9 offset " + ((index - 1) * 9));
                                 }
                                 if (type.equals("showSale")) {
                                     rsPaging = dao.getData("select * from product as p join ProductImage as pi on p.ProductID = pi.ProductID where pi.ProductURL like '%_1%' \n"
-                                            + "and p.UnitDiscount != 0 and p.TotalRate = " + TotalRate + " and p.CategoryID = " + CategoryID + " and p.UnitPrice between " + minValue + " and " + maxValue + " order by " + filterChoice + " limit 9 offset " + ((index - 1) * 9));
+                                            + resultRate + "and p.UnitDiscount != 0 and p.CategoryID = " + CategoryID + " and p.UnitPrice between " + minValue + " and " + maxValue + " order by " + filterChoice + " limit 9 offset " + ((index - 1) * 9));
                                 }
                             }
                         }
@@ -1270,6 +1399,12 @@ public class ControllerProductList extends HttpServlet {
             }
             if (service.equals("rate")) {
                 int TotalRate = Integer.parseInt(TotalRate_raw);
+                String resultRate = "";
+                if (TotalRate == 0) {
+                    resultRate = "and p.TotalRate between 0 and 5 ";
+                } else {
+                    resultRate = "and p.TotalRate =" + TotalRate + " ";
+                }
                 String index_raw = request.getParameter("index");
                 int index = 1;
                 if (index_raw != null) {
@@ -1278,115 +1413,220 @@ public class ControllerProductList extends HttpServlet {
                 if (filterChoice.equals("createDate asc") || filterChoice.equals("p.CreateDate asc")) {
                     filterChoice = "p.CreateDate asc";
                     if (CategoryID_raw == null || CategoryID_raw.equals("")) {
-                        int count = dao.getTotalProductByRate(TotalRate, minValue, maxValue);
-                        int endPage = count / 9;
-                        if (count % 9 != 0) {
-                            endPage++;
+                        if (TotalRate_raw == null || TotalRate_raw.equals("")) {
+                            int count = dao.getTotalProduct(minValue, maxValue);
+                            int endPage = count / 9;
+                            if (count % 9 != 0) {
+                                endPage++;
+                            }
+                            request.setAttribute("endPage", endPage);
+                            ResultSet rsPaging = dao.getData("select * from product as p join ProductImage as pi on p.ProductID = pi.ProductID where pi.ProductURL like '%_1%' \n"
+                                    + "and p.UnitPrice between " + minValue + " and " + maxValue + " order by " + filterChoice + " limit 9 offset " + ((index - 1) * 9));
+                            request.setAttribute("rsPaging", rsPaging);
+                            request.setAttribute("index", index);
+                        } else {
+                            int count = dao.getTotalProductByRate(TotalRate, minValue, maxValue);
+                            int endPage = count / 9;
+                            if (count % 9 != 0) {
+                                endPage++;
+                            }
+                            request.setAttribute("endPage", endPage);
+                            ResultSet rsPaging = dao.getData("select * from product as p join ProductImage as pi on p.ProductID = pi.ProductID where pi.ProductURL like '%_1%' \n"
+                                    + resultRate + "and p.UnitPrice between " + minValue + " and " + maxValue + " order by " + filterChoice + " limit 9 offset " + ((index - 1) * 9));
+                            request.setAttribute("rsPaging", rsPaging);
+                            request.setAttribute("index", index);
                         }
-                        request.setAttribute("endPage", endPage);
-                        ResultSet rsPaging = dao.getData("select * from product as p join ProductImage as pi on p.ProductID = pi.ProductID where pi.ProductURL like '%_1%' \n"
-                                + "and p.TotalRate = " + TotalRate + " and p.UnitPrice between " + minValue + " and " + maxValue + " order by " + filterChoice + " limit 9 offset " + ((index - 1) * 9));
-                        request.setAttribute("rsPaging", rsPaging);
-                        request.setAttribute("index", index);
                     } else {
                         int CategoryID = Integer.parseInt(CategoryID_raw);
-                        int count = dao.getTotalProductByRateAndCategoryID(TotalRate, CategoryID, minValue, maxValue);
-                        int endPage = count / 9;
-                        if (count % 9 != 0) {
-                            endPage++;
+                        if (TotalRate_raw == null || TotalRate_raw.equals("")) {
+                            int count = dao.getTotalProductByCateID(CategoryID, minValue, maxValue);
+                            int endPage = count / 9;
+                            if (count % 9 != 0) {
+                                endPage++;
+                            }
+                            request.setAttribute("endPage", endPage);
+                            ResultSet rsPaging = dao.getData("select * from product as p join ProductImage as pi on p.ProductID = pi.ProductID where pi.ProductURL like '%_1%' \n"
+                                    + "and p.CategoryID = " + CategoryID + " and p.UnitPrice between " + minValue + " and " + maxValue + " order by " + filterChoice + " limit 9 offset " + ((index - 1) * 9));
+                            request.setAttribute("rsPaging", rsPaging);
+                            request.setAttribute("index", index);
+                        } else {
+                            int count = dao.getTotalProductByRateAndCategoryID(TotalRate, CategoryID, minValue, maxValue);
+                            int endPage = count / 9;
+                            if (count % 9 != 0) {
+                                endPage++;
+                            }
+                            request.setAttribute("endPage", endPage);
+                            ResultSet rsPaging = dao.getData("select * from product as p join ProductImage as pi on p.ProductID = pi.ProductID where pi.ProductURL like '%_1%' \n"
+                                    + resultRate + "and p.CategoryID = " + CategoryID + " and p.UnitPrice between " + minValue + " and " + maxValue + " order by " + filterChoice + " limit 9 offset " + ((index - 1) * 9));
+                            request.setAttribute("rsPaging", rsPaging);
+                            request.setAttribute("index", index);
                         }
-                        request.setAttribute("endPage", endPage);
-                        ResultSet rsPaging = dao.getData("select * from product as p join ProductImage as pi on p.ProductID = pi.ProductID where pi.ProductURL like '%_1%' \n"
-                                + "and p.TotalRate = " + TotalRate + " and p.CategoryID = " + CategoryID + " and p.UnitPrice between " + minValue + " and " + maxValue + " order by " + filterChoice + " limit 9 offset " + ((index - 1) * 9));
-                        request.setAttribute("rsPaging", rsPaging);
-                        request.setAttribute("index", index);
                     }
                 }
                 if (filterChoice.equals("createDate desc") || filterChoice.equals("p.CreateDate desc")) {
                     filterChoice = "p.CreateDate desc";
                     //paging
                     if (CategoryID_raw == null || CategoryID_raw.equals("")) {
-                        int count = dao.getTotalProductByRate(TotalRate, minValue, maxValue);
-                        int endPage = count / 9;
-                        if (count % 9 != 0) {
-                            endPage++;
+                        if (TotalRate_raw == null || TotalRate_raw.equals("")) {
+                            int count = dao.getTotalProduct(minValue, maxValue);
+                            int endPage = count / 9;
+                            if (count % 9 != 0) {
+                                endPage++;
+                            }
+                            request.setAttribute("endPage", endPage);
+                            ResultSet rsPaging = dao.getData("select * from product as p join ProductImage as pi on p.ProductID = pi.ProductID where pi.ProductURL like '%_1%' \n"
+                                    + "and p.UnitPrice between " + minValue + " and " + maxValue + " order by " + filterChoice + " limit 9 offset " + ((index - 1) * 9));
+                            request.setAttribute("rsPaging", rsPaging);
+                            request.setAttribute("index", index);
+                        } else {
+                            int count = dao.getTotalProductByRate(TotalRate, minValue, maxValue);
+                            int endPage = count / 9;
+                            if (count % 9 != 0) {
+                                endPage++;
+                            }
+                            request.setAttribute("endPage", endPage);
+                            ResultSet rsPaging = dao.getData("select * from product as p join ProductImage as pi on p.ProductID = pi.ProductID where pi.ProductURL like '%_1%' \n"
+                                    + resultRate + "and p.UnitPrice between " + minValue + " and " + maxValue + " order by " + filterChoice + " limit 9 offset " + ((index - 1) * 9));
+                            request.setAttribute("rsPaging", rsPaging);
+                            request.setAttribute("index", index);
                         }
-                        request.setAttribute("endPage", endPage);
-                        ResultSet rsPaging = dao.getData("select * from product as p join ProductImage as pi on p.ProductID = pi.ProductID where pi.ProductURL like '%_1%' \n"
-                                + "and p.TotalRate = " + TotalRate + " and p.UnitPrice between " + minValue + " and " + maxValue + " order by " + filterChoice + " limit 9 offset " + ((index - 1) * 9));
-                        request.setAttribute("rsPaging", rsPaging);
-                        request.setAttribute("index", index);
                     } else {
-                        int CategoryID = Integer.parseInt(CategoryID_raw);
-                        int count = dao.getTotalProductByRateAndCategoryID(TotalRate, CategoryID, minValue, maxValue);
-                        int endPage = count / 9;
-                        if (count % 9 != 0) {
-                            endPage++;
+                        if (TotalRate_raw == null || TotalRate_raw.equals("")) {
+                            int CategoryID = Integer.parseInt(CategoryID_raw);
+                            int count = dao.getTotalProductByCateID(CategoryID, minValue, maxValue);
+                            int endPage = count / 9;
+                            if (count % 9 != 0) {
+                                endPage++;
+                            }
+                            request.setAttribute("endPage", endPage);
+                            ResultSet rsPaging = dao.getData("select * from product as p join ProductImage as pi on p.ProductID = pi.ProductID where pi.ProductURL like '%_1%' \n"
+                                    + "and p.CategoryID = " + CategoryID + " and p.UnitPrice between " + minValue + " and " + maxValue + " order by " + filterChoice + " limit 9 offset " + ((index - 1) * 9));
+                            request.setAttribute("rsPaging", rsPaging);
+                            request.setAttribute("index", index);
+                        } else {
+                            int CategoryID = Integer.parseInt(CategoryID_raw);
+                            int count = dao.getTotalProductByRateAndCategoryID(TotalRate, CategoryID, minValue, maxValue);
+                            int endPage = count / 9;
+                            if (count % 9 != 0) {
+                                endPage++;
+                            }
+                            request.setAttribute("endPage", endPage);
+                            ResultSet rsPaging = dao.getData("select * from product as p join ProductImage as pi on p.ProductID = pi.ProductID where pi.ProductURL like '%_1%' \n"
+                                    + resultRate + "and p.CategoryID = " + CategoryID + " and p.UnitPrice between " + minValue + " and " + maxValue + " order by " + filterChoice + " limit 9 offset " + ((index - 1) * 9));
+                            request.setAttribute("rsPaging", rsPaging);
+                            request.setAttribute("index", index);
                         }
-                        request.setAttribute("endPage", endPage);
-                        ResultSet rsPaging = dao.getData("select * from product as p join ProductImage as pi on p.ProductID = pi.ProductID where pi.ProductURL like '%_1%' \n"
-                                + "and p.TotalRate = " + TotalRate + " and p.CategoryID = " + CategoryID + " and p.UnitPrice between " + minValue + " and " + maxValue + " order by " + filterChoice + " limit 9 offset " + ((index - 1) * 9));
-                        request.setAttribute("rsPaging", rsPaging);
-                        request.setAttribute("index", index);
                     }
                 }
                 if (filterChoice.equals("priceasc") || filterChoice.equals("(UnitPrice*(100-UnitDiscount)/100) asc")) {
                     filterChoice = "(UnitPrice*(100-UnitDiscount)/100) asc";
                     if (CategoryID_raw == null || CategoryID_raw.equals("")) {
-                        int count = dao.getTotalProductByRate(TotalRate, minValue, maxValue);
-                        int endPage = count / 9;
-                        if (count % 9 != 0) {
-                            endPage++;
+                        if (TotalRate_raw == null || TotalRate_raw.equals("")) {
+                            int count = dao.getTotalProduct(minValue, maxValue);
+                            int endPage = count / 9;
+                            if (count % 9 != 0) {
+                                endPage++;
+                            }
+                            request.setAttribute("endPage", endPage);
+                            ResultSet rsPaging = dao.getData("select * from product as p join ProductImage as pi on p.ProductID = pi.ProductID where pi.ProductURL like '%_1%' \n"
+                                    + "and p.UnitPrice between " + minValue + " and " + maxValue + " order by " + filterChoice + " limit 9 offset " + ((index - 1) * 9));
+                            request.setAttribute("rsPaging", rsPaging);
+                            request.setAttribute("index", index);
+                        } else {
+                            int count = dao.getTotalProductByRate(TotalRate, minValue, maxValue);
+                            int endPage = count / 9;
+                            if (count % 9 != 0) {
+                                endPage++;
+                            }
+                            request.setAttribute("endPage", endPage);
+                            ResultSet rsPaging = dao.getData("select * from product as p join ProductImage as pi on p.ProductID = pi.ProductID where pi.ProductURL like '%_1%' \n"
+                                    + resultRate + "and p.UnitPrice between " + minValue + " and " + maxValue + " order by " + filterChoice + " limit 9 offset " + ((index - 1) * 9));
+                            request.setAttribute("rsPaging", rsPaging);
+                            request.setAttribute("index", index);
                         }
-                        request.setAttribute("endPage", endPage);
-                        ResultSet rsPaging = dao.getData("select * from product as p join ProductImage as pi on p.ProductID = pi.ProductID where pi.ProductURL like '%_1%' \n"
-                                + "and p.TotalRate = " + TotalRate + " and p.UnitPrice between " + minValue + " and " + maxValue + " order by " + filterChoice + " limit 9 offset " + ((index - 1) * 9));
-                        request.setAttribute("rsPaging", rsPaging);
-                        request.setAttribute("index", index);
                     } else {
-                        int CategoryID = Integer.parseInt(CategoryID_raw);
-                        int count = dao.getTotalProductByRateAndCategoryID(TotalRate, CategoryID, minValue, maxValue);
-                        int endPage = count / 9;
-                        if (count % 9 != 0) {
-                            endPage++;
+                        if (TotalRate_raw == null || TotalRate_raw.equals("")) {
+                            int CategoryID = Integer.parseInt(CategoryID_raw);
+                            int count = dao.getTotalProductByCateID(CategoryID, minValue, maxValue);
+                            int endPage = count / 9;
+                            if (count % 9 != 0) {
+                                endPage++;
+                            }
+                            request.setAttribute("endPage", endPage);
+                            ResultSet rsPaging = dao.getData("select * from product as p join ProductImage as pi on p.ProductID = pi.ProductID where pi.ProductURL like '%_1%' \n"
+                                    + "and p.CategoryID = " + CategoryID + " and p.UnitPrice between " + minValue + " and " + maxValue + " order by " + filterChoice + " limit 9 offset " + ((index - 1) * 9));
+                            request.setAttribute("rsPaging", rsPaging);
+                            request.setAttribute("index", index);
+                        } else {
+                            int CategoryID = Integer.parseInt(CategoryID_raw);
+                            int count = dao.getTotalProductByRateAndCategoryID(TotalRate, CategoryID, minValue, maxValue);
+                            int endPage = count / 9;
+                            if (count % 9 != 0) {
+                                endPage++;
+                            }
+                            request.setAttribute("endPage", endPage);
+                            ResultSet rsPaging = dao.getData("select * from product as p join ProductImage as pi on p.ProductID = pi.ProductID where pi.ProductURL like '%_1%' \n"
+                                    + resultRate + "and p.CategoryID = " + CategoryID + " and p.UnitPrice between " + minValue + " and " + maxValue + " order by " + filterChoice + " limit 9 offset " + ((index - 1) * 9));
+                            request.setAttribute("rsPaging", rsPaging);
+                            request.setAttribute("index", index);
                         }
-                        request.setAttribute("endPage", endPage);
-                        ResultSet rsPaging = dao.getData("select * from product as p join ProductImage as pi on p.ProductID = pi.ProductID where pi.ProductURL like '%_1%' \n"
-                                + "and p.TotalRate = " + TotalRate + " and p.CategoryID = " + CategoryID + " and p.UnitPrice between " + minValue + " and " + maxValue + " order by " + filterChoice + " limit 9 offset " + ((index - 1) * 9));
-                        request.setAttribute("rsPaging", rsPaging);
-                        request.setAttribute("index", index);
+
                     }
                 }
                 if (filterChoice.equals("pricedesc") || filterChoice.equals("(UnitPrice*(100-UnitDiscount)/100) desc")) {
                     filterChoice = "(UnitPrice*(100-UnitDiscount)/100) desc";
                     if (CategoryID_raw == null || CategoryID_raw.equals("")) {
-                        int count = dao.getTotalProductByRate(TotalRate, minValue, maxValue);
-                        int endPage = count / 9;
-                        if (count % 9 != 0) {
-                            endPage++;
+                        if (TotalRate_raw == null || TotalRate_raw.equals("")) {
+                            int count = dao.getTotalProduct(minValue, maxValue);
+                            int endPage = count / 9;
+                            if (count % 9 != 0) {
+                                endPage++;
+                            }
+                            request.setAttribute("endPage", endPage);
+                            ResultSet rsPaging = dao.getData("select * from product as p join ProductImage as pi on p.ProductID = pi.ProductID where pi.ProductURL like '%_1%' \n"
+                                    + "and p.UnitPrice between " + minValue + " and " + maxValue + " order by " + filterChoice + " limit 9 offset " + ((index - 1) * 9));
+                            request.setAttribute("rsPaging", rsPaging);
+                            request.setAttribute("index", index);
+                        } else {
+                            int count = dao.getTotalProductByRate(TotalRate, minValue, maxValue);
+                            int endPage = count / 9;
+                            if (count % 9 != 0) {
+                                endPage++;
+                            }
+                            request.setAttribute("endPage", endPage);
+                            ResultSet rsPaging = dao.getData("select * from product as p join ProductImage as pi on p.ProductID = pi.ProductID where pi.ProductURL like '%_1%' \n"
+                                    + resultRate + "and p.UnitPrice between " + minValue + " and " + maxValue + " order by " + filterChoice + " limit 9 offset " + ((index - 1) * 9));
+                            request.setAttribute("rsPaging", rsPaging);
+                            request.setAttribute("index", index);
                         }
-                        request.setAttribute("endPage", endPage);
-                        ResultSet rsPaging = dao.getData("select * from product as p join ProductImage as pi on p.ProductID = pi.ProductID where pi.ProductURL like '%_1%' \n"
-                                + "and p.TotalRate = " + TotalRate + " and p.UnitPrice between " + minValue + " and " + maxValue + " order by " + filterChoice + " limit 9 offset " + ((index - 1) * 9));
-                        request.setAttribute("rsPaging", rsPaging);
-                        request.setAttribute("index", index);
                     } else {
                         int CategoryID = Integer.parseInt(CategoryID_raw);
-                        int count = dao.getTotalProductByRateAndCategoryID(TotalRate, CategoryID, minValue, maxValue);
-                        int endPage = count / 9;
-                        if (count % 9 != 0) {
-                            endPage++;
+                        if (TotalRate_raw == null || TotalRate_raw.equals("")) {
+                            int count = dao.getTotalProductByCateID(CategoryID, minValue, maxValue);
+                            int endPage = count / 9;
+                            if (count % 9 != 0) {
+                                endPage++;
+                            }
+                            request.setAttribute("endPage", endPage);
+                            ResultSet rsPaging = dao.getData("select * from product as p join ProductImage as pi on p.ProductID = pi.ProductID where pi.ProductURL like '%_1%' \n"
+                                    + "and p.CategoryID = " + CategoryID + " and p.UnitPrice between " + minValue + " and " + maxValue + " order by " + filterChoice + " limit 9 offset " + ((index - 1) * 9));
+                            request.setAttribute("rsPaging", rsPaging);
+                            request.setAttribute("index", index);
+                        } else {
+                            int count = dao.getTotalProductByRateAndCategoryID(TotalRate, CategoryID, minValue, maxValue);
+                            int endPage = count / 9;
+                            if (count % 9 != 0) {
+                                endPage++;
+                            }
+                            request.setAttribute("endPage", endPage);
+                            ResultSet rsPaging = dao.getData("select * from product as p join ProductImage as pi on p.ProductID = pi.ProductID where pi.ProductURL like '%_1%' \n"
+                                    + resultRate + "and p.CategoryID = " + CategoryID + " and p.UnitPrice between " + minValue + " and " + maxValue + " order by " + filterChoice + " limit 9 offset " + ((index - 1) * 9));
+                            request.setAttribute("rsPaging", rsPaging);
+                            request.setAttribute("index", index);
                         }
-                        request.setAttribute("endPage", endPage);
-                        ResultSet rsPaging = dao.getData("select * from product as p join ProductImage as pi on p.ProductID = pi.ProductID where pi.ProductURL like '%_1%' \n"
-                                + "and p.TotalRate = " + TotalRate + " and p.CategoryID = " + CategoryID + " and p.UnitPrice between " + minValue + " and " + maxValue + " order by " + filterChoice + " limit 9 offset " + ((index - 1) * 9));
-                        request.setAttribute("rsPaging", rsPaging);
-                        request.setAttribute("index", index);
+
                     }
                 }
-            }
-            if (service.equals("showNew")) {
-
             }
 
             //End get Product from CategoryID-------------------------------------------------------
@@ -1410,6 +1650,7 @@ public class ControllerProductList extends HttpServlet {
             request.setAttribute("filterChoice", filterChoice);
             request.setAttribute("TotalRate", TotalRate_raw);
             request.setAttribute("service", service);
+            request.setAttribute("type", type);
             request.setAttribute("categoryID", CategoryID_raw);
             request.getRequestDispatcher("productList.jsp").forward(request, response);
         } catch (SQLException ex) {

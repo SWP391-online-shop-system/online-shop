@@ -63,29 +63,46 @@
                             </div>
                             <div class="shop__sidebar__accordion">
                                 <div class="accordion" id="accordionExample">
+                                    <div class="hottest-pro">
+                                        <div class="hottest-pro-title">Bán chạy nhất trong tháng</div>
+                                        <div class="hottest-pro-content">
+
+                                        </div>
+                                    </div>
                                     <div class="card">
                                         <div class="card-heading">
-                                            <a data-toggle="collapse" data-target="#collapseOne">Danh mục</a>
+                                            <a data-toggle="collapse" data-target="#collapseOne" href="ProductListURL">Danh mục</a>
                                         </div>
+                                        <%String TotalRate_raw = (String)request.getAttribute("TotalRate");
+                                        int TotalRate=0;
+                                        if(TotalRate_raw==null || TotalRate_raw.equals("")) {
+                                            TotalRate = 0;
+                                           } else {
+                                           TotalRate = Integer.parseInt(TotalRate_raw);
+                                            }
+                                        int CategoryID = 0;
+                                            String CategoryID_raw = (String)request.getAttribute("categoryID");
+                                            if(CategoryID_raw == null || CategoryID_raw.equals("")) {
+                                            CategoryID = 0;
+                                            } else {
+                                            CategoryID = Integer.parseInt(CategoryID_raw);
+                                            }
+                                            ResultSet rsCategory = (ResultSet)request.getAttribute("CategoryResult");
+                                        %>
                                         <div id="collapseOne" class="collapse show" data-parent="#accordionExample">
                                             <div class="card-body">
                                                 <div class="shop__sidebar__categories">
                                                     <ul class="nice-scroll">
-                                                        <%String service = (String)request.getAttribute("service");%>
-                                                        <li class="unique-li" style="<%=service.equals("showNew")?"background: #0091ff2b; width:190px;":""%>"><a style="color: #f7a749;" href="ProductListURL?type=showNew">Mới ra mắt</a></li>
-                                                        <li class="unique-li" style="<%=service.equals("showSale")?"background: #0091ff2b; width:190px;":""%>"><a style=" color: #f7a749;"href="ProductListURL?type=showSale">Đang giảm giá</a></li>
-                                                            <%
-                                                                int CategoryID = 0;
-                                                                String CategoryID_raw = (String)request.getAttribute("categoryID");
-                                                                if(CategoryID_raw == null || CategoryID_raw.equals("")) {
-                                                                    CategoryID = 0;
-                                                                } else {
-                                                                CategoryID = Integer.parseInt(CategoryID_raw);
+                                                        <li><a style="color: #f7a749;" href="ProductListURL">Tất cả sản phẩm</a></li>
+                                                            <%String type = (String)request.getAttribute("type");
+                                                            if(type==null || type.equals("")) {
+                                                            type = "";
                                                                 }
-                                                                ResultSet rsCategory = (ResultSet)request.getAttribute("CategoryResult");
-                                                                System.out.println("in jsp: categoryID  = "+CategoryID);
-                                                        while(rsCategory.next()) {%>
-                                                        <li style="<%=CategoryID==rsCategory.getInt(1) ? "background: #0091ff2b; width:190px;":""%>"><a href="ProductListURL?service=ShowCategory&CategoryID=<%=rsCategory.getInt(1)%>&index=1"><%=rsCategory.getString(2)%></a></li>
+                                                            %>
+                                                        <li class="unique-li" style="<%=type.equals("showNew")?"background: #0091ff2b; width:190px;":""%>"><a style="color: #f7a749;" href="ProductListURL?service=price&TotalRate=<%=TotalRate%>&type=showNew&CategoryID=${categoryID}&filterChoice=${filterChoice}&inputMinPrice=${oldMinPrice}&inputMaxPrice=${oldMaxPrice}">Mới ra mắt</a></li>
+                                                        <li class="unique-li" style="<%=type.equals("showSale")?"background: #0091ff2b; width:190px;":""%>"><a style=" color: #f7a749;" href="ProductListURL?service=price&TotalRate=<%=TotalRate%>&type=showSale&CategoryID=${categoryID}&filterChoice=${filterChoice}&inputMinPrice=${oldMinPrice}&inputMaxPrice=${oldMaxPrice}">Đang giảm giá</a></li>
+                                                            <%while(rsCategory.next()) {%>
+                                                        <li style="<%=CategoryID==rsCategory.getInt(1) ? "background: #0091ff2b; width:190px;":""%>"><a href="ProductListURL?service=ShowCategory&type=<%=type%>&CategoryID=<%=rsCategory.getInt(1)%>&index=1"><%=rsCategory.getString(2)%></a></li>
                                                             <%}%>
                                                     </ul>
                                                 </div>
@@ -99,44 +116,36 @@
                                         <div id="collapseThree" class="collapse show" data-parent="#accordionExample">
                                             <div class="card-body">
                                                 <div class="shop__sidebar__price">
-                                                    <%String TotalRate_raw = (String)request.getAttribute("TotalRate");
-                                                    int TotalRate=0;
-                                                    if(TotalRate_raw==null || TotalRate_raw.equals("")) {
-                                                        TotalRate = 0;
-                                                       } else {
-                                                       TotalRate = Integer.parseInt(TotalRate_raw);
-                                                        }
-                                                    %>
                                                     <ul>
-                                                        <li style="<%=TotalRate==5?"background: #0091ff2b;":""%>"><a href="ProductListURL?service=rate&CategoryID=${categoryID}&TotalRate=5&filterChoice=${filterChoice}&inputMinPrice=${oldMinPrice}&inputMaxPrice=${oldMaxPrice}">
+                                                        <li style="<%=TotalRate==5?"background: #0091ff2b;":""%>"><a href="ProductListURL?service=price&type=<%=type%>&CategoryID=${categoryID}&TotalRate=<%=TotalRate%>&filterChoice=${filterChoice}&inputMinPrice=${oldMinPrice}&inputMaxPrice=${oldMaxPrice}">
                                                                 <i class="fa fa-star" aria-hidden="true"></i>
                                                                 <i class="fa fa-star" aria-hidden="true"></i>
                                                                 <i class="fa fa-star" aria-hidden="true"></i>
                                                                 <i class="fa fa-star" aria-hidden="true"></i>
                                                                 <i class="fa fa-star" aria-hidden="true"></i>
                                                             </a></li>
-                                                        <li style="<%=TotalRate==4?"background: #0091ff2b;":""%>"><a href="ProductListURL?service=rate&CategoryID=${categoryID}&TotalRate=4&filterChoice=${filterChoice}&inputMinPrice=${oldMinPrice}&inputMaxPrice=${oldMaxPrice}">
+                                                        <li style="<%=TotalRate==4?"background: #0091ff2b;":""%>"><a href="ProductListURL?service=price&type=<%=type%>&CategoryID=${categoryID}&TotalRate=4&filterChoice=${filterChoice}&inputMinPrice=${oldMinPrice}&inputMaxPrice=${oldMaxPrice}">
                                                                 <i class="fa fa-star" aria-hidden="true"></i>
                                                                 <i class="fa fa-star" aria-hidden="true"></i>
                                                                 <i class="fa fa-star" aria-hidden="true"></i>
                                                                 <i class="fa fa-star" aria-hidden="true"></i>
                                                                 <i class="fa fa-star-o" aria-hidden="true"></i>
                                                             </a></li>
-                                                        <li style="<%=TotalRate==3 ? "background: #0091ff2b;" : ""%>"><a href="ProductListURL?service=rate&CategoryID=${categoryID}&TotalRate=3&filterChoice=${filterChoice}&inputMinPrice=${oldMinPrice}&inputMaxPrice=${oldMaxPrice}">
+                                                        <li style="<%=TotalRate==3 ? "background: #0091ff2b;" : ""%>"><a href="ProductListURL?service=price&type=<%=type%>&CategoryID=${categoryID}&TotalRate=3&filterChoice=${filterChoice}&inputMinPrice=${oldMinPrice}&inputMaxPrice=${oldMaxPrice}">
                                                                 <i class="fa fa-star" aria-hidden="true"></i>
                                                                 <i class="fa fa-star" aria-hidden="true"></i>
                                                                 <i class="fa fa-star" aria-hidden="true"></i>
                                                                 <i class="fa fa-star-o" aria-hidden="true"></i>
                                                                 <i class="fa fa-star-o" aria-hidden="true"></i>
                                                             </a></li>
-                                                        <li style="<%=TotalRate==2 ? "background: #0091ff2b;" : ""%>"><a href="ProductListURL?service=rate&CategoryID=${categoryID}&TotalRate=2&filterChoice=${filterChoice}&inputMinPrice=${oldMinPrice}&inputMaxPrice=${oldMaxPrice}">
+                                                        <li style="<%=TotalRate==2 ? "background: #0091ff2b;" : ""%>"><a href="ProductListURL?service=price&type=<%=type%>&CategoryID=${categoryID}&TotalRate=2&filterChoice=${filterChoice}&inputMinPrice=${oldMinPrice}&inputMaxPrice=${oldMaxPrice}">
                                                                 <i class="fa fa-star" aria-hidden="true"></i>
                                                                 <i class="fa fa-star" aria-hidden="true"></i>
                                                                 <i class="fa fa-star-o" aria-hidden="true"></i>
                                                                 <i class="fa fa-star-o" aria-hidden="true"></i>
                                                                 <i class="fa fa-star-o" aria-hidden="true"></i>
                                                             </a></li>
-                                                        <li style="<%=TotalRate==1 ? "background: #0091ff2b;" : ""%>"><a href="ProductListURL?service=rate&CategoryID=${categoryID}&TotalRate=1&filterChoice=${filterChoice}&inputMinPrice=${oldMinPrice}&inputMaxPrice=${oldMaxPrice}">
+                                                        <li style="<%=TotalRate==1 ? "background: #0091ff2b;" : ""%>"><a href="ProductListURL?service=price&type=<%=type%>&CategoryID=${categoryID}&TotalRate=1&filterChoice=${filterChoice}&inputMinPrice=${oldMinPrice}&inputMaxPrice=${oldMaxPrice}">
                                                                 <i class="fa fa-star" aria-hidden="true"></i>
                                                                 <i class="fa fa-star-o" aria-hidden="true"></i>
                                                                 <i class="fa fa-star-o" aria-hidden="true"></i>
@@ -170,9 +179,11 @@
                                                         <input type="hidden" name="service" value="price"/>
                                                         <c:if test="${categoryID != ''}">
                                                             <input type="hidden" name="CategoryID" value="${categoryID}"/>
+                                                            <input type="hidden" name="type" value="${type}"/>
                                                         </c:if>
                                                         <c:if test="${TotalRate != ''}">
                                                             <input type="hidden" name="TotalRate" value="${TotalRate}"/>
+                                                            <input type="hidden" name="type" value="${type}"/>
                                                         </c:if>
                                                         <div class="progress1"></div>
                                                         <div class="range-input">
@@ -209,10 +220,12 @@
                                         <form action="ProductListURL" method="GET">
                                             <c:if test="${categoryID == ''}">
                                                 <input type="hidden" name="service" value="filter"/>
+                                                <input type="hidden" name="type" value="<%=type%>"/>
                                             </c:if>
                                             <c:if test="${categoryID != ''}">
                                                 <input type="hidden" name="service" value="filter"/>
                                                 <input type="hidden" name="CategoryID" value="${categoryID}"/>
+                                                <input type="hidden" name="type" value="<%=type%>"/>
                                             </c:if>
                                             <c:if test="${TotalRate != ''}">
                                                 <input type="hidden" name="TotalRate" value="${TotalRate}"/>

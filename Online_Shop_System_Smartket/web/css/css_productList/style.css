@@ -1,4 +1,4 @@
-html,
+cahtml,
 body {
     height: 100%;
     font-family: "Nunito Sans", sans-serif;
@@ -1227,7 +1227,7 @@ ol {
 .shop__sidebar__categories ul,
 .shop__sidebar__price ul,
 .shop__sidebar__brand ul {
-    height: 353px;
+    height: 387px;
     margin-left: -33px;
 }
 .shop__sidebar__price ul li {
@@ -4010,4 +4010,16 @@ ol {
 }
 .reset-filter:hover{
     transform: scale(0.9);
+}
+.hottest-pro {
+    height: 243px;
+}
+.hottest-pro-title{
+    font-size: 17px;
+    text-align: center;
+    letter-spacing: 1px;
+    font-family: "Nunito Sans", sans-serif;
+    font-weight: 600;
+    margin-top: -24px;
+    color: #45970c;
 }

@@ -398,7 +398,12 @@ public class DAOProduct extends DBConnect {
     }
 
     public int getTotalProductByRate(int rate, double min, double max) {
-        String sql = "select count(*) from Product where TotalRate = " + rate + " and UnitPrice between " + min + " and " + max;
+        String sql = "";
+        if (rate == 0) {
+            sql = "select count(*) from Product where TotalRate = between 0 and 5 and UnitPrice between " + min + " and " + max;
+        } else {
+            sql = "select count(*) from Product where TotalRate = " + rate + " and UnitPrice between " + min + " and " + max;
+        }
         try {
             PreparedStatement st = conn.prepareStatement(sql);
             ResultSet rs = st.executeQuery();
@@ -452,7 +457,13 @@ public class DAOProduct extends DBConnect {
     }
 
     public int getTotalProductByRateAndCategoryID(int rate, int categoryID, double min, double max) {
-        String sql = "select count(*) from Product where TotalRate = " + rate + " and CategoryID = " + categoryID + " and UnitPrice between " + min + " and " + max;
+        String sql = "";
+        if (rate == 0) {
+            sql = "select count(*) from Product where TotalRate between 0 and  5 and CategoryID = " + categoryID + " and UnitPrice between " + min + " and " + max;
+
+        } else {
+            sql = "select count(*) from Product where TotalRate = " + rate + " and CategoryID = " + categoryID + " and UnitPrice between " + min + " and " + max;
+        }
         try {
             PreparedStatement st = conn.prepareStatement(sql);
             ResultSet rs = st.executeQuery();
