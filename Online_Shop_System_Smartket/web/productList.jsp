@@ -307,28 +307,28 @@
                                             <!-- Price range is different from begin -->
                                             <c:if test="${((requestScope.maxPrice != requestScope.oldMaxPrice)||(requestScope.minPrice != requestScope.oldMinPrice)) && (requestScope.oldMaxPrice != null && requestScope.oldMinPrice != null)}">
                                                 <c:if test="${requestScope.index == i}">
-                                                    <a class="active"  style="border: none;background: #4cdc4c;width: 4%;" href="ProductListURL?service=price&index=${i}&TotalRate=${TotalRate}&filterChoice=<%=filterChoice%>&inputMinPrice=<%=oldMinPrice%>&inputMaxPrice=<%=oldMaxPrice%>">${i}</a>
+                                                    <a class="active"  style="border: none;background: #4cdc4c;width: 4%;" href="ProductListURL?service=filter&type=<%=type%>&index=${i}&TotalRate=${TotalRate}&filterChoice=<%=filterChoice%>&inputMinPrice=<%=oldMinPrice%>&inputMaxPrice=<%=oldMaxPrice%>">${i}</a>
                                                 </c:if>
                                                 <c:if test="${requestScope.index != i}">
-                                                    <a class="active" href="ProductListURL?service=price&index=${i}&TotalRate=${TotalRate}&filterChoice=<%=filterChoice%>&inputMinPrice=<%=oldMinPrice%>&inputMaxPrice=<%=oldMaxPrice%>">${i}</a>
+                                                    <a class="active" href="ProductListURL?service=filter&type=<%=type%>&index=${i}&TotalRate=${TotalRate}&filterChoice=<%=filterChoice%>&inputMinPrice=<%=oldMinPrice%>&inputMaxPrice=<%=oldMaxPrice%>">${i}</a>
                                                 </c:if>
                                             </c:if>
 
                                             <c:if test="${((requestScope.maxPrice == requestScope.oldMaxPrice) &&(requestScope.minPrice == requestScope.oldMinPrice))|| (requestScope.oldMinPrice==null && requestScope.oldMaxPrice==null)}">
                                                 <c:if test="${requestScope.index == i}">
-                                                    <a class="active"  style="border: none;background: #4cdc4c;width: 4%;" href="ProductListURL?service=filter&index=${i}&TotalRate=${TotalRate}&filterChoice=<%=filterChoice%>&inputMinPrice=<%=oldMinPrice%>&inputMaxPrice=<%=oldMaxPrice%>">${i}</a>
+                                                    <a class="active"  style="border: none;background: #4cdc4c;width: 4%;" href="ProductListURL?service=filter&type=<%=type%>&index=${i}&TotalRate=${TotalRate}&filterChoice=<%=filterChoice%>&inputMinPrice=<%=oldMinPrice%>&inputMaxPrice=<%=oldMaxPrice%>">${i}</a>
                                                 </c:if>
                                                 <c:if test="${requestScope.index != i}"> 
-                                                    <a class="active" href="ProductListURL?service=filter&index=${i}&TotalRate=${TotalRate}&filterChoice=<%=filterChoice%>&inputMinPrice=<%=oldMinPrice%>&inputMaxPrice=<%=oldMaxPrice%>">${i}</a>
+                                                    <a class="active" href="ProductListURL?service=filter&type=<%=type%>&index=${i}&TotalRate=${TotalRate}&filterChoice=<%=filterChoice%>&inputMinPrice=<%=oldMinPrice%>&inputMaxPrice=<%=oldMaxPrice%>">${i}</a>
                                                 </c:if>
                                             </c:if>
                                         </c:if>
                                         <c:if test="${categoryID != ''}">
                                             <c:if test="${requestScope.index == i}">
-                                                <a class="active"  style="border: none;background: #4cdc4c;width: 4%;" href="ProductListURL?service=filter&CategoryID=${categoryID}&index=${i}&TotalRate=${TotalRate}&filterChoice=<%=filterChoice%>&inputMinPrice=<%=oldMinPrice%>&inputMaxPrice=<%=oldMaxPrice%>">${i}</a>
+                                                <a class="active"  style="border: none;background: #4cdc4c;width: 4%;" href="ProductListURL?service=filter&type=<%=type%>&CategoryID=${categoryID}&index=${i}&TotalRate=${TotalRate}&filterChoice=<%=filterChoice%>&inputMinPrice=<%=oldMinPrice%>&inputMaxPrice=<%=oldMaxPrice%>">${i}</a>
                                             </c:if>
                                             <c:if test="${requestScope.index != i}">
-                                                <a class="active" href="ProductListURL?service=filter&CategoryID=${categoryID}&index=${i}&TotalRate=${TotalRate}&filterChoice=<%=filterChoice%>&inputMinPrice=<%=oldMinPrice%>&inputMaxPrice=<%=oldMaxPrice%>">${i}</a>
+                                                <a class="active" href="ProductListURL?service=filter&type=<%=type%>&CategoryID=${categoryID}&index=${i}&TotalRate=${TotalRate}&filterChoice=<%=filterChoice%>&inputMinPrice=<%=oldMinPrice%>&inputMaxPrice=<%=oldMaxPrice%>">${i}</a>
                                             </c:if>
                                         </c:if>
                                     </c:forEach>
