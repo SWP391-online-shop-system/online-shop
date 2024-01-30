@@ -142,7 +142,7 @@
                                             <div class="product-content-name"><%=rsNewProduct.getString(2)%></div></a>
                                             <%if(rsNewProduct.getInt(7) != 0) {%>
                                         <div class="price-product "><img style="width: 21px; height: 20px;margin: 0px 3px -2px 0px;" src="images/logo/sale.png"/><%=df.format(rsNewProduct.getDouble(6)*(100-rsNewProduct.getInt(7))/100)%>đ</div>
-                                        <%} else {%>
+                                            <%} else {%>
                                         <div class="price-product"><%=df.format(rsNewProduct.getDouble(6))%><span>đ</span></div>
                                         <%}%>
                                         <div class="product-buy-section">
@@ -150,7 +150,7 @@
                                                 <div class="product-cart"><a href="loginURL" onclick="alertOpenCart()"><img src="images/cart/cart.png" alt="alt"/></a></div>
                                                     </c:if>
                                                     <c:if test="${sessionScope.account != null}">
-                                                <div class="product-cart"><a href="CartURL?service=addcart&quan=1&pid=<%=rsNewProduct.getInt("ProductID")%>"><img src="images/cart/cart.png" alt="alt"/></a></div>
+                                                    <div class="product-cart"><a href="#" onclick="addToCart(<%=rsNewProduct.getInt("ProductID")%>)"><img src="images/cart/cart.png" alt="alt"/></a></div>
                                                     </c:if>
                                             <div class="product-buy"><a href="#"><img src="images/cart/bag.png" alt="alt"/><span>MUA NGAY</span></div></a>
                                         </div>
@@ -297,5 +297,22 @@
                                                                             }
                                                                         }
                                                                     };
+                                                                    function addToCart(pId) {
+                                                                        var xhr = new XMLHttpRequest();
+                                                                        var url = 'CartURL?service=addcart&quan=1&pid=' + encodeURIComponent(pId);
+                                                                        xhr.open('POST', url, true);
+                                                                        xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+                                                                        xhr.onreadystatechange = function () {
+                                                                            if (xhr.readyState == XMLHttpRequest.DONE) {
+                                                                                if (xhr.status == 200) {
+                                                                                    // Xử lý phản hồi từ servlet (nếu cần)
+                                                                                    // Cập nhật giao diện người dùng (nếu cần)
+                                                                                } else {
+                                                                                    // Xử lý lỗi (nếu có)
+                                                                                }
+                                                                            }
+                                                                        };
+                                                                        xhr.send();
+                                                                    }
     </script>
 </html>
