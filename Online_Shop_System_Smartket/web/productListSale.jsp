@@ -47,6 +47,7 @@
                                 <th>Giá bán</th>
                                 <th>Tính năng</th>
                                 <th>Trạng thái</th>
+                                <th>Trạng thái</th>
                             </tr>
                         </thead>
                         <tbody>
