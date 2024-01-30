@@ -43,6 +43,7 @@
                         <meta name="viewport" content="width=device-width, initial-scale=1.0">
                         <title>Smarket</title>
                         <link rel="stylesheet" href="css/login.css"/>
+                        
                     </head>
                     <body> 
                         <%
@@ -86,7 +87,7 @@
                             <div class="popup ${requestScope.activeLogin}" id="loginPopup">
                                 <div class="close-btn" onclick="togglePopup('loginPopup')">x</div>
                                 <div class="form">
-                                    <h2>Đăng nhập</h2>
+                                    <h2><b>Đăng nhập</b></h2>
                                     <p class="text-danger" style="
                                        color: red;
                                        font-size: 20px;
