@@ -203,7 +203,7 @@ public class DAOUser extends DBConnect {
                 int reportTo = rs.getInt(13);
                 int roleID = rs.getInt(14);
                 User user = new User(id, fName, lName, address,
-                        phoneNumber, lastLogin, gender, image,
+                        phoneNumber, dob, gender, image,
                         password, email, lastLogin, userStatus,
                         reportTo, roleID);
                 vector.add(user);
