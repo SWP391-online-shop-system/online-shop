@@ -1,0 +1,599 @@
+{
+  "version": 2,
+  "warnings": [
+    {
+      "code": "V009",
+      "cwe": 0,
+      "level": 0,
+      "positions": [
+        {
+          "file": "D:\\Workspace\\SPRING2024\\online_shop_system\\Online_Shop_System_Smartket\\src\\java\\view\\Categories.java",
+          "line": 1,
+          "endLine": 1,
+          "column": 1,
+          "endColumn": 100500
+        }
+      ],
+      "message": "To use free version of PVS-Studio, source code files are required to start with a special comment.",
+      "projects": [],
+      "favorite": false,
+      "falseAlarm": false
+    },
+    {
+      "code": "V009",
+      "cwe": 0,
+      "level": 0,
+      "positions": [
+        {
+          "file": "D:\\Workspace\\SPRING2024\\online_shop_system\\Online_Shop_System_Smartket\\src\\java\\model\\DAOMail.java",
+          "line": 1,
+          "endLine": 1,
+          "column": 1,
+          "endColumn": 100500
+        }
+      ],
+      "message": "To use free version of PVS-Studio, source code files are required to start with a special comment.",
+      "projects": [],
+      "favorite": false,
+      "falseAlarm": false
+    },
+    {
+      "code": "V009",
+      "cwe": 0,
+      "level": 0,
+      "positions": [
+        {
+          "file": "D:\\Workspace\\SPRING2024\\online_shop_system\\Online_Shop_System_Smartket\\src\\java\\model\\DBConnect.java",
+          "line": 1,
+          "endLine": 1,
+          "column": 1,
+          "endColumn": 100500
+        }
+      ],
+      "message": "To use free version of PVS-Studio, source code files are required to start with a special comment.",
+      "projects": [],
+      "favorite": false,
+      "falseAlarm": false
+    },
+    {
+      "code": "V009",
+      "cwe": 0,
+      "level": 0,
+      "positions": [
+        {
+          "file": "D:\\Workspace\\SPRING2024\\online_shop_system\\Online_Shop_System_Smartket\\src\\java\\model\\DAOBlog.java",
+          "line": 1,
+          "endLine": 1,
+          "column": 1,
+          "endColumn": 100500
+        }
+      ],
+      "message": "To use free version of PVS-Studio, source code files are required to start with a special comment.",
+      "projects": [],
+      "favorite": false,
+      "falseAlarm": false
+    },
+    {
+      "code": "V009",
+      "cwe": 0,
+      "level": 0,
+      "positions": [
+        {
+          "file": "D:\\Workspace\\SPRING2024\\online_shop_system\\Online_Shop_System_Smartket\\src\\java\\controller\\ControllerSearchBlog.java",
+          "line": 1,
+          "endLine": 1,
+          "column": 1,
+          "endColumn": 100500
+        }
+      ],
+      "message": "To use free version of PVS-Studio, source code files are required to start with a special comment.",
+      "projects": [],
+      "favorite": false,
+      "falseAlarm": false
+    },
+    {
+      "code": "V009",
+      "cwe": 0,
+      "level": 0,
+      "positions": [
+        {
+          "file": "D:\\Workspace\\SPRING2024\\online_shop_system\\Online_Shop_System_Smartket\\src\\java\\controller\\ControllerBlog.java",
+          "line": 1,
+          "endLine": 1,
+          "column": 1,
+          "endColumn": 100500
+        }
+      ],
+      "message": "To use free version of PVS-Studio, source code files are required to start with a special comment.",
+      "projects": [],
+      "favorite": false,
+      "falseAlarm": false
+    },
+    {
+      "code": "V009",
+      "cwe": 0,
+      "level": 0,
+      "positions": [
+        {
+          "file": "D:\\Workspace\\SPRING2024\\online_shop_system\\Online_Shop_System_Smartket\\src\\java\\model\\DAOSlider.java",
+          "line": 1,
+          "endLine": 1,
+          "column": 1,
+          "endColumn": 100500
+        }
+      ],
+      "message": "To use free version of PVS-Studio, source code files are required to start with a special comment.",
+      "projects": [],
+      "favorite": false,
+      "falseAlarm": false
+    },
+    {
+      "code": "V009",
+      "cwe": 0,
+      "level": 0,
+      "positions": [
+        {
+          "file": "D:\\Workspace\\SPRING2024\\online_shop_system\\Online_Shop_System_Smartket\\src\\java\\controller\\ControllerSearchPage.java",
+          "line": 1,
+          "endLine": 1,
+          "column": 1,
+          "endColumn": 100500
+        }
+      ],
+      "message": "To use free version of PVS-Studio, source code files are required to start with a special comment.",
+      "projects": [],
+      "favorite": false,
+      "falseAlarm": false
+    },
+    {
+      "code": "V009",
+      "cwe": 0,
+      "level": 0,
+      "positions": [
+        {
+          "file": "D:\\Workspace\\SPRING2024\\online_shop_system\\Online_Shop_System_Smartket\\src\\java\\controller\\ControllerProductList.java",
+          "line": 1,
+          "endLine": 1,
+          "column": 1,
+          "endColumn": 100500
+        }
+      ],
+      "message": "To use free version of PVS-Studio, source code files are required to start with a special comment.",
+      "projects": [],
+      "favorite": false,
+      "falseAlarm": false
+    },
+    {
+      "code": "V009",
+      "cwe": 0,
+      "level": 0,
+      "positions": [
+        {
+          "file": "D:\\Workspace\\SPRING2024\\online_shop_system\\Online_Shop_System_Smartket\\src\\java\\controller\\CartController.java",
+          "line": 1,
+          "endLine": 1,
+          "column": 1,
+          "endColumn": 100500
+        }
+      ],
+      "message": "To use free version of PVS-Studio, source code files are required to start with a special comment.",
+      "projects": [],
+      "favorite": false,
+      "falseAlarm": false
+    },
+    {
+      "code": "V009",
+      "cwe": 0,
+      "level": 0,
+      "positions": [
+        {
+          "file": "D:\\Workspace\\SPRING2024\\online_shop_system\\Online_Shop_System_Smartket\\src\\java\\model\\DAOProductImage.java",
+          "line": 1,
+          "endLine": 1,
+          "column": 1,
+          "endColumn": 100500
+        }
+      ],
+      "message": "To use free version of PVS-Studio, source code files are required to start with a special comment.",
+      "projects": [],
+      "favorite": false,
+      "falseAlarm": false
+    },
+    {
+      "code": "V009",
+      "cwe": 0,
+      "level": 0,
+      "positions": [
+        {
+          "file": "D:\\Workspace\\SPRING2024\\online_shop_system\\Online_Shop_System_Smartket\\src\\java\\controller\\ControllerChangeuserinfo.java",
+          "line": 1,
+          "endLine": 1,
+          "column": 1,
+          "endColumn": 100500
+        }
+      ],
+      "message": "To use free version of PVS-Studio, source code files are required to start with a special comment.",
+      "projects": [],
+      "favorite": false,
+      "falseAlarm": false
+    },
+    {
+      "code": "V009",
+      "cwe": 0,
+      "level": 0,
+      "positions": [
+        {
+          "file": "D:\\Workspace\\SPRING2024\\online_shop_system\\Online_Shop_System_Smartket\\src\\java\\model\\DAOCart.java",
+          "line": 1,
+          "endLine": 1,
+          "column": 1,
+          "endColumn": 100500
+        }
+      ],
+      "message": "To use free version of PVS-Studio, source code files are required to start with a special comment.",
+      "projects": [],
+      "favorite": false,
+      "falseAlarm": false
+    },
+    {
+      "code": "V009",
+      "cwe": 0,
+      "level": 0,
+      "positions": [
+        {
+          "file": "D:\\Workspace\\SPRING2024\\online_shop_system\\Online_Shop_System_Smartket\\src\\java\\controller\\ControllerLogin.java",
+          "line": 1,
+          "endLine": 1,
+          "column": 1,
+          "endColumn": 100500
+        }
+      ],
+      "message": "To use free version of PVS-Studio, source code files are required to start with a special comment.",
+      "projects": [],
+      "favorite": false,
+      "falseAlarm": false
+    },
+    {
+      "code": "V009",
+      "cwe": 0,
+      "level": 0,
+      "positions": [
+        {
+          "file": "D:\\Workspace\\SPRING2024\\online_shop_system\\Online_Shop_System_Smartket\\src\\java\\controller\\ControllerChangepassword.java",
+          "line": 1,
+          "endLine": 1,
+          "column": 1,
+          "endColumn": 100500
+        }
+      ],
+      "message": "To use free version of PVS-Studio, source code files are required to start with a special comment.",
+      "projects": [],
+      "favorite": false,
+      "falseAlarm": false
+    },
+    {
+      "code": "V009",
+      "cwe": 0,
+      "level": 0,
+      "positions": [
+        {
+          "file": "D:\\Workspace\\SPRING2024\\online_shop_system\\Online_Shop_System_Smartket\\demo1\\src\\main\\java\\com\\example\\demo1\\HelloApplication.java",
+          "line": 1,
+          "endLine": 1,
+          "column": 1,
+          "endColumn": 100500
+        }
+      ],
+      "message": "To use free version of PVS-Studio, source code files are required to start with a special comment.",
+      "projects": [],
+      "favorite": false,
+      "falseAlarm": false
+    },
+    {
+      "code": "V009",
+      "cwe": 0,
+      "level": 0,
+      "positions": [
+        {
+          "file": "D:\\Workspace\\SPRING2024\\online_shop_system\\Online_Shop_System_Smartket\\demo1\\src\\main\\java\\com\\example\\demo1\\HelloResource.java",
+          "line": 1,
+          "endLine": 1,
+          "column": 1,
+          "endColumn": 100500
+        }
+      ],
+      "message": "To use free version of PVS-Studio, source code files are required to start with a special comment.",
+      "projects": [],
+      "favorite": false,
+      "falseAlarm": false
+    },
+    {
+      "code": "V009",
+      "cwe": 0,
+      "level": 0,
+      "positions": [
+        {
+          "file": "D:\\Workspace\\SPRING2024\\online_shop_system\\Online_Shop_System_Smartket\\src\\java\\controller\\ControllerLogOut.java",
+          "line": 1,
+          "endLine": 1,
+          "column": 1,
+          "endColumn": 100500
+        }
+      ],
+      "message": "To use free version of PVS-Studio, source code files are required to start with a special comment.",
+      "projects": [],
+      "favorite": false,
+      "falseAlarm": false
+    },
+    {
+      "code": "V009",
+      "cwe": 0,
+      "level": 0,
+      "positions": [
+        {
+          "file": "D:\\Workspace\\SPRING2024\\online_shop_system\\Online_Shop_System_Smartket\\src\\java\\view\\Slider.java",
+          "line": 1,
+          "endLine": 1,
+          "column": 1,
+          "endColumn": 100500
+        }
+      ],
+      "message": "To use free version of PVS-Studio, source code files are required to start with a special comment.",
+      "projects": [],
+      "favorite": false,
+      "falseAlarm": false
+    },
+    {
+      "code": "V009",
+      "cwe": 0,
+      "level": 0,
+      "positions": [
+        {
+          "file": "D:\\Workspace\\SPRING2024\\online_shop_system\\Online_Shop_System_Smartket\\src\\java\\controller\\ControllerUpload.java",
+          "line": 1,
+          "endLine": 1,
+          "column": 1,
+          "endColumn": 100500
+        }
+      ],
+      "message": "To use free version of PVS-Studio, source code files are required to start with a special comment.",
+      "projects": [],
+      "favorite": false,
+      "falseAlarm": false
+    },
+    {
+      "code": "V009",
+      "cwe": 0,
+      "level": 0,
+      "positions": [
+        {
+          "file": "D:\\Workspace\\SPRING2024\\online_shop_system\\Online_Shop_System_Smartket\\src\\java\\controller\\ControllerSignUp.java",
+          "line": 1,
+          "endLine": 1,
+          "column": 1,
+          "endColumn": 100500
+        }
+      ],
+      "message": "To use free version of PVS-Studio, source code files are required to start with a special comment.",
+      "projects": [],
+      "favorite": false,
+      "falseAlarm": false
+    },
+    {
+      "code": "V009",
+      "cwe": 0,
+      "level": 0,
+      "positions": [
+        {
+          "file": "D:\\Workspace\\SPRING2024\\online_shop_system\\Online_Shop_System_Smartket\\src\\java\\controller\\ControllerBlogDetail.java",
+          "line": 1,
+          "endLine": 1,
+          "column": 1,
+          "endColumn": 100500
+        }
+      ],
+      "message": "To use free version of PVS-Studio, source code files are required to start with a special comment.",
+      "projects": [],
+      "favorite": false,
+      "falseAlarm": false
+    },
+    {
+      "code": "V009",
+      "cwe": 0,
+      "level": 0,
+      "positions": [
+        {
+          "file": "D:\\Workspace\\SPRING2024\\online_shop_system\\Online_Shop_System_Smartket\\src\\java\\view\\ProductImage.java",
+          "line": 1,
+          "endLine": 1,
+          "column": 1,
+          "endColumn": 100500
+        }
+      ],
+      "message": "To use free version of PVS-Studio, source code files are required to start with a special comment.",
+      "projects": [],
+      "favorite": false,
+      "falseAlarm": false
+    },
+    {
+      "code": "V009",
+      "cwe": 0,
+      "level": 0,
+      "positions": [
+        {
+          "file": "D:\\Workspace\\SPRING2024\\online_shop_system\\Online_Shop_System_Smartket\\src\\java\\controller\\ControllerHomepage.java",
+          "line": 1,
+          "endLine": 1,
+          "column": 1,
+          "endColumn": 100500
+        }
+      ],
+      "message": "To use free version of PVS-Studio, source code files are required to start with a special comment.",
+      "projects": [],
+      "favorite": false,
+      "falseAlarm": false
+    },
+    {
+      "code": "V009",
+      "cwe": 0,
+      "level": 0,
+      "positions": [
+        {
+          "file": "D:\\Workspace\\SPRING2024\\online_shop_system\\Online_Shop_System_Smartket\\src\\java\\model\\DAOUser.java",
+          "line": 1,
+          "endLine": 1,
+          "column": 1,
+          "endColumn": 100500
+        }
+      ],
+      "message": "To use free version of PVS-Studio, source code files are required to start with a special comment.",
+      "projects": [],
+      "favorite": false,
+      "falseAlarm": false
+    },
+    {
+      "code": "V009",
+      "cwe": 0,
+      "level": 0,
+      "positions": [
+        {
+          "file": "D:\\Workspace\\SPRING2024\\online_shop_system\\Online_Shop_System_Smartket\\src\\java\\view\\Product.java",
+          "line": 1,
+          "endLine": 1,
+          "column": 1,
+          "endColumn": 100500
+        }
+      ],
+      "message": "To use free version of PVS-Studio, source code files are required to start with a special comment.",
+      "projects": [],
+      "favorite": false,
+      "falseAlarm": false
+    },
+    {
+      "code": "V009",
+      "cwe": 0,
+      "level": 0,
+      "positions": [
+        {
+          "file": "D:\\Workspace\\SPRING2024\\online_shop_system\\Online_Shop_System_Smartket\\src\\java\\model\\DAOProduct.java",
+          "line": 1,
+          "endLine": 1,
+          "column": 1,
+          "endColumn": 100500
+        }
+      ],
+      "message": "To use free version of PVS-Studio, source code files are required to start with a special comment.",
+      "projects": [],
+      "favorite": false,
+      "falseAlarm": false
+    },
+    {
+      "code": "V009",
+      "cwe": 0,
+      "level": 0,
+      "positions": [
+        {
+          "file": "D:\\Workspace\\SPRING2024\\online_shop_system\\Online_Shop_System_Smartket\\demo\\src\\main\\java\\com\\example\\demo\\HelloApplication.java",
+          "line": 1,
+          "endLine": 1,
+          "column": 1,
+          "endColumn": 100500
+        }
+      ],
+      "message": "To use free version of PVS-Studio, source code files are required to start with a special comment.",
+      "projects": [],
+      "favorite": false,
+      "falseAlarm": false
+    },
+    {
+      "code": "V009",
+      "cwe": 0,
+      "level": 0,
+      "positions": [
+        {
+          "file": "D:\\Workspace\\SPRING2024\\online_shop_system\\Online_Shop_System_Smartket\\src\\java\\model\\DAOCategories.java",
+          "line": 1,
+          "endLine": 1,
+          "column": 1,
+          "endColumn": 100500
+        }
+      ],
+      "message": "To use free version of PVS-Studio, source code files are required to start with a special comment.",
+      "projects": [],
+      "favorite": false,
+      "falseAlarm": false
+    },
+    {
+      "code": "V009",
+      "cwe": 0,
+      "level": 0,
+      "positions": [
+        {
+          "file": "D:\\Workspace\\SPRING2024\\online_shop_system\\Online_Shop_System_Smartket\\src\\java\\view\\User.java",
+          "line": 1,
+          "endLine": 1,
+          "column": 1,
+          "endColumn": 100500
+        }
+      ],
+      "message": "To use free version of PVS-Studio, source code files are required to start with a special comment.",
+      "projects": [],
+      "favorite": false,
+      "falseAlarm": false
+    },
+    {
+      "code": "V009",
+      "cwe": 0,
+      "level": 0,
+      "positions": [
+        {
+          "file": "D:\\Workspace\\SPRING2024\\online_shop_system\\Online_Shop_System_Smartket\\demo\\src\\main\\java\\com\\example\\demo\\HelloResource.java",
+          "line": 1,
+          "endLine": 1,
+          "column": 1,
+          "endColumn": 100500
+        }
+      ],
+      "message": "To use free version of PVS-Studio, source code files are required to start with a special comment.",
+      "projects": [],
+      "favorite": false,
+      "falseAlarm": false
+    },
+    {
+      "code": "V009",
+      "cwe": 0,
+      "level": 0,
+      "positions": [
+        {
+          "file": "D:\\Workspace\\SPRING2024\\online_shop_system\\Online_Shop_System_Smartket\\src\\java\\view\\Cart.java",
+          "line": 1,
+          "endLine": 1,
+          "column": 1,
+          "endColumn": 100500
+        }
+      ],
+      "message": "To use free version of PVS-Studio, source code files are required to start with a special comment.",
+      "projects": [],
+      "favorite": false,
+      "falseAlarm": false
+    },
+    {
+      "code": "V009",
+      "cwe": 0,
+      "level": 0,
+      "positions": [
+        {
+          "file": "D:\\Workspace\\SPRING2024\\online_shop_system\\Online_Shop_System_Smartket\\src\\java\\view\\Blog.java",
+          "line": 1,
+          "endLine": 1,
+          "column": 1,
+          "endColumn": 100500
+        }
+      ],
+      "message": "To use free version of PVS-Studio, source code files are required to start with a special comment.",
+      "projects": [],
+      "favorite": false,
+      "falseAlarm": false
+    }
+  ]
+}
