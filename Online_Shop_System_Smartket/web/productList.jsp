@@ -12,6 +12,10 @@
 <%@page import="model.DAOProduct"%>
 <%@page import="model.DAOProductImage"%>
 <%@page import="java.util.Vector" %>
+<%@page import="java.text.DateFormat" %>
+<%@page import="java.text.SimpleDateFormat" %>
+<%@page import="java.util.Date" %>
+<%@page import="java.util.Calendar" %>
 
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
@@ -26,6 +30,7 @@
         <title>San pham</title>
 
         <!-- Css Styles -->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
         <link rel="stylesheet" href="css/css_header/header.css" type="text/css">
         <link rel="stylesheet" href="css/css_productList/bootstrap.min.css" type="text/css">
         <link rel="stylesheet" href="css/css_productList/font-awesome.min.css" type="text/css">
@@ -58,17 +63,96 @@
                             </div>
                             <div class="shop__sidebar__accordion">
                                 <div class="accordion" id="accordionExample">
-                                    <div class="card">
-                                        <div class="card-heading">
-                                            <a data-toggle="collapse" data-target="#collapseOne">Danh mục</a>
+                                    <div class="hottest-pro">
+                                        <div class="hottest-pro-title">Bán chạy nhất</div>
+                                        <div class="row" style="display: contents">
+                                            <%
+                                                DAOProduct dao = new DAOProduct();
+                                                ResultSet rsHotPro = dao.getData("select * from Product as p join ProductImage as pi on p.ProductID = pi.ProductID where  pi.ProductURL like '%_1%'\n"
+                                                +"group by p.ProductID having min(p.TotalStock - p.UnitInStock) > 0");
+                                            while(rsHotPro.next()) {
+                                            %>
+                                            <div class="product__item" style="border: 1px solid #c1e8c1ba;border-radius: 40px;">
+                                                <div class="product__item__pic set-bg" style="height: 201px;">
+                                                    <img style="width: 192px;
+                                                         height: 174px;
+                                                         margin-left: 25px;
+                                                         margin-top: 10px;" src="<%=rsHotPro.getString("ProductURL")%>" alt="alt"/>
+                                                    <%if(rsHotPro.getInt("UnitDiscount")!=0) {%>
+                                                    <div class="sale-cotification">Sale</div>
+                                                    <%}%>
+                                                    <%    ResultSet rsNew2Product = dao.getData("select * from product as p join productImage as pi "
+                                                       + "on p.ProductID = pi.ProductID "
+                                                       + "where pi.ProductURL like '%_1%' "
+                                                       + "order by p.CreateDate desc limit 6 ");
+                                                         while(rsNew2Product.next()) {
+                                                            if(rsHotPro.getString("CreateDate").substring(0,10).equals(rsNew2Product.getString("CreateDate").substring(0,10))){%>
+                                                    <div class="sale-cotification">Mới</div>
+                                                    <%}}%>
+                                                </div>
+                                                <div class="product__item__text">
+                                                    <h6 style="margin-left: 34px;"><%=rsHotPro.getString("ProductName")%></h6>
+                                                    <a href="#" class="add-cart" style="left: 12px;">+ Thêm vào giỏ</a><a style="margin-left: 136px;" href="#">Mua ngay</a>
+                                                    <div style="display: flex;">
+                                                        <div class="rating" style="margin-left: 30px;">
+                                                            <%int star = (int)rsHotPro.getInt("totalRate");
+                                                              Product pro2 = new Product();
+                                                              String totalRate = pro2.convertStar(star);
+                                                            %>
+                                                            <%=totalRate%>
+                                                        </div>
+                                                    </div>
+                                                    <div style="display: flex;flex-direction: row;justify-content: space-between;">
+                                                        <%if(rsHotPro.getInt("UnitDiscount")!= 0){%>
+                                                        <div style="color: red;font-weight: 700;font-size: 15px; flex: 0 0 50%; text-decoration: line-through;"><%=df.format(rsHotPro.getDouble("UnitPrice"))%></div>
+                                                        <div style="color: #0d0d0d;font-weight: 700;font-size: 15px; flex: 0 0 50%"><%=df.format(rsHotPro.getDouble("UnitPrice")*(100-rsHotPro.getInt("UnitDiscount"))/100)%></div>
+                                                        <%} else {%>
+                                                        <div style="font-weight: 700;
+                                                             font-size: 15px;
+                                                             flex: -2 0 43%;
+                                                             margin-left: 146px;
+                                                             margin-top: -26px;"><%=df.format(rsHotPro.getDouble("UnitPrice"))%></div>
+                                                        <%}%>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <%}%>
                                         </div>
+                                    </div>
+                                    <div class="card" style="margin-top: 85px;">
+                                        <div class="card-heading">
+                                            <a data-toggle="collapse" data-target="#collapseOne" href="ProductListURL">Danh mục</a>
+                                        </div>
+                                        <%String TotalRate_raw = (String)request.getAttribute("TotalRate");
+                                        int TotalRate=0;
+                                        if(TotalRate_raw==null || TotalRate_raw.equals("")) {
+                                            TotalRate = 0;
+                                           } else {
+                                           TotalRate = Integer.parseInt(TotalRate_raw);
+                                            }
+                                        int CategoryID = 0;
+                                            String CategoryID_raw = (String)request.getAttribute("categoryID");
+                                            if(CategoryID_raw == null || CategoryID_raw.equals("")) {
+                                            CategoryID = 0;
+                                            } else {
+                                            CategoryID = Integer.parseInt(CategoryID_raw);
+                                            }
+                                            ResultSet rsCategory = (ResultSet)request.getAttribute("CategoryResult");
+                                        %>
                                         <div id="collapseOne" class="collapse show" data-parent="#accordionExample">
                                             <div class="card-body">
                                                 <div class="shop__sidebar__categories">
                                                     <ul class="nice-scroll">
-                                                        <%ResultSet rsCategory = (ResultSet)request.getAttribute("CategoryResult");
-                                                        while(rsCategory.next()) {%>
-                                                        <li><a href="ProductListURL?service=ShowCategory&CategoryID=<%=rsCategory.getInt(1)%>&index=1"><%=rsCategory.getString(2)%></a></li>
+                                                        <li><a style="color: #f7a749;" href="ProductListURL">Tất cả sản phẩm</a></li>
+                                                            <%String type = (String)request.getAttribute("type");
+                                                            if(type==null || type.equals("")) {
+                                                            type = "";
+                                                                }
+                                                            %>
+                                                        <li class="unique-li" style="<%=type.equals("showSale")?"background: #0091ff2b; width:190px;":""%>"><a style=" color: #f7a749;" href="ProductListURL?service=filter&TotalRate=<%=TotalRate%>&type=showSale&CategoryID=${categoryID}&filterChoice=${filterChoice}&inputMinPrice=${oldMinPrice}&inputMaxPrice=${oldMaxPrice}&index=1">Đang giảm giá</a></li>
+                                                            <%while(rsCategory.next()) {%>
+                                                        <li style="<%=CategoryID==rsCategory.getInt(1) ? "background: #0091ff2b; width:190px;":""%>"><a href="ProductListURL?service=filter&type=<%=type%>&CategoryID=<%=rsCategory.getInt(1)%>&TotalRate=<%=TotalRate%>&filterChoice=${filterChoice}&inputMinPrice=${oldMinPrice}&inputMaxPrice=${oldMaxPrice}&index=1"><%=rsCategory.getString(2)%></a></li>
                                                             <%}%>
                                                     </ul>
                                                 </div>
@@ -77,18 +161,48 @@
                                     </div>
                                     <div class="card">
                                         <div class="card-heading">
-                                            <a data-toggle="collapse" data-target="#collapseThree">Lọc theo giá tiền</a>
+                                            <a data-toggle="collapse" data-target="#collapseThree">Lọc theo đánh giá</a>
                                         </div>
                                         <div id="collapseThree" class="collapse show" data-parent="#accordionExample">
                                             <div class="card-body">
                                                 <div class="shop__sidebar__price">
                                                     <ul>
-                                                        <li><a href="#">$0.00 - $50.00</a></li>
-                                                        <li><a href="#">$50.00 - $100.00</a></li>
-                                                        <li><a href="#">$100.00 - $150.00</a></li>
-                                                        <li><a href="#">$150.00 - $200.00</a></li>
-                                                        <li><a href="#">$200.00 - $250.00</a></li>
-                                                        <li><a href="#">250.00+</a></li>
+                                                        <li style="<%=TotalRate==5?"background: #0091ff2b;":""%>"><a href="ProductListURL?service=filter&type=<%=type%>&CategoryID=${categoryID}&TotalRate=5&filterChoice=${filterChoice}&inputMinPrice=${oldMinPrice}&inputMaxPrice=${oldMaxPrice}&index=1">
+                                                                <i class="fa fa-star" aria-hidden="true"></i>
+                                                                <i class="fa fa-star" aria-hidden="true"></i>
+                                                                <i class="fa fa-star" aria-hidden="true"></i>
+                                                                <i class="fa fa-star" aria-hidden="true"></i>
+                                                                <i class="fa fa-star" aria-hidden="true"></i>
+                                                            </a></li>
+                                                        <li style="<%=TotalRate==4?"background: #0091ff2b;":""%>"><a href="ProductListURL?service=filter&type=<%=type%>&CategoryID=${categoryID}&TotalRate=4&filterChoice=${filterChoice}&inputMinPrice=${oldMinPrice}&inputMaxPrice=${oldMaxPrice}&index=1">
+                                                                <i class="fa fa-star" aria-hidden="true"></i>
+                                                                <i class="fa fa-star" aria-hidden="true"></i>
+                                                                <i class="fa fa-star" aria-hidden="true"></i>
+                                                                <i class="fa fa-star" aria-hidden="true"></i>
+                                                                <i class="fa fa-star-o" aria-hidden="true"></i>
+                                                            </a></li>
+                                                        <li style="<%=TotalRate==3 ? "background: #0091ff2b;" : ""%>"><a href="ProductListURL?service=filter&type=<%=type%>&CategoryID=${categoryID}&TotalRate=3&filterChoice=${filterChoice}&inputMinPrice=${oldMinPrice}&inputMaxPrice=${oldMaxPrice}&index=1">
+                                                                <i class="fa fa-star" aria-hidden="true"></i>
+                                                                <i class="fa fa-star" aria-hidden="true"></i>
+                                                                <i class="fa fa-star" aria-hidden="true"></i>
+                                                                <i class="fa fa-star-o" aria-hidden="true"></i>
+                                                                <i class="fa fa-star-o" aria-hidden="true"></i>
+                                                            </a></li>
+                                                        <li style="<%=TotalRate==2 ? "background: #0091ff2b;" : ""%>"><a href="ProductListURL?service=filter&type=<%=type%>&CategoryID=${categoryID}&TotalRate=2&filterChoice=${filterChoice}&inputMinPrice=${oldMinPrice}&inputMaxPrice=${oldMaxPrice}&index=1">
+                                                                <i class="fa fa-star" aria-hidden="true"></i>
+                                                                <i class="fa fa-star" aria-hidden="true"></i>
+                                                                <i class="fa fa-star-o" aria-hidden="true"></i>
+                                                                <i class="fa fa-star-o" aria-hidden="true"></i>
+                                                                <i class="fa fa-star-o" aria-hidden="true"></i>
+                                                            </a></li>
+                                                        <li style="<%=TotalRate==1 ? "background: #0091ff2b;" : ""%>"><a href="ProductListURL?service=filter&type=<%=type%>&CategoryID=${categoryID}&TotalRate=1&filterChoice=${filterChoice}&inputMinPrice=${oldMinPrice}&inputMaxPrice=${oldMaxPrice}&index=1">
+                                                                <i class="fa fa-star" aria-hidden="true"></i>
+                                                                <i class="fa fa-star-o" aria-hidden="true"></i>
+                                                                <i class="fa fa-star-o" aria-hidden="true"></i>
+                                                                <i class="fa fa-star-o" aria-hidden="true"></i>
+                                                                <i class="fa fa-star-o" aria-hidden="true"></i>
+                                                            </a></li>
+
                                                     </ul>
                                                 </div>
                                             </div>
@@ -96,45 +210,46 @@
                                     </div>
                                     <div class="card">
                                         <div class="card-heading">
-                                            <a data-toggle="collapse" data-target="#collapseSix">Lọc theo đánh giá</a>
+                                            <a data-toggle="collapse" data-target="#collapseSix">Lọc theo giá tiền</a>
                                         </div>
                                         <div id="collapseSix" class="collapse show" data-parent="#accordionExample">
+                                            <%
+                                            DAOProductImage daoImage = new DAOProductImage();
+                                            Double oldMinPrice=(Double)request.getAttribute("oldMinPrice");
+                                            Double oldMaxPrice=(Double)request.getAttribute("oldMaxPrice");
+                                            Double maxPrice =(Double)request.getAttribute("maxPrice");
+                                            Double minPrice = (Double)request.getAttribute("minPrice");
+                                            %>
                                             <div class="card-body">
-                                                <div class="shop__sidebar__tags">
-                                                    <a href="1"><i class="fa fa-star" aria-hidden="true"></i>
-                                                        <i class="fa fa-star-o" aria-hidden="true"></i>
-                                                        <i class="fa fa-star-o" aria-hidden="true"></i>
-                                                        <i class="fa fa-star-o" aria-hidden="true"></i>
-                                                        <i class="fa fa-star-o" aria-hidden="true"></i>
-                                                    </a>
-                                                    <a href="2"><i class="fa fa-star" aria-hidden="true"></i>
-                                                        <i class="fa fa-star" aria-hidden="true"></i>
-                                                        <i class="fa fa-star-o" aria-hidden="true"></i>
-                                                        <i class="fa fa-star-o" aria-hidden="true"></i>
-                                                        <i class="fa fa-star-o" aria-hidden="true"></i>
-                                                    </a>
-                                                    <a href="3"><i class="fa fa-star" aria-hidden="true"></i>
-                                                        <i class="fa fa-star" aria-hidden="true"></i>
-                                                        <i class="fa fa-star" aria-hidden="true"></i>
-                                                        <i class="fa fa-star-o" aria-hidden="true"></i>
-                                                        <i class="fa fa-star-o" aria-hidden="true"></i>
-                                                    </a>
-                                                    <a href="4"><i class="fa fa-star" aria-hidden="true"></i>
-                                                        <i class="fa fa-star" aria-hidden="true"></i>
-                                                        <i class="fa fa-star" aria-hidden="true"></i>
-                                                        <i class="fa fa-star" aria-hidden="true"></i>
-                                                        <i class="fa fa-star-o" aria-hidden="true"></i>
-                                                    </a>
-                                                    <a href="5"><i class="fa fa-star" aria-hidden="true"></i>
-                                                        <i class="fa fa-star" aria-hidden="true"></i>
-                                                        <i class="fa fa-star" aria-hidden="true"></i>
-                                                        <i class="fa fa-star" aria-hidden="true"></i>
-                                                        <i class="fa fa-star" aria-hidden="true"></i>
-                                                    </a>
-
+                                                <div class="group">
+                                                    <form action="ProductListURL" method="GET">
+                                                        <input type="hidden" name="service" value="filter"/>
+                                                        <input type="hidden" name="index" value="1"/>
+                                                        <c:if test="${categoryID != ''}">
+                                                            <input type="hidden" name="CategoryID" value="${categoryID}"/>
+                                                            <input type="hidden" name="type" value="${type}"/>
+                                                        </c:if>
+                                                        <c:if test="${TotalRate != ''}">
+                                                            <input type="hidden" name="TotalRate" value="${TotalRate}"/>
+                                                            <input type="hidden" name="type" value="${type}"/>
+                                                        </c:if>
+                                                        <div class="progress1"></div>
+                                                        <div class="range-input">
+                                                            <input name="inputMinPrice" class="range-min" max="<%=maxPrice%>" min="<%=minPrice%>" type="range" value="<%=(oldMinPrice==null ? minPrice : oldMinPrice)%>">
+                                                            <input name="inputMaxPrice" class="range-max" max="<%=maxPrice%>" type="range" value="<%=(oldMaxPrice==null ? maxPrice : oldMaxPrice)%>">
+                                                        </div>
+                                                        <div class="range-text">
+                                                            <div class="text-min"><%=df.format(oldMinPrice==null ? minPrice : oldMinPrice)%></div>
+                                                            <div class="text-max"><%=df.format(oldMaxPrice==null ? maxPrice : oldMaxPrice)%></div>
+                                                        </div>
+                                                        <button class="submit-price-form" type="submit">Lọc</button>
+                                                    </form>
                                                 </div>
                                             </div>
                                         </div>
+                                        <form action="ProductListURL" method="GET">
+                                            <button class="reset-filter" type="submit">Xóa tất cả</button>
+                                        </form>
                                     </div>
                                 </div>
                             </div>
@@ -150,48 +265,89 @@
                                 <div class="col-lg-6 col-md-6 col-sm-6">
                                     <div class="shop__product__option__right">
                                         <p>Bộ lọc</p>
-                                        <select>
-                                            <option>Giá tăng dần</option>
-                                            <option>Giá giảm dần</option>
-                                            <option>Mới nhất</option>
-                                            <option>Cũ nhất</option>
-                                        </select>
+                                        <form action="ProductListURL" method="GET">
+                                            <input type="hidden" name="index" value="1"/>
+                                            <c:if test="${categoryID == ''}">
+                                                <input type="hidden" name="service" value="filter"/>
+                                                <input type="hidden" name="type" value="<%=type%>"/>
+                                            </c:if>
+                                            <c:if test="${categoryID != ''}">
+                                                <input type="hidden" name="service" value="filter"/>
+                                                <input type="hidden" name="CategoryID" value="${categoryID}"/>
+                                                <input type="hidden" name="type" value="<%=type%>"/>
+                                            </c:if>
+                                            <c:if test="${TotalRate != ''}">
+                                                <input type="hidden" name="TotalRate" value="${TotalRate}"/>
+                                            </c:if>
+                                            <c:if test="${((requestScope.maxPrice != requestScope.oldMaxPrice)||(requestScope.minPrice != requestScope.oldMinPrice)) && (requestScope.oldMaxPrice != null && requestScope.oldMinPrice != null)}">
+                                                <input name="inputMinPrice" type="hidden" value="<%=(oldMinPrice==null ? minPrice : oldMinPrice)%>">
+                                                <input name="inputMaxPrice" type="hidden" value="<%=(oldMaxPrice==null ? maxPrice : oldMaxPrice)%>">
+                                            </c:if>
+                                            <select name="filterChoice" onchange="this.form.submit()">
+                                                <%String filterChoice = (String)request.getAttribute("filterChoice");
+                                                if(filterChoice == null){
+                                                filterChoice = "createDate desc";
+                                                }
+                                                %>
+                                                <option value="createDate desc"<%=(filterChoice.equals("createDate desc")||filterChoice.equals("p.CreateDate desc"))? "selected":""%>>Mới nhất</option>
+                                                <option value="createDate asc"<%=(filterChoice.equals("createDate asc")||filterChoice.equals("p.CreateDate asc"))? "selected":""%>>Cũ nhất</option>
+                                                <option value="priceasc"<%=(filterChoice.equals("priceasc")||filterChoice.equals("(UnitPrice*(100-UnitDiscount)/100) asc"))? "selected":""%>>Giá tăng dần</option>
+                                                <option value="pricedesc"<%=(filterChoice.equals("pricedesc")||filterChoice.equals("(UnitPrice*(100-UnitDiscount)/100) desc"))? "selected":""%>>Giá giảm dần</option>
+                                            </select>
+                                        </form>
                                     </div>
                                 </div>
                             </div>
                         </div>
                         <div class="row">
                             <%
-                                DAOProduct dao = new DAOProduct();
-                                DAOProductImage daoImage = new DAOProductImage();
-                            Vector<Product> listProduct = (Vector<Product>)request.getAttribute("listPage");
-                            for(Product list: listProduct){
-                                ProductImage proImage = daoImage.getProductImageByProductID(list.getProductID());
+                                System.out.println("Prepare to getattribute rsPaging!");
+                                ResultSet rsPaging = (ResultSet)request.getAttribute("rsPaging");
+                                if(!rsPaging.isBeforeFirst()) {%>
+                            <div class="notify-empty">Không có sản phẩm nào</div>
+                            <%} 
+                            while(rsPaging.next()) {
                             %>
                             <div class="col-lg-4 col-md-6 col-sm-6">
                                 <div class="product__item">
                                     <div class="product__item__pic set-bg">
-                                        <img src="<%=proImage.getProductURL()%>" alt="alt"/>
-                                        <%if(list.getUnitDiscount()!=0) {%>
+                                        <img src="<%=rsPaging.getString("ProductURL")%>" alt="alt"/>
+                                        <%if(rsPaging.getInt("UnitDiscount")!=0) {%>
                                         <div class="sale-cotification">Sale</div>
                                         <%}%>
+                                        <%    ResultSet rsNewProduct = dao.getData("select * from product as p join productImage as pi "
+                                           + "on p.ProductID = pi.ProductID "
+                                           + "where pi.ProductURL like '%_1%' "
+                                           + "order by p.CreateDate desc limit 6 ");
+                                             while(rsNewProduct.next()) {
+                                                if(rsPaging.getString("CreateDate").substring(0,10).equals(rsNewProduct.getString("CreateDate").substring(0,10))){%>
+                                        <div class="sale-cotification">Mới</div>
+                                        <%}}%>
                                     </div>
                                     <div class="product__item__text">
-                                        <h6><%=list.getProductName()%></h6>
+                                        <h6><%=rsPaging.getString("ProductName")%></h6>
                                         <a href="#" class="add-cart">+ Thêm vào giỏ</a><a style="margin-left: 136px;" href="#">Mua ngay</a>
                                         <div style="display: flex;">
                                             <div class="rating">
-                                                <%int star = (int)list.getTotalRate();
-                                                Product pro2 = new Product();
+                                                <%int star = (int)rsPaging.getInt("totalRate");
+                                                  Product pro2 = new Product();
                                                   String totalRate = pro2.convertStar(star);
                                                 %>
                                                 <%=totalRate%>
                                             </div>
-                                            <div style="color: #0d0d0d;font-weight: 700;font-size: 15px; flex: 0 0 50%"><%=df.format(list.getUnitPrice())%></div>
                                         </div>
-                                        <%if(list.getUnitDiscount()!=0) {%>
-                                        <div style="color: #0d0d0d;font-weight: 700;font-size: 18px; flex: 0 0 50%">$67.24</div>
-                                        <%}%>
+                                        <div style="display: flex;">
+                                            <%if(rsPaging.getInt("UnitDiscount")!= 0){%>
+                                            <div style="color: red;font-weight: 700;font-size: 15px; flex: 0 0 50%; text-decoration: line-through;"><%=df.format(rsPaging.getDouble("UnitPrice"))%></div>
+                                            <div style="color: #0d0d0d;font-weight: 700;font-size: 15px; flex: 0 0 50%"><%=df.format(rsPaging.getDouble("UnitPrice")*(100-rsPaging.getInt("UnitDiscount"))/100)%></div>
+                                            <%} else {%>
+                                            <div style="font-weight: 700;
+                                                 font-size: 15px;
+                                                 flex: -2 0 43%;
+                                                 margin-left: 116px;
+                                                 margin-top: -26px;"><%=df.format(rsPaging.getDouble("UnitPrice"))%></div>
+                                            <%}%>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -199,14 +355,17 @@
                         </div>
                         <div class="row">
                             <div class="col-lg-12">
-                                <div class="product__pagination">
-                                    <c:set value="${requestScope.catename}" var="category"/>
+                                <div class="product__pagination blog__pagination" style="margin: 0;margin-left: 40px;">
+                                    <%int endPage = (int)request.getAttribute("endPage");
+                                    %>
+                                    <c:set value="${requestScope.categoryID}" var="categoryID"/>
                                     <c:forEach begin="1" end="${endPage}" var="i">
+                                        <!-- Price range is different from begin -->
                                         <c:if test="${requestScope.index == i}">
-                                            <a class="active"  style="border: none;background: #4cdc4c;width: 4%;" href="ProductListURL?service=ShowCategory&CategoryID=${category.categoryID}&index=${i}">${i}</a>
+                                            <a class="active"  style="background: #7fad39;border-color: #7fad39;color: #ffffff;" href="ProductListURL?service=filter&CategoryID=${categoryID}&type=<%=type%>&index=${i}&TotalRate=${TotalRate}&filterChoice=<%=filterChoice%>&inputMinPrice=<%=oldMinPrice%>&inputMaxPrice=<%=oldMaxPrice%>">${i}</a>
                                         </c:if>
                                         <c:if test="${requestScope.index != i}">
-                                            <a class="active" href="ProductListURL?service=ShowCategory&CategoryID=${category.categoryID}&index=${i}">${i}</a>
+                                            <a class="active"href="ProductListURL?service=filter&CategoryID=${categoryID}&type=<%=type%>&index=${i}&TotalRate=${TotalRate}&filterChoice=<%=filterChoice%>&inputMinPrice=<%=oldMinPrice%>&inputMaxPrice=<%=oldMaxPrice%>">${i}</a>
                                         </c:if>
                                     </c:forEach>
                                 </div>
@@ -289,10 +448,7 @@
                 </form>
             </div>
         </div>
-
-        <!-- Search End -->
-
-        <!-- Js Plugins -->
+        <script src="js/price.js"></script>
     </body>
 
 </html>

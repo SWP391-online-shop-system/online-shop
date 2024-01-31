@@ -13,6 +13,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import java.sql.ResultSet;
 import model.DAOBlog;
+import model.DAOProduct;
 
 /**
  *
@@ -36,12 +37,17 @@ public class ControllerHomePage extends HttpServlet {
         try ( PrintWriter out = response.getWriter()) {
             /* TODO output your page here. You may use following sample code. */
             DAOBlog daoBlog = new DAOBlog();
+            DAOProduct dao = new DAOProduct();
             ResultSet rsNewBlog = daoBlog.getData("select * from Blog order by CreateTime desc limit 1");
             ResultSet rsFeatureBlog = daoBlog.getData("select * from Blog order by BlogRate desc limit 3");
             ResultSet rsSlider = daoBlog.getData("select SliderImage, SliderLink from Slider");
             request.setAttribute("rsSlider", rsSlider);
             request.setAttribute("rsNewBlog", rsNewBlog);
             request.setAttribute("rsFeatureBlog", rsFeatureBlog);
+            double maxValue = dao.getMaxUnitPrice();
+            double minValue = dao.getMinUnitPrice();
+            request.setAttribute("inputMinPrice", minValue);
+            request.setAttribute("inputMaxPrice", maxValue);
             request.getRequestDispatcher("homepage.jsp").forward(request, response);
         }
     }
@@ -59,7 +65,6 @@ public class ControllerHomePage extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         processRequest(request, response);
-
     }
 
     /**
