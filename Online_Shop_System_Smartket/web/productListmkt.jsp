@@ -100,12 +100,10 @@
                             </tr>
                         </thead>
                         <tbody>
-                    <%
-                        try {
-                            while(rs.next()) {
-                            
-                
-                    %>
+                            <%
+                                try {
+                                    while(rs.next()) {
+                            %>
                             <tr>
                                 <td><%=rs.getInt("ProductID")%></td>
                                 <td><img style="width: 100px" src="<%=rs.getString("ProductURL")%>"/></td>
@@ -116,26 +114,23 @@
                                 <td><%=rs.getInt("ProductID")%></td>
                                 <!--<td><span class="status text-success">&bull;</span> Delivered</td>-->
                             </tr>
-                    <%}
-                                                } catch (SQLException ex) {
-                                                }
-                    %>
+                            <%}
+                                                        } catch (SQLException ex) {
+                                                        }
+                            %>
                         </tbody>
                     </table>
                     <div class="clearfix">
                         <div class="hint-text">Showing <b>5</b> out of <b>25</b> entries</div>
                         <ul class="pagination">
                             <li class="page-item disabled"><a href="#">Previous</a></li>
-                            <li class="page-item"><a href="#" class="page-link">1</a></li>
-                            <li class="page-item"><a href="#" class="page-link">2</a></li>
-                            <li class="page-item"><a href="#" class="page-link">3</a></li>
-                            <li class="page-item active"><a href="#" class="page-link">4</a></li>
-                            <li class="page-item"><a href="#" class="page-link">5</a></li>
-                            <li class="page-item"><a href="#" class="page-link">6</a></li>
-                            <li class="page-item"><a href="#" class="page-link">7</a></li>
-                            <li class="page-item"><a href="#" class="page-link">Next</a></li>
+                                <c:forEach begin="1" end="${endP}" var="i">
+                                <li class="page-item"><a href="mktProductListURL?index=${i}" class="page-link">${i}</a></li>
+                                </c:forEach>
+                            <li class="page-item"><a href="#">Next</a></li>
                         </ul>
                     </div>
+
                 </div>
             </div>        
         </div>     

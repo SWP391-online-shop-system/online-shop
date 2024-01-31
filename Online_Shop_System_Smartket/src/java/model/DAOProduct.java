@@ -314,6 +314,34 @@ public class DAOProduct extends DBConnect {
         return list;
     }
 
+    public Vector<Product> get10Next(int index) {
+        Vector<Product> vector = new Vector<>();
+        String sql = "select * from Product order by ProductID limit 10 offset ?";
+        try {
+            PreparedStatement st = conn.prepareStatement(sql);
+            st.setInt(1, (index - 1) * 10);
+            ResultSet rs = st.executeQuery();
+            while (rs.next()) {
+                Product pro = new Product(
+                        rs.getInt("ProductID"),
+                        rs.getString("ProductName"),
+                        rs.getInt("CategoryID"),
+                        rs.getString("ProductDescription"),
+                        rs.getInt("UnitInStock"),
+                        rs.getDouble("UnitPrice"),
+                        rs.getInt("UnitDiscount"),
+                        rs.getString("CreateDate"),
+                        rs.getInt("TotalRate"),
+                        rs.getInt("TotalStock")
+                );
+                vector.add(pro);
+            }
+        } catch (SQLException e) {
+            System.out.println(e);
+        }
+        return vector;
+    }
+
     public int getTotalProductBySearch(String key) {
         String sql = "select count(*) from Product where ProductName like '%" + key + "%'";
         try {
@@ -355,6 +383,7 @@ public class DAOProduct extends DBConnect {
         }
         return 0;
     }
+
     public List<Product> getProduct1(String sql) {
         List<Product> list = new ArrayList<>();
         try {
@@ -383,11 +412,11 @@ public class DAOProduct extends DBConnect {
         }
         return list;
     }
-//    public static void main(String[] args) {
-//        DAOProduct dao = new DAOProduct();
-//        List<Product> list = dao.getProduct1("select * from product as p join productImage as pi on p.ProductID = pi.ProductID");
-//        for (Product product : list) {
-//            System.out.println(list);
-//        }
-//    }
+    public static void main(String[] args) {
+        DAOProduct dao = new DAOProduct();
+        Vector<Product> vector = dao.get10Next(2);
+        for (Product product : vector) {
+            System.out.println(product);
+        }
+    }
 }

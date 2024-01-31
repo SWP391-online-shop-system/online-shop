@@ -14,6 +14,7 @@ import jakarta.servlet.http.HttpServletResponse;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
+import java.util.Vector;
 import model.DAOProduct;
 import view.Product;
 
@@ -36,8 +37,6 @@ public class ControllerMarketingProductList extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        DAOProduct dao = new DAOProduct();
-        int count = dao.getTotalProduct();
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
@@ -53,10 +52,24 @@ public class ControllerMarketingProductList extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         DAOProduct dao = new DAOProduct();
-        ResultSet rs = dao.getData("select * from product as p  join productImage as pi on p.ProductID = pi.ProductID\n"
-                + "where pi.ProductURL like '%_1%'");
+        String indexPage = request.getParameter("index");
+        if (indexPage == null) {
+            indexPage = "1";
+        }
+        int index = Integer.parseInt(indexPage);
+        index = (index - 1) * 10;
+        ResultSet rs = dao.getData("select * from Product as p  \n"
+                + "                 join productImage as pi on p.ProductID = pi.ProductID\n"
+                + "                 where pi.ProductURL like '%_1%'\n"
+                + "                 limit 10 offset " + index);
+        int count = dao.getTotalProduct();
+        int endPage = count / 15;
+        if (count % 15 != 0) {
+            endPage++;
+        }
         request.setAttribute("data", rs);
-        request.getRequestDispatcher("productListSale.jsp").forward(request, response);
+        request.setAttribute("endP", endPage);
+        request.getRequestDispatcher("productListmkt.jsp").forward(request, response);
     }
 
     /**
