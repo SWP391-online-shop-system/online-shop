@@ -22,7 +22,7 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/CascadeStyleSheet.css
     padding: 4vh 5vh;
     border-bottom-left-radius: 1rem;
     border-top-left-radius: 1rem;
-    flex: 73%;
+    flex: 66%;
     box-shadow: 0 6px 20px 0 rgba(0, 0, 0, 0.19);
     border-radius: 1rem;
     border: transparent;
@@ -325,4 +325,63 @@ aside p {
 .summary .summary-child:last-child{
     position: sticky;
     top: 28%;
+}
+.cart-contact{
+    background-color: #fff;
+    padding: 16vh 5vh;
+    border-bottom-left-radius: 1rem;
+    border-top-left-radius: 1rem;
+    flex: 82%;
+    box-shadow: 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    border-radius: 1rem;
+    border: transparent;
+}
+.cart-contact input{
+    font-size: 15px;
+    display: flex;
+    margin-top: 10px;
+    padding: 7px 18px;
+    width: 90%;
+    height: 15%;
+    border: 2px solid #1B1B1B;
+    box-sizing: border-box;
+    border-radius: 16px;
+}
+.cart-contact label{
+    margin: 10px;
+}
+.cart-contact select{
+    font-size: 15px;
+    margin-top: 10px;
+    width: 29%;
+    height: 10%;
+    border: 2px solid #1B1B1B;
+    box-sizing: border-box;
+    border-radius: 16px;
+    padding: 0px 13px;
+}
+.summary-order{
+    background-color: #72e27a9c;
+    border-top-right-radius: 1rem;
+    border-bottom-right-radius: 1rem;
+    padding: 4vh;
+    color: rgb(65, 65, 65);
+    flex: auto;
+    position: relative;
+    display: table;
+    table-layout: fixed;
+    box-shadow: 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    border-radius: 1rem;
+    border: transparent;
+}
+.summary-order img{
+    width: 3.5rem;
+    padding-left: 10px;
+}
+.summary-product{
+    background-color: white;
+    border-radius: 13px;
+    margin: 18px;
+    display: flex;
+    align-items: center;
 }
