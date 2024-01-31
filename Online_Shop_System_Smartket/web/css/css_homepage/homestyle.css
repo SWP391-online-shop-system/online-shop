@@ -314,7 +314,7 @@ a{
 }
 
 #touch:checked + .sider-menu {
-    height: 123px;
+    height: 300px;
 }
 .sider-menu{
     background: #e8e8e89c;
@@ -563,13 +563,13 @@ a{
 .price-product{
     padding-top: 2px;
     font-size: 19px;
-    color: #000000;
+    color: #dcff00;
     width: 167px;
     height: 24px;
     text-align: center;
     margin-top: 3px;
     margin-left: 11px;
-    background: #cbffcf;
+    background: #7fc985;
     border-radius: 6px;
 }
 .product-content-name{
@@ -594,7 +594,7 @@ a{
 .product-buy{
     padding-left: 11px;
     padding-right: 10px;
-    background: #cbffcf;
+    background: #7fc985;
     border-radius: 7px;
     padding-top: 3px;
     margin-left: 12px;
@@ -612,12 +612,12 @@ a{
     font-size: 13px;
 }
 .product-buy span:hover{
-    color: #505f79;
+    color: whitesmoke;
 }
 .product-cart{
     padding-left: 11px;
     padding-right: 11px;
-    background: #cbffcf;
+    background: #7fc985;
     border-radius: 7px;
     padding-top: 3px;
     margin-left: 6px;

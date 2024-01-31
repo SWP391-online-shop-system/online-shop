@@ -79,10 +79,9 @@ public class ControllerSignUp extends HttpServlet {
                 String rFName = request.getParameter("rFName");
                 String rLName = request.getParameter("rLName");
                 String remail = request.getParameter("remail");
+                System.out.println("remail = " + remail);
                 String rpass = request.getParameter("rpass");
                 String rrepass = request.getParameter("rrepass");
-                User u = new User(rLName, rFName, remail, rpass, rrepass);
-                request.setAttribute("lastUser", u);
                 User user = dao.getUserByEmail(remail);
                 rFName = rFName.replaceAll("\\s+", " ");
                 rLName = rLName.replaceAll("\\s+", " ");
@@ -105,7 +104,6 @@ public class ControllerSignUp extends HttpServlet {
                     dao.signup(rFName, rLName, rpass, remail);
                     message = "User successfully signed up";
                     request.setAttribute("msg1", message);
-
                     // Send email or perform other necessary actions
                     DAOMail daomail = new DAOMail();
                     sendEmail(remail, daomail.GetMaxId());

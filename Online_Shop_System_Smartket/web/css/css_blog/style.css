@@ -2298,7 +2298,6 @@ ol {
 
 .blog__item__text ul li:last-child {
     margin-right: 0;
-    color: #3a9194;
 }
 
 .blog__item__text h5 {
@@ -2306,11 +2305,9 @@ ol {
 }
 
 .blog__item__text h5 a {
-    display: inline-block;
     font-size: 20px;
     color: #1c1c1c;
     font-weight: 700;
-    height: 71px;
 }
 
 .blog__item__text p {
