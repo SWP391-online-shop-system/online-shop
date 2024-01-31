@@ -340,7 +340,7 @@
                         </div>
                         <div class="row">
                             <div class="col-lg-12">
-                                <div class="product__pagination">
+                                <div class="product__pagination blog__pagination"  style="margin: 0;margin-left: 40px;">
                                     <c:set value="${requestScope.keyWord}" var="keyWord"/>
                                     <c:forEach begin="1" end="${endPage}" var="i">
                                         <c:if test="${requestScope.index == i}">

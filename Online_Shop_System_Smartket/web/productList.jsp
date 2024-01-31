@@ -355,7 +355,7 @@
                         </div>
                         <div class="row">
                             <div class="col-lg-12">
-                                <div class="product__pagination blog__pagination" style="margin: 0;margin-left: 100px;">
+                                <div class="product__pagination blog__pagination" style="margin: 0;margin-left: 40px;">
                                     <%int endPage = (int)request.getAttribute("endPage");
                                     %>
                                     <c:set value="${requestScope.categoryID}" var="categoryID"/>
