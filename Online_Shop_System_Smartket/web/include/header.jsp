@@ -124,7 +124,7 @@
                             <div class="popup ${requestScope.activeSignUp}" id="signupPopup">
                                 <div class="close-btn" onclick="togglePopup('signupPopup')">x</div>
                                 <div class="form">
-                                    <h2>Đăng kí</h2>
+                                    <h2><b>Đăng ký</b></h2>
                                     <%User u = (User)request.getAttribute("lastUser");
                                     if(u == null) {%>
                                     <div class="form-element">

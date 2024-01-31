@@ -13,6 +13,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import model.DAOUser;
+import model.EncodeSHA;
 import view.User;
 
 /**
@@ -59,10 +60,16 @@ public class ControllerLogin extends HttpServlet {
             }
             String email = request.getParameter("email");
             String pass = request.getParameter("pass");
-            User user = dao.check(email, pass);
+            String passwordEncode = EncodeSHA.transFer(pass);
+            User user = dao.check(email, passwordEncode);
             if (user == null) {
                 request.setAttribute("activeLogin", "active");
                 message = "Sai tài khoản hoặc mật khẩu.";
+                request.setAttribute("message", message);
+                request.getRequestDispatcher("HomePageURL").forward(request, response);
+            } else if (user.isUserStatus() == false) {
+                request.setAttribute("activeLogin", "active");
+                message = "Cút khỏi trang của tao";
                 request.setAttribute("message", message);
                 request.getRequestDispatcher("HomePageURL").forward(request, response);
             } else {

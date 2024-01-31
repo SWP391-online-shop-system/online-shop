@@ -5,6 +5,8 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Vector;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -38,16 +40,16 @@ public class DAOProduct extends DBConnect {
                     ResultSet.CONCUR_UPDATABLE);
             ResultSet rs = state.executeQuery(sql);
             while (rs.next()) {
-                int ProductID = rs.getInt("ProductID");
-                int CategoryID = rs.getInt("CategoryID");
-                String ProductName = rs.getString("ProductName");
-                String ProductDescription = rs.getString("ProductDescription");
-                int UnitInStock = rs.getInt("UnitInStock");
-                double UnitPrice = rs.getDouble("UnitPrice");
-                int UnitDiscount = rs.getInt("UnitDiscount");
-                String CreateDate = rs.getString("CreateDate");
-                int TotalRate = rs.getInt("TotalRate");
-                int TotalStock = rs.getInt("TotalStock");
+                int ProductID = rs.getInt(1);
+                String ProductName = rs.getString(2);
+                int CategoryID = rs.getInt(3);
+                String ProductDescription = rs.getString(4);
+                int UnitInStock = rs.getInt(5);
+                double UnitPrice = rs.getDouble(6);
+                int UnitDiscount = rs.getInt(7);
+                String CreateDate = rs.getString(8);
+                int TotalRate = rs.getInt(9);
+                int TotalStock = rs.getInt(10);
                 Product pro = new Product(ProductID, ProductName,
                         CategoryID, ProductDescription, UnitInStock,
                         UnitPrice, UnitDiscount, CreateDate, TotalRate, TotalStock);
@@ -353,4 +355,39 @@ public class DAOProduct extends DBConnect {
         }
         return 0;
     }
+    public List<Product> getProduct1(String sql) {
+        List<Product> list = new ArrayList<>();
+        try {
+            Statement state = conn.createStatement(
+                    ResultSet.TYPE_SCROLL_SENSITIVE,
+                    ResultSet.CONCUR_UPDATABLE);
+            ResultSet rs = state.executeQuery(sql);
+            while (rs.next()) {
+                int ProductID = rs.getInt(1);
+                String ProductName = rs.getString(2);
+                int CategoryID = rs.getInt(3);
+                String ProductDescription = rs.getString(4);
+                int UnitInStock = rs.getInt(5);
+                double UnitPrice = rs.getDouble(6);
+                int UnitDiscount = rs.getInt(7);
+                String CreateDate = rs.getString(8);
+                int TotalRate = rs.getInt(9);
+                int TotalStock = rs.getInt(10);
+                Product pro = new Product(ProductID, ProductName,
+                        CategoryID, ProductDescription, UnitInStock,
+                        UnitPrice, UnitDiscount, CreateDate, TotalRate, TotalStock);
+                list.add(pro);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(DAOProduct.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return list;
+    }
+//    public static void main(String[] args) {
+//        DAOProduct dao = new DAOProduct();
+//        List<Product> list = dao.getProduct1("select * from product as p join productImage as pi on p.ProductID = pi.ProductID");
+//        for (Product product : list) {
+//            System.out.println(list);
+//        }
+//    }
 }

@@ -5,12 +5,16 @@
 --%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@page import="view.*" %>
+<%@page import="model.*" %>
+<%@page import="java.sql.ResultSet, java.sql.SQLException"%>
 <!DOCTYPE html>
 <html lang="en">
     <head>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-        <title>Bootstrap User Management Data Table</title>
+        <title>Bootstrap Order Details Table with Search Filter</title>
         <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto|Varela+Round">
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
         <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
@@ -25,14 +29,62 @@
             });
         </script>
     </head>
+    <%
+    ResultSet rs = (ResultSet)request.getAttribute("data");
+    %>
     <body>
         <div class="container-xl">
             <div class="table-responsive">
                 <div class="table-wrapper">
                     <div class="table-title">
                         <div class="row">
-                            <div class="col-sm-5">
+                            <div class="col-sm-4">
                                 <h2>Product <b>List</b></h2>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="table-filter">
+                        <div class="row">
+                            <div class="col-sm-3">
+                                <div class="show-entries">
+                                    <span>Show</span>
+                                    <select class="form-control">
+                                        <option>5</option>
+                                        <option>10</option>
+                                        <option>15</option>
+                                        <option>20</option>
+                                    </select>
+                                    <span>entries</span>
+                                </div>
+                            </div>
+                            <div class="col-sm-9">
+                                <button type="button" class="btn btn-primary"><i class="fa fa-search"></i></button>
+                                <div class="filter-group">
+                                    <label>Tìm kiếm</label>
+                                    <input type="text" class="form-control">
+                                </div>
+                                <div class="filter-group">
+                                    <label>Loại</label>
+                                    <select class="form-control">
+                                        <option>All</option>
+                                        <option>Berlin</option>
+                                        <option>London</option>
+                                        <option>Madrid</option>
+                                        <option>New York</option>
+                                        <option>Paris</option>								
+                                    </select>
+                                </div>
+                                <div class="filter-group">
+                                    <label>Trạng thái</label>
+                                    <select class="form-control">
+                                        <option>Any</option>
+                                        <option>Delivered</option>
+                                        <option>Shipped</option>
+                                        <option>Pending</option>
+                                        <option>Cancelled</option>
+                                    </select>
+                                </div>
+                                <span class="filter-icon"><i class="fa fa-filter"></i></span>
                             </div>
                         </div>
                     </div>
@@ -40,47 +92,53 @@
                         <thead>
                             <tr>
                                 <th>ID</th>
-                                <th>Ảnh</th>						
+                                <th>Ảnh</th>
                                 <th>Tiêu đề</th>
                                 <th>Loại</th>
-                                <th>Bảng giá</th>
                                 <th>Giá bán</th>
-                                <th>Tính năng</th>
-                                <th>Trạng thái</th>
-                                <th>Trạng thái</th>
+                                <th>Trạng thái</th>						
+                                <th>Action</th>
                             </tr>
                         </thead>
                         <tbody>
-                            <tr>
-                                <td>1</td>
-                                <td><a href="#"><img src="/examples/images/avatar/1.jpg" class="avatar" alt="Avatar"></a></td>
-                                <td>04/10/2013</td>                        
-                                <td>Admin</td>
-                                <td><span class="status text-success">&bull;</span> Active</td>
-                                <td><span class="status text-success">&bull;</span> Active</td>
-                                <td><span class="status text-success">&bull;</span> Active</td>
-                                <td>
-                                    <a href="#" class="settings" title="Settings" data-toggle="tooltip"><i class="material-icons">&#xE8B8;</i></a>
-                                    <a href="#" class="delete" title="Delete" data-toggle="tooltip"><i class="material-icons">&#xE5C9;</i></a>
-                                </td>
-                            </tr>
+                    <%
+                        try {
+                            while(rs.next()) {
                             
+                
+                    %>
+                            <tr>
+                                <td><%=rs.getInt("ProductID")%></td>
+                                <td><img style="width: 100px" src="<%=rs.getString("ProductURL")%>"/></td>
+                                <td><%=rs.getString("ProductName")%></td>
+                                <td><%=rs.getInt("CategoryID")%></td>
+                                <td><%=rs.getDouble("UnitPrice")%></td>
+                                <td><%=rs.getInt("ProductID")%></td>
+                                <td><%=rs.getInt("ProductID")%></td>
+                                <!--<td><span class="status text-success">&bull;</span> Delivered</td>-->
+                            </tr>
+                    <%}
+                                                } catch (SQLException ex) {
+                                                }
+                    %>
                         </tbody>
                     </table>
                     <div class="clearfix">
-                        <div class="hint-text">Hiển thị <b>5</b> trên <b>25</b> sản phẩm</div>
+                        <div class="hint-text">Showing <b>5</b> out of <b>25</b> entries</div>
                         <ul class="pagination">
                             <li class="page-item disabled"><a href="#">Previous</a></li>
                             <li class="page-item"><a href="#" class="page-link">1</a></li>
                             <li class="page-item"><a href="#" class="page-link">2</a></li>
-                            <li class="page-item active"><a href="#" class="page-link">3</a></li>
-                            <li class="page-item"><a href="#" class="page-link">4</a></li>
+                            <li class="page-item"><a href="#" class="page-link">3</a></li>
+                            <li class="page-item active"><a href="#" class="page-link">4</a></li>
                             <li class="page-item"><a href="#" class="page-link">5</a></li>
+                            <li class="page-item"><a href="#" class="page-link">6</a></li>
+                            <li class="page-item"><a href="#" class="page-link">7</a></li>
                             <li class="page-item"><a href="#" class="page-link">Next</a></li>
                         </ul>
                     </div>
                 </div>
-            </div>
+            </div>        
         </div>     
     </body>
 </html>

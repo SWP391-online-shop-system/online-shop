@@ -24,6 +24,7 @@ import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 import model.DAOMail;
 import model.DAOUser;
+import model.EncodeSHA;
 import view.User;
 
 /**
@@ -102,7 +103,7 @@ public class ControllerSignUp extends HttpServlet {
                     request.getRequestDispatcher("HomePageURL").forward(request, response);
                 } else {
                     // User does not exist, proceed with signup
-                    dao.signup(rFName, rLName, rpass, remail);
+                    dao.signup(rFName, rLName, EncodeSHA.transFer(rpass), remail);
                     message = "User successfully signed up";
                     request.setAttribute("msg1", message);
 
