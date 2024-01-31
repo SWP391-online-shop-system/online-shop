@@ -344,7 +344,7 @@
                                     <c:set value="${requestScope.keyWord}" var="keyWord"/>
                                     <c:forEach begin="1" end="${endPage}" var="i">
                                         <c:if test="${requestScope.index == i}">
-                                            <a class="active"  style="border: none;background: #4cdc4c;width: 4%;" href="searchPageURL?keyWord=${keyWord}&type=<%=type%>&TotalRate=<%=TotalRate%>&index=${i}&filterChoice=<%=filterChoice%>&inputMinPrice=<%=oldMinPrice%>&inputMaxPrice=<%=oldMaxPrice%>">${i}</a>
+                                            <a class="active" style="background: #7fad39;border-color: #7fad39;color: #ffffff;" href="searchPageURL?keyWord=${keyWord}&type=<%=type%>&TotalRate=<%=TotalRate%>&index=${i}&filterChoice=<%=filterChoice%>&inputMinPrice=<%=oldMinPrice%>&inputMaxPrice=<%=oldMaxPrice%>">${i}</a>
                                         </c:if>
                                         <c:if test="${requestScope.index != i}">
                                             <a class="active"                                                      href="searchPageURL?keyWord=${keyWord}&type=<%=type%>&TotalRate=<%=TotalRate%>&index=${i}&filterChoice=<%=filterChoice%>&inputMinPrice=<%=oldMinPrice%>&inputMaxPrice=<%=oldMaxPrice%>">${i}</a>

@@ -72,7 +72,7 @@
                                                 +"group by p.ProductID having min(p.TotalStock - p.UnitInStock) > 0");
                                             while(rsHotPro.next()) {
                                             %>
-                                            <div class="product__item">
+                                            <div class="product__item" style="border: 1px solid #c1e8c1ba;border-radius: 40px;">
                                                 <div class="product__item__pic set-bg" style="height: 201px;">
                                                     <img style="width: 192px;
                                                          height: 174px;
@@ -355,17 +355,17 @@
                         </div>
                         <div class="row">
                             <div class="col-lg-12">
-                                <div class="product__pagination">
+                                <div class="product__pagination blog__pagination" style="margin: 0;margin-left: 100px;">
                                     <%int endPage = (int)request.getAttribute("endPage");
                                     %>
                                     <c:set value="${requestScope.categoryID}" var="categoryID"/>
                                     <c:forEach begin="1" end="${endPage}" var="i">
                                         <!-- Price range is different from begin -->
                                         <c:if test="${requestScope.index == i}">
-                                            <a class="active"  style="border: none;background: #4cdc4c;width: 4%;" href="ProductListURL?service=filter&CategoryID=${categoryID}&type=<%=type%>&index=${i}&TotalRate=${TotalRate}&filterChoice=<%=filterChoice%>&inputMinPrice=<%=oldMinPrice%>&inputMaxPrice=<%=oldMaxPrice%>">${i}</a>
+                                            <a class="active"  style="background: #7fad39;border-color: #7fad39;color: #ffffff;" href="ProductListURL?service=filter&CategoryID=${categoryID}&type=<%=type%>&index=${i}&TotalRate=${TotalRate}&filterChoice=<%=filterChoice%>&inputMinPrice=<%=oldMinPrice%>&inputMaxPrice=<%=oldMaxPrice%>">${i}</a>
                                         </c:if>
                                         <c:if test="${requestScope.index != i}">
-                                            <a class="active"                                                     href="ProductListURL?service=filter&CategoryID=${categoryID}&type=<%=type%>&index=${i}&TotalRate=${TotalRate}&filterChoice=<%=filterChoice%>&inputMinPrice=<%=oldMinPrice%>&inputMaxPrice=<%=oldMaxPrice%>">${i}</a>
+                                            <a class="active"href="ProductListURL?service=filter&CategoryID=${categoryID}&type=<%=type%>&index=${i}&TotalRate=${TotalRate}&filterChoice=<%=filterChoice%>&inputMinPrice=<%=oldMinPrice%>&inputMaxPrice=<%=oldMaxPrice%>">${i}</a>
                                         </c:if>
                                     </c:forEach>
                                 </div>
