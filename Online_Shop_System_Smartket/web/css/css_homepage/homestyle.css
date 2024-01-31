@@ -314,7 +314,7 @@ a{
 }
 
 #touch:checked + .sider-menu {
-    height: 300px;
+    height: 123px;
 }
 .sider-menu{
     background: #e8e8e89c;

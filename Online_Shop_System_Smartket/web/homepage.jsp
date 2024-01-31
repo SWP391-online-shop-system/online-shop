@@ -50,8 +50,16 @@
                     </div>
                     <div class="menu-section-content-search">
                         <div class="menu-section-content-search-form">
+                            <%double inputMinPrice = (double)request.getAttribute("inputMinPrice");
+                              double inputMaxPrice = (double)request.getAttribute("inputMaxPrice");
+                            %>
                             <form action="searchPageURL" method="GET">
                                 <input name="keyWord" type="text" placeholder="Bạn cần tìm gì?"/>
+                                <input type="hidden" name="type" value=""/>
+                                <input type="hidden" name="TotalRate" value="0"/>
+                                <input type="hidden" name="filterChoice" value="createDate desc"/>
+                                <input type="hidden" name="inputMinPrice" value="<%=inputMinPrice%>"/>
+                                <input type="hidden" name="inputMaxPrice" value="<%=inputMaxPrice%>"/>
                                 <button type="submit" class="site-btn">Tìm kiếm</button>
                             </form>
                         </div>
@@ -111,7 +119,7 @@
                                 <i class="fa-solid fa-list"></i>
                                 <label for="touch-1"><span class="content-title-2">TẤT CẢ DANH MỤC</span>
                                     <i class="fa-solid fa-angle-down" style="float: right;margin-top: -18px;margin-right: 6px;font-size: 19px;"></i></label>               
-                                <input type="checkbox" id="touch-1"> 
+                                <input type="checkbox" id="touch-1" checked> 
                                 <ul class="sider-menu-1">
                                     <%
                                     DAOCategories daoCate = new DAOCategories();

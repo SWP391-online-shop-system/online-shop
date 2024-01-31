@@ -4015,11 +4015,26 @@ ol {
     height: 243px;
 }
 .hottest-pro-title{
-    font-size: 17px;
+    font-size: 18px;
     text-align: center;
     letter-spacing: 1px;
     font-family: "Nunito Sans", sans-serif;
     font-weight: 600;
     margin-top: -24px;
-    color: #45970c;
+    color: #4a4a4a;
+    background: #fff8150d;
+    border-radius: 14px;
+    margin-bottom: 6px;
+}
+.notify-empty{
+    font-size: 18px;
+    margin-top: -13px;
+    background: #d8792578;
+    letter-spacing: 1px;
+    border-radius: 9px;
+    padding: 5px;
+    display: block;
+    color: #d42121;
+    font-family: nunito sans-serif;
+    width: 100%;
 }
