@@ -63,8 +63,8 @@ public class ControllerMarketingProductList extends HttpServlet {
                 + "                 where pi.ProductURL like '%_1%'\n"
                 + "                 limit 10 offset " + index);
         int count = dao.getTotalProduct();
-        int endPage = count / 15;
-        if (count % 15 != 0) {
+        int endPage = count / 10;
+        if (count % 10 != 0) {
             endPage++;
         }
         request.setAttribute("data", rs);
