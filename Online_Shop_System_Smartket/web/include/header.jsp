@@ -6,7 +6,7 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"  %>
 <%@page import="view.User" %>
-<%@page import="java.sql.ResultSet"%>
+<%@page import="java.sql.ResultSet, java.lang.System"%>
 <%@page import="model.DAOCart, view.Cart,view.User" %>
 <%@page import="jakarta.servlet.http.HttpSession" %>
 <div class="header">
@@ -121,6 +121,7 @@
                         <!-- Registration Pop-up Form -->
                         <form action="signupURL" method="post">
                             <input type="hidden" name="service" value="signupRegister">
+                            <input type="hidden" name="timestamp" value="<%= System.currentTimeMillis() %>">
                             <div class="popup ${requestScope.activeSignUp}" id="signupPopup">
                                 <div class="close-btn" onclick="togglePopup('signupPopup')">x</div>
                                 <div class="form">

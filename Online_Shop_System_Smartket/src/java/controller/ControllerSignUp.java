@@ -109,7 +109,8 @@ public class ControllerSignUp extends HttpServlet {
 
                     // Send email or perform other necessary actions
                     DAOMail daomail = new DAOMail();
-                    sendEmail(remail, daomail.GetMaxId());
+                    long timestamp = System.currentTimeMillis();
+                    sendEmail(remail, daomail.GetMaxId(), timestamp);
                 }
             }
         }
@@ -130,6 +131,23 @@ public class ControllerSignUp extends HttpServlet {
         String service = request.getParameter("service");
         String uid_raw = request.getParameter("uid");
         String message;
+        String timestampStr = request.getParameter("timestamp"); // Retrieve timestamp from the request parameters
+
+        if (timestampStr != null) {
+            // Convert timestamp to long
+            long timestamp = Long.parseLong(timestampStr);
+
+            // Get current time
+            long currentTime = System.currentTimeMillis();
+
+            // Check if the link has expired
+            long expirationTime = 1 * 60 * 1000; // 1 minute in milliseconds
+            if (currentTime - timestamp > expirationTime) {
+                // Link has expired, handle accordingly (e.g., show an error message)
+                response.sendRedirect("linkExpired.jsp");
+                return; // Exit the method to avoid further processing
+            }
+        }
         int uid = Integer.parseInt(uid_raw);
         DAOMail dao = new DAOMail();
         if (service.equals("verify")) {
@@ -165,7 +183,7 @@ public class ControllerSignUp extends HttpServlet {
         return "Short description";
     }// </editor-fold>
 
-    public void sendEmail(String emailTo, int userID) {
+    public void sendEmail(String emailTo, int userID, long timestamp) {
         String emailFrom = "smartketfpt@gmail.com";
         String password = "hvdw qdeh rbvg ahox";
         //properties
@@ -174,7 +192,7 @@ public class ControllerSignUp extends HttpServlet {
         pro.put("mail.smtp.port", "587");
         pro.put("mail.smtp.auth", "true");
         pro.put("mail.smtp.starttls.enable", "true");
-
+        String verificationLink = "http://localhost:9999/Smartket/signupURL?service=verify&uid=" + userID + "&timestamp=" + timestamp;
         //create authenticator
         Authenticator auth = new Authenticator() {
             @Override
@@ -259,7 +277,7 @@ public class ControllerSignUp extends HttpServlet {
                     + "            <div >\n"
                     + "                <div class=\"veryfication-remind\">Vui lòng xác nhận email của bạn</div>\n"
                     + "                <div><img class=\"veryfication-logo\"src=\"https://i.imgur.com/GVovat4.png\" alt=\"logo\" title=\"logo\"/></div>\n"
-                    + "                <a href=\"http://localhost:9999/Smartket/signupURL?service=verify&uid=" + userID + "\" ><div class=\"veryfication-btn\">Xác nhận email</div></a>\n"
+                    + "                <a href=\"" + verificationLink + "\" ><div class=\"veryfication-btn\">Xác nhận email</div></a>\n"
                     + "            </div>\n"
                     + "        </div>\n"
                     + "    </body>\n"

@@ -329,7 +329,7 @@ public class DAOProduct extends DBConnect {
         return vector;
     }
 
-    public int getTotalProductBySearch(String key) {
+    public int getTotalProductBySearch(String key, double min, double max) {
         String sql = "select count(*) from Product where ProductName like '%" + key + "%'";
         try {
             PreparedStatement st = conn.prepareStatement(sql);

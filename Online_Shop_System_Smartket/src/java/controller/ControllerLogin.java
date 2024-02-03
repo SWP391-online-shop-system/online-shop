@@ -69,7 +69,7 @@ public class ControllerLogin extends HttpServlet {
                 request.getRequestDispatcher("HomePageURL").forward(request, response);
             } else if (user.isUserStatus() == false) {
                 request.setAttribute("activeLogin", "active");
-                message = "Cút khỏi trang của tao";
+                message = "Tài khoản của bạn đã bị vô hiệu hóa";
                 request.setAttribute("message", message);
                 request.getRequestDispatcher("HomePageURL").forward(request, response);
             } else {
