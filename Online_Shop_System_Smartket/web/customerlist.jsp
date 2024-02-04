@@ -18,26 +18,18 @@
         <link rel="stylesheet" href="css/css_customerlist/style.css"/>
         <link rel="stylesheet" href="css/css_header/header.css"/>
         <link rel="shortcut icon" href="images/logo/logo.png" type="image/png">
-        <!--<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
-        <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
-        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>-->
-        <!--<script>
-        $(document).ready(function(){
-                $('[data-toggle="tooltip"]').tooltip();
-        });
-        </script>-->
     </head>
     <body>
         <jsp:include page="include/header.jsp"/>
         <div class="container-xl" style="display: flex;max-width: none;">
-            
+
             <!-- end sider -->
             <div class="table-responsive">
                 <div class="table-wrapper">
                     <div class="table-title">
                         <div class="row">
                             <div class="col-sm-4">
-                                <h2>Order <b>Details</b></h2>
+                                <h2>Danh Sách Khách Hàng</h2>
                             </div>
                         </div>
                     </div>
@@ -46,12 +38,19 @@
                             <div class="col-sm-3">
                                 <div class="show-entries">
                                     <span>Show</span>
-                                    <select class="form-control">
-                                        <option>5</option>
-                                        <option>10</option>
-                                        <option>15</option>
-                                        <option>20</option>
-                                    </select>
+                                    <form action="customerlist">
+                                        <select name="limit" class="form-control" onchange="this.form.submit()">
+                                            <%String limit = (String)request.getAttribute("limit");
+                                                if(limit == null){
+                                                limit = "5";
+                                                }
+                                            %>
+                                            <option value="5" <%=limit.equals("5")? "selected":""%>>5</option>
+                                            <option value="10" <%=limit.equals("10")? "selected":""%>>10</option>
+                                            <option value="15" <%=limit.equals("15")? "selected":""%>>15</option>
+                                            <option value="20" <%=limit.equals("20")? "selected":""%>>20</option>
+                                        </select>
+                                    </form>
                                     <span>entries</span>
                                 </div>
                             </div>
@@ -95,35 +94,42 @@
                                 <th>Email</th>
                                 <th>Số Điện Thoại</th>						
                                 <th>Ngày Sinh</th>						
+                                <th>Trạng Thái</th>						
                                 <th>Lần Đăng Nhập Cuối</th>
                             </tr>
                         </thead>
                         <tbody><%int count = 0;%>
                             <c:forEach items="${requestScope.data}" var="cus">
-                            <tr><%count++;%>
-                                <td><%=count%></td>
-                                <td>${cus.firstName} ${cus.lastName}</td>
-                                <td>${cus.gender ? 'Nam':'Nữ'}</td>
-                                <td>${cus.email}</td>
-                                <td>${cus.phoneNumber}</td>                        
-                                <td>${cus.dateOfBirth}</td>                        
-                                <td>${cus.lastLogin}</td>
-                            </tr>
+                                <tr><%count++;%>
+                                    <td><%=count%></td>
+                                    <td>${cus.firstName} ${cus.lastName}</td>
+                                    <td>${cus.gender ? 'Nam':'Nữ'}</td>
+                                    <td>${cus.email}</td>
+                                    <td>${cus.phoneNumber}</td>                        
+                                    <td>${cus.dateOfBirth}</td>                        
+                                    <td>${cus.userStatus ? 'Đang Hoạt Động':'Bị Chặn'}</td>                        
+                                    <td>${cus.lastLogin}</td>
+                                </tr>
                             </c:forEach>
                         </tbody>
                     </table>
                     <div class="clearfix">
-                        <div class="hint-text">Showing <b>5</b> out of <b>25</b> entries</div>
+                        <!--<div class="hint-text">Showing <b>5</b> out of <b>25</b> entries</div>-->
                         <ul class="pagination">
-                            <li class="page-item disabled"><a href="#">Previous</a></li>
-                            <li class="page-item"><a href="#" class="page-link">1</a></li>
-                            <li class="page-item"><a href="#" class="page-link">2</a></li>
-                            <li class="page-item"><a href="#" class="page-link">3</a></li>
-                            <li class="page-item active"><a href="#" class="page-link">4</a></li>
-                            <li class="page-item"><a href="#" class="page-link">5</a></li>
-                            <li class="page-item"><a href="#" class="page-link">6</a></li>
-                            <li class="page-item"><a href="#" class="page-link">7</a></li>
-                            <li class="page-item"><a href="#" class="page-link">Next</a></li>
+                            <c:if test="${index>1}">
+                                <li class="page-item"><a href="customerlist?index=${index-1}">Previous</a></li>
+                                </c:if>
+                                <c:forEach begin="1" end="${endPage}" var="i">
+                                    <c:if test="${index == i}">
+                                    <li class="page-item active"><a href="customerlist?index=${i}" class="page-link">${i}</a></li>
+                                    </c:if>
+                                    <c:if test="${index != i}">
+                                    <li class="page-item"><a href="customerlist?index=${i}" class="page-link">${i}</a></li>
+                                    </c:if>
+                                </c:forEach>
+                                <c:if test="${index<endPage}">
+                                <li class="page-item"><a href="customerlist?index=${index+1}">Next</a></li>
+                                </c:if>
                         </ul>
                     </div>
                 </div>

@@ -113,7 +113,7 @@ public class DAOUser extends DBConnect {
                 );
                 System.out.println("Not Null");
                 return pro;
-                
+
             }
         } catch (SQLException e) {
             System.out.println(e);
@@ -288,8 +288,8 @@ public class DAOUser extends DBConnect {
     public void updateLastLogin(int userId) {
         try {
             String sql = "UPDATE user SET LastLogin = CURRENT_TIMESTAMP WHERE UserID = ?";
-            try ( 
-                PreparedStatement pre = conn.prepareStatement(sql)) {
+            try (
+                     PreparedStatement pre = conn.prepareStatement(sql)) {
                 pre.setInt(1, userId);
                 pre.executeUpdate();
             }
@@ -299,9 +299,56 @@ public class DAOUser extends DBConnect {
         }
     }
 
+    public Vector<User> getCusPaging(int limit, int index) {
+        Vector<User> list = new Vector<>();
+        String sql = "SELECT * FROM online_shop_system.user where roleID = 1 limit " + limit + " offset ?";
+        try {
+            PreparedStatement pre = conn.prepareStatement(sql);
+            pre.setInt(1, ((index - 1) * limit));
+            ResultSet rs = pre.executeQuery();
+            while (rs.next()) {
+                User user = new User(rs.getInt("UserID"),
+                        rs.getString("FirstName"),
+                        rs.getString("LastName"),
+                        rs.getString("Address"),
+                        rs.getString("PhoneNumber"),
+                        rs.getString("DateOfBirth"),
+                        rs.getBoolean("Gender"),
+                        rs.getString("UserImage"),
+                        rs.getString("Password"),
+                        rs.getString("Email"),
+                        rs.getString("LastLogin"),
+                        rs.getBoolean("UserStatus"),
+                        rs.getInt("ReportTo"),
+                        rs.getInt("RoleID"));
+                list.add(user);
+            }
+        } catch (SQLException e) {
+            System.out.println(e);
+        }
+        return list;
+    }
+
+    public int getTotalCus() {
+        String sql = "select count(*) from User where roleID =1";
+        try {
+            PreparedStatement st = conn.prepareStatement(sql);
+            ResultSet rs = st.executeQuery();
+            while (rs.next()) {
+                return rs.getInt(1);
+            }
+        } catch (SQLException e) {
+            System.out.println(e);
+        }
+        return 0;
+    }
+
     public static void main(String[] args) {
-        DAOUser dao = new DAOUser();
-        dao.signup("ngo ngoc", "hung2", "123456", "ngongochung@gmail.com");
+//        DAOUser dao = new DAOUser();
+//        Vector<User> list = dao.getCusPaging(3, 3);
+//        for (User user : list) {
+//            System.out.println(user);
+//        }
     }
 
 }

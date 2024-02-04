@@ -42,17 +42,17 @@ public class DBConnect {
         return rs;
     }
 
-    public static void main(String[] args) {
-        new DBConnect();
-//        DBConnect db = new DBConnect();
-//        ResultSet rs = db.getData("SELECT * FROM Cart AS c JOIN Product AS p ON c.ProductID = p.ProductID where c.UserID = 1;");
-//        try {
-//            while (rs.next()) {                
-//                System.out.println(rs.getInt(1));
-//                System.out.println(rs.getString(5));
-//                System.out.println(rs.getString(7));
-//            }
-//        } catch (SQLException e) {
-//        }
-    }
+//    public static void main(String[] args) {
+////        new DBConnect();
+////        DBConnect db = new DBConnect();
+////        ResultSet rs = db.getData("SELECT * FROM Cart AS c JOIN Product AS p ON c.ProductID = p.ProductID where c.UserID = 1;");
+////        try {
+////            while (rs.next()) {                
+////                System.out.println(rs.getInt(1));
+////                System.out.println(rs.getString(5));
+////                System.out.println(rs.getString(7));
+////            }
+////        } catch (SQLException e) {
+////        }
+//    }
 }
