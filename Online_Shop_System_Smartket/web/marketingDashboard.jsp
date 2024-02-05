@@ -16,9 +16,10 @@
         <meta name="author" content="">
         <link href="images/logo/logo.png" rel="icon">
         <title>RuangAdmin - Dashboard</title>
-        <link href="fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
-        <link href="css/css_productList/bootstrap.min.css" rel="stylesheet" type="text/css">
+        <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+        <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css">
         <link href="css/css_marketing_dashboard/marketing_dashboard_style.css" rel="stylesheet">
+
     </head>
 
     <body id="page-top">
@@ -285,7 +286,7 @@
                             <li class="nav-item dropdown no-arrow">
                                 <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown"
                                    aria-haspopup="true" aria-expanded="false">
-                                    <img class="img-profile rounded-circle" src="img/boy.png" style="max-width: 60px">
+                                    <img class="img-profile rounded-circle" src="images/user/default_avatar.jpg" style="max-width: 60px">
                                     <span class="ml-2 d-none d-lg-inline text-white small">Maman Ketoprak</span>
                                 </a>
                                 <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="userDropdown">
@@ -416,11 +417,11 @@
                                             </a>
                                             <div class="dropdown-menu dropdown-menu-right shadow animated--fade-in"
                                                  aria-labelledby="dropdownMenuLink">
-                                                <div class="dropdown-header">Dropdown Header:</div>
-                                                <a class="dropdown-item" href="#">Action</a>
-                                                <a class="dropdown-item" href="#">Another action</a>
-                                                <div class="dropdown-divider"></div>
-                                                <a class="dropdown-item" href="#">Something else here</a>
+                                                <div class="dropdown-header">Doanh thu</div>
+                                                <a class="dropdown-item" href="#">Sản phẩm</a>
+                                                <a class="dropdown-item" href="#">BLog</a>
+                                                <a class="dropdown-item" href="#">Phản hồi</a>
+                                                <a class="dropdown-item" href="#">Khách hàng</a>
                                             </div>
                                         </div>
                                     </div>
@@ -669,13 +670,12 @@
         <a class="scroll-to-top rounded" href="#page-top">
             <i class="fas fa-angle-up"></i>
         </a>
-
-        <script src="js/marketing_dashboard_js/jquery.min.js"></script>
-        <script src="js/marketing_dashboard_js/bootstrap.bundle.min.js"></script>
-        <script src="js/marketing_dashboard_js/jquery.easing.min.js"></script>
-        <script src="js/marketing_dashboard_js/ruang-admin.min.js"></script>
-        <script src="js/marketing_dashboard_js/chart.min.js"></script>
-        <script src="js/marketing_dashboard_js/chart-area-demo.js"></script>  
+        <script src="vendor/jquery/jquery.min.js"></script>
+        <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+        <script src="vendor/jquery-easing/jquery.easing.min.js"></script>
+        <script src="js_marketing/ruang-admin.min.js"></script>
+        <script src="vendor/chart.js/Chart.min.js"></script>
+        <script src="js_marketing/demo/chart-area-demo.js"></script>  
     </body>
 
 </html>
