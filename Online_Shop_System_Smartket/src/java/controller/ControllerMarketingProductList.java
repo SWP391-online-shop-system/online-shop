@@ -58,10 +58,12 @@ public class ControllerMarketingProductList extends HttpServlet {
         }
         int index = Integer.parseInt(indexPage);
         index = (index - 1) * 10;
-        ResultSet rs = dao.getData("select * from Product as p  \n"
-                + "                 join productImage as pi on p.ProductID = pi.ProductID\n"
-                + "                 where pi.ProductURL like '%_1%'\n"
-                + "                 limit 10 offset " + index);
+        ResultSet rs = dao.getData("SELECT *\n"
+                + "FROM Product AS p \n"
+                + "JOIN Categories AS c ON p.CategoryID = c.CategoryID\n"
+                + "JOIN ProductImage AS pi ON p.ProductID = pi.ProductID\n"
+                + "Where pi.ProductURL LIKE '%_1%'\n"
+                + "limit 10 offset " + index);
         int count = dao.getTotalProduct();
         int endPage = count / 10;
         if (count % 10 != 0) {
