@@ -5,6 +5,11 @@
 --%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@page import="java.sql.ResultSet"%>
+<%@page import="model.DAOProduct"%>
+<%@page import="java.text.SimpleDateFormat"%>
+<%@page import="java.util.Date"%>
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -15,7 +20,7 @@
         <meta name="description" content="">
         <meta name="author" content="">
         <link href="images/logo/logo.png" rel="icon">
-        <title>RuangAdmin - Dashboard</title>
+        <title>marketing Dashboard</title>
         <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
         <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css">
         <link href="css/css_marketing_dashboard/marketing_dashboard_style.css" rel="stylesheet">
@@ -30,17 +35,17 @@
                     <div class="sidebar-brand-icon">
                         <img src="img/logo/logo2.png">
                     </div>
-                    <div class="sidebar-brand-text mx-3">RuangAdmin</div>
+                    <div class="sidebar-brand-text mx-3">Name</div>
                 </a>
-                <hr class="sidebar-divider my-0">
+                <hr class="sidebar-divider wee-0">
                 <li class="nav-item active">
                     <a class="nav-link" href="index.html">
                         <i class="fas fa-fw fa-tachometer-alt"></i>
-                        <span>Dashboard</span></a>
+                        <span>Bang thong ke</span></a>
                 </li>
                 <hr class="sidebar-divider">
                 <div class="sidebar-heading">
-                    Features
+                    Tinh nang 
                 </div>
                 <li class="nav-item">
                     <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseBootstrap"
@@ -316,10 +321,10 @@
                     <!-- Container Fluid-->
                     <div class="container-fluid" id="container-wrapper">
                         <div class="d-sm-flex align-items-center justify-content-between mb-4">
-                            <h1 class="h3 mb-0 text-gray-800">Dashboard</h1>
+                            <h1 class="h3 mb-0 text-gray-800">Bang thong ke</h1>
                             <ol class="breadcrumb">
-                                <li class="breadcrumb-item"><a href="./">Home</a></li>
-                                <li class="breadcrumb-item active" aria-current="page">Dashboard</li>
+                                <li class="breadcrumb-item"><a href="./">Trang chu</a></li>
+                                <li class="breadcrumb-item active" aria-current="page">Bang thong ke</li>
                             </ol>
                         </div>
 
@@ -330,7 +335,7 @@
                                     <div class="card-body">
                                         <div class="row align-items-center">
                                             <div class="col mr-2">
-                                                <div class="text-xs font-weight-bold text-uppercase mb-1">Earnings (Monthly)</div>
+                                                <div class="text-xs font-weight-bold text-uppercase mb-1">Bai dang</div>
                                                 <div class="h5 mb-0 font-weight-bold text-gray-800">$40,000</div>
                                                 <div class="mt-2 mb-0 text-muted text-xs">
                                                     <span class="text-success mr-2"><i class="fa fa-arrow-up"></i> 3.48%</span>
@@ -350,7 +355,7 @@
                                     <div class="card-body">
                                         <div class="row no-gutters align-items-center">
                                             <div class="col mr-2">
-                                                <div class="text-xs font-weight-bold text-uppercase mb-1">Sales</div>
+                                                <div class="text-xs font-weight-bold text-uppercase mb-1">San pham</div>
                                                 <div class="h5 mb-0 font-weight-bold text-gray-800">650</div>
                                                 <div class="mt-2 mb-0 text-muted text-xs">
                                                     <span class="text-success mr-2"><i class="fas fa-arrow-up"></i> 12%</span>
@@ -370,7 +375,7 @@
                                     <div class="card-body">
                                         <div class="row no-gutters align-items-center">
                                             <div class="col mr-2">
-                                                <div class="text-xs font-weight-bold text-uppercase mb-1">New User</div>
+                                                <div class="text-xs font-weight-bold text-uppercase mb-1">Khach hang moi</div>
                                                 <div class="h5 mb-0 mr-3 font-weight-bold text-gray-800">366</div>
                                                 <div class="mt-2 mb-0 text-muted text-xs">
                                                     <span class="text-success mr-2"><i class="fas fa-arrow-up"></i> 20.4%</span>
@@ -390,7 +395,7 @@
                                     <div class="card-body">
                                         <div class="row no-gutters align-items-center">
                                             <div class="col mr-2">
-                                                <div class="text-xs font-weight-bold text-uppercase mb-1">Pending Requests</div>
+                                                <div class="text-xs font-weight-bold text-uppercase mb-1">Phan hoi</div>
                                                 <div class="h5 mb-0 font-weight-bold text-gray-800">18</div>
                                                 <div class="mt-2 mb-0 text-muted text-xs">
                                                     <span class="text-danger mr-2"><i class="fas fa-arrow-down"></i> 1.10%</span>
@@ -409,25 +414,31 @@
                             <div class="col-xl-8 col-lg-7">
                                 <div class="card mb-4">
                                     <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-                                        <h6 class="m-0 font-weight-bold text-primary">Monthly Recap Report</h6>
+                                        <div class="m-0 font-weight-bold text-primary">Thong ke san pham hang tuan</div>
+                                        <%
+                                        String formatWeekFrom = (String)request.getAttribute("formatWeekFrom");
+                                        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+                                        Date currentDate = new Date();
+                                        String curDate = dateFormat.format(currentDate);
+                                        %>
+                                        <span style="margin-right: -12px;">tu</span>
+                                        <form action="MarketingDashBoardURL" method="GET">
+                                            <input id="dateInputFrom" class="date-chooser" type="date" name="weekFrom" value="<%=(formatWeekFrom==null || formatWeekFrom.equals(""))?curDate:formatWeekFrom%>" onchange="updateWeekTo(this.value);this.form.submit();"/>
+                                            <span>den</span>
+                                            <input id="dateInputTo" class="date-chooser" type="date" name="weekTo"/>
+                                        </form>
+                                        <div id="dateList" style="display: none;"></div>
                                         <div class="dropdown no-arrow">
-                                            <a class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown"
-                                               aria-haspopup="true" aria-expanded="false">
-                                                <i class="fas fa-ellipsis-v fa-sm fa-fw text-gray-400"></i>
-                                            </a>
-                                            <div class="dropdown-menu dropdown-menu-right shadow animated--fade-in"
-                                                 aria-labelledby="dropdownMenuLink">
-                                                <div class="dropdown-header">Doanh thu</div>
-                                                <a class="dropdown-item" href="#">Sản phẩm</a>
-                                                <a class="dropdown-item" href="#">BLog</a>
-                                                <a class="dropdown-item" href="#">Phản hồi</a>
-                                                <a class="dropdown-item" href="#">Khách hàng</a>
-                                            </div>
                                         </div>
                                     </div>
                                     <div class="card-body">
                                         <div class="chart-area">
                                             <canvas id="myAreaChart"></canvas>
+                                            <script>
+                                                window.addEventListener('load', function () {
+                                                    drawChart();
+                                                });
+                                            </script>
                                         </div>
                                     </div>
                                 </div>
@@ -436,20 +447,8 @@
                             <div class="col-xl-4 col-lg-5">
                                 <div class="card mb-4">
                                     <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-                                        <h6 class="m-0 font-weight-bold text-primary">Products Sold</h6>
+                                        <h6 class="m-0 font-weight-bold text-primary">San pham da ban</h6>
                                         <div class="dropdown no-arrow">
-                                            <a class="dropdown-toggle btn btn-primary btn-sm" href="#" role="button" id="dropdownMenuLink"
-                                               data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                                Month <i class="fas fa-chevron-down"></i>
-                                            </a>
-                                            <div class="dropdown-menu dropdown-menu-right shadow animated--fade-in"
-                                                 aria-labelledby="dropdownMenuLink">
-                                                <div class="dropdown-header">Select Periode</div>
-                                                <a class="dropdown-item" href="#">Today</a>
-                                                <a class="dropdown-item" href="#">Week</a>
-                                                <a class="dropdown-item active" href="#">Month</a>
-                                                <a class="dropdown-item" href="#">This Year</a>
-                                            </div>
                                         </div>
                                     </div>
                                     <div class="card-body">
@@ -509,28 +508,35 @@
                             <div class="col-xl-8 col-lg-7 mb-4">
                                 <div class="card">
                                     <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-                                        <h6 class="m-0 font-weight-bold text-primary">Invoice</h6>
-                                        <a class="m-0 float-right btn btn-danger btn-sm" href="#">View More <i
-                                                class="fas fa-chevron-right"></i></a>
+                                        <h6 class="m-0 font-weight-bold text-primary">Khach hang moi</h6>
+                                        <form action="marketingDashBoardURL" method="GET">
+                                            <input class="date-chooser" type="date" name="userWeekFrom"/>
+                                        </form>
+                                        <form action="marketingDashBoardURL" method="GET">
+                                            <span>den</span>
+                                            <input class="date-chooser" type="date" name="userWeekTo"/>
+                                        </form>
+                                        <a class="m-0 float-right btn btn-danger btn-sm" href="#">Quan li ngay
+                                            <i class="fas fa-chevron-right" style="margin-left: 8px;"></i></a>
                                     </div>
                                     <div class="table-responsive">
                                         <table class="table align-items-center table-flush">
                                             <thead class="thead-light">
                                                 <tr>
-                                                    <th>Order ID</th>
-                                                    <th>Customer</th>
-                                                    <th>Item</th>
-                                                    <th>Status</th>
-                                                    <th>Action</th>
+                                                    <th>ID</th>
+                                                    <th>Ten</th>
+                                                    <th>Email</th>
+                                                    <th style="padding-right: 0px;">Trang thai</th>
+                                                    <th></th>
                                                 </tr>
                                             </thead>
                                             <tbody>
                                                 <tr>
-                                                    <td><a href="#">RA0449</a></td>
+                                                    <td class="id-style"><a href="#">RA0449</a></td>
                                                     <td>Udin Wayang</td>
                                                     <td>Nasi Padang</td>
                                                     <td><span class="badge badge-success">Delivered</span></td>
-                                                    <td><a href="#" class="btn btn-sm btn-primary">Detail</a></td>
+                                                    <td><a style="width: 62px;" href="#" class="btn btn-sm btn-primary">Chi tiet</a></td>
                                                 </tr>
                                                 <tr>
                                                     <td><a href="#">RA5324</a></td>
@@ -570,7 +576,7 @@
                             <div class="col-xl-4 col-lg-5 ">
                                 <div class="card">
                                     <div class="card-header py-4 bg-primary d-flex flex-row align-items-center justify-content-between">
-                                        <h6 class="m-0 font-weight-bold text-light">Message From Customer</h6>
+                                        <h6 class="m-0 font-weight-bold text-light">Phan hoi moi</h6>
                                     </div>
                                     <div>
                                         <div class="customer-message align-items-center">
@@ -603,7 +609,7 @@
                                             </a>
                                         </div>
                                         <div class="card-footer text-center">
-                                            <a class="m-0 small text-primary card-link" href="#">View More <i
+                                            <a class="m-0 small text-primary card-link" href="#">Xem them   <i
                                                     class="fas fa-chevron-right"></i></a>
                                         </div>
                                     </div>
@@ -611,14 +617,6 @@
                             </div>
                         </div>
                         <!--Row-->
-
-                        <div class="row">
-                            <div class="col-lg-12 text-center">
-                                <p>Do you like this template ? you can download from <a href="https://github.com/indrijunanda/RuangAdmin"
-                                                                                        class="btn btn-primary btn-sm" target="_blank"><i class="fab fa-fw fa-github"></i>&nbsp;GitHub</a></p>
-                            </div>
-                        </div>
-
                         <!-- Modal Logout -->
                         <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabelLogout"
                              aria-hidden="true">
@@ -644,25 +642,6 @@
                     </div>
                     <!---Container Fluid-->
                 </div>
-                <!-- Footer -->
-                <footer class="sticky-footer bg-white">
-                    <div class="container my-auto">
-                        <div class="copyright text-center my-auto">
-                            <span>copyright &copy; <script> document.write(new Date().getFullYear());</script> - developed by
-                                <b><a href="https://indrijunanda.gitlab.io/" target="_blank">indrijunanda</a></b>
-                            </span>
-                        </div>
-                    </div>
-
-                    <div class="container my-auto py-2">
-                        <div class="copyright text-center my-auto">
-                            <span>copyright &copy; <script> document.write(new Date().getFullYear());</script> - distributed by
-                                <b><a href="https://themewagon.com/" target="_blank">themewagon</a></b>
-                            </span>
-                        </div>
-                    </div>
-                </footer>
-                <!-- Footer -->
             </div>
         </div>
 
