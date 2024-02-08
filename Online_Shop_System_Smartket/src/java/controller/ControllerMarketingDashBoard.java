@@ -17,7 +17,10 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.Calendar;
 import java.util.Date;
+import model.DAOBlog;
+import model.DAOFeedBack;
 import model.DAOProduct;
+import model.DAOUser;
 
 /**
  *
@@ -40,6 +43,9 @@ public class ControllerMarketingDashBoard extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         try ( PrintWriter out = response.getWriter()) {
             DAOProduct daoPro = new DAOProduct();
+            DAOBlog daoBlog = new DAOBlog();
+            DAOUser daoUser = new DAOUser();
+            DAOFeedBack daoFeedBack = new DAOFeedBack();
             ResultSet rsProductSold;
             String weekFrom = request.getParameter("weekFrom");
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
@@ -94,6 +100,19 @@ public class ControllerMarketingDashBoard extends HttpServlet {
                 request.setAttribute("rsProductSold", rsProductSold);
                 request.setAttribute("formatWeekFrom", formatWeekFrom);
             }
+            //Blog section
+            ResultSet rsBlogCount = daoBlog.getData("select count(BlogID) from Blog");
+            request.setAttribute("rsBlogCount", rsBlogCount);
+
+            //product section
+            ResultSet rsProductCount = daoBlog.getData("select count(ProductID) from Product");
+            request.setAttribute("rsProductCount", rsProductCount);
+            //User section
+            ResultSet rsUserCount = daoUser.getData("select count(UserID) from User where UserStatus = 1 and RoleID = 1");
+            request.setAttribute("rsUserCount", rsUserCount);
+            //FeedBack section
+            ResultSet rsFeedBackCount = daoFeedBack.getData("select count(FeedBackID) from FeedBack");
+            request.setAttribute("rsFeedBackCount", rsFeedBackCount);
             request.getRequestDispatcher("marketingDashboard.jsp").forward(request, response);
         }
     }
