@@ -423,10 +423,19 @@
                                         %>
                                         <span style="margin-right: -12px;">tu</span>
                                         <form action="MarketingDashBoardURL" method="GET">
-                                            <input id="dateInputFrom" class="date-chooser" type="date" name="weekFrom" value="<%=(formatWeekFrom==null || formatWeekFrom.equals(""))?curDate:formatWeekFrom%>" onchange="updateWeekTo(this.value);this.form.submit();"/>
+                                            <input id="dateInputFrom" class="date-chooser" type="date" name="weekFrom" value="<%=(formatWeekFrom==null || formatWeekFrom.equals(""))?curDate:formatWeekFrom%>" onchange="autoUpdateWeekTo(this.value);this.form.submit();"/>
                                             <span>den</span>
-                                            <input id="dateInputTo" class="date-chooser" type="date" name="weekTo"/>
+                                            <input id="dateInputTo" class="date-chooser" type="date" name="weekTo" disabled/>
                                         </form>
+                                        <%
+                                        ResultSet rsProductSold = (ResultSet)request.getAttribute("rsProductSold");
+                                        int countDate=0;
+                                        while(rsProductSold.next()) {
+                                        System.out.println("rsProductSold = "+rsProductSold.getInt(2)+" at day "+rsProductSold.getString(1));
+                                        countDate++;
+                                        %>
+                                        <div id="DataSold<%=countDate%>" style="display: none;"><%=rsProductSold.getInt(2)%></div>
+                                        <%}%>
                                         <div id="dateList" style="display: none;"></div>
                                         <div class="dropdown no-arrow">
                                         </div>

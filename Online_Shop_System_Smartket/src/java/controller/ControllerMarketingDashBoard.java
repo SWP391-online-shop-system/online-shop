@@ -15,6 +15,7 @@ import java.sql.ResultSet;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.Calendar;
 import java.util.Date;
 import model.DAOProduct;
 
@@ -43,17 +44,53 @@ public class ControllerMarketingDashBoard extends HttpServlet {
             String weekFrom = request.getParameter("weekFrom");
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
             if (weekFrom == null || weekFrom.equals("")) {
-                SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy");
-                weekFrom = sdf.format(new Date());
-                rsProductSold = daoPro.getData("select p.CreateDate,sum(((p.UnitPrice * (100-p.UnitDiscount)/100) * (p.TotalStock - p.UnitInStock))) as earning from Product as p join ProductImage as pi on p.ProductID = pi.ProductID where pi.ProductURL like '%_1%'\n"
-                        + "and  ((p.TotalStock - p.UnitInStock) > 0) group by p.CreateDate having p.CreateDate BETWEEN (CURDATE() - INTERVAL 6 DAY) and CURDATE();");
+                SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+                Calendar calendar = Calendar.getInstance();
+                calendar.add(Calendar.DAY_OF_YEAR, -6); // Subtract 6 days from the current date
+                weekFrom = sdf.format(calendar.getTime());
+                rsProductSold = daoPro.getData("SELECT dates.date, COALESCE(earning, 0) AS earning\n"
+                        + "FROM (\n"
+                        + "  SELECT DATE_SUB(CURDATE(), INTERVAL 6 DAY) + INTERVAL (t4.i * 10000 + t3.i * 1000 + t2.i * 100 + t1.i * 10 + t0.i) DAY AS date\n"
+                        + "  FROM\n"
+                        + "    (SELECT 0 AS i UNION SELECT 1 UNION SELECT 2 UNION SELECT 3 UNION SELECT 4 UNION SELECT 5 UNION SELECT 6 UNION SELECT 7 UNION SELECT 8 UNION SELECT 9) AS t0,\n"
+                        + "    (SELECT 0 AS i UNION SELECT 1 UNION SELECT 2 UNION SELECT 3 UNION SELECT 4 UNION SELECT 5 UNION SELECT 6 UNION SELECT 7 UNION SELECT 8 UNION SELECT 9) AS t1,\n"
+                        + "    (SELECT 0 AS i UNION SELECT 1 UNION SELECT 2 UNION SELECT 3 UNION SELECT 4 UNION SELECT 5 UNION SELECT 6 UNION SELECT 7 UNION SELECT 8 UNION SELECT 9) AS t2,\n"
+                        + "    (SELECT 0 AS i UNION SELECT 1 UNION SELECT 2 UNION SELECT 3 UNION SELECT 4 UNION SELECT 5 UNION SELECT 6 UNION SELECT 7 UNION SELECT 8 UNION SELECT 9) AS t3,\n"
+                        + "    (SELECT 0 AS i UNION SELECT 1 UNION SELECT 2 UNION SELECT 3 UNION SELECT 4 UNION SELECT 5 UNION SELECT 6 UNION SELECT 7 UNION SELECT 8 UNION SELECT 9) AS t4\n"
+                        + ") AS dates\n"
+                        + "LEFT JOIN (\n"
+                        + "  SELECT DATE_FORMAT(p.CreateDate, '%Y-%m-%d') AS date, SUM(((p.UnitPrice * (100 - p.UnitDiscount) / 100) * (p.TotalStock - p.UnitInStock))) AS earning\n"
+                        + "  FROM Product AS p\n"
+                        + "  LEFT JOIN ProductImage AS pi ON p.ProductID = pi.ProductID \n"
+                        + "  WHERE pi.ProductURL LIKE '%_1%' AND ((p.TotalStock - p.UnitInStock) > 0)\n"
+                        + "  GROUP BY date\n"
+                        + ") AS earnings ON dates.date = earnings.date\n"
+                        + "WHERE dates.date BETWEEN (CURDATE() - INTERVAL 6 DAY) AND CURDATE()\n"
+                        + "ORDER BY dates.date;");
                 request.setAttribute("rsProductSold", rsProductSold);
                 request.setAttribute("formatWeekFrom", weekFrom);
             } else {
                 LocalDate dateWeekFrom = LocalDate.parse(weekFrom, formatter);
                 String formatWeekFrom = dateWeekFrom.format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
-                rsProductSold = daoPro.getData("select p.CreateDate,sum(((p.UnitPrice * (100-p.UnitDiscount)/100) * (p.TotalStock - p.UnitInStock))) as earning from Product as p join ProductImage as pi on p.ProductID = pi.ProductID where pi.ProductURL like '%_1%'\n"
-                        + "and  ((p.TotalStock - p.UnitInStock) > 0) group by p.CreateDate having p.CreateDate between '" + formatWeekFrom + "' and (" + formatWeekFrom + " - INTERVAL 6 DAY)");
+                rsProductSold = daoPro.getData("SELECT dates.date, COALESCE(earning, 0) AS earning\n"
+                        + "FROM (\n"
+                        + "  SELECT DATE_SUB(CURDATE(), INTERVAL 6 DAY) + INTERVAL (t4.i * 10000 + t3.i * 1000 + t2.i * 100 + t1.i * 10 + t0.i) DAY AS date\n"
+                        + "  FROM\n"
+                        + "    (SELECT 0 AS i UNION SELECT 1 UNION SELECT 2 UNION SELECT 3 UNION SELECT 4 UNION SELECT 5 UNION SELECT 6 UNION SELECT 7 UNION SELECT 8 UNION SELECT 9) AS t0,\n"
+                        + "    (SELECT 0 AS i UNION SELECT 1 UNION SELECT 2 UNION SELECT 3 UNION SELECT 4 UNION SELECT 5 UNION SELECT 6 UNION SELECT 7 UNION SELECT 8 UNION SELECT 9) AS t1,\n"
+                        + "    (SELECT 0 AS i UNION SELECT 1 UNION SELECT 2 UNION SELECT 3 UNION SELECT 4 UNION SELECT 5 UNION SELECT 6 UNION SELECT 7 UNION SELECT 8 UNION SELECT 9) AS t2,\n"
+                        + "    (SELECT 0 AS i UNION SELECT 1 UNION SELECT 2 UNION SELECT 3 UNION SELECT 4 UNION SELECT 5 UNION SELECT 6 UNION SELECT 7 UNION SELECT 8 UNION SELECT 9) AS t3,\n"
+                        + "    (SELECT 0 AS i UNION SELECT 1 UNION SELECT 2 UNION SELECT 3 UNION SELECT 4 UNION SELECT 5 UNION SELECT 6 UNION SELECT 7 UNION SELECT 8 UNION SELECT 9) AS t4\n"
+                        + ") AS dates\n"
+                        + "LEFT JOIN (\n"
+                        + "  SELECT DATE_FORMAT(p.CreateDate, '%Y-%m-%d') AS date, SUM(((p.UnitPrice * (100 - p.UnitDiscount) / 100) * (p.TotalStock - p.UnitInStock))) AS earning\n"
+                        + "  FROM Product AS p\n"
+                        + "  LEFT JOIN ProductImage AS pi ON p.ProductID = pi.ProductID \n"
+                        + "  WHERE pi.ProductURL LIKE '%_1%' AND ((p.TotalStock - p.UnitInStock) > 0)\n"
+                        + "  GROUP BY date\n"
+                        + ") AS earnings ON dates.date = earnings.date\n"
+                        + "WHERE dates.date BETWEEN '" + formatWeekFrom + "' and ('" + formatWeekFrom + "' + INTERVAL 6 DAY)\n"
+                        + "ORDER BY dates.date;");
                 request.setAttribute("rsProductSold", rsProductSold);
                 request.setAttribute("formatWeekFrom", formatWeekFrom);
             }

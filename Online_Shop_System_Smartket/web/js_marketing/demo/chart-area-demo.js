@@ -10,6 +10,14 @@ var dateList6_real;
 var dateList7_real;
 var dateList1_real;
 
+var dataSold1;
+var dataSold2;
+var dataSold3;
+var dataSold4;
+var dataSold5;
+var dataSold6;
+var dataSold7;
+
 function number_format(number, decimals, dec_point, thousands_sep) {
     // *     example: number_format(1234.56, 2, ',', ' ');
     // *     return: '1 234,56'
@@ -67,6 +75,48 @@ function autoUpdateWeekTo(weekFrom) {
     dateList5_real = document.getElementById("dateList5").innerHTML.substring(5, 10).replace("-", "/");
     dateList6_real = document.getElementById("dateList6").innerHTML.substring(5, 10).replace("-", "/");
     dateList7_real = document.getElementById("dateList7").innerHTML.substring(5, 10).replace("-", "/");
+    dataSold1 = document.getElementById("DataSold1");
+    dataSold2 = document.getElementById("DataSold2");
+    dataSold3 = document.getElementById("DataSold3");
+    dataSold4 = document.getElementById("DataSold4");
+    dataSold5 = document.getElementById("DataSold5");
+    dataSold6 = document.getElementById("DataSold6");
+    dataSold7 = document.getElementById("DataSold7");
+    if (dataSold1 === null) {
+        dataSold1 = 0;
+    } else {
+        dataSold1 = dataSold1.innerHTML;
+    }
+    if (dataSold2 === null) {
+        dataSold2 = 0;
+    } else {
+        dataSold2 = dataSold2.innerHTML;
+    }
+    if (dataSold3 === null) {
+        dataSold3 = 0;
+    } else {
+        dataSold3 = dataSold3.innerHTML;
+    }
+    if (dataSold4 === null) {
+        dataSold4 = 0;
+    } else {
+        dataSold4 = dataSold4.innerHTML;
+    }
+    if (dataSold5 === null) {
+        dataSold5 = 0;
+    } else {
+        dataSold5 = dataSold5.innerHTML;
+    }
+    if (dataSold6 === null) {
+        dataSold6 = 0;
+    } else {
+        dataSold6 = dataSold6.innerHTML;
+    }
+    if (dataSold7 === null) {
+        dataSold7 = 0;
+    } else {
+        dataSold7 = dataSold7.innerHTML;
+    }
     drawChart();
 }
 autoUpdateWeekTo(document.getElementById("dateInputFrom").value);
@@ -95,17 +145,6 @@ function updateWeekTo(weekFrom) {
         currentDate.setDate(currentDate.getDate() + 1);
         counter++;
     }
-    dateList1_real = document.getElementById("dateList1").innerHTML.substring(5, 10).replace("-", "/");
-    dateList2_real = document.getElementById("dateList2").innerHTML.substring(5, 10).replace("-", "/");
-    dateList3_real = document.getElementById("dateList3").innerHTML.substring(5, 10).replace("-", "/");
-    dateList4_real = document.getElementById("dateList4").innerHTML.substring(5, 10).replace("-", "/");
-    dateList5_real = document.getElementById("dateList5").innerHTML.substring(5, 10).replace("-", "/");
-    dateList6_real = document.getElementById("dateList6").innerHTML.substring(5, 10).replace("-", "/");
-    dateList7_real = document.getElementById("dateList7").innerHTML.substring(5, 10).replace("-", "/");
-    var getDateInputFrom = document.getElementById("dateInputFrom").value;
-    var getDateInputTo = document.getElementById("dateInputTo").value;
-    var demo = '<%=s%>';
-    console.log(demo);
     drawChart();
 }
 
@@ -134,7 +173,7 @@ function drawChart() {
                     pointHoverBorderColor: "rgba(78, 115, 223, 1)",
                     pointHitRadius: 10,
                     pointBorderWidth: 2,
-                    data: [15000, 10000, 5000, 15000, 10000, 20000, 35000],
+                    data: [dataSold1, dataSold2, dataSold3, dataSold4, dataSold5, dataSold6, dataSold7],
                 }],
         },
         options: {
@@ -166,7 +205,7 @@ function drawChart() {
                             padding: 10,
                             // Include a dollar sign in the ticks
                             callback: function (value, index, values) {
-                                return '$' + number_format(value);
+                                return number_format(value) + 'VND';
                             }
                         },
                         gridLines: {
@@ -198,7 +237,7 @@ function drawChart() {
                 callbacks: {
                     label: function (tooltipItem, chart) {
                         var datasetLabel = chart.datasets[tooltipItem.datasetIndex].label || '';
-                        return datasetLabel + ': $' + number_format(tooltipItem.yLabel);
+                        return datasetLabel + ': ' + number_format(tooltipItem.yLabel) + 'VND';
                     }
                 }
             }
