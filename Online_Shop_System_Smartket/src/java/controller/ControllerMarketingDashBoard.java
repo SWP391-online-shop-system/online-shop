@@ -47,9 +47,12 @@ public class ControllerMarketingDashBoard extends HttpServlet {
             DAOUser daoUser = new DAOUser();
             DAOFeedBack daoFeedBack = new DAOFeedBack();
             ResultSet rsProductSold;
+            ResultSet rsUserList;
             String weekFrom = request.getParameter("weekFrom");
+            String userWeekFrom = request.getParameter("userWeekFrom");
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
             if (weekFrom == null || weekFrom.equals("")) {
+                System.out.println("weekFrom =null");
                 SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
                 Calendar calendar = Calendar.getInstance();
                 calendar.add(Calendar.DAY_OF_YEAR, -6); // Subtract 6 days from the current date
@@ -76,6 +79,7 @@ public class ControllerMarketingDashBoard extends HttpServlet {
                 request.setAttribute("rsProductSold", rsProductSold);
                 request.setAttribute("formatWeekFrom", weekFrom);
             } else {
+                System.out.println("weekFrom not null");
                 LocalDate dateWeekFrom = LocalDate.parse(weekFrom, formatter);
                 String formatWeekFrom = dateWeekFrom.format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
                 rsProductSold = daoPro.getData("SELECT dates.date, COALESCE(earning, 0) AS earning\n"
@@ -99,6 +103,24 @@ public class ControllerMarketingDashBoard extends HttpServlet {
                         + "ORDER BY dates.date;");
                 request.setAttribute("rsProductSold", rsProductSold);
                 request.setAttribute("formatWeekFrom", formatWeekFrom);
+            }
+            if (userWeekFrom == null || userWeekFrom.equals("")) {
+                System.out.println("userWeekFrom =null");
+                SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+                Calendar calendar = Calendar.getInstance();
+                calendar.add(Calendar.DAY_OF_YEAR, -6); // Subtract 6 days from the current date
+                userWeekFrom = sdf.format(calendar.getTime());
+                rsUserList = daoUser.getData("select * from User where UserStatus = 1 and CreateDate between curdate() - interval 6 day and curdate()");
+                request.setAttribute("rsUserList", rsUserList);
+                request.setAttribute("formatUserWeekFrom", userWeekFrom);
+            } else {
+                System.out.println("userWeekFrom not null");
+                LocalDate dateUserWeekFrom = LocalDate.parse(userWeekFrom, formatter);
+                String formatUserWeekFrom = dateUserWeekFrom.format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+                rsUserList = daoUser.getData("select * from User where UserStatus = 1 and CreateDate BETWEEN '" + formatUserWeekFrom + "' and ('" + formatUserWeekFrom + "' + INTERVAL 6 DAY)\n"
+                        + "ORDER BY dates.date;");
+                request.setAttribute("rsUserList", rsUserList);
+                request.setAttribute("formatUserWeekFrom", formatUserWeekFrom);
             }
             //Blog section
             ResultSet rsBlogCount = daoBlog.getData("select count(BlogID) from Blog");

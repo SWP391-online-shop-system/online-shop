@@ -44,8 +44,6 @@ function number_format(number, decimals, dec_point, thousands_sep) {
 }
 
 function autoUpdateWeekTo(weekFrom) {
-    realWeek = weekFrom;
-    console.log("weekFrom = " + weekFrom);
     // Convert the weekFrom string to a Date object 
     const weekFromDate = new Date(weekFrom);
     // Add 7 days to the weekFrom date to get the weekTo date 
@@ -243,4 +241,16 @@ function drawChart() {
             }
         }
     });
+}
+
+function autoUpdateWeekToUser(weekFrom) {
+    // Convert the weekFrom string to a Date object
+    const weekFromDate = new Date(weekFrom);
+    // Add 6 days to the weekFrom date to get the weekTo date
+    const weekToDate = new Date(weekFromDate.getTime() + 6 * 24 * 60 * 60 * 1000);
+    // Convert the weekTo date back to a string
+    const weekToString = weekToDate.toISOString().split('T')[0];
+    // Set the value of the weekTo input tag to the weekToString
+    document.querySelector('input[name="userWeekTo"]').value = weekToString;
+    autoUpdateWeekTo(document.getElementById("dateInputFrom").value);
 }
