@@ -115,38 +115,11 @@ function autoUpdateWeekTo(weekFrom) {
     } else {
         dataSold7 = dataSold7.innerHTML;
     }
-    drawChart();
+    autoUpdateWeekToUser(document.getElementById("dateUserInputFrom").value);
 }
 autoUpdateWeekTo(document.getElementById("dateInputFrom").value);
-function updateWeekTo(weekFrom) {
-    realWeek = weekFrom;
-    console.log("weekFrom = " + weekFrom);
-    // Convert the weekFrom string to a Date object 
-    const weekFromDate = new Date(weekFrom);
-    // Add 7 days to the weekFrom date to get the weekTo date 
-    const weekToDate = new Date(weekFromDate.getTime() + 6 * 24 * 60 * 60 * 1000);
-    // Convert the weekTo date back to a string 
-    const weekToString = weekToDate.toISOString().split('T')[0];
-    // Set the value of the weekTo input tag to the weekToString 
-    document.querySelector('input[name="weekTo"]').value = weekToString;
-    // Display all the dates between weekFrom and weekTo in separate <p> tags with unique IDs 
-    const dateList = document.getElementById('dateList');
-    dateList.innerHTML = '';
-    const currentDate = new Date(weekFromDate.getTime());
-    let counter = 1;
-    while (currentDate <= weekToDate) {
-        const dateString = currentDate.toISOString().split('T')[0];
-        const dateElement = document.createElement('p');
-        dateElement.innerHTML = dateString;
-        dateElement.id = 'dateList' + counter;
-        dateList.appendChild(dateElement);
-        currentDate.setDate(currentDate.getDate() + 1);
-        counter++;
-    }
-    drawChart();
-}
-
 function drawChart() {
+    autoUpdateWeekTo(document.getElementById("dateInputFrom").value);
     var ctx = document.getElementById("myAreaChart");
     var myLineChart = new Chart(ctx, {
         type: 'line',
@@ -252,5 +225,4 @@ function autoUpdateWeekToUser(weekFrom) {
     const weekToString = weekToDate.toISOString().split('T')[0];
     // Set the value of the weekTo input tag to the weekToString
     document.querySelector('input[name="userWeekTo"]').value = weekToString;
-    autoUpdateWeekTo(document.getElementById("dateInputFrom").value);
 }

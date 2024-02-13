@@ -79,7 +79,7 @@ public class ControllerMarketingDashBoard extends HttpServlet {
                 request.setAttribute("rsProductSold", rsProductSold);
                 request.setAttribute("formatWeekFrom", weekFrom);
             } else {
-                System.out.println("weekFrom not null");
+                System.out.println("weekFrom = " + weekFrom);
                 LocalDate dateWeekFrom = LocalDate.parse(weekFrom, formatter);
                 String formatWeekFrom = dateWeekFrom.format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
                 rsProductSold = daoPro.getData("SELECT dates.date, COALESCE(earning, 0) AS earning\n"
@@ -110,15 +110,16 @@ public class ControllerMarketingDashBoard extends HttpServlet {
                 Calendar calendar = Calendar.getInstance();
                 calendar.add(Calendar.DAY_OF_YEAR, -6); // Subtract 6 days from the current date
                 userWeekFrom = sdf.format(calendar.getTime());
-                rsUserList = daoUser.getData("select * from User where UserStatus = 1 and CreateDate between curdate() - interval 6 day and curdate()");
+                rsUserList = daoUser.getData("select * from User where UserStatus = 1 and CreateDate between curdate() - interval 6 day and curdate() ORDER BY CreateDate");
                 request.setAttribute("rsUserList", rsUserList);
                 request.setAttribute("formatUserWeekFrom", userWeekFrom);
             } else {
-                System.out.println("userWeekFrom not null");
+                System.out.println("userWeekFrom = " + userWeekFrom);
                 LocalDate dateUserWeekFrom = LocalDate.parse(userWeekFrom, formatter);
                 String formatUserWeekFrom = dateUserWeekFrom.format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+                System.out.println("formatUserWeekFrom = " + formatUserWeekFrom);
                 rsUserList = daoUser.getData("select * from User where UserStatus = 1 and CreateDate BETWEEN '" + formatUserWeekFrom + "' and ('" + formatUserWeekFrom + "' + INTERVAL 6 DAY)\n"
-                        + "ORDER BY dates.date;");
+                        + "ORDER BY CreateDate");
                 request.setAttribute("rsUserList", rsUserList);
                 request.setAttribute("formatUserWeekFrom", formatUserWeekFrom);
             }
@@ -135,6 +136,12 @@ public class ControllerMarketingDashBoard extends HttpServlet {
             //FeedBack section
             ResultSet rsFeedBackCount = daoFeedBack.getData("select count(FeedBackID) from FeedBack");
             request.setAttribute("rsFeedBackCount", rsFeedBackCount);
+
+            //productSold section
+            ResultSet rsSellProduct = daoPro.getData("select productName,(totalStock - UnitInStock) as sold,totalStock from Product \n"
+                    + "where (totalStock - UnitInStock) > 0 order by sold desc limit 5;");
+            request.setAttribute("rsSellProduct", rsSellProduct);
+
             request.getRequestDispatcher("marketingDashboard.jsp").forward(request, response);
         }
     }

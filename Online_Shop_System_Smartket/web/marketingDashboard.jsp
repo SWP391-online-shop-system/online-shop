@@ -485,12 +485,18 @@
                                         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
                                         Date currentDate = new Date();
                                         String curDate = dateFormat.format(currentDate);
+                                        
+                                       String formatUserWeekFrom = (String)request.getAttribute("formatUserWeekFrom");
+                                       SimpleDateFormat dateFormat1 = new SimpleDateFormat("yyyy-MM-dd");
+                                       Date currentDate1 = new Date();
+                                       String curDate1 = dateFormat1.format(currentDate1);
                                         %>
                                         <span style="margin-right: -12px;">từ</span>
                                         <form action="MarketingDashBoardURL" method="GET">
                                             <input id="dateInputFrom" class="date-chooser" type="date" name="weekFrom" value="<%=(formatWeekFrom==null || formatWeekFrom.equals(""))?curDate:formatWeekFrom%>" onchange="autoUpdateWeekTo(this.value);this.form.submit();"/>
                                             <span>đến</span>
-                                            <input id="dateInputTo" class="date-chooser" type="date" name="weekTo" disabled/>
+                                            <input id="dateInputTo" class="date-chooser" type="date" name="weekTo" disabled/>                                           
+                                            <input type="hidden" name="userWeekFrom" value="<%=(formatUserWeekFrom==null || formatUserWeekFrom.equals(""))?curDate1:formatUserWeekFrom%>"/>
                                         </form>
                                         <%
                                         ResultSet rsProductSold = (ResultSet)request.getAttribute("rsProductSold");
@@ -522,56 +528,31 @@
                                 <div class="card mb-4">
                                     <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
                                         <h6 class="m-0 font-weight-bold text-primary">Sản phẩm đã bán</h6>
-                                        <div class="dropdown no-arrow">
-                                        </div>
+                                        <div class="dropdown no-arrow"></div>
                                     </div>
-                                    <div class="card-body">
+                                    <%
+                                    int percent = 0;
+                                    ResultSet rsSellProduct = (ResultSet)request.getAttribute("rsSellProduct");
+                                    if(!rsSellProduct.isBeforeFirst()){%>
+                                    <div>Chưa có sản phẩm nào được mua</div>
+                                    <%}else {
+                                                                      while(rsSellProduct.next()){
+                                    percent = rsSellProduct.getInt(2)/rsSellProduct.getInt(3)*100;
+                                    System.out.println("percent of "+rsSellProduct.getString(1) +" = "+percent);
+                                    %>
+                                    <div class="card-body" style="padding:8px;">
                                         <div class="mb-3">
-                                            <div class="small text-gray-500">Oblong T-Shirt
-                                                <div class="small float-right"><b>600 of 800 Items</b></div>
+                                            <div class="small text-gray-500" style="font-weight: 500;"><%=rsSellProduct.getString(1)%>
+                                                <div class="small float-right"><b><%=rsSellProduct.getInt(2)%>/<%=rsSellProduct.getInt(3)%>&nbsp;đã bán</b></div>
                                             </div>
                                             <div class="progress" style="height: 12px;">
-                                                <div class="progress-bar bg-warning" role="progressbar" style="width: 80%" aria-valuenow="80"
-                                                     aria-valuemin="0" aria-valuemax="100"></div>
-                                            </div>
-                                        </div>
-                                        <div class="mb-3">
-                                            <div class="small text-gray-500">Gundam 90'Editions
-                                                <div class="small float-right"><b>500 of 800 Items</b></div>
-                                            </div>
-                                            <div class="progress" style="height: 12px;">
-                                                <div class="progress-bar bg-success" role="progressbar" style="width: 70%" aria-valuenow="70"
-                                                     aria-valuemin="0" aria-valuemax="100"></div>
-                                            </div>
-                                        </div>
-                                        <div class="mb-3">
-                                            <div class="small text-gray-500">Rounded Hat
-                                                <div class="small float-right"><b>455 of 800 Items</b></div>
-                                            </div>
-                                            <div class="progress" style="height: 12px;">
-                                                <div class="progress-bar bg-danger" role="progressbar" style="width: 55%" aria-valuenow="55"
-                                                     aria-valuemin="0" aria-valuemax="100"></div>
-                                            </div>
-                                        </div>
-                                        <div class="mb-3">
-                                            <div class="small text-gray-500">Indomie Goreng
-                                                <div class="small float-right"><b>400 of 800 Items</b></div>
-                                            </div>
-                                            <div class="progress" style="height: 12px;">
-                                                <div class="progress-bar bg-info" role="progressbar" style="width: 50%" aria-valuenow="50"
-                                                     aria-valuemin="0" aria-valuemax="100"></div>
-                                            </div>
-                                        </div>
-                                        <div class="mb-3">
-                                            <div class="small text-gray-500">Remote Control Car Racing
-                                                <div class="small float-right"><b>200 of 800 Items</b></div>
-                                            </div>
-                                            <div class="progress" style="height: 12px;">
-                                                <div class="progress-bar bg-success" role="progressbar" style="width: 30%" aria-valuenow="30"
+                                                <div class="progress-bar bg-success" role="progressbar" style="width: <%=percent%>%" aria-valuenow="<%=percent%>"
                                                      aria-valuemin="0" aria-valuemax="100"></div>
                                             </div>
                                         </div>
                                     </div>
+                                    <%}}%>
+
                                     <div class="card-footer text-center">
                                         <a class="m-0 small text-primary card-link" href="#">View More <i
                                                 class="fas fa-chevron-right"></i></a>
@@ -588,20 +569,21 @@
                                         <h6 class="m-0 font-weight-bold text-primary">Khách hàng mới</h6>
                                         <span>từ</span>
                                         <form action="MarketingDashBoardURL" method="GET">
-                                            <%
-                                       String formatUserWeekFrom = (String)request.getAttribute("formatUserWeekFrom");
-                                       SimpleDateFormat dateFormat1 = new SimpleDateFormat("yyyy-MM-dd");
-                                       Date currentDate1 = new Date();
-                                       String curDate1 = dateFormat1.format(currentDate1);
-                                            %>
-                                            <input id="dateUserInputFrom" class="date-chooser" type="date" name="userWeekFrom" value="<%=(formatUserWeekFrom==null || formatUserWeekFrom.equals(""))?curDate1:formatUserWeekFrom%>" onchange="autoUpdateWeekToUser(this.value);this.form.submit();"/>
+                                            <input id="dateUserInputFrom" class="date-chooser" type="date" name="userWeekFrom" value="<%=(formatUserWeekFrom==null || formatUserWeekFrom.equals(""))?curDate1:formatUserWeekFrom%>" onchange="autoUpdateWeekToUser(this.value);
+                                                    this.form.submit();"/>
                                             <span>đến</span>
                                             <input class="date-chooser" type="date" name="userWeekTo" disabled/>
+                                            <input type="hidden" name="weekFrom" value="<%=(formatWeekFrom==null || formatWeekFrom.equals(""))?curDate:formatWeekFrom%>"  />
                                         </form>
                                         <a class="m-0 float-right btn btn-danger btn-sm" href="#">Quản lí ngay
                                             <i class="fas fa-chevron-right" style="margin-left: 8px;"></i></a>
                                     </div>
                                     <div class="table-responsive">
+                                        <%
+                                        ResultSet rsUserList = (ResultSet)request.getAttribute("rsUserList");
+                                        if(!rsUserList.isBeforeFirst()) {%>
+                                        <div style="color:orange;text-align: center;">Không có khách hàng mới trong tuần này</div>
+                                        <%} else{%>
                                         <table class="table align-items-center table-flush">
                                             <thead class="thead-light">
                                                 <tr>
@@ -609,21 +591,17 @@
                                                     <th>Tên</th>
                                                     <th>Email</th>
                                                     <th style="padding-right: 0px;">Trạng thái</th>
-                                                    <th></th>
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                                <%
-                                                ResultSet rsUserList = (ResultSet)request.getAttribute("rsUserList");
-                                                while(rsUserList.next()){%>
+                                                <%while(rsUserList.next()){%>
                                                 <tr>
                                                     <td class="id-style"><a href="#"><%=rsUserList.getInt(1)%></a></td>
                                                     <td><%=rsUserList.getString(2)+" "+rsUserList.getString(3)%></td>
                                                     <td><%=rsUserList.getString(10)%></td>
                                                     <td><%=daoUser.convertStatus(rsUserList.getInt(12))%></td>
-                                                    <td><a style="width: 62px;" href="#" class="btn btn-sm btn-primary">Chi tiết</a></td>
                                                 </tr>
-                                                <%}%>
+                                                <%}}%>
                                             </tbody>
                                         </table>
                                     </div>
@@ -702,18 +680,17 @@
                 <!---Container Fluid-->
             </div>
         </div>
-    </div>
 
-    <!-- Scroll to top -->
-    <a class="scroll-to-top rounded" href="#page-top">
-        <i class="fas fa-angle-up"></i>
-    </a>
-    <script src="vendor/jquery/jquery.min.js"></script>
-    <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-    <script src="vendor/jquery-easing/jquery.easing.min.js"></script>
-    <script src="js_marketing/ruang-admin.min.js"></script>
-    <script src="vendor/chart.js/Chart.min.js"></script>
-    <script src="js_marketing/demo/chart-area-demo.js"></script>  
-</body>
+        <!-- Scroll to top -->
+        <a class="scroll-to-top rounded" href="#page-top">
+            <i class="fas fa-angle-up"></i>
+        </a>
+        <script src="vendor/jquery/jquery.min.js"></script>
+        <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+        <script src="vendor/jquery-easing/jquery.easing.min.js"></script>
+        <script src="js_marketing/ruang-admin.min.js"></script>
+        <script src="vendor/chart.js/Chart.min.js"></script>
+        <script src="js_marketing/demo/chart-area-demo.js"></script>  
+    </body>
 
 </html>
