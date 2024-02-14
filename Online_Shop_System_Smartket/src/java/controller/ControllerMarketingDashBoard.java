@@ -74,7 +74,7 @@ public class ControllerMarketingDashBoard extends HttpServlet {
                         + "  WHERE pi.ProductURL LIKE '%_1%' AND ((p.TotalStock - p.UnitInStock) > 0)\n"
                         + "  GROUP BY date\n"
                         + ") AS earnings ON dates.date = earnings.date\n"
-                        + "WHERE dates.date BETWEEN (CURDATE() - INTERVAL 6 DAY) AND CURDATE()\n"
+                        + "WHERE dates.date BETWEEN (CURDATE() - INTERVAL 6 DAY) AND NOW()\n"
                         + "ORDER BY dates.date;");
                 request.setAttribute("rsProductSold", rsProductSold);
                 request.setAttribute("formatWeekFrom", weekFrom);
@@ -136,11 +136,15 @@ public class ControllerMarketingDashBoard extends HttpServlet {
             //FeedBack section
             ResultSet rsFeedBackCount = daoFeedBack.getData("select count(FeedBackID) from FeedBack");
             request.setAttribute("rsFeedBackCount", rsFeedBackCount);
-
             //productSold section
             ResultSet rsSellProduct = daoPro.getData("select productName,(totalStock - UnitInStock) as sold,totalStock from Product \n"
                     + "where (totalStock - UnitInStock) > 0 order by sold desc limit 5;");
             request.setAttribute("rsSellProduct", rsSellProduct);
+            //feedBackTrend section
+            ResultSet rsNewFeedBack = daoFeedBack.getData("select f.FeedBackID, f.ProductID, f.UserID, CONCAT(FirstName,\" \",LastName) as fullName, \n"
+                    + "f.FeedBackContent, f.FeedBackRate, f.FeedBackDate from FeedBack as f \n"
+                    + "join User as u on f.UserID = u.UserID order by f.FeedBackDate;");
+            request.setAttribute("rsNewFeedBack", rsNewFeedBack);
 
             request.getRequestDispatcher("marketingDashboard.jsp").forward(request, response);
         }

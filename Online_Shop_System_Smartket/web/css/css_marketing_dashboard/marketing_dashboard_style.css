@@ -1548,3 +1548,9 @@ body.sidebar-toggled footer.sticky-footer{
     padding-left: 12px;
     padding-top: 12px;
 }
+.star-convert{
+    color: #f8f850;
+    font-size: 12px;
+    margin-top: -22px;
+    margin-left: 20px;
+}

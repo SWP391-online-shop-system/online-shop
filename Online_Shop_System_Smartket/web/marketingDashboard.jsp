@@ -10,6 +10,7 @@
 <%@page import="model.DAOProduct"%>
 <%@page import="model.DAOUser"%>
 <%@page import="model.DAOFeedBack"%>
+<%@page import="view.Product"%>
 <%@page import="java.text.SimpleDateFormat"%>
 <%@page import="java.util.Date"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
@@ -340,137 +341,144 @@
                         <div class="row mb-3">
                             <!-- Earnings (Monthly) Card Example -->
                             <div class="col-xl-3 col-md-6 mb-4">
-                                <div class="card h-100">
-                                    <div class="card-body">
-                                        <div class="row align-items-center">
-                                            <div class="col mr-2">
-                                                <div class="text-xs font-weight-bold text-uppercase mb-1">Bài đăng</div>
-                                                <%
-                                                ResultSet rsBlogCount = (ResultSet)request.getAttribute("rsBlogCount");
-                                                if(rsBlogCount.next()){%>
-                                                <div class="h5 mb-0 font-weight-bold text-gray-800"><%=rsBlogCount.getInt(1)%>&nbsp;bài viết</div>
-                                                <%}
-                                                ResultSet rsCountTrendBlog = daoBlog.getData("select count(BlogID) from Blog where CreateTime between (curdate() - interval 6 day) and  curdate()");
-                                                if(rsCountTrendBlog.next()){
-                                                if(rsCountTrendBlog.getInt(1)==0){%>
-                                                <div class="mt-2 mb-0 text-muted text-xs">
-                                                    <span class="text-success mr-2">Không có bài viết nào</span></br>
-                                                    <span>trong tuần này</span>
+                                <a href="1" style="text-decoration: none;">
+                                    <div class="card h-100">
+                                        <div class="card-body">
+                                            <div class="row align-items-center">
+                                                <div class="col mr-2">
+                                                    <div class="text-xs font-weight-bold text-uppercase mb-1">Bài đăng</div>
+                                                    <%
+                                                    ResultSet rsBlogCount = (ResultSet)request.getAttribute("rsBlogCount");
+                                                    if(rsBlogCount.next()){%>
+                                                    <div class="h5 mb-0 font-weight-bold text-gray-800"><%=rsBlogCount.getInt(1)%>&nbsp;bài viết</div>
+                                                    <%}
+                                                    ResultSet rsCountTrendBlog = daoBlog.getData("select count(BlogID) from Blog where CreateTime between (curdate() - interval 6 day) and  curdate()");
+                                                    if(rsCountTrendBlog.next()){
+                                                    if(rsCountTrendBlog.getInt(1)==0){%>
+                                                    <div class="mt-2 mb-0 text-muted text-xs">
+                                                        <span class="text-success mr-2">Không có bài viết nào</span></br>
+                                                        <span>trong tuần này</span>
+                                                    </div>
+                                                    <%}else{%>
+                                                    <div class="mt-2 mb-0 text-muted text-xs">
+                                                        <span class="text-success mr-2"><i class="fa fa-arrow-up"></i>&nbsp;<%=rsCountTrendBlog.getInt(1)%>&nbsp;bài viết</span></br>
+                                                        <span>trong tuần này</span>
+                                                    </div>
+                                                    <%}}%>
                                                 </div>
-                                                <%}else{%>
-                                                <div class="mt-2 mb-0 text-muted text-xs">
-                                                    <span class="text-success mr-2"><i class="fa fa-arrow-up"></i>&nbsp;<%=rsCountTrendBlog.getInt(1)%>&nbsp;bài viết</span></br>
-                                                    <span>trong tuần này</span>
+                                                <div class="col-auto">
+                                                    <i class="fas fa-calendar fa-2x text-primary"></i>
                                                 </div>
-                                                <%}}%>
-
-                                            </div>
-                                            <div class="col-auto">
-                                                <i class="fas fa-calendar fa-2x text-primary"></i>
                                             </div>
                                         </div>
                                     </div>
-                                </div>
+                                </a>
                             </div>
                             <!-- Earnings (Annual) Card Example -->
                             <div class="col-xl-3 col-md-6 mb-4">
-                                <div class="card h-100">
-                                    <div class="card-body">
-                                        <div class="row no-gutters align-items-center">
-                                            <div class="col mr-2">
-                                                <div class="text-xs font-weight-bold text-uppercase mb-1">Sản phẩm</div>
-                                                <%
-                                                ResultSet rsProductCount = (ResultSet)request.getAttribute("rsProductCount");
-                                                if(rsProductCount.next()) {%>
-                                                <div class="h5 mb-0 font-weight-bold text-gray-800"><%=rsProductCount.getInt(1)%>&nbsp;sản phẩm</div>
-                                                <%}
-                                                ResultSet rsProductTrend = daoPro.getData("select count(ProductID) from Product where CreateDate between (curdate() - interval 6 day) and  curdate();");
-                                                if(rsProductTrend.next()){
-                                                if(rsProductTrend.getInt(1) == 0){%>
-                                                <div class="mt-2 mb-0 text-muted text-xs">
-                                                    <span class="text-warning mr-2">Không có sản phẩm nào</span></br>
-                                                    <span>Trong tuần này</span>
+                                <a href="2" style="text-decoration: none;">
+                                    <div class="card h-100">
+                                        <div class="card-body">
+                                            <div class="row no-gutters align-items-center">
+                                                <div class="col mr-2">
+                                                    <div class="text-xs font-weight-bold text-uppercase mb-1">Sản phẩm</div>
+                                                    <%
+                                                    ResultSet rsProductCount = (ResultSet)request.getAttribute("rsProductCount");
+                                                    if(rsProductCount.next()) {%>
+                                                    <div class="h5 mb-0 font-weight-bold text-gray-800"><%=rsProductCount.getInt(1)%>&nbsp;sản phẩm</div>
+                                                    <%}
+                                                    ResultSet rsProductTrend = daoPro.getData("select count(ProductID) from Product where CreateDate between (curdate() - interval 6 day) and  curdate();");
+                                                    if(rsProductTrend.next()){
+                                                    if(rsProductTrend.getInt(1) == 0){%>
+                                                    <div class="mt-2 mb-0 text-muted text-xs">
+                                                        <span class="text-warning mr-2">Không có sản phẩm nào</span></br>
+                                                        <span>Trong tuần này</span>
+                                                    </div>
+                                                    <%}else{%>
+                                                    <div class="mt-2 mb-0 text-muted text-xs">
+                                                        <span class="text-success mr-2"><i class="fas fa-arrow-up">&nbsp;<%=rsProductTrend.getInt(1)%>&nbsp;sản phẩm mới</i></span></br>
+                                                        <span>Trong tuần này</span>
+                                                    </div>
+                                                    <%}}%>
                                                 </div>
-                                                <%}else{%>
-                                                <div class="mt-2 mb-0 text-muted text-xs">
-                                                    <span class="text-success mr-2"><i class="fas fa-arrow-up">&nbsp;<%=rsProductTrend.getInt(1)%>&nbsp;sản phẩm mới</i></span></br>
-                                                    <span>Trong tuần này</span>
+                                                <div class="col-auto">
+                                                    <i class="fas fa-shopping-cart fa-2x text-success"></i>
                                                 </div>
-                                                <%}}%>
-                                            </div>
-                                            <div class="col-auto">
-                                                <i class="fas fa-shopping-cart fa-2x text-success"></i>
                                             </div>
                                         </div>
                                     </div>
-                                </div>
+                                </a>
                             </div>
                             <!-- New User Card Example -->
                             <div class="col-xl-3 col-md-6 mb-4">
-                                <div class="card h-100">
-                                    <div class="card-body">
-                                        <div class="row no-gutters align-items-center">
-                                            <div class="col mr-2">
-                                                <div class="text-xs font-weight-bold text-uppercase mb-1">Khách hàng</div>
-                                                <%
-                                                ResultSet rsUserCount = (ResultSet)request.getAttribute("rsUserCount");
-                                                if(rsUserCount.next()) {%>
-                                                <div class="h5 mb-0 font-weight-bold text-gray-800"><%=rsUserCount.getInt(1)%>&nbsp;khách hàng</div>
-                                                <%}
-                                                ResultSet rsUserTrend = daoUser.getData("select count(UserID) from User where CreateDate between (curdate() - interval 6 day) and  curdate() and UserStatus = 1 and RoleID = 1;");
-                                                if(rsUserTrend.next()){
-                                                if(rsUserTrend.getInt(1) == 0) {%>
-                                                <div class="mt-2 mb-0 text-muted text-xs">
-                                                    <span class="text-warning mr-2">Không có khách hàng nào</span></br>
-                                                    <span>Trong tuần này</span>
+                                <a href="3" style="text-decoration: none;">
+                                    <div class="card h-100">
+                                        <div class="card-body">
+                                            <div class="row no-gutters align-items-center">
+                                                <div class="col mr-2">
+                                                    <div class="text-xs font-weight-bold text-uppercase mb-1">Khách hàng</div>
+                                                    <%
+                                                    ResultSet rsUserCount = (ResultSet)request.getAttribute("rsUserCount");
+                                                    if(rsUserCount.next()) {%>
+                                                    <div class="h5 mb-0 font-weight-bold text-gray-800"><%=rsUserCount.getInt(1)%>&nbsp;khách hàng</div>
+                                                    <%}
+                                                    ResultSet rsUserTrend = daoUser.getData("select count(UserID) from User where CreateDate between (curdate() - interval 6 day) and  curdate() and UserStatus = 1 and RoleID = 1;");
+                                                    if(rsUserTrend.next()){
+                                                    if(rsUserTrend.getInt(1) == 0) {%>
+                                                    <div class="mt-2 mb-0 text-muted text-xs">
+                                                        <span class="text-warning mr-2">Không có khách hàng nào</span></br>
+                                                        <span>Trong tuần này</span>
+                                                    </div>
+                                                    <%} else {%>
+                                                    <div class="mt-2 mb-0 text-muted text-xs">
+                                                        <span class="text-success mr-2"><i class="fas fa-arrow-up">&nbsp;<%=rsUserTrend.getInt(1)%>&nbsp;khách hàng mới</i></span></br>
+                                                        <span>Trong tuần này</span>
+                                                    </div>
+                                                    <%}}%>
                                                 </div>
-                                                <%} else {%>
-                                                <div class="mt-2 mb-0 text-muted text-xs">
-                                                    <span class="text-success mr-2"><i class="fas fa-arrow-up">&nbsp;<%=rsUserTrend.getInt(1)%>&nbsp;khách hàng mới</i></span></br>
-                                                    <span>Trong tuần này</span>
+                                                <div class="col-auto">
+                                                    <i class="fas fa-users fa-2x text-info"></i>
                                                 </div>
-                                                <%}}%>
-                                            </div>
-                                            <div class="col-auto">
-                                                <i class="fas fa-users fa-2x text-info"></i>
                                             </div>
                                         </div>
                                     </div>
-                                </div>
+                                </a>
                             </div>
                             <!-- Pending Requests Card Example -->
                             <div class="col-xl-3 col-md-6 mb-4">
-                                <div class="card h-100">
-                                    <div class="card-body">
-                                        <div class="row no-gutters align-items-center">
-                                            <div class="col mr-2">
-                                                <div class="text-xs font-weight-bold text-uppercase mb-1">Phản hồi</div>
-                                                <%
-                                                ResultSet rsFeedBackCount = (ResultSet)request.getAttribute("rsFeedBackCount");
-                                                if(rsFeedBackCount.next()) {%>
-                                                <div class="h5 mb-0 font-weight-bold text-gray-800"><%=rsFeedBackCount.getInt(1)%>&nbsp;Phản hồi</div>
-                                                <%}
-                                                ResultSet rsFeedBackTrend = daoFeedBack.getData("select count(FeedBackID) from FeedBack where FeedBackDate between (curdate() - interval 6 day) and  curdate()");
-                                                if(rsFeedBackTrend.next()){
-                                                if(rsFeedBackTrend.getInt(1) == 0) {%>
-                                                <div class="mt-2 mb-0 text-muted text-xs">
-                                                    <span class="text-warning mr-2">Không có phản hồi nào</span></br>
-                                                    <span>Trong tuần này</span>
-                                                </div>
-                                                <%} else {%>
-                                                <div class="mt-2 mb-0 text-muted text-xs">
-                                                    <span class="text-success mr-2"><i class="fas fa-arrow-up">&nbsp;<%=rsFeedBackTrend.getInt(1)%>&nbsp;Phản hồi mới</i></span></br>
-                                                    <span>Trong tuần này</span>
-                                                </div>
-                                                <%}}%>
+                                <a href="4" style="text-decoration: none;">
+                                    <div class="card h-100">
+                                        <div class="card-body">
+                                            <div class="row no-gutters align-items-center">
+                                                <div class="col mr-2">
+                                                    <div class="text-xs font-weight-bold text-uppercase mb-1">Phản hồi</div>
+                                                    <%
+                                                    ResultSet rsFeedBackCount = (ResultSet)request.getAttribute("rsFeedBackCount");
+                                                    if(rsFeedBackCount.next()) {%>
+                                                    <div class="h5 mb-0 font-weight-bold text-gray-800"><%=rsFeedBackCount.getInt(1)%>&nbsp;Phản hồi</div>
+                                                    <%}
+                                                    ResultSet rsFeedBackTrend = daoFeedBack.getData("select count(FeedBackID) from FeedBack where FeedBackDate between (curdate() - interval 6 day) and  now()");
+                                                    if(rsFeedBackTrend.next()){
+                                                    if(rsFeedBackTrend.getInt(1) == 0) {%>
+                                                    <div class="mt-2 mb-0 text-muted text-xs">
+                                                        <span class="text-warning mr-2">Không có phản hồi nào</span></br>
+                                                        <span>Trong tuần này</span>
+                                                    </div>
+                                                    <%} else {%>
+                                                    <div class="mt-2 mb-0 text-muted text-xs">
+                                                        <span class="text-success mr-2"><i class="fas fa-arrow-up">&nbsp;<%=rsFeedBackTrend.getInt(1)%>&nbsp;Phản hồi mới</i></span></br>
+                                                        <span>Trong tuần này</span>
+                                                    </div>
+                                                    <%}}%>
 
-                                            </div>
-                                            <div class="col-auto">
-                                                <i class="fas fa-comments fa-2x text-info"></i>
+                                                </div>
+                                                <div class="col-auto">
+                                                    <i class="fas fa-comments fa-2x text-info"></i>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
-                                </div>
+                                </a>
                             </div>
                         </div>
 
@@ -536,8 +544,8 @@
                                     if(!rsSellProduct.isBeforeFirst()){%>
                                     <div>Chưa có sản phẩm nào được mua</div>
                                     <%}else {
-                                                                      while(rsSellProduct.next()){
-                                    percent = rsSellProduct.getInt(2)/rsSellProduct.getInt(3)*100;
+                                    while(rsSellProduct.next()){
+                                    percent = (int) ((double) rsSellProduct.getInt(2) / rsSellProduct.getInt(3) * 100);
                                     System.out.println("percent of "+rsSellProduct.getString(1) +" = "+percent);
                                     %>
                                     <div class="card-body" style="padding:8px;">
@@ -554,7 +562,7 @@
                                     <%}}%>
 
                                     <div class="card-footer text-center">
-                                        <a class="m-0 small text-primary card-link" href="#">View More <i
+                                        <a class="m-0 small text-primary card-link" href="#">Quản lí ngay <i
                                                 class="fas fa-chevron-right"></i></a>
                                     </div>
                                 </div>
@@ -614,39 +622,30 @@
                                     <div class="card-header py-4 bg-primary d-flex flex-row align-items-center justify-content-between">
                                         <h6 class="m-0 font-weight-bold text-light">Phản hồi mới</h6>
                                     </div>
+                                    <%
+                                    ResultSet rsNewFeedBack = (ResultSet)request.getAttribute("rsNewFeedBack");
+                                    if(!rsNewFeedBack.isBeforeFirst()) {%>
+                                    <div>Chưa có phản hồi nào</div>
+                                    <%}else{
+                                        while(rsNewFeedBack.next()){%>
+                                    <div class="customer-message align-items-center">
+                                        <a href="#" style="font-weight: 500;" >
+                                            <div class="text-truncate message-title"><%=rsNewFeedBack.getString(5)%>
+                                            </div>
+                                            <div class="small text-gray-500 message-time" style="font-weight: 500"><%=rsNewFeedBack.getString(4)%>&nbsp;·&nbsp;<%=rsNewFeedBack.getString(7)%></div></br>
+                                            <%
+                                            int star = (int)rsNewFeedBack.getInt(6);
+                                            Product pro = new Product();
+                                             String totalRate = pro.convertStar(star);
+                                            %>
+                                            <div style="   color: #f8f850;font-size: 12px;margin-top: -22px;margin-left: 20px;"><%=totalRate%></div>
+                                        </a>
+                                    </div>
+                                    <%}}%>
                                     <div>
-                                        <div class="customer-message align-items-center">
-                                            <a class="font-weight-bold" href="#">
-                                                <div class="text-truncate message-title">Hi there! I am wondering if you can help me with a
-                                                    problem I've been having.</div>
-                                                <div class="small text-gray-500 message-time font-weight-bold">Udin Cilok · 58m</div>
-                                            </a>
-                                        </div>
-                                        <div class="customer-message align-items-center">
-                                            <a href="#">
-                                                <div class="text-truncate message-title">But I must explain to you how all this mistaken idea
-                                                </div>
-                                                <div class="small text-gray-500 message-time">Nana Haminah · 58m</div>
-                                            </a>
-                                        </div>
-                                        <div class="customer-message align-items-center">
-                                            <a class="font-weight-bold" href="#">
-                                                <div class="text-truncate message-title">Lorem ipsum dolor sit amet, consectetur adipiscing elit
-                                                </div>
-                                                <div class="small text-gray-500 message-time font-weight-bold">Jajang Cincau · 25m</div>
-                                            </a>
-                                        </div>
-                                        <div class="customer-message align-items-center">
-                                            <a class="font-weight-bold" href="#">
-                                                <div class="text-truncate message-title">At vero eos et accusamus et iusto odio dignissimos
-                                                    ducimus qui blanditiis
-                                                </div>
-                                                <div class="small text-gray-500 message-time font-weight-bold">Udin Wayang · 54m</div>
-                                            </a>
-                                        </div>
                                         <div class="card-footer text-center">
-                                            <a class="m-0 small text-primary card-link" href="#">Xem them   <i
-                                                    class="fas fa-chevron-right"></i></a>
+                                            <a class="m-0 small text-primary card-link" href="#">Quản lí ngay
+                                                <i class="fas fa-chevron-right"></i></a>
                                         </div>
                                     </div>
                                 </div>
