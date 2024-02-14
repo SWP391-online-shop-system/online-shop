@@ -43,109 +43,55 @@
             <ul class="navbar-nav sidebar sidebar-light accordion" id="accordionSidebar">
                 <a class="sidebar-brand d-flex align-items-center justify-content-center" href="index.html">
                     <div class="sidebar-brand-icon">
-                        <img src="img/logo/logo2.png">
+                        <img style="height: 91px;
+                             width: 133px;
+                             margin-bottom: -31px;" src="images/logo/logo.png">
                     </div>
-                    <div class="sidebar-brand-text mx-3">Name</div>
                 </a>
                 <hr class="sidebar-divider wee-0">
                 <li class="nav-item active">
                     <a class="nav-link" href="index.html">
                         <i class="fas fa-fw fa-tachometer-alt"></i>
-                        <span>Bảng thống kê</span></a>
+                        <span>Thống kê</span></a>
                 </li>
                 <hr class="sidebar-divider">
-                <div class="sidebar-heading">
-                    Tính năng
+                <div style="position: sticky; top: 30px;">
+                    <div class="sidebar-heading">
+                        Quản lí
+                    </div>
+                    <li class="nav-item">
+                        <a class="nav-link" href="ui-colors.html">
+                            <i class="fas fa-calendar fa-2x text-primary"></i>
+                            <span>Bài đăng</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="ui-colors.html">
+                            <i class="fas fa-shopping-cart fa-2x text-success"></i>
+                            <span>Sản phẩm</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="ui-colors.html">
+                            <i class="fas fa-users fa-2x text-info"></i>
+                            <span>Khách hàng</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="ui-colors.html">
+                            <i class="fas fa-comments fa-2x text-info"></i>
+                            <span>Phản hồi</span>
+                        </a>
+                    </li>
                 </div>
-                <li class="nav-item">
-                    <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseBootstrap"
-                       aria-expanded="true" aria-controls="collapseBootstrap">
-                        <i class="far fa-fw fa-window-maximize"></i>
-                        <span>Bootstrap UI</span>
-                    </a>
-                    <div id="collapseBootstrap" class="collapse" aria-labelledby="headingBootstrap" data-parent="#accordionSidebar">
-                        <div class="bg-white py-2 collapse-inner rounded">
-                            <h6 class="collapse-header">Bootstrap UI</h6>
-                            <a class="collapse-item" href="alerts.html">Alerts</a>
-                            <a class="collapse-item" href="buttons.html">Buttons</a>
-                            <a class="collapse-item" href="dropdowns.html">Dropdowns</a>
-                            <a class="collapse-item" href="modals.html">Modals</a>
-                            <a class="collapse-item" href="popovers.html">Popovers</a>
-                            <a class="collapse-item" href="progress-bar.html">Progress Bars</a>
-                        </div>
-                    </div>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseForm" aria-expanded="true"
-                       aria-controls="collapseForm">
-                        <i class="fab fa-fw fa-wpforms"></i>
-                        <span>Forms</span>
-                    </a>
-                    <div id="collapseForm" class="collapse" aria-labelledby="headingForm" data-parent="#accordionSidebar">
-                        <div class="bg-white py-2 collapse-inner rounded">
-                            <h6 class="collapse-header">Forms</h6>
-                            <a class="collapse-item" href="form_basics.html">Form Basics</a>
-                            <a class="collapse-item" href="form_advanceds.html">Form Advanceds</a>
-                        </div>
-                    </div>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTable" aria-expanded="true"
-                       aria-controls="collapseTable">
-                        <i class="fas fa-fw fa-table"></i>
-                        <span>Tables</span>
-                    </a>
-                    <div id="collapseTable" class="collapse" aria-labelledby="headingTable" data-parent="#accordionSidebar">
-                        <div class="bg-white py-2 collapse-inner rounded">
-                            <h6 class="collapse-header">Tables</h6>
-                            <a class="collapse-item" href="simple-tables.html">Simple Tables</a>
-                            <a class="collapse-item" href="datatables.html">DataTables</a>
-                        </div>
-                    </div>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="ui-colors.html">
-                        <i class="fas fa-fw fa-palette"></i>
-                        <span>UI Colors</span>
-                    </a>
-                </li>
                 <hr class="sidebar-divider">
-                <div class="sidebar-heading">
-                    Examples
-                </div>
-                <li class="nav-item">
-                    <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsePage" aria-expanded="true"
-                       aria-controls="collapsePage">
-                        <i class="fas fa-fw fa-columns"></i>
-                        <span>Pages</span>
-                    </a>
-                    <div id="collapsePage" class="collapse" aria-labelledby="headingPage" data-parent="#accordionSidebar">
-                        <div class="bg-white py-2 collapse-inner rounded">
-                            <h6 class="collapse-header">Example Pages</h6>
-                            <a class="collapse-item" href="login.html">Login</a>
-                            <a class="collapse-item" href="register.html">Register</a>
-                            <a class="collapse-item" href="404.html">404 Page</a>
-                            <a class="collapse-item" href="blank.html">Blank Page</a>
-                        </div>
-                    </div>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="charts.html">
-                        <i class="fas fa-fw fa-chart-area"></i>
-                        <span>Charts</span>
-                    </a>
-                </li>
-                <hr class="sidebar-divider">
-                <div class="version" id="version-ruangadmin"></div>
             </ul>
             <!-- Sidebar -->
             <div id="content-wrapper" class="d-flex flex-column">
                 <div id="content">
                     <!-- TopBar -->
                     <nav class="navbar navbar-expand navbar-light bg-navbar topbar mb-4 static-top">
-                        <button id="sidebarToggleTop" class="btn btn-link rounded-circle mr-3">
-                            <i class="fa fa-bars"></i>
-                        </button>
+                        <div style="font-weight: 700;color: white;font-size: 37px;letter-spacing: 2px;font-family: Nunito,-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol","Noto Color Emoji";">Trang marketing</div>
                         <ul class="navbar-nav ml-auto">
                             <li class="nav-item dropdown no-arrow">
                                 <a class="nav-link dropdown-toggle" href="#" id="searchDropdown" role="button" data-toggle="dropdown"
@@ -180,7 +126,7 @@
                                     </h6>
                                     <a class="dropdown-item d-flex align-items-center" href="#">
                                         <div class="mr-3">
-                                            <div class="icon-circle bg-primary">
+                                            <div class="icon-circle bg-primary" style="background-color: #1ab365!important;">
                                                 <i class="fas fa-file-alt text-white"></i>
                                             </div>
                                         </div>
@@ -331,10 +277,10 @@
                     <!-- Container Fluid-->
                     <div class="container-fluid" id="container-wrapper">
                         <div class="d-sm-flex align-items-center justify-content-between mb-4">
-                            <h1 class="h3 mb-0 text-gray-800">Bảng thống kê</h1>
+                            <h1 class="h3 mb-0 text-gray-800">Thống kê</h1>
                             <ol class="breadcrumb">
                                 <li class="breadcrumb-item"><a href="./">Trang chủ</a></li>
-                                <li class="breadcrumb-item active" aria-current="page">Bảng thống kê</li>
+                                <li class="breadcrumb-item active" aria-current="page">Thống kê</li>
                             </ol>
                         </div>
 
@@ -356,7 +302,7 @@
                                                     if(rsCountTrendBlog.next()){
                                                     if(rsCountTrendBlog.getInt(1)==0){%>
                                                     <div class="mt-2 mb-0 text-muted text-xs">
-                                                        <span class="text-success mr-2">Không có bài viết nào</span></br>
+                                                        <span class="text-warning mr-2">Không có bài viết nào</span></br>
                                                         <span>trong tuần này</span>
                                                     </div>
                                                     <%}else{%>
@@ -499,11 +445,11 @@
                                        Date currentDate1 = new Date();
                                        String curDate1 = dateFormat1.format(currentDate1);
                                         %>
-                                        <span style="margin-right: -12px;">từ</span>
+                                        <span  class="m-0 text-primary" style="margin-right: -12px;" >từ</span>
                                         <form action="MarketingDashBoardURL" method="GET">
-                                            <input id="dateInputFrom" class="date-chooser" type="date" name="weekFrom" value="<%=(formatWeekFrom==null || formatWeekFrom.equals(""))?curDate:formatWeekFrom%>" onchange="autoUpdateWeekTo(this.value);this.form.submit();"/>
-                                            <span>đến</span>
-                                            <input id="dateInputTo" class="date-chooser" type="date" name="weekTo" disabled/>                                           
+                                            <input style="background-color: #1ab365!important;" id="dateInputFrom" class="date-chooser" type="date" name="weekFrom" value="<%=(formatWeekFrom==null || formatWeekFrom.equals(""))?curDate:formatWeekFrom%>" onchange="autoUpdateWeekTo(this.value);this.form.submit();"/>
+                                            <span  class="m-0 text-primary">đến</span>
+                                            <input style="background-color: #1ab365!important;" id="dateInputTo" class="date-chooser" type="date" name="weekTo" disabled/>                                           
                                             <input type="hidden" name="userWeekFrom" value="<%=(formatUserWeekFrom==null || formatUserWeekFrom.equals(""))?curDate1:formatUserWeekFrom%>"/>
                                         </form>
                                         <%
@@ -523,8 +469,8 @@
                                         <div class="chart-area">
                                             <canvas id="myAreaChart"></canvas>
                                             <script>
-                                                window.addEventListener('load', function () {
-                                                    drawChart();
+                                                    window.addEventListener('load', function () {
+                                                drawChart();
                                                 });
                                             </script>
                                         </div>
@@ -575,12 +521,13 @@
                                 <div class="card">
                                     <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
                                         <h6 class="m-0 font-weight-bold text-primary">Khách hàng mới</h6>
-                                        <span>từ</span>
+                                        <span  class="m-0 text-primary">từ</span>
                                         <form action="MarketingDashBoardURL" method="GET">
-                                            <input id="dateUserInputFrom" class="date-chooser" type="date" name="userWeekFrom" value="<%=(formatUserWeekFrom==null || formatUserWeekFrom.equals(""))?curDate1:formatUserWeekFrom%>" onchange="autoUpdateWeekToUser(this.value);
+                                            <input style="background-color: #1ab365!important;" id="dateUserInputFrom" class="date-chooser" type="date" name="userWeekFrom" value="<%=(formatUserWeekFrom==null || formatUserWeekFrom.equals(""))?curDate1:formatUserWeekFrom%>" onchange="autoUpdateWeekToUser(this.value);
+                             
                                                     this.form.submit();"/>
-                                            <span>đến</span>
-                                            <input class="date-chooser" type="date" name="userWeekTo" disabled/>
+                                            <span class="m-0 text-primary">đến</span>
+                                            <input style="background-color: #1ab365!important;"class="date-chooser" type="date" name="userWeekTo" disabled/>
                                             <input type="hidden" name="weekFrom" value="<%=(formatWeekFrom==null || formatWeekFrom.equals(""))?curDate:formatWeekFrom%>"  />
                                         </form>
                                         <a class="m-0 float-right btn btn-danger btn-sm" href="#">Quản lí ngay
@@ -619,7 +566,7 @@
                             <!-- Message From Customer-->
                             <div class="col-xl-4 col-lg-5 ">
                                 <div class="card">
-                                    <div class="card-header py-4 bg-primary d-flex flex-row align-items-center justify-content-between">
+                                    <div class="card-header py-4 bg-primary d-flex flex-row align-items-center justify-content-between" style="background-color: #1ab365!important;">
                                         <h6 class="m-0 font-weight-bold text-light">Phản hồi mới</h6>
                                     </div>
                                     <%

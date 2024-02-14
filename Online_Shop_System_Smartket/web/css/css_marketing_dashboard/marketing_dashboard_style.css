@@ -488,7 +488,7 @@ a:focus{
     color:#858796
 }
 .bg-navbar{
-    background-color:#6777ef
+    background-color: #1ab365;
 }
 .sidebar{
     min-height:100vh;
@@ -625,7 +625,7 @@ a:focus{
     z-index:1
 }
 .sidebar .sidebar-brand .sidebar-brand-icon img{
-    max-height:2.3rem
+
 }
 .sidebar hr.sidebar-divider{
     margin:1rem 0 1rem 0
@@ -889,7 +889,7 @@ a:focus{
 }
 .sidebar-light .sidebar-brand{
     color:#fafafa;
-    background-color:#4c60da
+    background-color:#63c36000;
 }
 .sidebar-light hr.sidebar-divider{
     border-top:1px solid #eaecf4

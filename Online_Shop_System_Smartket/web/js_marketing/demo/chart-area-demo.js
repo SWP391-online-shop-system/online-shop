@@ -132,7 +132,7 @@ function drawChart() {
                 dateList6_real,
                 dateList7_real],
             datasets: [{
-                    label: "Earnings",
+                    label: "thu nhập: ",
                     lineTension: 0.3,
                     backgroundColor: "rgba(78, 115, 223, 0.5)",
                     borderColor: "rgba(78, 115, 223, 1)",
@@ -176,7 +176,7 @@ function drawChart() {
                             padding: 10,
                             // Include a dollar sign in the ticks
                             callback: function (value, index, values) {
-                                return number_format(value) + 'VND';
+                                return number_format(value) +' '+ 'VND';
                             }
                         },
                         gridLines: {
@@ -208,7 +208,7 @@ function drawChart() {
                 callbacks: {
                     label: function (tooltipItem, chart) {
                         var datasetLabel = chart.datasets[tooltipItem.datasetIndex].label || '';
-                        return datasetLabel + ': ' + number_format(tooltipItem.yLabel) + 'VND';
+                        return datasetLabel + ': ' + number_format(tooltipItem.yLabel) +' '+ 'VND';
                     }
                 }
             }
