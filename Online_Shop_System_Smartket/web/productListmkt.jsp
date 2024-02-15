@@ -86,7 +86,7 @@
                                 <th>Loại</th>
                                 <th>Giá bán</th>
                                 <th>Trạng thái</th>						
-                                <th>Action</th>
+                                <th>Hành động</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -101,7 +101,19 @@
                                 <td><%=rs.getString("CategoryName")%></td>
                                 <td><%=rs.getDouble("UnitPrice")%></td>
                                 <td><span class="status text-success">&bull;</span> Delivered</td>
-                                <td><%=rs.getInt("ProductID")%></td>
+                                <td>
+                                    <div class="dropdown">
+                                        <button class="btn btn-secondary btn-sm dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                            Hành động
+                                        </button>
+                                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                            <a class="dropdown-item" href="#" onclick="hideProduct(<%= rs.getInt("ProductID") %>)">Ẩn</a>
+                                            <a class="dropdown-item" href="#" onclick="showProduct(<%= rs.getInt("ProductID") %>)">Hiện</a>
+                                            <a class="dropdown-item" href="viewProduct.jsp?productId=<%= rs.getInt("ProductID") %>">Xem</a>
+                                            <a class="dropdown-item" href="editProduct.jsp?productId=<%= rs.getInt("ProductID") %>">Chỉnh sửa</a>
+                                        </div>
+                                    </div>
+                                </td>
                             </tr>
                             <%}
                                                         } catch (SQLException ex) {
@@ -112,12 +124,32 @@
                     <div class="clearfix">
                         <div class="hint-text">Showing <b>5</b> out of <b>25</b> entries</div>
                         <ul class="pagination">
-                            <li class="page-item disabled"><a href="#">Previous</a></li>
-                                <c:forEach begin="1" end="${endP}" var="i">
-                                <li class="page-item"><a href="mktProductListURL?index=${i}" class="page-link">${i}</a></li>
-                                </c:forEach>
-                            <li class="page-item"><a href="#">Next</a></li>
+                            <li class="page-item <c:if test='${empty param.index or param.index eq "1"}'>disabled</c:if>">
+                                <a href="<c:if test='${param.index ne "1" and not empty param.index}'>ControllerSearchMKTURL?index=${(param.index - 1)}&amp;</c:if>keyWord=${param.keyWord}" class="page-link">Previous</a>
+                                </li>
+                                <li class="page-item <c:if test='${empty param.index or param.index eq "1"}'>active</c:if>">
+                                <a href="ControllerSearchMKTURL?index=1&amp;keyWord=${param.keyWord}" class="page-link">1</a>
+                            </li>
+                            <c:forEach begin="2" end="${endP}" var="i">
+                                <li class="page-item <c:if test='${param.index eq i}'>active</c:if>">
+                                    <a href="ControllerSearchMKTURL?index=${i}&amp;keyWord=${param.keyWord}" class="page-link">${i}</a>
+                                </li>
+                            </c:forEach>
+                            <li class="page-item <c:if test='${param.index eq endP or empty param.index}'>disabled</c:if>">
+                                <a href="<c:if test='${not empty param.index and param.index ne endP}'>ControllerSearchMKTURL?index=${(param.index + 1)}&amp;</c:if>keyWord=${param.keyWord}" class="page-link">Next</a>
+                            </li>
                         </ul>
+
+
+
+
+
+
+
+
+
+
+
                     </div>
 
                 </div>
