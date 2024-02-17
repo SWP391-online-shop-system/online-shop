@@ -109,8 +109,8 @@
                                         <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                                             <a class="dropdown-item" href="#" onclick="hideProduct(<%= rs.getInt("ProductID") %>)">Ẩn</a>
                                             <a class="dropdown-item" href="#" onclick="showProduct(<%= rs.getInt("ProductID") %>)">Hiện</a>
-                                            <a class="dropdown-item" href="viewProduct.jsp?productId=<%= rs.getInt("ProductID") %>">Xem</a>
-                                            <a class="dropdown-item" href="editProduct.jsp?productId=<%= rs.getInt("ProductID") %>">Chỉnh sửa</a>
+                                            <a class="dropdown-item" href="mktViewProductURL?productId=<%= rs.getInt("ProductID") %>">Xem</a>
+                                            <a class="dropdown-item" href="EditProductmktURL?productId=<%= rs.getInt("ProductID") %>">Chỉnh sửa</a>
                                         </div>
                                     </div>
                                 </td>

@@ -16,6 +16,18 @@ public class Product {
     public Product() {
     }
 
+    public Product(String ProductName, int CategoryID, String ProductDescription, int UnitInStock, double UnitPrice, int UnitDiscount, String CreateDate, int TotalRate, int TotalStock) {
+        this.ProductName = ProductName;
+        this.CategoryID = CategoryID;
+        this.ProductDescription = ProductDescription;
+        this.UnitInStock = UnitInStock;
+        this.UnitPrice = UnitPrice;
+        this.UnitDiscount = UnitDiscount;
+        this.CreateDate = CreateDate;
+        this.TotalRate = TotalRate;
+        this.TotalStock = TotalStock;
+    }
+
     public Product(int ProductID, String ProductName, int CategoryID, String ProductDescription, int UnitInStock, double UnitPrice, int UnitDiscount, String CreateDate, int TotalRate, int TotalStock) {
         this.ProductID = ProductID;
         this.ProductName = ProductName;
