@@ -59,85 +59,88 @@
                 </ul>
             </aside>
             <div class="card">
-                <div class="row">
-                    <div class="cart-contact">
-                        <%
-                            int userID = user.getUserID();
-                            String firstName = user.getFirstName();
-                            String lastName = user.getLastName();
-                            String address = user.getAddress();
-                            String phone = user.getPhoneNumber();
-                            String email = user.getEmail();
-                        %>
-                        <h4 style="margin-top: -73px;">Thông Tin Người Nhận</h4>
-                        <label>Tên Người Nhận
-                        </label><br/>
-                        <input type="text" value="<%=firstName+" "+lastName%>" required autofocus><br/>
-                        <label>Số Điện Thoại Người Nhận
-                        </label><br/>
-                        <input value="<%=phone%>"required/><br/>
-                        <label>Email Người Nhận
-                        </label><br/>
-                        <input value="<%=email%>"required/><br/>
-                        <label>Địa Chỉ Người Nhận
-                        </label><br/>
-                        <select id="city">
-                            <option value="" selected>Chọn tỉnh thành</option>           
-                        </select>
+                <form action="action">
+                    <div class="row">
+                        <div class="cart-contact">
+                            <%
+                                int userID = user.getUserID();
+                                String firstName = user.getFirstName();
+                                String lastName = user.getLastName();
+                                String address = user.getAddress();
+                                String phone = user.getPhoneNumber();
+                                String email = user.getEmail();
+                            %>
+                            <h4 style="margin-top: -73px;">Thông Tin Người Nhận</h4>
+                            <label>Tên Người Nhận
+                            </label><br/>
+                            <input name="name" type="text" value="<%=firstName+" "+lastName%>" required autofocus><br/>
+                            <label>Số Điện Thoại Người Nhận
+                            </label><br/>
+                            <input name="phone" value="<%=phone%>"required/><br/>
+                            <label>Email Người Nhận
+                            </label><br/>
+                            <input name="email" value="<%=email%>"required/><br/>
+                            <label>Địa Chỉ Người Nhận
+                            </label><br/>
+                            <select name="city" id="city">
+                                <option value="" selected>Chọn tỉnh thành</option>           
+                            </select>
 
-                        <select id="district">
-                            <option value="" selected>Chọn quận huyện</option>
-                        </select>
+                            <select name="district" id="district">
+                                <option value="" selected>Chọn quận huyện</option>
+                            </select>
 
-                        <select id="ward">
-                            <option value="" selected>Chọn phường xã</option>
-                        </select><br/>
+                            <select name="ward" id="ward">
+                                <option value="" selected>Chọn phường xã</option>
+                            </select><br/>
 
-                        <hr/>
-                        <input type="text" value="<%=address%>" required/>
-                        <button id="goBackButton">Quay lại</button>
-                    </div>
-                    <div class="summary-order">
-                        <h4>Thông Tin Đơn Hàng</h4>
-                        <%
-                           try {
-                               while (rs.next()){
-                                double unitPrice = rs.getDouble("UnitPrice");
-                                double totalunitprice = unitPrice*rs.getInt("Quantity");
-                                totalprice += rs.getInt("Quantity")*unitPrice;
-                        %>    
-                        <div class="summary-product">
-                            <table>
-                                <tbody>
-                                    <tr>
-                                        <td>
-                                            <img class="img-fluid" src="<%=rs.getString("ProductURL")%>">
-                                        </td>
-                                        <td>
-                                            <%=rs.getString("ProductName")%><br/>
-                                            Số Lượng: <%=rs.getInt("Quantity")%>
-                                        </td>
-                                    </tr>
-                                    <!--                                <tr>
-                                                                        <td>
-                                                                            <div class="summary-product">
-                                                                            </div>
-                                                                        </td>
-                                                                    </tr>-->
-                                </tbody>
-
-                            </table>
+                            <hr/>
+                            <input name="addressdetail" type="text" placeholder="Địa Chỉ Cụ Thể" required/>
+                            <button id="goBackButton" class="button-back">Quay lại</button>
                         </div>
+                        <div class="summary-order">
+                            <h4>Thông Tin Đơn Hàng</h4>
+                            <%
+                               try {
+                                   while (rs.next()){
+                                    double unitPrice = rs.getDouble("UnitPrice");
+                                    double totalunitprice = unitPrice*rs.getInt("Quantity");
+                                    totalprice += rs.getInt("Quantity")*unitPrice;
+                            %>    
+                            <div class="summary-product">
+                                <table>
+                                    <tbody>
+                                        <tr>
+                                            <td>
+                                                <img class="img-fluid" src="<%=rs.getString("ProductURL")%>">
+                                            </td>
+                                            <td>
+                                                <%=rs.getString("ProductName")%><br/>
+                                                Số Lượng: <%=rs.getInt("Quantity")%>
+                                            </td>
+                                        </tr>
+                                        <!--                                <tr>
+                                                                            <td>
+                                                                                <div class="summary-product">
+                                                                                </div>
+                                                                            </td>
+                                                                        </tr>-->
+                                    </tbody>
 
-                        <%}
-                            rs.close(); 
-                            } catch (SQLException e) {
-                             e.printStackTrace();
-                            }
-                        %>
+                                </table>
+
+                            </div>
+
+                            <%}
+                                rs.close(); 
+                                } catch (SQLException e) {
+                                 e.printStackTrace();
+                                }
+                            %>
+                            <button type="submit" name="submit" class="btn">Đặt Hàng</button>
+                        </div>
                     </div>
-                </div>
-
+                </form>
             </div>
         </section> 
         <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.21.1/axios.min.js"></script>
