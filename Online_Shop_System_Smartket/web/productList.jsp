@@ -91,7 +91,7 @@
                                                     <%}}%>
                                                 </div>
                                                 <div class="product__item__text">
-                                                    <h6 style="margin-left: 34px;"><%=rsHotPro.getString("ProductName")%></h6>
+                                                    <h6 style="text-align: center;"><%=rsHotPro.getString("ProductName")%></h6>
                                                     <a href="#" class="add-cart" style="left: 12px;">+ Thêm vào giỏ</a><a style="margin-left: 136px;" href="#">Mua ngay</a>
                                                     <div style="display: flex;">
                                                         <div class="rating" style="margin-left: 30px;">

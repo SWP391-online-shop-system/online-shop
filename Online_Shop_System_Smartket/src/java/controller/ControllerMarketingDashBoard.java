@@ -143,7 +143,7 @@ public class ControllerMarketingDashBoard extends HttpServlet {
             //feedBackTrend section
             ResultSet rsNewFeedBack = daoFeedBack.getData("select f.FeedBackID, f.ProductID, f.UserID, CONCAT(FirstName,\" \",LastName) as fullName, \n"
                     + "f.FeedBackContent, f.FeedBackRate, f.FeedBackDate from FeedBack as f \n"
-                    + "join User as u on f.UserID = u.UserID order by f.FeedBackDate;");
+                    + "join User as u on f.UserID = u.UserID order by f.FeedBackDate limit 5");
             request.setAttribute("rsNewFeedBack", rsNewFeedBack);
 
             request.getRequestDispatcher("marketingDashboard.jsp").forward(request, response);
