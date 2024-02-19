@@ -1,0 +1,111 @@
+
+h
+java:S1192$"MDefine a constant instead of duplicating this literal "UnitDiscount" 7 times.(ÊÍíúÿÿÿÿ
+n
+java:S1192¨"RDefine a constant instead of duplicating this literal " and TotalRate = " 3 times.(ÓÈ›¶ûÿÿÿÿ
+b
+java:S1192 "LDefine a constant instead of duplicating this literal "ProductName" 7 times.(ÿ©¼æ
+f
+java:S1192%"KDefine a constant instead of duplicating this literal "CreateDate" 7 times.(ÙŸØêşÿÿÿÿ
+g
+java:S1192""LDefine a constant instead of duplicating this literal "UnitInStock" 7 times.(§Î—™şÿÿÿÿ
+j
+java:S1192ò"SDefine a constant instead of duplicating this literal " and CategoryID = " 3 times.(ñçëŞ
+s
+java:S1192í"WDefine a constant instead of duplicating this literal "CreateDate = curDate()" 3 times.(Î§”ßùÿÿÿÿ
+n
+java:S1192Ü"RDefine a constant instead of duplicating this literal "UnitDiscount != 0" 6 times.(Î’£§ùÿÿÿÿ
+a
+java:S1192"KDefine a constant instead of duplicating this literal "CategoryID" 7 times.(¸Ì Ç
+u
+java:S1192¿"YDefine a constant instead of duplicating this literal " and UnitPrice between " 12 times.(ÍÂÆÏûÿÿÿÿ
+_
+java:S1192¦"HDefine a constant instead of duplicating this literal "%' and " 3 times.(¯Ó¿
+e
+java:S1192Û"IDefine a constant instead of duplicating this literal "showSale" 6 times.(©‰¤Ëûÿÿÿÿ
+e
+java:S1192&"JDefine a constant instead of duplicating this literal "TotalRate" 7 times.(Ğñ„‰şÿÿÿÿ
+^
+java:S1192±"GDefine a constant instead of duplicating this literal " and " 19 times.(©Í”æ
+a
+java:S1192'"KDefine a constant instead of duplicating this literal "TotalStock" 7 times.(è² ï
+^
+java:S1192ì"HDefine a constant instead of duplicating this literal "showNew" 3 times.(ŒÀ0
+e
+java:S1192"JDefine a constant instead of duplicating this literal "ProductID" 7 times.(©Åÿÿÿÿÿ
+e
+java:S1192#"JDefine a constant instead of duplicating this literal "UnitPrice" 7 times.(ŒÆ¨¾ûÿÿÿÿ
+
+java:S1192±"xDefine a constant instead of duplicating this literal "select count(*) from Product where ProductName like N'%" 6 times.(©Í”æ
+n
+java:S1192!"SDefine a constant instead of duplicating this literal "ProductDescription" 7 times.(Ö€‘’øÿÿÿÿ
+€
+java:S1192Ş"dDefine a constant instead of duplicating this literal "select count(*) from Product where " 6 times.(ş¸÷ãÿÿÿÿÿ
+k	java:S117"QRename this local variable to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(©Åÿÿÿÿÿ
+f	java:S117"QRename this local variable to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(¸Ì Ç
+f	java:S117 "QRename this local variable to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(ÿ©¼æ
+k	java:S117!"QRename this local variable to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(Ö€‘’øÿÿÿÿ
+k	java:S117""QRename this local variable to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(§Î—™şÿÿÿÿ
+k	java:S117#"QRename this local variable to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(ŒÆ¨¾ûÿÿÿÿ
+k	java:S117$"QRename this local variable to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(ÊÍíúÿÿÿÿ
+k	java:S117%"QRename this local variable to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(ÙŸØêşÿÿÿÿ
+k	java:S117&"QRename this local variable to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(Ğñ„‰şÿÿÿÿ
+f	java:S117'"QRename this local variable to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(è² ï
+f	java:S117ò"QRename this local variable to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(§Ñ—
+g	java:S117¾"QRename this local variable to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(ºı¼®
+g	java:S117ë"QRename this local variable to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(Ò¤©Œ
+l	java:S117õ"QRename this local variable to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(ØÚœ¤ÿÿÿÿÿ
+r
+java:S1488…"[Immediately return this expression instead of assigning it to the temporary variable "pro".(û°ƒä
+w
+java:S4144ÿ"`Update this method so that its implementation is not identical to "getTotalProduct" on line 332.(“ºÄ€
+€
+java:S1149"eReplace the synchronized class "Vector" by an unsynchronized one such as "ArrayList" or "LinkedList".( ¥Ÿ¥şÿÿÿÿ
+z
+java:S1149"eReplace the synchronized class "Vector" by an unsynchronized one such as "ArrayList" or "LinkedList".(¶“ìt
+|
+java:S1149š"eReplace the synchronized class "Vector" by an unsynchronized one such as "ArrayList" or "LinkedList".(·Ã«
+{
+java:S1149›"eReplace the synchronized class "Vector" by an unsynchronized one such as "ArrayList" or "LinkedList".(¶“ìt
+
+java:S1149·"eReplace the synchronized class "Vector" by an unsynchronized one such as "ArrayList" or "LinkedList".(™àÜûÿÿÿÿ
+
+java:S1149¸"eReplace the synchronized class "Vector" by an unsynchronized one such as "ArrayList" or "LinkedList".(Çê€ıÿÿÿÿ
+|
+java:S1149Ó"eReplace the synchronized class "Vector" by an unsynchronized one such as "ArrayList" or "LinkedList".(íÌó¨
+
+java:S1149Ô"eReplace the synchronized class "Vector" by an unsynchronized one such as "ArrayList" or "LinkedList".(Çê€ıÿÿÿÿ
+{
+java:S1149ò"eReplace the synchronized class "Vector" by an unsynchronized one such as "ArrayList" or "LinkedList".(§Ñ—
+
+java:S1149ó"eReplace the synchronized class "Vector" by an unsynchronized one such as "ArrayList" or "LinkedList".(Çê€ıÿÿÿÿ
+|
+java:S1149’"eReplace the synchronized class "Vector" by an unsynchronized one such as "ArrayList" or "LinkedList".(ÿÇ©Õ
+
+java:S1149“"eReplace the synchronized class "Vector" by an unsynchronized one such as "ArrayList" or "LinkedList".(Çê€ıÿÿÿÿ
+E	java:S106y"+Replace this use of System.out by a logger.(¨¶ÑÍşÿÿÿÿ
+F	java:S106”"+Replace this use of System.out by a logger.(¨¶ÑÍşÿÿÿÿ
+F	java:S106–"+Replace this use of System.out by a logger.(Âû¯Ğüÿÿÿÿ
+F	java:S106²"+Replace this use of System.out by a logger.(¨¶ÑÍşÿÿÿÿ
+F	java:S106Î"+Replace this use of System.out by a logger.(¨¶ÑÍşÿÿÿÿ
+F	java:S106í"+Replace this use of System.out by a logger.(¨¶ÑÍşÿÿÿÿ
+F	java:S106"+Replace this use of System.out by a logger.(¨¶ÑÍşÿÿÿÿ
+F	java:S106«"+Replace this use of System.out by a logger.(¨¶ÑÍşÿÿÿÿ
+F	java:S106¹"+Replace this use of System.out by a logger.(¨¶ÑÍşÿÿÿÿ
+F	java:S106Ç"+Replace this use of System.out by a logger.(¨¶ÑÍşÿÿÿÿ
+F	java:S106Õ"+Replace this use of System.out by a logger.(¨¶ÑÍşÿÿÿÿ
+F	java:S106æ"+Replace this use of System.out by a logger.(¨¶ÑÍşÿÿÿÿ
+F	java:S106ú"+Replace this use of System.out by a logger.(¨¶ÑÍşÿÿÿÿ
+F	java:S106ˆ"+Replace this use of System.out by a logger.(¨¶ÑÍşÿÿÿÿ
+F	java:S106›"+Replace this use of System.out by a logger.(¨¶ÑÍşÿÿÿÿ
+F	java:S106±"+Replace this use of System.out by a logger.(¨¶ÑÍşÿÿÿÿ
+F	java:S106Ã"+Replace this use of System.out by a logger.(¨¶ÑÍşÿÿÿÿ
+F	java:S106Ö"+Replace this use of System.out by a logger.(¨¶ÑÍşÿÿÿÿ
+F	java:S106ğ"+Replace this use of System.out by a logger.(¨¶ÑÍşÿÿÿÿ
+F	java:S106Š"+Replace this use of System.out by a logger.(¨¶ÑÍşÿÿÿÿ
+F	java:S106"+Replace this use of System.out by a logger.(¨¶ÑÍşÿÿÿÿ
+F	java:S106¬"+Replace this use of System.out by a logger.(¨¶ÑÍşÿÿÿÿ
+F	java:S106º"+Replace this use of System.out by a logger.(¨¶ÑÍşÿÿÿÿ
+F	java:S106È"+Replace this use of System.out by a logger.(¨¶ÑÍşÿÿÿÿ
+F	java:S106Ö"+Replace this use of System.out by a logger.(¨¶ÑÍşÿÿÿÿ
+W	java:S125Û"<This block of commented-out lines of code should be removed.(»•ûÿÿÿÿ

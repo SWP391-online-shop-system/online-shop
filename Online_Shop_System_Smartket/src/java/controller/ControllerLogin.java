@@ -68,7 +68,11 @@ public class ControllerLogin extends HttpServlet {
             } else {
                 dao.updateLastLogin(user.getUserID());
                 session.setAttribute("account", user);
-                response.sendRedirect("HomePageURL");
+                if (user.getRoleID() == 2) {
+                    response.sendRedirect("MarketingDashBoardURL");
+                } else {
+                    response.sendRedirect("HomePageURL");
+                }
             }
         }
     }

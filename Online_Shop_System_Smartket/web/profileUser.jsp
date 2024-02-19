@@ -191,6 +191,7 @@
 
         </script>
     </section>
+                        <img src="images/user/cat.gif" alt="no"/>
     <jsp:include page="include/footer.jsp"/>
 </body>
 
