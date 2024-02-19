@@ -37,24 +37,29 @@
                     <div class="menu-section-content-categories">
                         <div class="menu-section-content-categories-unit">
                             <i class="fa-solid fa-list"></i>
-                            <label for="touch"><span class="content-title1">DANH MỤC NỔI BẬT</span></label>               
+                            <label for="touch"><span class="content-title1">DANH MỤC CHÍNH</span></label>               
                             <input type="checkbox" id="touch"> 
 
                             <ul class="sider-menu">
-                                <%
-                                    DAOProduct dao = new DAOProduct();
-                                ResultSet rs = dao.getData("SELECT c.CategoryID, c.CategoryName, AVG(p.TotalRate) FROM Product AS p JOIN Categories AS c ON c.CategoryID = p.CategoryID GROUP BY c.CategoryID ORDER BY AVG(p.TotalRate) DESC LIMIT 3;");
-                                while(rs.next()) {%>
-                                <li><a class="change-hover" href="ProductListURL?service=ShowCategory&CategoryID=<%=rs.getInt(1)%>&index=1"><%=rs.getString(2)%></a></li> 
-                                    <%}%>
+                                <li onclick="scrollToNew()">Sản phẩm mới nhất</li> 
+                                <li onclick="scrollToFeature()">Sản phẩm nổi bật</li> 
+                                <li onclick="scrollToBlog()">Bài viết xu hướng</li> 
                             </ul>
                             <span class="menu-section-drop-list"><i></i></span>
                         </div>
                     </div>
                     <div class="menu-section-content-search">
                         <div class="menu-section-content-search-form">
+                            <%double inputMinPrice = (double)request.getAttribute("inputMinPrice");
+                              double inputMaxPrice = (double)request.getAttribute("inputMaxPrice");
+                            %>
                             <form action="searchPageURL" method="GET">
                                 <input name="keyWord" type="text" placeholder="Bạn cần tìm gì?"/>
+                                <input type="hidden" name="type" value=""/>
+                                <input type="hidden" name="TotalRate" value="0"/>
+                                <input type="hidden" name="filterChoice" value="createDate desc"/>
+                                <input type="hidden" name="inputMinPrice" value="<%=inputMinPrice%>"/>
+                                <input type="hidden" name="inputMaxPrice" value="<%=inputMaxPrice%>"/>
                                 <button type="submit" class="site-btn">Tìm kiếm</button>
                             </form>
                         </div>
@@ -114,10 +119,11 @@
                                 <i class="fa-solid fa-list"></i>
                                 <label for="touch-1"><span class="content-title-2">TẤT CẢ DANH MỤC</span>
                                     <i class="fa-solid fa-angle-down" style="float: right;margin-top: -18px;margin-right: 6px;font-size: 19px;"></i></label>               
-                                <input type="checkbox" id="touch-1"> 
+                                <input type="checkbox" id="touch-1" checked> 
                                 <ul class="sider-menu-1">
                                     <%
                                     DAOCategories daoCate = new DAOCategories();
+                                     DAOProduct dao = new DAOProduct();
                                     Vector<Categories> CateList = daoCate.getCategories("select * from Categories");
                                     for(Categories cate: CateList){%>
                                     <li><a href="ProductListURL?service=ShowCategory&CategoryID=<%=cate.getCategoryID()%>&index=1"><%=cate.getCategoryName()%></a></li> 
@@ -138,11 +144,11 @@
                                 <div class="nft">
                                     <div class="brand-info">new</div>
                                     <div class='main'>
-                                        <a href="#"><img class='tokenImage' src="<%=rsNewProduct.getString(12)%>" alt="Not found" />
+                                        <a href="#"><img class='tokenImage' src="<%=rsNewProduct.getString(13)%>" alt="Not found" />
                                             <div class="product-content-name"><%=rsNewProduct.getString(2)%></div></a>
                                             <%if(rsNewProduct.getInt(7) != 0) {%>
                                         <div class="price-product "><img style="width: 21px; height: 20px;margin: 0px 3px -2px 0px;" src="images/logo/sale.png"/><%=df.format(rsNewProduct.getDouble(6)*(100-rsNewProduct.getInt(7))/100)%>đ</div>
-                                        <%} else {%>
+                                            <%} else {%>
                                         <div class="price-product"><%=df.format(rsNewProduct.getDouble(6))%><span>đ</span></div>
                                         <%}%>
                                         <div class="product-buy-section">
@@ -150,7 +156,7 @@
                                                 <div class="product-cart"><a href="loginURL" onclick="alertOpenCart()"><img src="images/cart/cart.png" alt="alt"/></a></div>
                                                     </c:if>
                                                     <c:if test="${sessionScope.account != null}">
-                                                <div class="product-cart"><a href="CartURL?service=addcart&quan=1&pid=<%=rsNewProduct.getInt("ProductID")%>"><img src="images/cart/cart.png" alt="alt"/></a></div>
+                                                    <div class="product-cart"><a href="#" onclick="addToCart(<%=rsNewProduct.getInt("ProductID")%>)"><img src="images/cart/cart.png" alt="alt"/></a></div>
                                                     </c:if>
                                             <div class="product-buy"><a href="#"><img src="images/cart/bag.png" alt="alt"/><span>MUA NGAY</span></div></a>
                                         </div>
@@ -167,6 +173,7 @@
                                 <button class="nxt-btn"><img src="images/slider/arrow.png" alt=""></button>
                                 <div class="product-container">
                                     <%
+                                       
                                 ResultSet rsFeatureProduct = dao.getData("select * from product as p join productImage as pi "
                                         + "on p.ProductID = pi.ProductID "
                                         + "where pi.ProductURL like '%_1%' "
@@ -206,7 +213,7 @@
                                                     </div>
                                                 </div>
                                             </div>
-                                            <a href="#"><div><img class="product-image2" src="<%=rsFeatureProduct.getString(12)%>" alt="alt"/></div></a>
+                                            <a href="#"><div><img class="product-image2" src="<%=rsFeatureProduct.getString(13)%>" alt="alt"/></div></a>
                                         </div>
                                     </div>
                                     <%}%>
@@ -297,5 +304,35 @@
                                                                             }
                                                                         }
                                                                     };
+
+                                                                    function scrollToNew() {
+                                                                        // Calculate the middle of the page
+                                                                        const middle = window.innerHeight + 90;
+                                                                        // Scroll to the middle of the page
+                                                                        window.scrollTo({
+                                                                            top: middle,
+                                                                            behavior: 'smooth' // Optional: Add smooth scrolling effect
+                                                                        });
+                                                                    }
+                                                                    function scrollToFeature() {
+                                                                        // Calculate the middle of the page
+                                                                        const middle = window.innerHeight * 2.3;
+
+                                                                        // Scroll to the middle of the page
+                                                                        window.scrollTo({
+                                                                            top: middle,
+                                                                            behavior: 'smooth' // Optional: Add smooth scrolling effect
+                                                                        });
+                                                                    }
+                                                                    function scrollToBlog() {
+                                                                        // Calculate the middle of the page
+                                                                        const middle = window.innerHeight * 3;
+
+                                                                        // Scroll to the middle of the page
+                                                                        window.scrollTo({
+                                                                            top: middle,
+                                                                            behavior: 'smooth' // Optional: Add smooth scrolling effect
+                                                                        });
+                                                                    }
     </script>
 </html>

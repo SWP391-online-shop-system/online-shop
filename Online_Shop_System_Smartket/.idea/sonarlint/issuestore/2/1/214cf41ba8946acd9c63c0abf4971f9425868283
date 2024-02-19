@@ -1,0 +1,19 @@
+
+g
+java:S1192`"LDefine a constant instead of duplicating this literal "HomePageURL" 3 times.(—¹Øšúÿÿÿÿ
+b
+java:S1192^"GDefine a constant instead of duplicating this literal "active" 3 times.(¯½ÏÉıÿÿÿÿ
+g
+java:S1192Ö"KDefine a constant instead of duplicating this literal "        }
+" 7 times.(Ûõìûÿÿÿÿ
+h
+java:S1192^"MDefine a constant instead of duplicating this literal "activeSignUp" 3 times.(¯½ÏÉıÿÿÿÿ
+i
+java:S1192_"NDefine a constant instead of duplicating this literal "messageSignUp" 3 times.(“„ïÎûÿÿÿÿ
+l	java:S117‚"QRename this local variable to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(ëı³¦ûÿÿÿÿ
+H
+java:S11351"2Complete the task associated to this TODO comment.(¢§‰
+G
+java:S1481M",Remove this unused "session" local variable.(ûİÙ¹şÿÿÿÿ
+W	java:S125Ç"<This block of commented-out lines of code should be removed.(ÅñÖˆıÿÿÿÿ
+A	java:S106‹"+Replace this use of System.out by a logger.(ÔÎœ”

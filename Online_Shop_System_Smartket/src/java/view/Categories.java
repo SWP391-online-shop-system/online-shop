@@ -12,13 +12,15 @@ public class Categories {
 
     private int CategoryID;
     private String CategoryName;
+    private boolean CategoryStatus;
 
     public Categories() {
     }
 
-    public Categories(int CategoryID, String CategoryName) {
+    public Categories(int CategoryID, String CategoryName, boolean CategoryStatus) {
         this.CategoryID = CategoryID;
         this.CategoryName = CategoryName;
+        this.CategoryStatus = CategoryStatus;
     }
 
     public int getCategoryID() {
@@ -37,9 +39,17 @@ public class Categories {
         this.CategoryName = CategoryName;
     }
 
+
+    public boolean isCategoryStatus() {
+        return CategoryStatus;
+    }
+
+    public void setCategoryStatus(boolean CategoryStatus) {
+        this.CategoryStatus = CategoryStatus;
+    }
     @Override
     public String toString() {
-        return "Categories{" + "CategoryID=" + CategoryID + ", CategoryName=" + CategoryName + '}';
+        return "Categories{" + "CategoryID=" + CategoryID + ", CategoryName=" + CategoryName + ", CategoryStatus=" + CategoryStatus + '}';
     }
 
 }

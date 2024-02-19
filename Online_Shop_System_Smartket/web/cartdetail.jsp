@@ -43,11 +43,11 @@
                     </div>
                     <a href="HomePageURL"><i class="fa fa-home"></i> Trang Chủ</a>
                     <a href="HomePageURL?section=newProduct">Sản Phẩm Mới Nhất</a>
-                    <div class="menu-section-content-categories-unit-1">
-                        <label for="touch-1"><span class="content-title-2">Danh Mục Sản Phẩm</span>
-                            <i class="fa-solid fa-angle-down"></i>
-                        </label>               
-                        <input type="checkbox" id="touch-1"> 
+                    <p style="font-size: 16px;text-align: center;">Danh Mục Sản Phẩm:</p>
+                        <!--<label for="touch-1"><span class="content-title-2">Danh Mục Sản Phẩm</span>-->
+                            <!--<i class="fa-solid fa-angle-down"></i>-->
+                        <!--</label>-->               
+                        <!--<input type="checkbox" id="touch-1">--> 
                         <ul class="sider-menu-1">
                             <%
                             DAOCategories daoCate = new DAOCategories();
@@ -56,12 +56,12 @@
                             <li><a href="ProductListURL?service=ShowCategory&CategoryID=<%=cate.getCategoryID()%>&index=1"><%=cate.getCategoryName()%></a></li> 
                                 <%}%>
                         </ul>
-                    </div>
+                    
                 </aside>
                 <div class="card">
                     <div class="row">
                         <div class=" cart">
-                            <table style="width: 100%; height: 100%; font-weight: normal;">
+                            <table style="font-weight: normal; width: 100%;">
                                 <thead>
                                     <tr>
                                         <td style="text-align: center;font-weight: bolder;font-size: medium;padding-bottom: 30px;">Ảnh Sản Phẩm</td>
@@ -110,10 +110,7 @@
 
 
                             </table>
-                            <div style="    font-size: 20px;
-                                 font-weight: normal;
-                                 display: flex;
-                                 justify-content: center;">
+                            <div style="font-weight: normal;display: flex;justify-content: center;">
                                 <%
                                     if(message == ""){
                                 %>
@@ -128,8 +125,8 @@
                             <div class="summary-child">
                                 <div style="bottom: 0">
                                     <div class="row" style="padding: 2vh 0;">
-                                        <div class="col" style="font-size: 16px;">Tổng Đơn Hàng:</div>
-                                        <div class="col" style="font-size: 18px;"><%=decimalFormat.format(totalprice)%>đ</div>
+                                        <div class="col" style="">Tổng Đơn Hàng:</div>
+                                        <div class="col" style=""><%=decimalFormat.format(totalprice)%>đ</div>
                                     </div>
                                 </div>
                             <button class="btn">Thanh Toán</button>

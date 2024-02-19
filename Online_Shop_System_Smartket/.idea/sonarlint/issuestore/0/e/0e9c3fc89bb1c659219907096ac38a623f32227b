@@ -1,0 +1,66 @@
+
+g
+java:S1192u"LDefine a constant instead of duplicating this literal " order by " 16 times.(èç±½şÿÿÿÿ
+w
+java:S1192¡"[Define a constant instead of duplicating this literal "and p.ProductName like N'%" 7 times.(¡÷ÑÄşÿÿÿÿ
+`
+java:S1192v"JDefine a constant instead of duplicating this literal "rsPaging" 16 times.(ÿÄ¶õ
+x
+java:S1192u"]Define a constant instead of duplicating this literal "%' and p.UnitPrice between " 16 times.(èç±½şÿÿÿÿ
+
+java:S1192†"sDefine a constant instead of duplicating this literal "and p.UnitDiscount != 0 and p.ProductName like N'%" 7 times.(ä²ï®şÿÿÿÿ
+d
+java:S1192y"IDefine a constant instead of duplicating this literal "showSale" 8 times.(©‰¤Ëûÿÿÿÿ
+b
+java:S1192i"GDefine a constant instead of duplicating this literal "index" 32 times.(§Ï‚£ÿÿÿÿÿ
+i
+java:S1192‘"RDefine a constant instead of duplicating this literal "and p.TotalRate =" 4 times.(„±éË
+b
+java:S1192u"GDefine a constant instead of duplicating this literal " and " 16 times.(èç±½şÿÿÿÿ
+d
+java:S1192s"IDefine a constant instead of duplicating this literal "endPage" 16 times.(¡çã¤ÿÿÿÿÿ
+n
+java:S1192u"SDefine a constant instead of duplicating this literal " limit 12 offset " 16 times.(èç±½şÿÿÿÿ
+x
+java:S1192"aDefine a constant instead of duplicating this literal "and p.TotalRate between 0 and 5 " 4 times.(¶ÿï
+Ğ
+java:S1192t"´Define a constant instead of duplicating this literal "select * from product as p join ProductImage as pi on p.ProductID = pi.ProductID where pi.ProductURL like '%_1%' 
+" 16 times.(òÂÅóúÿÿÿÿ
+f	java:S117I"QRename this local variable to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(åóôÉ
+k	java:S117J"QRename this local variable to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(ÙæÚøÿÿÿÿ
+f	java:S117U"QRename this local variable to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(Æèğö
+k	java:S117V"QRename this local variable to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(âÎö¹ûÿÿÿÿ
+k	java:S117i"QRename this local variable to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(§Ï‚£ÿÿÿÿÿ
+k	java:S117z"QRename this local variable to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(§Ï‚£ÿÿÿÿÿ
+l	java:S117•"QRename this local variable to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(§Ï‚£ÿÿÿÿÿ
+l	java:S117¨"QRename this local variable to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(§Ï‚£ÿÿÿÿÿ
+l	java:S117¿"QRename this local variable to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(§Ï‚£ÿÿÿÿÿ
+l	java:S117Ğ"QRename this local variable to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(§Ï‚£ÿÿÿÿÿ
+l	java:S117ë"QRename this local variable to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(§Ï‚£ÿÿÿÿÿ
+l	java:S117ü"QRename this local variable to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(§Ï‚£ÿÿÿÿÿ
+l	java:S117“"QRename this local variable to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(§Ï‚£ÿÿÿÿÿ
+l	java:S117¤"QRename this local variable to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(§Ï‚£ÿÿÿÿÿ
+l	java:S117¾"QRename this local variable to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(§Ï‚£ÿÿÿÿÿ
+l	java:S117Ğ"QRename this local variable to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(§Ï‚£ÿÿÿÿÿ
+l	java:S117ç"QRename this local variable to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(§Ï‚£ÿÿÿÿÿ
+l	java:S117ø"QRename this local variable to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(§Ï‚£ÿÿÿÿÿ
+l	java:S117’"QRename this local variable to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(§Ï‚£ÿÿÿÿÿ
+l	java:S117¤"QRename this local variable to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(§Ï‚£ÿÿÿÿÿ
+H
+java:S1135,"2Complete the task associated to this TODO comment.(¢§‰
+i
+java:S3776C"SRefactor this method to reduce its Cognitive Complexity from 266 to the 15 allowed.(÷¤‹ú
+Q
+java:S1854G";Remove this useless assignment to local variable "daoCate".(°ø›ú
+B
+java:S1481G",Remove this unused "daoCate" local variable.(°ø›ú
+E	java:S106a"+Replace this use of System.out by a logger.(Ö«›òÿÿÿÿÿ
+@	java:S106b"+Replace this use of System.out by a logger.(¦¬¢ğ
+F	java:S106”"+Replace this use of System.out by a logger.(í½ë¹ùÿÿÿÿ
+A	java:S106¤"+Replace this use of System.out by a logger.(…­°ã
+F	java:S106¥"+Replace this use of System.out by a logger.(œ¨‚üÿÿÿÿ
+F	java:S106Æ"+Replace this use of System.err by a logger.(Áãô–ıÿÿÿÿ
+F	java:S106Ç"+Replace this use of System.err by a logger.(êŞİÄøÿÿÿÿ
+F	java:S106Ì"+Replace this use of System.out by a logger.(µ± æùÿÿÿÿ
+Ş
+java:S6541C"ÇA "Brain Method" was detected. Refactor it to reduce at least one of the following metrics: LOC from 392 to 64, Complexity from 84 to 14, Nesting Level from 6 to 2, Number of Variables from 103 to 6.(÷¤‹ú

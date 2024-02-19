@@ -15,7 +15,6 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import java.sql.ResultSet;
-import java.sql.SQLException;
 import model.DAOCart;
 
 /**
@@ -62,12 +61,12 @@ public class CartController extends HttpServlet {
                 if (dao.productExistsInCart(userID, pid) == false) {
                     quantity = 1;
                     int n = dao.insertCartByPrepared(new Cart(userID, pid, quantity));
-                    response.sendRedirect("CartURL");
+                    response.sendRedirect("HomePageURL");
                 } else {
                     Cart cart = dao.getCartByUser(userID, pid);
                     cart.setQuantity(cart.getQuantity() + quantity);
                     int n = dao.updateCartByUserAndPro(cart, userID, pid);
-                    response.sendRedirect("CartURL");
+                    response.sendRedirect("HomePageURL");
                 }
             }
             if (service.equals("deleteCart")) {
