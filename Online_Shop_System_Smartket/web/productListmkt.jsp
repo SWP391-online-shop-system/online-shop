@@ -132,20 +132,22 @@
                             %>
                         </tbody>
                     </table>
-                        <ul class="pagination">
-                            <div class="product__pagination blog__pagination" style="margin: 0;margin-left: 40px;">
-                                <c:forEach begin="1" end="${endP}" var="i">
-                                    <c:choose>
-                                        <c:when test="${param.index == i}">
-                                            <a class="page-link" style="background: #7fad39; border-color: #7fad39; color: #ffffff;" href="mktProductListURL?index=${i}">${i}</a>
-                                        </c:when>
-                                        <c:otherwise>
-                                            <a class="page-link" href="mktProductListURL?index=${i}">${i}</a>
-                                        </c:otherwise>
-                                    </c:choose>
-                                </c:forEach>
-                            </div>
-                        </ul>
+                    <ul class="pagination">
+                        <div class="product__pagination blog__pagination" style="margin: 0;margin-left: 40px;">
+                            <c:forEach begin="1" end="${endP}" var="i">
+                                <c:choose>
+                                    <c:when test="${param.index == i}">
+                                        <a class="page-link" style="background: #7fad39; border-color: #7fad39; color: #ffffff;" href="mktProductListURL?index=${i}&amp;keyWord=${keyWord}">${i}</a>
+                                    </c:when>
+                                    <c:otherwise>
+                                        <a class="page-link" href="ControllerSearchMKTURL?index=${i}&amp;keyWord=${keyWord}">${i}</a>
+                                    </c:otherwise>
+                                </c:choose>
+                            </c:forEach>
+                        </div>
+                    </ul>
+
+
                 </div>
             </div>        
         </div>     

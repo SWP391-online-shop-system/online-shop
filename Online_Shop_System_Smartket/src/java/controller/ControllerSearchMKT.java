@@ -47,9 +47,9 @@ public class ControllerSearchMKT extends HttpServlet {
             String keyWord = request.getParameter("keyWord");
             ResultSet rs = dao.getData(
                     "SELECT * FROM product as p join productImage as pi on p.ProductID = pi.ProductID\n"
-                            + "JOIN Categories AS c ON p.CategoryID = c.CategoryID\n"
-                    + " WHERE LOWER(p.ProductName) LIKE N'%"+ keyWord + "%' and pi.ProductURL like '%_1%'"
-                            + " limit 10 offset " + index);
+                    + "JOIN Categories AS c ON p.CategoryID = c.CategoryID\n"
+                    + " WHERE LOWER(p.ProductName) LIKE N'%" + keyWord + "%' and pi.ProductURL like '%_1%'"
+                    + " limit 10 offset " + index);
             int count = dao.getTotalProduct();
             int endPage = count / 10;
             if (count % 10 != 0) {
@@ -57,7 +57,8 @@ public class ControllerSearchMKT extends HttpServlet {
             }
             request.setAttribute("data", rs);
             request.setAttribute("endP", endPage);
-            request.getRequestDispatcher("productListmkt.jsp").forward(request, response);
+            request.setAttribute("keyWord", keyWord); // Pass search keyword to JSP
+                request.getRequestDispatcher("productListmkt.jsp").forward(request, response);
         }
     }
 
