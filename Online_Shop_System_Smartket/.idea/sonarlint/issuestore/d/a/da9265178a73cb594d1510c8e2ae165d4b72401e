@@ -1,0 +1,42 @@
+
+
+java:S1192u"uDefine a constant instead of duplicating this literal "<i class=\"fa fa-star-o\" aria-hidden=\"true\"></i>
+" 6 times.(ëÑÑ ıÿÿÿÿ
+
+java:S1192t"tDefine a constant instead of duplicating this literal "<i class=\"fa fa-star\" aria-hidden=\"true\"></i>
+" 14 times.(ÑĞ¼“øÿÿÿÿ
+Š
+java:S1192x"tDefine a constant instead of duplicating this literal "<i class=\"fa fa-star-o\" aria-hidden=\"true\"></i>" 4 times.(°ğ„æ
+e	java:S117"QRename this local variable to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(ßè†
+e	java:S117"QRename this local variable to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(ßè†
+e	java:S117"QRename this local variable to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(ßè†
+e	java:S117"QRename this local variable to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(ßè†
+e	java:S117"QRename this local variable to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(ßè†
+e	java:S117"QRename this local variable to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(ßè†
+e	java:S117"QRename this local variable to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(ßè†
+e	java:S117"QRename this local variable to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(ßè†
+e	java:S117"QRename this local variable to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(ßè†
+e	java:S117"QRename this local variable to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(ßè†
+k	java:S117$"QRename this local variable to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(Ç¼Šôüÿÿÿÿ
+f	java:S117,"QRename this local variable to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(é“óä
+k	java:S1174"QRename this local variable to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(Á‹÷½øÿÿÿÿ
+k	java:S117<"QRename this local variable to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(ô´¢³şÿÿÿÿ
+f	java:S117D"QRename this local variable to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(½áî´
+k	java:S117L"QRename this local variable to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(÷Ô´¡ùÿÿÿÿ
+k	java:S117T"QRename this local variable to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(ß×»Üùÿÿÿÿ
+f	java:S117\"QRename this local variable to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(…»§€
+e	java:S117d"QRename this local variable to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(¦Ë”1
+k	java:S117l"QRename this local variable to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(Ì’Ç…øÿÿÿÿ
+i	java:S116"TRename this field "ProductID" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(ïÙó
+p	java:S116"VRename this field "ProductName" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(Ñ–ì²ûÿÿÿÿ
+o	java:S116"URename this field "CategoryID" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(£¬¬ûúÿÿÿÿ
+w	java:S116"]Rename this field "ProductDescription" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(Îºúÿÿÿÿÿ
+p	java:S116	"VRename this field "UnitInStock" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(²…˜Æıÿÿÿÿ
+i	java:S116
+"TRename this field "UnitPrice" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(ßÒúÉ
+q	java:S116"WRename this field "UnitDiscount" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(³øÓæùÿÿÿÿ
+o	java:S116"URename this field "CreateDate" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(øÀ‰Ìşÿÿÿÿ
+h	java:S116"TRename this field "TotalRate" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(½Ùğy
+j	java:S116"URename this field "TotalStock" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(®ÀŞÏ
+V	java:S107"BConstructor has 10 parameters, which is greater than 7 authorized.(ßè†
+7	java:S131r""Add a default case to this switch.(»à–€

@@ -12,6 +12,7 @@ public class Product {
     private String CreateDate;
     private int TotalRate;
     private int TotalStock;
+    private boolean ProductStatus;
 
     public Product() {
     }
@@ -39,6 +40,7 @@ public class Product {
         this.CreateDate = CreateDate;
         this.TotalRate = TotalRate;
         this.TotalStock = TotalStock;
+        this.ProductStatus = ProductStatus;
     }
 
     public int getProductID() {
@@ -163,8 +165,17 @@ public class Product {
         return result;
     }
 
+    public boolean isProductStatus() {
+        return ProductStatus;
+    }
+
+    public void setProductStatus(boolean ProductStatus) {
+        this.ProductStatus = ProductStatus;
+    }
+
     @Override
     public String toString() {
         return "Product{" + "ProductID=" + ProductID + ", ProductName=" + ProductName + ", CategoryID=" + CategoryID + ", ProductDescription=" + ProductDescription + ", UnitInStock=" + UnitInStock + ", UnitPrice=" + UnitPrice + ", UnitDiscount=" + UnitDiscount + ", CreateDate=" + CreateDate + ", TotalRate=" + TotalRate + ", TotalStock=" + TotalStock + '}';
     }
+
 }

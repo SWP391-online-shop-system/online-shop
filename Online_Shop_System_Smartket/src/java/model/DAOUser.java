@@ -113,7 +113,7 @@ public class DAOUser extends DBConnect {
                 );
                 System.out.println("Not Null");
                 return pro;
-                
+
             }
         } catch (SQLException e) {
             System.out.println(e);
@@ -288,8 +288,8 @@ public class DAOUser extends DBConnect {
     public void updateLastLogin(int userId) {
         try {
             String sql = "UPDATE user SET LastLogin = CURRENT_TIMESTAMP WHERE UserID = ?";
-            try ( 
-                PreparedStatement pre = conn.prepareStatement(sql)) {
+            try (
+                     PreparedStatement pre = conn.prepareStatement(sql)) {
                 pre.setInt(1, userId);
                 pre.executeUpdate();
             }
@@ -304,4 +304,19 @@ public class DAOUser extends DBConnect {
         
     }
 
+    public String convertStatus(int UserStatus) {
+        String result = "";
+        switch (UserStatus) {
+            case 0:
+                result = "<span class=\"badge badge-warning\">Chưa xác nhận email</span>";
+                break;
+            case 1:
+                result = "<span class=\"badge badge-success\">Hoạt động</span>";
+                break;
+            case 2:
+                result = "<span class=\"badge badge-danger\">Khóa</span>";
+                break;
+        }
+        return result;
+    }
 }

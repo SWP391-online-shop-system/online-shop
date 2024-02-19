@@ -1,0 +1,91 @@
+
+h
+java:S1192‰"LDefine a constant instead of duplicating this literal " order by " 26 times.(ğÃí¹úÿÿÿÿ
+e
+java:S1192t"JDefine a constant instead of duplicating this literal "pricedesc" 3 times.(ªÿèåıÿÿÿÿ
+ƒ
+java:S1192t"hDefine a constant instead of duplicating this literal "(UnitPrice*(100-UnitDiscount)/100) desc" 4 times.(ªÿèåıÿÿÿÿ
+h
+java:S1192\"MDefine a constant instead of duplicating this literal "filterChoice" 3 times.(ÏÛ‘Øûÿÿÿÿ
+q
+java:S1192ù"UDefine a constant instead of duplicating this literal " and p.CategoryID = " 4 times.(Š×ğµşÿÿÿÿ
+a
+java:S1192Š"JDefine a constant instead of duplicating this literal "rsPaging" 42 times.(ÿÄ¶õ
+f
+java:S1192“"JDefine a constant instead of duplicating this literal "showSale" 21 times.(©‰¤Ëûÿÿÿÿ
+b
+java:S1192k"GDefine a constant instead of duplicating this literal "index" 46 times.(§Ï‚£ÿÿÿÿÿ
+j
+java:S1192Ì"SDefine a constant instead of duplicating this literal "and p.TotalRate =" 12 times.(„±éË
+‚
+java:S1192q"gDefine a constant instead of duplicating this literal "(UnitPrice*(100-UnitDiscount)/100) asc" 5 times.(¤Íáïúÿÿÿÿ
+k
+java:S1192²"TDefine a constant instead of duplicating this literal "and p.CategoryID = " 4 times.(şœ¢É
+v
+java:S1192‰"ZDefine a constant instead of duplicating this literal "and p.UnitPrice between " 17 times.(ğÃí¹úÿÿÿÿ
+c
+java:S1192‰"GDefine a constant instead of duplicating this literal " and " 34 times.(ğÃí¹úÿÿÿÿ
+e
+java:S1192†"IDefine a constant instead of duplicating this literal "endPage" 43 times.(¡çã¤ÿÿÿÿÿ
+š
+java:S1192×"‚Define a constant instead of duplicating this literal " order by(UnitPrice*(100-UnitDiscount)/100) desc limit 12 offset " 8 times.(—áÖÚ
+g
+java:S1192w"QDefine a constant instead of duplicating this literal "p.CreateDate asc" 6 times.(Ò‚ª©
+‰
+java:S1192•"rDefine a constant instead of duplicating this literal "and p.UnitDiscount != 0 and p.UnitPrice between " 17 times.(¡³¯†
+d
+java:S1192q"IDefine a constant instead of duplicating this literal "priceasc" 3 times.(¤Íáïúÿÿÿÿ
+e
+java:S1192w"ODefine a constant instead of duplicating this literal "createDate asc" 3 times.(Ò‚ª©
+o
+java:S1192‰"SDefine a constant instead of duplicating this literal " limit 12 offset " 26 times.(ğÃí¹úÿÿÿÿ
+y
+java:S1192Ê"bDefine a constant instead of duplicating this literal "and p.TotalRate between 0 and 5 " 12 times.(¶ÿï
+k
+java:S1192^"PDefine a constant instead of duplicating this literal "createDate desc" 5 times.(õÖÚ‘úÿÿÿÿ
+ƒ
+java:S1192¾"lDefine a constant instead of duplicating this literal "and p.UnitDiscount != 0 and p.CategoryID = " 4 times.(¹ğ¿ 
+Ñ
+java:S1192ˆ"´Define a constant instead of duplicating this literal "select * from product as p join ProductImage as pi on p.ProductID = pi.ProductID where pi.ProductURL like '%_1%' 
+" 42 times.(òÂÅóúÿÿÿÿ
+Ÿ
+java:S1192Ì"‚Define a constant instead of duplicating this literal " order by (UnitPrice*(100-UnitDiscount)/100) asc limit 12 offset " 8 times.(Æ ·¦üÿÿÿÿ
+h
+java:S1192z"RDefine a constant instead of duplicating this literal "p.CreateDate desc" 6 times.(–¹Ô×
+q
+java:S1192‰"UDefine a constant instead of duplicating this literal " and p.CategoryID= " 12 times.(Š×ğµşÿÿÿÿ
+f	java:S117M"QRename this local variable to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(Æèğö
+k	java:S117N"QRename this local variable to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(âÎö¹ûÿÿÿÿ
+k	java:S117Z"QRename this local variable to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(ËéÈèúÿÿÿÿ
+f	java:S117["QRename this local variable to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(åóôÉ
+k	java:S117k"QRename this local variable to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(§Ï‚£ÿÿÿÿÿ
+l	java:S117 "QRename this local variable to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(§Ï‚£ÿÿÿÿÿ
+g	java:S117¥"QRename this local variable to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(Ç¼î
+l	java:S117 "QRename this local variable to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(§Ï‚£ÿÿÿÿÿ
+g	java:S117Ç"QRename this local variable to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(ø´æ›
+g	java:S117Ù"QRename this local variable to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(ø´æ›
+g	java:S117Œ"QRename this local variable to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(ø´æ›
+g	java:S117"QRename this local variable to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(ø´æ›
+g	java:S117Õ"QRename this local variable to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(ø´æ›
+g	java:S117ç"QRename this local variable to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(ø´æ›
+g	java:S117œ"QRename this local variable to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(ø´æ›
+g	java:S117ß"QRename this local variable to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(ø´æ›
+g	java:S117ñ"QRename this local variable to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(ø´æ›
+g	java:S117¥"QRename this local variable to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(ø´æ›
+g	java:S117é"QRename this local variable to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(ø´æ›
+g	java:S117§"QRename this local variable to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(ø´æ›
+H
+java:S1135."2Complete the task associated to this TODO comment.(¢§‰
+i
+java:S3776D"SRefactor this method to reduce its Cognitive Complexity from 689 to the 15 allowed.(÷¤‹ú
+@	java:S106g"+Replace this use of System.out by a logger.(ÃöÔ¶
+E	java:S106h"+Replace this use of System.out by a logger.(Ö«›òÿÿÿÿÿ
+E	java:S106p"+Replace this use of System.out by a logger.(Œíù°úÿÿÿÿ
+@	java:S106"+Replace this use of System.out by a logger.(ÆŸ¼Ò
+F	java:S106"+Replace this use of System.out by a logger.(‹Ê–ùÿÿÿÿ
+F	java:S106š"+Replace this use of System.out by a logger.(–Õ¨¼ùÿÿÿÿ
+F	java:S106¥"+Replace this use of System.out by a logger.(†ıÄôÿÿÿÿÿ
+F	java:S106†"+Replace this use of System.out by a logger.(èÓº¤ùÿÿÿÿ
+F	java:S106Ú"+Replace this use of System.out by a logger.(Ûì–÷şÿÿÿÿ
+ß
+java:S6541D"ÈA "Brain Method" was detected. Refactor it to reduce at least one of the following metrics: LOC from 779 to 64, Complexity from 181 to 14, Nesting Level from 7 to 2, Number of Variables from 181 to 6.(÷¤‹ú

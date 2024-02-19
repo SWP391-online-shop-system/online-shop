@@ -70,7 +70,7 @@
                                                 DAOProduct dao = new DAOProduct();
                                                 ResultSet rsHotPro = dao.getData("select * from Product as p join ProductImage as pi on p.ProductID = pi.ProductID where  pi.ProductURL like '%_1%'\n"
                                                 +"group by p.ProductID having min(p.TotalStock - p.UnitInStock) > 0");
-                                            while(rsHotPro.next()) {
+                                            if(rsHotPro.next()) {
                                             %>
                                             <div class="product__item" style="border: 1px solid #c1e8c1ba;border-radius: 40px;">
                                                 <div class="product__item__pic set-bg" style="height: 201px;">
@@ -91,7 +91,7 @@
                                                     <%}}%>
                                                 </div>
                                                 <div class="product__item__text">
-                                                    <h6 style="margin-left: 34px;"><%=rsHotPro.getString("ProductName")%></h6>
+                                                    <h6 style="text-align: center;"><%=rsHotPro.getString("ProductName")%></h6>
                                                     <a href="#" class="add-cart" style="left: 12px;">+ Thêm vào giỏ</a><a style="margin-left: 136px;" href="#">Mua ngay</a>
                                                     <div style="display: flex;">
                                                         <div class="rating" style="margin-left: 30px;">
