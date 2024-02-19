@@ -1,0 +1,14 @@
+
+z
+java:S1149{"eReplace the synchronized class "Vector" by an unsynchronized one such as "ArrayList" or "LinkedList".(¤õþb
+z
+java:S1149|"eReplace the synchronized class "Vector" by an unsynchronized one such as "ArrayList" or "LinkedList".(ðœì
+|
+java:S1149–"eReplace the synchronized class "Vector" by an unsynchronized one such as "ArrayList" or "LinkedList".(ÇÓÑÅ
+|
+java:S1149ž"eReplace the synchronized class "Vector" by an unsynchronized one such as "ArrayList" or "LinkedList".(ÇÓÑÅ
+d
+java:S1172¢"HRemove these unused method parameters "userID", "productID", "quantity".(±Ü›ßùÿÿÿÿ
+W	java:S125§"<This block of commented-out lines of code should be removed.(»ž•ûÿÿÿÿ
+O
+java:S1144¢"3Remove this unused private "updateQuantity" method.(±Ü›ßùÿÿÿÿ

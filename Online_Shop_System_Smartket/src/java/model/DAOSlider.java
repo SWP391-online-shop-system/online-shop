@@ -30,7 +30,8 @@ public class DAOSlider extends DBConnect {
                 int UserID = rs.getInt("UserID");
                 String SliderImage = rs.getString("SliderImage");
                 String SliderLink = rs.getString("SliderLink");
-                Slider s = new Slider(SliderID, UserID, SliderImage, SliderLink);
+                boolean SliderStatus = rs.getBoolean("SliderStatus");
+                Slider s = new Slider(SliderID, UserID, SliderImage, SliderLink,SliderStatus);
                 vector.add(s);
             }
 

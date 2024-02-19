@@ -37,9 +37,10 @@ public class DAOProduct extends DBConnect {
                 String CreateDate = rs.getString("CreateDate");
                 int TotalRate = rs.getInt("TotalRate");
                 int TotalStock = rs.getInt("TotalStock");
+                boolean ProductStatus = rs.getBoolean("ProductStatus");
                 Product pro = new Product(ProductID, ProductName,
                         CategoryID, ProductDescription, UnitInStock,
-                        UnitPrice, UnitDiscount, CreateDate, TotalRate, TotalStock);
+                        UnitPrice, UnitDiscount, CreateDate, TotalRate, TotalStock, ProductStatus);
                 vector.add(pro);
             }
         } catch (SQLException ex) {
@@ -59,9 +60,11 @@ public class DAOProduct extends DBConnect {
                 + "`UnitDiscount`,\n"
                 + "`CreateDate`,\n"
                 + "`TotalRate`,\n"
-                + "`TotalStock`)\n"
+                + "`TotalStock`\n"
+                + "`ProductStatus`)\n"
                 + "VALUES\n"
                 + "(?,\n"
+                + "?,\n"
                 + "?,\n"
                 + "?,\n"
                 + "?,\n"
@@ -83,6 +86,7 @@ public class DAOProduct extends DBConnect {
             pre.setString(8, pro.getCreateDate());
             pre.setInt(12, pro.getTotalRate());
             pre.setInt(10, pro.getTotalStock());
+            pre.setBoolean(11, pro.isProductStatus());
             pre.executeUpdate();
         } catch (SQLException ex) {
             Logger.getLogger(DAOProduct.class.getName()).log(Level.SEVERE, null, ex);
@@ -102,6 +106,7 @@ public class DAOProduct extends DBConnect {
                 + "`CreateDate` =?,\n"
                 + "`TotalRate` = ?,\n"
                 + "`TotalStock` = ?\n"
+                + "`ProductStatus` = ?\n"
                 + "WHERE `ProductID` = ?";
         try {
             PreparedStatement pre = conn.prepareStatement(sql);
@@ -115,7 +120,8 @@ public class DAOProduct extends DBConnect {
             pre.setString(8, pro.getCreateDate());
             pre.setInt(12, pro.getTotalRate());
             pre.setInt(10, pro.getTotalStock());
-            pre.setInt(11, pro.getProductID());
+            pre.setBoolean(11, pro.isProductStatus());
+            pre.setInt(12, pro.getProductID());
             pre.executeUpdate();
         } catch (SQLException e) {
             System.out.println(e);
@@ -140,7 +146,8 @@ public class DAOProduct extends DBConnect {
                         rs.getInt("UnitDiscount"),
                         rs.getString("CreateDate"),
                         rs.getInt("TotalRate"),
-                        rs.getInt("TotalStock")
+                        rs.getInt("TotalStock"),
+                        rs.getBoolean("ProductStatus")
                 );
                 return pro;
             }
@@ -169,7 +176,8 @@ public class DAOProduct extends DBConnect {
                         rs.getInt("UnitDiscount"),
                         rs.getString("CreateDate"),
                         rs.getInt("TotalRate"),
-                        rs.getInt("TotalStock")
+                        rs.getInt("TotalStock"),
+                        rs.getBoolean("ProductStatus")
                 );
                 vector.add(pro);
 
@@ -198,7 +206,8 @@ public class DAOProduct extends DBConnect {
                         rs.getInt("UnitDiscount"),
                         rs.getString("CreateDate"),
                         rs.getInt("TotalRate"),
-                        rs.getInt("TotalStock")
+                        rs.getInt("TotalStock"),
+                        rs.getBoolean("ProductStatus")
                 );
                 list.add(pro);
             }
@@ -229,7 +238,8 @@ public class DAOProduct extends DBConnect {
                         rs.getInt("UnitDiscount"),
                         rs.getString("CreateDate"),
                         rs.getInt("TotalRate"),
-                        rs.getInt("TotalStock")
+                        rs.getInt("TotalStock"),
+                        rs.getBoolean("ProductStatus")
                 );
                 list.add(pro);
             }
@@ -261,7 +271,8 @@ public class DAOProduct extends DBConnect {
                         rs.getInt("UnitDiscount"),
                         rs.getString("CreateDate"),
                         rs.getInt("TotalRate"),
-                        rs.getInt("TotalStock")
+                        rs.getInt("TotalStock"),
+                        rs.getBoolean("ProductStatus")
                 );
                 list.add(pro);
             }
@@ -291,7 +302,8 @@ public class DAOProduct extends DBConnect {
                         rs.getInt("UnitDiscount"),
                         rs.getString("CreateDate"),
                         rs.getInt("TotalRate"),
-                        rs.getInt("TotalStock")
+                        rs.getInt("TotalStock"),
+                        rs.getBoolean("ProductStatus")
                 );
                 list.add(pro);
             }

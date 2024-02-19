@@ -66,8 +66,6 @@
                         </c:if>
                         <c:if test="${sessionScope.account.roleID == 2}">
                             <a href="#">Marketing</a>
-
-
                         </c:if>
                         <c:if test="${sessionScope.account != null}">
                             <a href="logout">Đăng xuất</a>

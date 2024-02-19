@@ -144,7 +144,7 @@
                                 <div class="nft">
                                     <div class="brand-info">new</div>
                                     <div class='main'>
-                                        <a href="#"><img class='tokenImage' src="<%=rsNewProduct.getString(12)%>" alt="Not found" />
+                                        <a href="#"><img class='tokenImage' src="<%=rsNewProduct.getString(13)%>" alt="Not found" />
                                             <div class="product-content-name"><%=rsNewProduct.getString(2)%></div></a>
                                             <%if(rsNewProduct.getInt(7) != 0) {%>
                                         <div class="price-product "><img style="width: 21px; height: 20px;margin: 0px 3px -2px 0px;" src="images/logo/sale.png"/><%=df.format(rsNewProduct.getDouble(6)*(100-rsNewProduct.getInt(7))/100)%>đ</div>
@@ -213,7 +213,7 @@
                                                     </div>
                                                 </div>
                                             </div>
-                                            <a href="#"><div><img class="product-image2" src="<%=rsFeatureProduct.getString(12)%>" alt="alt"/></div></a>
+                                            <a href="#"><div><img class="product-image2" src="<%=rsFeatureProduct.getString(13)%>" alt="alt"/></div></a>
                                         </div>
                                     </div>
                                     <%}%>

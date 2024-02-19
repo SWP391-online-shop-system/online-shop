@@ -631,7 +631,7 @@ a{
     font-weight: 600;
     margin: 0 auto 2px;
     margin-left: 580px;
-    margin-top: 20px;
+    margin-top: 80px;
     padding-right: 423px;
     text-align: center;
     text-transform: uppercase;
@@ -874,6 +874,7 @@ a{
     overflow: hidden;
     padding: 20px;
     margin-left: 179px;
+    margin-bottom: 48px;
 }
 
 .product-category {
@@ -1262,7 +1263,7 @@ a{
     text-transform: uppercase;
     position: relative;
     z-index: 3;
-    margin-left: 13px;
+    margin-left: 51px;
 }
 .content-title6:before{
     content: " ";
