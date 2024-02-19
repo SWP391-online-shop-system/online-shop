@@ -179,8 +179,8 @@ table.table .avatar {
 	color: #ff5b5b;
 }
 .pagination {
-	float: right;
-	margin: 0 0 5px;
+/*	float: right;
+	margin: 0 0 5px;*/
 }
 .pagination li a {
 	border: none;

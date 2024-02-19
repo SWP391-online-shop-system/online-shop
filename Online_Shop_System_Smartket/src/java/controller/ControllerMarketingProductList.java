@@ -14,8 +14,11 @@ import jakarta.servlet.http.HttpServletResponse;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
+import java.util.Locale.Category;
 import java.util.Vector;
+import model.DAOCategories;
 import model.DAOProduct;
+import view.Categories;
 import view.Product;
 
 /**
@@ -49,26 +52,47 @@ public class ControllerMarketingProductList extends HttpServlet {
      * @throws IOException if an I/O error occurs
      */
     @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         DAOProduct dao = new DAOProduct();
+        DAOCategories daoCate = new DAOCategories();
         String indexPage = request.getParameter("index");
+        String categoryId = request.getParameter("categoryId");
         if (indexPage == null) {
             indexPage = "1";
         }
         int index = Integer.parseInt(indexPage);
         index = (index - 1) * 10;
-        ResultSet rs = dao.getData("SELECT *\n"
-                + "FROM Product AS p \n"
-                + "JOIN Categories AS c ON p.CategoryID = c.CategoryID\n"
-                + "JOIN ProductImage AS pi ON p.ProductID = pi.ProductID\n"
-                + "Where pi.ProductURL LIKE '%_1%'\n"
-                + "limit 10 offset " + index);
+
+        // Fetch products based on the selected category ID if available, otherwise fetch all products
+        ResultSet rs;
+        if (categoryId != null && !categoryId.isEmpty()) {
+            rs = dao.getData("SELECT *\n"
+                    + "FROM Product AS p \n"
+                    + "JOIN Categories AS c ON p.CategoryID = c.CategoryID\n"
+                    + "JOIN ProductImage AS pi ON p.ProductID = pi.ProductID\n"
+                    + "WHERE p.CategoryID = " + categoryId + " AND pi.ProductURL LIKE '%_1%'\n"
+                    + "LIMIT 10 OFFSET " + index);
+        } else {
+            rs = dao.getData("SELECT *\n"
+                    + "FROM Product AS p \n"
+                    + "JOIN Categories AS c ON p.CategoryID = c.CategoryID\n"
+                    + "JOIN ProductImage AS pi ON p.ProductID = pi.ProductID\n"
+                    + "WHERE pi.ProductURL LIKE '%_1%'\n"
+                    + "LIMIT 10 OFFSET " + index);
+        }
+        
+        // Get total number of products for pagination
         int count = dao.getTotalProduct();
         int endPage = count / 10;
         if (count % 10 != 0) {
             endPage++;
         }
+
+        // Get categories for dropdown list
+        Vector<Categories> categories = daoCate.getCategories("SELECT * FROM categories");
+
+        // Set attributes in request
+        request.setAttribute("categories", categories);
         request.setAttribute("data", rs);
         request.setAttribute("endP", endPage);
         request.getRequestDispatcher("productListmkt.jsp").forward(request, response);

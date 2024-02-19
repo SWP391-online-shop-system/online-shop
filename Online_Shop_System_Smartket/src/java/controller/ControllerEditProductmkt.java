@@ -53,7 +53,8 @@ public class ControllerEditProductmkt extends HttpServlet {
         // Create a DAOProduct instance
         DAOProduct dao = new DAOProduct();
         String service = request.getParameter("service");
-        if(service == null || service.equals("")) {
+        String message = request.getParameter("message");
+        if (service == null || service.equals("")) {
             service = "";
         }
         if (service.equals("update")) {
@@ -69,17 +70,23 @@ public class ControllerEditProductmkt extends HttpServlet {
             int totalStock = Integer.parseInt(request.getParameter("totalStock"));
             Product product = new Product(productId, productName, categoryId, productDescription,
                     unitInStock, unitPrice, unitDiscount, createDate, totalRate, totalStock);
-            dao.updateProduct(product);
-            request.getRequestDispatcher("mktProductListURL").forward(request, response);
+            int n = dao.updateProduct(product);
+            String st = "";
+            if (n > 0) {
+                st = "Update product Successfully";
+            } else {
+                st = "can't Update product";
+            }
+            response.sendRedirect("mktProductListURL?message=" + st);
         }
-        if(service.equals("")) {
-        int productId = Integer.parseInt(request.getParameter("productId"));
-        Product product = dao.getProductById(productId);
-        if (product != null) {
-            request.setAttribute("product", product);
-        } else {
-            System.out.println("Product not found");
-        }
+        if (service.equals("")) {
+            int productId = Integer.parseInt(request.getParameter("productId"));
+            Product product = dao.getProductById(productId);
+            if (product != null) {
+                request.setAttribute("product", product);
+            } else {
+                System.out.println("Product not found");
+            }
             request.getRequestDispatcher("updateProductmkt.jsp").forward(request, response);
         }
     }

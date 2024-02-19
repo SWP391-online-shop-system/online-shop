@@ -46,7 +46,28 @@
         <%
         Product product = (Product)request.getAttribute("product");
         %>
-        <form action="EditProductmktURL" method="get">
+        <div class="container">
+            <% String message = (String)request.getParameter("message"); %>
+            <% if (message != null && !message.isEmpty()) { %>
+            <div class="alert alert-info" role="alert">
+                <%= message %>
+            </div>
+            <% } %>
+            <!-- Form content -->
+        </div>
+        <script>
+            function validateForm() {
+                var unitInStock = parseInt(document.getElementById("unitInStock").value);
+                var totalStock = parseInt(document.getElementById("totalStock").value);
+
+                if (unitInStock > totalStock) {
+                    alert("Hàng trong kho không thể lớn hơn Tổng số sản phẩm.");
+                    return false;
+                }
+                return true;
+            }
+        </script>
+        <form action="EditProductmktURL" method="get" onsubmit="return validateForm()">
             <table class="table table-striped table-hover">
                 <thead>
                     <tr>
@@ -65,17 +86,17 @@
                 <tbody>
                     <tr>
                 <input type="hidden" name="service" value="update">
-                        <td><input type="text" name="productId" value="${product.productID}" readonly></td>
-                        <td><input type="text" name="productName" value="${product.productName}"></td>
-                        <td><input type="number" name="categoryId" value="${product.categoryID}"></td>
-                        <td><input type="text" name="productDescription" value="${product.productDescription}"></td>
-                        <td><input type="number" name="unitInStock" value="${product.unitInStock}"></td>
-                        <td><input type="number" name="unitPrice" value="${product.unitPrice}"></td>
-                        <td><input type="number" name="unitDiscount" value="${product.unitDiscount}"></td>
-                        <td><input type="text" name="createDate" value="${product.createDate}"></td>
-                        <td><input type="number" name="totalRate" value="${product.totalRate}"></td>
-                        <td><input type="number" name="totalStock" value="${product.totalStock}"></td>
-                    </tr>
+                <td><input type="text" name="productId" value="${product.productID}" readonly></td>
+                <td><input type="text" name="productName" value="${product.productName}"></td>
+                <td><input type="number" name="categoryId" value="${product.categoryID}"></td>
+                <td><input type="text" name="productDescription" value="${product.productDescription}"></td>
+                <td><input type="number" name="unitInStock" id="unitInStock" value="${product.unitInStock}"></td>
+                <td><input type="number" name="unitPrice" value="${product.unitPrice}"></td>
+                <td><input type="number" name="unitDiscount" value="${product.unitDiscount}"></td>
+                <td><input type="text" name="createDate" value="${product.createDate}"></td>
+                <td><input type="number" name="totalRate" value="${product.totalRate}"></td>
+                <td><input type="number" name="totalStock" id="totalStock" value="${product.totalStock}"></td>
+                </tr>
                 </tbody>
             </table>
             <input type="submit" value="Update">

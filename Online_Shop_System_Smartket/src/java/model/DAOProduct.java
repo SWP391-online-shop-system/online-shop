@@ -89,7 +89,8 @@ public class DAOProduct extends DBConnect {
         }
     }
 
-    public void updateProduct(Product pro) {
+    public int updateProduct(Product pro) {
+        int n = 0;
         String sql = "UPDATE `online_shop_system`.`product`\n"
                 + "SET\n"
                 + "`ProductID` = ?,\n"
@@ -116,10 +117,11 @@ public class DAOProduct extends DBConnect {
             pre.setInt(9, pro.getTotalRate());
             pre.setInt(10, pro.getTotalStock());
             pre.setInt(11, pro.getProductID());
-            pre.executeUpdate();
+            n = pre.executeUpdate();
         } catch (SQLException e) {
             System.out.println(e);
         }
+        return n;
     }
 
     public Product getProductById(int productID) {

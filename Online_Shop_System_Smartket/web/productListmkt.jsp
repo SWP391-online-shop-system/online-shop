@@ -18,10 +18,11 @@
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
         <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
-        <link rel="stylesheet" href="css/css_saleProductList/saleProductList.css"/>
         <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
         <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
+        <link rel="stylesheet" href="css/css_saleProductList/saleProductList.css"/>
+        <link rel="stylesheet" href="css/css_mkt/style.css"/>
         <script>
             $(document).ready(function () {
                 $('[data-toggle="tooltip"]').tooltip();
@@ -31,6 +32,15 @@
     <%
     ResultSet rs = (ResultSet)request.getAttribute("data");
     %>
+    <div class="container">
+        <% String message = (String)request.getParameter("message"); %>
+        <% if (message != null && !message.isEmpty()) { %>
+        <div class="alert alert-info" role="alert">
+            <%= message %>
+        </div>
+        <% } %>
+        <!-- Form content -->
+    </div>
     <body>
         <div class="container-xl">
             <div class="table-responsive">
@@ -52,25 +62,23 @@
                                         <input type="text" name="keyWord" class="form-control" placeholder="Tìm kiếm">
                                     </div>
                                 </form>
-                                <div class="filter-group">
-                                    <label>Loại</label>
-                                    <select class="form-control">
-                                        <option>All</option>
-                                        <option>Berlin</option>
-                                        <option>London</option>
-                                        <option>Madrid</option>
-                                        <option>New York</option>
-                                        <option>Paris</option>								
-                                    </select>
-                                </div>
+                                <form action="mktProductListURL" method="get" id="categoryForm">
+                                    <div class="filter-group">
+                                        <label>Loại</label>
+                                        <select class="form-control" name="categoryId" onchange="submitForm()">
+                                            <option value="">All</option>
+                                            <c:forEach var="category" items="${categories}">
+                                                <option value="${category.categoryID}">${category.categoryName}</option>
+                                            </c:forEach>							
+                                        </select>
+                                    </div>
+                                </form>
                                 <div class="filter-group">
                                     <label>Trạng thái</label>
                                     <select class="form-control">
                                         <option>Any</option>
-                                        <option>Delivered</option>
-                                        <option>Shipped</option>
-                                        <option>Pending</option>
-                                        <option>Cancelled</option>
+                                        <option>Còn hàng</option>
+                                        <option>Hết hàng</option>
                                     </select>
                                 </div>
                                 <span class="filter-icon"><i class="fa fa-filter"></i></span>
@@ -93,6 +101,9 @@
                             <%
                                 try {
                                     while(rs.next()) {
+                                    int unitInStock = rs.getInt("UnitInStock");
+                                        int totalStock = rs.getInt("TotalStock");
+                                        String status = (unitInStock > 0 && unitInStock <= totalStock) ? "Còn hàng" : "Hết hàng";
                             %>
                             <tr>
                                 <td><%=rs.getInt("ProductID")%></td>
@@ -100,7 +111,7 @@
                                 <td><%=rs.getString("ProductName")%></td>
                                 <td><%=rs.getString("CategoryName")%></td>
                                 <td><%=rs.getDouble("UnitPrice")%></td>
-                                <td><span class="status text-success">&bull;</span> Delivered</td>
+                                <td><%= status %></td>
                                 <td>
                                     <div class="dropdown">
                                         <button class="btn btn-secondary btn-sm dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -121,39 +132,27 @@
                             %>
                         </tbody>
                     </table>
-                    <div class="clearfix">
-                        <div class="hint-text">Showing <b>5</b> out of <b>25</b> entries</div>
                         <ul class="pagination">
-                            <li class="page-item <c:if test='${empty param.index or param.index eq "1"}'>disabled</c:if>">
-                                <a href="<c:if test='${param.index ne "1" and not empty param.index}'>ControllerSearchMKTURL?index=${(param.index - 1)}&amp;</c:if>keyWord=${param.keyWord}" class="page-link">Previous</a>
-                                </li>
-                                <li class="page-item <c:if test='${empty param.index or param.index eq "1"}'>active</c:if>">
-                                <a href="ControllerSearchMKTURL?index=1&amp;keyWord=${param.keyWord}" class="page-link">1</a>
-                            </li>
-                            <c:forEach begin="2" end="${endP}" var="i">
-                                <li class="page-item <c:if test='${param.index eq i}'>active</c:if>">
-                                    <a href="ControllerSearchMKTURL?index=${i}&amp;keyWord=${param.keyWord}" class="page-link">${i}</a>
-                                </li>
-                            </c:forEach>
-                            <li class="page-item <c:if test='${param.index eq endP or empty param.index}'>disabled</c:if>">
-                                <a href="<c:if test='${not empty param.index and param.index ne endP}'>ControllerSearchMKTURL?index=${(param.index + 1)}&amp;</c:if>keyWord=${param.keyWord}" class="page-link">Next</a>
-                            </li>
+                            <div class="product__pagination blog__pagination" style="margin: 0;margin-left: 40px;">
+                                <c:forEach begin="1" end="${endP}" var="i">
+                                    <c:choose>
+                                        <c:when test="${param.index == i}">
+                                            <a class="page-link" style="background: #7fad39; border-color: #7fad39; color: #ffffff;" href="mktProductListURL?index=${i}">${i}</a>
+                                        </c:when>
+                                        <c:otherwise>
+                                            <a class="page-link" href="mktProductListURL?index=${i}">${i}</a>
+                                        </c:otherwise>
+                                    </c:choose>
+                                </c:forEach>
+                            </div>
                         </ul>
-
-
-
-
-
-
-
-
-
-
-
-                    </div>
-
                 </div>
             </div>        
         </div>     
     </body>
+    <script>
+        function submitForm() {
+            document.getElementById('categoryForm').submit();
+        }
+    </script>
 </html>
