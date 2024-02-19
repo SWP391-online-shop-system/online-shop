@@ -68,7 +68,7 @@
                                             <%
                                                 DAOProduct dao = new DAOProduct();
                                                 ResultSet rsHotPro = dao.getData("select * from Product as p join ProductImage as pi on p.ProductID = pi.ProductID where  pi.ProductURL like '%_1%'\n"
-                                                +"group by p.ProductID having min(p.TotalStock - p.UnitInStock) > 0");
+                                                +"group by p.ProductID having min(p.TotalStock - p.UnitInStock) > 0 order by (p.TotalStock - p.UnitInStock) desc limit 1");
                                             while(rsHotPro.next()) {
                                             %>
                                             <div class="product__item" style="border: 1px solid #c1e8c1ba;
@@ -347,7 +347,7 @@
                                             <a class="active" style="background: #7fad39;border-color: #7fad39;color: #ffffff;" href="searchPageURL?keyWord=${keyWord}&type=<%=type%>&TotalRate=<%=TotalRate%>&index=${i}&filterChoice=<%=filterChoice%>&inputMinPrice=<%=oldMinPrice%>&inputMaxPrice=<%=oldMaxPrice%>">${i}</a>
                                         </c:if>
                                         <c:if test="${requestScope.index != i}">
-                                            <a class="active"                                                      href="searchPageURL?keyWord=${keyWord}&type=<%=type%>&TotalRate=<%=TotalRate%>&index=${i}&filterChoice=<%=filterChoice%>&inputMinPrice=<%=oldMinPrice%>&inputMaxPrice=<%=oldMaxPrice%>">${i}</a>
+                                            <a class="active" href="searchPageURL?keyWord=${keyWord}&type=<%=type%>&TotalRate=<%=TotalRate%>&index=${i}&filterChoice=<%=filterChoice%>&inputMinPrice=<%=oldMinPrice%>&inputMaxPrice=<%=oldMaxPrice%>">${i}</a>
                                         </c:if>
                                     </c:forEach>
                                 </div>
