@@ -6,7 +6,7 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"  %>
 <%@page import="view.User" %>
-<%@page import="java.sql.ResultSet"%>
+<%@page import="java.sql.ResultSet, java.lang.System"%>
 <%@page import="model.DAOCart, view.Cart,view.User" %>
 <%@page import="jakarta.servlet.http.HttpSession" %>
 <div class="header">
@@ -43,6 +43,7 @@
                         <meta name="viewport" content="width=device-width, initial-scale=1.0">
                         <title>Smarket</title>
                         <link rel="stylesheet" href="css/login.css"/>
+                        
                     </head>
                     <body> 
                         <%
@@ -84,7 +85,7 @@
                             <div class="popup ${requestScope.activeLogin}" id="loginPopup">
                                 <div class="close-btn" onclick="togglePopup('loginPopup')">x</div>
                                 <div class="form">
-                                    <h2>Đăng nhập</h2>
+                                    <h2><b>Đăng nhập</b></h2>
                                     <p class="text-danger" style="
                                        color: red;
                                        font-size: 20px;
@@ -118,10 +119,11 @@
                         <!-- Registration Pop-up Form -->
                         <form action="signupURL" method="post">
                             <input type="hidden" name="service" value="signupRegister">
+                            <input type="hidden" name="timestamp" value="<%= System.currentTimeMillis() %>">
                             <div class="popup ${requestScope.activeSignUp}" id="signupPopup">
                                 <div class="close-btn" onclick="togglePopup('signupPopup')">x</div>
                                 <div class="form">
-                                    <h2>Đăng kí</h2>
+                                    <h2><b>Đăng ký</b></h2>
                                     <%User u = (User)request.getAttribute("lastUser");
                                     if(u == null) {%>
                                     <div class="form-element">

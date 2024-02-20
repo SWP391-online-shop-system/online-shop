@@ -84,7 +84,7 @@ public class DAOProduct extends DBConnect {
             pre.setDouble(6, pro.getUnitPrice());
             pre.setInt(7, pro.getUnitDiscount());
             pre.setString(8, pro.getCreateDate());
-            pre.setInt(12, pro.getTotalRate());
+            pre.setInt(9, pro.getTotalRate());
             pre.setInt(10, pro.getTotalStock());
             pre.setBoolean(11, pro.isProductStatus());
             pre.executeUpdate();
@@ -93,7 +93,8 @@ public class DAOProduct extends DBConnect {
         }
     }
 
-    public void updateProduct(Product pro) {
+    public int updateProduct(Product pro) {
+        int n = 0;
         String sql = "UPDATE `online_shop_system`.`product`\n"
                 + "SET\n"
                 + "`ProductID` = ?,\n"
@@ -118,14 +119,14 @@ public class DAOProduct extends DBConnect {
             pre.setDouble(6, pro.getUnitPrice());
             pre.setInt(7, pro.getUnitDiscount());
             pre.setString(8, pro.getCreateDate());
-            pre.setInt(12, pro.getTotalRate());
+            pre.setInt(9, pro.getTotalRate());
             pre.setInt(10, pro.getTotalStock());
-            pre.setBoolean(11, pro.isProductStatus());
-            pre.setInt(12, pro.getProductID());
-            pre.executeUpdate();
+            pre.setInt(11, pro.getProductID());
+            n = pre.executeUpdate();
         } catch (SQLException e) {
             System.out.println(e);
         }
+        return n;
     }
 
     public Product getProductById(int productID) {
@@ -312,6 +313,35 @@ public class DAOProduct extends DBConnect {
         return list;
     }
 
+    public Vector<Product> get10Next(int index) {
+        Vector<Product> vector = new Vector<>();
+        String sql = "select * from Product order by ProductID limit 10 offset ?";
+        try {
+            PreparedStatement st = conn.prepareStatement(sql);
+            st.setInt(1, (index - 1) * 10);
+            ResultSet rs = st.executeQuery();
+            while (rs.next()) {
+                Product pro = new Product(
+                        rs.getInt("ProductID"),
+                        rs.getString("ProductName"),
+                        rs.getInt("CategoryID"),
+                        rs.getString("ProductDescription"),
+                        rs.getInt("UnitInStock"),
+                        rs.getDouble("UnitPrice"),
+                        rs.getInt("UnitDiscount"),
+                        rs.getString("CreateDate"),
+                        rs.getInt("TotalRate"),
+                        rs.getInt("TotalStock"),
+                        rs.getBoolean("ProductStatus")
+                );
+                vector.add(pro);
+            }
+        } catch (SQLException e) {
+            System.out.println(e);
+        }
+        return vector;
+    }
+
     public int getTotalProductBySearch(String key, double min, double max) {
         String sql = "select count(*) from Product where ProductName like N'%" + key + "%' and UnitPrice between " + min + " and " + max;
         try {
@@ -353,7 +383,20 @@ public class DAOProduct extends DBConnect {
         }
         return 0;
     }
-
+	 public int getTotalProduct() {
+        String sql = "select count(*) from Product";
+        try {
+            PreparedStatement st = conn.prepareStatement(sql);
+            ResultSet rs = st.executeQuery();
+            while (rs.next()) {
+                return rs.getInt(1);
+            }
+        } catch (SQLException e) {
+            System.out.println(e);
+        }
+        return 0;
+    }
+    
     public int getTotalTypeProduct(String type, double min, double max) {
         if (type.equals("showSale")) {
             type = "UnitDiscount != 0";
