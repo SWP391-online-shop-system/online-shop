@@ -1,0 +1,28 @@
+
+^
+java:S1192L"HDefine a constant instead of duplicating this literal "CartURL" 4 times.(»§Äƒ
+a
+java:S1192I"FDefine a constant instead of duplicating this literal "proid" 3 times.(‹êõæúÿÿÿÿ
+f	java:S1179"QRename this local variable to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(Á¸žÈ
+f	java:S117:"QRename this local variable to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(¶î¤Þ
+k	java:S117I"QRename this local variable to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(‹êõæúÿÿÿÿ
+k	java:S117S"QRename this local variable to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(‹êõæúÿÿÿÿ
+k	java:S117["QRename this local variable to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(‹êõæúÿÿÿÿ
+G
+java:S1481-",Remove this unused "message" local variable.(¥Ý£ ÿÿÿÿÿ
+=
+java:S1125="'Remove the unnecessary boolean literal.(ã˜¨ã
+<
+java:S1481?"&Remove this unused "n" local variable.(«©®Í
+<
+java:S1481D"&Remove this unused "n" local variable.(ÛÈùÇ
+A
+java:S1481K"&Remove this unused "n" local variable.(Ì˜°Þüÿÿÿÿ
+A
+java:S1481O"&Remove this unused "n" local variable.(ÅÂÊõýÿÿÿÿ
+<
+java:S1481W"&Remove this unused "n" local variable.(ÛÈùÇ
+A
+java:S1481_"&Remove this unused "n" local variable.(Ì˜°Þüÿÿÿÿ
+<
+java:S1481c"&Remove this unused "n" local variable.(ÛÈùÇ

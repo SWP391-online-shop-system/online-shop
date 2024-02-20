@@ -15,6 +15,7 @@ import jakarta.servlet.http.HttpServletResponse;
 import java.util.List;
 import model.DAOBlog;
 import view.Blog;
+import view.Categories;
 
 /**
  *
@@ -38,7 +39,9 @@ public class ControllerBlogDetail extends HttpServlet {
         DAOBlog dao = new DAOBlog();
         List<Blog> listNB = dao.getNewBlog();
         List<Blog> listGB = dao.getGoodBlog();
+        List<Categories> listC = dao.getAllCategories();
         Blog b = dao.getBlogByID(bid);
+        request.setAttribute("listC", listC);
         request.setAttribute("listNB", listNB);
         request.setAttribute("listGB", listGB);
         request.setAttribute("Bdetail",b);

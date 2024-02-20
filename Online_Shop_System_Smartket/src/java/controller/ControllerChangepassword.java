@@ -59,7 +59,7 @@ public class ControllerChangepassword extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
-            request.getRequestDispatcher("profileUser.jsp").forward(request, response);
+           request.getRequestDispatcher("changepassword.jsp").forward(request, response);
 
     } 
 
@@ -78,28 +78,28 @@ public class ControllerChangepassword extends HttpServlet {
        String newPassword = request.getParameter("newPassword");
        String renewPassword = request.getParameter("renewPassword");
        HttpSession session = request.getSession();
-session.removeAttribute("inputerror");
+        session.removeAttribute("input");
        User user = (User) session.getAttribute("account");
        DAOUser dao = new DAOUser();
        User checkOldpassword = dao.check(user.getEmail(), oldPassword);
        if(checkOldpassword==null){
            session.setAttribute("inputerror","Nhập sai mật khẩu cũ!!");
-           request.getRequestDispatcher("profileUser.jsp").forward(request, response);
+           request.getRequestDispatcher("changepassword.jsp").forward(request, response);
        }else
             if((newPassword.length()<6)){
            session.setAttribute("inputerror","Nhập mật khẩu mới sai fomat!!");
-            request.getRequestDispatcher("profileUser.jsp").forward(request, response);
+           request.getRequestDispatcher("changepassword.jsp").forward(request, response);
        }else
        if(!newPassword.equals(renewPassword)){
            session.setAttribute("inputerror","Nhập lại sai mật khẩu mới!!");
-            request.getRequestDispatcher("profileUser.jsp").forward(request, response);
+           request.getRequestDispatcher("changepassword.jsp").forward(request, response);
        }else {
         User u= new User(user.getUserID(),user.getFirstName(),user.getLastName(),user.getAddress(),user.getPhoneNumber(),user.getDateOfBirth(),user.isGender(),user.getUserImage(),
         newPassword,user.getEmail(),user.getLastLogin(),user.isUserStatus(),user.getReportTo(),user.getRoleID());
         dao.updateUser(u);
-           System.out.println("Update thnh cong");
+           System.out.println("Update thanh cong");
         session.setAttribute("inputerror","Thay đổi thành công");
-        request.getRequestDispatcher("profileUser.jsp").forward(request, response);
+           request.getRequestDispatcher("changepassword.jsp").forward(request, response);
        }
     }
     
