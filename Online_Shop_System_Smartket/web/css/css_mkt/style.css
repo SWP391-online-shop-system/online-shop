@@ -13,7 +13,7 @@ Click nbfs://nbhost/SystemFileSystem/Templates/ClientSide/css.css to edit this t
 
 .product__pagination a,
 .blog__pagination a {
-       display: inline-block;
+    display: inline-block;
     width: 30px;
     height: 30px;
     border: 1px solid #b2b2b2;
@@ -45,3 +45,9 @@ Click nbfs://nbhost/SystemFileSystem/Templates/ClientSide/css.css to edit this t
 .blog__pagination a:last-child {
     margin-right: 0;
 }
+/*#dataTableHover_length{
+    display: none;
+}
+#dataTableHover_filter{
+    display: none;
+}*/
