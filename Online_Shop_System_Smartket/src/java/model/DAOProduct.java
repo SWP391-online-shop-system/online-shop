@@ -155,7 +155,6 @@ public class DAOProduct extends DBConnect {
         } catch (SQLException e) {
             System.out.println(e);
         }
-        System.out.println("null");
         return null;
     }
 

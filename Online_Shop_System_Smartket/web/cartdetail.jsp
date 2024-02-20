@@ -129,7 +129,7 @@
                                         <div class="col" style=""><%=decimalFormat.format(totalprice)%>đ</div>
                                     </div>
                                 </div>
-                            <button class="btn">Thanh Toán</button>
+                                    <a href="contactURL?service=showContact"><button class="btn">Thanh Toán</button></a>
                             </div>
                         </div>
                     </div>
@@ -137,16 +137,5 @@
                 </div>        
             </section> 
         </div>
-        <script>
-            document.querySelector("#show-voucher").addEventListener("click", function () {
-                document.querySelector(".popup").style.display = "block";
-                document.querySelector(".popup").classList.add("active");
-                document.getElementById("body").classList.add("blurred-background");
-            });
-            document.querySelector(".popup .close-btn").addEventListener("click", function () {
-                document.querySelector(".popup").style.display = "none";
-                document.getElementById("body").classList.remove("blurred-background");
-            });
-        </script>
     </body>
 </html>
