@@ -61,7 +61,8 @@ public class ControllerMarketingProductList extends HttpServlet {
             indexPage = "1";
         }
         int index = Integer.parseInt(indexPage);
-        index = (index - 1) * 10;
+        int itemsPerPage = 10; // Number of items to display per page
+        int offset = (index - 1) * itemsPerPage;
 
         // Fetch products based on the selected category ID if available, otherwise fetch all products
         ResultSet rs;
@@ -71,22 +72,19 @@ public class ControllerMarketingProductList extends HttpServlet {
                     + "JOIN Categories AS c ON p.CategoryID = c.CategoryID\n"
                     + "JOIN ProductImage AS pi ON p.ProductID = pi.ProductID\n"
                     + "WHERE p.CategoryID = " + categoryId + " AND pi.ProductURL LIKE '%_1%'\n"
-                    + "LIMIT 10 OFFSET " + index);
+                    );
         } else {
             rs = dao.getData("SELECT *\n"
                     + "FROM Product AS p \n"
                     + "JOIN Categories AS c ON p.CategoryID = c.CategoryID\n"
                     + "JOIN ProductImage AS pi ON p.ProductID = pi.ProductID\n"
                     + "WHERE pi.ProductURL LIKE '%_1%'\n"
-                    + "LIMIT 10 OFFSET " + index);
+                    );
         }
-        
+
         // Get total number of products for pagination
         int count = dao.getTotalProduct();
-        int endPage = count / 10;
-        if (count % 10 != 0) {
-            endPage++;
-        }
+        int endPage = (int) Math.ceil((double) count / itemsPerPage);
 
         // Get categories for dropdown list
         Vector<Categories> categories = daoCate.getCategories("SELECT * FROM categories");
@@ -94,8 +92,9 @@ public class ControllerMarketingProductList extends HttpServlet {
         // Set attributes in request
         request.setAttribute("categories", categories);
         request.setAttribute("data", rs);
-        request.setAttribute("endP", endPage);
-        request.getRequestDispatcher("productListmkt.jsp").forward(request, response);
+        request.setAttribute("currentPage", index);
+        request.setAttribute("endPage", endPage);
+        request.getRequestDispatcher("productListmkt1.jsp").forward(request, response);
     }
 
     /**
