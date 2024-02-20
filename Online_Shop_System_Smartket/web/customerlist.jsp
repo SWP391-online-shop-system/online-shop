@@ -14,127 +14,179 @@
         <title>Danh Sách Khách Hàng</title>
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
         <script src="https://kit.fontawesome.com/ac74b86ade.js" crossorigin="anonymous"></script>
-        <link rel="stylesheet" href="css/css_customerlist/list.css"/>
-        <link rel="stylesheet" href="css/css_customerlist/style.css"/>
-        <link rel="stylesheet" href="css/css_header/header.css"/>
+        <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+        <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css">
+        <link href="css/css_marketing_dashboard/marketing_dashboard_style.css" rel="stylesheet">
+        <link href="vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">
         <link rel="shortcut icon" href="images/logo/logo.png" type="image/png">
     </head>
-    <body>
-        <jsp:include page="include/header.jsp"/>
-        <div class="container-xl" style="display: flex;max-width: none;">
-
-            <!-- end sider -->
-            <div class="table-responsive">
-                <div class="table-wrapper">
-                    <div class="table-title">
-                        <div class="row">
-                            <div class="col-sm-4">
-                                <h2>Danh Sách Khách Hàng</h2>
-                            </div>
-                        </div>
+    <body id="page-top">
+        <div id="wrapper">
+            <!-- Sidebar -->
+            <ul class="navbar-nav sidebar sidebar-light accordion" id="accordionSidebar">
+                <a class="sidebar-brand d-flex align-items-center justify-content-center" href="index.html">
+                    <div class="sidebar-brand-icon">
+                        <img style="height: 91px;
+                             width: 133px;
+                             margin-bottom: -18px;" src="images/logo/logo.png">
                     </div>
-                    <div class="table-filter">
-                        <div class="row">
-                            <div class="col-sm-3">
-                                <div class="show-entries">
-                                    <span>Show</span>
-                                    <form action="customerlist">
-                                        <select name="limit" class="form-control" onchange="this.form.submit()">
-                                            <%String limit = (String)request.getAttribute("limit");
-                                                if(limit == null){
-                                                limit = "5";
-                                                }
-                                            %>
-                                            <option value="5" <%=limit.equals("5")? "selected":""%>>5</option>
-                                            <option value="10" <%=limit.equals("10")? "selected":""%>>10</option>
-                                            <option value="15" <%=limit.equals("15")? "selected":""%>>15</option>
-                                            <option value="20" <%=limit.equals("20")? "selected":""%>>20</option>
-                                        </select>
-                                    </form>
-                                    <span>entries</span>
-                                </div>
-                            </div>
-                            <div class="col-sm-9">
-                                <button type="button" class="btn btn-primary"><i class="fa fa-search"></i></button>
-                                <div class="filter-group">
-                                    <label>Name</label>
-                                    <input type="text" class="form-control">
-                                </div>
-                                <div class="filter-group">
-                                    <label>Location</label>
-                                    <select class="form-control">
-                                        <option>All</option>
-                                        <option>Berlin</option>
-                                        <option>London</option>
-                                        <option>Madrid</option>
-                                        <option>New York</option>
-                                        <option>Paris</option>								
-                                    </select>
-                                </div>
-                                <div class="filter-group">
-                                    <label>Status</label>
-                                    <select class="form-control">
-                                        <option>Any</option>
-                                        <option>Delivered</option>
-                                        <option>Shipped</option>
-                                        <option>Pending</option>
-                                        <option>Cancelled</option>
-                                    </select>
-                                </div>
-                                <span class="filter-icon"><i class="fa fa-filter"></i></span>
-                            </div>
-                        </div>
+                </a>
+                <div style="position: sticky; top: 30px;">
+                    <hr class="sidebar-divider wee-0" style="margin: 0px;">
+                    <li class="nav-item active">
+                        <a class="nav-link" href="index.html">
+                            <i class="fas fa-fw fa-tachometer-alt"></i>
+                            <span>Thống kê</span></a>
+                    </li>
+                    <hr class="sidebar-divider">
+                    <div class="sidebar-heading">
+                        Quản lí
                     </div>
-                    <table class="table table-striped table-hover">
-                        <thead>
-                            <tr>
-                                <th>Số Thứ Tự</th>
-                                <th>Tên Khách Hàng</th>
-                                <th>Giới Tính</th>
-                                <th>Email</th>
-                                <th>Số Điện Thoại</th>						
-                                <th>Ngày Sinh</th>						
-                                <th>Trạng Thái</th>						
-                                <th>Lần Đăng Nhập Cuối</th>
-                            </tr>
-                        </thead>
-                        <tbody><%int count = 0;%>
-                            <c:forEach items="${requestScope.data}" var="cus">
-                                <tr><%count++;%>
-                                    <td><%=count%></td>
-                                    <td>${cus.firstName} ${cus.lastName}</td>
-                                    <td>${cus.gender ? 'Nam':'Nữ'}</td>
-                                    <td>${cus.email}</td>
-                                    <td>${cus.phoneNumber}</td>                        
-                                    <td>${cus.dateOfBirth}</td>                        
-                                    <td>${cus.userStatus ? 'Đang Hoạt Động':'Bị Chặn'}</td>                        
-                                    <td>${cus.lastLogin}</td>
-                                </tr>
-                            </c:forEach>
-                        </tbody>
-                    </table>
-                    <div class="clearfix">
-                        <!--<div class="hint-text">Showing <b>5</b> out of <b>25</b> entries</div>-->
-                        <ul class="pagination">
-                            <c:if test="${index>1}">
-                                <li class="page-item"><a href="customerlist?index=${index-1}">Previous</a></li>
-                                </c:if>
-                                <c:forEach begin="1" end="${endPage}" var="i">
-                                    <c:if test="${index == i}">
-                                    <li class="page-item active"><a href="customerlist?index=${i}" class="page-link">${i}</a></li>
-                                    </c:if>
-                                    <c:if test="${index != i}">
-                                    <li class="page-item"><a href="customerlist?index=${i}" class="page-link">${i}</a></li>
-                                    </c:if>
-                                </c:forEach>
-                                <c:if test="${index<endPage}">
-                                <li class="page-item"><a href="customerlist?index=${index+1}">Next</a></li>
-                                </c:if>
-                        </ul>
-                    </div>
+                    <li class="nav-item">
+                        <a class="nav-link" href="ui-colors.html">
+                            <i class="fas fa-calendar fa-2x text-primary"></i>
+                            <span>Bài đăng</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="ui-colors.html">
+                            <i class="fas fa-shopping-cart fa-2x text-success"></i>
+                            <span>Sản phẩm</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="ui-colors.html">
+                            <i class="fas fa-users fa-2x text-info"></i>
+                            <span>Khách hàng</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="ui-colors.html">
+                            <i class="fas fa-comments fa-2x text-info"></i>
+                            <span>Phản hồi</span>
+                        </a>
+                    </li>
+                    <hr class="sidebar-divider">
                 </div>
-            </div>        
-        </div>     
+            </ul>
+            <!-- Sidebar -->
+            <div id="content-wrapper" class="d-flex flex-column">
+                <div id="content">
+                    <!-- TopBar -->
+                    <nav class="navbar navbar-expand navbar-light bg-navbar topbar mb-4 static-top">
+                        <div style="font-weight: 700;color: white;font-size: 37px;letter-spacing: 2px;font-family: Nunito,-apple-system,BlinkMacSystemFont"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol","Noto Color Emoji";">Trang marketing</div>
+                        <ul class="navbar-nav ml-auto">
+                            <div class="topbar-divider d-none d-sm-block"></div>
+                            <li class="nav-item dropdown no-arrow">
+                                <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown"
+                                   aria-haspopup="true" aria-expanded="false">
+                                    <img class="img-profile rounded-circle" src="images/user/default_avatar.jpg" style="max-width: 60px">
+                                    <span class="ml-2 d-none d-lg-inline text-white small">Maman Ketoprak</span>
+                                </a>
+                                <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="userDropdown">
+                                    <a class="dropdown-item" href="#">
+                                        <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
+                                        Hồ sơ
+                                    </a>
+                                    <div class="dropdown-divider"></div>
+                                    <a class="dropdown-item" href="javascript:void(0);" data-toggle="modal" data-target="#logoutModal">
+                                        <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
+                                        Đăng xuất
+                                    </a>
+                                </div>
+                            </li>
+                        </ul>
+                    </nav>
+                    <!-- Topbar -->
+
+                    <!-- Container Fluid-->
+                    <div class="container-fluid" id="container-wrapper">
+                        <div class="d-sm-flex align-items-center justify-content-between mb-4">
+                            <h1 class="h3 mb-0 text-gray-800">Danh Sách Khách Hàng</h1>
+                            <ol class="breadcrumb">
+                                <li class="breadcrumb-item"><a href="./">Trang Chủ</a></li>
+                                <li class="breadcrumb-item active">Danh Sách Khách Hàng</li>
+                            </ol>
+                        </div>
+
+                        <!-- Row -->
+                        <div class="row">
+
+                        </div>
+                        <div class="row">
+                            <!-- DataTable with Hover -->
+                            <div class="col-lg-12">
+                                <div class="card mb-4">                                 
+                                    <!--                                    <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                                                                            <h6 class="m-0 font-weight-bold text-primary">DataTables with Hover</h6>
+                                                                        </div>-->
+                                    <div class="table-responsive p-3">
+                                        <table class="table align-items-center table-flush table-hover" id="dataTableHover" style="font-size: 16px;
+                                               ">
+                                            <thead class="thead-light">
+                                                <tr>
+                                                    <th style="text-align: center;">STT</th>
+                                                    <th style="text-align: center;width: 128.4432px;">Tên Khách Hàng</th>
+                                                    <th style="text-align: center;">Email</th>
+                                                    <th style="text-align: center; width: 0">Giới Tính</th>
+                                                    <th style="text-align: center;width: 112.2955px">Số Điện Thoại</th>						
+                                                    <th style="text-align: center; width:89.73860000000002px">Trạng Thái</th>						
+                                                    <th style="text-align: center;">Lần Đăng Nhập Cuối</th>
+                                                </tr>
+                                            </thead>
+
+                                            <tbody>
+                                                <%int count = 0;%>
+                                                <c:forEach items="${requestScope.data}" var="cus">
+                                                    <tr style="text-align: center;"><%count++;%>
+                                                        <td><%=count%></td>
+                                                        <td>${cus.firstName} ${cus.lastName}</td>
+                                                        <td>${cus.email}</td>
+                                                        <td>${cus.gender ? 'Nam':'Nữ'}</td>
+                                                        <td>${cus.phoneNumber ? '':'Không'}</td>                        
+                                                        <td>${cus.userStatus ? 'Đang Hoạt Động':'Bị Chặn'}</td>                        
+                                                        <td>${cus.lastLogin}</td>
+                                                    </tr>
+                                                </c:forEach>    
+                                            </tbody>
+                                        </table>
+                                    </div>                                    
+                                </div>
+                            </div>
+                        </div>
+                        <!--Row-->
+                    </div>      
+                </div>
+                <!---Container Fluid-->
+            </div>
+        </div>
+        <!-- Scroll to top -->
+        <a class="scroll-to-top rounded" href="#page-top">
+            <i class="fas fa-angle-up"></i>
+        </a>
+        <script src="vendor/jquery/jquery.min.js"></script>
+        <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+        <script src="vendor/jquery-easing/jquery.easing.min.js"></script>
+        <!--        <script src="js_marketing/ruang-admin.min.js"></script>
+                <script src="js_marketing/demo/chart-area-demo.js"></script>  -->
+        <script src="vendor/datatables/jquery.dataTables.min.js"></script>
+        <script src="vendor/datatables/dataTables.bootstrap4.min.js"></script>
+
+        <!-- Page level custom scripts -->
+        <script>
+            $(document).ready(function () {
+                $('#dataTable').DataTable(); // ID From dataTable 
+                $('#dataTableHover').DataTable({
+                    columns: [
+                        {searchable: false},
+                        {searchable: true},
+                        {searchable: false},
+                        {searchable: true},
+                        {searchable: true},
+                        {searchable: false},
+                        {searchable: false}]
+                }); // ID From dataTable with Hover
+            });
+        </script>
     </body>
 </html>
-

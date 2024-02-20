@@ -61,7 +61,7 @@ public class ControllerCustomerList extends HttpServlet {
                 }
                 request.setAttribute("limit", limit_raw);
                 request.setAttribute("endPage", endPage);
-                Vector<User> list = dao.getCusPaging(limit, index);
+                Vector<User> list = dao.getUser("SELECT * FROM online_shop_system.user where roleID = 1");
                 request.setAttribute("index", index);
                 request.setAttribute("data", list);
                 request.getRequestDispatcher("customerlist.jsp").forward(request, response);
