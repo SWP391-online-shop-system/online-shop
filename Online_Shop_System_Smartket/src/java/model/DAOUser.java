@@ -259,12 +259,12 @@ public class DAOUser extends DBConnect {
     }
 
     public User checkAccountExist(String email) {
-        String sql = "select * from user where email = '?'";
+        String sql = "SELECT * FROM user WHERE email = ?";
         try {
             PreparedStatement pre = conn.prepareStatement(sql);
             pre.setString(1, email);
             ResultSet rs = pre.executeQuery();
-            while (rs.next()) {
+            if (rs.next()) {
                 return new User(rs.getInt(1),
                         rs.getString(2),
                         rs.getString(3),
@@ -281,6 +281,7 @@ public class DAOUser extends DBConnect {
                         rs.getInt(14));
             }
         } catch (SQLException e) {
+            // Handle exception appropriately (e.g., logging)
         }
         return null;
     }
@@ -298,6 +299,7 @@ public class DAOUser extends DBConnect {
             e.printStackTrace(); // Handle the exception according to your needs
         }
     }
+
     public void updateCreateDate(int userId) {
         try {
             String sql = "UPDATE user SET CreateDate = CURRENT_TIMESTAMP WHERE UserID = ?";
@@ -314,7 +316,7 @@ public class DAOUser extends DBConnect {
 
     public static void main(String[] args) {
         DAOUser dao = new DAOUser();
-        
+
     }
 
     public String convertStatus(int UserStatus) {
