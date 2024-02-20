@@ -156,7 +156,7 @@ public class DAOBlog extends DBConnect {
             ResultSet rs = state.executeQuery(sql);
             while (rs.next()) {
                 list.add(new Categories(rs.getInt(1),
-                        rs.getString(2)
+                        rs.getString(2),rs.getBoolean(3)
                 ));
             }
         } catch (Exception e) {

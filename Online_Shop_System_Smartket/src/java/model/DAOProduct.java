@@ -332,7 +332,8 @@ public class DAOProduct extends DBConnect {
                         rs.getInt("UnitDiscount"),
                         rs.getString("CreateDate"),
                         rs.getInt("TotalRate"),
-                        rs.getInt("TotalStock")
+                        rs.getInt("TotalStock"),
+                        rs.getBoolean("ProductStatus")
                 );
                 vector.add(pro);
             }

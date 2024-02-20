@@ -298,6 +298,19 @@ public class DAOUser extends DBConnect {
             e.printStackTrace(); // Handle the exception according to your needs
         }
     }
+    public void updateCreateDate(int userId) {
+        try {
+            String sql = "UPDATE user SET CreateDate = CURRENT_TIMESTAMP WHERE UserID = ?";
+            try (
+                     PreparedStatement pre = conn.prepareStatement(sql)) {
+                pre.setInt(1, userId);
+                pre.executeUpdate();
+            }
+            // Close the connection
+        } catch (SQLException e) {
+            e.printStackTrace(); // Handle the exception according to your needs
+        }
+    }
 
     public static void main(String[] args) {
         DAOUser dao = new DAOUser();
