@@ -21,21 +21,21 @@
     <body>
         <jsp:include page="include/header.jsp"/>
         <!-- Breadcrumb Section Begin -->
-        <section class="breadcrumb-section set-bg" data-setbg="images/blog/breadcrumb.jpg">
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-12 text-center">
-                    <div class="breadcrumb__text">
-                        <h2>Blog</h2>
-                        <div class="breadcrumb__option">
-                            <a href="HomePageURL">Trang chủ</a>
-                            <span>Blog</span>
+        <section class="breadcrumb-section set-bg" data-setbg="images/blog/breadcrumb2.jpg">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-12 text-center">
+                        <div class="breadcrumb__text">
+                            <h2>Blog</h2>
+                            <div class="breadcrumb__option">
+                                <a href="HomePageURL">Trang chủ</a>
+                                <span>Blog</span>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
-    </section>
+        </section>
         <!-- Breadcrumb Section End -->
 
         <!-- Blog Section Begin -->
@@ -51,19 +51,28 @@
                                 </form>
                             </div>
                             <div class="blog__sidebar__item">
+                                <h4>Danh Mục</h4>
+                                <ul>
+                                    <li><a href="blog">Tất cả</a></li>
+                                        <c:forEach items="${listC}" var="o">
+                                        <li><a href="cblog?Cid=${o.categoryID}">${o.categoryName}</a></li>
+                                        </c:forEach>
+                                </ul>
+                            </div>
+                            <div class="blog__sidebar__item">
                                 <h4>BLog mới gần đây</h4>
                                 <c:forEach items="${listNB}" var="nb">
-                                <div class="blog__sidebar__recent">
-                                    <a href="blogdetail?bid=${nb.blogID}" class="blog__sidebar__recent__item">
-                                        <div class="blog__sidebar__recent__item__pic">
-                                            <img src="images/blog/${nb.blogImage}" alt="">
-                                        </div>
-                                        <div class="blog__sidebar__recent__item__text">
-                                            <h6>${nb.blogTitle}</h6>
-                                            <span>${nb.createTime}</span>
-                                        </div>
-                                    </a>
-                                </div>
+                                    <div class="blog__sidebar__recent">
+                                        <a href="blogdetail?bid=${nb.blogID}" class="blog__sidebar__recent__item">
+                                            <div class="blog__sidebar__recent__item__pic">
+                                                <img src="images/blog/${nb.blogImage}" alt="">
+                                            </div>
+                                            <div class="blog__sidebar__recent__item__text">
+                                                <h6>${nb.blogTitle}</h6>
+                                                <span>${nb.createTime}</span>
+                                            </div>
+                                        </a>
+                                    </div>
                                 </c:forEach>
                             </div>
                         </div>
@@ -71,34 +80,34 @@
                     <div class="col-lg-8 col-md-7">
                         <div class="row">
                             <c:forEach items="${listPB}" var="pb">
-                            <div class="col-lg-6 col-md-6 col-sm-6">
-                                <div class="blog__item">
-                                    <div class="blog__item__pic">
-                                        <img src="images/blog/${pb.blogImage}" alt="">
-                                    </div>
-                                    <div class="blog__item__text">
-                                        <ul>
-                                            <li><i class="fa fa-calendar-o"></i> ${pb.createTime}</li>
-<!--                                            <li><i class="fa fa-comment-o"></i> 5</li>-->
-                                        </ul>
-                                        <h5><a href="blogdetail?bid=${pb.blogID}">${pb.blogTitle}</a></h5>
-                                        <p>${pb.blogContent.substring(0,130)}...</p>
-                                        <a href="blogdetail?bid=${pb.blogID}" class="blog__btn">Xem thêm<span class="fa fa-long-arrow-right"></span></a>
+                                <div class="col-lg-6 col-md-6 col-sm-6">
+                                    <div class="blog__item">
+                                        <div class="blog__item__pic">
+                                            <img src="images/blog/${pb.blogImage}" alt="">
+                                        </div>
+                                        <div class="blog__item__text">
+                                            <ul>
+                                                <li><i class="fa fa-calendar-o"></i> ${pb.createTime}</li>
+                                                <!--                                            <li><i class="fa fa-comment-o"></i> 5</li>-->
+                                            </ul>
+                                            <h5><a href="blogdetail?bid=${pb.blogID}">${pb.blogTitle}</a></h5>
+                                            <p>${pb.blogContent.substring(0,130)}...</p>
+                                            <a href="blogdetail?bid=${pb.blogID}" class="blog__btn">Xem thêm<span class="fa fa-long-arrow-right"></span></a>
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
                             </c:forEach>
                             <div class="col-lg-12">
                                 <div class="product__pagination blog__pagination">
                                     <c:if test="${tag>1}">
-                                    <a href="blog?index=${tag-1}"><i class="fa fa-long-arrow-left"></i></a>
-                                    </c:if>
-                                    <c:forEach begin="1" end="${endP}" var="i">
-                                    <a href="blog?index=${i}">${i}</a>
+                                        <a href="blog?index=${tag-1}"><i class="fa fa-long-arrow-left"></i></a>
+                                        </c:if>
+                                        <c:forEach begin="1" end="${endP}" var="i">
+                                        <a href="blog?index=${i}">${i}</a>
                                     </c:forEach>
                                     <c:if test="${tag<endP}">
-                                    <a href="blog?index=${tag+1}"><i class="fa fa-long-arrow-right"></i></a>
-                                    </c:if>
+                                        <a href="blog?index=${tag+1}"><i class="fa fa-long-arrow-right"></i></a>
+                                        </c:if>
                                 </div>
                             </div>
                         </div>
@@ -107,5 +116,15 @@
             </div>
         </section>
         <!-- Blog Section End -->
+
+        <script src="js/jquery-3.3.1.min.js"></script>
+        <script src="js/bootstrap.min.js"></script>
+        <script src="js/jquery.nice-select.min.js"></script>
+        <script src="js/jquery-ui.min.js"></script>
+        <script src="js/jquery.slicknav.js"></script>
+        <script src="js/mixitup.min.js"></script>
+        <script src="js/owl.carousel.min.js"></script>
+        <script src="js/main.js"></script>
+
     </body>
 </html>

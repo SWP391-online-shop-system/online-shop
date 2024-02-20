@@ -351,4 +351,19 @@ public class DAOUser extends DBConnect {
 //        }
     }
 
+    public String convertStatus(int UserStatus) {
+        String result = "";
+        switch (UserStatus) {
+            case 0:
+                result = "<span class=\"badge badge-warning\">Chưa xác nhận email</span>";
+                break;
+            case 1:
+                result = "<span class=\"badge badge-success\">Hoạt động</span>";
+                break;
+            case 2:
+                result = "<span class=\"badge badge-danger\">Khóa</span>";
+                break;
+        }
+        return result;
+    }
 }
