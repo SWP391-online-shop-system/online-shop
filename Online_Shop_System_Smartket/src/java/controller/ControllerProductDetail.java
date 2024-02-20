@@ -50,6 +50,12 @@ public class ControllerProductDetail extends HttpServlet {
             request.setAttribute("rsDetail", rsDetail);
             request.setAttribute("rsRate", rsRate);
             request.setAttribute("rsFeedBack", rsFeedBack);
+            double maxValue = daoPro.getMaxUnitPrice();
+            double minValue = daoPro.getMinUnitPrice();
+            request.setAttribute("inputMinPrice", minValue);
+            request.setAttribute("inputMaxPrice", maxValue);
+            ResultSet rsCategory = daoPro.getData("Select * from Categories");
+            request.setAttribute("CategoryResult", rsCategory);
             request.getRequestDispatcher("productDetail.jsp").forward(request, response);
         }
     }
