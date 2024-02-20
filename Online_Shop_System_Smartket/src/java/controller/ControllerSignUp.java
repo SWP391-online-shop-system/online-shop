@@ -106,7 +106,6 @@ public class ControllerSignUp extends HttpServlet {
                     dao.signup(rFName, rLName, EncodeSHA.transFer(rpass), remail);
                     message = "User successfully signed up";
                     request.setAttribute("msg1", message);
-                    dao.updateCreateDate(user.getUserID());
                     // Send email or perform other necessary actions
                     DAOMail daomail = new DAOMail();
                     long timestamp = System.currentTimeMillis();
