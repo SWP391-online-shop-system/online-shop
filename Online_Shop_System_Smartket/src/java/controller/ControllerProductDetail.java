@@ -11,18 +11,16 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import jakarta.servlet.http.HttpSession;
 import java.sql.ResultSet;
-import model.DAOCart;
 import model.DAOProduct;
-import view.User;
+import view.Product;
 
 /**
  *
- * @author trant
+ * @author admin
  */
-@WebServlet(name = "ControllerCartContact", urlPatterns = {"/contactURL"})
-public class ControllerCartContact extends HttpServlet {
+@WebServlet(name = "ControllerProductDetail", urlPatterns = {"/ProductDetailURL"})
+public class ControllerProductDetail extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -37,23 +35,28 @@ public class ControllerCartContact extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         try ( PrintWriter out = response.getWriter()) {
-            /* TODO output your page here. You may use following sample code. */
-            HttpSession session = request.getSession();
-            String service = request.getParameter("service");
-            DAOCart dao = new DAOCart();
-            User user = (User) session.getAttribute("account");
-            int userID = user.getUserID();
-            String message = "";
-            if (service == null) {
-                service = "showContact";
-            }
-            if (service.equals("showContact")) {
-                ResultSet rs = dao.getData("SELECT * FROM Cart AS c JOIN Product AS p ON c.ProductID = p.ProductID\n"
-                        + "join ProductImage as pi on p.ProductID = pi.ProductID\n"
-                        + "where c.UserID = " + userID + " and pi.ProductURL like '%_1%';");
-                request.setAttribute("data", rs);
-                request.getRequestDispatcher("cartcontact.jsp").forward(request, response);
-            }
+            DAOProduct daoPro = new DAOProduct();
+            int ProductID = Integer.parseInt(request.getParameter("ProductID"));
+            Product p = daoPro.getProductById(ProductID);
+            ResultSet rsDetail = daoPro.getData("select * from Product as p join ProductImage as pi on p.ProductID = pi.ProductID "
+                    + "where p.ProductID = " + ProductID);
+            ResultSet rsRate = daoPro.getData("SELECT p.ProductID, COALESCE(avg(fb.FeedBackRate), 3) AS AverageFeedbackRate, count(fb.ProductID) as timeRateCount, count(fb.UserID) as userRateCount\n"
+                    + "FROM Product p\n"
+                    + "LEFT JOIN FeedBack fb ON p.ProductID = fb.ProductID where p.ProductID = " + ProductID + " \n"
+                    + "GROUP BY p.ProductID");
+            ResultSet rsFeedBack = daoPro.getData("select u.UserImage, (CONCAT(u.FirstName,\" \",u.LastName))as UserName,\n"
+                    + "fb.FeedBackRate, fb.FeedBackContent, fb.FeedBackDate \n"
+                    + "from User as u join FeedBack as fb on u.UserID = fb.UserID where fb.ProductID= " + ProductID + " order by fb.FeedBackDate;");
+            request.setAttribute("rsDetail", rsDetail);
+            request.setAttribute("rsRate", rsRate);
+            request.setAttribute("rsFeedBack", rsFeedBack);
+            double maxValue = daoPro.getMaxUnitPrice();
+            double minValue = daoPro.getMinUnitPrice();
+            request.setAttribute("inputMinPrice", minValue);
+            request.setAttribute("inputMaxPrice", maxValue);
+            ResultSet rsCategory = daoPro.getData("Select * from Categories");
+            request.setAttribute("CategoryResult", rsCategory);
+            request.getRequestDispatcher("productDetail.jsp").forward(request, response);
         }
     }
 

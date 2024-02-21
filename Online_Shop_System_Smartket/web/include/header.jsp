@@ -211,7 +211,7 @@
                 </html>
             </div>
         </div>
-    </div>
+    </div>  
     <div class="header-content">
         <div class="header-content-logo">
             <a href="HomePageURL"><img src="images/logo/logo.png"alt="404"/></a>
@@ -253,12 +253,15 @@
                             ResultSet rs = dao.getData("SELECT count(*) as count FROM Cart AS c JOIN Product AS p ON c.ProductID = p.ProductID where userID = "+userID+"");
                             while(rs.next()){
                         %>
-                        <span class="count-cart" style="margin-right: -11px;
+                        <span class="count-cart" style="position: absolute;
+                              margin-left: 17px;
                               background-color: #ff0000;
                               color: #ffffff;
                               border-radius: 50%;
-                              padding: 0px 5px;
-                              font-size: 17px;"><%=rs.getInt(1)%></span>
+                              padding: 0px 4px;
+                              font-size: 15px;
+                              z-index: 9;
+                              top: 11px;"><%=rs.getInt(1)%></span>
                         <%
                             }
                         %>
