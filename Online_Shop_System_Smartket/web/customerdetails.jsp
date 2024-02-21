@@ -1,17 +1,16 @@
 <%-- 
-    Document   : customerlist
-    Created on : Jan 31, 2024, 3:38:58 PM
+    Document   : customerdetails
+    Created on : Feb 21, 2024, 6:08:48 PM
     Author     : trant
 --%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
-<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html lang="en">
     <head>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-        <title>Danh Sách Khách Hàng</title>
+        <title>Thông Tin Khách Hàng</title>
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
         <script src="https://kit.fontawesome.com/ac74b86ade.js" crossorigin="anonymous"></script>
         <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
@@ -110,16 +109,14 @@
                         </div>
 
                         <!-- Row -->
-                        <div class="row">
-
-                        </div>
-                        <div class="row">
-                            <!-- DataTable with Hover -->
+                        <div class="row">hello</div>
+<!--                        <div class="row">
+                             DataTable with Hover 
                             <div class="col-lg-12">
                                 <div class="card mb-4">                                 
-                                    <!--                                    <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                                                                        <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
                                                                             <h6 class="m-0 font-weight-bold text-primary">DataTables with Hover</h6>
-                                                                        </div>-->
+                                                                        </div>
                                     <div class="table-responsive p-3">
                                         <table class="table align-items-center table-flush table-hover" id="dataTableHover" style="font-size: 16px;
                                                ">
@@ -135,26 +132,12 @@
                                                 </tr>
                                             </thead>
 
-                                            <tbody>
-                                                <%int count = 0;%>
-                                                <c:forEach items="${requestScope.data}" var="cus">
-                                                    <tr style="text-align: center; cursor: pointer" onclick="Customerdetail()">
-                                                        <%count++;%>
-                                                        <td><%=count%></td>
-                                                        <td>${cus.firstName} ${cus.lastName}</td>
-                                                        <td>${cus.email}</td>
-                                                        <td>${cus.gender ? 'Nam':'Nữ'}</td>
-                                                        <td>${cus.phoneNumber ? '':'Không'}</td>                        
-                                                        <td>${cus.userStatus ? 'Đang Hoạt Động':'Bị Chặn'}</td>                        
-                                                        <td>${cus.lastLogin}</td>
-                                                    </tr>
-                                                </c:forEach>    
-                                            </tbody>
+                                            
                                         </table>
                                     </div>                                    
                                 </div>
                             </div>
-                        </div>
+                        </div>-->
                         <!--Row-->
                     </div>      
                 </div>
@@ -175,27 +158,19 @@
 
         <!-- Page level custom scripts -->
         <script>
-                                                        $(document).ready(function () {
-                                                            $('#dataTable').DataTable(); // ID From dataTable 
-                                                            $('#dataTableHover').DataTable({
-                                                                columns: [
-                                                                    {searchable: false},
-                                                                    {searchable: true},
-                                                                    {searchable: true},
-                                                                    {searchable: false},
-                                                                    {searchable: true},
-                                                                    {searchable: false},
-                                                                    {searchable: false}],
-                                                                search: {
-                                                                    placeholder: 'Type search here'
-                                                                }
-                                                            }); // ID From dataTable with Hover
-                                                        });
-
-                                                        function Customerdetail() {
-                                                            var url = "customerdetails.jsp";
-                                                            window.location.href = url;
-                                                        }
+            $(document).ready(function () {
+                $('#dataTable').DataTable(); // ID From dataTable 
+                $('#dataTableHover').DataTable({
+                    columns: [
+                        {searchable: false},
+                        {searchable: true},
+                        {searchable: false},
+                        {searchable: true},
+                        {searchable: true},
+                        {searchable: false},
+                        {searchable: false}]
+                }); // ID From dataTable with Hover
+            });
         </script>
     </body>
 </html>
