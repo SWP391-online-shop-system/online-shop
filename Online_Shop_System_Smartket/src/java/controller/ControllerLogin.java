@@ -61,15 +61,24 @@ public class ControllerLogin extends HttpServlet {
             String email = request.getParameter("email");
             String pass = request.getParameter("pass");
             String passwordEncode = EncodeSHA.transFer(pass);
+
+// First, try to check with encoded password
             User user = dao.check(email, passwordEncode);
+
+// If user is not found, try checking with plain text password
             if (user == null) {
+                // Fetch user details by email without checking password
                 User userWithoutPasswordCheck = dao.checkAccountExist(email);
+
                 if (userWithoutPasswordCheck != null) {
+                    // Compare plain text password
                     if (pass.equals(userWithoutPasswordCheck.getPassword())) {
+                        // Password matched
                         user = userWithoutPasswordCheck;
                     }
                 }
             }
+
             if (user == null) {
                 // User not found or password doesn't match
                 request.setAttribute("activeLogin", "active");
@@ -96,18 +105,17 @@ public class ControllerLogin extends HttpServlet {
         }
     }
 
-
 // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
-/**
- * Handles the HTTP <code>GET</code> method.
- *
- * @param request servlet request
- * @param response servlet response
- * @throws ServletException if a servlet-specific error occurs
- * @throws IOException if an I/O error occurs
- */
-@Override
-protected void doGet(HttpServletRequest request, HttpServletResponse response)
+    /**
+     * Handles the HTTP <code>GET</code> method.
+     *
+     * @param request servlet request
+     * @param response servlet response
+     * @throws ServletException if a servlet-specific error occurs
+     * @throws IOException if an I/O error occurs
+     */
+    @Override
+    protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         request.setAttribute("activeLogin", "active");
         request.getRequestDispatcher("HomePageURL").forward(request, response);
@@ -122,7 +130,7 @@ protected void doGet(HttpServletRequest request, HttpServletResponse response)
      * @throws IOException if an I/O error occurs
      */
     @Override
-protected void doPost(HttpServletRequest request, HttpServletResponse response)
+    protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         processRequest(request, response);
 
@@ -134,7 +142,7 @@ protected void doPost(HttpServletRequest request, HttpServletResponse response)
      * @return a String containing servlet description
      */
     @Override
-public String getServletInfo() {
+    public String getServletInfo() {
         return "Short description";
     }// </editor-fold>
 

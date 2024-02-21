@@ -488,7 +488,7 @@ a:focus{
     color:#858796
 }
 .bg-navbar{
-   background: linear-gradient(45deg, #5fc176, #1ab365);
+    background: linear-gradient(45deg, #5fc176, #1ab365);
 }
 .sidebar{
     min-height:100vh;

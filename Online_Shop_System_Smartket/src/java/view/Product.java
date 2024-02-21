@@ -17,6 +17,36 @@ public class Product {
     public Product() {
     }
 
+    public Product(String ProductName, int CategoryID, String ProductDescription, int UnitInStock, double UnitPrice, int UnitDiscount, String CreateDate, int TotalRate, int TotalStock, boolean ProductStatus) {
+        this.ProductName = ProductName;
+        this.CategoryID = CategoryID;
+        this.ProductDescription = ProductDescription;
+        this.UnitInStock = UnitInStock;
+        this.UnitPrice = UnitPrice;
+        this.UnitDiscount = UnitDiscount;
+        this.CreateDate = CreateDate;
+        this.TotalRate = TotalRate;
+        this.TotalStock = TotalStock;
+        this.ProductStatus = ProductStatus;
+    }
+
+    public Product(int ProductID, String ProductName, int CategoryID, String ProductDescription, int UnitInStock, double UnitPrice, int UnitDiscount, String CreateDate, int TotalRate, int TotalStock) {
+        this.ProductID = ProductID;
+        this.ProductName = ProductName;
+        this.CategoryID = CategoryID;
+        this.ProductDescription = ProductDescription;
+        this.UnitInStock = UnitInStock;
+        this.UnitPrice = UnitPrice;
+        this.UnitDiscount = UnitDiscount;
+        this.CreateDate = CreateDate;
+        this.TotalRate = TotalRate;
+        this.TotalStock = TotalStock;
+    }
+
+    
+
+    
+
     public Product(int ProductID, String ProductName, int CategoryID, String ProductDescription, int UnitInStock, double UnitPrice, int UnitDiscount, String CreateDate, int TotalRate, int TotalStock, boolean ProductStatus) {
         this.ProductID = ProductID;
         this.ProductName = ProductName;
@@ -30,6 +60,8 @@ public class Product {
         this.TotalStock = TotalStock;
         this.ProductStatus = ProductStatus;
     }
+
+    
 
     public int getProductID() {
         return ProductID;
@@ -163,7 +195,7 @@ public class Product {
 
     @Override
     public String toString() {
-        return "Product{" + "ProductID=" + ProductID + ", ProductName=" + ProductName + ", CategoryID=" + CategoryID + ", ProductDescription=" + ProductDescription + ", UnitInStock=" + UnitInStock + ", UnitPrice=" + UnitPrice + ", UnitDiscount=" + UnitDiscount + ", CreateDate=" + CreateDate + ", TotalRate=" + TotalRate + ", TotalStock=" + TotalStock + ", ProductStatus=" + ProductStatus + '}';
+        return "Product{" + "ProductID=" + ProductID + ", ProductName=" + ProductName + ", CategoryID=" + CategoryID + ", ProductDescription=" + ProductDescription + ", UnitInStock=" + UnitInStock + ", UnitPrice=" + UnitPrice + ", UnitDiscount=" + UnitDiscount + ", CreateDate=" + CreateDate + ", TotalRate=" + TotalRate + ", TotalStock=" + TotalStock + '}';
     }
 
 }

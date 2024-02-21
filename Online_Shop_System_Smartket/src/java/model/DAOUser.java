@@ -67,7 +67,8 @@ public class DAOUser extends DBConnect {
                 + "`Email`,\n"
                 + "`UserStatus`,\n"
                 + "`ReportTo`,\n"
-                + "`RoleID`)\n"
+                + "`RoleID`,\n"
+                + "`CreateDate`)\n" // Include CreateDate column in the query
                 + "VALUES\n"
                 + "(?,\n"
                 + "?,\n"
@@ -75,7 +76,8 @@ public class DAOUser extends DBConnect {
                 + "?,\n"
                 + "0,\n"
                 + "1,\n"
-                + "1);";
+                + "1,\n"
+                + "CURRENT_TIMESTAMP)"; // Use CURRENT_TIMESTAMP to set the current timestamp
         try {
             PreparedStatement pre = conn.prepareStatement(sql);
             pre.setString(1, fname);
