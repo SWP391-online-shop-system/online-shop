@@ -133,11 +133,11 @@
                             </ol>
                         </div>
                         <!-- Row -->
-                        <form action="mktProductListURL" method="get" id="categoryForm">
+                        <form action="mktProductListURL" method="get" id="filterForm">
                             <div class="filter-group">
                                 <label>Loại</label>
                                 <select class="form-control" name="categoryId" onchange="submitForm()">
-                                    <option value="">All</option>
+                                    <option value="">Tất cả</option>
                                     <c:forEach var="category" items="${categories}">
                                         <option value="${category.categoryID}" 
                                                 <c:if test="${category.categoryID eq param.categoryId}">
@@ -147,19 +147,22 @@
                                     </c:forEach>							
                                 </select>
                             </div>
-                        </form>
-                        <form action="mktProductListURL" method="get">
-                            <!-- Your other form elements -->
                             <div class="filter-group">
                                 <label>Trạng thái</label>
-                                <select class="form-control" name="status" onchange="this.form.submit()">
-                                    <option value="">Any</option>
-                                    <option value="Còn hàng" <c:if test="${fn:contains(param.status,'Còn')}">selected</c:if>>Còn hàng</option>
-                                    <option value="Hết hàng" <c:if test="${fn:contains(param.status,'Hết')}">selected</c:if>>Hết hàng</option>
+                                <select class="form-control" name="status" onchange="submitForm()">
+                                    <option value="">Tất cả</option>
+                                    <option value="Còn hàng" <c:if test="${param.status == 'Còn hàng'}">selected</c:if>>Còn hàng</option>
+                                    <option value="Hết hàng" <c:if test="${param.status == 'Hết hàng'}">selected</c:if>>Hết hàng</option>
                                     </select>
                                 </div>
-                                <input type="submit" style="display: none;">
                             </form>
+
+                            <script>
+                                function submitForm() {
+                                    document.getElementById('filterForm').submit();
+                                }
+                            </script>
+
                             <a href="AddProductmktURL?service=addProduct" class="btn btn-secondary">Add New Product</a>
                             <div class="row">
                                 <!-- DataTable with Hover -->
@@ -210,8 +213,6 @@
                                                                 Hành động
                                                             </button>
                                                             <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                                                <a class="dropdown-item" href="#" onclick="hideProduct(<%= rs.getInt("ProductID") %>)">Ẩn</a>
-                                                                <a class="dropdown-item" href="#" onclick="showProduct(<%= rs.getInt("ProductID") %>)">Hiện</a>
                                                                 <a class="dropdown-item" href="mktViewProductURL?productId=<%= rs.getInt("ProductID") %>">Xem</a>
                                                                 <a class="dropdown-item" href="EditProductmktURL?productId=<%= rs.getInt("ProductID") %>">Chỉnh sửa</a>
                                                             </div>
@@ -293,15 +294,10 @@
 
         <!-- Page level custom scripts -->
         <script>
-                                                                    $(document).ready(function () {
-                                                                        $('#dataTable').DataTable(); // ID From dataTable 
-                                                                        $('#dataTableHover').DataTable(); // ID From dataTable with Hover
-                                                                    });
-        </script>
-        <script>
-            function submitForm() {
-                document.getElementById('categoryForm').submit();
-            }
+                                $(document).ready(function () {
+                                    $('#dataTable').DataTable(); // ID From dataTable 
+                                    $('#dataTableHover').DataTable(); // ID From dataTable with Hover
+                                });
         </script>
     </body>
 

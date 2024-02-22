@@ -63,7 +63,6 @@
                 <tr>
                     <th>ID</th>
                     <th>Tên sản phẩm</th>
-                    <th>Ảnh</th>
                     <th>Loại</th>
                     <th>Mô tả sản phẩm</th>
                     <th>Hàng trong kho</th>
@@ -72,6 +71,7 @@
                     <th>Ngày tạo</th>
                     <th>Tổng số đánh giá</th>
                     <th>Tổng số sản phẩm</th>
+                    <th>Trạng thái sản phẩm</th>
                 </tr>
             </thead>
                 <!-- Table headers -->
