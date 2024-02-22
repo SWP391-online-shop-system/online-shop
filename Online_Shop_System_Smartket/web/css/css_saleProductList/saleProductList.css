@@ -101,7 +101,12 @@ body {
     display: inline-block;
 }
 .filter-group select.form-control {
-    width: 110px;
+    width: 175px;
+    height: 31px;
+    font-size: 13px;
+    margin-left: 14px;
+    margin-right: 21px;
+    padding: 4px;
 }
 .filter-icon {
     float: right;

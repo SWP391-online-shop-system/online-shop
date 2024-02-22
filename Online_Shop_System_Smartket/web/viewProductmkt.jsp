@@ -66,6 +66,7 @@
                     <th>Ngày tạo</th>
                     <th>Tổng số đánh giá</th>
                     <th>Tổng số sản phẩm</th>
+                    <th>Ngày tạo</th>
                 </tr>
             </thead>
             <tbody>
@@ -87,6 +88,7 @@
                     <td><%= rs.getString("CreateDate") %></td>
                     <td><%= rs.getInt("TotalRate") %></td>
                     <td><%= rs.getInt("TotalStock") %></td>
+                    <td><%= rs.getBoolean("ProductStatus") %></td>
                 </tr>
                 <% 
                         }
