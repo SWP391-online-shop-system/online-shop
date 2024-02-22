@@ -34,9 +34,9 @@
         <%DecimalFormat df = new DecimalFormat("###,###");
             df.setMaximumFractionDigits(8);%>
         <!-- start header -->
-        <div class="header" style="margin-top: 21px;">
+        <div class="header">
             <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-            <div class="header-title" style="margin-top: -16px;">
+            <div class="header-title">
                 <div class="header-title-left">
                     <ul>
                         <li>
@@ -71,8 +71,8 @@
                             </head>
                             <body> 
                                 <%
-                                    String message1 = (String)request.getAttribute("message");
-                                    String messagesu1 = (String)request.getAttribute("messageSignUp");
+                                    String message = (String)request.getAttribute("message");
+                                    String messagesu = (String)request.getAttribute("messageSignUp");
                                     String msg1 = (String)request.getAttribute("msg1");
                                 %>
                                 <c:if test="${sessionScope.account.roleID == 5}">
@@ -97,7 +97,7 @@
                                     <a href="profileUser.jsp"><img style="width: 30px;
                                                                    height: 30px;
                                                                    margin-right: -10px;
-                                                                   margin-bottom: 3px;
+                                                                   margin-bottom: -8px;
                                                                    margin-left: 7px;
                                                                    border-radius: 50%;" class="styling1" src="images/user/default_avatar.jpg" alt="Admin Image"></a>
                                     </c:if>
@@ -114,7 +114,7 @@
                                                color: red;
                                                font-size: 20px;
                                                font-weight: 700;
-                                               text-align: left;"><%=(message1 == null) ? "" : message1%></p>
+                                               text-align: left;"><%=(message == null) ? "" : message%></p>
                                             <div class="form-element">
                                                 <label for="email">Email</label>
                                                 <input type="email" id="email" name="email" placeholder="Nhập email" required 
@@ -219,7 +219,7 @@
                                                color: red;
                                                font-size: 20px;
                                                font-weight: 700;
-                                               text-align: left;"><%=(messagesu1 == null) ? "" : messagesu1%></p>
+                                               text-align: left;"><%=(messagesu == null) ? "" : messagesu%></p>
                                             <div class="form-element">
                                                 <button type="submit" >Đăng kí</button>
                                             </div>
@@ -234,12 +234,12 @@
                         </html>
                     </div>
                 </div>
-            </div>  
-            <div class="header-content" style="margin-bottom: 20px;">
+            </div>
+            <div class="header-content">
                 <div class="header-content-logo">
                     <a href="HomePageURL"><img src="images/logo/logo.png"alt="404"/></a>
                 </div>
-                <div class="header-content-menu">
+                <div class="header-content-menu" style="padding: 67px 0px;">
                     <ul>
                         <li class="active"><a href="HomePageURL">Trang chủ</a></li>
                         <li><a href="ProductListURL?service=ShowAllProduct">Mua hàng</a></li>
@@ -260,7 +260,7 @@
                             <li><a href="profileUser.jsp">Tài khoản</a></li>
                         </c:if>            </ul>
                 </div>
-                <div class="header-content-right-menu">
+                <div class="header-content-right-menu"style="padding: 21px 0px;">
                     <ul>
                         <li class="margin-unit"><a href="#" title="Đơn hàng của tôi"><i class="fa-solid fa-file-invoice-dollar"></i></i></a></li>
                             <c:if test="${sessionScope.account == null}">
@@ -272,21 +272,16 @@
                                     HttpSession session2 = request.getSession();
                                     User user = (User) session2.getAttribute("account");
                                     int userID = user.getUserID();
-                                    DAOCart dao = new DAOCart();
-                                    
-                                    ResultSet rs1 = dao.getData("SELECT count(*) as count FROM Cart AS c JOIN Product AS p ON c.ProductID = p.ProductID where userID = "+userID+"");
-                                    while(rs1.next()){
+                                    DAOCart daoC = new DAOCart();
+                                    ResultSet rs = daoC.getData("SELECT count(*) as count FROM Cart AS c JOIN Product AS p ON c.ProductID = p.ProductID where userID = "+userID+"");
+                                    while(rs.next()){
                                 %>
-                                <span class="count-cart" style="position: absolute;
-                                      margin-left: 17px;
+                                <span class="count-cart" style="margin-right: -11px;
                                       background-color: #ff0000;
                                       color: #ffffff;
                                       border-radius: 50%;
-                                      padding: 0px 4px;
-                                      font-size: 15px;
-                                      z-index: 9;
-                                      top: 11px;
-                                      left: 3px;"><%=rs1.getInt(1)%></span>
+                                      padding: 0px 5px;
+                                      font-size: 17px;"><%=rs.getInt(1)%></span>
                                 <%
                                     }
                                 %>
@@ -454,7 +449,7 @@
                                         </div>
                                         <% } else { %>
                                         <div class="item">
-                                            <img src="<%=listUrls.get(i)%>" class="img-responsive" alt style="height: 253px;width: 253px;margin-left: 48px;"/>
+                                            <img src="<%=listUrls.get(i)%>" class="img-responsive" alt style="height: 335px;width: 253px;margin-left: 48px;"/>
                                         </div>
                                         <%}}%>
                                     </div>
@@ -465,17 +460,10 @@
                             <div class="row">
                                 <div style="text-align: center;margin-top: 23px;">
                                     <form class="frm">
-                                        <div style="display: flex;width: 368px;height: 48px;margin-left: 20px;
-                                             margin-top: -20px;">
-                                            <div style="margin: 4px 10px -3px 0px;font-size: 15px;">Số lượng</div>
-                                            <div>
-                                                <div class="value-button" id="decrease" onclick="decreaseValue()" value="Decrease Value"><i class="fa-solid fa-minus" style="font-size: 14px;"></i></div>
-                                                <input type="number" id="number" value="1" min="1" />
-                                                <div class="value-button" style="flex: 0 0 70%" id="increase" onclick="increaseValue()" value="Increase Value"><i class="fa-solid fa-plus" style="font-size: 14px;"></i></div>
-                                            </div>
-                                            <div style="    font-size: 15px;margin: 5px 0px -10px 10px;">Còn lại trong kho: <%=newPro.getUnitInStock()%></div>
-                                        </div>
-                                        <button type="submit" class="btn btn-success btn-lg" style="padding: 4px 11px;border-radius: 2px;margin-left: 4px;margin-bottom: 1px;">Mua ngay</button>
+                                        <div class="value-button" id="decrease" onclick="decreaseValue()" value="Decrease Value"><i class="fa-solid fa-minus" style="font-size: 14px;"></i></div>
+                                        <input type="number" id="number" value="0" />
+                                        <div class="value-button" id="increase" onclick="increaseValue()" value="Increase Value"><i class="fa-solid fa-plus" style="font-size: 14px;"></i></div><br/>
+                                        <button type="submit" class="btn btn-success btn-lg" style="padding: 4px 11px;">Mua ngay</button>
                                     </form>
                                 </div>
                             </div>
@@ -573,7 +561,7 @@
                                                     </div>
                                                     <br/>
                                                     <span><%=rsFeedBack.getString(4)%></span>
-                                                    <ul class="list-inline font-xs" style="margin-bottom: 30px;">
+                                                    <ul class="list-inline font-xs" style="margin-bottom: 50px;">
                                                         <li style="float:left">
                                                             <small class="text-muted pull-right ultra-light"><%=rsFeedBack.getString(5)%> </small>
                                                         </li>
@@ -594,19 +582,20 @@
         <script src="https://code.jquery.com/jquery-1.10.2.min.js"></script>
         <script src="https://netdna.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
         <script type="text/javascript">
-                                                    function increaseValue() {
-                                                        var value = parseInt(document.getElementById('number').value, 10);
-                                                        value = isNaN(value) ? 0 : value;
-                                                        value++;
-                                                        document.getElementById('number').value = value;
-                                                    }
+                                            function increaseValue() {
+                                                var value = parseInt(document.getElementById('number').value, 10);
+                                                value = isNaN(value) ? 0 : value;
+                                                value++;
+                                                document.getElementById('number').value = value;
+                                            }
 
-                                                    function decreaseValue() {
-                                                        var value = parseInt(document.getElementById('number').value, 10);
-                                                        value = isNaN(value) ? 0 : value;
-                                                        value <= 1 ? value = 1 : value--;
-                                                        document.getElementById('number').value = value;
-                                                    }
+                                            function decreaseValue() {
+                                                var value = parseInt(document.getElementById('number').value, 10);
+                                                value = isNaN(value) ? 0 : value;
+                                                value < 1 ? value = 1 : '';
+                                                value--;
+                                                document.getElementById('number').value = value;
+                                            }
         </script>
     </body>
 </html>
