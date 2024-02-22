@@ -59,6 +59,21 @@
         <form action="EditProductmktURL" method="get" onsubmit="return validateForm()">
             <input type="hidden" name="service" value="update">
             <table class="table table-striped table-hover">
+                <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Tên sản phẩm</th>
+                    <th>Ảnh</th>
+                    <th>Loại</th>
+                    <th>Mô tả sản phẩm</th>
+                    <th>Hàng trong kho</th>
+                    <th>Giá bán</th>
+                    <th>Giảm giá</th>
+                    <th>Ngày tạo</th>
+                    <th>Tổng số đánh giá</th>
+                    <th>Tổng số sản phẩm</th>
+                </tr>
+            </thead>
                 <!-- Table headers -->
                 <tbody>
                     <tr>

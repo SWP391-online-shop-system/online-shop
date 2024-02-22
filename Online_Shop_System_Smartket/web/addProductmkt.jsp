@@ -36,7 +36,7 @@
                     <div class="table-title">
                         <div class="row">
                             <div class="col-sm-4">
-                                <h2>Thêm sản phẩm <b>Thêm sản phẩm</b></h2>
+                                <h2><b>Thêm sản phẩm</b></h2>
                             </div>
                         </div>
                     </div>
@@ -58,9 +58,23 @@
                 return true;
             }
         </script>
-        <form action="AddProductmktURL" method="post" onsubmit="return validateForm()">
+        <form action="AddProductmktURL" method="get" onsubmit="return validateForm()">
             <input type="hidden" name="service" value="addProduct">
             <table class="table table-striped table-hover">
+                <thead>
+                <tr>
+                    <th>Tên sản phẩm</th>
+                    <th>Ảnh</th>
+                    <th>Loại</th>
+                    <th>Mô tả sản phẩm</th>
+                    <th>Hàng trong kho</th>
+                    <th>Giá bán</th>
+                    <th>Giảm giá</th>
+                    <th>Ngày tạo</th>
+                    <th>Tổng số đánh giá</th>
+                    <th>Tổng số sản phẩm</th>
+                </tr>
+            </thead>
                 <tbody>
                     <tr>
                         <td><input type="text" name="productName" value="${productName}"></td>
@@ -69,13 +83,13 @@
                         <td><input type="number" name="unitInStock" id="unitInStock" value="${unitInStock}"></td>
                         <td><input type="number" name="unitPrice" value="${unitPrice}"></td>
                         <td><input type="number" name="unitDiscount" value="${unitDiscount}"></td>
-                        <td><input type="text" name="createDate" value="${createDate}"></td>
                         <td><input type="number" name="totalRate" value="${totalRate}"></td>
                         <td><input type="number" name="totalStock" id="totalStock" value="${totalStock}"></td>
                     </tr>
                 </tbody>
             </table>
-            <input type="submit" value="Add">
+            <input type="submit" name="submit" value="Add Product">
+            <input type="reset" value="Clear">
         </form>
     </body>
 </html>

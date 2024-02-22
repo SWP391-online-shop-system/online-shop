@@ -11,6 +11,7 @@
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page import="view.*" %>
 <%@page import="model.*" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
 <%@page import="java.sql.ResultSet, java.sql.SQLException"%>
 <link rel="stylesheet" href="css/css_saleProductList/saleProductList.css"/>
 <link rel="stylesheet" href="css/css_mkt/style.css"/>
@@ -153,8 +154,8 @@
                                 <label>Trạng thái</label>
                                 <select class="form-control" name="status" onchange="this.form.submit()">
                                     <option value="">Any</option>
-                                    <option value="Còn hàng" <c:if test="${param.status == 'Còn hàng'}">selected</c:if>>Còn hàng</option>
-                                    <option value="Hết hàng" <c:if test="${param.status == 'Hết hàng'}">selected</c:if>>Hết hàng</option>
+                                    <option value="Còn hàng" <c:if test="${fn:contains(param.status,'Còn')}">selected</c:if>>Còn hàng</option>
+                                    <option value="Hết hàng" <c:if test="${fn:contains(param.status,'Hết')}">selected</c:if>>Hết hàng</option>
                                     </select>
                                 </div>
                                 <input type="submit" style="display: none;">
