@@ -12,12 +12,12 @@ public class Product {
     private String CreateDate;
     private int TotalRate;
     private int TotalStock;
-    private boolean ProductStatus;
+    private boolean productStatus;
 
     public Product() {
     }
 
-    public Product(String ProductName, int CategoryID, String ProductDescription, int UnitInStock, double UnitPrice, int UnitDiscount, String CreateDate, int TotalRate, int TotalStock, boolean ProductStatus) {
+    public Product(String ProductName, int CategoryID, String ProductDescription, int UnitInStock, double UnitPrice, int UnitDiscount, String CreateDate, int TotalRate, int TotalStock) {
         this.ProductName = ProductName;
         this.CategoryID = CategoryID;
         this.ProductDescription = ProductDescription;
@@ -27,8 +27,10 @@ public class Product {
         this.CreateDate = CreateDate;
         this.TotalRate = TotalRate;
         this.TotalStock = TotalStock;
-        this.ProductStatus = ProductStatus;
+        this.productStatus = false;
     }
+
+    
 
     public Product(int ProductID, String ProductName, int CategoryID, String ProductDescription, int UnitInStock, double UnitPrice, int UnitDiscount, String CreateDate, int TotalRate, int TotalStock) {
         this.ProductID = ProductID;
@@ -47,7 +49,7 @@ public class Product {
 
     
 
-    public Product(int ProductID, String ProductName, int CategoryID, String ProductDescription, int UnitInStock, double UnitPrice, int UnitDiscount, String CreateDate, int TotalRate, int TotalStock, boolean ProductStatus) {
+    public Product(int ProductID, String ProductName, int CategoryID, String ProductDescription, int UnitInStock, double UnitPrice, int UnitDiscount, String CreateDate, int TotalRate, int TotalStock, boolean productStatus) {
         this.ProductID = ProductID;
         this.ProductName = ProductName;
         this.CategoryID = CategoryID;
@@ -58,7 +60,7 @@ public class Product {
         this.CreateDate = CreateDate;
         this.TotalRate = TotalRate;
         this.TotalStock = TotalStock;
-        this.ProductStatus = ProductStatus;
+        this.productStatus = productStatus;
     }
 
     
@@ -186,11 +188,11 @@ public class Product {
     }
 
     public boolean isProductStatus() {
-        return ProductStatus;
+        return productStatus;
     }
 
-    public void setProductStatus(boolean ProductStatus) {
-        this.ProductStatus = ProductStatus;
+    public void setProductStatus(boolean productStatus) {
+        this.productStatus = productStatus;
     }
 
     @Override

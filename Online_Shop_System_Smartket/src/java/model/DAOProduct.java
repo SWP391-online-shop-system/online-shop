@@ -5,6 +5,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.sql.Timestamp;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -49,7 +50,8 @@ public class DAOProduct extends DBConnect {
         return vector;
     }
 
-    public void insertProduct(Product pro) {
+    public int insertProduct(Product pro) {
+        int n = 0;
         String sql = "INSERT INTO `online_shop_system`.`product`\n"
                 + "(`ProductID`,\n"
                 + "`ProductName`,\n"
@@ -60,7 +62,7 @@ public class DAOProduct extends DBConnect {
                 + "`UnitDiscount`,\n"
                 + "`CreateDate`,\n"
                 + "`TotalRate`,\n"
-                + "`TotalStock`\n"
+                + "`TotalStock`,\n"
                 + "`ProductStatus`)\n"
                 + "VALUES\n"
                 + "(?,\n"
@@ -73,7 +75,7 @@ public class DAOProduct extends DBConnect {
                 + "?,\n"
                 + "?,\n"
                 + "?,\n"
-                + "?),\n";
+                + "?)";
         try {
             PreparedStatement pre = conn.prepareStatement(sql);
             pre.setInt(1, pro.getProductID());
@@ -83,21 +85,21 @@ public class DAOProduct extends DBConnect {
             pre.setInt(5, pro.getUnitInStock());
             pre.setDouble(6, pro.getUnitPrice());
             pre.setInt(7, pro.getUnitDiscount());
-            pre.setString(8, pro.getCreateDate());
+            pre.setString(8, getCurrentTimestamp()); // Set current timestamp
             pre.setInt(9, pro.getTotalRate());
             pre.setInt(10, pro.getTotalStock());
             pre.setBoolean(11, pro.isProductStatus());
-            pre.executeUpdate();
+            n = pre.executeUpdate();
         } catch (SQLException ex) {
             Logger.getLogger(DAOProduct.class.getName()).log(Level.SEVERE, null, ex);
         }
+        return n;
     }
 
     public int updateProduct(Product pro) {
         int n = 0;
         String sql = "UPDATE `online_shop_system`.`product`\n"
                 + "SET\n"
-                + "`ProductID` = ?,\n"
                 + "`ProductName` = ?,\n"
                 + "`CategoryID` = ?,\n"
                 + "`ProductDescription` = ?,\n"
@@ -106,21 +108,21 @@ public class DAOProduct extends DBConnect {
                 + "`UnitDiscount` = ?,\n"
                 + "`CreateDate` =?,\n"
                 + "`TotalRate` = ?,\n"
-                + "`TotalStock` = ?\n"
-                + "`ProductStatus` = ?\n"
+                + "`TotalStock` = ?,\n"
+                + "`ProductStatus` = ?\n" // Moved ProductStatus to the end
                 + "WHERE `ProductID` = ?";
         try {
             PreparedStatement pre = conn.prepareStatement(sql);
-            pre.setInt(1, pro.getProductID());
-            pre.setString(2, pro.getProductName());
-            pre.setInt(3, pro.getCategoryID());
-            pre.setString(4, pro.getProductDescription());
-            pre.setInt(5, pro.getUnitInStock());
-            pre.setDouble(6, pro.getUnitPrice());
-            pre.setInt(7, pro.getUnitDiscount());
-            pre.setString(8, pro.getCreateDate());
-            pre.setInt(9, pro.getTotalRate());
-            pre.setInt(10, pro.getTotalStock());
+            pre.setString(1, pro.getProductName());
+            pre.setInt(2, pro.getCategoryID());
+            pre.setString(3, pro.getProductDescription());
+            pre.setInt(4, pro.getUnitInStock());
+            pre.setDouble(5, pro.getUnitPrice());
+            pre.setInt(6, pro.getUnitDiscount());
+            pre.setString(7, pro.getCreateDate());
+            pre.setInt(8, pro.getTotalRate());
+            pre.setInt(9, pro.getTotalStock());
+            pre.setInt(10, pro.isProductStatus() ? 1 : 0);  // Convert boolean to int
             pre.setInt(11, pro.getProductID());
             n = pre.executeUpdate();
         } catch (SQLException e) {
@@ -383,7 +385,8 @@ public class DAOProduct extends DBConnect {
         }
         return 0;
     }
-	 public int getTotalProduct() {
+
+    public int getTotalProduct() {
         String sql = "select count(*) from Product";
         try {
             PreparedStatement st = conn.prepareStatement(sql);
@@ -396,7 +399,7 @@ public class DAOProduct extends DBConnect {
         }
         return 0;
     }
-    
+
     public int getTotalTypeProduct(String type, double min, double max) {
         if (type.equals("showSale")) {
             type = "UnitDiscount != 0";
@@ -654,6 +657,26 @@ public class DAOProduct extends DBConnect {
         return 0;
     }
 
+    public ResultSet getDataWithStatus(String statusQuery) {
+        ResultSet rs = null;
+        try {
+            Statement stm = conn.createStatement();
+            String query = "SELECT * FROM Product AS p "
+                    + "JOIN Categories AS c ON p.CategoryID = c.CategoryID "
+                    + "JOIN ProductImage AS pi ON p.ProductID = pi.ProductID "
+                    + statusQuery;  // Append status condition to the query
+            rs = stm.executeQuery(query);
+        } catch (SQLException e) {
+            System.out.println(e);
+        }
+        return rs;
+    }
+
+    public static String getCurrentTimestamp() {
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        Date date = new Date();
+        return dateFormat.format(date);
+    }
 //    public static void main(String[] args) {
 //        DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
 //        Calendar calendar = Calendar.getInstance();

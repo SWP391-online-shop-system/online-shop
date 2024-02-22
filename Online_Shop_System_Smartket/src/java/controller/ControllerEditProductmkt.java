@@ -54,9 +54,11 @@ public class ControllerEditProductmkt extends HttpServlet {
         DAOProduct dao = new DAOProduct();
         String service = request.getParameter("service");
         String message = request.getParameter("message");
-        if (service == null || service.equals("")) {
+
+        if (service == null || service.isEmpty()) {
             service = "";
         }
+
         if (service.equals("update")) {
             int productId = Integer.parseInt(request.getParameter("productId"));
             String productName = request.getParameter("productName");
@@ -68,27 +70,29 @@ public class ControllerEditProductmkt extends HttpServlet {
             String createDate = request.getParameter("createDate");
             int totalRate = Integer.parseInt(request.getParameter("totalRate"));
             int totalStock = Integer.parseInt(request.getParameter("totalStock"));
+            int productStatusValue = Integer.parseInt(request.getParameter("productStatus"));
+            boolean productStatus = (productStatusValue == 0);
             Product product = new Product(productId, productName, categoryId, productDescription,
-                    unitInStock, unitPrice, unitDiscount, createDate, totalRate, totalStock);
+                    unitInStock, unitPrice, unitDiscount, createDate, totalRate, totalStock, productStatus);
             int n = dao.updateProduct(product);
-            String st = "";
-            if (n > 0) {
-                st = "Update product Successfully";
-            } else {
-                st = "can't Update product";
-            }
+            String st = (n > 0) ? "Cập nhật sản phẩm thành công" : "Cập nhật sản phẩm thất bại";
             response.sendRedirect("mktProductListURL?message=" + st);
+            return; // Redirecting, so exit method
         }
-        if (service.equals("")) {
+
+        if (service.isEmpty()) {
             int productId = Integer.parseInt(request.getParameter("productId"));
             Product product = dao.getProductById(productId);
             if (product != null) {
                 request.setAttribute("product", product);
+                // Set the productStatus attribute based on the initial status of the product
+                request.setAttribute("productStatus", product.isProductStatus() ? 0 : 1); // 1 for Enabled, 0 for Disabled
             } else {
                 System.out.println("Product not found");
             }
             request.getRequestDispatcher("updateProductmkt.jsp").forward(request, response);
         }
+
     }
 
     /**

@@ -14,7 +14,7 @@
     <head>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-        <title>Cập nhật sản phẩm</title>
+        <title>Thêm sản phẩm</title>
         <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto|Varela+Round">
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
         <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
@@ -36,14 +36,16 @@
                     <div class="table-title">
                         <div class="row">
                             <div class="col-sm-4">
-                                <h2>Cập nhật <b>Sản phẩm</b></h2>
+                                <h2>Thêm sản phẩm <b>Thêm sản phẩm</b></h2>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-        
+        <%
+        Product product = (Product)request.getAttribute("product");
+        %>
         <script>
             function validateForm() {
                 var unitInStock = parseInt(document.getElementById("unitInStock").value);
@@ -56,32 +58,24 @@
                 return true;
             }
         </script>
-        <form action="EditProductmktURL" method="get" onsubmit="return validateForm()">
-            <input type="hidden" name="service" value="update">
+        <form action="AddProductmktURL" method="post" onsubmit="return validateForm()">
+            <input type="hidden" name="service" value="addProduct">
             <table class="table table-striped table-hover">
-                <!-- Table headers -->
                 <tbody>
                     <tr>
-                        <td><input type="text" name="productId" value="${product.productID}" readonly></td>
-                        <td><input type="text" name="productName" value="${product.productName}"></td>
-                        <td><input type="number" name="categoryId" value="${product.categoryID}"></td>
-                        <td><input type="text" name="productDescription" value="${product.productDescription}"></td>
-                        <td><input type="number" name="unitInStock" id="unitInStock" value="${product.unitInStock}"></td>
-                        <td><input type="number" name="unitPrice" value="${product.unitPrice}"></td>
-                        <td><input type="number" name="unitDiscount" value="${product.unitDiscount}"></td>
-                        <td><input type="text" name="createDate" value="${product.createDate}"></td>
-                        <td><input type="number" name="totalRate" value="${product.totalRate}"></td>
-                        <td><input type="number" name="totalStock" id="totalStock" value="${product.totalStock}"></td>
-                        <td>
-                            <select name="productStatus" id="productStatus">
-                                <option value="0" ${productStatus == 0 ? 'selected' : ''}>Enabled</option>
-                                <option value="1" ${productStatus == 1 ? 'selected' : ''}>Disabled</option>
-                            </select>
-                        </td>
+                        <td><input type="text" name="productName" value="${productName}"></td>
+                        <td><input type="number" name="categoryId" value="${categoryId}"></td>
+                        <td><textarea name="productDescription">${productDescription}</textarea></td>
+                        <td><input type="number" name="unitInStock" id="unitInStock" value="${unitInStock}"></td>
+                        <td><input type="number" name="unitPrice" value="${unitPrice}"></td>
+                        <td><input type="number" name="unitDiscount" value="${unitDiscount}"></td>
+                        <td><input type="text" name="createDate" value="${createDate}"></td>
+                        <td><input type="number" name="totalRate" value="${totalRate}"></td>
+                        <td><input type="number" name="totalStock" id="totalStock" value="${totalStock}"></td>
                     </tr>
                 </tbody>
             </table>
-            <input type="submit" value="Update">
+            <input type="submit" value="Add">
         </form>
     </body>
 </html>
