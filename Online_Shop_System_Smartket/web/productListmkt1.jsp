@@ -11,19 +11,12 @@
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page import="view.*" %>
 <%@page import="model.*" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
 <%@page import="java.sql.ResultSet, java.sql.SQLException"%>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto|Varela+Round">
-<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
-<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
-<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
 <link rel="stylesheet" href="css/css_saleProductList/saleProductList.css"/>
 <link rel="stylesheet" href="css/css_mkt/style.css"/>
 <!DOCTYPE html>
 <html lang="en">
-
     <head>
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -41,6 +34,15 @@
     <%
     ResultSet rs = (ResultSet)request.getAttribute("data");
     %>
+    <div class="container">
+        <% String message = (String)request.getParameter("message"); %>
+        <% if (message != null && !message.isEmpty()) { %>
+        <div class="alert alert-info" role="alert">
+            <%= message %>
+        </div>
+        <% } %>
+        <!-- Form content -->
+    </div>
     <body id="page-top">
         <div id="wrapper">
             <!-- Sidebar -->
@@ -130,38 +132,65 @@
                                 <li class="breadcrumb-item active" aria-current="page">Product List</li>
                             </ol>
                         </div>
-
                         <!-- Row -->
-                        <div class="row">
-                            <!-- DataTable with Hover -->
-                            <div class="col-lg-12">
-                                <div class="card mb-4">
-                                    <div class="table-responsive p-3">
-                                        <table class="table align-items-center table-flush table-hover" id="dataTableHover">
-                                            <thead class="thead-light">
-                                                <tr>
-                                                    <th>ID</th>
-                                                    <th>Ảnh</th>
-                                                    <th>Tiêu đề</th>
-                                                    <th>Loại</th>
-                                                    <th>Giá bán</th>
-                                                    <th>Trạng thái</th>						
-                                                    <th>Hành động</th>
-                                                </tr>
-                                            </thead>
-                                            <tfoot>
-                                                <tr>
-                                                    <th>ID</th>
-                                                    <th>Ảnh</th>
-                                                    <th>Tiêu đề</th>
-                                                    <th>Loại</th>
-                                                    <th>Giá bán</th>
-                                                    <th style="width:87px; padding-left: 20px;">Trạng thái</th>						
-                                                    <th>Hành động</th>
-                                                </tr>
-                                            </tfoot>
-                                            <tbody>
-                                                <!-- Iterate over the result set -->
+                        <form action="mktProductListURL" method="get" id="categoryForm">
+                            <div class="filter-group">
+                                <label>Loại</label>
+                                <select class="form-control" name="categoryId" onchange="submitForm()">
+                                    <option value="">All</option>
+                                    <c:forEach var="category" items="${categories}">
+                                        <option value="${category.categoryID}" 
+                                                <c:if test="${category.categoryID eq param.categoryId}">
+                                                    selected
+                                                </c:if>
+                                                >${category.categoryName}</option>
+                                    </c:forEach>							
+                                </select>
+                            </div>
+                        </form>
+                        <form action="mktProductListURL" method="get">
+                            <!-- Your other form elements -->
+                            <div class="filter-group">
+                                <label>Trạng thái</label>
+                                <select class="form-control" name="status" onchange="this.form.submit()">
+                                    <option value="">Any</option>
+                                    <option value="Còn hàng" <c:if test="${fn:contains(param.status,'Còn')}">selected</c:if>>Còn hàng</option>
+                                    <option value="Hết hàng" <c:if test="${fn:contains(param.status,'Hết')}">selected</c:if>>Hết hàng</option>
+                                    </select>
+                                </div>
+                                <input type="submit" style="display: none;">
+                            </form>
+                            <a href="AddProductmktURL?service=addProduct" class="btn btn-secondary">Add New Product</a>
+                            <div class="row">
+                                <!-- DataTable with Hover -->
+                                <div class="col-lg-12">
+                                    <div class="card mb-4">
+                                        <div class="table-responsive p-3">
+                                            <table class="table align-items-center table-flush table-hover" id="dataTableHover">
+                                                <thead class="thead-light">
+                                                    <tr>
+                                                        <th>ID</th>
+                                                        <th>Ảnh</th>
+                                                        <th>Tiêu đề</th>
+                                                        <th>Loại</th>
+                                                        <th>Giá bán</th>
+                                                        <th>Trạng thái</th>						
+                                                        <th>Hành động</th>
+                                                    </tr>
+                                                </thead>
+                                                <tfoot>
+                                                    <tr>
+                                                        <th>ID</th>
+                                                        <th>Ảnh</th>
+                                                        <th>Tiêu đề</th>
+                                                        <th>Loại</th>
+                                                        <th>Giá bán</th>
+                                                        <th style="width:87px; padding-left: 20px;">Trạng thái</th>						
+                                                        <th>Hành động</th>
+                                                    </tr>
+                                                </tfoot>
+                                                <tbody>
+                                                    <!-- Iterate over the result set -->
                                                 <% try {
                                                     while(rs.next()) {
                                                         int unitInStock = rs.getInt("UnitInStock");
@@ -268,6 +297,11 @@
                                                                         $('#dataTable').DataTable(); // ID From dataTable 
                                                                         $('#dataTableHover').DataTable(); // ID From dataTable with Hover
                                                                     });
+        </script>
+        <script>
+            function submitForm() {
+                document.getElementById('categoryForm').submit();
+            }
         </script>
     </body>
 

@@ -18,8 +18,8 @@ import view.Product;
  *
  * @author HP
  */
-@WebServlet(name = "ControllerEditProductmkt", urlPatterns = {"/EditProductmktURL"})
-public class ControllerEditProductmkt extends HttpServlet {
+@WebServlet(name = "ControllerAddProductmkt", urlPatterns = {"/AddProductmktURL"})
+public class ControllerAddProductmkt extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -35,6 +35,15 @@ public class ControllerEditProductmkt extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         try ( PrintWriter out = response.getWriter()) {
             /* TODO output your page here. You may use following sample code. */
+            out.println("<!DOCTYPE html>");
+            out.println("<html>");
+            out.println("<head>");
+            out.println("<title>Servlet ControllerAddProductmkt</title>");
+            out.println("</head>");
+            out.println("<body>");
+            out.println("<h1>Servlet ControllerAddProductmkt at " + request.getContextPath() + "</h1>");
+            out.println("</body>");
+            out.println("</html>");
         }
     }
 
@@ -50,49 +59,33 @@ public class ControllerEditProductmkt extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        // Create a DAOProduct instance
-        DAOProduct dao = new DAOProduct();
         String service = request.getParameter("service");
+        System.out.println("service = " + service);
         String message = request.getParameter("message");
-
-        if (service == null || service.isEmpty()) {
+        if (service.equals("") || service.isEmpty()) {
             service = "";
         }
-
-        if (service.equals("update")) {
-            int productId = Integer.parseInt(request.getParameter("productId"));
-            String productName = request.getParameter("productName");
-            int categoryId = Integer.parseInt(request.getParameter("categoryId"));
-            String productDescription = request.getParameter("productDescription");
-            int unitInStock = Integer.parseInt(request.getParameter("unitInStock"));
-            double unitPrice = Double.parseDouble(request.getParameter("unitPrice"));
-            int unitDiscount = Integer.parseInt(request.getParameter("unitDiscount"));
-            String createDate = request.getParameter("createDate");
-            int totalRate = Integer.parseInt(request.getParameter("totalRate"));
-            int totalStock = Integer.parseInt(request.getParameter("totalStock"));
-            int productStatusValue = Integer.parseInt(request.getParameter("productStatus"));
-            boolean productStatus = (productStatusValue == 0);
-            Product product = new Product(productId, productName, categoryId, productDescription,
-                    unitInStock, unitPrice, unitDiscount, createDate, totalRate, totalStock, productStatus);
-            int n = dao.updateProduct(product);
-            String st = (n > 0) ? "Cập nhật sản phẩm thành công" : "Cập nhật sản phẩm thất bại";
-            response.sendRedirect("mktProductListURL?message=" + st);
-            return; // Redirecting, so exit method
-        }
-
-        if (service.isEmpty()) {
-            int productId = Integer.parseInt(request.getParameter("productId"));
-            Product product = dao.getProductById(productId);
-            if (product != null) {
-                request.setAttribute("product", product);
-                // Set the productStatus attribute based on the initial status of the product
-                request.setAttribute("productStatus", product.isProductStatus() ? 0 : 1); // 1 for Enabled, 0 for Disabled
+        if (service.equals("addProduct")) {
+            String submit = request.getParameter("submit");
+            if (submit == null) {
+                request.getRequestDispatcher("addProductmkt.jsp").forward(request, response);
             } else {
-                System.out.println("Product not found");
+                String productName = request.getParameter("productName");
+                int categoryId = Integer.parseInt(request.getParameter("categoryId"));
+                String productDescription = request.getParameter("productDescription");
+                int unitInStock = Integer.parseInt(request.getParameter("unitInStock"));
+                double unitPrice = Double.parseDouble(request.getParameter("unitPrice"));
+                int unitDiscount = Integer.parseInt(request.getParameter("unitDiscount"));
+                String createDate = DAOProduct.getCurrentTimestamp(); // Use current timestamp
+                int totalRate = Integer.parseInt(request.getParameter("totalRate"));
+                int totalStock = Integer.parseInt(request.getParameter("totalStock"));
+                Product newProduct = new Product(productName, categoryId, productDescription, unitInStock, unitPrice, unitDiscount, createDate, totalRate, totalStock);
+                DAOProduct dao = new DAOProduct();
+                int n = dao.insertProduct(newProduct);
+                String st = (n > 0) ? "Thêm sản phẩm thành công" : "Thêm sản phẩm thất bại";
+                response.sendRedirect("mktProductListURL?message=" + st);
             }
-            request.getRequestDispatcher("updateProductmkt.jsp").forward(request, response);
         }
-
     }
 
     /**
