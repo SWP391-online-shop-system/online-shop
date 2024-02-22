@@ -156,7 +156,9 @@ public class DAOBlog extends DBConnect {
             ResultSet rs = state.executeQuery(sql);
             while (rs.next()) {
                 list.add(new Categories(rs.getInt(1),
-                        rs.getString(2)
+                        rs.getString(2),
+                        rs.getDate(3),
+                        rs.getBoolean(4)
                 ));
             }
         } catch (Exception e) {
@@ -339,10 +341,10 @@ public class DAOBlog extends DBConnect {
 
     public static void main(String[] args) {
         DAOBlog dao = new DAOBlog();
-        List<Blog> list = dao.searchByName("a",0);
+        List<Categories> list = dao.getAllCategories();
         Blog b = dao.getBlogByID(1);
         int count = dao.getTotalCategoriesBlog(1);
-        for (Blog o : list) {
+        for (Categories o : list) {
             System.out.println(o);
         }
         System.out.println(count);
