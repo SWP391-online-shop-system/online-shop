@@ -50,7 +50,6 @@
                 <%= message %>
             </div>
         <% } %>
-        <!-- Form content -->
     </div>
         <table class="table table-striped table-hover">
             <thead>
@@ -88,7 +87,7 @@
                     <td><%= rs.getString("CreateDate") %></td>
                     <td><%= rs.getInt("TotalRate") %></td>
                     <td><%= rs.getInt("TotalStock") %></td>
-                    <td><%= rs.getBoolean("ProductStatus") %></td>
+                    <td><%= rs.getString("CreateDate") %></td>
                 </tr>
                 <% 
                         }

@@ -60,7 +60,7 @@ public class ControllerViewProductmkt extends HttpServlet {
                 + "JOIN Categories AS c ON p.CategoryID = c.CategoryID\n"
                 + "where p.ProductID = " + id);
         request.setAttribute("data", rs);
-        request.getRequestDispatcher("viewProductmkt.jsp").forward(request, response);
+        request.getRequestDispatcher("test.jsp").forward(request, response);
     }
 
     /**

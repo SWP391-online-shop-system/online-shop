@@ -125,7 +125,7 @@ public class DAOProduct extends DBConnect {
                 + "`CreateDate` =?,\n"
                 + "`TotalRate` = ?,\n"
                 + "`TotalStock` = ?,\n"
-                + "`ProductStatus` = ?\n" // Moved ProductStatus to the end
+                + "`ProductStatus` = ?\n"
                 + "WHERE `ProductID` = ?";
         try {
             PreparedStatement pre = conn.prepareStatement(sql);
