@@ -1,8 +1,3 @@
-body{
-    margin-top:20px;
-    background:#eee;
-}
-
 
 .product-content {
     border: 1px solid #dfe5e9;
@@ -195,7 +190,10 @@ body{
 }
 
 .product-deatil {
-    padding: 30px 30px 50px
+    padding: 30px 30px 50px;
+    position: sticky;
+    top: 50px;
+
 }
 
 .product-deatil hr+.description-tabs {
@@ -321,6 +319,125 @@ body{
 }
 
 .message img.online {
-    width:40px;
-    height:40px;
+    width: 40px;
+    height: 40px;
+    margin-bottom: 0px;
+    border-radius: 32px;
+    margin-right: 8px;
+}
+.mainPage{
+    display: flex;
+}
+.shop__sidebar__search {
+    margin-top: 13px;
+    margin-left: 22px;
+}
+
+.shop__sidebar__search form {
+    position: relative;
+}
+
+.shop__sidebar__search form input {
+    width: 100%;
+    font-size: 15px;
+    color: #b7b7b7;
+    padding-left: 20px;
+    border: 2px solid #e5e5e5;
+    height: 42px;
+}
+
+.shop__sidebar__search form input::-webkit-input-placeholder {
+    color: #b7b7b7;
+}
+
+.shop__sidebar__search form input::-moz-placeholder {
+    color: #b7b7b7;
+}
+
+.shop__sidebar__search form input:-ms-input-placeholder {
+    color: #b7b7b7;
+}
+
+.shop__sidebar__search form input::-ms-input-placeholder {
+    color: #b7b7b7;
+}
+
+.shop__sidebar__search form input::placeholder {
+    color: #b7b7b7;
+}
+
+.shop__sidebar__search form button {
+    color: #b7b7b7;
+    font-size: 15px;
+    border: none;
+    background: transparent;
+    position: absolute;
+    right: 0;
+    padding: 0 15px;
+    top: 0;
+    height: 100%;
+}
+.frm {
+    width: 300px;
+    margin: 0 auto;
+    text-align: center;
+    padding-top: 6px;
+}
+
+.value-button {
+    display: inline-block;
+    border: 1px solid #ddd;
+    margin: 0px;
+    width: 40px;
+    height: 20px;
+    text-align: center;
+    vertical-align: middle;
+    padding: 5px 0;
+    background: #eee;
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+.value-button:hover {
+    cursor: pointer;
+}
+
+.frm  #decrease {
+    margin-right: -4px;
+    height: 32px;
+    margin-top: -2px;
+    background: none;
+}
+
+.frm  #increase {
+    margin-left: -4px;
+    height: 32px;
+    margin-top: -2px;
+    background: none;
+}
+
+.frm  #input-wrap {
+    margin: 0px;
+    padding: 0px;
+}
+
+input#number {
+    text-align: center;
+    border: none;
+    border-top: 1px solid #ddd;
+    border-bottom: 1px solid #ddd;
+    margin: 0px;
+    width: 40px;
+    height: 32px;
+    margin-bottom: 13px;
+}
+
+input[type=number]::-webkit-inner-spin-button,
+input[type=number]::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
 }
