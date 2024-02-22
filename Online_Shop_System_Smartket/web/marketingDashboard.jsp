@@ -51,7 +51,7 @@
                 <div style="position: sticky; top: 30px;">
                     <hr class="sidebar-divider wee-0" style="margin: 0px;">
                     <li class="nav-item active">
-                        <a class="nav-link" href="index.html">
+                        <a class="nav-link" href="MarketingDashBoardURL">
                             <i class="fas fa-fw fa-tachometer-alt"></i>
                             <span>Thống kê</span></a>
                     </li>
@@ -66,7 +66,7 @@
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="ui-colors.html">
+                        <a class="nav-link" href="mktProductListURL">
                             <i class="fas fa-shopping-cart fa-2x text-success"></i>
                             <span>Sản phẩm</span>
                         </a>
