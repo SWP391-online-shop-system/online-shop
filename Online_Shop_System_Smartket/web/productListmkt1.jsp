@@ -63,7 +63,7 @@
                     </li>
                     <hr class="sidebar-divider">
                     <div class="sidebar-heading">
-                        Quản lí
+                       Quản lí
                     </div>
                     <li class="nav-item">
                         <a class="nav-link" href="ui-colors.html">
@@ -109,12 +109,12 @@
                                 <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="userDropdown">
                                     <a class="dropdown-item" href="#">
                                         <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
-                                        Hồ sơ
+                                       Hồ sơ
                                     </a>
                                     <div class="dropdown-divider"></div>
                                     <a class="dropdown-item" href="javascript:void(0);" data-toggle="modal" data-target="#logoutModal">
                                         <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
-                                        Đăng xuất
+                                       Đăng xuất
                                     </a>
                                 </div>
                             </li>
@@ -151,8 +151,8 @@
                                 <label>Trạng thái</label>
                                 <select class="form-control" name="status" onchange="submitForm()">
                                     <option value="">Tất cả</option>
-                                    <option value="Còn hàng" <c:if test="${param.status == 'Còn hàng'}">selected</c:if>>Còn hàng</option>
-                                    <option value="Hết hàng" <c:if test="${param.status == 'Hết hàng'}">selected</c:if>>Hết hàng</option>
+                                    <option value="CÃ²n hÃ ng" <c:if test="${param.status == 'CÃ²n hÃ ng'}">selected</c:if>>Còn hàng</option>
+                                    <option value="Háº¿t hÃ ng" <c:if test="${param.status == 'Háº¿t hÃ ng'}">selected</c:if>>Hết hàng</option>
                                     </select>
                                 </div>
                             </form>
@@ -176,18 +176,18 @@
                                                         <th>Ảnh</th>
                                                         <th>Tiêu đề</th>
                                                         <th>Loại</th>
-                                                        <th>Giá bán</th>
+                                                        <th>Giá</th>
                                                         <th>Trạng thái</th>						
                                                         <th>Hành động</th>
                                                     </tr>
                                                 </thead>
                                                 <tfoot>
                                                     <tr>
-                                                        <th>ID</th>
+                                                         <th>ID</th>
                                                         <th>Ảnh</th>
                                                         <th>Tiêu đề</th>
                                                         <th>Loại</th>
-                                                        <th>Giá bán</th>
+                                                        <th>Giá</th>
                                                         <th style="width:87px; padding-left: 20px;">Trạng thái</th>						
                                                         <th>Hành động</th>
                                                     </tr>
@@ -198,7 +198,7 @@
                                                     while(rs.next()) {
                                                         int unitInStock = rs.getInt("UnitInStock");
                                                         int totalStock = rs.getInt("TotalStock");
-                                                        String status = (unitInStock > 0 && unitInStock <= totalStock) ? "Còn hàng" : "Hết hàng";
+                                                        String status = (unitInStock > 0 && unitInStock <= totalStock) ? "Còn Hàng" : "Hết Hàng";
                                                 %>
                                                 <tr>
                                                     <td><%=rs.getInt("ProductID")%></td>
