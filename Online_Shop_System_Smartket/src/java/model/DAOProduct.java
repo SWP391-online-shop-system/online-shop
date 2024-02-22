@@ -49,7 +49,7 @@ public class DAOProduct extends DBConnect {
         }
         return vector;
     }
-
+    
     public String getProductURL(int productId) {
         String productURL = null;
         try {
@@ -65,7 +65,6 @@ public class DAOProduct extends DBConnect {
         }
         return productURL;
     }
-
     public int insertProduct(Product pro) {
         int n = 0;
         String sql = "INSERT INTO `online_shop_system`.`product`\n"
@@ -125,7 +124,7 @@ public class DAOProduct extends DBConnect {
                 + "`CreateDate` =?,\n"
                 + "`TotalRate` = ?,\n"
                 + "`TotalStock` = ?,\n"
-                + "`ProductStatus` = ?\n" // Moved ProductStatus to the end
+                + "`ProductStatus` = ?\n"
                 + "WHERE `ProductID` = ?";
         try {
             PreparedStatement pre = conn.prepareStatement(sql);

@@ -45,8 +45,16 @@ public class Product {
         this.TotalStock = TotalStock;
     }
 
-    
-
+    public Product(String ProductName, int CategoryID, String ProductDescription, int UnitInStock, double UnitPrice, int UnitDiscount, int TotalRate, int TotalStock) {
+        this.ProductName = ProductName;
+        this.CategoryID = CategoryID;
+        this.ProductDescription = ProductDescription;
+        this.UnitInStock = UnitInStock;
+        this.UnitPrice = UnitPrice;
+        this.UnitDiscount = UnitDiscount;
+        this.TotalRate = TotalRate;
+        this.TotalStock = TotalStock;
+    }
     
 
     public Product(int ProductID, String ProductName, int CategoryID, String ProductDescription, int UnitInStock, double UnitPrice, int UnitDiscount, String CreateDate, int TotalRate, int TotalStock, boolean productStatus) {
