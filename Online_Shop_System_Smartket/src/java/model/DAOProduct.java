@@ -50,6 +50,22 @@ public class DAOProduct extends DBConnect {
         return vector;
     }
 
+    public String getProductURL(int productId) {
+        String productURL = null;
+        try {
+            String sql = "SELECT ProductURL FROM ProductImage WHERE ProductID = ?";
+            PreparedStatement pre = conn.prepareStatement(sql);
+            pre.setInt(1, productId);
+            ResultSet rs = pre.executeQuery();
+            if (rs.next()) {
+                productURL = rs.getString("ProductURL");
+            }
+        } catch (SQLException e) {
+            System.out.println(e);
+        }
+        return productURL;
+    }
+
     public int insertProduct(Product pro) {
         int n = 0;
         String sql = "INSERT INTO `online_shop_system`.`product`\n"

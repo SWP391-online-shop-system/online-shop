@@ -57,39 +57,39 @@ public class ControllerMarketingProductList extends HttpServlet {
         DAOCategories daoCate = new DAOCategories();
         String indexPage = request.getParameter("index");
         String categoryId = request.getParameter("categoryId");
+        String status = request.getParameter("status"); // Get the status parameter
         if (indexPage == null) {
             indexPage = "1";
         }
         int index = Integer.parseInt(indexPage);
-        int itemsPerPage = 10; // Number of items to display per page
-        int offset = (index - 1) * itemsPerPage;
-
-        // Fetch products based on the selected category ID if available, otherwise fetch all products
+        int itemsPerPage = 10;
         ResultSet rs;
+        String sql = "SELECT p.*, c.*, MIN(pi.ProductURL) AS ProductURL\n"
+                + "FROM Product AS p\n"
+                + "JOIN Categories AS c ON p.CategoryID = c.CategoryID\n"
+                + "LEFT JOIN ProductImage AS pi ON p.ProductID = pi.ProductID\n";
         if (categoryId != null && !categoryId.isEmpty()) {
-            rs = dao.getData("SELECT *\n"
-                    + "FROM Product AS p \n"
-                    + "JOIN Categories AS c ON p.CategoryID = c.CategoryID\n"
-                    + "JOIN ProductImage AS pi ON p.ProductID = pi.ProductID\n"
-                    + "WHERE p.CategoryID = " + categoryId + " AND pi.ProductURL LIKE '%_1%'\n"
-                    );
-        } else {
-            rs = dao.getData("SELECT *\n"
-                    + "FROM Product AS p \n"
-                    + "JOIN Categories AS c ON p.CategoryID = c.CategoryID\n"
-                    + "JOIN ProductImage AS pi ON p.ProductID = pi.ProductID\n"
-                    + "WHERE pi.ProductURL LIKE '%_1%'\n"
-                    );
+            sql += "WHERE p.CategoryID = " + categoryId + "\n";
         }
+        if (status != null && !status.isEmpty()) {
+            if (sql.contains("WHERE")) {
+                sql += "AND ";
+            } else {
+                sql += "WHERE ";
+            }
+            if (status.equals("Còn hàng")) {
+                sql += "p.UnitInStock > 0\n"; // Filter products in stock
+            } else if (status.equals("Hết hàng")) {
+                sql += "p.UnitInStock = 0\n"; // Filter out-of-stock products
+            }
+        }
+        sql += "GROUP BY p.ProductID\n";
 
-        // Get total number of products for pagination
+        rs = dao.getData(sql);
+
         int count = dao.getTotalProduct();
         int endPage = (int) Math.ceil((double) count / itemsPerPage);
-
-        // Get categories for dropdown list
         Vector<Categories> categories = daoCate.getCategories("SELECT * FROM categories");
-
-        // Set attributes in request
         request.setAttribute("categories", categories);
         request.setAttribute("data", rs);
         request.setAttribute("currentPage", index);

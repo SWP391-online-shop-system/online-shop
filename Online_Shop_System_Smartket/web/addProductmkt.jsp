@@ -64,13 +64,11 @@
                 <thead>
                 <tr>
                     <th>Tên sản phẩm</th>
-                    <th>Ảnh</th>
                     <th>Loại</th>
                     <th>Mô tả sản phẩm</th>
                     <th>Hàng trong kho</th>
                     <th>Giá bán</th>
                     <th>Giảm giá</th>
-                    <th>Ngày tạo</th>
                     <th>Tổng số đánh giá</th>
                     <th>Tổng số sản phẩm</th>
                 </tr>
