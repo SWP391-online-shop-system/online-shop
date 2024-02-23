@@ -11,18 +11,15 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import jakarta.servlet.http.HttpSession;
 import java.sql.ResultSet;
-import model.DAOCart;
-import model.DAOProduct;
-import view.User;
+import model.DAOFeedBack;
 
 /**
  *
- * @author trant
+ * @author admin
  */
-@WebServlet(name = "ControllerCartContact", urlPatterns = {"/contactURL"})
-public class ControllerCartContact extends HttpServlet {
+@WebServlet(name = "ControllerFeedBackList", urlPatterns = {"/FeedBackListURL"})
+public class ControllerFeedBackList extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -38,29 +35,15 @@ public class ControllerCartContact extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         try ( PrintWriter out = response.getWriter()) {
             /* TODO output your page here. You may use following sample code. */
-            HttpSession session = request.getSession();
-            String service = request.getParameter("service");
-            User user = (User) session.getAttribute("account");
-            int userID = user.getUserID();
-            DAOCart dao = new DAOCart();
-            DAOProduct daoPro = new DAOProduct();
-            double maxValue = daoPro.getMaxUnitPrice();
-            double minValue = daoPro.getMinUnitPrice();
-            request.setAttribute("inputMinPrice", minValue);
-            request.setAttribute("inputMaxPrice", maxValue);
-            ResultSet rsCategory = daoPro.getData("Select * from Categories");
-            request.setAttribute("CategoryResult", rsCategory);
-            String message = "";
-            if (service == null) {
-                service = "showContact";
-            }
-            if (service.equals("showContact")) {
-                ResultSet rs = dao.getData("SELECT * FROM Cart AS c JOIN Product AS p ON c.ProductID = p.ProductID\n"
-                        + "join ProductImage as pi on p.ProductID = pi.ProductID\n"
-                        + "where c.UserID = " + userID + " and pi.ProductURL like '%_1%';");
-                request.setAttribute("data", rs);
-                request.getRequestDispatcher("cartcontact.jsp").forward(request, response);
-            }
+            out.println("<!DOCTYPE html>");
+            out.println("<html>");
+            out.println("<head>");
+            out.println("<title>Servlet ControllerFeedBackList</title>");
+            out.println("</head>");
+            out.println("<body>");
+            out.println("<h1>Servlet ControllerFeedBackList at " + request.getContextPath() + "</h1>");
+            out.println("</body>");
+            out.println("</html>");
         }
     }
 
@@ -76,7 +59,15 @@ public class ControllerCartContact extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        DAOFeedBack daoF = new DAOFeedBack();
+        String FeedBackStat = request.getParameter("FeedBackStat");
+        if (FeedBackStat == null || FeedBackStat.equals("")) {
+            FeedBackStat = "0";
+        }
+        ResultSet rsFeedBackStatus = daoF.getData("select * from FeedBack");
+        request.setAttribute("rsFeedBackStatus", rsFeedBackStatus);
+        request.setAttribute("FeedBackStat", FeedBackStat);
+        request.getRequestDispatcher("feedbackList.jsp").forward(request, response);
     }
 
     /**

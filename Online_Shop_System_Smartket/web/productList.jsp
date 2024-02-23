@@ -46,14 +46,18 @@
         <link rel="stylesheet" href="css/css_productList/style.css" type="text/css">
         <link rel="stylesheet" href="css/css_footer/footer.css" type="text/css">
         <script src="https://kit.fontawesome.com/ac74b86ade.js" crossorigin="anonymous"></script>
-
+        <style>
+            body{
+                margin: 5px -5px;
+            }
+        </style>
     </head>
 
     <body>
         <!-- comment start -->
-        <div class="header" style="margin-top: 21px;">
+        <div class="header">
             <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-            <div class="header-title" style="margin-top: -16px;">
+            <div class="header-title">
                 <div class="header-title-left">
                     <ul>
                         <li>
@@ -69,7 +73,7 @@
                         </li>
                     </ul>
                 </div>
-                <div class="header-title-right">
+                <div class="header-title-right" style="margin-bottom: -8px;">
                     <div class="header-title-right-social">
                         <div><a href="#" title="Trang Facebook chúng tôi"><i class="fa-brands fa-facebook"></i></a></div>
                         <div><a href="#" title="Trang Twitter của chúng tôi"><i class="fa-brands fa-x-twitter"></i></a></div>
@@ -88,8 +92,8 @@
                             </head>
                             <body> 
                                 <%
-                                    String message1 = (String)request.getAttribute("message");
-                                    String messagesu1 = (String)request.getAttribute("messageSignUp");
+                                    String message = (String)request.getAttribute("message");
+                                    String messagesu = (String)request.getAttribute("messageSignUp");
                                     String msg1 = (String)request.getAttribute("msg1");
                                 %>
                                 <c:if test="${sessionScope.account.roleID == 5}">
@@ -114,7 +118,7 @@
                                     <a href="profileUser.jsp"><img style="width: 30px;
                                                                    height: 30px;
                                                                    margin-right: -10px;
-                                                                   margin-bottom: -8px;
+                                                                   margin-bottom: 4px;
                                                                    margin-left: 7px;
                                                                    border-radius: 50%;" class="styling1" src="images/user/default_avatar.jpg" alt="Admin Image"></a>
                                     </c:if>
@@ -131,7 +135,7 @@
                                                color: red;
                                                font-size: 20px;
                                                font-weight: 700;
-                                               text-align: left;"><%=(message1 == null) ? "" : message1%></p>
+                                               text-align: left;"><%=(message == null) ? "" : message%></p>
                                             <div class="form-element">
                                                 <label for="email">Email</label>
                                                 <input type="email" id="email" name="email" placeholder="Nhập email" required 
@@ -236,7 +240,7 @@
                                                color: red;
                                                font-size: 20px;
                                                font-weight: 700;
-                                               text-align: left;"><%=(messagesu1 == null) ? "" : messagesu1%></p>
+                                               text-align: left;"><%=(messagesu == null) ? "" : messagesu%></p>
                                             <div class="form-element">
                                                 <button type="submit" >Đăng kí</button>
                                             </div>
@@ -251,8 +255,8 @@
                         </html>
                     </div>
                 </div>
-            </div>  
-            <div class="header-content" style="margin-bottom: 20px;">
+            </div>
+            <div class="header-content">
                 <div class="header-content-logo">
                     <a href="HomePageURL"><img src="images/logo/logo.png"alt="404"/></a>
                 </div>
@@ -290,9 +294,8 @@
                                     User user = (User) session2.getAttribute("account");
                                     int userID = user.getUserID();
                                     DAOCart dao = new DAOCart();
-                                    
-                                    ResultSet rs1 = dao.getData("SELECT count(*) as count FROM Cart AS c JOIN Product AS p ON c.ProductID = p.ProductID where userID = "+userID+"");
-                                    while(rs1.next()){
+                                    ResultSet rs = dao.getData("SELECT count(*) as count FROM Cart AS c JOIN Product AS p ON c.ProductID = p.ProductID where userID = "+userID+"");
+                                    while(rs.next()){
                                 %>
                                 <span class="count-cart" style="position: absolute;
                                       margin-left: 17px;
@@ -303,7 +306,9 @@
                                       font-size: 15px;
                                       z-index: 9;
                                       top: 11px;
-                                      left: 3px;"><%=rs1.getInt(1)%></span>
+                                      left: 3px;
+                                      font-family: none;
+                                      line-height: normal;"><%=rs.getInt(1)%></span>
                                 <%
                                     }
                                 %>
@@ -355,7 +360,7 @@
                                                              margin-top: 10px;" src="<%=rsHotPro.getString("ProductURL")%>" alt="alt"/>
                                                     </a>
                                                     <%if(rsHotPro.getInt("UnitDiscount")!=0) {%>
-                                                    <div class="sale-cotification">Sale</div>
+                                                    <div class="sale-cotification" style="margin-left: 114px;">Sale</div>
                                                     <%}%>
                                                     <%    ResultSet rsNew2Product = dao.getData("select * from product as p join productImage as pi "
                                                        + "on p.ProductID = pi.ProductID "
@@ -591,9 +596,9 @@
                                             <img src="<%=rsPaging.getString("ProductURL")%>" alt="alt"/>
                                         </a>
                                         <%if(rsPaging.getInt("UnitDiscount")!=0) {%>
-                                        <div class="sale-cotification">Sale</div>
+                                        <div class="sale-cotification" style="margin-left: 114px;">Sale</div>
                                         <%}%>
-                                        <%    ResultSet rsNewProduct = dao.getData("select * from product as p join productImage as pi "
+                                        <%ResultSet rsNewProduct = dao.getData("select * from product as p join productImage as pi "
                                            + "on p.ProductID = pi.ProductID "
                                            + "where pi.ProductURL like '%_1%' "
                                            + "order by p.CreateDate desc limit 6 ");

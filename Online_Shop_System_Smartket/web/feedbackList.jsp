@@ -72,7 +72,7 @@
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="mktProductListURL">
+                        <a class="nav-link" href="ui-colors.html">
                             <i class="fas fa-shopping-cart fa-2x text-success"></i>
                             <span>Sản phẩm</span>
                         </a>
@@ -149,62 +149,53 @@
                                             <div style="display: flex;
                                                  margin-left: 200px;
                                                  margin-bottom: -30px;">
-                                                <form action="mktProductListURL" method="get" id="categoryForm">
-                                                    <div class="filter-group" style="display:flex;">
-                                                        <div style="padding-top: 3px;">Loại</div>
-                                                        <select class="form-control" name="categoryId" onchange="this.form.submit();">
-                                                            <option value="">All</option>
-                                                            <c:forEach var="category" items="${categories}">
-                                                                <option value="${category.categoryID}"<c:if test="${category.categoryID eq param.categoryId}">selected
-                                                                        </c:if>
-                                                                        >${category.categoryName}</option>
-                                                            </c:forEach>							
-                                                        </select>
-                                                    </div>
-                                                </form>
-                                                <form action="mktProductListURL" method="get">
-                                                    <!-- Your other form elements -->
+                                                <form action="FeedBackListURL" method="get" id="categoryForm">
                                                     <div class="filter-group" style="display:flex;">
                                                         <div style="padding-top: 3px;">Trạng thái</div>
+                                                        <select class="form-control" name="FeedBackStat" onchange="this.form.submit();">
+                                                            <option value="">Tất cả</option>
+                                                            <%
+                                                            ResultSet rsFeedBackStatus = (ResultSet)request.getAttribute("rsFeedBackStatus");
+                                                            int FeedBackStat = Integer.parseInt((String)request.getAttribute("FeedBackStat"));
+                                                            while(rsFeedBackStatus.next()){%>
+                                                            <option value=""<%=rsFeedBackStatus.getInt(7) == FeedBackStat ? "selected":""%>><%=rsFeedBackStatus.getInt(7)==0?"Hiện":"Ẩn"%></option>
+                                                            <%}%>
+                                                        </select>
+                                                    </div>
+                                                    <div class="filter-group" style="display:flex;">
+                                                        <div style="padding-top: 3px;">Sản phẩm</div>
                                                         <select class="form-control" name="status" onchange="this.form.submit()">
-                                                            <option value="">Any</option>
-                                                            <option value="Còn hàng" <c:if test="${fn:contains(param.status,'Còn')}">selected</c:if>>Còn hàng</option>
-                                                            <option value="Hết hàng" <c:if test="${fn:contains(param.status,'Hết')}">selected</c:if>>Hết hàng</option>
-                                                            </select>
-                                                        </div>
-                                                        <input type="submit" style="display: none;">
-                                                    </form>
-                                                </div>
-                                                <thead class="thead-light">
-                                                    <tr>
-                                                        <th>ID</th>
-                                                        <th>Ảnh</th>
-                                                        <th>Tiêu đề</th>
-                                                        <th>Loại</th>
-                                                        <th>Giá bán</th>
-                                                        <th>Trạng thái</th>						
-                                                        <th>Hành động</th>
-                                                    </tr>
-                                                </thead>
-                                                <tfoot>
-                                                    <tr>
-                                                        <th>ID</th>
-                                                        <th>Ảnh</th>
-                                                        <th>Tiêu đề</th>
-                                                        <th>Loại</th>
-                                                        <th>Giá bán</th>
-                                                        <th style="width:87px; padding-left: 20px;">Trạng thái</th>						
-                                                        <th>Hành động</th>
-                                                    </tr>
-                                                </tfoot>
-                                                <tbody>
-                                                    <!-- Iterate over the result set -->
-                                                <% try {
-                                                    while(rs.next()) {
-                                                        int unitInStock = rs.getInt("UnitInStock");
-                                                        int totalStock = rs.getInt("TotalStock");
-                                                        String status = (unitInStock > 0 && unitInStock <= totalStock) ? "Còn hàng" : "Hết hàng";
-                                                %>
+
+                                                        </select>
+                                                    </div>
+                                                    <input type="submit" style="display: none;">
+                                                </form>
+                                            </div>
+                                            <thead class="thead-light">
+                                                <tr>
+                                                    <th>ID</th>
+                                                    <th>Sản phẩm</th>
+                                                    <th>Phản hồi bởi</th>
+                                                    <th>Nội dung</th>
+                                                    <th>Đánh giá</th>
+                                                    <th>Ngày đăng</th>						
+                                                    <th>Trạng thái</th>
+                                                    <th></th>
+                                                </tr>
+                                            </thead>
+                                            <tfoot>
+                                                <tr>
+                                                    <th>ID</th>
+                                                    <th>Sản phẩm</th>
+                                                    <th>Phản hồi bởi</th>
+                                                    <th>Nội dung</th>
+                                                    <th>Đánh giá</th>
+                                                    <th>Ngày đăng</th>						
+                                                    <th>Trạng thái</th>
+                                                    <th></th>
+                                                </tr>
+                                            </tfoot>
+                                            <tbody>
                                                 <tr>
                                                     <td><%=rs.getInt("ProductID")%></td>
                                                     <td><img style="width: 100px" src="<%=rs.getString("ProductURL")%>"/></td>
@@ -286,7 +277,7 @@
 
         <!-- Scroll to top -->
         <a class="scroll-to-top rounded" href="#page-top">
-            <i class="fas fa-angle-up" style="padding: 14px;"></i>
+            <i class="fas fa-angle-up"></i>
         </a>
         <script src="vendor/jquery/jquery.min.js"></script>
         <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>

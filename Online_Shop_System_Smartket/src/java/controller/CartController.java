@@ -16,6 +16,7 @@ import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import java.sql.ResultSet;
 import model.DAOCart;
+import model.DAOProduct;
 
 /**
  *
@@ -40,6 +41,7 @@ public class CartController extends HttpServlet {
             HttpSession session = request.getSession();
             String service = request.getParameter("service");
             DAOCart dao = new DAOCart();
+            DAOProduct daoPro = new DAOProduct();
             User user = (User) session.getAttribute("account");
             int userID = user.getUserID();
             String message = "";
@@ -51,6 +53,12 @@ public class CartController extends HttpServlet {
                         + "join ProductImage as pi on p.ProductID = pi.ProductID\n"
                         + "where c.UserID = " + userID + " and pi.ProductURL like '%_1%';");
                 request.setAttribute("data", rs);
+                double maxValue = daoPro.getMaxUnitPrice();
+                double minValue = daoPro.getMinUnitPrice();
+                request.setAttribute("inputMinPrice", minValue);
+                request.setAttribute("inputMaxPrice", maxValue);
+                ResultSet rsCategory = daoPro.getData("Select * from Categories");
+                request.setAttribute("CategoryResult", rsCategory);
                 request.getRequestDispatcher("cartdetail.jsp").forward(request, response);
             }
             if (service.equals("addcart")) {
@@ -99,7 +107,7 @@ public class CartController extends HttpServlet {
                 int n = dao.updateCartByUserAndPro(cart, userID, pid);
                 response.sendRedirect("CartURL");
             }
-            
+
         }
     }
 
