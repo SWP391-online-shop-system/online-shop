@@ -57,7 +57,7 @@
                 <div style="position: sticky; top: 30px;">
                     <hr class="sidebar-divider wee-0" style="margin: 0px;">
                     <li class="nav-item active">
-                        <a class="nav-link" href="index.html">
+                        <a class="nav-link" href="MarketingDashBoardURL">
                             <i class="fas fa-fw fa-tachometer-alt"></i>
                             <span>Thống kê</span></a>
                     </li>
@@ -72,7 +72,7 @@
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="ui-colors.html">
+                        <a class="nav-link" href="mktProductListURL">
                             <i class="fas fa-shopping-cart fa-2x text-success"></i>
                             <span>Sản phẩm</span>
                         </a>
@@ -133,7 +133,13 @@
                             </ol>
                         </div>
                         <!-- Row -->
-                        <a href="addProductmkt.jsp" class="btn btn-secondary">Add New Product</a>
+                        <script>
+                            function submitForm() {
+                                document.getElementById('filterForm').submit();
+                            }
+                        </script>
+
+                        <a href="AddProductmktURL?service=addProduct" class="btn btn-secondary">Add New Product</a>
                         <div class="row">
                             <!-- DataTable with Hover -->
                             <div class="col-lg-12">
@@ -146,7 +152,7 @@
                                                 <form action="mktProductListURL" method="get" id="categoryForm">
                                                     <div class="filter-group" style="display:flex;">
                                                         <div style="padding-top: 3px;">Loại</div>
-                                                        <select class="form-control" name="categoryId" onchange="this.form.submit()">
+                                                        <select class="form-control" name="categoryId" onchange="this.form.submit();">
                                                             <option value="">All</option>
                                                             <c:forEach var="category" items="${categories}">
                                                                 <option value="${category.categoryID}"<c:if test="${category.categoryID eq param.categoryId}">selected
@@ -155,6 +161,9 @@
                                                             </c:forEach>							
                                                         </select>
                                                     </div>
+                                                </form>
+                                                <form action="mktProductListURL" method="get">
+                                                    <!-- Your other form elements -->
                                                     <div class="filter-group" style="display:flex;">
                                                         <div style="padding-top: 3px;">Trạng thái</div>
                                                         <select class="form-control" name="status" onchange="this.form.submit()">
@@ -172,7 +181,7 @@
                                                         <th>Ảnh</th>
                                                         <th>Tiêu đề</th>
                                                         <th>Loại</th>
-                                                        <th>Giá</th>
+                                                        <th>Giá bán</th>
                                                         <th>Trạng thái</th>						
                                                         <th>Hành động</th>
                                                     </tr>
@@ -183,7 +192,7 @@
                                                         <th>Ảnh</th>
                                                         <th>Tiêu đề</th>
                                                         <th>Loại</th>
-                                                        <th>Giá</th>
+                                                        <th>Giá bán</th>
                                                         <th style="width:87px; padding-left: 20px;">Trạng thái</th>						
                                                         <th>Hành động</th>
                                                     </tr>
@@ -194,7 +203,7 @@
                                                     while(rs.next()) {
                                                         int unitInStock = rs.getInt("UnitInStock");
                                                         int totalStock = rs.getInt("TotalStock");
-                                                        String status = (unitInStock > 0 && unitInStock <= totalStock) ? "Còn Hàng" : "Hết Hàng";
+                                                        String status = (unitInStock > 0 && unitInStock <= totalStock) ? "Còn hàng" : "Hết hàng";
                                                 %>
                                                 <tr>
                                                     <td><%=rs.getInt("ProductID")%></td>
@@ -277,7 +286,7 @@
 
         <!-- Scroll to top -->
         <a class="scroll-to-top rounded" href="#page-top">
-            <i class="fas fa-angle-up"></i>
+            <i class="fas fa-angle-up" style="padding: 14px;"></i>
         </a>
         <script src="vendor/jquery/jquery.min.js"></script>
         <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
@@ -294,11 +303,6 @@
                                                                 $('#dataTable').DataTable(); // ID From dataTable 
                                                                 $('#dataTableHover').DataTable(); // ID From dataTable with Hover
                                                             });
-        </script>
-        <script>
-            function submitForm() {
-                document.getElementById('filterForm').submit();
-            }
         </script>
     </body>
 
