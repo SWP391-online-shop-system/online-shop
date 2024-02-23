@@ -1,4 +1,10 @@
 cahtml,
+body {
+    height: 100%;
+    font-family: "Nunito Sans", sans-serif;
+    -webkit-font-smoothing: antialiased;
+}
+
 h1,
 h2,
 h3,
@@ -939,7 +945,7 @@ ol {
     position: absolute;
     font-size: 14px;
     margin-top: -218px;
-    margin-left: 168px;
+    margin-left: 131px;
     width: 46px;
     font-family: monospace;
     height: 22px;
