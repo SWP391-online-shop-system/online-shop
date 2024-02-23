@@ -94,7 +94,7 @@ public class ControllerMarketingProductList extends HttpServlet {
         request.setAttribute("data", rs);
         request.setAttribute("currentPage", index);
         request.setAttribute("endPage", endPage);
-        request.getRequestDispatcher("productListmkt.jsp").forward(request, response);
+        request.getRequestDispatcher("productListmkt1.jsp").forward(request, response);
     }
     /**
      * Handles the HTTP <code>POST</code> method.

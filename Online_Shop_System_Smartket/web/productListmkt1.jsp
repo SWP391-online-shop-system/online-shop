@@ -133,21 +133,27 @@
                             </ol>
                         </div>
                         <!-- Row -->
-                        <a href="addProductmkt.jsp" class="btn btn-secondary">Add New Product</a>
-                        <div class="row">
-                            <!-- DataTable with Hover -->
-                            <div class="col-lg-12">
-                                <div class="card mb-4">
-                                    <div class="table-responsive p-3">
-                                        <table class="table align-items-center table-flush table-hover" id="dataTableHover">
-                                            <div style="display: flex;
-                                                 margin-left: 200px;
-                                                 margin-bottom: -30px;">
-                                                <form action="mktProductListURL" method="get" id="categoryForm">
-                                                    <div class="filter-group" style="display:flex;">
-                                                        <div style="padding-top: 3px;">Loại</div>
-                                                        <select class="form-control" name="categoryId" onchange="this.form.submit()">
-                                                            <option value="">All</option>
+                            <script>
+                                function submitForm() {
+                                    document.getElementById('filterForm').submit();
+                                }
+                            </script>
+
+                            <a href="AddProductmktURL?service=addProduct" class="btn btn-secondary">Add New Product</a>
+                            <div class="row">
+                                <!-- DataTable with Hover -->
+                                <div class="col-lg-12">
+                                    <div class="card mb-4">
+                                        <div class="table-responsive p-3">
+                                            <table class="table align-items-center table-flush table-hover" id="dataTableHover">
+                                                <div style="display: flex;
+                                                     margin-left: 200px;
+                                                     margin-bottom: -30px;">
+                                                    <form action="mktProductListURL" method="get" id="categoryForm">
+                                                        <div class="filter-group" style="display:flex;">
+                                                            <div style="padding-top: 3px;">Loại</div>
+                                                            <select class="form-control" name="categoryId" onchange="submitForm()">
+                                                                <option value="">All</option>
                                                             <c:forEach var="category" items="${categories}">
                                                                 <option value="${category.categoryID}"<c:if test="${category.categoryID eq param.categoryId}">selected
                                                                         </c:if>
@@ -155,6 +161,9 @@
                                                             </c:forEach>							
                                                         </select>
                                                     </div>
+                                                </form>
+                                                <form action="mktProductListURL" method="get">
+                                                    <!-- Your other form elements -->
                                                     <div class="filter-group" style="display:flex;">
                                                         <div style="padding-top: 3px;">Trạng thái</div>
                                                         <select class="form-control" name="status" onchange="this.form.submit()">
@@ -294,11 +303,6 @@
                                                                 $('#dataTable').DataTable(); // ID From dataTable 
                                                                 $('#dataTableHover').DataTable(); // ID From dataTable with Hover
                                                             });
-        </script>
-        <script>
-            function submitForm() {
-                document.getElementById('filterForm').submit();
-            }
         </script>
     </body>
 

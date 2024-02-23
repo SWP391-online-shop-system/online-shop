@@ -8,9 +8,6 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Vector;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import static model.DAOProduct.getCurrentTimestamp;
 import view.ProductImage;
 
 /**
@@ -36,24 +33,5 @@ public class DAOProductImage extends DBConnect {
             System.out.println(e);
         }
         return null;
-    }
-
-    public int insertImage(ProductImage productImage) {
-        int n = 0;
-        String sql = "INSERT INTO `online_shop_system`.`productimage`\n"
-                + "(`ProductID`,\n"
-                + "`ProductURL`)\n"
-                + "VALUES\n"
-                + "(?,\n"
-                + "?)";
-        try {
-            PreparedStatement pre = conn.prepareStatement(sql);
-            pre.setInt(1, productImage.getProductID());
-            pre.setString(2, productImage.getProductURL());
-            n = pre.executeUpdate();
-        } catch (SQLException ex) {
-            Logger.getLogger(DAOProductImage.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        return n;
     }
 }
