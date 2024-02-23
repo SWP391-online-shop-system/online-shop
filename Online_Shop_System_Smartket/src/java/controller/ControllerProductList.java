@@ -76,12 +76,12 @@ public class ControllerProductList extends HttpServlet {
             double maxValue;
             String maxValue_raw = request.getParameter("inputMaxPrice");
             String minValue_raw = request.getParameter("inputMinPrice");
-            if (maxValue_raw == null || maxValue_raw.equals("")) {
+            if (maxValue_raw == null) {
                 maxValue = dao.getMaxUnitPrice();
             } else {
                 maxValue = Double.parseDouble(maxValue_raw);
             }
-            if (minValue_raw == null || minValue_raw.equals("")) {
+            if (minValue_raw == null) {
                 minValue = dao.getMinUnitPrice();
             } else {
                 minValue = Double.parseDouble(minValue_raw);

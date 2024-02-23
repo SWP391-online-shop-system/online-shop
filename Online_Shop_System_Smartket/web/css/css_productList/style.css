@@ -946,20 +946,6 @@ ol {
     font-size: 14px;
     margin-top: -218px;
     margin-left: 131px;
-    width: 74px;
-    font-family: monospace;
-    height: 22px;
-    text-align: center;
-    /* border: 1px solid; */
-    background: #ff2929;
-    color: #f3f3f3;
-    border-radius: 5px;
-}
-.sale-cotification2{
-    position: absolute;
-    font-size: 14px;
-    margin-top: -218px;
-    margin-left: 9px;
     width: 46px;
     font-family: monospace;
     height: 22px;

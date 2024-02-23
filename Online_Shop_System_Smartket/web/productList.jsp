@@ -591,7 +591,7 @@
                                             <img src="<%=rsPaging.getString("ProductURL")%>" alt="alt"/>
                                         </a>
                                         <%if(rsPaging.getInt("UnitDiscount")!=0) {%>
-                                        <div class="sale-cotification">Sale&nbsp;<%=rsPaging.getInt("UnitDiscount")%>%</div>
+                                        <div class="sale-cotification">Sale</div>
                                         <%}%>
                                         <%    ResultSet rsNewProduct = dao.getData("select * from product as p join productImage as pi "
                                            + "on p.ProductID = pi.ProductID "
@@ -599,7 +599,7 @@
                                            + "order by p.CreateDate desc limit 6 ");
                                              while(rsNewProduct.next()) {
                                                 if(rsPaging.getString("CreateDate").substring(0,10).equals(rsNewProduct.getString("CreateDate").substring(0,10))){%>
-                                        <div class="sale-cotification2">Mới</div>
+                                        <div class="sale-cotification">Mới</div>
                                         <%}}%>
                                     </div>
                                     <div class="product__item__text">
