@@ -46,7 +46,11 @@
         <link rel="stylesheet" href="css/css_productList/style.css" type="text/css">
         <link rel="stylesheet" href="css/css_footer/footer.css" type="text/css">
         <script src="https://kit.fontawesome.com/ac74b86ade.js" crossorigin="anonymous"></script>
-
+        <style>
+            body{
+                margin: 5px -5px;
+            }
+        </style>
     </head>
 
     <body>
@@ -293,12 +297,18 @@
                                     ResultSet rs = dao.getData("SELECT count(*) as count FROM Cart AS c JOIN Product AS p ON c.ProductID = p.ProductID where userID = "+userID+"");
                                     while(rs.next()){
                                 %>
-                                <span class="count-cart" style="margin-right: -11px;
+                                <span class="count-cart" style="position: absolute;
+                                      margin-left: 17px;
                                       background-color: #ff0000;
                                       color: #ffffff;
                                       border-radius: 50%;
-                                      padding: 0px 5px;
-                                      font-size: 17px;"><%=rs.getInt(1)%></span>
+                                      padding: 0px 4px;
+                                      font-size: 15px;
+                                      z-index: 9;
+                                      top: 11px;
+                                      left: 3px;
+                                      font-family: none;
+                                      line-height: normal;"><%=rs.getInt(1)%></span>
                                 <%
                                     }
                                 %>
