@@ -348,7 +348,7 @@
                                                          margin-left: 25px;
                                                          margin-top: 10px;" src="<%=rsHotPro.getString("ProductURL")%>" alt="alt"/>
                                                     <%if(rsHotPro.getInt("UnitDiscount")!=0) {%>
-                                                    <div class="sale-cotification">Sale</div>
+                                                    <div class="sale-cotification"style="margin-left: 114px;">Sale</div>
                                                     <%}%>
                                                     <%    ResultSet rsNew2Product = dao.getData("select * from product as p join productImage as pi "
                                                        + "on p.ProductID = pi.ProductID "
@@ -567,7 +567,7 @@
                                     <div class="product__item__pic set-bg">
                                         <img src="<%=rsPaging.getString("ProductURL")%>" alt="alt"/>
                                         <%if(rsPaging.getInt("UnitDiscount")!=0) {%>
-                                        <div class="sale-cotification">Sale</div>
+                                        <div class="sale-cotification"style="margin-left: 114px;">Sale</div>
                                         <%}%>
                                         <%    ResultSet rsNewProduct = dao.getData("select * from product as p join productImage as pi "
                                         + "on p.ProductID = pi.ProductID "
