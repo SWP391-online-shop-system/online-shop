@@ -14,14 +14,15 @@ public class User {
     private String firstName, lastName, address, phoneNumber, dateOfBirth;
     private Boolean gender;
     private String userImage, password, email, lastLogin;
-    private Boolean userStatus;
+    private int userStatus;
     private int reportTo, roleID;
     private String rePassword;
+    private String createDate;
 
     public User() {
     }
 
-    public User(int userID, String firstName, String lastName, String address, String phoneNumber, String dateOfBirth, Boolean gender, String userImage, String password, String email, String lastLogin, Boolean userStatus, int reportTo, int roleID) {
+    public User(int userID, String firstName, String lastName, String address, String phoneNumber, String dateOfBirth, Boolean gender, String userImage, String password, String email, String lastLogin, int userStatus, int reportTo, int roleID) {
         this.userID = userID;
         this.firstName = firstName;
         this.lastName = lastName;
@@ -38,7 +39,7 @@ public class User {
         this.roleID = roleID;
     }
 
-    public User(String firstName, String lastName, String address, String phoneNumber, String dateOfBirth, Boolean gender, String userImage, String password, String email, String lastLogin, Boolean userStatus, int reportTo, int roleID) {
+    public User(String firstName, String lastName, String address, String phoneNumber, String dateOfBirth, Boolean gender, String userImage, String password, String email, String lastLogin, int userStatus, int reportTo, int roleID) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.address = address;
@@ -60,6 +61,24 @@ public class User {
         this.email = email;
         this.password = password;
         this.rePassword = rePassword;
+    }
+
+    public User(String firstName, String lastName, String address, String phoneNumber, Boolean gender, String password, String email) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.address = address;
+        this.phoneNumber = phoneNumber;
+        this.gender = gender;
+        this.password = password;
+        this.email = email;
+    }
+
+    public String getCreateDate() {
+        return createDate;
+    }
+
+    public void setCreateDate(String createDate) {
+        this.createDate = createDate;
     }
 
     public int getUserID() {
@@ -158,11 +177,11 @@ public class User {
         this.lastLogin = lastLogin;
     }
 
-    public Boolean isUserStatus() {
+    public int isUserStatus() {
         return userStatus;
     }
 
-    public void setUserStatus(Boolean userStatus) {
+    public void setUserStatus(int userStatus) {
         this.userStatus = userStatus;
     }
 
@@ -186,7 +205,7 @@ public class User {
         return gender;
     }
 
-    public Boolean getUserStatus() {
+    public int getUserStatus() {
         return userStatus;
     }
 

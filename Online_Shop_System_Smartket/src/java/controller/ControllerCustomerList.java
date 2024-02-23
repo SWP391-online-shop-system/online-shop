@@ -11,7 +11,9 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import java.sql.ResultSet;
 import java.util.Vector;
+import java.util.logging.Logger;
 import model.DAOUser;
 import view.User;
 
@@ -65,6 +67,37 @@ public class ControllerCustomerList extends HttpServlet {
                 request.setAttribute("index", index);
                 request.setAttribute("data", list);
                 request.getRequestDispatcher("customerlist.jsp").forward(request, response);
+            }
+            if (service.equals("addnewuser")) {
+                String Fname = request.getParameter("FName");
+                String Lname = request.getParameter("LName");
+                String Adress = request.getParameter("adress");
+                String Email = request.getParameter("email");
+                String Phone = request.getParameter("phone");
+                String Pass = request.getParameter("pass");
+                String gender_str = request.getParameter("gender");
+                boolean gender;
+                if(gender_str.equals("male")) {
+                    gender = true;
+                } else {
+                    gender = false;
+                }
+                User newUser = new User(Fname, Lname, Adress, Phone, gender, Pass, Email);
+                int n = dao.addNewUserByMKT(newUser);
+//                if(n>0){
+//                    message = "Thêm thành công";
+//                }
+                request.setAttribute("message", message);
+//                request.getRequestDispatcher("customerlist").forward(request, response);
+                response.sendRedirect("customerlist");
+            }
+            if (service.equals("showDetail")) {
+                String cusID = request.getParameter("uid");
+                ResultSet rs = dao.getData("SELECT * FROM `user` where userID = " + cusID);
+                ResultSet log = dao.getData("SELECT * FROM loghistory as log join `user` as u on log.UserId = u.UserID where u.UserId = " + cusID);
+                request.setAttribute("data", rs);
+                request.setAttribute("log", log);
+                request.getRequestDispatcher("customerdetails.jsp").forward(request, response);
             }
         }
     }

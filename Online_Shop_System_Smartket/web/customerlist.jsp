@@ -21,6 +21,7 @@
         <link rel="shortcut icon" href="images/logo/logo.png" type="image/png">
     </head>
     <body id="page-top">
+        <%String message =(String)request.getAttribute("message");%>
         <div id="wrapper">
             <!-- Sidebar -->
             <ul class="navbar-nav sidebar sidebar-light accordion" id="accordionSidebar">
@@ -110,7 +111,16 @@
                         </div>
 
                         <!-- Row -->
+                        <div class="alert alert-success alert-dismissible" role="alert" <%if(message == null){%>style="display: none"<%}%>>
+                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                            <h6><i class="fas fa-check"></i><b> Success!</b></h6>
+                            A simple success alert—check it out!
+                        </div>
                         <div class="row">
+                            <button style="margin-left: 13px;margin-bottom: 5px;" type="button" class="btn btn-outline-primary" data-toggle="modal" data-target="#exampleModalLong"
+                                    id="#modalLong">Thêm Khách Hàng Mới</button>
 
                         </div>
                         <div class="row">
@@ -121,32 +131,32 @@
                                                                             <h6 class="m-0 font-weight-bold text-primary">DataTables with Hover</h6>
                                                                         </div>-->
                                     <div class="table-responsive p-3">
-                                        <table class="table align-items-center table-flush table-hover" id="dataTableHover" style="font-size: 16px;
+                                        <table class="table align-items-center table-flush table-hover" id="dataTableHover" style="font-size: 14px;
                                                ">
                                             <thead class="thead-light">
                                                 <tr>
-                                                    <th style="text-align: center;">STT</th>
-                                                    <th style="text-align: center;width: 128.4432px;">Tên Khách Hàng</th>
-                                                    <th style="text-align: center;">Email</th>
-                                                    <th style="text-align: center; width: 0">Giới Tính</th>
-                                                    <th style="text-align: center;width: 112.2955px">Số Điện Thoại</th>						
-                                                    <th style="text-align: center; width:89.73860000000002px">Trạng Thái</th>						
-                                                    <th style="text-align: center;">Lần Đăng Nhập Cuối</th>
+                                                    <th style="text-align: center; width: 0">ID</th>
+                                                    <th style="text-align: center;width: 105.898px;">Tên Khách Hàng</th>
+                                                    <th style="text-align: center;width: 188.727px">Email</th>
+                                                    <th style="text-align: center; width: 59.1023px">Giới Tính</th>
+                                                    <th style="text-align: center;width: 98px">Số Điện Thoại</th>						
+                                                    <th style="text-align: center; width:67.5114px">Trạng Thái</th>						
+                                                    <th style="text-align: center;width: 98px">Đăng Nhập Cuối</th>
                                                 </tr>
                                             </thead>
 
                                             <tbody>
-                                                <%int count = 0;%>
                                                 <c:forEach items="${requestScope.data}" var="cus">
-                                                    <tr style="text-align: center; cursor: pointer" onclick="Customerdetail()">
-                                                        <%count++;%>
-                                                        <td><%=count%></td>
+                                                    <tr style="text-align: center; cursor: pointer" onclick="Customerdetail(${cus.userID})">
+                                                        <td>${cus.userID}</td>
                                                         <td>${cus.firstName} ${cus.lastName}</td>
                                                         <td>${cus.email}</td>
                                                         <td>${cus.gender ? 'Nam':'Nữ'}</td>
                                                         <td>${cus.phoneNumber ? '':'Không'}</td>                        
-                                                        <td>${cus.userStatus ? 'Đang Hoạt Động':'Bị Chặn'}</td>                        
-                                                        <td>${cus.lastLogin}</td>
+                                                        <td><c:if test="${cus.userStatus == 0}"><span class="badge badge-info">Chưa xác nhận</span></c:if>
+                                                            <c:if test="${cus.userStatus == 1}"><span class="badge badge-success">Hoạt động</span></c:if>
+                                                            <c:if test="${cus.userStatus == 2}"><span class="badge badge-danger">Bị chặn</span></c:if>
+                                                        <td title="${cus.lastLogin}">${cus.lastLogin}</td>
                                                     </tr>
                                                 </c:forEach>    
                                             </tbody>
@@ -156,6 +166,96 @@
                             </div>
                         </div>
                         <!--Row-->
+                        <!-- Modal Long -->
+                        <div class="modal fade" id="exampleModalLong" tabindex="-1" role="dialog"
+                             aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+                            <div class="modal-dialog" role="document">
+                                <form action="customerlist" method="post">
+                                    <input type="hidden" name="service" value="addnewuser"/>
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title" id="exampleModalLongTitle">Thêm Khách Hàng</h5>
+                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                <span aria-hidden="true">&times;</span>
+                                            </button>
+                                        </div>
+                                        <div class="modal-body">                                           
+                                            <div class="form-element form-group">                                              
+                                                <label for="registerEmail">Họ</label>                                               
+                                                <input type="text" name="FName" placeholder="Nhập họ" required class="form-control"
+                                                       pattern="[A-Za-zÀ-ỹ ]+" oninvalid="this.setCustomValidity('Vui lòng điền thông tin này, Không bao gồm số và kí tự đặc biệt')" 
+                                                       oninput="setCustomValidity(''); validateInput(this)" >
+
+                                            </div>
+                                            <div class="form-element">
+                                                <label for="registerEmail">Tên</label>
+                                                <input type="text" name="LName" placeholder="Nhập Tên" required class="form-control"
+                                                       pattern="[A-Za-zÀ-ỹ ]+" oninvalid="this.setCustomValidity('Vui lòng điền thông tin này, Không bao gồm số và kí tự đặc biệt')" 
+                                                       oninput="setCustomValidity(''); validateInput(this)" >
+                                            </div>
+                                            <div class="form-element">
+                                                <label>Giới tính</label>
+                                                <div style="display:flex; flex: 40%">
+                                                    <div class="custom-control custom-radio" style="margin-right: 15px;">
+                                                        <input type="radio" id="customRadio3" name="gender" class="custom-control-input" value="male" required>
+                                                        <label class="custom-control-label" for="customRadio3">Nam</label>
+                                                    </div>
+                                                    <div class="custom-control custom-radio">
+                                                        <input type="radio" id="customRadio4" name="gender" class="custom-control-input" value="female" required>
+                                                        <label class="custom-control-label" for="customRadio4">Nữ</label>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="form-element">
+                                                <label for="registerEmail">Địa chỉ</label>
+                                                <input type="text" name="adress" placeholder="Nhập Địa Chỉ"       class="form-control"                                                 
+                                                       oninput="setCustomValidity(''); validateInput(this)" >
+                                            </div>
+                                            <div class="form-element">
+                                                <label for="registerEmail">Email</label>
+                                                <input type="email" name="email" placeholder="Nhập email"required class="form-control"
+                                                       oninvalid="this.setCustomValidity('Vui lòng điền thông tin này và bao gồm @')" 
+                                                       oninput="setCustomValidity(''); validateInput(this)" >
+                                            </div>
+                                            <div class="form-element">
+                                                <label for="registerEmail">Số điện thoại</label>
+                                                <input type="text" name="phone" placeholder="Nhập Số Điện Thoại" class="form-control"
+                                                       minlength="10" maxlength="10"
+                                                       pattern="[0-9 ]+" oninvalid="this.setCustomValidity('Vui lòng điền thông tin này, Không bao gồm chữ cái và kí tự đặc biệt')" 
+                                                       oninput="setCustomValidity(''); validateInput(this)" >
+                                            </div>
+                                            <div class="form-element">
+                                                <label for="registerPassword">Mật khẩu</label>
+
+                                                <input type="password" id="registerPassword" name="pass" placeholder="Nhập mật khẩu" required class="form-control"
+                                                       minlength="6" maxlength="15" title="Mật khẩu phải chứa từ 6 đến 15 ký tự" 
+                                                       oninvalid="this.setCustomValidity('Vui lòng điền thông tin này')" 
+                                                       oninput="setCustomValidity(''); validateInput(this);validatePasswordMatch(this)">                                               
+
+
+                                            </div>
+                                            <div class="form-element">
+                                                <label for="registerPassword">Nhập lại mật khẩu</label>
+                                                <div style="flex:40%">
+                                                    <input type="password" id="registerPasswordConfirm" name="repass" placeholder="Nhập lại mật khẩu" required class="form-control"
+                                                           minlength="6" maxlength="15"
+                                                           title="Mật khẩu phải chứa từ 6 đến 15 ký tự" 
+                                                           oninvalid="this.setCustomValidity('Vui lòng điền thông tin này')" 
+                                                           oninput="setCustomValidity(''); validateInput(this);validatePasswordMatch(this)">
+                                                    <div class="invalid-feedback" id="passwordMismatch">
+                                                        Mật khẩu không khớp
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-outline-primary" data-dismiss="modal">Close</button>
+                                            <button type="submit" class="btn btn-primary">Save changes</button>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
                     </div>      
                 </div>
                 <!---Container Fluid-->
@@ -169,33 +269,13 @@
         <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
         <script src="vendor/jquery-easing/jquery.easing.min.js"></script>
         <!--        <script src="js_marketing/ruang-admin.min.js"></script>
-                <script src="js_marketing/demo/chart-area-demo.js"></script>  -->
+        --><script src="js_marketing/customerlist.js"></script>  
         <script src="vendor/datatables/jquery.dataTables.min.js"></script>
         <script src="vendor/datatables/dataTables.bootstrap4.min.js"></script>
 
         <!-- Page level custom scripts -->
         <script>
-                                                        $(document).ready(function () {
-                                                            $('#dataTable').DataTable(); // ID From dataTable 
-                                                            $('#dataTableHover').DataTable({
-                                                                columns: [
-                                                                    {searchable: false},
-                                                                    {searchable: true},
-                                                                    {searchable: true},
-                                                                    {searchable: false},
-                                                                    {searchable: true},
-                                                                    {searchable: false},
-                                                                    {searchable: false}],
-                                                                search: {
-                                                                    placeholder: 'Type search here'
-                                                                }
-                                                            }); // ID From dataTable with Hover
-                                                        });
 
-                                                        function Customerdetail() {
-                                                            var url = "customerdetails.jsp";
-                                                            window.location.href = url;
-                                                        }
         </script>
     </body>
 </html>

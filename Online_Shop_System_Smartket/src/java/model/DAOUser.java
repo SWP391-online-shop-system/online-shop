@@ -88,6 +88,41 @@ public class DAOUser extends DBConnect {
         }
     }
 
+    public int addNewUserByMKT(User user) {
+        int n = 0;
+        String sql = "INSERT INTO `online_shop_system`.`user`(`FirstName`,`LastName`,`Address`,`PhoneNumber`,`Gender`,`Password`,`Email`,`UserStatus`,`ReportTo`,`RoleID`,`CreateDate`)\n"
+                + "VALUES(?,?,?,?,?,?,?,0,1,1,CURRENT_TIMESTAMP);";
+        try {
+            PreparedStatement pre = conn.prepareStatement(sql);
+            pre.setString(1, user.getFirstName());
+            pre.setString(2, user.getLastName());
+            pre.setString(3, user.getAddress());
+            pre.setString(4, user.getPhoneNumber());
+            pre.setInt(5, user.getGender() ? 1 : 0);
+            pre.setString(6, user.getPassword());
+            pre.setString(7, user.getEmail());
+            n = pre.executeUpdate();
+        } catch (SQLException ex) {
+//           context.log("SQL Exception occurred: " + ex.getMessage());
+
+        }
+        return n;
+    }
+
+    public int updateStatus(int uid, int status) {
+        int n = 0;
+        String sql = "UPDATE `online_shop_system`.`user`\n"
+                + "SET`UserStatus` = ? WHERE `UserID` = ?;";
+        try {
+            PreparedStatement pre = conn.prepareStatement(sql);
+            pre.setInt(1, status);
+            pre.setInt(2, uid);
+            n = pre.executeUpdate();
+        } catch (SQLException ex) {
+        }
+        return n;
+    }
+
     public User getUserByEmail(String Email) {
 
         String sql = "select * from user where Email ='" + Email + "'";
@@ -107,7 +142,7 @@ public class DAOUser extends DBConnect {
                         rs.getString(9),
                         rs.getString(10),
                         rs.getString(11),
-                        rs.getBoolean(12),
+                        rs.getInt(12),
                         rs.getInt(13),
                         rs.getInt(14)
                 );
@@ -199,7 +234,7 @@ public class DAOUser extends DBConnect {
                 String password = rs.getString(9);
                 String email = rs.getString(10);
                 String lastLogin = rs.getString(11);
-                Boolean userStatus = rs.getBoolean(12);
+                int userStatus = rs.getInt(12);
                 int reportTo = rs.getInt(13);
                 int roleID = rs.getInt(14);
                 User user = new User(id, fName, lName, address,
@@ -248,7 +283,7 @@ public class DAOUser extends DBConnect {
                         rs.getString(9),
                         rs.getString(10),
                         rs.getString(11),
-                        rs.getBoolean(12),
+                        rs.getInt(12),
                         rs.getInt(13),
                         rs.getInt(14));
                 return user;
@@ -276,7 +311,7 @@ public class DAOUser extends DBConnect {
                         rs.getString(9),
                         rs.getString(10),
                         rs.getString(11),
-                        rs.getBoolean(12),
+                        rs.getInt(12),
                         rs.getInt(13),
                         rs.getInt(14));
             }
@@ -318,7 +353,7 @@ public class DAOUser extends DBConnect {
                         rs.getString("Password"),
                         rs.getString("Email"),
                         rs.getString("LastLogin"),
-                        rs.getBoolean("UserStatus"),
+                        rs.getInt("UserStatus"),
                         rs.getInt("ReportTo"),
                         rs.getInt("RoleID"));
                 list.add(user);
@@ -349,6 +384,22 @@ public class DAOUser extends DBConnect {
 //        for (User user : list) {
 //            System.out.println(user);
 //        }
+//        String Fname = "tran";
+//        String Lname = "minh";
+//        String Adress = null;
+//        String Email = null;
+//        String Phone = null;
+//        String Pass = "1234567";
+//        String gender_str = "male";
+//        boolean gender;
+//        if (gender_str.equals("male")) {
+//            gender = true;
+//        } else {
+//            gender = false;
+//        }
+//        User user = new User(Fname, Lname, Adress, Phone, gender, Pass, Email);
+//        int n = dao.addNewUserByMKT(user);
+//        System.out.println(n);
     }
 
     public String convertStatus(int UserStatus) {

@@ -1554,3 +1554,13 @@ body.sidebar-toggled footer.sticky-footer{
     margin-top: -22px;
     margin-left: 20px;
 }
+.form-element{
+    display:flex;
+    margin-bottom: 19px;
+}
+.form-element label{
+    flex: 9%;
+}
+.form-element input{
+    flex: 40%;
+}
