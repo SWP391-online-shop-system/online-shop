@@ -95,7 +95,7 @@ public class ControllerChangepassword extends HttpServlet {
            request.getRequestDispatcher("changepassword.jsp").forward(request, response);
        }else {
         User u= new User(user.getUserID(),user.getFirstName(),user.getLastName(),user.getAddress(),user.getPhoneNumber(),user.getDateOfBirth(),user.isGender(),user.getUserImage(),
-        newPassword,user.getEmail(),user.getLastLogin(),user.isUserStatus(),user.getReportTo(),user.getRoleID());
+        newPassword,user.getEmail(),user.getLastLogin(),user.isUserStatus(),user.getReportTo(),user.getRoleID(),"now()");
         dao.updateUser(u);
            System.out.println("Update thanh cong");
         session.setAttribute("inputerror","Thay đổi thành công");

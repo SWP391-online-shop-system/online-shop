@@ -67,8 +67,6 @@ public class DBConnect {
     }
 
     public static void main(String[] args) {
-        
-        changeImage("images/product/diengiadung/capnoidienquang_1.jpg", "images/product/diengiadung/capnoidienquang_2.jpg");
 
     }
 }

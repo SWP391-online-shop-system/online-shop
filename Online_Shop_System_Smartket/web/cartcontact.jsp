@@ -465,7 +465,7 @@
                                                    placeholder="Nhập tên...">
                                         </div>
                                         <div class="form-group">
-                                            <label for="exampleInputPassword1">Số điện thoại người nhận</label>
+                                               <label for="exampleInputPassword1">Số điện thoại người nhận</label>
                                             <input name="phone" value="<%=phone%>"required class="form-control" id="" placeholder="Nhập số điện thoại...">
                                         </div>
                                         <div class="form-group">

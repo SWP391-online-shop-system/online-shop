@@ -43,7 +43,7 @@
                         <meta name="viewport" content="width=device-width, initial-scale=1.0">
                         <title>Smarket</title>
                         <link rel="stylesheet" href="css/login.css"/>
-                        
+
                     </head>
                     <body> 
                         <%
@@ -70,7 +70,7 @@
                         </c:if>
                         <c:if test="${sessionScope.account != null}">
                             <a href="logout">Đăng xuất</a>
-                            <a href="profileUser.jsp"><img style="width: 30px;
+                            <a href="ChangeuserinfoURL?UserID=${sessionScope.account.userID}"><img style="width: 30px;
                                                            height: 30px;
                                                            margin-right: -10px;
                                                            margin-bottom: -8px;
@@ -234,7 +234,7 @@
                 </li>
                 <li><a href="blog">Blog</a></li>
                     <c:if test="${sessionScope.account != null}">
-                    <li><a href="profileUser.jsp">Tài khoản</a></li>
+                    <li><a href="ChangeuserinfoURL?UserID=${sessionScope.account.userID}">Tài khoản</a></li>
                 </c:if>            </ul>
         </div>
         <div class="header-content-right-menu">
