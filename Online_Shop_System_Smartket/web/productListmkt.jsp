@@ -8,6 +8,8 @@
 <%@page import="java.sql.ResultSet"%>
 <%@page import="java.text.SimpleDateFormat"%>
 <%@page import="java.util.Date"%>
+<%@ page import="java.text.NumberFormat" %>
+<%@ page import="java.util.Locale" %>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page import="view.*" %>
 <%@page import="model.*" %>
@@ -125,15 +127,15 @@
                     <!-- Container Fluid-->
                     <div class="container-fluid" id="container-wrapper">
                         <div class="d-sm-flex align-items-center justify-content-between mb-4">
-                            <h1 class="h3 mb-0 text-gray-800">Product List</h1>
+                            <h1 class="h3 mb-0 text-gray-800">Danh sách sản phẩm</h1>
                             <ol class="breadcrumb">
-                                <li class="breadcrumb-item"><a href="./">Home</a></li>
+                                <li class="breadcrumb-item"><a href="./">Trang chủ</a></li>
                                 <!--<li class="breadcrumb-item">Tables</li>-->
-                                <li class="breadcrumb-item active" aria-current="page">Product List</li>
+                                <li class="breadcrumb-item active" aria-current="page">Danh sách sản phẩm</li>
                             </ol>
                         </div>
                         <!-- Row -->
-                        <a href="addProductmkt.jsp" class="btn btn-secondary">Add New Product</a>
+                        <a href="addProductmkt.jsp" class="btn btn-secondary">Thêm sản phẩm mới</a>
                         <div class="row">
                             <!-- DataTable with Hover -->
                             <div class="col-lg-12">
@@ -147,7 +149,7 @@
                                                     <div class="filter-group" style="display:flex;">
                                                         <div style="padding-top: 3px;">Loại</div>
                                                         <select class="form-control" name="categoryId" onchange="this.form.submit()">
-                                                            <option value="">All</option>
+                                                            <option value="">Tất cả</option>
                                                             <c:forEach var="category" items="${categories}">
                                                                 <option value="${category.categoryID}"<c:if test="${category.categoryID eq param.categoryId}">selected
                                                                         </c:if>
@@ -158,7 +160,7 @@
                                                     <div class="filter-group" style="display:flex;">
                                                         <div style="padding-top: 3px;">Trạng thái</div>
                                                         <select class="form-control" name="status" onchange="this.form.submit()">
-                                                            <option value="">Any</option>
+                                                            <option value="">Tất cả</option>
                                                             <option value="Còn hàng" <c:if test="${fn:contains(param.status,'Còn')}">selected</c:if>>Còn hàng</option>
                                                             <option value="Hết hàng" <c:if test="${fn:contains(param.status,'Hết')}">selected</c:if>>Hết hàng</option>
                                                             </select>
@@ -198,10 +200,10 @@
                                                 %>
                                                 <tr>
                                                     <td><%=rs.getInt("ProductID")%></td>
-                                                    <td><img style="width: 100px" src="<%=rs.getString("ProductURL")%>"/></td>
+                                                    <td><img style="width: 100px" src="<%=rs.getString("ProductURLShow")%>"/></td>
                                                     <td><%=rs.getString("ProductName")%></td>
                                                     <td><%=rs.getString("CategoryName")%></td>
-                                                    <td><%=rs.getDouble("UnitPrice")%></td>
+                                                    <td><%= NumberFormat.getCurrencyInstance(new Locale("vi", "VN")).format(rs.getDouble("UnitPrice")) %></td>
                                                     <td><%= status %></td>
                                                     <td>
                                                         <div class="dropdown">
