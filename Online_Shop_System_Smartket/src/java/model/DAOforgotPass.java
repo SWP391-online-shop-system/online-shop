@@ -76,8 +76,8 @@ public class DAOforgotPass extends DBConnect {
             pre.setString(1, pass);
             pre.setString(2, mail);
             int affectedRows = pre.executeUpdate();
-            if(affectedRows !=0){
-                row=1;
+            if (affectedRows != 0) {
+                row = 1;
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -85,9 +85,26 @@ public class DAOforgotPass extends DBConnect {
         return row;
     }
 
+    public static boolean validatePassword(String password) {
+        // Kiểm tra độ dài của mật khẩu
+        if (password.length() < 6) {
+            return false;
+        }
+
+        // Kiểm tra xem mật khẩu có chứa ít nhất một chữ số hay không
+        boolean hasDigit = false;
+        for (char c : password.toCharArray()) {
+            if (Character.isDigit(c)) {
+                hasDigit = true;
+                break;
+            }
+        }
+        return hasDigit;
+    }
+
     public static void main(String[] args) {
         DAOforgotPass dao = new DAOforgotPass();
-        int row=dao.rePass("Matkhau22", "giangpthe171781@fpt.edu.vn");
+        int row = dao.rePass("Matkhau22", "giangpthe171781@fpt.edu.vn");
         System.out.println(row);
         User user = dao.checkEmailExist("giangpthe171781@fpt.edu.vn");
         if (user != null) {

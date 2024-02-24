@@ -1,5 +1,6 @@
 <!doctype html>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <html>
 <head>
 <meta charset='utf-8'>
@@ -70,7 +71,7 @@ body {
 					<div class="card-body">
 						<div class="form-group">
 							<label for="email-for-pass">Điền địa chỉ email của bạn</label> <input
-								class="form-control" type="text" name="email" id="email-for-pass" required=""><small
+								class="form-control" type="text" name="email" id="email-for-pass" required="" value="${email}"><small
 								class="form-text text-muted">Nhập địa chỉ email đã đăng ký.OTP sẽ được gửi tới địa chỉ email này</small>
                                                         <%
                         if(request.getAttribute("message")!=null)

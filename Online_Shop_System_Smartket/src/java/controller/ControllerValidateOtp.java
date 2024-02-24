@@ -66,7 +66,7 @@ public class ControllerValidateOtp extends HttpServlet {
 
                 // Thực hiện các bước xác nhận và xử lý sau đây
             } else {
-                request.setAttribute("message", "OTP quá hạn");
+                request.setAttribute("message", "OTP quá hạn vui lòng thử lại");
                 dispatcher = request.getRequestDispatcher("EnterOtp.jsp");
                 dispatcher.forward(request, response);
             }

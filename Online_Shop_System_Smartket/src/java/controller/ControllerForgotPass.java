@@ -51,56 +51,65 @@ public class ControllerForgotPass extends HttpServlet {
         RequestDispatcher dispatcher = null;
         int otpvalue = 0;
         HttpSession mySession = request.getSession();
+        String msg = null;
+        if (email != null) {
+            if (check != null) {
+                // sending otp
+                Random rand = new Random();
+                otpvalue = rand.nextInt(1255650);
 
-        if (check != null) {
-            // sending otp
-            Random rand = new Random();
-            otpvalue = rand.nextInt(1255650);
-
-            String to = email;// change accordingly
-            // Get the session object
-            Properties props = new Properties();
-            props.put("mail.smtp.host", "smtp.gmail.com");
-            props.put("mail.smtp.socketFactory.port", "465");
-            props.put("mail.smtp.socketFactory.class", "javax.net.ssl.SSLSocketFactory");
-            props.put("mail.smtp.auth", "true");
-            props.put("mail.smtp.port", "465");
-            Session session = Session.getDefaultInstance(props, new javax.mail.Authenticator() {
-                protected PasswordAuthentication getPasswordAuthentication() {
-                    return new PasswordAuthentication("kofpytago22@gmail.com", "kmnv wwlz gczo xfmi");// Put your email
-                    // id and
-                    // password here
+                String to = email;// change accordingly
+                // Get the session object
+                Properties props = new Properties();
+                props.put("mail.smtp.host", "smtp.gmail.com");
+                props.put("mail.smtp.socketFactory.port", "465");
+                props.put("mail.smtp.socketFactory.class", "javax.net.ssl.SSLSocketFactory");
+                props.put("mail.smtp.auth", "true");
+                props.put("mail.smtp.port", "465");
+                Session session = Session.getDefaultInstance(props, new javax.mail.Authenticator() {
+                    protected PasswordAuthentication getPasswordAuthentication() {
+                        return new PasswordAuthentication("kofpytago22@gmail.com", "kmnv wwlz gczo xfmi");// Put your email
+                        // id and
+                        // password here
+                    }
+                });
+                // compose message
+                try {
+                    MimeMessage message = new MimeMessage(session);
+                    message.setFrom(new InternetAddress(email));// change accordingly
+                    message.addRecipient(Message.RecipientType.TO, new InternetAddress(to));
+                    message.setSubject("Smartket");
+                    message.setText("your OTP is: " + otpvalue);
+                    // send message
+                    Transport.send(message);
+                } catch (MessagingException e) {
+                    throw new RuntimeException(e);
                 }
-            });
-            // compose message
-            try {
-                MimeMessage message = new MimeMessage(session);
-                message.setFrom(new InternetAddress(email));// change accordingly
-                message.addRecipient(Message.RecipientType.TO, new InternetAddress(to));
-                message.setSubject("Smartket");
-                message.setText("your OTP is: " + otpvalue);
-                // send message
-                Transport.send(message);
-            } catch (MessagingException e) {
-                throw new RuntimeException(e);
+                dispatcher = request.getRequestDispatcher("EnterOtp.jsp");
+                msg = "OTP đã được gửi tới mail của bạn";
+                request.setAttribute("message", msg);
+                //request.setAttribute("connection", con);
+                mySession.setAttribute("otp", otpvalue);
+                mySession.setAttribute("otpCreationTime", new Date());
+                mySession.setAttribute("email", email);
+                dispatcher.forward(request, response);
+                //request.setAttribute("status", "success");
+            } else {
+                msg = "không tìm thấy email của bạn";
+                request.setAttribute("message", msg);
+                mySession.setAttribute("email", email);
+                dispatcher = request.getRequestDispatcher("forgotpass.jsp");
+                dispatcher.forward(request, response);
             }
-            dispatcher = request.getRequestDispatcher("EnterOtp.jsp");
-            request.setAttribute("message", "OTP đã được gửi tới mail của bạn");
-            //request.setAttribute("connection", con);
-            mySession.setAttribute("otp", otpvalue);
-            mySession.setAttribute("otpCreationTime", new Date());
+        } else {
+            request.setAttribute("message", msg);
             mySession.setAttribute("email", email);
+            dispatcher = request.getRequestDispatcher("forgotpass.jsp");
             dispatcher.forward(request, response);
-            //request.setAttribute("status", "success");
-        }else {
-                    request.setAttribute("message", "không tìm thấy email của bạn");
-                    dispatcher = request.getRequestDispatcher("forgotpass.jsp");
-                    dispatcher.forward(request, response);
-                }
+        }
 
-    }
+    }// <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
 
-    // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
      * Handles the HTTP <code>GET</code> method.
      *

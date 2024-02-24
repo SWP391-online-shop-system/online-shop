@@ -20,6 +20,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import model.DAOforgotPass;
+import util.MaHoa;
 
 /**
  *
@@ -43,21 +44,34 @@ public class ControllerNewPass extends HttpServlet {
         HttpSession session = request.getSession();
         String newPassword = request.getParameter("password");
         String confPassword = request.getParameter("confPassword");
+        boolean check = dao.validatePassword(newPassword);
         RequestDispatcher dispatcher = null;
-        if (newPassword != null && confPassword != null && newPassword.equals(confPassword)) {
-            int row = dao.rePass(newPassword, (String) session.getAttribute("email"));
-            if (row > 0) {
-                request.setAttribute("message", "đổi thành công");
-                dispatcher = request.getRequestDispatcher("newPassword.jsp");
+        String msg = null;
+        if (check == true) {
+            if (newPassword != null && confPassword != null && newPassword.equals(confPassword)) {
+//                newPassword = MaHoa.toSHA1(newPassword);
+                int row = dao.rePass(newPassword, (String) session.getAttribute("email"));
+                if (row > 0) {
+                    msg = "đổi thành công";
+                    request.setAttribute("message", msg);
+                    dispatcher = request.getRequestDispatcher("newPassword.jsp");
+                } else {
+                    msg = "xảy ra lỗi";
+                    request.setAttribute("message", msg);
+                    dispatcher = request.getRequestDispatcher("newPassword.jsp");
+                }
+                dispatcher.forward(request, response);
             } else {
-                request.setAttribute("message", "xảy ra lỗi");
-                dispatcher = request.getRequestDispatcher("newPassword.jsp");
-            }
-            dispatcher.forward(request, response);
-        }else {
-                request.setAttribute("message", "mật khẩu xác nhận không trùng khớp");
+                msg = "mật khẩu xác nhận không trùng khớp";
+                request.setAttribute("message", msg);
                 dispatcher = request.getRequestDispatcher("newPassword.jsp");
                 dispatcher.forward(request, response);
+            }
+        } else {
+            msg = "mật khẩu phải dài ít nhất 6 kí tự và có chứa ít nhất 1 kí tự số";
+            request.setAttribute("message", msg);
+            dispatcher = request.getRequestDispatcher("newPassword.jsp");
+            dispatcher.forward(request, response);
         }
     }
 

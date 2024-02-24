@@ -39,13 +39,9 @@
                                     <strong>Đặt lại mật khẩu</strong>
                                 </h1>
                             </div>
-                            <%
-    if(request.getAttribute("message")!=null)
-    {
-            out.print("<p class='text-danger ml-1'>"+request.getAttribute("message")+"</p>");
-    }
-		  
-                            %>
+                            <div class="alert alert-danger mt-3 text-center">
+                                ${message}
+                            </div>
                             <div class="pt-3 pb-3">
                                 <form class="form-horizontal" action="newPass" method="POST">
                                     <!-- User Name Input -->
