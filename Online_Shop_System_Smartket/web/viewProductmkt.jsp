@@ -8,6 +8,8 @@
 <%@page import="java.sql.ResultSet"%>
 <%@page import="java.text.SimpleDateFormat"%>
 <%@page import="java.util.Date"%>
+<%@ page import="java.text.NumberFormat" %>
+<%@ page import="java.util.Locale" %>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page import="view.*" %>
 <%@page import="model.*" %>
@@ -172,7 +174,7 @@
                                                     <td><%= rs.getString("CategoryName") %></td>
                                                     <td><textarea style="width: 140px; height: 140px"><%= rs.getString("ProductDescription") %></textarea></td>
                                                     <td><%= rs.getInt("UnitInStock") %></td>
-                                                    <td><%= rs.getInt("UnitPrice") %>đ</td>
+                                                    <td><%= NumberFormat.getCurrencyInstance(new Locale("vi", "VN")).format(rs.getDouble("UnitPrice")) %></td>
                                                     <td><%= rs.getInt("UnitDiscount") %></td>
                                                     <td><%= rs.getString("CreateDate") %></td>
                                                     <td><%= rs.getInt("TotalRate") %></td>

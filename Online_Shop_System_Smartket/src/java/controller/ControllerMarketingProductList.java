@@ -55,16 +55,10 @@ public class ControllerMarketingProductList extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         DAOProduct dao = new DAOProduct();
         DAOCategories daoCate = new DAOCategories();
-        String indexPage = request.getParameter("index");
         String categoryId = request.getParameter("categoryId");
         String status = request.getParameter("status"); // Get the status parameter
-        if (indexPage == null) {
-            indexPage = "1";
-        }
-        int index = Integer.parseInt(indexPage);
-        int itemsPerPage = 10;
         ResultSet rs;
-        String sql = "SELECT p.*, c.*, MIN(pi.ProductURL) AS ProductURL\n"
+        String sql = "SELECT p.*, c.*, Min(pi.ProductURLShow) AS ProductURLShow\n"
                 + "FROM Product AS p\n"
                 + "JOIN Categories AS c ON p.CategoryID = c.CategoryID\n"
                 + "LEFT JOIN ProductImage AS pi ON p.ProductID = pi.ProductID\n";
@@ -78,22 +72,16 @@ public class ControllerMarketingProductList extends HttpServlet {
                 sql += "WHERE ";
             }
             if (status.equals("Còn hàng")) {
-                sql += "p.UnitInStock > 0\n"; // Filter products in stock
+                sql += "p.UnitInStock > 0\n";
             } else if (status.equals("Hết hàng")) {
-                sql += "p.UnitInStock = 0\n"; // Filter out-of-stock products
+                sql += "p.UnitInStock = 0\n";
             }
         }
         sql += "GROUP BY p.ProductID\n";
-
         rs = dao.getData(sql);
-
-        int count = dao.getTotalProduct();
-        int endPage = (int) Math.ceil((double) count / itemsPerPage);
         Vector<Categories> categories = daoCate.getCategories("SELECT * FROM categories");
         request.setAttribute("categories", categories);
         request.setAttribute("data", rs);
-        request.setAttribute("currentPage", index);
-        request.setAttribute("endPage", endPage);
         request.getRequestDispatcher("productListmkt.jsp").forward(request, response);
     }
     /**

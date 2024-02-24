@@ -3,7 +3,6 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
  */
 package controller;
-
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.MultipartConfig;
 import jakarta.servlet.annotation.WebServlet;
@@ -162,11 +161,12 @@ public class ControllerAddProductmkt extends HttpServlet {
         String name = fileName.substring(0, index);
         String tail = fileName.substring(index);
         String productImageURL = "images/product/" + convert + "/" + name + "_1" + tail;
+        String productImageUrlShow = productImageURL;
         Product newProduct = new Product(productName, categoryId, productDescription, unitInStock, unitPrice, unitDiscount, totalRate, totalStock);
         DAOProduct daoProduct = new DAOProduct();
         int n = daoProduct.insertProduct(newProduct);
         DAOProductImage dao = new DAOProductImage();
-        dao.insertImage(new ProductImage(productID, productImageURL));
+        dao.insertImage(new ProductImage(productID, productImageURL, productImageUrlShow));
         moveImage(request, response);
         String st = (n > 0) ? "Thêm sản phẩm thành công" : "Thêm sản phẩm thất bại";
         response.sendRedirect("mktProductListURL?message=" + st);
