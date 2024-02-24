@@ -156,7 +156,7 @@
                                                 <div class="product-cart"><a href="loginURL" onclick="alertOpenCart()"><img src="images/cart/cart.png" alt="alt"/></a></div>
                                                     </c:if>
                                                     <c:if test="${sessionScope.account != null}">
-                                                    <div class="product-cart"><a href="#" onclick="addToCart(<%=rsNewProduct.getInt("ProductID")%>)"><img src="images/cart/cart.png" alt="alt"/></a></div>
+                                                <div class="product-cart"><a href="CartURL?service=addcart&quan=1" onclick="addToCart(<%=rsNewProduct.getInt("ProductID")%>)"><img src="images/cart/cart.png" alt="alt"/></a></div>
                                                     </c:if>
                                             <div class="product-buy"><a href="#"><img src="images/cart/bag.png" alt="alt"/><span>MUA NGAY</span></div></a>
                                         </div>
