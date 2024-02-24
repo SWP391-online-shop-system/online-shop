@@ -33,6 +33,20 @@
             a{
                 color: black;
             }
+            .btn-back{
+                margin-left: 1.25rem;
+                padding: 7px 15px;
+                background: #5bbc5b;
+                border: none;
+                border-radius: 3px;
+                color: white;
+                font-size: 14px;
+                transition: all 0.5s;
+            }
+            .btn-back:hover{
+                cursor: pointer;
+                transform: scale(0.95);
+            }
         </style>
     </head>
     <body>
@@ -444,7 +458,7 @@
             <div class="card">
                 <form action="action">
                     <div class="row">
-                        <div class="cart-contact" style="flex: 0 0 47%;border-radius: 3px;margin: 0px 14px 0px 16px;">
+                        <div class="cart-contact" style="flex: 0 0 49%;border-radius: 3px;margin: 0px 14px 0px 16px;">
                             <%
                                 int userID = user1.getUserID();
                                 String firstName = user1.getFirstName();
@@ -457,45 +471,42 @@
                                 <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between" style="margin-top: -53px;margin-bottom: -16px;">
                                     <h6 class="m-0 font-weight-bold text-primary"style="font-size: 24px;">Thông tin người nhận</h6>
                                 </div>
-                                <div class="card-body">
-                                    <form>
-                                        <div class="form-group">
-                                            <label for="exampleInputEmail1">Tên người nhận</label>
-                                            <input name="name" type="text" value="<%=firstName+" "+lastName%>" required autofocus class="form-control" id="" aria-describedby="emailHelp"
-                                                   placeholder="Nhập tên...">
-                                        </div>
-                                        <div class="form-group">
-                                            <label for="exampleInputPassword1">Số điện thoại người nhận</label>
-                                            <input name="phone" value="<%=phone%>"required class="form-control" id="" placeholder="Nhập số điện thoại...">
-                                        </div>
-                                        <div class="form-group">
-                                            <label for="exampleInputPassword1">Email</label>
-                                            <input name="email" value="<%=email%>"required class="form-control" id="" placeholder="Nhập email...">
-                                        </div>
-                                        <div class="form-group">
-                                            <label>Địa Chỉ Người Nhận
-                                            </label><br/>
-                                            <select name="city" id="city" onchange="updateAddress();">
-                                                <option value="" selected>Tỉnh thành</option>           
-                                            </select>
-                                            <select name="district" id="district" onchange="updateAddress();">
-                                                <option value="" selected>Quận huyện</option>
-                                            </select>
-                                            <select name="ward" id="ward" onchange="updateAddress();">
-                                                <option value="" selected>Phường xã</option>
-                                            </select>
-                                        </div>
-                                        <div class="form-group">
-                                            <label for="exampleInputPassword1">Địa chỉ cụ thể</label>
-                                            <input name="addressdetail" type="text" required class="form-control" id="exampleInputPassword1" value="">
-                                        </div>
-                                        <button type="submit" class="btn btn-primary">Thay đổi</button>
-                                    </form>
+                                <div class="card-body" style="font-size: 17px;">
+                                    <div class="form-group">
+                                        <label for="exampleInputEmail1">Tên người nhận</label>
+                                        <input name="name" type="text" value="<%=firstName+" "+lastName%>" required autofocus class="form-control" id="" aria-describedby="emailHelp"
+                                               placeholder="Nhập tên...">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="exampleInputPassword1">Số điện thoại người nhận</label>
+                                        <input name="phone" value="<%if(phone != null){%><%=phone%><%}%>"required class="form-control" id="" placeholder="Nhập số điện thoại...">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="exampleInputPassword1">Email</label>
+                                        <input name="email" value="<%=email%>"required class="form-control" id="" placeholder="Nhập email...">
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Địa Chỉ Người Nhận
+                                        </label><br/>
+                                        <select name="city" id="city" onchange="updateAddress();">
+                                            <option value="" selected>Tỉnh thành</option>           
+                                        </select>
+                                        <select name="district" id="district" onchange="updateAddress();">
+                                            <option value="" selected>Quận huyện</option>
+                                        </select>
+                                        <select name="ward" id="ward" onchange="updateAddress();">
+                                            <option value="" selected>Phường xã</option>
+                                        </select>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="exampleInputPassword1">Địa chỉ cụ thể</label>
+                                        <textarea name="addressdetail" required class="form-control" id="exampleInputPassword1"></textarea>
+                                    </div>
                                 </div>
+                                <button id="goBackButton" class="btn-back">Trở về</button>
                             </div>
-                            <button id="goBackButton" class="button-back">Quay lại</button>
                         </div>
-                        <div class="summary-order" style="flex: 0 0 48%;border-radius: 3px;">
+                        <div class="summary-order" style="flex: 0 0 46%;border-radius: 3px;">
                             <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between" style="margin-top: 13px;
                                  margin-bottom: -16px;    background-color: #f8f8f89c;">
                                 <%ResultSet rsGetQuan = daoP.getData("select count(productID) from Cart where UserID = "+userID);
@@ -504,22 +515,22 @@
                                 <%}%>
                             </div>
                             <div class="big-summary-product">
-                                <%
-                                   try {
-                                       while (rs.next()){
-                                        double unitPrice = rs.getDouble("UnitPrice");
-                                        double totalunitprice = unitPrice*rs.getInt("Quantity");
-                                        totalprice += rs.getInt("Quantity")*unitPrice;
-                                %>   
                                 <div class="summary-product">
-                                    <table style="border-collapse: collapse;">
+                                    <table style="width: 100%;">
                                         <tbody>
                                             <tr class="row-edit">
                                                 <td style="padding: 0px 88px 0px 0px;"">Sản phẩm</td>
                                                 <td>Số lượng</td>
                                                 <td style="border-right: none;">Giá tiền</td>
                                             </tr>
-                                            <tr class="row-edit" style="border-bottom: none;">
+                                            <%
+                                               try {
+                                                   while (rs.next()){
+                                                    double unitPrice = rs.getDouble("UnitPrice");
+                                                    double totalunitprice = unitPrice*rs.getInt("Quantity");
+                                                    totalprice += rs.getInt("Quantity")*unitPrice;
+                                            %>   
+                                            <tr class="row-edit">
                                                 <td>
                                                     <div style="display: flex;
                                                          width: 205px;text-align: left;align-items: center;
@@ -535,18 +546,18 @@
                                                     <%=decimalFormat.format(rs.getInt("Quantity")*(rs.getDouble("UnitPrice") * (100 - rs.getInt("UnitDiscount")) / 100 ))%>đ
                                                 </td>
                                             </tr>
+                                        <%}
+                                            rs.close(); 
+                                            } catch (SQLException e) {
+                                             e.printStackTrace();
+                                            }
+                                        %>
                                         </tbody>
                                     </table>
                                 </div>
-                                <%}
-                                    rs.close(); 
-                                    } catch (SQLException e) {
-                                     e.printStackTrace();
-                                    }
-                                %>
                             </div>
 
-                            <button type="submit" name="submit" class="btn">Đặt Hàng</button>
+                            <button type="submit" name="submit" class="btn-back">Đặt Hàng</button>
                         </div>
                     </div>
                 </form>
@@ -556,68 +567,68 @@
 
         <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.21.1/axios.min.js"></script>
         <script>
-                                                var citis = document.getElementById("city");
-                                                var districts = document.getElementById("district");
-                                                var wards = document.getElementById("ward");
-                                                var Parameter = {
-                                                    url: "https://raw.githubusercontent.com/kenzouno1/DiaGioiHanhChinhVN/master/data.json",
-                                                    method: "GET",
-                                                    responseType: "application/json",
-                                                };
-                                                var promise = axios(Parameter);
-                                                promise.then(function (result) {
-                                                    renderCity(result.data);
-                                                });
+                                            var citis = document.getElementById("city");
+                                            var districts = document.getElementById("district");
+                                            var wards = document.getElementById("ward");
+                                            var Parameter = {
+                                                url: "https://raw.githubusercontent.com/kenzouno1/DiaGioiHanhChinhVN/master/data.json",
+                                                method: "GET",
+                                                responseType: "application/json",
+                                            };
+                                            var promise = axios(Parameter);
+                                            promise.then(function (result) {
+                                                renderCity(result.data);
+                                            });
 
-                                                function renderCity(data) {
-                                                    for (const x of data) {
-                                                        var opt = document.createElement('option');
-                                                        opt.value = x.Name;
-                                                        opt.text = x.Name;
-                                                        opt.setAttribute('data-id', x.Id);
-                                                        citis.options.add(opt);
+                                            function renderCity(data) {
+                                                for (const x of data) {
+                                                    var opt = document.createElement('option');
+                                                    opt.value = x.Name;
+                                                    opt.text = x.Name;
+                                                    opt.setAttribute('data-id', x.Id);
+                                                    citis.options.add(opt);
+                                                }
+                                                citis.onchange = function () {
+                                                    district.length = 1;
+                                                    ward.length = 1;
+                                                    if (this.options[this.selectedIndex].dataset.id != "") {
+                                                        const result = data.filter(n => n.Id === this.options[this.selectedIndex].dataset.id);
+
+                                                        for (const k of result[0].Districts) {
+                                                            var opt = document.createElement('option');
+                                                            opt.value = k.Name;
+                                                            opt.text = k.Name;
+                                                            opt.setAttribute('data-id', k.Id);
+                                                            district.options.add(opt);
+                                                        }
                                                     }
-                                                    citis.onchange = function () {
-                                                        district.length = 1;
-                                                        ward.length = 1;
-                                                        if (this.options[this.selectedIndex].dataset.id != "") {
-                                                            const result = data.filter(n => n.Id === this.options[this.selectedIndex].dataset.id);
+                                                };
+                                                district.onchange = function () {
+                                                    ward.length = 1;
+                                                    const dataCity = data.filter((n) => n.Id === citis.options[citis.selectedIndex].dataset.id);
+                                                    if (this.options[this.selectedIndex].dataset.id != "") {
+                                                        const dataWards = dataCity[0].Districts.filter(n => n.Id === this.options[this.selectedIndex].dataset.id)[0].Wards;
 
-                                                            for (const k of result[0].Districts) {
-                                                                var opt = document.createElement('option');
-                                                                opt.value = k.Name;
-                                                                opt.text = k.Name;
-                                                                opt.setAttribute('data-id', k.Id);
-                                                                district.options.add(opt);
-                                                            }
+                                                        for (const w of dataWards) {
+                                                            var opt = document.createElement('option');
+                                                            opt.value = w.Name;
+                                                            opt.text = w.Name;
+                                                            opt.setAttribute('data-id', w.Id);
+                                                            wards.options.add(opt);
                                                         }
-                                                    };
-                                                    district.onchange = function () {
-                                                        ward.length = 1;
-                                                        const dataCity = data.filter((n) => n.Id === citis.options[citis.selectedIndex].dataset.id);
-                                                        if (this.options[this.selectedIndex].dataset.id != "") {
-                                                            const dataWards = dataCity[0].Districts.filter(n => n.Id === this.options[this.selectedIndex].dataset.id)[0].Wards;
-
-                                                            for (const w of dataWards) {
-                                                                var opt = document.createElement('option');
-                                                                opt.value = w.Name;
-                                                                opt.text = w.Name;
-                                                                opt.setAttribute('data-id', w.Id);
-                                                                wards.options.add(opt);
-                                                            }
-                                                        }
-                                                    };
-                                                }
-                                                document.getElementById("goBackButton").addEventListener("click", function () {
-                                                    window.history.back();
-                                                });
-                                                function updateAddress() {
-                                                    var city = document.getElementById("city").value;
-                                                    var district = document.getElementById("district").value;
-                                                    var ward = document.getElementById("ward").value;
-                                                    var addressDetail = city + ', ' + district + ', ' + ward;
-                                                    document.getElementById("exampleInputPassword1").value = addressDetail;
-                                                }
+                                                    }
+                                                };
+                                            }
+                                            document.getElementById("goBackButton").addEventListener("click", function () {
+                                                window.history.back();
+                                            });
+                                            function updateAddress() {
+                                                var city = document.getElementById("city").value;
+                                                var district = document.getElementById("district").value;
+                                                var ward = document.getElementById("ward").value;
+                                                var addressDetail = city + ', ' + district + ', ' + ward;
+                                                document.getElementById("exampleInputPassword1").value = addressDetail;
+                                            }
         </script>
         <script src="vendor/jquery/jquery.min.js"></script>
         <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>

@@ -13,8 +13,10 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import model.DAOCart;
 import model.DAOProduct;
+import view.Cart;
 import view.User;
 
 /**
@@ -51,6 +53,14 @@ public class ControllerCartContact extends HttpServlet {
             ResultSet rsCategory = daoPro.getData("Select * from Categories");
             request.setAttribute("CategoryResult", rsCategory);
             String message = "";
+            int count = countPro(request, response);
+            for (int i = 1; i <= count; i++) {
+                String quan_str = request.getParameter("quan"+i);
+                String proid_str = request.getParameter("proid"+i);
+                int quan = Integer.parseInt(quan_str);
+                int proid = Integer.parseInt(proid_str);
+                dao.updateQuantity(userID, proid, quan);
+            }
             if (service == null) {
                 service = "showContact";
             }
@@ -103,4 +113,19 @@ public class ControllerCartContact extends HttpServlet {
         return "Short description";
     }// </editor-fold>
 
+    private int countPro(HttpServletRequest request, HttpServletResponse response) {
+        DAOCart dao = new DAOCart();
+        HttpSession session = request.getSession();
+        User user = (User) session.getAttribute("account");
+        int userID = user.getUserID();
+        int count = 0;
+        ResultSet countPro = dao.getData("SELECT count(*) FROM Cart where UserID = " + userID);
+        try {
+            while (countPro.next()) {
+                count = countPro.getInt(1);
+            }
+        } catch (SQLException e) {
+        }
+        return count;
+    }
 }

@@ -159,10 +159,20 @@ public class DAOCart extends DBConnect {
         return vector.firstElement();
     }
 
-    private void updateQuantity(int userID, int productID, int quantity) {
-        // Cập nhật lượng của sản phẩm trong giỏ hàng
-        // Viết truy vấn SQL tương ứng để cập nhật
-
+    public void updateQuantity(int userID, int productID, int quantity) {
+        String sql = "UPDATE `online_shop_system`.`cart`\n"
+                + "SET\n"
+                + "`Quantity` = ?\n"
+                + "WHERE `UserID` = ? and `ProductID` = ? ;";
+        try {
+            PreparedStatement pre = conn.prepareStatement(sql);
+            pre.setInt(1, quantity);
+            pre.setInt(2, userID);
+            pre.setInt(3, productID);
+            pre.executeUpdate();
+        } catch (SQLException ex) {
+            Logger.getLogger(DAOCart.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 //    public static void main(String[] args) {
 //        DAOCart dao = new DAOCart();

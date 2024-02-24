@@ -27,7 +27,6 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/CascadeStyleSheet.css
 .summary{
     width: 100%;
     background-color: #f8f8f8;
-    height: 116px;
     margin: 7px 0px 10px;
     color: rgb(65, 65, 65);
     border: 1px dashed #dfd7d7;
@@ -315,7 +314,7 @@ aside p {
 }
 .cart-contact{
     background-color: #fff;
-    padding: 16vh 5vh;
+    padding: 14vh 5vh;
     border-bottom-left-radius: 1rem;
     border-top-left-radius: 1rem;
     flex: 82%;
@@ -335,7 +334,7 @@ aside p {
 }
 .cart-contact select{
     font-size: 13px;
-    width: 119px;
+    width: 142px;
     height: 35px;
     padding: 7px;
 }
@@ -451,7 +450,6 @@ input[type=number]::-webkit-outer-spin-button {
 }
 .btn-back button{
     margin-top: 15px;
-    float: right;
     padding: 7px 15px;
     background: #5bbc5b;
     border: none;
@@ -465,7 +463,6 @@ input[type=number]::-webkit-outer-spin-button {
     transform: scale(0.95);
 }
 .big-summary-product{
-    height: 330px;
     overflow-y: scroll;
 }
 .row-edit td{
