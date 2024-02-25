@@ -8,6 +8,8 @@
 <%@page import="java.sql.ResultSet"%>
 <%@page import="java.text.SimpleDateFormat"%>
 <%@page import="java.util.Date"%>
+<%@ page import="java.text.NumberFormat" %>
+<%@ page import="java.util.Locale" %>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page import="view.*" %>
 <%@page import="model.*" %>
@@ -125,58 +127,54 @@
                     <!-- Container Fluid-->
                     <div class="container-fluid" id="container-wrapper">
                         <div class="d-sm-flex align-items-center justify-content-between mb-4">
-                            <h1 class="h3 mb-0 text-gray-800">Product List</h1>
+                            <h1 class="h3 mb-0 text-gray-800">Danh sách sản phẩm</h1>
                             <ol class="breadcrumb">
-                                <li class="breadcrumb-item"><a href="./">Home</a></li>
+                                <li class="breadcrumb-item"><a href="./">Trang chủ</a></li>
                                 <!--<li class="breadcrumb-item">Tables</li>-->
-                                <li class="breadcrumb-item active" aria-current="page">Product List</li>
+                                <li class="breadcrumb-item active" aria-current="page">Danh sách sản phẩm</li>
                             </ol>
                         </div>
                         <!-- Row -->
-                        <form action="mktProductListURL" method="get" id="filterForm">
-                            <div class="filter-group">
-                                <label>Loại</label>
-                                <select class="form-control" name="categoryId" onchange="submitForm()">
-                                    <option value="">Tất cả</option>
-                                    <c:forEach var="category" items="${categories}">
-                                        <option value="${category.categoryID}" 
-                                                <c:if test="${category.categoryID eq param.categoryId}">
-                                                    selected
-                                                </c:if>
-                                                >${category.categoryName}</option>
-                                    </c:forEach>							
-                                </select>
-                            </div>
-                            <div class="filter-group">
-                                <label>Trạng thái</label>
-                                <select class="form-control" name="status" onchange="submitForm()">
-                                    <option value="">Tất cả</option>
-                                    <option value="Còn hàng" <c:if test="${param.status == 'Còn hàng'}">selected</c:if>>Còn hàng</option>
-                                    <option value="Hết hàng" <c:if test="${param.status == 'Hết hàng'}">selected</c:if>>Hết hàng</option>
-                                    </select>
-                                </div>
-                            </form>
-
-                            <script>
-                                function submitForm() {
-                                    document.getElementById('filterForm').submit();
-                                }
-                            </script>
-
-                            <a href="AddProductmktURL?service=addProduct" class="btn btn-secondary">Add New Product</a>
-                            <div class="row">
-                                <!-- DataTable with Hover -->
-                                <div class="col-lg-12">
-                                    <div class="card mb-4">
-                                        <div class="table-responsive p-3">
-                                            <table class="table align-items-center table-flush table-hover" id="dataTableHover">
+                        <a href="addProductmkt.jsp" class="btn btn-secondary">Thêm sản phẩm mới</a>
+                        <div class="row">
+                            <!-- DataTable with Hover -->
+                            <div class="col-lg-12">
+                                <div class="card mb-4">
+                                    <div class="table-responsive p-3">
+                                        <table class="table align-items-center table-flush table-hover" id="dataTableHover">
+                                            <div style="display: flex;
+                                                 margin-left: 200px;
+                                                 margin-bottom: -30px;">
+                                                <form action="mktProductListURL" method="get" id="categoryForm">
+                                                    <div class="filter-group" style="display:flex;">
+                                                        <div style="padding-top: 3px;">Loại</div>
+                                                        <select class="form-control" name="categoryId" onchange="this.form.submit()">
+                                                            <option value="">Tất cả</option>
+                                                            <c:forEach var="category" items="${categories}">
+                                                                <option value="${category.categoryID}"<c:if test="${category.categoryID eq param.categoryId}">selected
+                                                                        </c:if>
+                                                                        >${category.categoryName}</option>
+                                                            </c:forEach>							
+                                                        </select>
+                                                    </div>
+                                                    <div class="filter-group" style="display:flex;">
+                                                        <div style="padding-top: 3px;">Trạng thái</div>
+                                                        <select class="form-control" name="status" onchange="this.form.submit()">
+                                                            <option value="">Tất cả</option>
+                                                            <option value="Còn hàng" <c:if test="${fn:contains(param.status,'Còn')}">selected</c:if>>Còn hàng</option>
+                                                            <option value="Hết hàng" <c:if test="${fn:contains(param.status,'Hết')}">selected</c:if>>Hết hàng</option>
+                                                            </select>
+                                                        </div>
+                                                        <input type="submit" style="display: none;">
+                                                    </form>
+                                                </div>
                                                 <thead class="thead-light">
                                                     <tr>
                                                         <th>ID</th>
                                                         <th>Ảnh</th>
                                                         <th>Tiêu đề</th>
                                                         <th>Loại</th>
-                                                        <th>Giá bán</th>
+                                                        <th>Giá</th>
                                                         <th>Trạng thái</th>						
                                                         <th>Hành động</th>
                                                     </tr>
@@ -187,7 +185,7 @@
                                                         <th>Ảnh</th>
                                                         <th>Tiêu đề</th>
                                                         <th>Loại</th>
-                                                        <th>Giá bán</th>
+                                                        <th>Giá</th>
                                                         <th style="width:87px; padding-left: 20px;">Trạng thái</th>						
                                                         <th>Hành động</th>
                                                     </tr>
@@ -198,14 +196,14 @@
                                                     while(rs.next()) {
                                                         int unitInStock = rs.getInt("UnitInStock");
                                                         int totalStock = rs.getInt("TotalStock");
-                                                        String status = (unitInStock > 0 && unitInStock <= totalStock) ? "Còn hàng" : "Hết hàng";
+                                                        String status = (unitInStock > 0 && unitInStock <= totalStock) ? "Còn Hàng" : "Hết Hàng";
                                                 %>
                                                 <tr>
                                                     <td><%=rs.getInt("ProductID")%></td>
-                                                    <td><img style="width: 100px" src="<%=rs.getString("ProductURL")%>"/></td>
+                                                    <td><img style="width: 100px" src="<%=rs.getString("ProductURLShow")%>"/></td>
                                                     <td><%=rs.getString("ProductName")%></td>
                                                     <td><%=rs.getString("CategoryName")%></td>
-                                                    <td><%=rs.getDouble("UnitPrice")%></td>
+                                                    <td><%= NumberFormat.getCurrencyInstance(new Locale("vi", "VN")).format(rs.getDouble("UnitPrice")) %></td>
                                                     <td><%= status %></td>
                                                     <td>
                                                         <div class="dropdown">
@@ -294,10 +292,15 @@
 
         <!-- Page level custom scripts -->
         <script>
-                                $(document).ready(function () {
-                                    $('#dataTable').DataTable(); // ID From dataTable 
-                                    $('#dataTableHover').DataTable(); // ID From dataTable with Hover
-                                });
+                                                            $(document).ready(function () {
+                                                                $('#dataTable').DataTable(); // ID From dataTable 
+                                                                $('#dataTableHover').DataTable(); // ID From dataTable with Hover
+                                                            });
+        </script>
+        <script>
+            function submitForm() {
+                document.getElementById('filterForm').submit();
+            }
         </script>
     </body>
 
