@@ -6,6 +6,8 @@
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@page import="jakarta.servlet.http.HttpSession"%>
+
 <!DOCTYPE html>
 <html lang="en">
     <head>
@@ -21,7 +23,11 @@
         <link rel="shortcut icon" href="images/logo/logo.png" type="image/png">
     </head>
     <body id="page-top">
-        <%String message =(String)request.getAttribute("message");%>
+        <%
+            HttpSession sessionMessage = request.getSession();
+            String message =(String)sessionMessage.getAttribute("message");
+            
+        %>
         <div id="wrapper">
             <!-- Sidebar -->
             <ul class="navbar-nav sidebar sidebar-light accordion" id="accordionSidebar">
@@ -111,13 +117,26 @@
                         </div>
 
                         <!-- Row -->
-                        <div class="alert alert-success alert-dismissible" role="alert" <%if(message == null){%>style="display: none"<%}%>>
-                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                                <span aria-hidden="true">&times;</span>
-                            </button>
-                            <h6><i class="fas fa-check"></i><b> Success!</b></h6>
-                            A simple success alert—check it out!
+                        <div<%if(message == null){%> style="display: none"<%}%>>
+                            <%if(message != null){%>
+                            <%if(message.equals("Thêm thành công")){%>
+                            <div class="alert alert-success alert-dismissible" role="alert" style="width: 40%" >
+                                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                                <h6><i class="fas fa-check"></i><b>  <%=message%></b></h6>
+                            </div>
+                            <%}%>
+                            <%if(message.equals("Email đã tồn tại")){%>
+                            <div class="alert alert-warning alert-dismissible" role="alert" style="width: 40%">
+                                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                                <h6><i class="fas fa-check"></i><b>  <%=message%></b></h6>
+                            </div>
+                            <%}}%>
                         </div>
+                        <%sessionMessage.removeAttribute("message");%>
                         <div class="row">
                             <button style="margin-left: 13px;margin-bottom: 5px;" type="button" class="btn btn-outline-primary" data-toggle="modal" data-target="#exampleModalLong"
                                     id="#modalLong">Thêm Khách Hàng Mới</button>

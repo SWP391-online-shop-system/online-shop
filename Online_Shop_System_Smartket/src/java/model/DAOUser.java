@@ -102,9 +102,9 @@ public class DAOUser extends DBConnect {
             pre.setString(6, user.getPassword());
             pre.setString(7, user.getEmail());
             n = pre.executeUpdate();
+            conn.close();
         } catch (SQLException ex) {
-//           context.log("SQL Exception occurred: " + ex.getMessage());
-
+            ex.printStackTrace();
         }
         return n;
     }
@@ -119,6 +119,21 @@ public class DAOUser extends DBConnect {
             pre.setInt(2, uid);
             n = pre.executeUpdate();
         } catch (SQLException ex) {
+        }
+        return n;
+    }
+
+    public int checkEmail(String email) {
+        DAOUser dao = new DAOUser();
+        int n = 0;
+        ResultSet rs = dao.getData("select * from `user` where Email ='" + email + "'");
+        try {
+            while (rs.next()) {
+                if (rs != null) {
+                    n = 1;
+                }
+            }
+        } catch (SQLException e) {
         }
         return n;
     }

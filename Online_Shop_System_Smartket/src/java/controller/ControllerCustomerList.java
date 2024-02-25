@@ -11,6 +11,7 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 import java.sql.ResultSet;
 import java.util.Vector;
 import java.util.logging.Logger;
@@ -38,6 +39,7 @@ public class ControllerCustomerList extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         try ( PrintWriter out = response.getWriter()) {
             /* TODO output your page here. You may use following sample code. */
+            HttpSession session = request.getSession();
             String service = request.getParameter("service");
             DAOUser dao = new DAOUser();
             String message = "";
@@ -45,26 +47,7 @@ public class ControllerCustomerList extends HttpServlet {
                 service = "showList";
             }
             if (service.equals("showList")) {
-                String index_raw = request.getParameter("index");
-                String limit_raw = request.getParameter("limit");
-                int limit = 5;
-                int index = 1;
-                if (limit_raw != null) {
-                    limit = Integer.parseInt(limit_raw);
-                }
-                if (index_raw != null) {
-                    index = Integer.parseInt(index_raw);
-                }
-                //paging
-                int count = dao.getTotalCus();
-                int endPage = count / limit;
-                if (count % limit != 0) {
-                    endPage++;
-                }
-                request.setAttribute("limit", limit_raw);
-                request.setAttribute("endPage", endPage);
                 Vector<User> list = dao.getUser("SELECT * FROM online_shop_system.user where roleID = 1");
-                request.setAttribute("index", index);
                 request.setAttribute("data", list);
                 request.getRequestDispatcher("customerlist.jsp").forward(request, response);
             }
@@ -76,19 +59,23 @@ public class ControllerCustomerList extends HttpServlet {
                 String Phone = request.getParameter("phone");
                 String Pass = request.getParameter("pass");
                 String gender_str = request.getParameter("gender");
-                boolean gender;
-                if(gender_str.equals("male")) {
-                    gender = true;
+                int checkEmail = dao.checkEmail(Email);
+                if (checkEmail == 1) {
+                    message = "Email đã tồn tại";
                 } else {
-                    gender = false;
+                    boolean gender;
+                    if (gender_str.equals("male")) {
+                        gender = true;
+                    } else {
+                        gender = false;
+                    }
+                    User newUser = new User(Fname, Lname, Adress, Phone, gender, Pass, Email);
+                    int n = dao.addNewUserByMKT(newUser);
+                    if (n > 0) {
+                        message = "Thêm thành công";
+                    }
                 }
-                User newUser = new User(Fname, Lname, Adress, Phone, gender, Pass, Email);
-                int n = dao.addNewUserByMKT(newUser);
-//                if(n>0){
-//                    message = "Thêm thành công";
-//                }
-                request.setAttribute("message", message);
-//                request.getRequestDispatcher("customerlist").forward(request, response);
+                session.setAttribute("message", message);
                 response.sendRedirect("customerlist");
             }
             if (service.equals("showDetail")) {
@@ -99,6 +86,7 @@ public class ControllerCustomerList extends HttpServlet {
                 request.setAttribute("log", log);
                 request.getRequestDispatcher("customerdetails.jsp").forward(request, response);
             }
+
         }
     }
 

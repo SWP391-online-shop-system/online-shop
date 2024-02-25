@@ -160,7 +160,7 @@
                                                         <p class="mb-0">Phone</p>
                                                     </div>
                                                     <div class="col-sm-9">
-                                                        <p class="text-muted mb-0"><%=(rs.getString("PhoneNumber")==null)?"N/A":""%></p>
+                                                        <p class="text-muted mb-0"><%=(rs.getString("PhoneNumber")==null)?"N/A":rs.getString("PhoneNumber")%></p>
                                                     </div>
                                                 </div>
                                                 <hr>
@@ -281,7 +281,7 @@
                                                         DAOUser dao = new DAOUser();
                                                         ResultSet mkt = dao.getData("SELECT * FROM online_shop_system.user where userID = " + log.getInt(2));
                                                     %>
-                                                    <p>- <%while(mkt.next()){%><%=mkt.getString("FirstName")+" "+mkt.getString("LastName")%> <%}%>
+                                                    <p>- <%while(mkt.next()){%>Nhân viên <%=mkt.getString("FirstName")+" "+mkt.getString("LastName")%> <%}%>
                                                         đã <%=log.getString(4)%> <%=log.getString("FirstName")+" "+log.getString("LastName")%> vào <%=log.getString(3)%></p>
                                                         <%}%>
                                                 </div>                                         

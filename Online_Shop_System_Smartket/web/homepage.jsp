@@ -138,7 +138,7 @@
                                 ResultSet rsNewProduct = dao.getData("select * from product as p join productImage as pi "
                                         + "on p.ProductID = pi.ProductID "
                                         + "where pi.ProductURL like '%_1%' "
-                                        + "order by p.CreateDate desc limit 6 ");
+                                        + "order by p.CreateDate desc limit 6");
                                 
                                 while(rsNewProduct.next()) {%>
                                 <div class="nft">
