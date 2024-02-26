@@ -71,11 +71,11 @@
                         <c:if test="${sessionScope.account != null}">
                             <a href="logout">Đăng xuất</a>
                             <a href="ChangeuserinfoURL?UserID=${sessionScope.account.userID}"><img style="width: 30px;
-                                                           height: 30px;
-                                                           margin-right: -10px;
-                                                           margin-bottom: -8px;
-                                                           margin-left: 7px;
-                                                           border-radius: 50%;" class="styling1" src="images/user/default_avatar.jpg" alt="Admin Image"></a>
+                                                                                                   height: 30px;
+                                                                                                   margin-right: -10px;
+                                                                                                   margin-bottom: -8px;
+                                                                                                   margin-left: 7px;
+                                                                                                   border-radius: 50%;" class="styling1" src="images/user/default_avatar.jpg" alt="Admin Image"></a>
                             </c:if>
                             <c:if test="${sessionScope.account == null}">
                             <button href="#" style="border: none; font-size:16px; font-family: math;" id="show-login">Đăng nhập</button>
@@ -110,12 +110,71 @@
                                         <button id="showSignup" onclick="togglePopup('signupPopup')">Đăng kí</button>
                                     </div>
                                     <div class="form-element">
-                                        <a href="forgotpass">Quên mật khẩu?</a>
+                                        <button type="button" class="btn-submitform btn btn-primary" style="    margin-top: -7px;background: #5bbc5b;box-shadow: none;border: none;" 
+                                                data-toggle="modal" data-target="#exampleModal"
+                                                id="#myBtn">
+                                            Cập nhật
+                                        </button>
+                                        <a href="forgotpass" class="btn-submitform btn btn-primary" data-toggle="modal" data-target="#exampleModal"
+                                           id="#myBtn"">Quên mật khẩu?</a>
                                     </div>
                                 </div>
                             </div>
                         </form>
-
+                        <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+                             aria-hidden="true">
+                            <div class="modal-dialog" role="document">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="exampleModalLabel">Quên mật khẩu</h5>
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <form>
+                                            <table>
+                                                <tr style="height: 51px;">
+                                                    <td>Họ</td>
+                                                    <td><input type="text" name="lastName" value=""/></td>
+                                                </tr>
+                                                <tr style="height: 51px;">
+                                                    <td>Tên</td>
+                                                    <td><input type="text" name="firstName" value=""/></td>
+                                                </tr>
+                                                <tr style="height: 51px;">
+                                                    <td>Ngày sinh</td>
+                                                    <td><input type="date" name="dateOfBirth" value=""/></td>
+                                                </tr>
+                                                <tr style="height: 51px;">
+                                                    <td>Giới tính</td>
+                                                    <td>
+                                                        <input type="radio" name="gender" value="Nam"/>Nam
+                                                        <input type="radio" name="gender" value="Nữ"/>Nữ
+                                                    </td>
+                                                </tr>
+                                                <tr style="height: 51px;">
+                                                    <td>Email</td>
+                                                    <td><input type="text" name="email" readonly value=""/></td>
+                                                </tr>
+                                                <tr>
+                                                    <td>Số điện thoại</td>
+                                                    <td><input type="tel" name="phone" value=""/></td>
+                                                </tr>
+                                                <tr style="height: 51px;">
+                                                    <td>Địa chỉ</td>
+                                                    <td><input type="text" name="address" value=""/></td>
+                                                </tr>
+                                            </table>
+                                        </form>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-outline-primary" data-dismiss="modal">Close</button>
+                                        <button type="button" class="btn btn-primary">Save changes</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                         <!-- Registration Pop-up Form -->
                         <form action="signupURL" method="post">
                             <input type="hidden" name="service" value="signupRegister">
