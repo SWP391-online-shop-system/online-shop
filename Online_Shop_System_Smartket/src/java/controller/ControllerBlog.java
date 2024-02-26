@@ -49,6 +49,9 @@ public class ControllerBlog extends HttpServlet {
         List<Categories> listC = dao.getAllCategories();
         List<Blog> listPB = dao.pagingBlog(index);
         List<Blog> listNB = dao.getNewBlog();
+        for (Blog o : listPB) {
+            System.out.println(o.getBlogContent().length());
+        }
         
         request.setAttribute("listNB", listNB);
         request.setAttribute("listPB", listPB);
@@ -56,6 +59,8 @@ public class ControllerBlog extends HttpServlet {
         request.setAttribute("endP", endPage);
         request.setAttribute("tag", index);
         request.getRequestDispatcher("blog.jsp").forward(request, response);
+        
+        
     } 
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
