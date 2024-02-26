@@ -82,7 +82,7 @@ public class ControllerSignUp extends HttpServlet {
                 String remail = request.getParameter("remail");
                 String rpass = request.getParameter("rpass");
                 String rrepass = request.getParameter("rrepass");
-                User u = new User(rLName, rFName, remail, rpass, rrepass);
+                User u = new User(rLName, rFName, remail, rpass, rrepass,"now()");
                 request.setAttribute("lastUser", u);
                 User user = dao.getUserByEmail(remail);
                 rFName = rFName.replaceAll("\\s+", " ");

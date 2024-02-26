@@ -7,11 +7,14 @@ package controller;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
+import jakarta.servlet.annotation.MultipartConfig;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
+import jakarta.servlet.http.Part;
+import java.sql.ResultSet;
 import view.User;
 import model.DAOUser;
 
@@ -19,8 +22,12 @@ import model.DAOUser;
  *
  * @author 84395
  */
-@WebServlet(name="changeuserinfo", urlPatterns={"/ChangeuserinfoURL"})
-
+@WebServlet(name = "changeuserinfo", urlPatterns = {"/ChangeuserinfoURL"})
+@MultipartConfig(
+        fileSizeThreshold = 1024 * 1024 * 1, // 1 MB
+        maxFileSize = 1024 * 1024 * 10, // 10 MB
+        maxRequestSize = 1024 * 1024 * 100 // 100 MB
+)
 public class ControllerChangeuserinfo extends HttpServlet {
 
     /**
@@ -36,16 +43,18 @@ public class ControllerChangeuserinfo extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         try ( PrintWriter out = response.getWriter()) {
-            /* TODO output your page here. You may use following sample code. */
-            out.println("<!DOCTYPE html>");
-            out.println("<html>");
-            out.println("<head>");
-            out.println("<title>Servlet changeuserinfo</title>");
-            out.println("</head>");
-            out.println("<body>");
-            out.println("<h1>Servlet changeuserinfo at " + request.getContextPath() + "</h1>");
-            out.println("</body>");
-            out.println("</html>");
+            int UserID = Integer.parseInt(request.getParameter("UserID"));
+            String service = request.getParameter("service");
+            if (service == null || service.equals("")) {
+                service = "";
+            }
+            DAOUser daoU = new DAOUser();
+            ResultSet rsProfile = daoU.getData("select * from User where UserID = " + UserID);
+            request.setAttribute("rsProfile", rsProfile);
+            if (service.equals("upload")) {
+
+            }
+            request.getRequestDispatcher("profileUser.jsp").forward(request, response);
         }
     }
 
@@ -61,8 +70,7 @@ public class ControllerChangeuserinfo extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        request.getRequestDispatcher("profileUser.jsp").forward(request, response);
-
+        processRequest(request, response);
     }
 
     /**
@@ -76,38 +84,39 @@ public class ControllerChangeuserinfo extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        String lastname = request.getParameter("lastname");
-        String firstname = request.getParameter("firstname");
-        String phonenumber = request.getParameter("phonenumber");
-        String address = request.getParameter("address");
-        HttpSession session = request.getSession();
-        session.removeAttribute("inputerror");
-        User user = (User) session.getAttribute("account");
-        DAOUser dao = new DAOUser();
-        String pattern = "[A-Za-zÀ-ỹ ]+";
-        String num = "[0-9]+";
-      
-         if(!lastname.matches(pattern) || !firstname.matches(pattern) ){
-           session.setAttribute("input","Nhập sai tên!!");
-           request.getRequestDispatcher("profileUser.jsp").forward(request, response);
-       }else
-            if(!address.matches(pattern)){
-           session.setAttribute("input","Nhập lại địa chỉ!!");
+        response.setHeader("Cache-Control", "no-cache, no-store, must-revalidate");
+        response.setHeader("Pragma", "no-cache");
+        response.setDateHeader("Expires", 0);
+        int UserID = Integer.parseInt(request.getParameter("UserID"));
+        String service = request.getParameter("service");
+        if (service == null || service.equals("")) {
+            service = "";
+        }
+        DAOUser daoU = new DAOUser();
+        User user = daoU.getUserByUserID(UserID);
+        ResultSet rsProfile = daoU.getData("select * from User where UserID = " + UserID);
+        request.setAttribute("rsProfile", rsProfile);
+        if (service.equals("upload")) {
+            String mess = "";
+            String newImageName = "AvatarUser" + UserID;
+            Part filePart = request.getPart("file");
+            String fileName = filePart.getSubmittedFileName();
+            int dotIndex = fileName.lastIndexOf(".");
+            String result = newImageName + fileName.substring(dotIndex);
+            for (Part part : request.getParts()) {
+                part.write("D:\\fpt\\Semeter_5\\SWP391\\Project\\Online_Shop_System_Smartket\\web\\images\\user\\" + result);
+            }
+            user.setUserImage(result);
+            int n = daoU.updateUser(user);
+            if (n > 0) {
+                mess = "Tải ảnh lên thành công";
+            } else {
+                mess = null;
+            }
+            request.setAttribute("mess", mess);
             request.getRequestDispatcher("profileUser.jsp").forward(request, response);
-       }else
-       if(!phonenumber.matches(num) || !(phonenumber.length() == 10)){
-           session.setAttribute("input","Nhập lại số điện thoại (10 số)!!");
-            request.getRequestDispatcher("profileUser.jsp").forward(request, response);
-       }else {
-        User u = new User(user.getUserID(), firstname, lastname, address, phonenumber, user.getDateOfBirth(), user.isGender(), user.getUserImage(),
-                user.getPassword(), user.getEmail(), user.getLastLogin(), user.isUserStatus(), user.getReportTo(), user.getRoleID());
-        dao.updateUser(u);
-        session.setAttribute("input", "Thay đổi thành công");
-        session.setAttribute("account", u);
-        request.getRequestDispatcher("profileUser.jsp").forward(request, response);
-       }
+        }
     }
-
     /**
      * Returns a short description of the servlet.
      *

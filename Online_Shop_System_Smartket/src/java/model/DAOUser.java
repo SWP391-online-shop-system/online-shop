@@ -34,7 +34,8 @@ public class DAOUser extends DBConnect {
                 + "`LastLogin`,\n"
                 + "`UserStatus`,\n"
                 + "`ReportTo`,\n"
-                + "`RoleID`)\n"
+                + "`RoleID`),\n"
+                + "`CreateDate`)\n"
                 + "VALUES\n"
                 + "(?,?,?,?,?,?,?,?,?,?,?,?,?);";
         try {
@@ -52,6 +53,7 @@ public class DAOUser extends DBConnect {
             pre.setBoolean(11, true);
             pre.setInt(12, user.getReportTo());
             pre.setInt(13, user.getRoleID());
+            pre.setString(14, user.getCreateDate());
             n = pre.executeUpdate();
         } catch (SQLException ex) {
             Logger.getLogger(DAOUser.class.getName()).log(Level.SEVERE, null, ex);
@@ -77,7 +79,7 @@ public class DAOUser extends DBConnect {
                 + "0,\n"
                 + "1,\n"
                 + "1,\n"
-                + "CURRENT_TIMESTAMP)"; // Use CURRENT_TIMESTAMP to set the current timestamp
+                + "now())"; // Use CURRENT_TIMESTAMP to set the current timestamp
         try {
             PreparedStatement pre = conn.prepareStatement(sql);
             pre.setString(1, fname);
@@ -111,7 +113,43 @@ public class DAOUser extends DBConnect {
                         rs.getString(11),
                         rs.getBoolean(12),
                         rs.getInt(13),
-                        rs.getInt(14)
+                        rs.getInt(14),
+                        rs.getString(15)
+                );
+                System.out.println("Not Null");
+                return pro;
+
+            }
+        } catch (SQLException e) {
+            System.out.println(e);
+        }
+        System.out.println("null user");
+        return null;
+    }
+
+    public User getUserByUserID(int id) {
+
+        String sql = "select * from user where UserID =" + id;
+        try {
+            PreparedStatement st = conn.prepareStatement(sql);
+            ResultSet rs = st.executeQuery();
+            while (rs.next()) {
+                User pro = new User(
+                        rs.getInt(1),
+                        rs.getString(2),
+                        rs.getString(3),
+                        rs.getString(4),
+                        rs.getString(5),
+                        rs.getString(6),
+                        rs.getBoolean(7),
+                        rs.getString(8),
+                        rs.getString(9),
+                        rs.getString(10),
+                        rs.getString(11),
+                        rs.getBoolean(12),
+                        rs.getInt(13),
+                        rs.getInt(14),
+                        rs.getString(15)
                 );
                 System.out.println("Not Null");
                 return pro;
@@ -155,7 +193,8 @@ public class DAOUser extends DBConnect {
                 + "`LastLogin` = ?,\n"
                 + "`UserStatus` = ?,\n"
                 + "`ReportTo` = ?,\n"
-                + "`RoleID` = ?\n"
+                + "`RoleID` = ?,\n"
+                + "`CreateDate` = ?\n"
                 + "WHERE `UserID` = ?;";
         try {
             // number ? = number fields
@@ -174,7 +213,22 @@ public class DAOUser extends DBConnect {
             pre.setBoolean(11, true);
             pre.setInt(12, user.getReportTo());
             pre.setInt(13, user.getRoleID());
-            pre.setInt(14, user.getUserID());
+            pre.setString(14, user.getCreateDate());
+            pre.setInt(15, user.getUserID());
+            n = pre.executeUpdate();
+        } catch (SQLException ex) {
+            Logger.getLogger(DAOUser.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return n;
+    }
+
+    public int updateUserImage(int userID, String userImage) {
+        int n = 0;
+        String sql = "update User set UserImage = '?' where UserID = ?";
+        try {
+            PreparedStatement pre = conn.prepareStatement(sql);
+            pre.setString(1, userImage);
+            pre.setInt(2, userID);
             n = pre.executeUpdate();
         } catch (SQLException ex) {
             Logger.getLogger(DAOUser.class.getName()).log(Level.SEVERE, null, ex);
@@ -204,10 +258,11 @@ public class DAOUser extends DBConnect {
                 Boolean userStatus = rs.getBoolean(12);
                 int reportTo = rs.getInt(13);
                 int roleID = rs.getInt(14);
+                String CreateDate = rs.getString(15);
                 User user = new User(id, fName, lName, address,
                         phoneNumber, dob, gender, image,
                         password, email, lastLogin, userStatus,
-                        reportTo, roleID);
+                        reportTo, roleID, CreateDate);
                 vector.add(user);
             }
         } catch (SQLException ex) {
@@ -230,7 +285,8 @@ public class DAOUser extends DBConnect {
                 + "    `user`.`LastLogin`,\n"
                 + "    `user`.`UserStatus`,\n"
                 + "    `user`.`ReportTo`,\n"
-                + "    `user`.`RoleID`\n"
+                + "    `user`.`RoleID`,\n"
+                + "    `user`.`CreateDate`\n"
                 + "FROM `online_shop_system`.`user`\n"
                 + "where Email = ? and password = ?";
         try {
@@ -252,7 +308,8 @@ public class DAOUser extends DBConnect {
                         rs.getString(11),
                         rs.getBoolean(12),
                         rs.getInt(13),
-                        rs.getInt(14));
+                        rs.getInt(14),
+                        rs.getString(15));
                 return user;
             }
         } catch (SQLException e) {
@@ -280,7 +337,9 @@ public class DAOUser extends DBConnect {
                         rs.getString(11),
                         rs.getBoolean(12),
                         rs.getInt(13),
-                        rs.getInt(14));
+                        rs.getInt(14),
+                        rs.getString(15)
+                );
             }
         } catch (SQLException e) {
             // Handle exception appropriately (e.g., logging)

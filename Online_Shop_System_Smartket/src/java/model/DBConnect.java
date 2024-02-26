@@ -1,5 +1,6 @@
 package model;
 
+import java.io.File;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
@@ -25,7 +26,7 @@ public class DBConnect {
     }
 
     public DBConnect() {
-        this("jdbc:mysql://localhost:3306/Online_Shop_System", "root", "12345678");
+        this("jdbc:mysql://localhost:3306/Online_Shop_System", "duong", "123456");
     }
 
     public ResultSet getData(String sql) {
@@ -42,17 +43,30 @@ public class DBConnect {
         return rs;
     }
 
+    /**
+     *
+     * @param imageRoot: name of image you want to change
+     * @param imageChange: name of image you want to replace
+     */
+    public static void changeImage(String imageRoot, String imageChange) {
+        String rootDirectory = "D:\\fpt\\Semeter_5\\SWP391\\Project\\Online_Shop_System_Smartket\\";
+        String oldFileName = rootDirectory + "web\\" + imageRoot.replaceAll("/", "\\\\");
+        String newFileName = rootDirectory + "web\\" + imageChange.replaceAll("/", "\\\\");
+        File oldFile = new File(oldFileName);
+        File newFile = new File(newFileName);
+        if (oldFile.exists() && newFile.exists()) {
+            File tempFile = new File(newFileName + ".temp");
+            if (newFile.renameTo(tempFile) && oldFile.renameTo(newFile) && tempFile.renameTo(oldFile)) {
+                System.out.println("Image files renamed successfully.");
+            } else {
+                System.out.println("Failed to rename image files.");
+            }
+        } else {
+            System.out.println("One or both image files do not exist.");
+        }
+    }
+
     public static void main(String[] args) {
-        new DBConnect();
-//        DBConnect db = new DBConnect();
-//        ResultSet rs = db.getData("SELECT * FROM Cart AS c JOIN Product AS p ON c.ProductID = p.ProductID where c.UserID = 1;");
-//        try {
-//            while (rs.next()) {                
-//                System.out.println(rs.getInt(1));
-//                System.out.println(rs.getString(5));
-//                System.out.println(rs.getString(7));
-//            }
-//        } catch (SQLException e) {
-//        }
+
     }
 }

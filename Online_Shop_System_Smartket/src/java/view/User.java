@@ -17,11 +17,12 @@ public class User {
     private Boolean userStatus;
     private int reportTo, roleID;
     private String rePassword;
+    private String createDate;
 
     public User() {
     }
 
-    public User(int userID, String firstName, String lastName, String address, String phoneNumber, String dateOfBirth, Boolean gender, String userImage, String password, String email, String lastLogin, Boolean userStatus, int reportTo, int roleID) {
+    public User(int userID, String firstName, String lastName, String address, String phoneNumber, String dateOfBirth, Boolean gender, String userImage, String password, String email, String lastLogin, Boolean userStatus, int reportTo, int roleID, String createDate) {
         this.userID = userID;
         this.firstName = firstName;
         this.lastName = lastName;
@@ -36,9 +37,10 @@ public class User {
         this.userStatus = userStatus;
         this.reportTo = reportTo;
         this.roleID = roleID;
+        this.createDate = createDate;
     }
 
-    public User(String firstName, String lastName, String address, String phoneNumber, String dateOfBirth, Boolean gender, String userImage, String password, String email, String lastLogin, Boolean userStatus, int reportTo, int roleID) {
+    public User(String firstName, String lastName, String address, String phoneNumber, String dateOfBirth, Boolean gender, String userImage, String password, String email, String lastLogin, Boolean userStatus, int reportTo, int roleID, String createDate) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.address = address;
@@ -52,14 +54,16 @@ public class User {
         this.userStatus = userStatus;
         this.reportTo = reportTo;
         this.roleID = roleID;
+        this.createDate = createDate;
     }
 
-    public User(String firstName, String lastName, String email, String password, String rePassword) {
+    public User(String firstName, String lastName, String email, String password, String rePassword, String createDate) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
         this.password = password;
         this.rePassword = rePassword;
+        this.createDate = createDate;
     }
 
     public int getUserID() {
@@ -182,9 +186,37 @@ public class User {
         this.roleID = roleID;
     }
 
+    public String getCreateDate() {
+        return createDate;
+    }
+
+    public void setCreateDate(String createDate) {
+        this.createDate = createDate;
+    }
+
+    public static String encryptEmail(String email) {
+        StringBuilder encryptedEmail = new StringBuilder();
+        int length = email.length();
+        if (length > 4) {
+            int atIndex = email.indexOf('@');
+            if (atIndex > 2) {
+                encryptedEmail.append(email.substring(0, 2)); // First two characters
+                for (int i = 2; i < atIndex; i++) {
+                    encryptedEmail.append("*");
+                }
+                encryptedEmail.append(email.substring(atIndex)); // Append the domain part as is
+            } else {
+                encryptedEmail.append(email); // Return original email if the username is too short
+            }
+        } else {
+            encryptedEmail.append(email); // Return original email if it's too short
+        }
+        return encryptedEmail.toString();
+    }
+
     @Override
     public String toString() {
-        return "User{" + "userID=" + userID + ", firstName=" + firstName + ", lastName=" + lastName + ", address=" + address + ", phoneNumber=" + phoneNumber + ", dateOfBirth=" + dateOfBirth + ", gender=" + gender + ", userImage=" + userImage + ", password=" + password + ", email=" + email + ", lastLogin=" + lastLogin + ", userStatus=" + userStatus + ", reportTo=" + reportTo + ", roleID=" + roleID + ", rePassword=" + rePassword + '}';
+        return "User{" + "userID=" + userID + ", firstName=" + firstName + ", lastName=" + lastName + ", address=" + address + ", phoneNumber=" + phoneNumber + ", dateOfBirth=" + dateOfBirth + ", gender=" + gender + ", userImage=" + userImage + ", password=" + password + ", email=" + email + ", lastLogin=" + lastLogin + ", userStatus=" + userStatus + ", reportTo=" + reportTo + ", roleID=" + roleID + ", rePassword=" + rePassword + ", createDate=" + createDate + '}';
     }
 
 }
