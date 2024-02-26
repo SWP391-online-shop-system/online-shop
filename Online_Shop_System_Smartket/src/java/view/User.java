@@ -37,10 +37,46 @@ public class User {
         this.userStatus = userStatus;
         this.reportTo = reportTo;
         this.roleID = roleID;
+    }
+
+    public User(int userID, String firstName, String lastName, String address, String phoneNumber, String dateOfBirth, Boolean gender, String userImage, String password, String email, String lastLogin, int userStatus, int reportTo, int roleID, String rePassword, String createDate) {
+        this.userID = userID;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.address = address;
+        this.phoneNumber = phoneNumber;
+        this.dateOfBirth = dateOfBirth;
+        this.gender = gender;
+        this.userImage = userImage;
+        this.password = password;
+        this.email = email;
+        this.lastLogin = lastLogin;
+        this.userStatus = userStatus;
+        this.reportTo = reportTo;
+        this.roleID = roleID;
+        this.rePassword = rePassword;
         this.createDate = createDate;
     }
 
+    public User(int userID, String firstName, String lastName, String address, String phoneNumber, String dateOfBirth, Boolean gender, String userImage, String password, String email, String lastLogin, int userStatus, int reportTo, int roleID, String createDate) {
+        this.userID = userID;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.address = address;
+        this.phoneNumber = phoneNumber;
+        this.dateOfBirth = dateOfBirth;
+        this.gender = gender;
+        this.userImage = userImage;
+        this.password = password;
+        this.email = email;
+        this.lastLogin = lastLogin;
+        this.userStatus = userStatus;
+        this.reportTo = reportTo;
+        this.roleID = roleID;
+        this.createDate = createDate;
     }
+
+    
 
     public User(String firstName, String lastName, String address, String phoneNumber, String dateOfBirth, Boolean gender, String userImage, String password, String email, String lastLogin, int userStatus, int reportTo, int roleID) {
         this.firstName = firstName;
@@ -58,7 +94,7 @@ public class User {
         this.roleID = roleID;
     }
 
-    public User(String firstName, String lastName, String email, String password, String rePassword) {
+    public User(String firstName, String lastName, String email, String password, String rePassword,String createDate) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
@@ -203,14 +239,6 @@ public class User {
 
     public void setRoleID(int roleID) {
         this.roleID = roleID;
-    }
-
-    public String getCreateDate() {
-        return createDate;
-    }
-
-    public void setCreateDate(String createDate) {
-        this.createDate = createDate;
     }
 
     public static String encryptEmail(String email) {
