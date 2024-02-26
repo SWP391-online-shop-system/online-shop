@@ -140,11 +140,11 @@
                                 <c:if test="${sessionScope.account != null}">
                                     <a href="logout">Đăng xuất</a>
                                     <a href="ChangeuserinfoURL?UserID=${sessionScope.account.userID}"><img style="width: 30px;
-                                                                   height: 30px;
-                                                                   margin-right: -10px;
-                                                                   margin-bottom: 7px;
-                                                                   margin-left: 7px;
-                                                                   border-radius: 50%;" class="styling1" src="images/user/default_avatar.jpg" alt="Admin Image"></a>
+                                                                                                           height: 30px;
+                                                                                                           margin-right: -10px;
+                                                                                                           margin-bottom: 7px;
+                                                                                                           margin-left: 7px;
+                                                                                                           border-radius: 50%;" class="styling1" src="images/user/default_avatar.jpg" alt="Admin Image"></a>
                                     </c:if>
                                     <c:if test="${sessionScope.account == null}">
                                     <button href="#" style="border: none; font-size:16px; font-family: math;" id="show-login">Đăng nhập</button>
@@ -344,11 +344,6 @@
                 </div>
             </div>
         </div>
-        <script>
-            function alertOpenCart() {
-                alert('Đăng nhập để xem giỏ hàng của bạn');
-            }
-        </script>
         <section class="menu-section">  
             <div class="menu-section-title">
                 <div class="menu-section-content">
@@ -487,7 +482,12 @@
                                         </div>
                                         <div class="product__item__text">
                                             <h6><%=rsNewProduct.getString("ProductName")%></h6>
+                                            <%User testus = (User)session.getAttribute("account");
+                                            if(testus==null) {%>
+                                            <a onclick="alertOpenCart();" class="add-cart">+ Thêm vào giỏ</a><a style="margin-left: 136px;" href="#">Mua ngay</a>
+                                            <%}else{%>
                                             <a href="CartURL?service=addcart&pid=<%=rsNewProduct.getInt(1)%>&quan=1" class="add-cart">+ Thêm vào giỏ</a><a style="margin-left: 136px;" href="#">Mua ngay</a>
+                                            <%}%>
                                             <div style="display: flex;">
                                                 <div class="rating">
                                                     <%int star = (int)rsNewProduct.getInt("totalRate");
@@ -699,59 +699,59 @@
     </body>
     <script src="js/script.js"></script>
     <script type="text/javascript">
-                                    var counter = 1;
-                                    setInterval(function () {
-                                        document.getElementById('radio' + counter).checked = true;
-                                        counter++;
-                                        console.log(counter);
-                                        if (counter == 5) {
-                                            counter = 1;
-                                        }
-                                    }, 5000);
-                                    function alertOpenCart() {
-                                        alert('Đăng nhập để xem giỏ hàng của bạn');
-                                    }
-                                    window.onload = function () {
-                                        // Lấy giá trị của tham số section từ URL
-                                        var sectionId = '<%=request.getParameter("section") %>';
+                                                var counter = 1;
+                                                setInterval(function () {
+                                                    document.getElementById('radio' + counter).checked = true;
+                                                    counter++;
+                                                    console.log(counter);
+                                                    if (counter == 5) {
+                                                        counter = 1;
+                                                    }
+                                                }, 5000);
+                                                function alertOpenCart() {
+                                                    alert('Đăng nhập để xem giỏ hàng của bạn');
+                                                }
+                                                window.onload = function () {
+                                                    // Lấy giá trị của tham số section từ URL
+                                                    var sectionId = '<%=request.getParameter("section") %>';
 
-                                        // Nếu sectionId không rỗng, thì cuộn đến phần có id tương ứng
-                                        if (sectionId) {
-                                            var targetSection = document.getElementById(sectionId);
-                                            if (targetSection) {
-                                                targetSection.scrollIntoView({behavior: 'smooth'});
-                                            }
-                                        }
-                                    };
+                                                    // Nếu sectionId không rỗng, thì cuộn đến phần có id tương ứng
+                                                    if (sectionId) {
+                                                        var targetSection = document.getElementById(sectionId);
+                                                        if (targetSection) {
+                                                            targetSection.scrollIntoView({behavior: 'smooth'});
+                                                        }
+                                                    }
+                                                };
 
-                                    function scrollToNew() {
-                                        // Calculate the middle of the page
-                                        const middle = window.innerHeight + 90;
-                                        // Scroll to the middle of the page
-                                        window.scrollTo({
-                                            top: middle,
-                                            behavior: 'smooth' // Optional: Add smooth scrolling effect
-                                        });
-                                    }
-                                    function scrollToFeature() {
-                                        // Calculate the middle of the page
-                                        const middle = window.innerHeight * 2.3;
+                                                function scrollToNew() {
+                                                    // Calculate the middle of the page
+                                                    const middle = window.innerHeight + 90;
+                                                    // Scroll to the middle of the page
+                                                    window.scrollTo({
+                                                        top: middle,
+                                                        behavior: 'smooth' // Optional: Add smooth scrolling effect
+                                                    });
+                                                }
+                                                function scrollToFeature() {
+                                                    // Calculate the middle of the page
+                                                    const middle = window.innerHeight * 2.3;
 
-                                        // Scroll to the middle of the page
-                                        window.scrollTo({
-                                            top: middle,
-                                            behavior: 'smooth' // Optional: Add smooth scrolling effect
-                                        });
-                                    }
-                                    function scrollToBlog() {
-                                        // Calculate the middle of the page
-                                        const middle = window.innerHeight * 3;
+                                                    // Scroll to the middle of the page
+                                                    window.scrollTo({
+                                                        top: middle,
+                                                        behavior: 'smooth' // Optional: Add smooth scrolling effect
+                                                    });
+                                                }
+                                                function scrollToBlog() {
+                                                    // Calculate the middle of the page
+                                                    const middle = window.innerHeight * 3;
 
-                                        // Scroll to the middle of the page
-                                        window.scrollTo({
-                                            top: middle,
-                                            behavior: 'smooth' // Optional: Add smooth scrolling effect
-                                        });
-                                    }
+                                                    // Scroll to the middle of the page
+                                                    window.scrollTo({
+                                                        top: middle,
+                                                        behavior: 'smooth' // Optional: Add smooth scrolling effect
+                                                    });
+                                                }
     </script>
 </html>

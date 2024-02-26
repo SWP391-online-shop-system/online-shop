@@ -206,162 +206,173 @@ public class DAOProduct extends DBConnect {
         return vector;
     }
 
-    public Vector<Product> searchProductByName(String keyWord) {
-        Vector<Product> list = new Vector<>();
-        String sql = "select * from Product where ProductName like ?";
-        try {
-            PreparedStatement st = conn.prepareStatement(sql);
-            st.setString(1, "N%" + keyWord + "%");
-            ResultSet rs = st.executeQuery();
-            while (rs.next()) {
-                Product pro = new Product(
-                        rs.getInt("ProductID"),
-                        rs.getString("ProductName"),
-                        rs.getInt("CategoryID"),
-                        rs.getString("ProductDescription"),
-                        rs.getInt("UnitInStock"),
-                        rs.getDouble("UnitPrice"),
-                        rs.getInt("UnitDiscount"),
-                        rs.getString("CreateDate"),
-                        rs.getInt("TotalRate"),
-                        rs.getInt("TotalStock"),
-                        rs.getBoolean("ProductStatus")
-                );
-                list.add(pro);
-            }
-        } catch (SQLException e) {
-            System.out.println(e);
-        }
-        return list;
-    }
-
-    public Vector<Product> get12Next(int ammount, String orderBy) {
-        Vector<Product> list = new Vector<>();
-        String sql = "select * from Product \n"
-                + "order by " + orderBy + "\n"
-                + "limit 12 \n"
-                + "offset ?";
-        try {
-            PreparedStatement st = conn.prepareStatement(sql);
-            st.setInt(1, (ammount - 1) * 12);
-            ResultSet rs = st.executeQuery();
-            while (rs.next()) {
-                Product pro = new Product(
-                        rs.getInt("ProductID"),
-                        rs.getString("ProductName"),
-                        rs.getInt("CategoryID"),
-                        rs.getString("ProductDescription"),
-                        rs.getInt("UnitInStock"),
-                        rs.getDouble("UnitPrice"),
-                        rs.getInt("UnitDiscount"),
-                        rs.getString("CreateDate"),
-                        rs.getInt("TotalRate"),
-                        rs.getInt("TotalStock"),
-                        rs.getBoolean("ProductStatus")
-                );
-                list.add(pro);
-            }
-        } catch (SQLException e) {
-            System.out.println(e);
-        }
-        return list;
-    }
-
-    public Vector<Product> get12NextByCateId(int ammount, int CateID, String filter) {
-        Vector<Product> list = new Vector<>();
-        String sql = "select * from Product \n"
-                + "Where CategoryID =" + CateID + " \n"
-                + "order by " + filter + "\n"
-                + "limit 12 \n"
-                + "offset ?";
-        try {
-            PreparedStatement st = conn.prepareStatement(sql);
-            st.setInt(1, (ammount - 1) * 12);
-            ResultSet rs = st.executeQuery();
-            while (rs.next()) {
-                Product pro = new Product(
-                        rs.getInt("ProductID"),
-                        rs.getString("ProductName"),
-                        rs.getInt("CategoryID"),
-                        rs.getString("ProductDescription"),
-                        rs.getInt("UnitInStock"),
-                        rs.getDouble("UnitPrice"),
-                        rs.getInt("UnitDiscount"),
-                        rs.getString("CreateDate"),
-                        rs.getInt("TotalRate"),
-                        rs.getInt("TotalStock"),
-                        rs.getBoolean("ProductStatus")
-                );
-                list.add(pro);
-            }
-        } catch (SQLException e) {
-            System.out.println(e);
-        }
-        return list;
-    }
-
-    public Vector<Product> get12NextBySearch(int ammount, String key, String filter) {
-        Vector<Product> list = new Vector<>();
-        String sql = "select * from product as p join productImage as pi on p.ProductID = pi.ProductID "
-                + "where p.ProductName like N'%" + key + "%'"
-                + " and pi.productURL like '%_1%' order by " + filter + " limit 12 offset ?;";
-        try {
-            PreparedStatement st = conn.prepareStatement(sql);
-            st.setInt(1, (ammount - 1) * 12);
-            ResultSet rs = st.executeQuery();
-            while (rs.next()) {
-                Product pro = new Product(
-                        rs.getInt("ProductID"),
-                        rs.getString("ProductName"),
-                        rs.getInt("CategoryID"),
-                        rs.getString("ProductDescription"),
-                        rs.getInt("UnitInStock"),
-                        rs.getDouble("UnitPrice"),
-                        rs.getInt("UnitDiscount"),
-                        rs.getString("CreateDate"),
-                        rs.getInt("TotalRate"),
-                        rs.getInt("TotalStock"),
-                        rs.getBoolean("ProductStatus")
-                );
-                list.add(pro);
-            }
-        } catch (SQLException e) {
-            System.out.println(e);
-        }
-        return list;
-    }
-
-    public Vector<Product> get10Next(int index) {
-        Vector<Product> vector = new Vector<>();
-        String sql = "select * from Product order by ProductID limit 10 offset ?";
-        try {
-            PreparedStatement st = conn.prepareStatement(sql);
-            st.setInt(1, (index - 1) * 10);
-            ResultSet rs = st.executeQuery();
-            while (rs.next()) {
-                Product pro = new Product(
-                        rs.getInt("ProductID"),
-                        rs.getString("ProductName"),
-                        rs.getInt("CategoryID"),
-                        rs.getString("ProductDescription"),
-                        rs.getInt("UnitInStock"),
-                        rs.getDouble("UnitPrice"),
-                        rs.getInt("UnitDiscount"),
-                        rs.getString("CreateDate"),
-                        rs.getInt("TotalRate"),
-                        rs.getInt("TotalStock"),
-                        rs.getBoolean("ProductStatus")
-                );
-                vector.add(pro);
-            }
-        } catch (SQLException e) {
-            System.out.println(e);
-        }
-        return vector;
-    }
-
+//    public Vector<Product> searchProductByName(String keyWord) {
+//        Vector<Product> list = new Vector<>();
+//        String sql = "select * from Product where ProductName like ?";
+//        try {
+//            PreparedStatement st = conn.prepareStatement(sql);
+//            st.setString(1, "N%" + keyWord + "%");
+//            ResultSet rs = st.executeQuery();
+//            while (rs.next()) {
+//                Product pro = new Product(
+//                        rs.getInt("ProductID"),
+//                        rs.getString("ProductName"),
+//                        rs.getInt("CategoryID"),
+//                        rs.getString("ProductDescription"),
+//                        rs.getInt("UnitInStock"),
+//                        rs.getDouble("UnitPrice"),
+//                        rs.getInt("UnitDiscount"),
+//                        rs.getString("CreateDate"),
+//                        rs.getInt("TotalRate"),
+//                        rs.getInt("TotalStock"),
+//                        rs.getBoolean("ProductStatus")
+//                );
+//                list.add(pro);
+//            }
+//        } catch (SQLException e) {
+//            System.out.println(e);
+//        }
+//        return list;
+//    }
+//    public Vector<Product> get12Next(int ammount, String orderBy) {
+//        Vector<Product> list = new Vector<>();
+//        String sql = "select * from Product \n"
+//                + "order by " + orderBy + "\n"
+//                + "limit 12 \n"
+//                + "offset ?";
+//        try {
+//            PreparedStatement st = conn.prepareStatement(sql);
+//            st.setInt(1, (ammount - 1) * 12);
+//            ResultSet rs = st.executeQuery();
+//            while (rs.next()) {
+//                Product pro = new Product(
+//                        rs.getInt("ProductID"),
+//                        rs.getString("ProductName"),
+//                        rs.getInt("CategoryID"),
+//                        rs.getString("ProductDescription"),
+//                        rs.getInt("UnitInStock"),
+//                        rs.getDouble("UnitPrice"),
+//                        rs.getInt("UnitDiscount"),
+//                        rs.getString("CreateDate"),
+//                        rs.getInt("TotalRate"),
+//                        rs.getInt("TotalStock"),
+//                        rs.getBoolean("ProductStatus")
+//                );
+//                list.add(pro);
+//            }
+//        } catch (SQLException e) {
+//            System.out.println(e);
+//        }
+//        return list;
+//    }
+//
+//    public Vector<Product> get12NextByCateId(int ammount, int CateID, String filter) {
+//        Vector<Product> list = new Vector<>();
+//        String sql = "select * from Product \n"
+//                + "Where CategoryID =" + CateID + " \n"
+//                + "order by " + filter + "\n"
+//                + "limit 12 \n"
+//                + "offset ?";
+//        try {
+//            PreparedStatement st = conn.prepareStatement(sql);
+//            st.setInt(1, (ammount - 1) * 12);
+//            ResultSet rs = st.executeQuery();
+//            while (rs.next()) {
+//                Product pro = new Product(
+//                        rs.getInt("ProductID"),
+//                        rs.getString("ProductName"),
+//                        rs.getInt("CategoryID"),
+//                        rs.getString("ProductDescription"),
+//                        rs.getInt("UnitInStock"),
+//                        rs.getDouble("UnitPrice"),
+//                        rs.getInt("UnitDiscount"),
+//                        rs.getString("CreateDate"),
+//                        rs.getInt("TotalRate"),
+//                        rs.getInt("TotalStock"),
+//                        rs.getBoolean("ProductStatus")
+//                );
+//                list.add(pro);
+//            }
+//        } catch (SQLException e) {
+//            System.out.println(e);
+//        }
+//        return list;
+//    }
+//
+//    public Vector<Product> get12NextBySearch(int ammount, String key, String filter) {
+//        Vector<Product> list = new Vector<>();
+//        String sql = "select * from product as p join productImage as pi on p.ProductID = pi.ProductID "
+//                + "where p.ProductName like N'%" + key + "%'"
+//                + " and pi.productURL like '%_1%' order by " + filter + " limit 12 offset ?;";
+//        try {
+//            PreparedStatement st = conn.prepareStatement(sql);
+//            st.setInt(1, (ammount - 1) * 12);
+//            ResultSet rs = st.executeQuery();
+//            while (rs.next()) {
+//                Product pro = new Product(
+//                        rs.getInt("ProductID"),
+//                        rs.getString("ProductName"),
+//                        rs.getInt("CategoryID"),
+//                        rs.getString("ProductDescription"),
+//                        rs.getInt("UnitInStock"),
+//                        rs.getDouble("UnitPrice"),
+//                        rs.getInt("UnitDiscount"),
+//                        rs.getString("CreateDate"),
+//                        rs.getInt("TotalRate"),
+//                        rs.getInt("TotalStock"),
+//                        rs.getBoolean("ProductStatus")
+//                );
+//                list.add(pro);
+//            }
+//        } catch (SQLException e) {
+//            System.out.println(e);
+//        }
+//        return list;
+//    }
+//    public Vector<Product> get10Next(int index) {
+//        Vector<Product> vector = new Vector<>();
+//        String sql = "select * from Product order by ProductID limit 10 offset ?";
+//        try {
+//            PreparedStatement st = conn.prepareStatement(sql);
+//            st.setInt(1, (index - 1) * 10);
+//            ResultSet rs = st.executeQuery();
+//            while (rs.next()) {
+//                Product pro = new Product(
+//                        rs.getInt("ProductID"),
+//                        rs.getString("ProductName"),
+//                        rs.getInt("CategoryID"),
+//                        rs.getString("ProductDescription"),
+//                        rs.getInt("UnitInStock"),
+//                        rs.getDouble("UnitPrice"),
+//                        rs.getInt("UnitDiscount"),
+//                        rs.getString("CreateDate"),
+//                        rs.getInt("TotalRate"),
+//                        rs.getInt("TotalStock"),
+//                        rs.getBoolean("ProductStatus")
+//                );
+//                vector.add(pro);
+//            }
+//        } catch (SQLException e) {
+//            System.out.println(e);
+//        }
+//        return vector;
+//    }
     public int getTotalProductBySearch(String key, double min, double max) {
-        String sql = "select count(*) from Product where ProductName like N'%" + key + "%' and UnitPrice between " + min + " and " + max;
+        String sql = "select count(*) from Product as p join Categories as c on p.CategoryID = c.CategoryID where UnitPrice between " + min + " and " + max + " and ProductName like N'%" + key + "%' or CategoryName like '%" + key + "%'";
+        try {
+            PreparedStatement st = conn.prepareStatement(sql);
+            ResultSet rs = st.executeQuery();
+            while (rs.next()) {
+                return rs.getInt(1);
+            }
+        } catch (SQLException e) {
+            System.out.println(e);
+        }
+        return 0;
+    }
+
+    public int getTotalProductBySearchCategory(String key, int CategoryID, double min, double max) {
+        String sql = "select count(*) from Product as p join Categories as c on p.CategoryID = c.CategoryID where c.CategoryID =" + CategoryID + " and UnitPrice between " + min + " and " + max + " and ProductName like N'%" + key + "%' or CategoryName like '%" + key + "%'";
         try {
             PreparedStatement st = conn.prepareStatement(sql);
             ResultSet rs = st.executeQuery();
@@ -470,9 +481,9 @@ public class DAOProduct extends DBConnect {
     public int getTotalProductByRate(int rate, double min, double max) {
         String sql = "";
         if (rate == 0) {
-            sql = "select count(*) from Product where TotalRate between 0 and 5 and UnitPrice between " + min + " and " + max;
+            sql = "select count(*) from Product where UnitPrice between " + min + " and " + max + "and TotalRate between 0 and 5";
         } else {
-            sql = "select count(*) from Product where TotalRate = " + rate + " and UnitPrice between " + min + " and " + max;
+            sql = "select count(*) from Product where UnitPrice between " + min + " and " + max + " and TotalRate = " + rate + ";";
         }
         try {
             PreparedStatement st = conn.prepareStatement(sql);
@@ -492,9 +503,31 @@ public class DAOProduct extends DBConnect {
         }
         String sql = "";
         if (rate == 0) {
-            sql = "select count(*) from Product where ProductName like N'%" + key + "%' and " + type + " and TotalRate between 0 and 5 and UnitPrice between " + min + " and " + max;
+            sql = "select count(*) from Product as p join Categories as c on p.CategoryID = c.CategoryID where UnitPrice between " + min + " and " + max + " and " + type + " and TotalRate between 0 and 5 and ProductName like N'%" + key + "%' or c.CategoryName like '%" + key + "%'";
         } else {
-            sql = "select count(*) from Product where ProductName like N'%" + key + "%' and " + type + " and TotalRate = " + rate + " and UnitPrice between " + min + " and " + max;
+            sql = "select count(*) from Product as p join Categories as c on p.CategoryID = c.CategoryID where UnitPrice between " + min + " and " + max + " and " + type + " and TotalRate =" + rate + " and productName like N'%" + key + "%' or c.CategoryName like '%" + key + "%'";
+        }
+        try {
+            PreparedStatement st = conn.prepareStatement(sql);
+            ResultSet rs = st.executeQuery();
+            while (rs.next()) {
+                return rs.getInt(1);
+            }
+        } catch (SQLException e) {
+            System.out.println(e);
+        }
+        return 0;
+    }
+
+    public int getTotalProductByRateAndTypeSearchCategory(String key, int CategoryID, int rate, String type, double min, double max) {
+        if (type.equals("showSale")) {
+            type = "UnitDiscount != 0";
+        }
+        String sql = "";
+        if (rate == 0) {
+            sql = "select count(*) from Product as p join Categories as c on p.CategoryID = c.CategoryID where UnitPrice between " + min + " and " + max + " and " + type + " and CategoryID= " + CategoryID + " and ProductName like N'%" + key + "%' or c.CategoryName like '%" + key + "%'";
+        } else {
+            sql = "select count(*) from Product as p join Categories as c on p.CategoryID = c.CategoryID where UnitPrice between " + min + " and " + max + " and " + type + "and TotalRate = " + rate + " and CategoryID= " + CategoryID + " and ProductName like N'%" + key + "%' or c.CategoryName like '%" + key + "%'";
         }
         try {
             PreparedStatement st = conn.prepareStatement(sql);
@@ -513,7 +546,25 @@ public class DAOProduct extends DBConnect {
             type = "UnitDiscount != 0";
         }
         String sql = "";
-        sql = "select count(*) from Product where ProductName like N'%" + key + "%' and " + type + " and UnitPrice between " + min + " and " + max;
+        sql = "select count(*) from Product as p join Categories as c on p.CategoryID = c.CategoryID where UnitPrice between " + min + " and " + max + " and ProductName like N'%" + key + "%' or c.CategoryName like '%" + key + "%' and " + type;
+        try {
+            PreparedStatement st = conn.prepareStatement(sql);
+            ResultSet rs = st.executeQuery();
+            while (rs.next()) {
+                return rs.getInt(1);
+            }
+        } catch (SQLException e) {
+            System.out.println(e);
+        }
+        return 0;
+    }
+
+    public int getTotalProductByTypeSearchCategory(String key, int CategoryID, String type, double min, double max) {
+        if (type.equals("showSale")) {
+            type = "UnitDiscount != 0";
+        }
+        String sql = "";
+        sql = "select count(*) from Product as p join Categories as c on p.CategoryID = c.CategoryID where UnitPrice between " + min + " and " + max + " c.CategoryID = " + CategoryID + " and ProductName like N'% and " + key + "%' or c.CategoryName like '% " + key + "%'and " + type;
         try {
             PreparedStatement st = conn.prepareStatement(sql);
             ResultSet rs = st.executeQuery();
@@ -529,9 +580,30 @@ public class DAOProduct extends DBConnect {
     public int getTotalProductByRateSearch(String key, int rate, double min, double max) {
         String sql = "";
         if (rate == 0) {
-            sql = "select count(*) from Product where ProductName like N'%" + key + "%' and TotalRate between 0 and 5 and UnitPrice between " + min + " and " + max;
+            sql = "select count(*) from Product as p join Categories as c on p.CategoryID = c.CategoryID where UnitPrice between " + min + " and " + max + " and TotalRate between 0 and 5 and ProductName like N'%" + key + "%' or c.CategoryName like '%" + key + "%'";
         } else {
-            sql = "select count(*) from Product where ProductName like N'%" + key + "%' and TotalRate = " + rate + " and UnitDiscount != 0 and TotalRate = " + rate + " and UnitPrice between " + min + " and " + max;
+            sql = "select count(*) from Product as p join Categories as c on p.CategoryID = c.CategoryID where UnitPrice between " + min + " and " + max + "and TotalRate = " + rate + " and ProductName like N'%" + key + "%' or c.CategoryName like '%" + key + "%' and UnitDiscount != 0";
+        }
+        try {
+            PreparedStatement st = conn.prepareStatement(sql);
+            ResultSet rs = st.executeQuery();
+            while (rs.next()) {
+                return rs.getInt(1);
+            }
+        } catch (SQLException e) {
+            System.out.println(e);
+        }
+        return 0;
+    }
+
+    public int getTotalProductByRateSearchCategory(String key, int CategoryID, int rate, double min, double max) {
+        String sql = "";
+        if (rate == 0) {
+            sql = "select count(*) from Product as p join Categories as c on p.CategoryID = c.CategoryID where c.CategoryID = " + CategoryID
+                    + " and ProductName like N'%" + key + "%' or c.CategoryName like '%" + key + "%'";
+        } else {
+            sql = "select count(*) from Product as p join Categories as c on p.CategoryID = c.CategoryID where UnitPrice between " + min + " and " + max + " and TotalRate = " + rate + " and c.CategoryID = " + CategoryID
+                    + " and ProductName like N'%" + key + "%' or c.CategoryName like '%" + key + "%' and UnitDiscount != 0";
         }
         try {
             PreparedStatement st = conn.prepareStatement(sql);
@@ -554,15 +626,42 @@ public class DAOProduct extends DBConnect {
         }
         String sql = "";
         if (totalRate == 0) {
-            sql = "select count(*) from Product where " + type + " and TotalRate between 0 and 5 and UnitPrice between " + min + " and " + max;
+            sql = "select count(*) from Product where UnitPrice between " + min + " and " + max + " and " + type + " and TotalRate between 0 and 5";
         } else {
-            sql = "select count(*) from Product where " + type + " and TotalRate = " + totalRate + " and UnitPrice between " + min + " and " + max;
+            sql = "select count(*) from Product where UnitPrice between " + min + " and " + max + " and " + type + " and TotalRate = " + totalRate;
         }
 
         try {
             PreparedStatement st = conn.prepareStatement(sql);
             ResultSet rs = st.executeQuery();
             while (rs.next()) {
+                return rs.getInt(1);
+            }
+        } catch (SQLException e) {
+            System.out.println(e);
+        }
+        return 0;
+    }
+
+    public int getTotalTypeAndRateProductCategory(String type, int CategoryID, int totalRate, double min, double max) {
+        if (type.equals("showNew")) {
+            type = "CreateDate = curDate()";
+        }
+        if (type.equals("showSale")) {
+            type = "UnitDiscount != 0";
+        }
+        String sql = "";
+        if (totalRate == 0) {
+            sql = "select count(*) from Product where UnitPrice between " + min + " and " + max + " and CategoryID =" + CategoryID + " and  " + type + " and TotalRate between 0 and 5";
+        } else {
+            sql = "select count(*) from Product where UnitPrice between " + min + " and " + max + " and CategoryID =" + CategoryID + " and  " + type + " and TotalRate = " + totalRate;
+        }
+
+        try {
+            PreparedStatement st = conn.prepareStatement(sql);
+            ResultSet rs = st.executeQuery();
+            while (rs.next()) {
+                System.out.println("======="+rs.getInt(1));
                 return rs.getInt(1);
             }
         } catch (SQLException e) {
@@ -580,9 +679,9 @@ public class DAOProduct extends DBConnect {
         }
         String sql = "";
         if (totalRate == 0) {
-            sql = "select count(*) from Product where " + type + " and TotalRate between 0 and 5 and CategoryID = " + CategoryID + " and UnitPrice between " + min + " and " + max;
+            sql = "select count(*) from Product where UnitPrice between " + min + " and " + max + "and " + type + " and TotalRate between 0 and 5 and CategoryID = " + CategoryID;
         } else {
-            sql = "select count(*) from Product where " + type + " and TotalRate = " + totalRate + " and CategoryID = " + CategoryID + " and UnitPrice between " + min + " and " + max;
+            sql = "select count(*) from Product where UnitPrice between " + min + " and " + max + " and " + type + " and TotalRate = " + totalRate + " and CategoryID = " + CategoryID;
         }
 
         try {
@@ -600,10 +699,10 @@ public class DAOProduct extends DBConnect {
     public int getTotalProductByRateAndCategoryID(int rate, int categoryID, double min, double max) {
         String sql = "";
         if (rate == 0) {
-            sql = "select count(*) from Product where TotalRate between 0 and  5 and CategoryID = " + categoryID + " and UnitPrice between " + min + " and " + max;
+            sql = "select count(*) from Product where UnitPrice between " + min + " and " + max + " and TotalRate between 0 and  5 and CategoryID = " + categoryID;
 
         } else {
-            sql = "select count(*) from Product where TotalRate = " + rate + " and CategoryID = " + categoryID + " and UnitPrice between " + min + " and " + max;
+            sql = "select count(*) from Product where UnitPrice between " + min + " and " + max + " and TotalRate = " + rate + " and CategoryID = " + categoryID;
         }
         try {
             PreparedStatement st = conn.prepareStatement(sql);
@@ -646,7 +745,7 @@ public class DAOProduct extends DBConnect {
     }
 
     public double getMaxUnitPriceSearch(String keyWord) {
-        String sql = "select UnitPrice from Product where ProductName like'%" + keyWord + "%' order by UnitPrice desc limit 1";
+        String sql = "select UnitPrice from Product as p join Categories as c on p.CategoryID = c.CategoryID where ProductName like'%" + keyWord + "%' or c.CategoryName like '%" + keyWord + "%' order by UnitPrice desc limit 1";
         try {
             PreparedStatement st = conn.prepareStatement(sql);
             ResultSet rs = st.executeQuery();
@@ -660,7 +759,7 @@ public class DAOProduct extends DBConnect {
     }
 
     public double getMinUnitPriceSearch(String keyWord) {
-        String sql = "select UnitPrice from Product where ProductName like'%" + keyWord + "%' order by UnitPrice asc limit 1";
+        String sql = "select UnitPrice from Product as p join Categories as c on p.CategoryID = c.CategoryID where ProductName like'%" + keyWord + "%' order by UnitPrice asc limit 1";
         try {
             PreparedStatement st = conn.prepareStatement(sql);
             ResultSet rs = st.executeQuery();

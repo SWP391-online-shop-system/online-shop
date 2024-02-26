@@ -368,7 +368,13 @@
                                                 </div>
                                                 <div class="product__item__text">
                                                     <h6 style="text-align: center;"><%=rsHotPro.getString("ProductName")%></h6>
-                                                    <a href="#" class="add-cart" style="left: 12px;">+ Thêm vào giỏ</a><a style="margin-left: 136px;" href="#">Mua ngay</a>
+                                                    <%
+                                                    User testUser = (User)session.getAttribute("account");
+                                                    if(testUser == null) {%>
+                                                    <a onclick="alertOpenCart();" style="left: 12px;">+ Thêm vào giỏ</a><a style="margin-left: 136px;" href="#">Mua ngay</a>
+                                                    <%} else{%>
+                                                    <a href="CartURL?service=addcart&pid=<%=rsHotPro.getInt("ProductID")%>&quan=1" class="add-cart" style="left: 12px;">+ Thêm vào giỏ</a><a style="margin-left: 136px;" href="#">Mua ngay</a>
+                                                    <%}%>
                                                     <div style="display: flex;">
                                                         <div class="rating" style="margin-left: 30px;">
                                                             <%int star = (int)rsHotPro.getInt("totalRate");
@@ -380,14 +386,14 @@
                                                     </div>
                                                     <div style="display: flex;flex-direction: row;justify-content: space-between;">
                                                         <%if(rsHotPro.getInt("UnitDiscount")!= 0){%>
-                                                        <div style="color: red;font-weight: 700;font-size: 15px; flex: 0 0 50%; text-decoration: line-through;"><%=df.format(rsHotPro.getDouble("UnitPrice"))%></div>
-                                                        <div style="color: #0d0d0d;font-weight: 700;font-size: 15px; flex: 0 0 50%"><%=df.format(rsHotPro.getDouble("UnitPrice")*(100-rsHotPro.getInt("UnitDiscount"))/100)%></div>
+                                                        <div style="color: red;font-weight: 700;font-size: 15px; flex: 0 0 50%; text-decoration: line-through;"><%=df.format(rsHotPro.getDouble("UnitPrice"))%>đ</div>
+                                                        <div style="color: #0d0d0d;font-weight: 700;font-size: 15px; flex: 0 0 50%"><%=df.format(rsHotPro.getDouble("UnitPrice")*(100-rsHotPro.getInt("UnitDiscount"))/100)%>đ</div>
                                                         <%} else {%>
                                                         <div style="font-weight: 700;
                                                              font-size: 15px;
                                                              flex: -2 0 43%;
                                                              margin-left: 146px;
-                                                             margin-top: -26px;"><%=df.format(rsHotPro.getDouble("UnitPrice"))%></div>
+                                                             margin-top: -26px;"><%=df.format(rsHotPro.getDouble("UnitPrice"))%>đ</div>
                                                         <%}%>
                                                     </div>
                                                 </div>
@@ -515,8 +521,8 @@
                                                             <input name="inputMaxPrice" class="range-max" max="<%=maxPrice%>" type="range" value="<%=(oldMaxPrice==null ? maxPrice : oldMaxPrice)%>">
                                                         </div>
                                                         <div class="range-text">
-                                                            <div class="text-min"><%=df.format(oldMinPrice==null ? minPrice : oldMinPrice)%></div>
-                                                            <div class="text-max"><%=df.format(oldMaxPrice==null ? maxPrice : oldMaxPrice)%></div>
+                                                            <div class="text-min"><%=df.format(oldMinPrice==null ? minPrice : oldMinPrice)%>đ</div>
+                                                            <div class="text-max"><%=df.format(oldMaxPrice==null ? maxPrice : oldMaxPrice)%>đ</div>
                                                         </div>
                                                         <button class="submit-price-form" type="submit">Lọc</button>
                                                     </form>
@@ -604,7 +610,13 @@
                                     </div>
                                     <div class="product__item__text">
                                         <h6><%=rsPaging.getString("ProductName")%></h6>
-                                        <a href="#" class="add-cart">+ Thêm vào giỏ</a><a style="margin-left: 136px;" href="#">Mua ngay</a>
+                                        <%User testUser2 = (User)session.getAttribute("account");
+                                           if(testUser2==null) {%>
+                                        <a onclick="alertOpenCart()" class="add-cart">+ Thêm vào giỏ</a><a style="margin-left: 136px;" href="#">Mua ngay</a>
+                                        <%}else{%>
+                                        <a href="CartURL?service=addcart&pid=<%=rsPaging.getInt(1)%>&quan=1" class="add-cart">+ Thêm vào giỏ</a><a style="margin-left: 136px;" href="#">Mua ngay</a>
+
+                                        <%}%>
                                         <div style="display: flex;">
                                             <div class="rating">
                                                 <%int star = (int)rsPaging.getInt("totalRate");
@@ -616,14 +628,14 @@
                                         </div>
                                         <div style="display: flex;">
                                             <%if(rsPaging.getInt("UnitDiscount")!= 0){%>
-                                            <div style="color: red;font-weight: 700;font-size: 15px; flex: 0 0 50%; text-decoration: line-through;"><%=df.format(rsPaging.getDouble("UnitPrice"))%></div>
-                                            <div style="color: #0d0d0d;font-weight: 700;font-size: 15px; flex: 0 0 50%"><%=df.format(rsPaging.getDouble("UnitPrice")*(100-rsPaging.getInt("UnitDiscount"))/100)%></div>
+                                            <div style="color: red;font-weight: 700;font-size: 15px; flex: 0 0 50%; text-decoration: line-through;"><%=df.format(rsPaging.getDouble("UnitPrice"))%>đ</div>
+                                            <div style="color: #0d0d0d;font-weight: 700;font-size: 15px; flex: 0 0 50%"><%=df.format(rsPaging.getDouble("UnitPrice")*(100-rsPaging.getInt("UnitDiscount"))/100)%>đ</div>
                                             <%} else {%>
                                             <div style="font-weight: 700;
                                                  font-size: 15px;
                                                  flex: -2 0 43%;
                                                  margin-left: 116px;
-                                                 margin-top: -26px;"><%=df.format(rsPaging.getDouble("UnitPrice"))%></div>
+                                                 margin-top: -26px;"><%=df.format(rsPaging.getDouble("UnitPrice"))%>đ</div>
                                             <%}%>
                                         </div>
                                     </div>
@@ -716,7 +728,11 @@
             </div>
         </footer>
         <!-- Footer Section End -->
-
+        <script>
+            function alertOpenCart() {
+                alert('Đăng nhập để xem giỏ hàng của bạn');
+            }
+        </script>
         <!-- Search Begin -->
         <div class="search-model">
             <div class="h-100 d-flex align-items-center justify-content-center">
