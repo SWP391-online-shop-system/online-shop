@@ -110,7 +110,7 @@
                                         <button id="showSignup" onclick="togglePopup('signupPopup')">Đăng kí</button>
                                     </div>
                                     <div class="form-element">
-                                        <a href="#">Quên mật khẩu?</a>
+                                        <a href="forgotpass">Quên mật khẩu?</a>
                                     </div>
                                 </div>
                             </div>

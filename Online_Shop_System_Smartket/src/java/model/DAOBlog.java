@@ -41,7 +41,7 @@ public class DAOBlog extends DBConnect {
                 int BlogRate = rs.getInt("BlogRate");
                 int HiddenStatus = rs.getInt("HiddenStatus");
                 String CreateTime = rs.getString("CreateTime");
-                Blog blog = new Blog(BlogID, UserID, BlogAuthor, CategoryID,
+                Blog blog = new Blog(BlogID, UserID, BlogAuthor,CategoryID,
                         AuthorImage, BlogImage, BlogTitle, BlogContent,
                         BlogRate, HiddenStatus, CreateTime);
                 vector.add(blog);
@@ -54,7 +54,7 @@ public class DAOBlog extends DBConnect {
         return vector;
     }
 
-    public List<Blog> searchByName(String txtSearch, int index) {
+    public List<Blog> searchByName(String txtSearch,int index) {
         List<Blog> list = new ArrayList<>();
         String sql = "select * from Blog\n"
                 + "where BlogTitle like ?\n"
@@ -86,8 +86,7 @@ public class DAOBlog extends DBConnect {
         }
         return list;
     }
-
-    public List<Blog> searchByCategories(int Cid, int index) {
+    public List<Blog> searchByCategories(int Cid,int index) {
         List<Blog> list = new ArrayList<>();
         String sql = "select * from Blog\n"
                 + "where CategoryID like ?\n"
@@ -98,7 +97,7 @@ public class DAOBlog extends DBConnect {
                     ResultSet.TYPE_SCROLL_SENSITIVE,
                     ResultSet.CONCUR_UPDATABLE);
             PreparedStatement st = conn.prepareStatement(sql);
-            st.setInt(1, Cid);
+            st.setInt(1,Cid);
             st.setInt(2, (index - 1) * 6);
             ResultSet rs = st.executeQuery();
             while (rs.next()) {
@@ -119,6 +118,7 @@ public class DAOBlog extends DBConnect {
         }
         return list;
     }
+   
 
     public List<Blog> getAllBlog() {
         List<Blog> list = new ArrayList<>();
@@ -146,7 +146,6 @@ public class DAOBlog extends DBConnect {
         }
         return list;
     }
-
     public List<Categories> getAllCategories() {
         List<Categories> list = new ArrayList<>();
         String sql = "select * from Categories";
@@ -158,14 +157,14 @@ public class DAOBlog extends DBConnect {
             while (rs.next()) {
                 list.add(new Categories(rs.getInt(1),
                         rs.getString(2),
-                        rs.getBoolean(3)
+                        rs.getDate(3),
+                        rs.getBoolean(4)
                 ));
             }
         } catch (Exception e) {
         }
         return list;
     }
-
     public Blog getBlogByID(int Bid) {
         List<Blog> list = new ArrayList<>();
         String sql = "SELECT * \n"
@@ -290,7 +289,6 @@ public class DAOBlog extends DBConnect {
         }
         return 0;
     }
-
     public int getTotalCategoriesBlog(int Cid) {
         String sql = "select count(*) from Blog\n"
                 + "where CategoryID like ?";
@@ -299,7 +297,7 @@ public class DAOBlog extends DBConnect {
                     ResultSet.TYPE_SCROLL_SENSITIVE,
                     ResultSet.CONCUR_UPDATABLE);
             PreparedStatement st = conn.prepareStatement(sql);
-            st.setInt(1, Cid);
+            st.setInt(1,Cid);
             ResultSet rs = st.executeQuery();
             while (rs.next()) {
                 return rs.getInt(1);
@@ -343,10 +341,10 @@ public class DAOBlog extends DBConnect {
 
     public static void main(String[] args) {
         DAOBlog dao = new DAOBlog();
-        List<Blog> list = dao.searchByName("a", 0);
+        List<Categories> list = dao.getAllCategories();
         Blog b = dao.getBlogByID(1);
         int count = dao.getTotalCategoriesBlog(1);
-        for (Blog o : list) {
+        for (Categories o : list) {
             System.out.println(o);
         }
         System.out.println(count);

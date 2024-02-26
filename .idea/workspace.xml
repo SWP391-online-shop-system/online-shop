@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="e156203c-296e-4568-bf28-930b394db852" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/Online_Shop_System_Smartket/dist/Online_Shop_System_Smartket.war" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Online_Shop_System_Smartket/nbproject/build-impl.xml" beforeDir="false" afterPath="$PROJECT_DIR$/Online_Shop_System_Smartket/nbproject/build-impl.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Online_Shop_System_Smartket/nbproject/genfiles.properties" beforeDir="false" afterPath="$PROJECT_DIR$/Online_Shop_System_Smartket/nbproject/genfiles.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Online_Shop_System_Smartket/nbproject/private/private.properties" beforeDir="false" afterPath="$PROJECT_DIR$/Online_Shop_System_Smartket/nbproject/private/private.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Online_Shop_System_Smartket/nbproject/project.properties" beforeDir="false" afterPath="$PROJECT_DIR$/Online_Shop_System_Smartket/nbproject/project.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Online_Shop_System_Smartket/nbproject/project.xml" beforeDir="false" afterPath="$PROJECT_DIR$/Online_Shop_System_Smartket/nbproject/project.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Online_Shop_System_Smartket/src/java/controller/ControllerBlog.java" beforeDir="false" afterPath="$PROJECT_DIR$/Online_Shop_System_Smartket/src/java/controller/ControllerBlog.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Online_Shop_System_Smartket/src/java/controller/ControllerBlogDetail.java" beforeDir="false" afterPath="$PROJECT_DIR$/Online_Shop_System_Smartket/src/java/controller/ControllerBlogDetail.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Online_Shop_System_Smartket/src/java/controller/ControllerSearchBlog.java" beforeDir="false" afterPath="$PROJECT_DIR$/Online_Shop_System_Smartket/src/java/controller/ControllerSearchBlog.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Online_Shop_System_Smartket/src/java/model/DAOBlog.java" beforeDir="false" afterPath="$PROJECT_DIR$/Online_Shop_System_Smartket/src/java/model/DAOBlog.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Online_Shop_System_Smartket/src/java/model/DBConnect.java" beforeDir="false" afterPath="$PROJECT_DIR$/Online_Shop_System_Smartket/src/java/model/DBConnect.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Online_Shop_System_Smartket/web/blog.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/Online_Shop_System_Smartket/web/blog.jsp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Online_Shop_System_Smartket/web/blogdetail.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/Online_Shop_System_Smartket/web/blogdetail.jsp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Online_Shop_System_Smartket/web/blogsearch.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/Online_Shop_System_Smartket/web/blogsearch.jsp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Online_Shop_System_Smartket/web/css/css_blog/style.css" beforeDir="false" afterPath="$PROJECT_DIR$/Online_Shop_System_Smartket/web/css/css_blog/style.css" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="MarkdownSettingsMigration">
+    <option name="stateVersion" value="1" />
+  </component>
+  <component name="ProjectId" id="2bkSgXGnodyNpfjQ533ULPaydI5" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "WebServerToolWindowFactoryState": "false",
+    "last_opened_file_path": "C:/Users/admin/Desktop/online_shop_system",
+    "nodejs_package_manager_path": "npm",
+    "project.structure.last.edited": "Project",
+    "project.structure.proportion": "0.0",
+    "project.structure.side.proportion": "0.0",
+    "settings.editor.selected.configurable": "preferences.pluginManager"
+  }
+}]]></component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="e156203c-296e-4568-bf28-930b394db852" name="Changes" comment="" />
+      <created>1706757695987</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1706757695987</updated>
+      <workItem from="1706757701092" duration="511000" />
+      <workItem from="1706759280412" duration="315000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+</project>
