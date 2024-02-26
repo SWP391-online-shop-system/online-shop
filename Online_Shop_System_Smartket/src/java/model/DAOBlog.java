@@ -157,7 +157,7 @@ public class DAOBlog extends DBConnect {
             while (rs.next()) {
                 list.add(new Categories(rs.getInt(1),
                         rs.getString(2),
-                        rs.getDate(3),
+                        rs.getString(3),
                         rs.getBoolean(4)
                 ));
             }
