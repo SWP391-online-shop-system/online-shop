@@ -46,18 +46,14 @@
         <link rel="stylesheet" href="css/css_productList/style.css" type="text/css">
         <link rel="stylesheet" href="css/css_footer/footer.css" type="text/css">
         <script src="https://kit.fontawesome.com/ac74b86ade.js" crossorigin="anonymous"></script>
-        <style>
-            body{
-                margin: 5px -5px;
-            }
-        </style>
+
     </head>
 
     <body>
         <!-- comment start -->
-        <div class="header">
+        <div class="header" style="margin-top: 21px;">
             <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-            <div class="header-title">
+            <div class="header-title" style="margin-top: -16px;">
                 <div class="header-title-left">
                     <ul>
                         <li>
@@ -73,7 +69,7 @@
                         </li>
                     </ul>
                 </div>
-                <div class="header-title-right" style="margin-bottom: -8px;">
+                <div class="header-title-right">
                     <div class="header-title-right-social">
                         <div><a href="#" title="Trang Facebook chúng tôi"><i class="fa-brands fa-facebook"></i></a></div>
                         <div><a href="#" title="Trang Twitter của chúng tôi"><i class="fa-brands fa-x-twitter"></i></a></div>
@@ -92,8 +88,8 @@
                             </head>
                             <body> 
                                 <%
-                                    String message = (String)request.getAttribute("message");
-                                    String messagesu = (String)request.getAttribute("messageSignUp");
+                                    String message1 = (String)request.getAttribute("message");
+                                    String messagesu1 = (String)request.getAttribute("messageSignUp");
                                     String msg1 = (String)request.getAttribute("msg1");
                                 %>
                                 <c:if test="${sessionScope.account.roleID == 5}">
@@ -118,7 +114,7 @@
                                     <a href="profileUser.jsp"><img style="width: 30px;
                                                                    height: 30px;
                                                                    margin-right: -10px;
-                                                                   margin-bottom: 4px;
+                                                                   margin-bottom: -8px;
                                                                    margin-left: 7px;
                                                                    border-radius: 50%;" class="styling1" src="images/user/default_avatar.jpg" alt="Admin Image"></a>
                                     </c:if>
@@ -135,7 +131,7 @@
                                                color: red;
                                                font-size: 20px;
                                                font-weight: 700;
-                                               text-align: left;"><%=(message == null) ? "" : message%></p>
+                                               text-align: left;"><%=(message1 == null) ? "" : message1%></p>
                                             <div class="form-element">
                                                 <label for="email">Email</label>
                                                 <input type="email" id="email" name="email" placeholder="Nhập email" required 
@@ -240,7 +236,7 @@
                                                color: red;
                                                font-size: 20px;
                                                font-weight: 700;
-                                               text-align: left;"><%=(messagesu == null) ? "" : messagesu%></p>
+                                               text-align: left;"><%=(messagesu1 == null) ? "" : messagesu1%></p>
                                             <div class="form-element">
                                                 <button type="submit" >Đăng kí</button>
                                             </div>
@@ -255,8 +251,8 @@
                         </html>
                     </div>
                 </div>
-            </div>
-            <div class="header-content">
+            </div>  
+            <div class="header-content" style="margin-bottom: 20px;">
                 <div class="header-content-logo">
                     <a href="HomePageURL"><img src="images/logo/logo.png"alt="404"/></a>
                 </div>
@@ -294,8 +290,9 @@
                                     User user = (User) session2.getAttribute("account");
                                     int userID = user.getUserID();
                                     DAOCart dao = new DAOCart();
-                                    ResultSet rs = dao.getData("SELECT count(*) as count FROM Cart AS c JOIN Product AS p ON c.ProductID = p.ProductID where userID = "+userID+"");
-                                    while(rs.next()){
+                                    
+                                    ResultSet rs1 = dao.getData("SELECT count(*) as count FROM Cart AS c JOIN Product AS p ON c.ProductID = p.ProductID where userID = "+userID+"");
+                                    while(rs1.next()){
                                 %>
                                 <span class="count-cart" style="position: absolute;
                                       margin-left: 17px;
@@ -306,9 +303,7 @@
                                       font-size: 15px;
                                       z-index: 9;
                                       top: 11px;
-                                      left: 3px;
-                                      font-family: none;
-                                      line-height: normal;"><%=rs.getInt(1)%></span>
+                                      left: 3px;"><%=rs1.getInt(1)%></span>
                                 <%
                                     }
                                 %>
@@ -360,7 +355,7 @@
                                                              margin-top: 10px;" src="<%=rsHotPro.getString("ProductURL")%>" alt="alt"/>
                                                     </a>
                                                     <%if(rsHotPro.getInt("UnitDiscount")!=0) {%>
-                                                    <div class="sale-cotification" style="margin-left: 114px;">Sale</div>
+                                                    <div class="sale-cotification">Sale</div>
                                                     <%}%>
                                                     <%    ResultSet rsNew2Product = dao.getData("select * from product as p join productImage as pi "
                                                        + "on p.ProductID = pi.ProductID "
@@ -373,7 +368,13 @@
                                                 </div>
                                                 <div class="product__item__text">
                                                     <h6 style="text-align: center;"><%=rsHotPro.getString("ProductName")%></h6>
-                                                    <a href="#" class="add-cart" style="left: 12px;">+ Thêm vào giỏ</a><a style="margin-left: 136px;" href="#">Mua ngay</a>
+                                                    <%
+                                                    User testUser = (User)session.getAttribute("account");
+                                                    if(testUser == null) {%>
+                                                    <a onclick="alertOpenCart();" style="left: 12px;">+ Thêm vào giỏ</a><a style="margin-left: 136px;" href="#">Mua ngay</a>
+                                                    <%} else{%>
+                                                    <a href="CartURL?service=addcart&pid=<%=rsHotPro.getInt("ProductID")%>&quan=1" class="add-cart" style="left: 12px;">+ Thêm vào giỏ</a><a style="margin-left: 136px;" href="#">Mua ngay</a>
+                                                    <%}%>
                                                     <div style="display: flex;">
                                                         <div class="rating" style="margin-left: 30px;">
                                                             <%int star = (int)rsHotPro.getInt("totalRate");
@@ -385,14 +386,14 @@
                                                     </div>
                                                     <div style="display: flex;flex-direction: row;justify-content: space-between;">
                                                         <%if(rsHotPro.getInt("UnitDiscount")!= 0){%>
-                                                        <div style="color: red;font-weight: 700;font-size: 15px; flex: 0 0 50%; text-decoration: line-through;"><%=df.format(rsHotPro.getDouble("UnitPrice"))%></div>
-                                                        <div style="color: #0d0d0d;font-weight: 700;font-size: 15px; flex: 0 0 50%"><%=df.format(rsHotPro.getDouble("UnitPrice")*(100-rsHotPro.getInt("UnitDiscount"))/100)%></div>
+                                                        <div style="color: red;font-weight: 700;font-size: 15px; flex: 0 0 50%; text-decoration: line-through;"><%=df.format(rsHotPro.getDouble("UnitPrice"))%>đ</div>
+                                                        <div style="color: #0d0d0d;font-weight: 700;font-size: 15px; flex: 0 0 50%"><%=df.format(rsHotPro.getDouble("UnitPrice")*(100-rsHotPro.getInt("UnitDiscount"))/100)%>đ</div>
                                                         <%} else {%>
                                                         <div style="font-weight: 700;
                                                              font-size: 15px;
                                                              flex: -2 0 43%;
                                                              margin-left: 146px;
-                                                             margin-top: -26px;"><%=df.format(rsHotPro.getDouble("UnitPrice"))%></div>
+                                                             margin-top: -26px;"><%=df.format(rsHotPro.getDouble("UnitPrice"))%>đ</div>
                                                         <%}%>
                                                     </div>
                                                 </div>
@@ -520,8 +521,8 @@
                                                             <input name="inputMaxPrice" class="range-max" max="<%=maxPrice%>" type="range" value="<%=(oldMaxPrice==null ? maxPrice : oldMaxPrice)%>">
                                                         </div>
                                                         <div class="range-text">
-                                                            <div class="text-min"><%=df.format(oldMinPrice==null ? minPrice : oldMinPrice)%></div>
-                                                            <div class="text-max"><%=df.format(oldMaxPrice==null ? maxPrice : oldMaxPrice)%></div>
+                                                            <div class="text-min"><%=df.format(oldMinPrice==null ? minPrice : oldMinPrice)%>đ</div>
+                                                            <div class="text-max"><%=df.format(oldMaxPrice==null ? maxPrice : oldMaxPrice)%>đ</div>
                                                         </div>
                                                         <button class="submit-price-form" type="submit">Lọc</button>
                                                     </form>
@@ -596,9 +597,9 @@
                                             <img src="<%=rsPaging.getString("ProductURL")%>" alt="alt"/>
                                         </a>
                                         <%if(rsPaging.getInt("UnitDiscount")!=0) {%>
-                                        <div class="sale-cotification" style="margin-left: 114px;">Sale</div>
+                                        <div class="sale-cotification">Sale</div>
                                         <%}%>
-                                        <%ResultSet rsNewProduct = dao.getData("select * from product as p join productImage as pi "
+                                        <%    ResultSet rsNewProduct = dao.getData("select * from product as p join productImage as pi "
                                            + "on p.ProductID = pi.ProductID "
                                            + "where pi.ProductURL like '%_1%' "
                                            + "order by p.CreateDate desc limit 6 ");
@@ -609,7 +610,13 @@
                                     </div>
                                     <div class="product__item__text">
                                         <h6><%=rsPaging.getString("ProductName")%></h6>
-                                        <a href="#" class="add-cart">+ Thêm vào giỏ</a><a style="margin-left: 136px;" href="#">Mua ngay</a>
+                                        <%User testUser2 = (User)session.getAttribute("account");
+                                           if(testUser2==null) {%>
+                                        <a onclick="alertOpenCart()" class="add-cart">+ Thêm vào giỏ</a><a style="margin-left: 136px;" href="#">Mua ngay</a>
+                                        <%}else{%>
+                                        <a href="CartURL?service=addcart&pid=<%=rsPaging.getInt(1)%>&quan=1" class="add-cart">+ Thêm vào giỏ</a><a style="margin-left: 136px;" href="#">Mua ngay</a>
+
+                                        <%}%>
                                         <div style="display: flex;">
                                             <div class="rating">
                                                 <%int star = (int)rsPaging.getInt("totalRate");
@@ -621,14 +628,14 @@
                                         </div>
                                         <div style="display: flex;">
                                             <%if(rsPaging.getInt("UnitDiscount")!= 0){%>
-                                            <div style="color: red;font-weight: 700;font-size: 15px; flex: 0 0 50%; text-decoration: line-through;"><%=df.format(rsPaging.getDouble("UnitPrice"))%></div>
-                                            <div style="color: #0d0d0d;font-weight: 700;font-size: 15px; flex: 0 0 50%"><%=df.format(rsPaging.getDouble("UnitPrice")*(100-rsPaging.getInt("UnitDiscount"))/100)%></div>
+                                            <div style="color: red;font-weight: 700;font-size: 15px; flex: 0 0 50%; text-decoration: line-through;"><%=df.format(rsPaging.getDouble("UnitPrice"))%>đ</div>
+                                            <div style="color: #0d0d0d;font-weight: 700;font-size: 15px; flex: 0 0 50%"><%=df.format(rsPaging.getDouble("UnitPrice")*(100-rsPaging.getInt("UnitDiscount"))/100)%>đ</div>
                                             <%} else {%>
                                             <div style="font-weight: 700;
                                                  font-size: 15px;
                                                  flex: -2 0 43%;
                                                  margin-left: 116px;
-                                                 margin-top: -26px;"><%=df.format(rsPaging.getDouble("UnitPrice"))%></div>
+                                                 margin-top: -26px;"><%=df.format(rsPaging.getDouble("UnitPrice"))%>đ</div>
                                             <%}%>
                                         </div>
                                     </div>
@@ -721,7 +728,11 @@
             </div>
         </footer>
         <!-- Footer Section End -->
-
+        <script>
+            function alertOpenCart() {
+                alert('Đăng nhập để xem giỏ hàng của bạn');
+            }
+        </script>
         <!-- Search Begin -->
         <div class="search-model">
             <div class="h-100 d-flex align-items-center justify-content-center">
