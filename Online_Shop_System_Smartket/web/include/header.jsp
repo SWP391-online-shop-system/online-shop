@@ -6,6 +6,9 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"  %>
 <%@page import="view.User" %>
+<%@page import="java.sql.ResultSet"%>
+<%@page import="model.DAOCart, view.Cart,view.User" %>
+<%@page import="jakarta.servlet.http.HttpSession" %>
 <div class="header">
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <div class="header-title">
@@ -63,8 +66,6 @@
                         </c:if>
                         <c:if test="${sessionScope.account.roleID == 2}">
                             <a href="#">Marketing</a>
-
-
                         </c:if>
                         <c:if test="${sessionScope.account != null}">
                             <a href="logout">Đăng xuất</a>
@@ -216,7 +217,7 @@
         <div class="header-content-menu">
             <ul>
                 <li class="active"><a href="HomePageURL">Trang chủ</a></li>
-                <li><a href="ProductListURL">Mua hàng</a></li>
+                <li><a href="ProductListURL?service=ShowAllProduct">Mua hàng</a></li>
                 <li>
                     <a href="#">Trang</a>
                     <ul class="header-content-menu-drop-down">
@@ -241,8 +242,27 @@
                     <li><a href="loginURL" onclick="alertOpenCart()"title="Giỏ hàng của tôi"><i class="fa-solid fa-cart-shopping"></i></a></li>
                         </c:if>
                         <c:if test="${sessionScope.account != null}">
-                    <li><a href="CartURL" title="Giỏ hàng của tôi"><i class="fa-solid fa-cart-shopping"></i></a></li>
-                        </c:if>
+                    <li>
+                        <%
+                            HttpSession session2 = request.getSession();
+                            User user = (User) session2.getAttribute("account");
+                            int userID = user.getUserID();
+                            DAOCart dao = new DAOCart();
+                            ResultSet rs = dao.getData("SELECT count(*) as count FROM Cart AS c JOIN Product AS p ON c.ProductID = p.ProductID where userID = "+userID+"");
+                            while(rs.next()){
+                        %>
+                        <span class="count-cart" style="margin-right: -11px;
+                              background-color: #ff0000;
+                              color: #ffffff;
+                              border-radius: 50%;
+                              padding: 0px 5px;
+                              font-size: 17px;"><%=rs.getInt(1)%></span>
+                        <%
+                            }
+                        %>
+                        <a href="CartURL" title="Giỏ hàng của tôi"><i class="fa-solid fa-cart-shopping"></i></a>
+                    </li>
+                </c:if>
             </ul>
         </div>
     </div>
