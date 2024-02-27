@@ -27,6 +27,12 @@ public class Categories {
         this.CategoryStatus = CategoryStatus;
     }
 
+    public Categories(int CategoryID, String CategoryName, boolean CategoryStatus) {
+        this.CategoryID = CategoryID;
+        this.CategoryName = CategoryName;
+        this.CategoryStatus = CategoryStatus;
+    }
+
     public int getCategoryID() {
         return CategoryID;
     }

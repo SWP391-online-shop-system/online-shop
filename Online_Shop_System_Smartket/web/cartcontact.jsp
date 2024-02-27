@@ -456,7 +456,7 @@
                 </div>
             </div>  
             <div class="card">
-                <form action="action">
+                <form action="CartCompletion" method="post">
                     <div class="row">
                         <div class="cart-contact" style="flex: 0 0 49%;border-radius: 3px;margin: 0px 14px 0px 16px;">
                             <%
@@ -502,6 +502,10 @@
                                         <label for="exampleInputPassword1">Địa chỉ cụ thể</label>
                                         <textarea name="addressdetail" required class="form-control" id="exampleInputPassword1"></textarea>
                                     </div>
+                                    <div class="form-group">
+                                        <label for="exampleInputPassword1">Ghi chú</label>
+                                        <textarea name="note" class="form-control"></textarea>
+                                    </div>
                                 </div>
                                 <button id="goBackButton" class="btn-back">Trở về</button>
                             </div>
@@ -528,7 +532,7 @@
                                                    while (rs.next()){
                                                     double unitPrice = rs.getDouble("UnitPrice");
                                                     double totalunitprice = unitPrice*rs.getInt("Quantity");
-                                                    totalprice += rs.getInt("Quantity")*unitPrice;
+                                                    totalprice += totalunitprice;
                                             %>   
                                             <tr class="row-edit">
                                                 <td>
@@ -546,16 +550,17 @@
                                                     <%=decimalFormat.format(rs.getInt("Quantity")*(rs.getDouble("UnitPrice") * (100 - rs.getInt("UnitDiscount")) / 100 ))%>đ
                                                 </td>
                                             </tr>
-                                        <%}
-                                            rs.close(); 
-                                            } catch (SQLException e) {
-                                             e.printStackTrace();
-                                            }
-                                        %>
+                                            <%}
+                                                rs.close(); 
+                                                } catch (SQLException e) {
+                                                 e.printStackTrace();
+                                                }
+                                            %>
                                         </tbody>
                                     </table>
                                 </div>
                             </div>
+                            <div style="text-align: end;">Tổng đơn hàng: <%=decimalFormat.format(totalprice)%>đ</div>
 
                             <button type="submit" name="submit" class="btn-back">Đặt Hàng</button>
                         </div>
