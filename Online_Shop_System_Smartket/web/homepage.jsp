@@ -493,8 +493,7 @@
                                 margin-top: -3px;
                                 box-sizing: unset;
                                 margin-left: 1px;
-                                height: 475px;
-                                ">
+                                height: auto;">
                                 <%
                                 DAOCategories daoCate = new DAOCategories();
                                  DAOProduct dao = new DAOProduct();
@@ -509,11 +508,8 @@
                         <div class="content-title"style="margin-top: 110px;">SẢN PHẨM MỚI NHẤT</div>
                         <div class="product-card-content">
                             <%
-                            ResultSet rsNewProduct = dao.getData("select * from product as p join productImage as pi "
-                                    + "on p.ProductID = pi.ProductID "
-                                    + "where pi.ProductURL like '%_1%' "
-                                    + "order by p.CreateDate desc limit 6");
-                                
+                            
+                            ResultSet rsNewProduct = (ResultSet)request.getAttribute("rsNewProduct");
                             while(rsNewProduct.next()) {%>
                             <div class="col-lg-4 col-md-6 col-sm-6">
                                 <div class="product__item">

@@ -661,7 +661,7 @@ public class DAOProduct extends DBConnect {
             PreparedStatement st = conn.prepareStatement(sql);
             ResultSet rs = st.executeQuery();
             while (rs.next()) {
-                System.out.println("======="+rs.getInt(1));
+                System.out.println("=======" + rs.getInt(1));
                 return rs.getInt(1);
             }
         } catch (SQLException e) {
@@ -829,4 +829,5 @@ public class DAOProduct extends DBConnect {
 //            Logger.getLogger(DAOProduct.class.getName()).log(Level.SEVERE, null, ex);
 //        }
 //    }
+
 }
