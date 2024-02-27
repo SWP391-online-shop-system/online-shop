@@ -57,7 +57,7 @@ public class DAOforgotPass extends DBConnect {
                             rs.getString(9),
                             rs.getString(10),
                             rs.getString(11),
-                            rs.getBoolean(12),
+                            rs.getInt(12),
                             rs.getInt(13),
                             rs.getInt(14));
                 }
