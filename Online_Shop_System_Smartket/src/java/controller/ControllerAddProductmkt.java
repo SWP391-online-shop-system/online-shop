@@ -3,6 +3,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
  */
 package controller;
+
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.MultipartConfig;
 import jakarta.servlet.annotation.WebServlet;
@@ -16,12 +17,20 @@ import view.Product;
 import view.ProductImage;
 import java.io.*;
 import java.nio.file.Paths;
+import java.util.Vector;
+import model.DAOCategories;
+import view.Categories;
 
 /**
  *
  * @author HP
  */
 @WebServlet(name = "ControllerAddProductmkt", urlPatterns = {"/AddProductmktURL"})
+@MultipartConfig(
+        fileSizeThreshold = 1024 * 1024 * 1, // 1 MB
+        maxFileSize = 1024 * 1024 * 10, // 10 MB
+        maxRequestSize = 1024 * 1024 * 100 // 100 MB
+)
 public class ControllerAddProductmkt extends HttpServlet {
 
     /**
@@ -140,6 +149,7 @@ public class ControllerAddProductmkt extends HttpServlet {
      */
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        DAOCategories daoCategories = new DAOCategories();
         int productID = Integer.parseInt(request.getParameter("productID"));
         String productName = request.getParameter("productName");
         int categoryId = Integer.parseInt(request.getParameter("categoryId"));
@@ -147,7 +157,6 @@ public class ControllerAddProductmkt extends HttpServlet {
         int unitInStock = Integer.parseInt(request.getParameter("unitInStock"));
         double unitPrice = Double.parseDouble(request.getParameter("unitPrice"));
         int unitDiscount = Integer.parseInt(request.getParameter("unitDiscount"));
-        int totalRate = Integer.parseInt(request.getParameter("totalRate"));
         int totalStock = Integer.parseInt(request.getParameter("totalStock"));
         String convert = convertCate(categoryId);
         Part productImageUrl_raw = request.getPart("productImageUrl");
@@ -157,13 +166,15 @@ public class ControllerAddProductmkt extends HttpServlet {
         String tail = fileName.substring(index);
         String productImageURL = "images/product/" + convert + "/" + name + "_1" + tail;
         String productImageUrlShow = productImageURL;
-        Product newProduct = new Product(productName, categoryId, productDescription, unitInStock, unitPrice, unitDiscount, totalRate, totalStock);
+        Product newProduct = new Product(productName, categoryId, productDescription, unitInStock, unitPrice, unitDiscount, totalStock);
         DAOProduct daoProduct = new DAOProduct();
         int n = daoProduct.insertProduct(newProduct);
         DAOProductImage dao = new DAOProductImage();
         dao.insertImage(new ProductImage(productID, productImageURL, productImageUrlShow));
         moveImage(request, response);
         String st = (n > 0) ? "Thêm sản phẩm thành công" : "Thêm sản phẩm thất bại";
+        Vector<Categories> categories = daoCategories.getCategories("SELECT * FROM categories");
+        request.setAttribute("categories", categories);
         response.sendRedirect("mktProductListURL?message=" + st);
     }
 

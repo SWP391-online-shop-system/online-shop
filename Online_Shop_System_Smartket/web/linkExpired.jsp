@@ -9,14 +9,14 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>JSP Page</title>
+        <title>Expired Link</title>
         <<link rel="stylesheet" href="css/expiredLink.css"/>
     </head>
     <body>
         <div class="expired">
             <svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
                  viewBox="0 0 464 390.4" style="enable-background:new 0 0 464 390.4;" xml:space="preserve">
-
+            
             <circle class="st0" cx="126" cy="175.4" r="12"/>
             <circle class="st0" cx="339" cy="175.4" r="12"/>
             <circle class="st1" cx="232.5" cy="170.9" r="106.5"/>
@@ -32,10 +32,14 @@
             <circle id="path" class="st3 uhoh" cx="234.5" cy="230.5" r="20"/>
             <path class="st3 smile" d="M191,214.4c-1.1-1.5,38.6,49.3,83,0"/>
             </svg>
-
+            <% String userid = (String)request.getAttribute("userid");%>
+            <% String email = (String)request.getAttribute("email");%>
             <div class="message">
-                <h1>Oops, this link is expired</h1>
-                <p>This URL is not valid anymore.</p>
+                <h1>Ôi không, đường link đã hết hạn</h1>
+                <p>Đường link này đã hết hạn. <%=userid%></p>
+                <a href="signupURL?service=resend&uid=<%=userid%>&remail=<%=email%>">Click vào đây để nhận lại email</a>
+
+
             </div>
 
             <!--   <div class="light">

@@ -18,8 +18,11 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.nio.file.Paths;
 import java.sql.ResultSet;
+import java.util.Vector;
+import model.DAOCategories;
 import model.DAOProduct;
 import model.DAOProductImage;
+import view.Categories;
 import view.Product;
 import view.ProductImage;
 
@@ -51,14 +54,11 @@ public class ControllerEditProductmkt extends HttpServlet {
             // Create a DAOProduct instance
             DAOProduct dao = new DAOProduct();
             DAOProductImage daoPI = new DAOProductImage();
-
+            DAOCategories daoCategories = new DAOCategories();
             String service = request.getParameter("service");
-            String message = request.getParameter("message");
-
             if (service == null || service.isEmpty()) {
                 service = "";
             }
-
             if (service.equals("update")) {
                 int productId = Integer.parseInt(request.getParameter("productId"));
                 String productName = request.getParameter("productName");
@@ -68,14 +68,13 @@ public class ControllerEditProductmkt extends HttpServlet {
                 double unitPrice = Double.parseDouble(request.getParameter("unitPrice"));
                 int unitDiscount = Integer.parseInt(request.getParameter("unitDiscount"));
                 String createDate = request.getParameter("createDate");
-                int totalRate = Integer.parseInt(request.getParameter("totalRate"));
                 int totalStock = Integer.parseInt(request.getParameter("totalStock"));
                 int productStatusValue = Integer.parseInt(request.getParameter("productStatus"));
                 boolean productStatus = (productStatusValue == 0);
                 int n = 0;
-                            Product product = new Product(productId, productName, categoryId, productDescription,
-                                    unitInStock, unitPrice, unitDiscount, createDate, totalRate, totalStock, productStatus);
-                            n = dao.updateProduct(product);
+                Product product = new Product(productId, productName, categoryId, productDescription,
+                        unitInStock, unitPrice, unitDiscount, createDate, totalStock, productStatus);
+                n = dao.updateProduct(product);
                 String st = (n > 0) ? "Cập nhật sản phẩm thành công" : "Cập nhật sản phẩm thất bại";
                 response.sendRedirect("mktProductListURL?message=" + st);
             }
@@ -89,6 +88,8 @@ public class ControllerEditProductmkt extends HttpServlet {
                 } else {
                     System.out.println("Product not found");
                 }
+                Vector<Categories> categories = daoCategories.getCategories("SELECT * FROM categories");
+                request.setAttribute("categories", categories);
                 request.getRequestDispatcher("updateProductmkt.jsp").forward(request, response);
             }
             if (service.equals("updateImg")) {

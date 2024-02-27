@@ -5,14 +5,12 @@
 --%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
-<%@page import="java.sql.ResultSet"%>
-<%@page import="java.text.SimpleDateFormat"%>
-<%@page import="java.util.Date"%>
-<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@page import="view.*" %>
 <%@page import="model.*" %>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
-<%@page import="java.sql.ResultSet, java.sql.SQLException"%>
+<%@ page import="java.text.NumberFormat" %>
+<%@ page import="java.util.Locale" %>
+<%@page import="java.sql.ResultSet, java.sql.SQLException, java.util.Vector"%>
 <link rel="stylesheet" href="css/css_saleProductList/saleProductList.css"/>
 <link rel="stylesheet" href="css/css_mkt/style.css"/>
 <!DOCTYPE html>
@@ -128,53 +126,103 @@
                     <!-- Container Fluid-->
                     <div class="container-fluid" id="container-wrapper">
                         <div class="d-sm-flex align-items-center justify-content-between mb-4">
-                            <h1 class="h3 mb-0 text-gray-800">Product Detail</h1>
+                            <h1 class="h3 mb-0 text-gray-800">Thêm sản phẩm</h1>
                             <ol class="breadcrumb">
-                                <li class="breadcrumb-item"><a href="./">Home</a></li>
+                                <li class="breadcrumb-item"><a href="mktProductListURL">Trang sản phẩm</a></li>
                                 <!--<li class="breadcrumb-item">Tables</li>-->
-                                <li class="breadcrumb-item active" aria-current="page">Product Detail</li>
+                                <li class="breadcrumb-item active" aria-current="page">Thêm sản phẩm</li>
                             </ol>
                         </div>
                         <div class="row">
-                            <!-- DataTable with Hover -->
-                            <div class="col-lg-12">
+                            <div class="col-lg-8">
                                 <div class="card mb-4">
-                                    <div class="table-responsive p-3">
+                                    <div class="card-body">
                                         <form action="AddProductmktURL" method="post" enctype='multipart/form-data' onsubmit="return validateForm()">
-                                            <table class="table align-items-center table-flush table-hover" id="dataTableHover">
-                                                <thead class="thead-light">
-                                                    <tr>
-                                                        <th>Tên sản phẩm</th>
-                                                        <th>Loại</th>
-                                                        <th>Mô tả sản phẩm</th>
-                                                        <th>Hàng trong kho</th>
-                                                        <th>Giá bán</th>
-                                                        <th>Giảm giá</th>
-                                                        <th>Tổng số đánh giá</th>
-                                                        <th>Tổng số sản phẩm</th>
-                                                        <th>Ảnh sản phẩm</th>
-                                                    </tr>
-                                                </thead>
-                                                <tbody>
-                                                    <tr>
-                                                        <%
+                                            <%
                                                         DAOProduct dao = new DAOProduct();
                                                         ResultSet rsPro = dao.getData("select * from Product order by ProductID desc limit 1");
                                                         if(rsPro.next()) {%>
-                                                <input type="hidden" name ="productID" value="<%=rsPro.getInt(1) + 1%>">
-                                                <%}%>
-                                                <td><input type="text" name="productName" value="${productName}"></td>
-                                                <td><input type="number" name="categoryId" value="${categoryId}"></td>
-                                                <td><textarea name="productDescription">${productDescription}</textarea></td>
-                                                <td><input type="number" name="unitInStock" id="unitInStock" value="${unitInStock}"></td>
-                                                <td><input type="number" name="unitPrice" value="${unitPrice}"></td>
-                                                <td><input type="number" name="unitDiscount" value="${unitDiscount}"></td>
-                                                <td><input type="number" name="totalRate" value="${totalRate}"></td>
-                                                <td><input type="number" name="totalStock" id="totalStock" value="${totalStock}"></td>
-                                                <td><input type="file" name="productImageUrl"></td>
-                                                </tr>
-                                                </tbody>
-                                            </table>
+                                            <input type="hidden" name ="productID" value="<%=rsPro.getInt(1) + 1%>">
+                                            <%}%>
+                                            <div class="row">
+                                                <div class="col-sm-3">
+                                                    <p class="mb-0">Tên sản phẩm</p>
+                                                </div>
+                                                <div class="col-sm-9">
+                                                    <input type="text" name="productName" value="${productName}" required>
+                                                </div>
+                                            </div>
+                                            <hr>
+                                            <div class="row">
+                                                <div class="col-sm-3">
+                                                    <p class="mb-0">Loại</p>
+                                                </div>
+                                                <div class="col-sm-9">
+                                                    <select name="categoryId">
+                                                        <%
+                                                            DAOCategories daoct = new DAOCategories();
+                                                            Vector<Categories> categories = daoct.getCategories("Select * from categories");
+                                                            for (Categories category : categories) {
+                                                                out.println("<option value='" + category.getCategoryID() + "'>" + category.getCategoryName() + "</option>");
+                                                            }
+                                                        %>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            <hr>
+                                            <div class="row">
+                                                <div class="col-sm-3">
+                                                    <p class="mb-0">Mô tả sản phẩm</p>
+                                                </div>
+                                                <div class="col-sm-9">
+                                                    <textarea name="productDescription" required>${productDescription}</textarea>
+                                                </div>
+                                            </div>
+                                            <hr>
+                                            <div class="row">
+                                                <div class="col-sm-3">
+                                                    <p class="mb-0">Hàng trong kho</p>
+                                                </div>
+                                                <div class="col-sm-9">
+                                                    <input type="number" required name="unitInStock" id="unitInStock" value="${unitInStock}">
+                                                </div>
+                                            </div>
+                                            <hr>
+                                            <div class="row">
+                                                <div class="col-sm-3">
+                                                    <p class="mb-0">Giá bán</p>
+                                                </div>
+                                                <div class="col-sm-9">
+                                                    <input type="number" required name="unitPrice" value="${unitPrice}">
+                                                </div>
+                                            </div>
+                                            <hr>
+                                            <div class="row">
+                                                <div class="col-sm-3">
+                                                    <p class="mb-0">Giảm giá</p>%
+                                                </div>
+                                                <div class="col-sm-9">
+                                                    <input type="number" required name="unitDiscount" value="${unitDiscount}">
+                                                </div>
+                                            </div>
+                                            <hr>
+                                            <div class="row">
+                                                <div class="col-sm-3">
+                                                    <p class="mb-0">Tổng số sản phẩm</p>
+                                                </div>
+                                                <div class="col-sm-9">
+                                                    <input type="number" required name="totalStock" id="totalStock" value="${totalStock}">
+                                                </div>
+                                            </div>
+                                            <hr>
+                                            <div class="row">
+                                                <div class="col-sm-3">
+                                                    <p class="mb-0">Ảnh sản phẩm</p>
+                                                </div>
+                                                <div class="col-sm-9">
+                                                    <input type="file" required name="productImageUrl">
+                                                </div>
+                                            </div>
                                             <input type="submit" name="submit" value="Add Product">
                                             <input type="reset" value="Clear">
                                         </form>
@@ -182,72 +230,17 @@
                                 </div>
                             </div>
                         </div>
-                        <!-- Modal Logout -->
-                        <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabelLogout"
-                             aria-hidden="true">
-                            <div class="modal-dialog" role="document">
-                                <div class="modal-content">
-                                    <div class="modal-header">
-                                        <h5 class="modal-title" id="exampleModalLabelLogout">Ohh No!</h5>
-                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                            <span aria-hidden="true">&times;</span>
-                                        </button>
-                                    </div>
-                                    <div class="modal-body">
-                                        <p>Are you sure you want to logout?</p>
-                                    </div>
-                                    <div class="modal-footer">
-                                        <button type="button" class="btn btn-outline-primary" data-dismiss="modal">Cancel</button>
-                                        <a href="login.html" class="btn btn-primary">Logout</a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+                        </body>
+                        <script>
+                            function validateForm() {
+                                var unitInStock = parseInt(document.getElementById("unitInStock").value);
+                                var totalStock = parseInt(document.getElementById("totalStock").value);
 
-                    </div>
-                    <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabelLogout"
-                         aria-hidden="true">
-                        <div class="modal-dialog" role="document">
-                            <div class="modal-content">
-                                <div class="modal-header">
-                                    <h5 class="modal-title" id="exampleModalLabelLogout">Ohh No!</h5>
-                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                        <span aria-hidden="true">&times;</span>
-                                    </button>
-                                </div>
-                                <div class="modal-body">
-                                    <p>Are you sure you want to logout?</p>
-                                </div>
-                                <div class="modal-footer">
-                                    <button type="button" class="btn btn-outline-primary" data-dismiss="modal">Cancel</button>
-                                    <a href="login.html" class="btn btn-primary">Logout</a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                </div>
-                <!---Container Fluid-->
-            </div>
-        </div>
-
-        <!-- Scroll to top -->
-        <a class="scroll-to-top rounded" href="#page-top">
-            <i class="fas fa-angle-up"></i>
-        </a>
-        <script src="vendor/jquery/jquery.min.js"></script>
-        <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-        <script src="vendor/jquery-easing/jquery.easing.min.js"></script>
-        <script src="js_marketing/ruang-admin.min.js"></script>
-        <script src="vendor/chart.js/Chart.min.js"></script>
-        <script src="js_marketing/demo/chart-area-demo.js"></script>  
-        <script src="vendor/datatables/jquery.dataTables.min.js"></script>
-        <script src="vendor/datatables/dataTables.bootstrap4.min.js"></script>
-        <script>
-                                            $(document).ready(function () {
-                                                $('#dataTable').DataTable(); // ID From dataTable 
-                                                $('#dataTableHover').DataTable(); // ID From dataTable with Hover
-                                            });
-        </script>
-    </body>
-</html>
+                                if (unitInStock > totalStock) {
+                                    alert("Hàng trong kho không thể lớn hơn Tổng số sản phẩm.");
+                                    return false;
+                                }
+                                return true;
+                            }
+                        </script>
+                        </html>

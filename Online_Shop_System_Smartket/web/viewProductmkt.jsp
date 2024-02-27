@@ -1,6 +1,6 @@
 <%-- 
-    Document   : viewProduct
-    Created on : Feb 15, 2024, 1:59:07 PM
+    Document   : test
+    Created on : Feb 22, 2024, 5:39:39 PM
     Author     : HP
 --%>
 
@@ -62,7 +62,7 @@
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="ui-colors.html">
+                        <a class="nav-link" href="mktProductListURL">
                             <i class="fas fa-shopping-cart fa-2x text-success"></i>
                             <span>Sản phẩm</span>
                         </a>
@@ -115,11 +115,11 @@
                     <!-- Container Fluid-->
                     <div class="container-fluid" id="container-wrapper">
                         <div class="d-sm-flex align-items-center justify-content-between mb-4">
-                            <h1 class="h3 mb-0 text-gray-800">Product Detail</h1>
+                            <h1 class="h3 mb-0 text-gray-800">Chi tiết sản phẩm</h1>
                             <ol class="breadcrumb">
-                                <li class="breadcrumb-item"><a href="./">Home</a></li>
+                                <li class="breadcrumb-item"><a href="HomePageURL">Trang chủ</a></li>
                                 <!--<li class="breadcrumb-item">Tables</li>-->
-                                <li class="breadcrumb-item active" aria-current="page">Product Detail</li>
+                                <li class="breadcrumb-item active" aria-current="page">Chi tiết sản phẩm</li>
                             </ol>
                         </div>
                         <div class="row">
@@ -133,7 +133,7 @@
                                                     <th>ID</th>
                                                     <th>Tên sản phẩm</th>
                                                     <th>Ảnh</th>
-                                                    <th>Loại</th>
+                                                    <th>Loại sản phẩm</th>
                                                     <th>Mô tả sản phẩm</th>
                                                     <th>Hàng trong kho</th>
                                                     <th>Giá bán</th>
@@ -149,7 +149,7 @@
                                                     <th>ID</th>
                                                     <th>Tên sản phẩm</th>
                                                     <th>Ảnh</th>
-                                                    <th>Loại</th>
+                                                    <th>Loại sản phẩm</th>
                                                     <th>Mô tả sản phẩm</th>
                                                     <th>Hàng trong kho</th>
                                                     <th>Giá bán</th>
@@ -172,7 +172,7 @@
                                                     <td><%= rs.getString("ProductName") %></td>
                                                     <td><img style="width: 100px" src="<%= rs.getString("ProductURL") %>"/></td>
                                                     <td><%= rs.getString("CategoryName") %></td>
-                                                    <td><textarea style="width: 140px; height: 140px"><%= rs.getString("ProductDescription") %></textarea></td>
+                                                    <td><textarea style="width: 300px;height: 140px;color: #a4a4a4;"><%= rs.getString("ProductDescription") %></textarea></td>
                                                     <td><%= rs.getInt("UnitInStock") %></td>
                                                     <td><%= NumberFormat.getCurrencyInstance(new Locale("vi", "VN")).format(rs.getDouble("UnitPrice")) %></td>
                                                     <td><%= rs.getInt("UnitDiscount") %></td>

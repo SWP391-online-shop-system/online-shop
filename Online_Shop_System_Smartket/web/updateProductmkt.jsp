@@ -10,7 +10,7 @@
 <%@page import="model.*" %>
 <%@ page import="java.text.NumberFormat" %>
 <%@ page import="java.util.Locale" %>
-<%@page import="java.sql.ResultSet, java.sql.SQLException"%>
+<%@page import="java.sql.ResultSet, java.sql.SQLException, java.util.Vector"%>
 <link rel="stylesheet" href="css/css_saleProductList/saleProductList.css"/>
 <link rel="stylesheet" href="css/css_mkt/style.css"/>
 <!DOCTYPE html>
@@ -58,7 +58,7 @@
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="ui-colors.html">
+                        <a class="nav-link" href="mktProductListURL">
                             <i class="fas fa-shopping-cart fa-2x text-success"></i>
                             <span>Sản phẩm</span>
                         </a>
@@ -114,7 +114,6 @@
                             <h1 class="h3 mb-0 text-gray-800">Cập nhật sản phẩm</h1>
                             <ol class="breadcrumb">
                                 <li class="breadcrumb-item"><a href="HomePageURL">Trang chủ</a></li>
-                                <!--<li class="breadcrumb-item">Tables</li>-->
                                 <li class="breadcrumb-item active" aria-current="page">Cập nhật sản phẩm</li>
                             </ol>
                         </div>
@@ -179,7 +178,15 @@
                                                     <p class="mb-0">Loại</p>
                                                 </div>
                                                 <div class="col-sm-9">
-                                                    <input type="number" name="categoryId" value="${product.categoryID}">
+                                                    <select name="categoryId">
+                                                        <%
+                                                            DAOCategories dao = new DAOCategories();
+                                                            Vector<Categories> categories = dao.getCategories("Select * from categories");
+                                                            for (Categories category : categories) {
+                                                                out.println("<option value='" + category.getCategoryID() + "'>" + category.getCategoryName() + "</option>");
+                                                            }
+                                                        %>
+                                                    </select>
                                                 </div>
                                             </div>
                                             <hr>
@@ -188,7 +195,7 @@
                                                     <p class="mb-0">Mô tả sản phẩm</p>
                                                 </div>
                                                 <div class="col-sm-9">
-                                                    <input type="text" name="productDescription" value="${product.productDescription}">
+                                                    <textarea name="productDescription"style="width: 300px;height: 140px;color: #858585;" value="${product.productDescription}"></textarea>
                                                 </div>
                                             </div>
                                             <hr>
@@ -230,15 +237,6 @@
                                             <hr>
                                             <div class="row">
                                                 <div class="col-sm-3">
-                                                    <p class="mb-0">Tổng số đánh giá</p>
-                                                </div>
-                                                <div class="col-sm-9">
-                                                    <input type="number" name="totalRate" value="${product.totalRate}">
-                                                </div>
-                                            </div>
-                                            <hr>
-                                            <div class="row">
-                                                <div class="col-sm-3">
                                                     <p class="mb-0">Tổng số sản phẩm</p>
                                                 </div>
                                                 <div class="col-sm-9">
@@ -263,17 +261,17 @@
                                 </div>
                             </div>
                         </div>
-                            </body>
-                            <script>
-                                function validateForm() {
-                                    var unitInStock = parseInt(document.getElementById("unitInStock").value);
-                                    var totalStock = parseInt(document.getElementById("totalStock").value);
+                        </body>
+                        <script>
+                            function validateForm() {
+                                var unitInStock = parseInt(document.getElementById("unitInStock").value);
+                                var totalStock = parseInt(document.getElementById("totalStock").value);
 
-                                    if (unitInStock > totalStock) {
-                                        alert("Hàng trong kho không thể lớn hơn Tổng số sản phẩm.");
-                                        return false;
-                                    }
-                                    return true;
+                                if (unitInStock > totalStock) {
+                                    alert("Hàng trong kho không thể lớn hơn Tổng số sản phẩm.");
+                                    return false;
                                 }
-                            </script>
-                            </html>
+                                return true;
+                            }
+                        </script>
+                        </html>

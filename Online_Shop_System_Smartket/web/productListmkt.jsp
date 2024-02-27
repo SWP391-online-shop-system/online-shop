@@ -36,15 +36,6 @@
     <%
     ResultSet rs = (ResultSet)request.getAttribute("data");
     %>
-    <div class="container">
-        <% String message = (String)request.getParameter("message"); %>
-        <% if (message != null && !message.isEmpty()) { %>
-        <div class="alert alert-info" role="alert">
-            <%= message %>
-        </div>
-        <% } %>
-        <!-- Form content -->
-    </div>
     <body id="page-top">
         <div id="wrapper">
             <!-- Sidebar -->
@@ -74,7 +65,7 @@
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="ui-colors.html">
+                        <a class="nav-link" href="mktProductListURL">
                             <i class="fas fa-shopping-cart fa-2x text-success"></i>
                             <span>Sản phẩm</span>
                         </a>
@@ -129,7 +120,7 @@
                         <div class="d-sm-flex align-items-center justify-content-between mb-4">
                             <h1 class="h3 mb-0 text-gray-800">Danh sách sản phẩm</h1>
                             <ol class="breadcrumb">
-                                <li class="breadcrumb-item"><a href="./">Trang chủ</a></li>
+                                <li class="breadcrumb-item"><a href="HomePageURL">Trang chủ</a></li>
                                 <!--<li class="breadcrumb-item">Tables</li>-->
                                 <li class="breadcrumb-item active" aria-current="page">Danh sách sản phẩm</li>
                             </ol>
@@ -173,7 +164,7 @@
                                                         <th>ID</th>
                                                         <th>Ảnh</th>
                                                         <th>Tiêu đề</th>
-                                                        <th>Loại</th>
+                                                        <th>Loại sản phẩm</th>
                                                         <th>Giá</th>
                                                         <th>Trạng thái</th>						
                                                         <th>Hành động</th>
@@ -184,7 +175,7 @@
                                                         <th>ID</th>
                                                         <th>Ảnh</th>
                                                         <th>Tiêu đề</th>
-                                                        <th>Loại</th>
+                                                        <th>Loại sản phẩm</th>
                                                         <th>Giá</th>
                                                         <th style="width:87px; padding-left: 20px;">Trạng thái</th>						
                                                         <th>Hành động</th>
