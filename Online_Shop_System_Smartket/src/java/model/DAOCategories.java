@@ -29,9 +29,10 @@ public class DAOCategories extends DBConnect {
             while (rs.next()) {
                 int CategoryID = rs.getInt("CategoryID");
                 String CategoryName = rs.getString("CategoryName");
+                String CreateDate = rs.getString("CreateDate");
                 boolean CategoryStatus = rs.getBoolean("CategoryStatus");
                 Categories cat = new Categories(CategoryID,
-                        CategoryName, CategoryStatus);
+                        CategoryName,CreateDate, CategoryStatus);
                 vector.add(cat);
             }
         } catch (SQLException ex) {
@@ -51,6 +52,7 @@ public class DAOCategories extends DBConnect {
                 Categories cate = new Categories(
                         rs.getInt("CategoryID"),
                         rs.getString("CategoryName"),
+                        rs.getString("CreateDate"),
                         rs.getBoolean("CategoryStatus")
                 );
                 System.out.println("get success");
