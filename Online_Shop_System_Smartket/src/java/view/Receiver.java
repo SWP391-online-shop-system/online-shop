@@ -14,6 +14,7 @@ public class Receiver {
     private String recePhone;
     private String receAdress;
     private String receEmail;
+    private String note;
 
     public Receiver() {
     }
@@ -24,6 +25,23 @@ public class Receiver {
         this.recePhone = recePhone;
         this.receAdress = receAdress;
         this.receEmail = receEmail;
+    }
+
+    public Receiver(int orderID, String receName, String recePhone, String receAdress, String receEmail, String note) {
+        this.orderID = orderID;
+        this.receName = receName;
+        this.recePhone = recePhone;
+        this.receAdress = receAdress;
+        this.receEmail = receEmail;
+        this.note = note;
+    }
+
+    public String getNote() {
+        return note;
+    }
+
+    public void setNote(String note) {
+        this.note = note;
     }
 
     public int getOrderID() {
