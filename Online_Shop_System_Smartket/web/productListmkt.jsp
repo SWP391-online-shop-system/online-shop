@@ -162,10 +162,10 @@
                                                 <thead class="thead-light">
                                                     <tr>
                                                         <th>ID</th>
-                                                        <th>Ảnh</th>
+                                                        <th style="height: 100px">Ảnh</th>
                                                         <th>Tiêu đề</th>
-                                                        <th>Loại sản phẩm</th>
-                                                        <th>Giá</th>
+                                                        <th style="min-width: 102px;">Loại sản phẩm</th>
+                                                        <th style="max-width: 56px;">Giá</th>
                                                         <th>Trạng thái</th>						
                                                         <th>Hành động</th>
                                                     </tr>
@@ -173,10 +173,10 @@
                                                 <tfoot>
                                                     <tr>
                                                         <th>ID</th>
-                                                        <th>Ảnh</th>
+                                                        <th style="height: 100px">Ảnh</th>
                                                         <th>Tiêu đề</th>
-                                                        <th>Loại sản phẩm</th>
-                                                        <th>Giá</th>
+                                                        <th style="min-width: 102px;">Loại sản phẩm</th>
+                                                        <th style="max-width: 56px;">Giá</th>
                                                         <th style="width:87px; padding-left: 20px;">Trạng thái</th>						
                                                         <th>Hành động</th>
                                                     </tr>

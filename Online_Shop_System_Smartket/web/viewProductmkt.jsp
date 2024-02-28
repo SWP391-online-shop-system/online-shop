@@ -141,7 +141,7 @@
                                                     <th style="min-width: 77px;">Ngày tạo</th>
                                                     <th style="min-width: 130px;">Tổng số đánh giá</th>
                                                     <th style="min-width: 137px;">Tổng số sản phẩm</th>
-                                                    <th>Trạng thái</th>
+                                                    <th style="min-width: 77px;">Trạng thái</th>
                                                 </tr>
                                             </thead>
                                             <tfoot>
@@ -157,7 +157,7 @@
                                                     <th style="min-width: 77px;">Ngày tạo</th>
                                                     <th style="min-width: 130px;">Tổng số đánh giá</th>
                                                     <th style="min-width: 137px;">Tổng số sản phẩm</th>
-                                                    <th>Trạng thái</th>
+                                                    <th style="min-width: 77px;">Trạng thái</th>
                                                 </tr>
                                             </tfoot>
                                             <tbody>
