@@ -11,6 +11,9 @@
 <%@ page import="java.text.NumberFormat" %>
 <%@ page import="java.util.Locale" %>
 <%@page import="java.sql.ResultSet, java.sql.SQLException, java.util.Vector"%>
+<%@ page import="java.text.SimpleDateFormat" %>
+<%@ page import="java.util.Date" %>
+
 <link rel="stylesheet" href="css/css_saleProductList/saleProductList.css"/>
 <link rel="stylesheet" href="css/css_mkt/style.css"/>
 <!DOCTYPE html>
@@ -29,6 +32,7 @@
         <link href="vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">
 
     </head>
+    <% String message = (String)request.getAttribute("message");%>
     <body id="page-top">
         <div id="wrapper">
             <!-- Sidebar -->
@@ -198,7 +202,7 @@
                                                 <p class="mb-0">Ngày tạo</p>
                                             </div>
                                             <div class="col-sm-9">
-                                                <input type="date" name="createDate" value="${product.createDate}">
+                                                <input type="text" name="createDate" id="createDate" value="${product.createDate}">
                                             </div>
                                         </div>
                                         <hr>
@@ -217,8 +221,8 @@
                                             </div>
                                             <div class="col-sm-9">
                                                 <select name="productStatus" id="productStatus">
-                                                    <option value="0" ${productStatus == 0 ? 'selected' : ''}>Kích Hoạt</option>
-                                                    <option value="1" ${productStatus == 1 ? 'selected' : ''}>Vô hiệu hóa</option>
+                                                    <option value="0" ${product.productStatus ? 'selected' : ''}>Kích Hoạt</option>
+                                                    <option value="1" ${product.productStatus ? 'selected' : ''}>Vô hiệu hóa</option>
                                                 </select>
                                             </div>
                                         </div>
