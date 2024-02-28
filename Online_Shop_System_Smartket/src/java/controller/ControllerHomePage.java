@@ -46,13 +46,13 @@ public class ControllerHomePage extends HttpServlet {
             ResultSet rsSlider = daoBlog.getData("select SliderImage, SliderLink from Slider");
             int settingPage = 0;
             ResultSet rsSettingPage = dao.getData("select * from Setting where SettingID = 1");
-            try {
-                if (rsSettingPage.next()) {
-                    settingPage = Integer.parseInt(rsSettingPage.getString("SettingValue"));
-                }
-            } catch (SQLException ex) {
-                Logger.getLogger(ControllerHomePage.class.getName()).log(Level.SEVERE, null, ex);
-            }
+//            try {
+//                if (rsSettingPage.next()) {
+//                    settingPage = Integer.parseInt(rsSettingPage.getString("SettingValue"));
+//                }
+//            } catch (SQLException ex) {
+//                Logger.getLogger(ControllerHomePage.class.getName()).log(Level.SEVERE, null, ex);
+//            }
             ResultSet rsNewProduct = dao.getData("select * from product as p join productImage as pi on p.ProductID = pi.ProductID "
                     + "where pi.ProductURL = pi.ProductURLShow order by p.CreateDate desc limit "+settingPage);
             request.setAttribute("rsNewProduct", rsNewProduct);

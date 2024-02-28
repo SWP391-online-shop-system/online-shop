@@ -131,33 +131,33 @@
                                             <thead class="thead-light">
                                                 <tr>
                                                     <th>ID</th>
-                                                    <th>Tên sản phẩm</th>
-                                                    <th>Ảnh</th>
-                                                    <th>Loại sản phẩm</th>
+                                                    <th style="min-width: 104px">Tên sản phẩm</th>
+                                                    <th style="max-height: 100px;">Ảnh</th>
+                                                    <th style="min-width: 109px;">Loại sản phẩm</th>
                                                     <th>Mô tả sản phẩm</th>
-                                                    <th>Hàng trong kho</th>
-                                                    <th>Giá bán</th>
-                                                    <th>Giảm giá</th>
-                                                    <th>Ngày tạo</th>
-                                                    <th>Tổng số đánh giá</th>
-                                                    <th>Tổng số sản phẩm</th>
-                                                    <th>Ngày tạo</th>
+                                                    <th style="min-width: 120px;">Hàng trong kho</th>
+                                                    <th style="min-width: 60px;">Giá bán</th>
+                                                    <th style="min-width: 67px;">Giảm giá</th>
+                                                    <th style="min-width: 77px;">Ngày tạo</th>
+                                                    <th style="min-width: 130px;">Tổng số đánh giá</th>
+                                                    <th style="min-width: 137px;">Tổng số sản phẩm</th>
+                                                    <th>Trạng thái</th>
                                                 </tr>
                                             </thead>
                                             <tfoot>
                                                 <tr>
                                                     <th>ID</th>
-                                                    <th>Tên sản phẩm</th>
-                                                    <th>Ảnh</th>
-                                                    <th>Loại sản phẩm</th>
+                                                    <th style="min-width: 104px">Tên sản phẩm</th>
+                                                    <th style="max-height: 100px;">Ảnh</th>
+                                                    <th style="min-width: 109px;">Loại sản phẩm</th>
                                                     <th>Mô tả sản phẩm</th>
-                                                    <th>Hàng trong kho</th>
-                                                    <th>Giá bán</th>
-                                                    <th>Giảm giá</th>
-                                                    <th>Ngày tạo</th>
-                                                    <th>Tổng số đánh giá</th>
-                                                    <th>Tổng số sản phẩm</th>
-                                                    <th>Ngày tạo</th>
+                                                    <th style="min-width: 120px;">Hàng trong kho</th>
+                                                    <th style="min-width: 60px;">Giá bán</th>
+                                                    <th style="min-width: 67px;">Giảm giá</th>
+                                                    <th style="min-width: 77px;">Ngày tạo</th>
+                                                    <th style="min-width: 130px;">Tổng số đánh giá</th>
+                                                    <th style="min-width: 137px;">Tổng số sản phẩm</th>
+                                                    <th>Trạng thái</th>
                                                 </tr>
                                             </tfoot>
                                             <tbody>
@@ -165,7 +165,8 @@
                 ResultSet rs = (ResultSet) request.getAttribute("data");
                 if (rs != null) {
                     try {
-                        while (rs.next()) { 
+                        while (rs.next()) {
+                        boolean productStatus = rs.getBoolean("productStatus");
                                                 %>
                                                 <tr>
                                                     <td><%= rs.getInt("ProductID") %></td>
@@ -179,7 +180,15 @@
                                                     <td><%= rs.getString("CreateDate") %></td>
                                                     <td><%= rs.getInt("TotalRate") %></td>
                                                     <td><%= rs.getInt("TotalStock") %></td>
-                                                    <td><%= rs.getString("CreateDate") %></td>
+                                                    <td>
+                                                        <% 
+                                                            if (!productStatus) {
+                            out.println("Kích hoạt"); // Print "kích hoạt" if productStatus is true (or 1)
+                        } else {
+                            out.println("Vô hiệu hóa"); // Print "vô hiệu hóa" if productStatus is false (or 0)
+                        }
+                                                        %>
+                                                    </td>
                                                 </tr>
                                                 <% 
                                                         }

@@ -32,7 +32,6 @@
         <link href="vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">
 
     </head>
-    <% String message = (String)request.getAttribute("message");%>
     <body id="page-top">
         <div id="wrapper">
             <!-- Sidebar -->
@@ -166,7 +165,7 @@
                                                 <p class="mb-0">Mô tả sản phẩm</p>
                                             </div>
                                             <div class="col-sm-9">
-                                                <textarea name="productDescription"style="width: 300px;height: 140px;color: #858585;" value="${product.productDescription}"></textarea>
+                                                <textarea name="productDescription"style="width: 300px;height: 140px;color: #a4a4a4;" value="${product.productDescription}"></textarea>
                                             </div>
                                         </div>
                                         <hr>
@@ -226,7 +225,7 @@
                                                 </select>
                                             </div>
                                         </div>
-                                        <input type="submit" value="Update">
+                                        <input type="submit" value="Lưu">
                                     </form>
                                 </div>
                             </div>
