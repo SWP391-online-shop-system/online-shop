@@ -12,6 +12,9 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import model.DAOBlog;
 import model.DAOProduct;
 
@@ -41,6 +44,18 @@ public class ControllerHomePage extends HttpServlet {
             ResultSet rsNewBlog = daoBlog.getData("select * from Blog order by CreateTime desc limit 1");
             ResultSet rsFeatureBlog = daoBlog.getData("select * from Blog order by BlogRate desc limit 3");
             ResultSet rsSlider = daoBlog.getData("select SliderImage, SliderLink from Slider");
+            int settingPage = 0;
+            ResultSet rsSettingPage = dao.getData("select * from Setting where SettingID = 1");
+            try {
+                if (rsSettingPage.next()) {
+                    settingPage = Integer.parseInt(rsSettingPage.getString("SettingValue"));
+                }
+            } catch (SQLException ex) {
+                Logger.getLogger(ControllerHomePage.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            ResultSet rsNewProduct = dao.getData("select * from product as p join productImage as pi on p.ProductID = pi.ProductID "
+                    + "where pi.ProductURL = pi.ProductURLShow order by p.CreateDate desc limit "+settingPage);
+            request.setAttribute("rsNewProduct", rsNewProduct);
             request.setAttribute("rsSlider", rsSlider);
             request.setAttribute("rsNewBlog", rsNewBlog);
             request.setAttribute("rsFeatureBlog", rsFeatureBlog);
