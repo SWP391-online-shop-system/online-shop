@@ -1,5 +1,6 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html lang="en">
     <head>
@@ -35,20 +36,19 @@
             <div id="editEmployeeModal">
                 <div class="modal-dialog">
                     <div class="modal-content">
-                        <form action="editAcc" method="post" enctype="multipart/form-data">
+                        <form action="editPost" method="post" enctype="multipart/form-data">
+                            <input type="hidden" name="service" value="upload"/>
                             <div class="modal-body">					
                                 <div class="form-group">
                                     <label>ID</label>
-                                    <input value="${blog.blogID}" name="id" type="text" class="form-control" readonly required>
+                                    <input value="${blog.blogID}" name="BlogID" type="text" class="form-control" readonly required>
                                 </div>
                                 <div class="form-group">
                                     <label>Danh mục</label>
-                                    <select name="category" class="form-select" aria-label="Default select example">
-                                        <c:forEach var="category" items="${categories}">
-                                            <option value="${category.categoryID}"<c:if test="${category.categoryID eq param.categoryId}">selected
-                                                    </c:if>
-                                                    >${category.categoryName}</option>
-                                        </c:forEach>					
+                                    <select class="form-control" name="categoryId">
+                                        <c:forEach var="category" items="${category}">
+                                            <option value="${category.categoryID}" ${category.categoryID eq blog.categoryID ? 'selected' : ''}>${category.categoryName}</option>
+                                        </c:forEach>
                                     </select>
                                 </div>
                                 <div class="form-group">
@@ -69,7 +69,7 @@
                                 </div>
                                 <div class="form-group">
                                     <label>Tiêu đề</label>
-                                    <textarea name="title" class="form-control" required>${blog.blogTitle}</textarea>
+                                    <input value="${blog.blogTitle}" name="title" type="text" class="form-control" required>
                                 </div>
                                 <div class="form-group">
                                     <label>Nội dung</label>
@@ -82,13 +82,13 @@
                                 <div class="form-group">
                                     <label>Trạng thái</label>
                                     <select name="hidden" class="form-select" aria-label="Default select example">
-                                        <option value="Hiện" >Hiện</option>
-                                        <option value="Ẩn" >Ẩn</option>
-                                        </select>
-                                    </div>
-                                    <div class="form-group">
-                                        <label>Ngày đăng</label>
-                                        <input value="${blog.createTime}" name="date" type="datetime" class="form-control" required>
+                                        <option value="1" ${blog.hiddenStatus eq 1 ? 'selected' : ''}>Hiện</option>
+                                        <option value="0" ${blog.hiddenStatus eq 0 ? 'selected' : ''}>Ẩn</option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label>Ngày đăng</label>
+                                    <input value="${blog.createTime}" name="date" type="datetime" class="form-control" required>
                                 </div>
                             </div>
                             <div class="modal-footer">
@@ -100,7 +100,6 @@
             </div>
 
         </div>
-
 
         <script src="js/manager.js" type="text/javascript"></script>
     </body>

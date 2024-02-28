@@ -25,10 +25,10 @@ import view.Categories;
  *
  * @author admin
  */
-@MultipartConfig(fileSizeThreshold = 1024 * 1024 * 2, // 2MB
-        maxFileSize = 1024 * 1024 * 10, // 10MB
-        maxRequestSize = 1024 * 1024 * 50)   // 50MB
-
+@MultipartConfig(fileSizeThreshold = 1024 * 1024 * 1, // 1 MB
+        maxFileSize = 1024 * 1024 * 10, // 10 MB
+        maxRequestSize = 1024 * 1024 * 100 // 100 MB
+)
 @WebServlet(name = "ControlllerEditPost", urlPatterns = {"/editPost"})
 public class ControlllerEditPost extends HttpServlet {
 
@@ -43,40 +43,81 @@ public class ControlllerEditPost extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        String uploadAuthorImg = "images/blog_author"; // Đường dẫn thư mục để lưu trữ ảnh 1
-        String uploadPostImg = "images/blog"; // Đường dẫn thư mục để lưu trữ ảnh 2
+        String service = request.getParameter("service");
         DAOBlog dao = new DAOBlog();
-        DAOCategories daoCate = new DAOCategories();
         String SBlogID = request.getParameter("BlogID");
-        int BlogID = Integer.parseInt(SBlogID);
-        Blog blog = dao.getBlogByID(BlogID);
-        Vector<Categories> categories = daoCate.getCategories("SELECT * FROM categories");
-//        dao.editBlog(Blog.getCategoryID(),Blog.getBlogAuthor(),Blog.getAuthorImage(),Blog.getBlogImage(),Blog.getBlogTitle(),Blog.getBlogContent(),Blog.getHiddenStatus(),Blog.getCreateTime(), Blog.getBlogID());
-        
-//        File dir1 = new File(uploadAuthorImg);
-//        if (!dir1.exists()) {
-//            dir1.mkdirs();
-//        }
-//
-//        File dir2 = new File(uploadPostImg);
-//        if (!dir2.exists()) {
-//            dir2.mkdirs();
-//        }
-//
-//        Part authorImg = request.getPart("authorImg");
-//        String authorImgFileName = authorImg.getSubmittedFileName();
-//        String authorImgFilePath = uploadAuthorImg + File.separator + authorImgFileName;
-//        authorImg.write(authorImgFilePath);
-//
-//        Part blogImg = request.getPart("blogImg");
-//        String blogImgFileName = blogImg.getSubmittedFileName();
-//        String blogImgFilePath = uploadPostImg + File.separator + blogImgFileName;
-//        blogImg.write(blogImgFilePath);
+        if (service == null) {
+            service = "showDetail";
+        }
+        if (service.equals("showDetail")) {
 
-        // Thực hiện các xử lý khác sau khi upload file thành công
-        request.setAttribute("blog", blog);
-        request.setAttribute("category", categories);
-        request.getRequestDispatcher("EditPost.jsp").forward(request, response);
+            int BlogID = Integer.parseInt(SBlogID);
+            Blog blog = dao.getBlogByID(BlogID);
+            List<Categories> categories = dao.getAllCategories();
+            request.setAttribute("blog", blog);
+            request.setAttribute("category", categories);
+            request.getRequestDispatcher("EditPost.jsp").forward(request, response);
+        }
+        if (service.equals("upload")) {
+            Part photo1 = request.getPart("authorImg");
+            Part photo2 = request.getPart("blogImg");
+
+            String authorImg = getSubmittedFileName(photo1);
+            String blogImg = getSubmittedFileName(photo2);
+
+            String path1 = "images/blog_author/" + photo1.getSubmittedFileName();
+            String path2 = "images/blog/" + photo2.getSubmittedFileName();
+
+            String filename1 = request.getServletContext().getRealPath(path1);
+            String filename2 = request.getServletContext().getRealPath(path2);
+
+            String realFileName1 = filename1;
+            String realFileName2 = filename2;
+
+            if (filename1.contains("\\build")) {
+                realFileName1 = filename1.replace("\\build", "");
+            }
+
+            if (filename2.contains("\\build")) {
+                realFileName2 = filename2.replace("\\build", "");
+            }
+            photo1.write(realFileName1);
+            photo2.write(realFileName2);
+
+            String SCategoryID = request.getParameter("categoryId");
+            String BlogAuthor = request.getParameter("author");
+            String BlogTitle = request.getParameter("title");
+            String BlogContent = request.getParameter("content");
+            String CreateTime = request.getParameter("date");
+//            String SBlogRate = request.getParameter("rate");
+            String SHiddenStatus = request.getParameter("hidden");
+            int BlogID = Integer.parseInt(SBlogID);
+            int CategoryID = Integer.parseInt(SCategoryID);
+//            int BlogRate = Integer.parseInt(SBlogRate);
+            int HiddenStatus = Integer.parseInt(SHiddenStatus);
+            dao.editBlog(CategoryID, BlogAuthor, authorImg, blogImg, BlogTitle, BlogContent, HiddenStatus, CreateTime, BlogID);
+            Blog blog = dao.getBlogByID(BlogID);
+            List<Categories> categories = dao.getAllCategories();
+            request.setAttribute("blog", blog);
+            request.setAttribute("category", categories);
+            response.sendRedirect("mtkPost");
+        }
+
+    }
+
+    private String getSubmittedFileName(Part part) {
+        String contentDisposition = part.getHeader("content-disposition");
+        String[] tokens = contentDisposition.split(";");
+        for (String token : tokens) {
+            if (token.trim().startsWith("filename")) {
+                return token.substring(token.indexOf("=") + 2, token.length() - 1);
+            }
+        }
+        return null;
+    }
+
+    private String removeBuildPath(String filename) {
+        return filename.replace("\\build", "");
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
