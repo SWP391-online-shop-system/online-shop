@@ -11,6 +11,9 @@
 <%@ page import="java.text.NumberFormat" %>
 <%@ page import="java.util.Locale" %>
 <%@page import="java.sql.ResultSet, java.sql.SQLException, java.util.Vector"%>
+<%@ page import="java.text.SimpleDateFormat" %>
+<%@ page import="java.util.Date" %>
+
 <link rel="stylesheet" href="css/css_saleProductList/saleProductList.css"/>
 <link rel="stylesheet" href="css/css_mkt/style.css"/>
 <!DOCTYPE html>
@@ -29,6 +32,7 @@
         <link href="vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">
 
     </head>
+    <% String message = (String)request.getAttribute("message");%>
     <body id="page-top">
         <div id="wrapper">
             <!-- Sidebar -->
@@ -198,7 +202,7 @@
                                                 <p class="mb-0">Ngày tạo</p>
                                             </div>
                                             <div class="col-sm-9">
-                                                <input type="date" name="createDate" value="${product.createDate}">
+                                                <input type="text" name="createDate" id="createDate" value="${product.createDate}">
                                             </div>
                                         </div>
                                         <hr>
@@ -217,8 +221,8 @@
                                             </div>
                                             <div class="col-sm-9">
                                                 <select name="productStatus" id="productStatus">
-                                                    <option value="0" ${productStatus == 0 ? 'selected' : ''}>Kích Hoạt</option>
-                                                    <option value="1" ${productStatus == 1 ? 'selected' : ''}>Vô hiệu hóa</option>
+                                                    <option value="0" ${product.productStatus ? 'selected' : ''}>Kích Hoạt</option>
+                                                    <option value="1" ${product.productStatus ? 'selected' : ''}>Vô hiệu hóa</option>
                                                 </select>
                                             </div>
                                         </div>
@@ -233,42 +237,50 @@
                                  margin-left: 15px;
                                  max-width: 40%">
                                 <div style="margin-left: 70px">Ảnh</div>
+                                <script>
+                                    function handleRadioClick(clickedId) {
+                                        var radios = document.querySelectorAll('input[type="radio"]');
+                                        radios.forEach(function (radio) {
+                                            if (radio.id !== clickedId) {
+                                                radio.checked = false;
+                                            }
+                                        });
+                                    }
+                                </script>
+
                                 <form action="EditProductmktURL" enctype='multipart/form-data' method="post">
-                                    <%
-                        int count = 0;
-                        int cateId = 0;
-                        Product p = (Product)request.getAttribute("product");
-                        DAOProductImage daoPi = new DAOProductImage();
-                        ProductImage pi = daoPi.getProductImageByProductID(p.getProductID());
-                        ResultSet cate = daoPi.getData("select * from product where productID = "+p.getProductID());
-                        while(cate.next()){
-                            cateId = cate.getInt("CategoryID");
-                        }
-                    ResultSet rss = daoPi.getData("select * from ProductImage where ProductId = "+p.getProductID());
-                    while(rss.next()){
-                    count++;
-                    String paths = "D:\\Workspace\\SPRING2024\\online_shop_system\\Online_Shop_System_Smartket\\web\\" + rss.getString(3).replaceAll("/", "\\\\");
+                                    <% int count = 0;
+                                    int cateId = 0;
+                                    Product p = (Product) request.getAttribute("product");
+                                    DAOProductImage daoPi = new DAOProductImage();
+                                    ProductImage pi = daoPi.getProductImageByProductID(p.getProductID());
+                                    ResultSet cate = daoPi.getData("select * from product where productID = " + p.getProductID());
+                                    while (cate.next()) {
+                                        cateId = cate.getInt("CategoryID");
+                                    }
+                                    ResultSet rss = daoPi.getData("select * from ProductImage where ProductId = " + p.getProductID());
+                                    while (rss.next()) {
+                                        count++;
+                                        System.out.println("count in jsp = "+count);
+                                        String paths = "D:\\Workspace\\SPRING2024\\online_shop_system\\Online_Shop_System_Smartket\\web\\" + rss.getString(3).replaceAll("/", "\\\\");
                                     %>
                                     <div class="card-body text-center" style="width: 187px;">
                                         <div style="display: flex;">
-                                            <input type="hidden" name="service" value="updateImg"/>
-                                            <img style="min-width: 100px;
-                                                 height: 100px;
-                                                 width: 100px;
-                                                 margin-bottom: 5px;" src="<%=rss.getString(2)%>" alt="alt"/>
-                                            <div style="flex: 0 0 89%;
-                                                 margin-top: 36px; margin-left: 50px">
-                                                <input type="radio" id="html<%=count%>" name="default<%=count%>" value="<%=count%>">
-                                                  <label for="html<%=count%>" style="font-size: 10px">Ảnh mặc định</label><br>
+                                            <input type="hidden" name="service" value="updateImg" />
+                                            <img style="min-width: 100px; height: 100px; width: 100px; margin-bottom: 5px;" src="<%=rss.getString(2)%>" alt="alt" />
+                                            <div style="flex: 0 0 89%; margin-top: 36px; margin-left: 50px">
+                                                <input type="radio" id="html<%=count%>" name="default" onclick="handleRadioClick('html<%=count%>')" value="<%=count%>" style="">
+                                                <label for="html<%=count%>" style="font-size: 10px">Ảnh mặc định</label><br>
                                             </div>
                                         </div>
-                                        <input type="file" style="font-size: 12px;" name="productImageUrl" id="productImageUrl"value="<%=paths%>">
-                                        <input type="hidden" name="oldImageUrl" value="<%=rss.getString(2)%>">
+                                        <input type="file" style="font-size: 12px;" name="productImageUrl<%=count%>" id="productImageUrl" value="<%=rss.getString(2)%>">
+                                        <input type="hidden" name="oldImageUrl<%=count%>" value="<%=rss.getString(2)%>">
                                         <input type="hidden" name="cateId" value="<%=cateId%>">
                                         <input type="hidden" name="proId" value="<%=rss.getInt(1)%>">
                                     </div>
                                     <%}%>
-                                    <button class="buttonsubmit-update" type="subnit">Lưu</button>
+                                    <input type="hidden" name="countImg" value="<%=count%>">
+                                    <button class="buttonsubmit-update" type="submit">Lưu</button>
                                 </form>
                             </div>
                         </div>

@@ -138,7 +138,7 @@ public class DAOProduct extends DBConnect {
             pre.setString(7, pro.getCreateDate());
             pre.setInt(8, pro.getTotalRate());
             pre.setInt(9, pro.getTotalStock());
-            pre.setInt(10, pro.isProductStatus() ? 1 : 0);  // Convert boolean to int
+            pre.setInt(10, pro.isProductStatus() ? 0 : 1);  // Convert boolean to int
             pre.setInt(11, pro.getProductID());
             n = pre.executeUpdate();
         } catch (SQLException e) {
