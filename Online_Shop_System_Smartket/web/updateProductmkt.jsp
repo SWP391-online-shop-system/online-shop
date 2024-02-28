@@ -118,147 +118,158 @@
                             </ol>
                         </div>
                         <div class="row">
-                            <%
-                int count = 0;
-                int cateId = 0;
-                Product p = (Product)request.getAttribute("product");
-                DAOProductImage daoPi = new DAOProductImage();
-                ProductImage pi = daoPi.getProductImageByProductID(p.getProductID());
-                ResultSet cate = daoPi.getData("select * from product where productID = "+p.getProductID());
-                while(cate.next()){
-                    cateId = cate.getInt("CategoryID");
-                }
-            ResultSet rss = daoPi.getData("select * from ProductImage where ProductId = "+p.getProductID());
-            while(rss.next()){
-            count++;
-            String paths = "D:\\Workspace\\SPRING2024\\online_shop_system\\Online_Shop_System_Smartket\\web\\" + rss.getString(3).replaceAll("/", "\\\\");
-                            %>
-                            <form action="EditProductmktURL" enctype='multipart/form-data' method="post">
-                                <div class="col-lg-4">
-                                    <div class="card mb-4">
-                                        <div class="card-body text-center">
-                                            <input type="hidden" name="service" value="updateImg"/>
-                                            <img style="height: 100px;
-                                                 width: 100px;" src="<%=rss.getString(2)%>" alt="alt"/>
-                                            <input type="file" name="productImageUrl" id="productImageUrl"value="<%=paths%>">
-                                            <input type="hidden" name="oldImageUrl" value="<%=rss.getString(2)%>">
-                                            <input type="hidden" name="cateId" value="<%=cateId%>">
-                                            <input type="hidden" name="proId" value="<%=rss.getInt(1)%>">
-                                            <button type="subnit">Save</button>
+                            <div class="card mb-4" style="flex: 0 0 54%;">
+                                <div class="card-body">
+                                    <form action="EditProductmktURL" method="post" enctype='multipart/form-data' onsubmit="return validateForm()">
+                                        <input type="hidden" name="service" value="update">
+                                        <div class="row">
+                                            <div class="col-sm-3">
+                                                <p class="mb-0">ID</p>
+                                            </div>
+                                            <div class="col-sm-9">
+                                                <input type="text" name="productId" value="${product.productID}" readonly>
+                                            </div>
                                         </div>
-                                    </div>
+                                        <hr>
+                                        <div class="row">
+                                            <div class="col-sm-3">
+                                                <p class="mb-0">Tên sản phẩm</p>
+                                            </div>
+                                            <div class="col-sm-9">
+                                                <input type="text" name="productName" value="${product.productName}">
+                                            </div>
+                                        </div>
+                                        <hr>
+                                        <div class="row">
+                                            <div class="col-sm-3">
+                                                <p class="mb-0">Loại sản phẩm</p>
+                                            </div>
+                                            <div class="col-sm-9">
+                                                <select name="categoryId">
+                                                    <%
+                                                        DAOCategories dao = new DAOCategories();
+                                                        Vector<Categories> categories = dao.getCategories("Select * from categories");
+                                                        for (Categories category : categories) {
+                                                            out.println("<option value='" + category.getCategoryID() + "'>" + category.getCategoryName() + "</option>");
+                                                        }
+                                                    %>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <hr>
+                                        <div class="row">
+                                            <div class="col-sm-3">
+                                                <p class="mb-0">Mô tả sản phẩm</p>
+                                            </div>
+                                            <div class="col-sm-9">
+                                                <textarea name="productDescription"style="width: 300px;height: 140px;color: #858585;" value="${product.productDescription}"></textarea>
+                                            </div>
+                                        </div>
+                                        <hr>
+                                        <div class="row">
+                                            <div class="col-sm-3">
+                                                <p class="mb-0">Hàng trong kho</p>
+                                            </div>
+                                            <div class="col-sm-9">
+                                                <input type="number" name="unitInStock" id="unitInStock" value="${product.unitInStock}">
+                                            </div>
+                                        </div>
+                                        <hr>
+                                        <div class="row">
+                                            <div class="col-sm-3">
+                                                <p class="mb-0">Giá bán</p>
+                                            </div>
+                                            <div class="col-sm-9">
+                                                <input type="number" name="unitPrice" value="${product.unitPrice}">
+                                            </div>
+                                        </div>
+                                        <hr>
+                                        <div class="row">
+                                            <div class="col-sm-3">
+                                                <p class="mb-0">Giảm giá</p>
+                                            </div>
+                                            <div class="col-sm-9">
+                                                <input type="number" name="unitDiscount" value="${product.unitDiscount}">
+                                            </div>
+                                        </div>
+                                        <hr>
+                                        <div class="row">
+                                            <div class="col-sm-3">
+                                                <p class="mb-0">Ngày tạo</p>
+                                            </div>
+                                            <div class="col-sm-9">
+                                                <input type="date" name="createDate" value="${product.createDate}">
+                                            </div>
+                                        </div>
+                                        <hr>
+                                        <div class="row">
+                                            <div class="col-sm-3">
+                                                <p class="mb-0">Tổng số sản phẩm</p>
+                                            </div>
+                                            <div class="col-sm-9">
+                                                <input type="number" name="totalStock" id="totalStock" value="${product.totalStock}">
+                                            </div>
+                                        </div>
+                                        <hr>
+                                        <div class="row">
+                                            <div class="col-sm-3">
+                                                <p class="mb-0">Trạng thái sản phẩm</p>
+                                            </div>
+                                            <div class="col-sm-9">
+                                                <select name="productStatus" id="productStatus">
+                                                    <option value="0" ${productStatus == 0 ? 'selected' : ''}>Kích Hoạt</option>
+                                                    <option value="1" ${productStatus == 1 ? 'selected' : ''}>Vô hiệu hóa</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <input type="submit" value="Update">
+                                    </form>
                                 </div>
-                            </form>
-                            <%}%>
-                            <div class="col-lg-8">
-                                <div class="card mb-4">
-                                    <div class="card-body">
-                                        <form action="EditProductmktURL" method="post" enctype='multipart/form-data' onsubmit="return validateForm()">
-                                            <input type="hidden" name="service" value="update">
-                                            <div class="row">
-                                                <div class="col-sm-3">
-                                                    <p class="mb-0">ID</p>
-                                                </div>
-                                                <div class="col-sm-9">
-                                                    <input type="text" name="productId" value="${product.productID}" readonly>
-                                                </div>
+                            </div>
+                            <div class="card-body mb-8" style="flex: 0 0 40%;
+                                 max-width: 40%;
+                                 background: white;
+                                 border-radius: 10px;
+                                 margin-left: 15px;
+                                 max-width: 40%">
+                                <div style="margin-left: 70px">Ảnh</div>
+                                <form action="EditProductmktURL" enctype='multipart/form-data' method="post">
+                                    <%
+                        int count = 0;
+                        int cateId = 0;
+                        Product p = (Product)request.getAttribute("product");
+                        DAOProductImage daoPi = new DAOProductImage();
+                        ProductImage pi = daoPi.getProductImageByProductID(p.getProductID());
+                        ResultSet cate = daoPi.getData("select * from product where productID = "+p.getProductID());
+                        while(cate.next()){
+                            cateId = cate.getInt("CategoryID");
+                        }
+                    ResultSet rss = daoPi.getData("select * from ProductImage where ProductId = "+p.getProductID());
+                    while(rss.next()){
+                    count++;
+                    String paths = "D:\\Workspace\\SPRING2024\\online_shop_system\\Online_Shop_System_Smartket\\web\\" + rss.getString(3).replaceAll("/", "\\\\");
+                                    %>
+                                    <div class="card-body text-center" style="width: 187px;">
+                                        <div style="display: flex;">
+                                            <input type="hidden" name="service" value="updateImg"/>
+                                            <img style="min-width: 100px;
+                                                 height: 100px;
+                                                 width: 100px;
+                                                 margin-bottom: 5px;" src="<%=rss.getString(2)%>" alt="alt"/>
+                                            <div style="flex: 0 0 89%;
+                                                 margin-top: 36px; margin-left: 50px">
+                                                <input type="radio" id="html<%=count%>" name="default<%=count%>" value="<%=count%>">
+                                                  <label for="html<%=count%>" style="font-size: 10px">Ảnh mặc định</label><br>
                                             </div>
-                                            <hr>
-                                            <div class="row">
-                                                <div class="col-sm-3">
-                                                    <p class="mb-0">Tên sản phẩm</p>
-                                                </div>
-                                                <div class="col-sm-9">
-                                                    <input type="text" name="productName" value="${product.productName}">
-                                                </div>
-                                            </div>
-                                            <hr>
-                                            <div class="row">
-                                                <div class="col-sm-3">
-                                                    <p class="mb-0">Loại sản phẩm</p>
-                                                </div>
-                                                <div class="col-sm-9">
-                                                    <select name="categoryId">
-                                                        <%
-                                                            DAOCategories dao = new DAOCategories();
-                                                            Vector<Categories> categories = dao.getCategories("Select * from categories");
-                                                            for (Categories category : categories) {
-                                                                out.println("<option value='" + category.getCategoryID() + "'>" + category.getCategoryName() + "</option>");
-                                                            }
-                                                        %>
-                                                    </select>
-                                                </div>
-                                            </div>
-                                            <hr>
-                                            <div class="row">
-                                                <div class="col-sm-3">
-                                                    <p class="mb-0">Mô tả sản phẩm</p>
-                                                </div>
-                                                <div class="col-sm-9">
-                                                    <textarea name="productDescription"style="width: 300px;height: 140px;color: #858585;" value="${product.productDescription}"></textarea>
-                                                </div>
-                                            </div>
-                                            <hr>
-                                            <div class="row">
-                                                <div class="col-sm-3">
-                                                    <p class="mb-0">Hàng trong kho</p>
-                                                </div>
-                                                <div class="col-sm-9">
-                                                    <input type="number" name="unitInStock" id="unitInStock" value="${product.unitInStock}">
-                                                </div>
-                                            </div>
-                                            <hr>
-                                            <div class="row">
-                                                <div class="col-sm-3">
-                                                    <p class="mb-0">Giá bán</p>
-                                                </div>
-                                                <div class="col-sm-9">
-                                                    <input type="number" name="unitPrice" value="${product.unitPrice}">
-                                                </div>
-                                            </div>
-                                            <hr>
-                                            <div class="row">
-                                                <div class="col-sm-3">
-                                                    <p class="mb-0">Giảm giá</p>
-                                                </div>
-                                                <div class="col-sm-9">
-                                                    <input type="number" name="unitDiscount" value="${product.unitDiscount}">
-                                                </div>
-                                            </div>
-                                            <hr>
-                                            <div class="row">
-                                                <div class="col-sm-3">
-                                                    <p class="mb-0">Ngày tạo</p>
-                                                </div>
-                                                <div class="col-sm-9">
-                                                    <input type="date" name="createDate" value="${product.createDate}">
-                                                </div>
-                                            </div>
-                                            <hr>
-                                            <div class="row">
-                                                <div class="col-sm-3">
-                                                    <p class="mb-0">Tổng số sản phẩm</p>
-                                                </div>
-                                                <div class="col-sm-9">
-                                                    <input type="number" name="totalStock" id="totalStock" value="${product.totalStock}">
-                                                </div>
-                                            </div>
-                                            <hr>
-                                            <div class="row">
-                                                <div class="col-sm-3">
-                                                    <p class="mb-0">Trạng thái sản phẩm</p>
-                                                </div>
-                                                <div class="col-sm-9">
-                                                    <select name="productStatus" id="productStatus">
-                                                        <option value="0" ${productStatus == 0 ? 'selected' : ''}>Kích Hoạt</option>
-                                                        <option value="1" ${productStatus == 1 ? 'selected' : ''}>Vô hiệu hóa</option>
-                                                    </select>
-                                                </div>
-                                            </div>
-                                            <input type="submit" value="Update">
-                                        </form>
+                                        </div>
+                                        <input type="file" style="font-size: 12px;" name="productImageUrl" id="productImageUrl"value="<%=paths%>">
+                                        <input type="hidden" name="oldImageUrl" value="<%=rss.getString(2)%>">
+                                        <input type="hidden" name="cateId" value="<%=cateId%>">
+                                        <input type="hidden" name="proId" value="<%=rss.getInt(1)%>">
                                     </div>
-                                </div>
+                                    <%}%>
+                                    <button class="buttonsubmit-update" type="subnit">Lưu</button>
+                                </form>
                             </div>
                         </div>
                         </body>
