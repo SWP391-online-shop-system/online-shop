@@ -93,32 +93,31 @@ public class ControllerEditProductmkt extends HttpServlet {
                 request.getRequestDispatcher("updateProductmkt.jsp").forward(request, response);
             }
             if (service.equals("updateImg")) {
+                System.out.println("IN UPDATEIMG");
                 int productId = Integer.parseInt(request.getParameter("proId"));
                 int categoryId = Integer.parseInt(request.getParameter("cateId"));
+                int countImg = Integer.parseInt(request.getParameter("countImg"));
                 int n = 0;
-                int tail = 0;
-                for (Part part : request.getParts()) {
-                    String convert = convertCate(categoryId);
-                    String productImageURL = "images/product/" + convert + "/";
-                    String fileName = getFileName(part);
-                    System.out.println("DAy la se duong dan: " + fileName);
-                    if (fileName != null) {
-                        if (fileName.equals("")) {
-                            tail++;
-                        }
-                        if (!fileName.isEmpty()) {
-                            tail++;
-                            System.out.println(tail);
-                            int index = fileName.lastIndexOf(".");
-                            String name = fileName.substring(0, index);
-                            String tail_jpg = fileName.substring(index);
-                            String oldURL = request.getParameter("oldImageUrl");
-                            System.out.println("OLD URL::::::::" + oldURL);
-                            productImageURL = productImageURL + name + "_" + tail + tail_jpg;
-                            n = daoPI.updateImage(productImageURL, productId, oldURL);
-                            moveImage(request, response, productImageURL, part);
-                        }
+                String convertCategory = convertCate(categoryId);
+                String fileName;
+                for (int i = 1; i <= countImg; i++) {
+                    String productImageURL = "images/product/" + convertCategory + "/";
+                    String oldImageUrl = request.getParameter("oldImageUrl" + i);
+                    Part imgURL = request.getPart("productImageUrl" + i);
+                    String realImgURL = imgURL.getSubmittedFileName();
+                    System.out.println("real = " + realImgURL);
+                    if (realImgURL.equals("") || realImgURL == null) {
+                        productImageURL = oldImageUrl;
+                    } else {
+                        fileName = imgURL.getSubmittedFileName();
+                        int index = fileName.lastIndexOf(".");
+                        String tailType = fileName.substring(index);
+                        productImageURL += fileName.substring(0, index) + "_" + i + tailType;
                     }
+                    imgURL.write("D:\\fpt\\Semeter_5\\SWP391\\Project_GitHub\\Online_Shop_System_Smartket\\web\\" + productImageURL);
+                    imgURL.write("D:\\fpt\\Semeter_5\\SWP391\\Project_GitHub\\Online_Shop_System_Smartket\\build\\web\\" + productImageURL);
+                    n = daoPI.updateImage(productImageURL, productId, oldImageUrl);
+
                 }
                 String st = (n > 0) ? "Cập nhật sản phẩm thành công" : "Cập nhật sản phẩm thất bại";
                 response.sendRedirect("mktProductListURL?message=" + st);
