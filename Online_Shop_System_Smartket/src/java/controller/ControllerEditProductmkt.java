@@ -16,6 +16,7 @@ import jakarta.servlet.http.Part;
 import java.io.FileOutputStream;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.net.URLEncoder;
 import java.nio.file.Paths;
 import java.sql.ResultSet;
 import java.util.Vector;
@@ -56,6 +57,7 @@ public class ControllerEditProductmkt extends HttpServlet {
             DAOProductImage daoPI = new DAOProductImage();
             DAOCategories daoCategories = new DAOCategories();
             String service = request.getParameter("service");
+            String message = request.getParameter("message");
             if (service == null || service.isEmpty()) {
                 service = "";
             }
@@ -76,15 +78,14 @@ public class ControllerEditProductmkt extends HttpServlet {
                         unitInStock, unitPrice, unitDiscount, createDate, totalStock, productStatus);
                 n = dao.updateProduct(product);
                 String st = (n > 0) ? "Cập nhật sản phẩm thành công" : "Cập nhật sản phẩm thất bại";
-                response.sendRedirect("mktProductListURL?message=" + st);
+                response.sendRedirect("mktProductListURL?message=" + URLEncoder.encode(st, "UTF-8"));
             }
             if (service.isEmpty()) {
                 int productId = Integer.parseInt(request.getParameter("productId"));
                 Product product = dao.getProductById(productId);
                 if (product != null) {
                     request.setAttribute("product", product);
-                    // Set the productStatus attribute based on the initial status of the product
-                    request.setAttribute("productStatus", product.isProductStatus() ? 1 : 0);
+                    request.setAttribute("productStatus", product.isProductStatus() ? 0 : 1);
                 } else {
                     System.out.println("Product not found");
                 }
@@ -120,7 +121,7 @@ public class ControllerEditProductmkt extends HttpServlet {
 
                 }
                 String st = (n > 0) ? "Cập nhật sản phẩm thành công" : "Cập nhật sản phẩm thất bại";
-                response.sendRedirect("mktProductListURL?message=" + st);
+                response.sendRedirect("mktProductListURL?message=" + URLEncoder.encode(st, "UTF-8"));
             }
 
         }
