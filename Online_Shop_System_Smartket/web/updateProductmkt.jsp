@@ -175,7 +175,7 @@
                                             <hr>
                                             <div class="row">
                                                 <div class="col-sm-3">
-                                                    <p class="mb-0">Loại</p>
+                                                    <p class="mb-0">Loại sản phẩm</p>
                                                 </div>
                                                 <div class="col-sm-9">
                                                     <select name="categoryId">
@@ -231,7 +231,7 @@
                                                     <p class="mb-0">Ngày tạo</p>
                                                 </div>
                                                 <div class="col-sm-9">
-                                                    <input type="text" name="createDate" value="${product.createDate}">
+                                                    <input type="date" name="createDate" value="${product.createDate}">
                                                 </div>
                                             </div>
                                             <hr>
@@ -250,7 +250,7 @@
                                                 </div>
                                                 <div class="col-sm-9">
                                                     <select name="productStatus" id="productStatus">
-                                                        <option value="0" ${productStatus == 0 ? 'selected' : ''}>Hoạt động</option>
+                                                        <option value="0" ${productStatus == 0 ? 'selected' : ''}>Kích Hoạt</option>
                                                         <option value="1" ${productStatus == 1 ? 'selected' : ''}>Vô hiệu hóa</option>
                                                     </select>
                                                 </div>

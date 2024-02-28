@@ -155,7 +155,7 @@
                                             <hr>
                                             <div class="row">
                                                 <div class="col-sm-3">
-                                                    <p class="mb-0">Loại</p>
+                                                    <p class="mb-0">Loại sản phẩm</p>
                                                 </div>
                                                 <div class="col-sm-9">
                                                     <select name="categoryId">
