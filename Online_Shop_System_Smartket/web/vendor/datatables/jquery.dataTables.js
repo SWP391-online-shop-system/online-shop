@@ -11342,7 +11342,7 @@
 				 *      } );
 				 *    } );
 				 */
-				"sFirst": "First",
+				"sFirst": "Đầu",
 	
 	
 				/**
@@ -11365,7 +11365,7 @@
 				 *      } );
 				 *    } );
 				 */
-				"sLast": "Last",
+				"sLast": "Cuối",
 	
 	
 				/**
@@ -11388,7 +11388,7 @@
 				 *      } );
 				 *    } );
 				 */
-				"sNext": "Next",
+				"sNext": "Tiếp",
 	
 	
 				/**
@@ -11411,7 +11411,7 @@
 				 *      } );
 				 *    } );
 				 */
-				"sPrevious": "Previous"
+				"sPrevious": "Trước"
 			},
 	
 			/**
@@ -11434,7 +11434,7 @@
 			 *      } );
 			 *    } );
 			 */
-			"sEmptyTable": "No data available in table",
+			"sEmptyTable": "Bảng không có dữ liệu",
 	
 	
 			/**
@@ -11466,7 +11466,7 @@
 			 *      } );
 			 *    } );
 			 */
-			"sInfo": "Showing _START_ to _END_ of _TOTAL_ entries",
+			"sInfo": "Hiện _START_ đến _END_ trong _TOTAL_ dòng",
 	
 	
 			/**
@@ -11487,7 +11487,7 @@
 			 *      } );
 			 *    } );
 			 */
-			"sInfoEmpty": "Showing 0 to 0 of 0 entries",
+			"sInfoEmpty": "Hiện 0 đến 0 trong 0 dòng",
 	
 	
 			/**
@@ -11627,7 +11627,7 @@
 			 *      } );
 			 *    } );
 			 */
-			"sLengthMenu": "Show _MENU_ entries",
+			"sLengthMenu": "Hiện _MENU_ dòng",
 	
 	
 			/**
@@ -11651,7 +11651,7 @@
 			 *      } );
 			 *    } );
 			 */
-			"sLoadingRecords": "Loading...",
+			"sLoadingRecords": "Đang tải...",
 	
 	
 			/**
@@ -11672,7 +11672,7 @@
 			 *      } );
 			 *    } );
 			 */
-			"sProcessing": "Processing...",
+			"sProcessing": "Đang lấy dữ liệu...",
 	
 	
 			/**
@@ -11707,7 +11707,7 @@
 			 *      } );
 			 *    } );
 			 */
-			"sSearch": "Search:",
+			"sSearch": "Tìm:",
 	
 	
 			/**
@@ -11765,7 +11765,7 @@
 			 *      } );
 			 *    } );
 			 */
-			"sZeroRecords": "No matching records found"
+			"sZeroRecords": "Không tìm thấy dữ liệu"
 		},
 	
 	
@@ -11811,7 +11811,7 @@
 		 *
 		 *  @deprecated 1.10. Please use `ajax` for this functionality now.
 		 */
-		"sAjaxDataProp": "data",
+		"sAjaxDataProp": "dư liệu",
 	
 	
 		/**
