@@ -10,7 +10,7 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>Expired Link</title>
-        <<link rel="stylesheet" href="css/expiredLink.css"/>
+        <link rel="stylesheet" href="css/expiredLink.css"/>
     </head>
     <body>
         <div class="expired">
@@ -34,14 +34,11 @@
             </svg>
             <% String userid = (String)request.getAttribute("userid");%>
             <% String email = (String)request.getAttribute("email");%>
-            <div class="message">
+            <div class="message" style="margin: -15em 10em 0 0;">
                 <h1>Ôi không, đường link đã hết hạn</h1>
-                <p>Đường link này đã hết hạn. <%=userid%></p>
+                <p>Đường link này đã hết hạn.</p>
                 <a href="signupURL?service=resend&uid=<%=userid%>&remail=<%=email%>">Click vào đây để nhận lại email</a>
-
-
             </div>
-
             <!--   <div class="light">
                 <span></span>
                 <span></span>

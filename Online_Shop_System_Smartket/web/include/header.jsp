@@ -86,11 +86,6 @@
                                 <div class="close-btn" onclick="togglePopup('loginPopup')">x</div>
                                 <div class="form">
                                     <h2><b>Đăng nhập</b></h2>
-                                    <p class="text-danger" style="
-                                       color: red;
-                                       font-size: 20px;
-                                       font-weight: 700;
-                                       text-align: left;"><%=(message == null) ? "" : message%></p>
                                     <div class="form-element">
                                         <label for="email">Email</label>
                                         <input type="email" id="email" name="email" placeholder="Nhập email" required 
@@ -112,6 +107,10 @@
                                     <div class="form-element">
                                         <a href="forgotpass">Quên mật khẩu?</a>
                                     </div>
+                                    <p class="text-danger" style="
+                                       color: red;
+                                       font-size: 15px;
+                                       text-align: left;"><%=(message == null) ? "" : message%></p>
                                 </div>
                             </div>
                         </form>
@@ -194,8 +193,7 @@
                                     <%}%>
                                     <p class="text-danger" style="
                                        color: red;
-                                       font-size: 20px;
-                                       font-weight: 700;
+                                       font-size: 15px;
                                        text-align: left;"><%=(messagesu == null) ? "" : messagesu%></p>
                                     <div class="form-element">
                                         <button type="submit" >Đăng kí</button>
