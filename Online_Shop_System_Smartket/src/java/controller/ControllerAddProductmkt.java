@@ -16,6 +16,7 @@ import model.DAOProductImage;
 import view.Product;
 import view.ProductImage;
 import java.io.*;
+import java.net.URLEncoder;
 import java.nio.file.Paths;
 import java.util.Vector;
 import model.DAOCategories;
@@ -175,7 +176,7 @@ public class ControllerAddProductmkt extends HttpServlet {
         String st = (n > 0) ? "Thêm sản phẩm thành công" : "Thêm sản phẩm thất bại";
         Vector<Categories> categories = daoCategories.getCategories("SELECT * FROM categories");
         request.setAttribute("categories", categories);
-        response.sendRedirect("mktProductListURL?message=" + st);
+        response.sendRedirect("mktProductListURL?message=" + URLEncoder.encode(st, "UTF-8"));
     }
 
     /**

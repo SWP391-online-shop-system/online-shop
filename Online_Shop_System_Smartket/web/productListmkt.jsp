@@ -36,6 +36,15 @@
     <%
     ResultSet rs = (ResultSet)request.getAttribute("data");
     %>
+    <div class="container">
+        <% String message = (String)request.getParameter("message"); %>
+        <% if (message != null && !message.isEmpty()) { %>
+        <div class="alert alert-info" role="alert">
+            <%= message %>
+        </div>
+        <% } %>
+        <!-- Form content -->
+    </div>
     <body id="page-top">
         <div id="wrapper">
             <!-- Sidebar -->
