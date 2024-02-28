@@ -7,23 +7,29 @@ package controller;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
+import jakarta.servlet.annotation.MultipartConfig;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import model.DAOBlog;
+import jakarta.servlet.http.HttpSession;
+import jakarta.servlet.http.Part;
 import model.DAOProduct;
+import model.DAOProductImage;
+import model.DAOSlider;
+import view.Product;
+import view.ProductImage;
+import view.Slider;
+import view.User;
 
 /**
  *
- * @author admin
+ * @author 84395
  */
-@WebServlet(name = "ControllerHomePage", urlPatterns = {"/HomePageURL"})
-public class ControllerHomePage extends HttpServlet {
+@WebServlet(name = "AddSlider", urlPatterns = {"/AddSlider"})
+@MultipartConfig
+
+public class controllerAddSlider extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -39,31 +45,15 @@ public class ControllerHomePage extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         try ( PrintWriter out = response.getWriter()) {
             /* TODO output your page here. You may use following sample code. */
-            DAOBlog daoBlog = new DAOBlog();
-            DAOProduct dao = new DAOProduct();
-            ResultSet rsNewBlog = daoBlog.getData("select * from Blog order by CreateTime desc limit 1");
-            ResultSet rsFeatureBlog = daoBlog.getData("select * from Blog order by BlogRate desc limit 3");
-            ResultSet rsSlider = daoBlog.getData("select SliderImage, SliderLink from Slider");
-            int settingPage = 0;
-            ResultSet rsSettingPage = dao.getData("select * from Setting where SettingID = 1");
-            try {
-                if (rsSettingPage.next()) {
-                    settingPage = Integer.parseInt(rsSettingPage.getString("SettingValue"));
-                }
-            } catch (SQLException ex) {
-                Logger.getLogger(ControllerHomePage.class.getName()).log(Level.SEVERE, null, ex);
-            }
-            ResultSet rsNewProduct = dao.getData("select * from product as p join productImage as pi on p.ProductID = pi.ProductID "
-                    + "where pi.ProductURL = pi.ProductURLShow order by p.CreateDate desc limit "+settingPage);
-            request.setAttribute("rsNewProduct", rsNewProduct);
-            request.setAttribute("rsSlider", rsSlider);
-            request.setAttribute("rsNewBlog", rsNewBlog);
-            request.setAttribute("rsFeatureBlog", rsFeatureBlog);
-            double maxValue = dao.getMaxUnitPrice();
-            double minValue = dao.getMinUnitPrice();
-            request.setAttribute("inputMinPrice", minValue);
-            request.setAttribute("inputMaxPrice", maxValue);
-            request.getRequestDispatcher("homepage.jsp").forward(request, response);
+            out.println("<!DOCTYPE html>");
+            out.println("<html>");
+            out.println("<head>");
+            out.println("<title>Servlet controllerAddSlider</title>");
+            out.println("</head>");
+            out.println("<body>");
+            out.println("<h1>Servlet controllerAddSlider at " + request.getContextPath() + "</h1>");
+            out.println("</body>");
+            out.println("</html>");
         }
     }
 
@@ -93,7 +83,20 @@ public class ControllerHomePage extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        int sliderID1 = Integer.parseInt(request.getParameter("sliderID1").trim());
+        HttpSession session = request.getSession();
+        User u = (User) session.getAttribute("account");
+        String sliderLink1 = request.getParameter("sliderLink1");
+        String createDate1 = request.getParameter("createDate1");
+        boolean sliderStatus1 = Boolean.parseBoolean(request.getParameter("sliderStatus1"));
+        Part sliderImage1 = request.getPart("sliderImage1");
+        String fileName = sliderImage1.getSubmittedFileName();
+        String productImageURL = "images/slider/" + fileName;
+        sliderImage1.write(productImageURL);
+        Slider newSlider = new Slider(sliderID1, u.getUserID(), fileName, sliderLink1, sliderStatus1, createDate1);
+        DAOSlider DAOSlider = new DAOSlider();
+        int n = DAOSlider.insertSlider(newSlider);
+        response.sendRedirect("sliderList");
     }
 
     /**

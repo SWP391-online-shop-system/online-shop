@@ -260,6 +260,7 @@
                                     ResultSet rss = daoPi.getData("select * from ProductImage where ProductId = " + p.getProductID());
                                     while (rss.next()) {
                                         count++;
+                                        System.out.println("count in jsp = "+count);
                                         String paths = "D:\\Workspace\\SPRING2024\\online_shop_system\\Online_Shop_System_Smartket\\web\\" + rss.getString(3).replaceAll("/", "\\\\");
                                     %>
                                     <div class="card-body text-center" style="width: 187px;">
@@ -271,12 +272,13 @@
                                                 <label for="html<%=count%>" style="font-size: 10px">Ảnh mặc định</label><br>
                                             </div>
                                         </div>
-                                        <input type="file" style="font-size: 12px;" name="productImageUrl" id="productImageUrl" value="<%=paths%>">
-                                        <input type="hidden" name="oldImageUrl" value="<%=rss.getString(2)%>">
+                                        <input type="file" style="font-size: 12px;" name="productImageUrl<%=count%>" id="productImageUrl" value="<%=rss.getString(2)%>">
+                                        <input type="hidden" name="oldImageUrl<%=count%>" value="<%=rss.getString(2)%>">
                                         <input type="hidden" name="cateId" value="<%=cateId%>">
                                         <input type="hidden" name="proId" value="<%=rss.getInt(1)%>">
                                     </div>
                                     <%}%>
+                                    <input type="hidden" name="countImg" value="<%=count%>">
                                     <button class="buttonsubmit-update" type="submit">Lưu</button>
                                 </form>
                             </div>
