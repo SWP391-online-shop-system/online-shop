@@ -1,6 +1,6 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+         pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html lang="en">
     <head>
@@ -57,15 +57,15 @@
                                 </div>
                                 <div class="form-group">
                                     <label>Ảnh tác giả</label>
-                                    <img src="images/blog_author/${blog.authorImage}" alt="Ảnh tác giả">
-                                    <input type="file" 
-                                           class="form-control" name="authorImg" placeholder="Enter photo" required>
+                                    <img id="author-image" style="width: 350px;height: 200px;padding-left: 56px;padding-bottom: 15px" src="images/blog_author/${blog.authorImage}" alt="Ảnh tác giả">
+                                    <input value="${blog.authorImage}"  type="file" 
+                                           class="form-control" name="authorImg" placeholder="Enter photo" id="author-img-input">
                                 </div>
                                 <div class="form-group">
                                     <label>Ảnh bài đăng</label>
-                                    <img src="images/blog/${blog.blogImage}" alt="Ảnh bài đăng">
-                                    <input type="file" 
-                                           class="form-control" name="blogImg" placeholder="Enter photo" required>
+                                    <img  id="blog-image" style="width: 350px;height: 200px;padding-left: 45px;padding-bottom: 15px;padding-right: 12px"src="images/blog/${blog.blogImage}" alt="Ảnh bài đăng">
+                                    <input value="${blog.blogImage}"type="file" 
+                                           class="form-control" name="blogImg" placeholder="Enter photo" id="blog-img-input">
                                 </div>
                                 <div class="form-group">
                                     <label>Tiêu đề</label>
@@ -88,7 +88,7 @@
                                 </div>
                                 <div class="form-group">
                                     <label>Ngày đăng</label>
-                                    <input value="${blog.createTime}" name="date" type="datetime" class="form-control" required>
+                                    <input value="${blog.createTime.substring(0,10)}" name="date" type="date" class="form-control" required>
                                 </div>
                             </div>
                             <div class="modal-footer">
@@ -100,7 +100,23 @@
             </div>
 
         </div>
+        <script>
+            document.getElementById('author-img-input').addEventListener('change', function (e) {
+                var reader = new FileReader();
+                reader.onload = function (event) {
+                    document.getElementById('author-image').src = event.target.result;
+                };
+                reader.readAsDataURL(e.target.files[0]);
+            });
 
+            document.getElementById('blog-img-input').addEventListener('change', function (e) {
+                var reader = new FileReader();
+                reader.onload = function (event) {
+                    document.getElementById('blog-image').src = event.target.result;
+                };
+                reader.readAsDataURL(e.target.files[0]);
+            });
+        </script>
         <script src="js/manager.js" type="text/javascript"></script>
     </body>
 </html>

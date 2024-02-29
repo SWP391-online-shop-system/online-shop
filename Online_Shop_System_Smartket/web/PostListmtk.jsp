@@ -221,7 +221,7 @@
                                                                 Hành động
                                                             </button>
                                                             <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                                                <a class="dropdown-item" href="blogdetail?bid=<%=rs.getInt("BlogID")%>">Xem</a>
+                                                                <a class="dropdown-item" href="view?BlogID=<%=rs.getInt("BlogID")%>">Xem</a>
                                                                 <a class="dropdown-item" href="editPost?BlogID=<%= rs.getInt("BlogID") %>">Chỉnh sửa</a>
                                                             </div>
                                                         </div>

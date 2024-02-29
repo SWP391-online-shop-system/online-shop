@@ -46,13 +46,13 @@ public class ControlllerEditPost extends HttpServlet {
         String service = request.getParameter("service");
         DAOBlog dao = new DAOBlog();
         String SBlogID = request.getParameter("BlogID");
+        int BlogID = Integer.parseInt(SBlogID);
+        Blog blog = dao.getBlogByID(BlogID);
         if (service == null) {
             service = "showDetail";
         }
         if (service.equals("showDetail")) {
 
-            int BlogID = Integer.parseInt(SBlogID);
-            Blog blog = dao.getBlogByID(BlogID);
             List<Categories> categories = dao.getAllCategories();
             request.setAttribute("blog", blog);
             request.setAttribute("category", categories);
@@ -81,8 +81,16 @@ public class ControlllerEditPost extends HttpServlet {
             if (filename2.contains("\\build")) {
                 realFileName2 = filename2.replace("\\build", "");
             }
-            photo1.write(realFileName1);
-            photo2.write(realFileName2);
+
+            System.out.println(realFileName1);
+            System.out.println(realFileName2);
+            if (photo1.getSize() > 0) {
+                photo1.write(realFileName1);
+            } 
+
+            if (photo2.getSize() > 0) {
+                photo2.write(realFileName2);
+            } 
 
             String SCategoryID = request.getParameter("categoryId");
             String BlogAuthor = request.getParameter("author");
@@ -91,16 +99,14 @@ public class ControlllerEditPost extends HttpServlet {
             String CreateTime = request.getParameter("date");
 //            String SBlogRate = request.getParameter("rate");
             String SHiddenStatus = request.getParameter("hidden");
-            int BlogID = Integer.parseInt(SBlogID);
             int CategoryID = Integer.parseInt(SCategoryID);
 //            int BlogRate = Integer.parseInt(SBlogRate);
             int HiddenStatus = Integer.parseInt(SHiddenStatus);
             dao.editBlog(CategoryID, BlogAuthor, authorImg, blogImg, BlogTitle, BlogContent, HiddenStatus, CreateTime, BlogID);
-            Blog blog = dao.getBlogByID(BlogID);
             List<Categories> categories = dao.getAllCategories();
             request.setAttribute("blog", blog);
             request.setAttribute("category", categories);
-            response.sendRedirect("mtkPost");
+            response.sendRedirect("view?BlogID=" + BlogID);
         }
 
     }
