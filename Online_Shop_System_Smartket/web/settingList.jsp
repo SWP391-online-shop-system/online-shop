@@ -29,7 +29,7 @@
             <%while(rsSetting.next()){%>
             <input type="hidden" name="SettingID" value="<%=rsSetting.getInt("SettingID")%>">
             <div><%=rsSetting.getString("SettingName")%></div>
-            <input type="number" name="valueSettingHomePage" min="6" value="<%=rsSetting.getString("SettingValue")==null?"6":rsSetting.getString("SettingValue")%>">
+            <input type="number" name="valueSetting" min="6" value="<%=rsSetting.getString("SettingValue")==null?"6":rsSetting.getString("SettingValue")%>">
             <%}%>
             <button type="submit">Luu</button>
         </form>

@@ -184,11 +184,7 @@
                                         <div class="close-btn" onclick="togglePopup('loginPopup')">x</div>
                                         <div class="form">
                                             <h2><b>Đăng nhập</b></h2>
-                                            <p class="text-danger" style="
-                                               color: red;
-                                               font-size: 20px;
-                                               font-weight: 700;
-                                               text-align: left;"><%=(message == null) ? "" : message%></p>
+
                                             <div class="form-element">
                                                 <label for="email">Email</label>
                                                 <input type="email" id="email" name="email" placeholder="Nhập email" required 
@@ -201,6 +197,10 @@
                                                        oninvalid="this.setCustomValidity('Vui lòng điền thông tin này')" 
                                                        oninput="setCustomValidity('')">
                                             </div>
+                                            <p class="text-danger" style="
+                                               color: red;
+                                               font-size: 15px;
+                                               text-align: left;"><%=(message == null) ? "" : message%></p>
                                             <div class="form-element">
                                                 <button type="submit" value="login" >Đăng nhập</button>
                                             </div>
@@ -214,6 +214,7 @@
                                                id="#myBtn">Quên mật khẩu?</a>
                                         </div>
                                     </div>
+
                     </div>
                     </form>
                     <!-- start modals -->
@@ -316,8 +317,7 @@
                                 <%}%>
                                 <p class="text-danger" style="
                                    color: red;
-                                   font-size: 20px;
-                                   font-weight: 700;
+                                   font-size: 15px;
                                    text-align: left;"><%=(messagesu == null) ? "" : messagesu%></p>
                                 <div class="form-element">
                                     <button type="submit" >Đăng kí</button>
@@ -508,7 +508,6 @@
                         <div class="content-title"style="margin-top: 110px;">SẢN PHẨM MỚI NHẤT</div>
                         <div class="product-card-content">
                             <%
-                            
                             ResultSet rsNewProduct = (ResultSet)request.getAttribute("rsNewProduct");
                             while(rsNewProduct.next()) {%>
                             <div class="col-lg-4 col-md-6 col-sm-6">
@@ -522,7 +521,7 @@
                                         <%}%>
                                         <%ResultSet rsNewestProduct = dao.getData("select * from product as p join productImage as pi "
                                            + "on p.ProductID = pi.ProductID "
-                                           + "where pi.ProductURL like '%_1%' "
+                                           + "where pi.ProductURL = pi.ProductURLShow "
                                            + "order by p.CreateDate desc limit 6 ");
                                              while(rsNewestProduct.next()) {
                                                 if(rsNewProduct.getString("CreateDate").substring(0,10).equals(rsNewProduct.getString("CreateDate").substring(0,10))){%>
@@ -533,7 +532,7 @@
                                         <h6><%=rsNewProduct.getString("ProductName")%></h6>
                                         <%User testus = (User)session.getAttribute("account");
                                             if(testus==null) {%>
-                                        <a onclick="alertOpenCart();" class="add-cart"style="margin-left: 29px;">+ Thêm vào giỏ</a><a style="margin-left: 166px;" href="#">Mua ngay</a>
+                                        <a onclick="alertOpenCart();" class="add-cart"style="">+ Thêm vào giỏ</a><a style="margin-left: 166px;" href="#">Mua ngay</a>
                                         <%}else{%>
                                         <a href="CartURL?service=addcart&pid=<%=rsNewProduct.getInt(1)%>&quan=1" class="add-cart"style="margin-left: 29px;">+ Thêm vào giỏ</a><a style="margin-left: 166px;" href="#">Mua ngay</a>
                                         <%}%>
@@ -591,7 +590,12 @@
                                         </div>
                                         <div class="product__item__text"style="text-align: center;">
                                             <h6><%=rsFeatureProduct.getString("ProductName")%></h6>
-                                            <a href="CartURL?service=addcart&pid=<%=rsFeatureProduct.getInt(1)%>&quan=1" class="add-cart"style="margin-left: 29px;">+ Thêm vào giỏ</a><a style="margin-left: 136px;" href="#">Mua ngay</a>
+                                            <c:if test="${sessionScope.account==null}">
+                                                <a onclick="alertOpenCart();" class="add-cart"style="">+ Thêm vào giỏ</a><a style="margin-left: 136px;" href="#">Mua ngay</a>
+                                            </c:if>
+                                            <c:if test="${sessionScope.account!=null}">
+                                                <a href="CartURL?service=addcart&pid=<%=rsFeatureProduct.getInt(1)%>&quan=1" class="add-cart"style="">+ Thêm vào giỏ</a><a style="margin-left: 136px;" href="#">Mua ngay</a>
+                                            </c:if>
                                             <div style="display: flex;">
                                                 <div class="rating">
                                                     <%int star = (int)rsFeatureProduct.getInt("totalRate");
