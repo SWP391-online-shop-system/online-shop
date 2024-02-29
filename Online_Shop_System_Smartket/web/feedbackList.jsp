@@ -1,53 +1,40 @@
 <%-- 
-    Document   : marketing_dashboard
-    Created on : Feb 1, 2024, 10:24:26 AM
-    Author     : admin
+    Document   : customerlist
+    Created on : Jan 31, 2024, 3:38:58 PM
+    Author     : trant
 --%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
-<%@page import="java.sql.ResultSet"%>
-<%@page import="java.text.SimpleDateFormat"%>
-<%@page import="java.util.Date"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@page import="view.*" %>
-<%@page import="model.*" %>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
-<%@page import="java.sql.ResultSet, java.sql.SQLException"%>
-<link rel="stylesheet" href="css/css_saleProductList/saleProductList.css"/>
-<link rel="stylesheet" href="css/css_mkt/style.css"/>
+<%@page import="jakarta.servlet.http.HttpSession"%>
+<%@page import="view.*"%>
+<%@page import="model.*"%>
+<%@page import="java.sql.ResultSet"%>
+
 <!DOCTYPE html>
 <html lang="en">
     <head>
         <meta charset="utf-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-        <meta name="description" content="">
-        <meta name="author" content="">
-        <link href="images/logo/logo.png" rel="icon">
-        <title>Trang marketing</title>
+        <title>Danh Sách Khách Hàng</title>
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
+        <script src="https://kit.fontawesome.com/ac74b86ade.js" crossorigin="anonymous"></script>
         <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
         <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css">
         <link href="css/css_marketing_dashboard/marketing_dashboard_style.css" rel="stylesheet">
         <link href="vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">
-
+        <link rel="shortcut icon" href="images/logo/logo.png" type="image/png">
     </head>
-    <%
-    ResultSet rs = (ResultSet)request.getAttribute("data");
-    %>
-    <div class="container">
-        <% String message = (String)request.getParameter("message"); %>
-        <% if (message != null && !message.isEmpty()) { %>
-        <div class="alert alert-info" role="alert">
-            <%= message %>
-        </div>
-        <% } %>
-        <!-- Form content -->
-    </div>
     <body id="page-top">
+        <%
+            HttpSession sessionMessage = request.getSession();
+            String message =(String)sessionMessage.getAttribute("message");
+            
+        %>
         <div id="wrapper">
             <!-- Sidebar -->
             <ul class="navbar-nav sidebar sidebar-light accordion" id="accordionSidebar">
-                <a class="sidebar-brand d-flex align-items-center justify-content-center" href="index.html">
+                <a class="sidebar-brand d-flex align-items-center justify-content-center" href="HomePageURL">
                     <div class="sidebar-brand-icon">
                         <img style="height: 91px;
                              width: 133px;
@@ -66,19 +53,19 @@
                         Quản lí
                     </div>
                     <li class="nav-item">
-                        <a class="nav-link" href="ui-colors.html">
+                        <a class="nav-link" href="#">
                             <i class="fas fa-calendar fa-2x text-primary"></i>
                             <span>Bài đăng</span>
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="ui-colors.html">
+                        <a class="nav-link" href="mktProductListURL">
                             <i class="fas fa-shopping-cart fa-2x text-success"></i>
                             <span>Sản phẩm</span>
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="ui-colors.html">
+                        <a class="nav-link" href="customerlist">
                             <i class="fas fa-users fa-2x text-info"></i>
                             <span>Khách hàng</span>
                         </a>
@@ -103,8 +90,8 @@
                             <li class="nav-item dropdown no-arrow">
                                 <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown"
                                    aria-haspopup="true" aria-expanded="false">
-                                    <img class="img-profile rounded-circle" src="images/user/default_avatar.jpg" style="max-width: 60px">
-                                    <span class="ml-2 d-none d-lg-inline text-white small">Maman Ketoprak</span>
+                                    <img class="img-profile rounded-circle" src="images/user/${sessionScope.account.userImage}" style="max-width: 60px">
+                                    <span class="ml-2 d-none d-lg-inline text-white small">${sessionScope.account.firstName}&nbsp;${sessionScope.account.lastName}</span>
                                 </a>
                                 <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="userDropdown">
                                     <a class="dropdown-item" href="#">
@@ -112,7 +99,7 @@
                                         Hồ sơ
                                     </a>
                                     <div class="dropdown-divider"></div>
-                                    <a class="dropdown-item" href="javascript:void(0);" data-toggle="modal" data-target="#logoutModal">
+                                    <a class="dropdown-item" href="logout">
                                         <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
                                         Đăng xuất
                                     </a>
@@ -125,156 +112,214 @@
                     <!-- Container Fluid-->
                     <div class="container-fluid" id="container-wrapper">
                         <div class="d-sm-flex align-items-center justify-content-between mb-4">
-                            <h1 class="h3 mb-0 text-gray-800">Product List</h1>
+                            <h1 class="h3 mb-0 text-gray-800">Danh Sách Khách Hàng</h1>
                             <ol class="breadcrumb">
-                                <li class="breadcrumb-item"><a href="./">Home</a></li>
-                                <!--<li class="breadcrumb-item">Tables</li>-->
-                                <li class="breadcrumb-item active" aria-current="page">Product List</li>
+                                <li class="breadcrumb-item"><a href="./">Trang Chủ</a></li>
+                                <li class="breadcrumb-item active">Danh Sách Khách Hàng</li>
                             </ol>
                         </div>
-                        <!-- Row -->
-                        <script>
-                            function submitForm() {
-                                document.getElementById('filterForm').submit();
-                            }
-                        </script>
 
-                        <a href="AddProductmktURL?service=addProduct" class="btn btn-secondary">Add New Product</a>
+                        <!-- Row -->
+                        <div<%if(message == null){%> style="display: none"<%}%>>
+                            <%if(message != null){%>
+                            <%if(message.equals("Thêm thành công")){%>
+                            <div class="alert alert-success alert-dismissible" role="alert" style="width: 40%" >
+                                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                                <h6><i class="fas fa-check"></i><b>  <%=message%></b></h6>
+                            </div>
+                            <%}%>
+                            <%if(message.equals("Email đã tồn tại")){%>
+                            <div class="alert alert-warning alert-dismissible" role="alert" style="width: 40%">
+                                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                                <h6><i class="fas fa-check"></i><b>  <%=message%></b></h6>
+                            </div>
+                            <%}}%>
+                        </div>
+                        <%sessionMessage.removeAttribute("message");%>
+                        <div class="row">
+                            <button style="margin-left: 13px;margin-bottom: 5px;" type="button" class="btn btn-secondary" data-toggle="modal" data-target="#exampleModalLong"
+                                    id="#modalLong">Thêm Khách Hàng Mới</button>
+
+                        </div>
                         <div class="row">
                             <!-- DataTable with Hover -->
                             <div class="col-lg-12">
-                                <div class="card mb-4">
+                                <div class="card mb-4">                                 
                                     <div class="table-responsive p-3">
-                                        <table class="table align-items-center table-flush table-hover" id="dataTableHover">
+                                        <table class="table align-items-center table-flush table-hover" id="dataTableHover" style="font-size: 14px;">
                                             <div style="display: flex;
                                                  margin-left: 200px;
                                                  margin-bottom: -30px;">
-                                                <form action="FeedBackListURL" method="get" id="categoryForm">
+                                                <%  DAOUser daoU = new DAOUser();
+                                                    DAOProduct daoP = new DAOProduct();
+                                                    User user = new User();
+                                                    Product product = new Product();
+                                                    int status = (int)request.getAttribute("status");
+                                                    ResultSet rsFeedBack= (ResultSet)request.getAttribute("rsFeedBack");%>
+                                                <form action="FeedBackList" method="get">
                                                     <div class="filter-group" style="display:flex;">
-                                                        <div style="padding-top: 3px;">Trạng thái</div>
-                                                        <select class="form-control" name="FeedBackStat" onchange="this.form.submit();">
-                                                            <option value="">Tất cả</option>
-                                                            <%
-                                                            ResultSet rsFeedBackStatus = (ResultSet)request.getAttribute("rsFeedBackStatus");
-                                                            int FeedBackStat = Integer.parseInt((String)request.getAttribute("FeedBackStat"));
-                                                            while(rsFeedBackStatus.next()){%>
-                                                            <option value=""<%=rsFeedBackStatus.getInt(7) == FeedBackStat ? "selected":""%>><%=rsFeedBackStatus.getInt(7)==0?"Hiện":"Ẩn"%></option>
-                                                            <%}%>
+                                                        <div style="padding-top: 16px;
+                                                             width: 81%;">Trạng thái</div>
+                                                        <select class="form-control" name="status" onchange="this.form.submit()" style="height: 34px;
+                                                                padding-top: 6px;
+                                                                margin-top: 10px;">                                                            
+                                                            <option value="2" <%if(status==2){%>selected<%}%>>Tất cả</option>                                                     
+                                                            <option value="0" <%if(status==0){%>selected<%}%>>Hoạt động</option>                                                          
+                                                            <option value="1" <%if(status==1){%>selected<%}%>>Vô hiệu hóa</option>                                                            
                                                         </select>
-                                                    </div>
-                                                    <div class="filter-group" style="display:flex;">
-                                                        <div style="padding-top: 3px;">Sản phẩm</div>
-                                                        <select class="form-control" name="status" onchange="this.form.submit()">
-
-                                                        </select>
-                                                    </div>
+                                                    </div>                                                   
                                                     <input type="submit" style="display: none;">
+                                                    <input type="hidden" name="service" value="fillterStatus"/>
                                                 </form>
                                             </div>
                                             <thead class="thead-light">
                                                 <tr>
-                                                    <th>ID</th>
-                                                    <th>Sản phẩm</th>
-                                                    <th>Phản hồi bởi</th>
-                                                    <th>Nội dung</th>
-                                                    <th>Đánh giá</th>
-                                                    <th>Ngày đăng</th>						
-                                                    <th>Trạng thái</th>
-                                                    <th></th>
+                                                    <th style="text-align: center; width: 0">ID</th>
+                                                    <th style="text-align: center;width: 105.898px;">Sản phẩm</th>
+                                                    <th style="text-align: center;width: 188.727px">Phản hồi bởi</th>
+                                                    <th style="text-align: center; width: 59.1023px">Nội dung</th>
+                                                    <th style="text-align: center;width: 98px">Đánh giá</th>						
+                                                    <th style="text-align: center; width:67.5114px">Ngày đăng</th>						
+                                                    <th style="text-align: center;width: 98px">Trạng thái</th>
                                                 </tr>
                                             </thead>
-                                            <tfoot>
-                                                <tr>
-                                                    <th>ID</th>
-                                                    <th>Sản phẩm</th>
-                                                    <th>Phản hồi bởi</th>
-                                                    <th>Nội dung</th>
-                                                    <th>Đánh giá</th>
-                                                    <th>Ngày đăng</th>						
-                                                    <th>Trạng thái</th>
-                                                    <th></th>
-                                                </tr>
-                                            </tfoot>
+
                                             <tbody>
-                                                <tr>
-                                                    <td><%=rs.getInt("ProductID")%></td>
-                                                    <td><img style="width: 100px" src="<%=rs.getString("ProductURL")%>"/></td>
-                                                    <td><%=rs.getString("ProductName")%></td>
-                                                    <td><%=rs.getString("CategoryName")%></td>
-                                                    <td><%=rs.getDouble("UnitPrice")%></td>
-                                                    <td><%= status %></td>
-                                                    <td>
-                                                        <div class="dropdown">
-                                                            <button class="btn btn-secondary btn-sm dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                                                Hành động
-                                                            </button>
-                                                            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                                                <a class="dropdown-item" href="mktViewProductURL?productId=<%= rs.getInt("ProductID") %>">Xem</a>
-                                                                <a class="dropdown-item" href="EditProductmktURL?productId=<%= rs.getInt("ProductID") %>">Chỉnh sửa</a>
-                                                            </div>
-                                                        </div>
-                                                    </td>
-                                                </tr>
-                                                <% }
-                                                   } catch (SQLException ex) {
-                                                   }
+                                                <%while(rsFeedBack.next()) {
+                                                    user = daoU.getUserByUserID(rsFeedBack.getInt("UserID"));
+                                                    product = daoP.getProductById(rsFeedBack.getInt("ProductID"));
                                                 %>
+                                                <tr style="text-align: center; cursor: pointer" onclick="FeedBackdetail(<%=rsFeedBack.getInt("FeedBackID")%>,<%=rsFeedBack.getInt("FeedBackStatus")%>)">
+                                                    <td><%=rsFeedBack.getInt("FeedBackID")%></td>
+                                                    <td><%=product.getProductName()%></td>
+                                                    <td><%=user.getFirstName()+" "+user.getLastName()%></td>
+                                                    <td>
+                                                        <textarea style="width: 140px; height: 60px; font-size: 13px;">
+                                                            <%=rsFeedBack.getString("FeedBackContent")%>
+                                                        </textarea></td>
+                                                    <td><%=rsFeedBack.getInt("FeedBackRate")%></td>                        
+                                                    <td><%=rsFeedBack.getString("FeedBackDate")%></td>                        
+                                                    <%if(rsFeedBack.getBoolean("FeedBackStatus")==false) {%>
+                                                    <td><span class="badge badge-success">Hoạt động</span></td>
+                                                    <%}else{%>
+                                                    <td><span class="badge badge-danger">Vô hiệu hóa</span></td>
+                                                    <%}%>
+                                                </tr>
+                                                <%}%>
                                             </tbody>
                                         </table>
-                                    </div>
+                                    </div>                                    
                                 </div>
                             </div>
                         </div>
-
-                        <!-- Modal Logout -->
-                        <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabelLogout"
-                             aria-hidden="true">
+                        <!--Row-->
+                        <!-- Modal Long -->
+                        <div class="modal fade" id="exampleModalLong" tabindex="-1" role="dialog"
+                             aria-labelledby="exampleModalLongTitle" aria-hidden="true">
                             <div class="modal-dialog" role="document">
-                                <div class="modal-content">
-                                    <div class="modal-header">
-                                        <h5 class="modal-title" id="exampleModalLabelLogout">Ohh No!</h5>
-                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                            <span aria-hidden="true">&times;</span>
-                                        </button>
+                                <form action="customerlist" method="post">
+                                    <input type="hidden" name="service" value="addnewuser"/>
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title" id="exampleModalLongTitle">Thêm Khách Hàng</h5>
+                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                <span aria-hidden="true">&times;</span>
+                                            </button>
+                                        </div>
+                                        <div class="modal-body">                                           
+                                            <div class="form-element form-group">                                              
+                                                <label for="registerEmail">Họ</label>                                               
+                                                <input type="text" name="FName" placeholder="Nhập họ" required class="form-control"
+                                                       pattern="[A-Za-zÀ-ỹ ]+" oninvalid="this.setCustomValidity('Vui lòng điền thông tin này, Không bao gồm số và kí tự đặc biệt')" 
+                                                       oninput="setCustomValidity(''); validateInput(this)" >
+
+                                            </div>
+                                            <div class="form-element">
+                                                <label for="registerEmail">Tên</label>
+                                                <input type="text" name="LName" placeholder="Nhập Tên" required class="form-control"
+                                                       pattern="[A-Za-zÀ-ỹ ]+" oninvalid="this.setCustomValidity('Vui lòng điền thông tin này, Không bao gồm số và kí tự đặc biệt')" 
+                                                       oninput="setCustomValidity(''); validateInput(this)" >
+                                            </div>    height: 34px;
+                                            padding-top: 6px;
+                                            margin-top: 10px;
+                                            <div class="form-element">
+                                                <label>Giới tính</label>
+                                                <div style="display:flex; flex: 40%">
+                                                    <div class="custom-control custom-radio" style="margin-right: 15px;">
+                                                        <input type="radio" id="customRadio3" name="gender" class="custom-control-input" value="male" required>
+                                                        <label class="custom-control-label" for="customRadio3">Nam</label>
+                                                    </div>
+                                                    <div class="custom-control custom-radio">
+                                                        <input type="radio" id="customRadio4" name="gender" class="custom-control-input" value="female" required>
+                                                        <label class="custom-control-label" for="customRadio4">Nữ</label>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="form-element">
+                                                <label for="registerEmail">Địa chỉ</label>
+                                                <input type="text" name="adress" placeholder="Nhập Địa Chỉ"       class="form-control"                                                 
+                                                       oninput="setCustomValidity(''); validateInput(this)" >
+                                            </div>
+                                            <div class="form-element">
+                                                <label for="registerEmail">Email</label>
+                                                <input type="email" name="email" placeholder="Nhập email"required class="form-control"
+                                                       oninvalid="this.setCustomValidity('Vui lòng điền thông tin này và bao gồm @')" 
+                                                       oninput="setCustomValidity(''); validateInput(this)" >
+                                            </div>
+                                            <div class="form-element">
+                                                <label for="registerEmail">Số điện thoại</label>
+                                                <input type="text" name="phone" placeholder="Nhập Số Điện Thoại" class="form-control"
+                                                       minlength="10" maxlength="10"
+                                                       pattern="[0-9 ]+" oninvalid="this.setCustomValidity('Vui lòng điền thông tin này, Không bao gồm chữ cái và kí tự đặc biệt')" 
+                                                       oninput="setCustomValidity(''); validateInput(this)" >
+                                            </div>
+                                            <div class="form-element">
+                                                <label for="registerPassword">Mật khẩu</label>
+
+                                                <input type="password" id="registerPassword" name="pass" placeholder="Nhập mật khẩu" required class="form-control"
+                                                       minlength="6" maxlength="15" title="Mật khẩu phải chứa từ 6 đến 15 ký tự" 
+                                                       oninvalid="this.setCustomValidity('Vui lòng điền thông tin này')" 
+                                                       oninput="setCustomValidity(''); validateInput(this);validatePasswordMatch(this)">                                               
+
+
+                                            </div>
+                                            <div class="form-element">
+                                                <label for="registerPassword">Nhập lại mật khẩu</label>
+                                                <div style="flex:40%">
+                                                    <input type="password" id="registerPasswordConfirm" name="repass" placeholder="Nhập lại mật khẩu" required class="form-control"
+                                                           minlength="6" maxlength="15"
+                                                           title="Mật khẩu phải chứa từ 6 đến 15 ký tự" 
+                                                           oninvalid="this.setCustomValidity('Vui lòng điền thông tin này')" 
+                                                           oninput="setCustomValidity(''); validateInput(this);validatePasswordMatch(this)">
+                                                    <div class="invalid-feedback" id="passwordMismatch">
+                                                        Mật khẩu không khớp
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-outline-primary" data-dismiss="modal">Đóng</button>
+                                            <button type="submit" class="btn btn-primary">Lưu</button>
+                                        </div>
                                     </div>
-                                    <div class="modal-body">
-                                        <p>Are you sure you want to logout?</p>
-                                    </div>
-                                    <div class="modal-footer">
-                                        <button type="button" class="btn btn-outline-primary" data-dismiss="modal">Cancel</button>
-                                        <a href="login.html" class="btn btn-primary">Logout</a>
-                                    </div>
-                                </div>
+                                </form>
                             </div>
                         </div>
-
-                    </div>
-                    <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabelLogout"
-                         aria-hidden="true">
-                        <div class="modal-dialog" role="document">
-                            <div class="modal-content">
-                                <div class="modal-header">
-                                    <h5 class="modal-title" id="exampleModalLabelLogout">Ohh No!</h5>
-                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                        <span aria-hidden="true">&times;</span>
-                                    </button>
-                                </div>
-                                <div class="modal-body">
-                                    <p>Are you sure you want to logout?</p>
-                                </div>
-                                <div class="modal-footer">
-                                    <button type="button" class="btn btn-outline-primary" data-dismiss="modal">Cancel</button>
-                                    <a href="login.html" class="btn btn-primary">Logout</a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
+                    </div>      
                 </div>
                 <!---Container Fluid-->
             </div>
         </div>
-
+        <script>
+            function FeedBackdetail(uid, stat) {
+                var url = "FeedBackDetailURL?uid=" + uid + "&status=" + stat;
+                window.location.href = url;
+            }
+        </script>
         <!-- Scroll to top -->
         <a class="scroll-to-top rounded" href="#page-top">
             <i class="fas fa-angle-up"></i>
@@ -282,19 +327,14 @@
         <script src="vendor/jquery/jquery.min.js"></script>
         <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
         <script src="vendor/jquery-easing/jquery.easing.min.js"></script>
-        <script src="js_marketing/ruang-admin.min.js"></script>
-        <script src="vendor/chart.js/Chart.min.js"></script>
-        <script src="js_marketing/demo/chart-area-demo.js"></script>  
+        <!--        <script src="js_marketing/ruang-admin.min.js"></script>
+        --><script src="js_marketing/customerlist.js"></script>  
         <script src="vendor/datatables/jquery.dataTables.min.js"></script>
         <script src="vendor/datatables/dataTables.bootstrap4.min.js"></script>
 
         <!-- Page level custom scripts -->
         <script>
-                                                            $(document).ready(function () {
-                                                                $('#dataTable').DataTable(); // ID From dataTable 
-                                                                $('#dataTableHover').DataTable(); // ID From dataTable with Hover
-                                                            });
+
         </script>
     </body>
-
 </html>

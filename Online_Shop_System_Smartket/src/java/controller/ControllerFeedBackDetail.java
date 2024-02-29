@@ -11,16 +11,21 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 import java.sql.ResultSet;
 import model.DAOFeedBack;
+import model.DAOLog;
+import model.DAOUser;
 import view.FeedBack;
+import view.Log;
+import view.User;
 
 /**
  *
  * @author admin
  */
-@WebServlet(name = "ControllerFeedBackList", urlPatterns = {"/FeedBackListURL"})
-public class ControllerFeedBackList extends HttpServlet {
+@WebServlet(name = "ControllerFeedBackDetail", urlPatterns = {"/FeedBackDetailURL"})
+public class ControllerFeedBackDetail extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -39,10 +44,10 @@ public class ControllerFeedBackList extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet ControllerFeedBackList</title>");
+            out.println("<title>Servlet ControllerFeedBackDetail</title>");
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet ControllerFeedBackList at " + request.getContextPath() + "</h1>");
+            out.println("<h1>Servlet ControllerFeedBackDetail at " + request.getContextPath() + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
@@ -60,20 +65,37 @@ public class ControllerFeedBackList extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        DAOFeedBack daoF = new DAOFeedBack();
-//        String service = request.getParameter("service");
-        String status_raw = (request.getParameter("status"));
-        int status;
-        if (status_raw == null || status_raw.equals("")) {
-            status = 2;
+        HttpSession session = request.getSession();
+        User oldUser = (User) session.getAttribute("account");
+        if (oldUser == null) {
+            response.sendRedirect("HomePageURL");
         } else {
-            status = Integer.parseInt(request.getParameter("status"));
-        }
-        ResultSet rsFeedBack = daoF.getData("select * from FeedBack");
-        request.setAttribute("rsFeedBack", rsFeedBack);
-        request.setAttribute("status", status);
-            request.getRequestDispatcher("feedbackList.jsp").forward(request, response);
+            int updateBy = oldUser.getUserID(); // nhan vien
+            DAOFeedBack daoF = new DAOFeedBack();
+            DAOUser daoU = new DAOUser();
+            DAOLog daoLog = new DAOLog();
+            int FeedBackID = Integer.parseInt(request.getParameter("uid"));
+            FeedBack FeedBack = daoF.getFeedBackById(FeedBackID);
+            request.setAttribute("data", FeedBack);
+            String status = request.getParameter("status");
+            System.out.println("status = "+status);
+            String cusId_str = request.getParameter("uid");
+            int cusId = Integer.parseInt(cusId_str); //nguoi phan hoi
 
+            String purpose = "";
+            if (status.equals("1")) {
+                daoU.updateStatus(cusId, 2);
+                purpose = "đã vô hiệu hóa phản hồi ";
+            } else {
+                daoU.updateStatus(cusId, 1);
+                purpose = "đã kích hoạt phản hồi";
+            }
+            Log log = new Log(cusId, updateBy, purpose);
+            int n = daoLog.insertLog(log);
+            ResultSet logger = daoU.getData("SELECT * FROM loghistory as log join `user` as u on log.UserId = u.UserID where u.UserId = " + cusId);
+                request.setAttribute("log", logger);
+            request.getRequestDispatcher("FeedBackDetail.jsp").forward(request, response);
+        }
     }
 
     /**
@@ -87,7 +109,7 @@ public class ControllerFeedBackList extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-
+        processRequest(request, response);
     }
 
     /**
