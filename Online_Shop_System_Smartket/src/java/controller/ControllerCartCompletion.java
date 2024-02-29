@@ -75,7 +75,7 @@ public class ControllerCartCompletion extends HttpServlet {
                             + "join ProductImage as pi on p.ProductID = pi.ProductID\n"
                             + "where c.UserID = " + userID + " ;");
                     while (listCart.next()) {
-
+                        
                     }
                 } catch (SQLException e) {
                 }

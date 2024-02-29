@@ -284,17 +284,16 @@
                             <li><a href="loginURL" onclick="alertOpenCart()"title="Giỏ hàng của tôi"><i class="fa-solid fa-cart-shopping"></i></a></li>
                                 </c:if>
                                 <c:if test="${sessionScope.account != null}">
-                            <li>
+                            <li>      
                                 <%
-                                    HttpSession session2 = request.getSession();
-                                    User user = (User) session2.getAttribute("account");
-                                    int userID = user.getUserID();
-                                    DAOCart dao = new DAOCart();
-                                    
-                                    ResultSet rs1 = dao.getData("SELECT count(*) as count FROM Cart AS c JOIN Product AS p ON c.ProductID = p.ProductID where userID = "+userID+"");
-                                    while(rs1.next()){
+                                HttpSession session2 = request.getSession();
+                                User user = (User) session2.getAttribute("account");
+                                int userID = user.getUserID();
+                                DAOCart dao = new DAOCart();
+                                ResultSet rs = dao.getData("SELECT count(*) as count FROM Cart AS c JOIN Product AS p ON c.ProductID = p.ProductID where userID = "+userID+"");
+                                while(rs.next()){
                                 %>
-                                <span class="count-cart" style="position: absolute;
+                                <span class="count-cart" id="countCart" style="position: absolute;
                                       margin-left: 17px;
                                       background-color: #ff0000;
                                       color: #ffffff;
@@ -303,7 +302,9 @@
                                       font-size: 15px;
                                       z-index: 9;
                                       top: 11px;
-                                      left: 3px;"><%=rs1.getInt(1)%></span>
+                                      left: 3px;
+                                      font-family: none;
+                                      line-height: normal;"><%=rs.getInt(1)%></span>
                                 <%
                                     }
                                 %>
@@ -373,7 +374,7 @@
                                                     if(testUser == null) {%>
                                                     <a onclick="alertOpenCart();" style="left: 12px;">+ Thêm vào giỏ</a><a style="margin-left: 136px;" href="#">Mua ngay</a>
                                                     <%} else{%>
-                                                    <a href="CartURL?service=addcart&pid=<%=rsHotPro.getInt("ProductID")%>&quan=1" class="add-cart" style="left: 12px;">+ Thêm vào giỏ</a><a style="margin-left: 136px;" href="#">Mua ngay</a>
+                                                    <a href="#" onclick="addToCart(<%=rsHotPro.getInt("ProductID")%>)" class="add-cart" style="left: 12px;">+ Thêm vào giỏ</a><a style="margin-left: 136px;" href="#">Mua ngay</a>
                                                     <%}%>
                                                     <div style="display: flex;">
                                                         <div class="rating" style="margin-left: 30px;">
@@ -614,7 +615,7 @@
                                            if(testUser2==null) {%>
                                         <a onclick="alertOpenCart()" class="add-cart">+ Thêm vào giỏ</a><a style="margin-left: 136px;" href="#">Mua ngay</a>
                                         <%}else{%>
-                                        <a href="CartURL?service=addcart&pid=<%=rsPaging.getInt(1)%>&quan=1" class="add-cart">+ Thêm vào giỏ</a><a style="margin-left: 136px;" href="#">Mua ngay</a>
+                                        <a href="#" onclick="addToCart(<%=rsPaging.getInt(1)%>)" class="add-cart">+ Thêm vào giỏ</a><a style="margin-left: 136px;" href="#">Mua ngay</a>
 
                                         <%}%>
                                         <div style="display: flex;">
@@ -743,6 +744,7 @@
             </div>
         </div>
         <script src="js/price.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
     </body>
 
 </html>
