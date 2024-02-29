@@ -93,9 +93,9 @@ public class controllerAddSlider extends HttpServlet {
         String fileName = sliderImage1.getSubmittedFileName();
         String productImageURL = "images/slider/" + fileName;
         sliderImage1.write(productImageURL);
-        Slider newSlider = new Slider(sliderID1, u.getUserID(), fileName, sliderLink1, sliderStatus1, createDate1);
+//        Slider newSlider = new Slider(sliderID1, u.getUserID(), fileName, sliderLink1, sliderStatus1, createDate1);
         DAOSlider DAOSlider = new DAOSlider();
-        int n = DAOSlider.insertSlider(newSlider);
+//        int n = DAOSlider.insertSlider(newSlider);
         response.sendRedirect("sliderList");
     }
 
