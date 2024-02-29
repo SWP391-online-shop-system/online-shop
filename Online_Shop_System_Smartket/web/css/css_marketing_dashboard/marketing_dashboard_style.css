@@ -488,7 +488,7 @@ a:focus{
     color:#858796
 }
 .bg-navbar{
-   background: linear-gradient(45deg, #5fc176, #1ab365);
+    background: linear-gradient(45deg, #5fc176, #1ab365);
 }
 .sidebar{
     min-height:100vh;
@@ -883,9 +883,12 @@ a:focus{
     }
 }
 .breadcrumb{
-    background-color:transparent;
-    font-size:12px;
-    font-weight:700
+    background-color: transparent;
+    flex: 0 0 57%;
+    font-size: 12px;
+    font-weight: 700;
+    padding-top: 18px;
+    margin: 0;
 }
 .sidebar-light .sidebar-brand{
     color:#fafafa;
@@ -1553,4 +1556,23 @@ body.sidebar-toggled footer.sticky-footer{
     font-size: 12px;
     margin-top: -22px;
     margin-left: 20px;
+}
+.form-element{
+    display:flex;
+    margin-bottom: 19px;
+}
+.form-element label{
+    flex: 9%;
+}
+.form-element input{
+    flex: 40%;
+}
+.buttonsubmit-update{
+    margin-top: 5px;
+    border: none;
+    background: #7eb47e;
+    color: white;
+    float: left;
+    font-size: 13px;
+    border-radius: 2px;
 }

@@ -18,7 +18,7 @@ import view.Order;
  */
 public class DAOOrder extends DBConnect {
 
-    public int insertUserByPreparedReturnId(Order order) {
+    public int insertOrderByPreparedReturnId(Order order) {
         int n = 0;
         String sql = "INSERT INTO `online_shop_system`.`order`\n"
                 + "(`UserID`,\n"
@@ -35,7 +35,7 @@ public class DAOOrder extends DBConnect {
             n = pre.executeUpdate();
             ResultSet key = pre.getGeneratedKeys();
             if (key.next()) {
-                n = key.getInt(4);
+                n = key.getInt(1);
             }
         } catch (SQLException ex) {
             Logger.getLogger(DAOOrder.class.getName()).log(Level.SEVERE, null, ex);

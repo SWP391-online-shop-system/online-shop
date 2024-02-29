@@ -14,7 +14,7 @@ public class User {
     private String firstName, lastName, address, phoneNumber, dateOfBirth;
     private Boolean gender;
     private String userImage, password, email, lastLogin;
-    private Boolean userStatus;
+    private int userStatus;
     private int reportTo, roleID;
     private String rePassword;
     private String createDate;
@@ -22,7 +22,51 @@ public class User {
     public User() {
     }
 
-    public User(int userID, String firstName, String lastName, String address, String phoneNumber, String dateOfBirth, Boolean gender, String userImage, String password, String email, String lastLogin, Boolean userStatus, int reportTo, int roleID, String createDate) {
+    public User(String firstName, String lastName, String email, String password, String rePassword) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.email = email;
+        this.password = password;
+        this.rePassword = rePassword;
+    }
+
+    public User(int userID, String firstName, String lastName, String address, String phoneNumber, String dateOfBirth, Boolean gender, String userImage, String password, String email, String lastLogin, int userStatus, int reportTo, int roleID) {
+        this.userID = userID;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.address = address;
+        this.phoneNumber = phoneNumber;
+        this.dateOfBirth = dateOfBirth;
+        this.gender = gender;
+        this.userImage = userImage;
+        this.password = password;
+        this.email = email;
+        this.lastLogin = lastLogin;
+        this.userStatus = userStatus;
+        this.reportTo = reportTo;
+        this.roleID = roleID;
+    }
+
+    public User(int userID, String firstName, String lastName, String address, String phoneNumber, String dateOfBirth, Boolean gender, String userImage, String password, String email, String lastLogin, int userStatus, int reportTo, int roleID, String rePassword, String createDate) {
+        this.userID = userID;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.address = address;
+        this.phoneNumber = phoneNumber;
+        this.dateOfBirth = dateOfBirth;
+        this.gender = gender;
+        this.userImage = userImage;
+        this.password = password;
+        this.email = email;
+        this.lastLogin = lastLogin;
+        this.userStatus = userStatus;
+        this.reportTo = reportTo;
+        this.roleID = roleID;
+        this.rePassword = rePassword;
+        this.createDate = createDate;
+    }
+
+    public User(int userID, String firstName, String lastName, String address, String phoneNumber, String dateOfBirth, Boolean gender, String userImage, String password, String email, String lastLogin, int userStatus, int reportTo, int roleID, String createDate) {
         this.userID = userID;
         this.firstName = firstName;
         this.lastName = lastName;
@@ -40,7 +84,7 @@ public class User {
         this.createDate = createDate;
     }
 
-    public User(String firstName, String lastName, String address, String phoneNumber, String dateOfBirth, Boolean gender, String userImage, String password, String email, String lastLogin, Boolean userStatus, int reportTo, int roleID, String createDate) {
+    public User(String firstName, String lastName, String address, String phoneNumber, String dateOfBirth, Boolean gender, String userImage, String password, String email, String lastLogin, int userStatus, int reportTo, int roleID) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.address = address;
@@ -54,7 +98,6 @@ public class User {
         this.userStatus = userStatus;
         this.reportTo = reportTo;
         this.roleID = roleID;
-        this.createDate = createDate;
     }
 
     public User(String firstName, String lastName, String email, String password, String rePassword, String createDate) {
@@ -63,6 +106,24 @@ public class User {
         this.email = email;
         this.password = password;
         this.rePassword = rePassword;
+        this.createDate = createDate;
+    }
+
+    public User(String firstName, String lastName, String address, String phoneNumber, Boolean gender, String password, String email) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.address = address;
+        this.phoneNumber = phoneNumber;
+        this.gender = gender;
+        this.password = password;
+        this.email = email;
+    }
+
+    public String getCreateDate() {
+        return createDate;
+    }
+
+    public void setCreateDate(String createDate) {
         this.createDate = createDate;
     }
 
@@ -162,11 +223,11 @@ public class User {
         this.lastLogin = lastLogin;
     }
 
-    public Boolean isUserStatus() {
+    public int isUserStatus() {
         return userStatus;
     }
 
-    public void setUserStatus(Boolean userStatus) {
+    public void setUserStatus(int userStatus) {
         this.userStatus = userStatus;
     }
 
@@ -184,14 +245,6 @@ public class User {
 
     public void setRoleID(int roleID) {
         this.roleID = roleID;
-    }
-
-    public String getCreateDate() {
-        return createDate;
-    }
-
-    public void setCreateDate(String createDate) {
-        this.createDate = createDate;
     }
 
     public static String encryptEmail(String email) {
@@ -214,9 +267,17 @@ public class User {
         return encryptedEmail.toString();
     }
 
+    public Boolean getGender() {
+        return gender;
+    }
+
+    public int getUserStatus() {
+        return userStatus;
+    }
+
     @Override
     public String toString() {
-        return "User{" + "userID=" + userID + ", firstName=" + firstName + ", lastName=" + lastName + ", address=" + address + ", phoneNumber=" + phoneNumber + ", dateOfBirth=" + dateOfBirth + ", gender=" + gender + ", userImage=" + userImage + ", password=" + password + ", email=" + email + ", lastLogin=" + lastLogin + ", userStatus=" + userStatus + ", reportTo=" + reportTo + ", roleID=" + roleID + ", rePassword=" + rePassword + ", createDate=" + createDate + '}';
+        return "User{" + "userID=" + userID + ", firstName=" + firstName + ", lastName=" + lastName + ", address=" + address + ", phoneNumber=" + phoneNumber + ", dateOfBirth=" + dateOfBirth + ", gender=" + gender + ", userImage=" + userImage + ", password=" + password + ", email=" + email + ", lastLogin=" + lastLogin + ", userStatus=" + userStatus + ", reportTo=" + reportTo + ", roleID=" + roleID + ", rePassword=" + rePassword + '}';
     }
 
 }

@@ -51,48 +51,34 @@ public class ControllerLogin extends HttpServlet {
                     message = "Sai email.";
                     request.setAttribute("message", message);
                     request.getRequestDispatcher("HomePageURL").forward(request, response);
-                    return; // Stop further execution
                 } else {
                     session.setAttribute("account", user);
                     response.sendRedirect("HomePageURL");
-                    return; // Stop further execution
                 }
             }
             String email = request.getParameter("email");
             String pass = request.getParameter("pass");
             String passwordEncode = EncodeSHA.transFer(pass);
-
-// First, try to check with encoded password
             User user = dao.check(email, passwordEncode);
-
-// If user is not found, try checking with plain text password
             if (user == null) {
-                // Fetch user details by email without checking password
                 User userWithoutPasswordCheck = dao.checkAccountExist(email);
-
                 if (userWithoutPasswordCheck != null) {
-                    // Compare plain text password
                     if (pass.equals(userWithoutPasswordCheck.getPassword())) {
-                        // Password matched
                         user = userWithoutPasswordCheck;
                     }
                 }
             }
-
             if (user == null) {
-                // User not found or password doesn't match
                 request.setAttribute("activeLogin", "active");
                 message = "Sai tài khoản hoặc mật khẩu.";
                 request.setAttribute("message", message);
                 request.getRequestDispatcher("HomePageURL").forward(request, response);
-            } else if (!user.isUserStatus()) {
-                // User found but account is disabled
+            } else if (user.isUserStatus() == 0) {
                 request.setAttribute("activeLogin", "active");
-                message = "Tài khoản của bạn đã bị vô hiệu hóa";
+                message = "Tài khoản của bạn chưa xác thực";
                 request.setAttribute("message", message);
                 request.getRequestDispatcher("HomePageURL").forward(request, response);
             } else {
-                // Update last login time
                 dao.updateLastLogin(user.getUserID());
                 session.setAttribute("account", user);
                 if (user.getRoleID() == 2) {
@@ -101,7 +87,6 @@ public class ControllerLogin extends HttpServlet {
                     response.sendRedirect("HomePageURL");
                 }
             }
-
         }
     }
         // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

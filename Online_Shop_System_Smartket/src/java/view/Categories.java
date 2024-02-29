@@ -4,6 +4,8 @@
  */
 package view;
 
+import java.sql.Date;
+
 /**
  *
  * @author admin
@@ -12,9 +14,17 @@ public class Categories {
 
     private int CategoryID;
     private String CategoryName;
+    private String CreateDate;
     private boolean CategoryStatus;
 
     public Categories() {
+    }
+
+    public Categories(int CategoryID, String CategoryName, String CreateDate, boolean CategoryStatus) {
+        this.CategoryID = CategoryID;
+        this.CategoryName = CategoryName;
+        this.CreateDate = CreateDate;
+        this.CategoryStatus = CategoryStatus;
     }
 
     public Categories(int CategoryID, String CategoryName, boolean CategoryStatus) {
@@ -39,6 +49,13 @@ public class Categories {
         this.CategoryName = CategoryName;
     }
 
+    public String getCreateDate() {
+        return CreateDate;
+    }
+
+    public void setCreateDate(String CreateDate) {
+        this.CreateDate = CreateDate;
+    }
 
     public boolean isCategoryStatus() {
         return CategoryStatus;
@@ -47,9 +64,15 @@ public class Categories {
     public void setCategoryStatus(boolean CategoryStatus) {
         this.CategoryStatus = CategoryStatus;
     }
+
     @Override
     public String toString() {
-        return "Categories{" + "CategoryID=" + CategoryID + ", CategoryName=" + CategoryName + ", CategoryStatus=" + CategoryStatus + '}';
+        return "Categories{" + "CategoryID=" + CategoryID + ", CategoryName=" + CategoryName + ", CreateDate=" + CreateDate + ", CategoryStatus=" + CategoryStatus + '}';
     }
+
+    
+    
+
+    
 
 }

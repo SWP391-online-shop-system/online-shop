@@ -1,28 +1,33 @@
-package controller;
-
 /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
  */
+package controller;
 
-
+import jakarta.servlet.RequestDispatcher;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.sql.Connection;
+import java.sql.DriverManager;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import java.sql.ResultSet;
-import model.DAOProduct;
-import view.Product;
+import jakarta.servlet.http.HttpSession;
+import model.DAOforgotPass;
+import model.EncodeSHA;
 
 /**
  *
  * @author admin
  */
-@WebServlet(name = "ControllerProductDetail", urlPatterns = {"/ProductDetailURL"})
-public class ControllerProductDetail extends HttpServlet {
+@WebServlet(name = "ControllerNewPass", urlPatterns = {"/newPass"})
+public class ControllerNewPass extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -35,30 +40,38 @@ public class ControllerProductDetail extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        response.setContentType("text/html;charset=UTF-8");
-        try ( PrintWriter out = response.getWriter()) {
-            DAOProduct daoPro = new DAOProduct();
-            int ProductID = Integer.parseInt(request.getParameter("ProductID"));
-            Product p = daoPro.getProductById(ProductID);
-            ResultSet rsDetail = daoPro.getData("select * from Product as p join ProductImage as pi on p.ProductID = pi.ProductID "
-                    + "where p.ProductID = " + ProductID);
-            ResultSet rsRate = daoPro.getData("SELECT p.ProductID, COALESCE(avg(fb.FeedBackRate), 3) AS AverageFeedbackRate, count(fb.ProductID) as timeRateCount, count(fb.UserID) as userRateCount\n"
-                    + "FROM Product p\n"
-                    + "LEFT JOIN FeedBack fb ON p.ProductID = fb.ProductID where p.ProductID = " + ProductID + " \n"
-                    + "GROUP BY p.ProductID");
-            ResultSet rsFeedBack = daoPro.getData("select u.UserImage, (CONCAT(u.FirstName,\" \",u.LastName))as UserName,\n"
-                    + "fb.FeedBackRate, fb.FeedBackContent, fb.FeedBackDate \n"
-                    + "from User as u join FeedBack as fb on u.UserID = fb.UserID where fb.ProductID= " + ProductID + " order by fb.FeedBackDate;");
-            request.setAttribute("rsDetail", rsDetail);
-            request.setAttribute("rsRate", rsRate);
-            request.setAttribute("rsFeedBack", rsFeedBack);
-            double maxValue = daoPro.getMaxUnitPrice();
-            double minValue = daoPro.getMinUnitPrice();
-            request.setAttribute("inputMinPrice", minValue);
-            request.setAttribute("inputMaxPrice", maxValue);
-            ResultSet rsCategory = daoPro.getData("Select * from Categories");
-            request.setAttribute("CategoryResult", rsCategory);
-            request.getRequestDispatcher("productDetail.jsp").forward(request, response);
+        DAOforgotPass dao = new DAOforgotPass();
+        HttpSession session = request.getSession();
+        String newPassword = request.getParameter("password");
+        String confPassword = request.getParameter("confPassword");
+        boolean check = dao.validatePassword(newPassword);
+        RequestDispatcher dispatcher = null;
+        String msg = null;
+        if (check == true) {
+            if (newPassword != null && confPassword != null && newPassword.equals(confPassword)) {
+                newPassword = EncodeSHA.transFer(newPassword);
+                int row = dao.rePass(newPassword, (String) session.getAttribute("email"));
+                if (row > 0) {
+                    msg = "đổi thành công";
+                    request.setAttribute("message", msg);
+                    dispatcher = request.getRequestDispatcher("newPassword.jsp");
+                } else {
+                    msg = "xảy ra lỗi";
+                    request.setAttribute("message", msg);
+                    dispatcher = request.getRequestDispatcher("newPassword.jsp");
+                }
+                dispatcher.forward(request, response);
+            } else {
+                msg = "mật khẩu xác nhận không trùng khớp";
+                request.setAttribute("message", msg);
+                dispatcher = request.getRequestDispatcher("newPassword.jsp");
+                dispatcher.forward(request, response);
+            }
+        } else {
+            msg = "mật khẩu phải dài ít nhất 6 kí tự và có chứa ít nhất 1 kí tự số";
+            request.setAttribute("message", msg);
+            dispatcher = request.getRequestDispatcher("newPassword.jsp");
+            dispatcher.forward(request, response);
         }
     }
 

@@ -11,8 +11,10 @@
 <%@page import="model.DAOUser"%>
 <%@page import="model.DAOFeedBack"%>
 <%@page import="view.Product"%>
+<%@page import="view.User"%>
 <%@page import="java.text.SimpleDateFormat"%>
 <%@page import="java.util.Date"%>
+<%@page import="jakarta.servlet.http.HttpSession" %>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html lang="en">
@@ -60,7 +62,7 @@
                         Quản lí
                     </div>
                     <li class="nav-item">
-                        <a class="nav-link" href="ui-colors.html">
+                        <a class="nav-link" href="#">
                             <i class="fas fa-calendar fa-2x text-primary"></i>
                             <span>Bài đăng</span>
                         </a>
@@ -72,7 +74,7 @@
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="ui-colors.html">
+                        <a class="nav-link" href="customerlist">
                             <i class="fas fa-users fa-2x text-info"></i>
                             <span>Khách hàng</span>
                         </a>
@@ -95,13 +97,10 @@
                         <ul class="navbar-nav ml-auto">
                             <div class="topbar-divider d-none d-sm-block"></div>
                             <li class="nav-item dropdown no-arrow">
-                                <a class="nav-link dropdown-toggle" href="" id="userDropdown" role="button" data-toggle="dropdown"
+                                <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown"
                                    aria-haspopup="true" aria-expanded="false">
-                                    <%
-                                     
-                                    %>
-                                    <img class="img-profile rounded-circle" src="images/user/default_avatar.jpg" style="max-width: 60px">
-                                    <span class="ml-2 d-none d-lg-inline text-white small">Maman Ketoprak</span>
+                                    <img class="img-profile rounded-circle" src="images/user/${sessionScope.account.userImage}" style="max-width: 60px">
+                                    <span class="ml-2 d-none d-lg-inline text-white small">${sessionScope.account.firstName}&nbsp;${sessionScope.account.lastName}</span>
                                 </a>
                                 <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="userDropdown">
                                     <a class="dropdown-item" href="#">
@@ -109,7 +108,7 @@
                                         Hồ sơ
                                     </a>
                                     <div class="dropdown-divider"></div>
-                                    <a class="dropdown-item" href="javascript:void(0);" data-toggle="modal" data-target="#logoutModal">
+                                    <a class="dropdown-item" href="logout">
                                         <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
                                         Đăng xuất
                                     </a>
@@ -202,7 +201,7 @@
                             </div>
                             <!-- New User Card Example -->
                             <div class="col-xl-3 col-md-6 mb-4">
-                                <a href="3" style="text-decoration: none;">
+                                <a href="customerlist" style="text-decoration: none;">
                                     <div class="card h-100">
                                         <div class="card-body">
                                             <div class="row no-gutters align-items-center">
@@ -213,7 +212,7 @@
                                                     if(rsUserCount.next()) {%>
                                                     <div class="h5 mb-0 font-weight-bold text-gray-800"><%=rsUserCount.getInt(1)%>&nbsp;khách hàng</div>
                                                     <%}
-                                                    ResultSet rsUserTrend = daoUser.getData("select count(UserID) from User where CreateDate between (curdate() - interval 6 day) and  curdate() and UserStatus = 1 and RoleID = 1;");
+                                                    ResultSet rsUserTrend = daoUser.getData("select count(UserID) from User where CreateDate between (curdate() - interval 6 day) and  now() and UserStatus = 1 and RoleID = 1;");
                                                     if(rsUserTrend.next()){
                                                     if(rsUserTrend.getInt(1) == 0) {%>
                                                     <div class="mt-2 mb-0 text-muted text-xs">
@@ -445,28 +444,6 @@
                         </div>
                     </div>
                     <!--Row-->
-                    <!-- Modal Logout -->
-                    <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabelLogout"
-                         aria-hidden="true">
-                        <div class="modal-dialog" role="document">
-                            <div class="modal-content">
-                                <div class="modal-header">
-                                    <h5 class="modal-title" id="exampleModalLabelLogout">Ohh No!</h5>
-                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                        <span aria-hidden="true">&times;</span>
-                                    </button>
-                                </div>
-                                <div class="modal-body">
-                                    <p>Are you sure you want to logout?</p>
-                                </div>
-                                <div class="modal-footer">
-                                    <button type="button" class="btn btn-outline-primary" data-dismiss="modal">Cancel</button>
-                                    <a href="login.html" class="btn btn-primary">Logout</a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
                 </div>
                 <!---Container Fluid-->
             </div>

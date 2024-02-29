@@ -1,3 +1,8 @@
+body{
+    margin-top:20px;
+    background:#eee;
+}
+
 
 .product-content {
     border: 1px solid #dfe5e9;
@@ -190,10 +195,7 @@
 }
 
 .product-deatil {
-    padding: 30px 30px 50px;
-    position: sticky;
-    top: 50px;
-
+    padding: 30px 30px 50px
 }
 
 .product-deatil hr+.description-tabs {
@@ -441,4 +443,3 @@ input[type=number]::-webkit-outer-spin-button {
     -webkit-appearance: none;
     margin: 0;
 }
-

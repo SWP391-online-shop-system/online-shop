@@ -92,6 +92,56 @@ public class DAOUser extends DBConnect {
         }
     }
 
+    public int addNewUserByMKT(User user) {
+        int n = 0;
+        String sql = "INSERT INTO `online_shop_system`.`user`(`FirstName`,`LastName`,`Address`,`PhoneNumber`,`Gender`,`Password`,`Email`,`UserStatus`,`ReportTo`,`RoleID`,`CreateDate`)\n"
+                + "VALUES(?,?,?,?,?,?,?,1,1,1,CURRENT_TIMESTAMP);";
+        try {
+            PreparedStatement pre = conn.prepareStatement(sql);
+            pre.setString(1, user.getFirstName());
+            pre.setString(2, user.getLastName());
+            pre.setString(3, user.getAddress());
+            pre.setString(4, user.getPhoneNumber());
+            pre.setInt(5, user.getGender() ? 1 : 0);
+            pre.setString(6, user.getPassword());
+            pre.setString(7, user.getEmail());
+            n = pre.executeUpdate();
+            conn.close();
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+        return n;
+    }
+
+    public int updateStatus(int uid, int status) {
+        int n = 0;
+        String sql = "UPDATE `online_shop_system`.`user`\n"
+                + "SET`UserStatus` = ? WHERE `UserID` = ?;";
+        try {
+            PreparedStatement pre = conn.prepareStatement(sql);
+            pre.setInt(1, status);
+            pre.setInt(2, uid);
+            n = pre.executeUpdate();
+        } catch (SQLException ex) {
+        }
+        return n;
+    }
+
+    public int checkEmail(String email) {
+        DAOUser dao = new DAOUser();
+        int n = 0;
+        ResultSet rs = dao.getData("select * from `user` where Email ='" + email + "'");
+        try {
+            while (rs.next()) {
+                if (rs != null) {
+                    n = 1;
+                }
+            }
+        } catch (SQLException e) {
+        }
+        return n;
+    }
+
     public User getUserByEmail(String Email) {
 
         String sql = "select * from user where Email ='" + Email + "'";
@@ -111,7 +161,7 @@ public class DAOUser extends DBConnect {
                         rs.getString(9),
                         rs.getString(10),
                         rs.getString(11),
-                        rs.getBoolean(12),
+                        rs.getInt(12),
                         rs.getInt(13),
                         rs.getInt(14),
                         rs.getString(15)
@@ -146,7 +196,7 @@ public class DAOUser extends DBConnect {
                         rs.getString(9),
                         rs.getString(10),
                         rs.getString(11),
-                        rs.getBoolean(12),
+                        rs.getInt(12),
                         rs.getInt(13),
                         rs.getInt(14),
                         rs.getString(15)
@@ -255,7 +305,7 @@ public class DAOUser extends DBConnect {
                 String password = rs.getString(9);
                 String email = rs.getString(10);
                 String lastLogin = rs.getString(11);
-                Boolean userStatus = rs.getBoolean(12);
+                int userStatus = rs.getInt(12);
                 int reportTo = rs.getInt(13);
                 int roleID = rs.getInt(14);
                 String CreateDate = rs.getString(15);
@@ -306,7 +356,7 @@ public class DAOUser extends DBConnect {
                         rs.getString(9),
                         rs.getString(10),
                         rs.getString(11),
-                        rs.getBoolean(12),
+                        rs.getInt(12),
                         rs.getInt(13),
                         rs.getInt(14),
                         rs.getString(15));
@@ -335,7 +385,7 @@ public class DAOUser extends DBConnect {
                         rs.getString(9),
                         rs.getString(10),
                         rs.getString(11),
-                        rs.getBoolean(12),
+                        rs.getInt(12),
                         rs.getInt(13),
                         rs.getInt(14),
                         rs.getString(15)

@@ -138,7 +138,7 @@ public class DAOProduct extends DBConnect {
             pre.setString(7, pro.getCreateDate());
             pre.setInt(8, pro.getTotalRate());
             pre.setInt(9, pro.getTotalStock());
-            pre.setInt(10, pro.isProductStatus() ? 1 : 0);  // Convert boolean to int
+            pre.setInt(10, pro.isProductStatus() ? 0 : 1);  // Convert boolean to int
             pre.setInt(11, pro.getProductID());
             n = pre.executeUpdate();
         } catch (SQLException e) {
@@ -661,7 +661,7 @@ public class DAOProduct extends DBConnect {
             PreparedStatement st = conn.prepareStatement(sql);
             ResultSet rs = st.executeQuery();
             while (rs.next()) {
-                System.out.println("======="+rs.getInt(1));
+                System.out.println("=======" + rs.getInt(1));
                 return rs.getInt(1);
             }
         } catch (SQLException e) {
@@ -829,4 +829,5 @@ public class DAOProduct extends DBConnect {
 //            Logger.getLogger(DAOProduct.class.getName()).log(Level.SEVERE, null, ex);
 //        }
 //    }
+
 }

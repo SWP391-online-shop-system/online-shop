@@ -12,13 +12,28 @@ public class ProductImage {
 
     private int ProductID;
     private String ProductURL;
+    private String ProductURLShow;
 
     public ProductImage() {
+    }
+
+    public ProductImage(int ProductID, String ProductURL, String ProductURLShow) {
+        this.ProductID = ProductID;
+        this.ProductURL = ProductURL;
+        this.ProductURLShow = ProductURLShow;
     }
 
     public ProductImage(int ProductID, String ProductURL) {
         this.ProductID = ProductID;
         this.ProductURL = ProductURL;
+    }
+
+    public String getProductURLShow() {
+        return ProductURLShow;
+    }
+
+    public void setProductURLShow(String ProductURLShow) {
+        this.ProductURLShow = ProductURLShow;
     }
 
     public int getProductID() {
