@@ -40,30 +40,19 @@ public class DAOforgotPass extends DBConnect {
         return true;
     }
 
-    public User checkEmailExist(String mail) {
-        String sql = "SELECT * FROM User WHERE Email = ?";
-        try ( PreparedStatement st = conn.prepareStatement(sql)) {
-            st.setString(1, mail);
-            try ( ResultSet rs = st.executeQuery()) {
-                if (rs.next()) {
-                    return new User(rs.getInt(1),
-                            rs.getString(2),
-                            rs.getString(3),
-                            rs.getString(4),
-                            rs.getString(5),
-                            rs.getString(6),
-                            rs.getBoolean(7),
-                            rs.getString(8),
-                            rs.getString(9),
-                            rs.getString(10),
-                            rs.getString(11),
-                            rs.getInt(12),
-                            rs.getInt(13),
-                            rs.getInt(14));
-                }
+    public String checkEmailExist(String mail) {
+        String sql = "SELECT Email FROM User WHERE Email = ?";
+            try {
+            Statement state = conn.createStatement(
+                    ResultSet.TYPE_SCROLL_SENSITIVE,
+                    ResultSet.CONCUR_UPDATABLE);
+            PreparedStatement st = conn.prepareStatement(sql);
+            st.setString(1,mail);
+            ResultSet rs = st.executeQuery();
+            while (rs.next()) {
+                return rs.getString(1);
             }
         } catch (Exception e) {
-            // Xử lý ngoại lệ
         }
         return null;
     }
@@ -105,12 +94,8 @@ public class DAOforgotPass extends DBConnect {
     public static void main(String[] args) {
         DAOforgotPass dao = new DAOforgotPass();
         int row = dao.rePass("Matkhau22", "giangpthe171781@fpt.edu.vn");
-        System.out.println(row);
-        User user = dao.checkEmailExist("giangpthe171781@fpt.edu.vn");
-        if (user != null) {
-            System.out.println("Email đã tồn tại: " + user.getEmail());
-        } else {
-            System.out.println("Email không tồn tại trong cơ sở dữ liệu.");
-        }
+
+        String user = dao.checkEmailExist("giangpthe171781@fpt.edu.vn");
+                System.out.println(user);
     }
 }
