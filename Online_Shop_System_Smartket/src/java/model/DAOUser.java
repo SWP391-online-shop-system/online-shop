@@ -95,7 +95,7 @@ public class DAOUser extends DBConnect {
     public int addNewUserByMKT(User user) {
         int n = 0;
         String sql = "INSERT INTO `online_shop_system`.`user`(`FirstName`,`LastName`,`Address`,`PhoneNumber`,`Gender`,`Password`,`Email`,`UserStatus`,`ReportTo`,`RoleID`,`CreateDate`)\n"
-                + "VALUES(?,?,?,?,?,?,?,0,1,1,CURRENT_TIMESTAMP);";
+                + "VALUES(?,?,?,?,?,?,?,1,1,1,CURRENT_TIMESTAMP);";
         try {
             PreparedStatement pre = conn.prepareStatement(sql);
             pre.setString(1, user.getFirstName());

@@ -48,6 +48,8 @@ public class ControllerCustomerList extends HttpServlet {
             }
             if (service.equals("showList")) {
                 Vector<User> list = dao.getUser("SELECT * FROM online_shop_system.user where roleID = 1");
+                String status = "3";
+                request.setAttribute("status", status);
                 request.setAttribute("data", list);
                 request.getRequestDispatcher("customerlist.jsp").forward(request, response);
             }
@@ -85,6 +87,30 @@ public class ControllerCustomerList extends HttpServlet {
                 request.setAttribute("data", rs);
                 request.setAttribute("log", log);
                 request.getRequestDispatcher("customerdetails.jsp").forward(request, response);
+            }
+            if (service.equals("fillterStatus")) {
+                String status = request.getParameter("status");
+                String sql = "SELECT * FROM online_shop_system.user where roleID = 1";
+                if (status.equals("1")) {
+                    sql += " and UserStatus = 1";
+                    status = "1";
+                }
+                if (status.equals("2")) {
+                    sql += " and UserStatus = 2";
+                    status = "2";
+                }
+                if (status.equals("0")) {
+                    sql += " and UserStatus = 0";
+                    status = "0";
+                }
+                if (status.equals("3")) {
+                    sql = "SELECT * FROM online_shop_system.user where roleID = 1";
+                    status = "3";
+                }
+                Vector<User> list = dao.getUser(sql);
+                request.setAttribute("data", list);
+                request.setAttribute("status", status);
+                request.getRequestDispatcher("customerlist.jsp").forward(request, response);
             }
 
         }

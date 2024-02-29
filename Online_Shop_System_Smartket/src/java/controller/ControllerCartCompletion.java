@@ -50,6 +50,9 @@ public class ControllerCartCompletion extends HttpServlet {
             User user = (User) session.getAttribute("account");
             int userID = user.getUserID();
             String submit = request.getParameter("submit");
+            ResultSet rsCategory = daoCart.getData("Select * from Categories");
+            request.setAttribute("CategoryResult", rsCategory);
+            request.getRequestDispatcher("cartcompletion.jsp").forward(request, response);
             if (submit != null) {
                 LocalDate orderDate = LocalDate.now();
                 DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
@@ -64,15 +67,15 @@ public class ControllerCartCompletion extends HttpServlet {
                 String ward = request.getParameter("ward");
                 String addressdetail = request.getParameter("addressdetail");
                 String note = request.getParameter("note");
-                String adress = addressdetail +" "+ward+" "+ district+" "+ city;
-                Receiver rece = new Receiver(orderID, name, phone, adress, email,note);
+                String adress = addressdetail + " " + ward + " " + district + " " + city;
+                Receiver rece = new Receiver(orderID, name, phone, adress, email, note);
                 daoRece.insertReceiverByPrepared(rece);
                 try {
                     ResultSet listCart = daoCart.getData("SELECT * FROM Cart AS c JOIN Product AS p ON c.ProductID = p.ProductID\n"
                             + "join ProductImage as pi on p.ProductID = pi.ProductID\n"
                             + "where c.UserID = " + userID + " ;");
                     while (listCart.next()) {
-                        
+
                     }
                 } catch (SQLException e) {
                 }
