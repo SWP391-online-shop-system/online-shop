@@ -67,13 +67,46 @@ public class DAOProductImage extends DBConnect {
                 + "`ProductURL` =?\n"
                 + "WHERE ProductID = ? and ProductURL = ?";
         try {
-        PreparedStatement pre = conn.prepareStatement(sql);
+            PreparedStatement pre = conn.prepareStatement(sql);
             pre.setString(1, newURL);
             pre.setInt(2, ProductID);
             pre.setString(3, oldURL);
             n = pre.executeUpdate();
         } catch (SQLException e) {
             System.out.println(e);
+        }
+        return n;
+    }
+
+    public int updateProductImage(int ProductID, String ProductURLShow) {
+        int n = 0;
+        String sql = "UPDATE `online_shop_system`.`ProductImage`\n"
+                + "SET\n"
+                + "ProductURLShow= '" + ProductURLShow + "' WHERE ProductID = " + ProductID;
+        try {
+            PreparedStatement pre = conn.prepareStatement(sql);
+            n = pre.executeUpdate();
+        } catch (SQLException e) {
+            System.out.println("line 93 in daoProductImage: " + e);
+        }
+        return n;
+    }
+
+    public int updateAllProductImage(ProductImage pro) {
+        int n = 0;
+        String sql = "UPDATE `online_shop_system`.`ProductImage`\n"
+                + "SET\n"
+                + "ProductURL ='?',\n"
+                + "ProductURLShow = '?',\n"
+                + "WHERE ProductID = ?";
+        try {
+            PreparedStatement pre = conn.prepareStatement(sql);
+            pre.setString(1, pro.getProductURL());
+            pre.setString(2, pro.getProductURLShow());
+            pre.setInt(3, pro.getProductID());
+            n = pre.executeUpdate();
+        } catch (SQLException e) {
+            System.out.println("line 112 in daoProductImage: " + e);
         }
         return n;
     }

@@ -19,7 +19,10 @@ import java.io.OutputStream;
 import java.net.URLEncoder;
 import java.nio.file.Paths;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.Vector;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import model.DAOCategories;
 import model.DAOProduct;
 import model.DAOProductImage;
@@ -77,11 +80,80 @@ public class ControllerEditProductmkt extends HttpServlet {
                 Product product = new Product(productId, productName, categoryId, productDescription,
                         unitInStock, unitPrice, unitDiscount, createDate, totalStock, productStatus);
                 n = dao.updateProduct(product);
+
+                int countImg = Integer.parseInt(request.getParameter("countImg"));
+                String convertCategory = convertCate(categoryId);
+                String fileName;
+                String radio = request.getParameter("default");
+                int radioChoice = 0;
+                if (radio == null) {
+                    ResultSet rsRadio = daoPI.getData("select * from ProductImage where ProductID =" + productId);
+                    try {
+                        if (rsRadio.next()) {
+                            System.out.println("àter fix: " + rsRadio.getString("ProductURLShow").replaceAll("[a-zA-Z]+", ""));
+                            radioChoice = Integer.parseInt(rsRadio.getString("ProductURLShow").replaceAll("[a-zA-Z]+", ""));
+                        }
+                    } catch (SQLException ex) {
+                        Logger.getLogger(ControllerEditProductmkt.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                } else {
+                    radioChoice = Integer.parseInt(radio);
+                }
+                System.out.println("radio = " + radioChoice);
+                for (int i = 1; i <= countImg; i++) {
+                    String productImageURL = "images/product/" + convertCategory + "/";
+                    String oldImageUrl = request.getParameter("oldImageUrl" + i);
+                    Part imgURL = request.getPart("productImageUrl" + i);
+                    String realImgURL = imgURL.getSubmittedFileName();
+                    if (realImgURL.equals("") || realImgURL == null) {
+                        productImageURL = oldImageUrl;
+                        System.out.println("realImg" + i + "=null => ProductImageURL = " + productImageURL);
+                    } else {
+                        realImgURL = imgURL.getSubmittedFileName();
+                        if (!("images/product/" + convertCategory + "/"+realImgURL).equals(oldImageUrl)) {
+                            System.out.println("realImg = " + realImgURL + " != olfImageURL = " + oldImageUrl);
+                            int index = realImgURL.lastIndexOf(".");
+                            String tailType = realImgURL.substring(index);
+                            productImageURL += realImgURL.substring(0, index) + "_" + i + tailType;
+                            ProductImage pi = new ProductImage(productId, productImageURL, productImageURL);
+                            daoPI.updateImage(productImageURL, productId, oldImageUrl);
+                            System.out.println("realImg" + i + "!=null => ProductImageURL = " + productImageURL);
+                            imgURL.write("D:\\fpt\\Semeter_5\\SWP391\\Project_GitHub\\Online_Shop_System_Smartket\\web\\" + productImageURL);
+                            imgURL.write("D:\\fpt\\Semeter_5\\SWP391\\Project_GitHub\\Online_Shop_System_Smartket\\build\\web\\" + productImageURL);
+                        } else {
+                            System.out.println("realImg = " + realImgURL + " == oldImageURL = " + oldImageUrl);
+                            System.out.println("and PRoductimageURL = "+productImageURL);
+                        }
+                    }
+
+                    if (radioChoice == i) {
+                        System.out.println("radio = i");
+                        n = daoPI.updateProductImage(productId, productImageURL);
+                    } else {
+                        n = daoPI.updateImage(productImageURL, productId, oldImageUrl);
+                    }
+
+                }
+                request.setAttribute("radioChoice", radioChoice);
                 String st = (n > 0) ? "Cập nhật sản phẩm thành công" : "Cập nhật sản phẩm thất bại";
                 response.sendRedirect("mktProductListURL?message=" + URLEncoder.encode(st, "UTF-8"));
             }
             if (service.isEmpty()) {
                 int productId = Integer.parseInt(request.getParameter("productId"));
+                String radio = request.getParameter("default");
+                int radioChoice = 0;
+                if (radio == null) {
+                    ResultSet rsRadio = daoPI.getData("select * from ProductImage where ProductID =" + productId);
+                    try {
+                        if (rsRadio.next()) {
+                            radioChoice = Integer.parseInt(rsRadio.getString("ProductURLShow").replaceAll(".*_(\\d+)\\..*", "$1"));
+                        }
+                    } catch (SQLException ex) {
+                        Logger.getLogger(ControllerEditProductmkt.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                } else {
+                    radioChoice = Integer.parseInt(radio);
+                }
                 Product product = dao.getProductById(productId);
                 if (product != null) {
                     request.setAttribute("product", product);
@@ -91,37 +163,8 @@ public class ControllerEditProductmkt extends HttpServlet {
                 }
                 Vector<Categories> categories = daoCategories.getCategories("SELECT * FROM categories");
                 request.setAttribute("categories", categories);
+                request.setAttribute("radioChoice", radioChoice);
                 request.getRequestDispatcher("updateProductmkt.jsp").forward(request, response);
-            }
-            if (service.equals("updateImg")) {
-                System.out.println("IN UPDATEIMG");
-                int productId = Integer.parseInt(request.getParameter("proId"));
-                int categoryId = Integer.parseInt(request.getParameter("cateId"));
-                int countImg = Integer.parseInt(request.getParameter("countImg"));
-                int n = 0;
-                String convertCategory = convertCate(categoryId);
-                String fileName;
-                for (int i = 1; i <= countImg; i++) {
-                    String productImageURL = "images/product/" + convertCategory + "/";
-                    String oldImageUrl = request.getParameter("oldImageUrl" + i);
-                    Part imgURL = request.getPart("productImageUrl" + i);
-                    String realImgURL = imgURL.getSubmittedFileName();
-                    System.out.println("real = " + realImgURL);
-                    if (realImgURL.equals("") || realImgURL == null) {
-                        productImageURL = oldImageUrl;
-                    } else {
-                        fileName = imgURL.getSubmittedFileName();
-                        int index = fileName.lastIndexOf(".");
-                        String tailType = fileName.substring(index);
-                        productImageURL += fileName.substring(0, index) + "_" + i + tailType;
-                    }
-                    imgURL.write("D:\\fpt\\Semeter_5\\SWP391\\Project_GitHub\\Online_Shop_System_Smartket\\web\\" + productImageURL);
-                    imgURL.write("D:\\fpt\\Semeter_5\\SWP391\\Project_GitHub\\Online_Shop_System_Smartket\\build\\web\\" + productImageURL);
-                    n = daoPI.updateImage(productImageURL, productId, oldImageUrl);
-
-                }
-                String st = (n > 0) ? "Cập nhật sản phẩm thành công" : "Cập nhật sản phẩm thất bại";
-                response.sendRedirect("mktProductListURL?message=" + URLEncoder.encode(st, "UTF-8"));
             }
 
         }
