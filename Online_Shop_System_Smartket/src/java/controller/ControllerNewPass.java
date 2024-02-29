@@ -20,6 +20,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import model.DAOforgotPass;
+import model.EncodeSHA;
 
 /**
  *
@@ -48,7 +49,7 @@ public class ControllerNewPass extends HttpServlet {
         String msg = null;
         if (check == true) {
             if (newPassword != null && confPassword != null && newPassword.equals(confPassword)) {
-//                newPassword = MaHoa.toSHA1(newPassword);
+                newPassword = EncodeSHA.transFer(newPassword);
                 int row = dao.rePass(newPassword, (String) session.getAttribute("email"));
                 if (row > 0) {
                     msg = "đổi thành công";

@@ -70,4 +70,9 @@ public class Categories {
         return "Categories{" + "CategoryID=" + CategoryID + ", CategoryName=" + CategoryName + ", CreateDate=" + CreateDate + ", CategoryStatus=" + CategoryStatus + '}';
     }
 
+    
+    
+
+    
+
 }

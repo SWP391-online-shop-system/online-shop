@@ -47,7 +47,7 @@ public class ControllerForgotPass extends HttpServlet {
             throws ServletException, IOException {
         DAOforgotPass dao = new DAOforgotPass();
         String email = request.getParameter("email");
-        User check = dao.checkEmailExist(email);
+        String check = dao.checkEmailExist(email);
         RequestDispatcher dispatcher = null;
         int otpvalue = 0;
         HttpSession mySession = request.getSession();
