@@ -4,30 +4,23 @@
  */
 package controller;
 
-import jakarta.servlet.RequestDispatcher;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
-import java.sql.Connection;
-import java.sql.DriverManager;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
-import model.DAOforgotPass;
-import model.EncodeSHA;
+import model.DAOSlider;
+import view.Slider;
 
 /**
  *
- * @author admin
+ * @author 84395
  */
-@WebServlet(name = "ControllerNewPass", urlPatterns = {"/newPass"})
-public class ControllerNewPass extends HttpServlet {
+@WebServlet(name = "sliderdetail", urlPatterns = {"/sliderdetail"})
+public class sliderdetail extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -40,39 +33,13 @@ public class ControllerNewPass extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        DAOforgotPass dao = new DAOforgotPass();
+        String id = request.getParameter("id");
+        DAOSlider DAOSlider = new DAOSlider();
+//        Slider slider = DAOSlider.getaSlider("select * from slider where sliderId = " + id);
         HttpSession session = request.getSession();
-        String newPassword = request.getParameter("password");
-        String confPassword = request.getParameter("confPassword");
-        boolean check = dao.validatePassword(newPassword);
-        RequestDispatcher dispatcher = null;
-        String msg = null;
-        if (check == true) {
-            if (newPassword != null && confPassword != null && newPassword.equals(confPassword)) {
-                newPassword = EncodeSHA.transFer(newPassword);
-                int row = dao.rePass(newPassword, (String) session.getAttribute("email"));
-                if (row > 0) {
-                    msg = "đổi thành công";
-                    request.setAttribute("message", msg);
-                    dispatcher = request.getRequestDispatcher("newPassword.jsp");
-                } else {
-                    msg = "xảy ra lỗi";
-                    request.setAttribute("message", msg);
-                    dispatcher = request.getRequestDispatcher("newPassword.jsp");
-                }
-                dispatcher.forward(request, response);
-            } else {
-                msg = "mật khẩu xác nhận không trùng khớp";
-                request.setAttribute("message", msg);
-                dispatcher = request.getRequestDispatcher("newPassword.jsp");
-                dispatcher.forward(request, response);
-            }
-        } else {
-            msg = "mật khẩu phải dài ít nhất 6 kí tự và có chứa ít nhất 1 kí tự số";
-            request.setAttribute("message", msg);
-            dispatcher = request.getRequestDispatcher("newPassword.jsp");
-            dispatcher.forward(request, response);
-        }
+//        session.setAttribute("getaSlider", slider);
+        request.getRequestDispatcher("sliderdetail.jsp").forward(request, response);
+
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

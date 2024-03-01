@@ -110,7 +110,7 @@ public class ControllerMarketingDashBoard extends HttpServlet {
                 Calendar calendar = Calendar.getInstance();
                 calendar.add(Calendar.DAY_OF_YEAR, -6); // Subtract 6 days from the current date
                 userWeekFrom = sdf.format(calendar.getTime());
-                rsUserList = daoUser.getData("select * from User where CreateDate between curdate() - interval 6 day and curdate() ORDER BY CreateDate");
+                rsUserList = daoUser.getData("select * from User where CreateDate between curdate() - interval 6 day and now() ORDER BY CreateDate");
                 request.setAttribute("rsUserList", rsUserList);
                 request.setAttribute("formatUserWeekFrom", userWeekFrom);
             } else {

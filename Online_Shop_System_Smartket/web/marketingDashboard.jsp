@@ -201,7 +201,7 @@
                             </div>
                             <!-- New User Card Example -->
                             <div class="col-xl-3 col-md-6 mb-4">
-                                <a href="3" style="text-decoration: none;">
+                                <a href="customerlist" style="text-decoration: none;">
                                     <div class="card h-100">
                                         <div class="card-body">
                                             <div class="row no-gutters align-items-center">
@@ -212,7 +212,7 @@
                                                     if(rsUserCount.next()) {%>
                                                     <div class="h5 mb-0 font-weight-bold text-gray-800"><%=rsUserCount.getInt(1)%>&nbsp;khách hàng</div>
                                                     <%}
-                                                    ResultSet rsUserTrend = daoUser.getData("select count(UserID) from User where CreateDate between (curdate() - interval 6 day) and  curdate() and UserStatus = 1 and RoleID = 1;");
+                                                    ResultSet rsUserTrend = daoUser.getData("select count(UserID) from User where CreateDate between (curdate() - interval 6 day) and  now() and UserStatus = 1 and RoleID = 1;");
                                                     if(rsUserTrend.next()){
                                                     if(rsUserTrend.getInt(1) == 0) {%>
                                                     <div class="mt-2 mb-0 text-muted text-xs">

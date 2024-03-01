@@ -14,14 +14,13 @@ public class Categories {
 
     private int CategoryID;
     private String CategoryName;
-    private Date CreateDate;
+    private String CreateDate;
     private boolean CategoryStatus;
 
     public Categories() {
     }
 
-    
-    public Categories(int CategoryID, String CategoryName, Date CreateDate, boolean CategoryStatus) {
+    public Categories(int CategoryID, String CategoryName, String CreateDate, boolean CategoryStatus) {
         this.CategoryID = CategoryID;
         this.CategoryName = CategoryName;
         this.CreateDate = CreateDate;
@@ -50,11 +49,11 @@ public class Categories {
         this.CategoryName = CategoryName;
     }
 
-    public Date getCreateDate() {
+    public String getCreateDate() {
         return CreateDate;
     }
 
-    public void setCreateDate(Date CreateDate) {
+    public void setCreateDate(String CreateDate) {
         this.CreateDate = CreateDate;
     }
 
@@ -70,6 +69,9 @@ public class Categories {
     public String toString() {
         return "Categories{" + "CategoryID=" + CategoryID + ", CategoryName=" + CategoryName + ", CreateDate=" + CreateDate + ", CategoryStatus=" + CategoryStatus + '}';
     }
+
+    
+    
 
     
 

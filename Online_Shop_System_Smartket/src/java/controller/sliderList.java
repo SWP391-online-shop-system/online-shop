@@ -4,30 +4,27 @@
  */
 package controller;
 
-import jakarta.servlet.RequestDispatcher;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
-import java.sql.Connection;
-import java.sql.DriverManager;
 import jakarta.servlet.ServletException;
-import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
-import model.DAOforgotPass;
-import model.EncodeSHA;
+import java.sql.ResultSet;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Vector;
+import model.DAOProduct;
+import static model.DAOProduct.getCurrentTimestamp;
+import model.DAOSlider;
+import view.Slider;
 
 /**
  *
- * @author admin
+ * @author 84395
  */
-@WebServlet(name = "ControllerNewPass", urlPatterns = {"/newPass"})
-public class ControllerNewPass extends HttpServlet {
+public class sliderList extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -40,38 +37,18 @@ public class ControllerNewPass extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        DAOforgotPass dao = new DAOforgotPass();
-        HttpSession session = request.getSession();
-        String newPassword = request.getParameter("password");
-        String confPassword = request.getParameter("confPassword");
-        boolean check = dao.validatePassword(newPassword);
-        RequestDispatcher dispatcher = null;
-        String msg = null;
-        if (check == true) {
-            if (newPassword != null && confPassword != null && newPassword.equals(confPassword)) {
-                newPassword = EncodeSHA.transFer(newPassword);
-                int row = dao.rePass(newPassword, (String) session.getAttribute("email"));
-                if (row > 0) {
-                    msg = "đổi thành công";
-                    request.setAttribute("message", msg);
-                    dispatcher = request.getRequestDispatcher("newPassword.jsp");
-                } else {
-                    msg = "xảy ra lỗi";
-                    request.setAttribute("message", msg);
-                    dispatcher = request.getRequestDispatcher("newPassword.jsp");
-                }
-                dispatcher.forward(request, response);
-            } else {
-                msg = "mật khẩu xác nhận không trùng khớp";
-                request.setAttribute("message", msg);
-                dispatcher = request.getRequestDispatcher("newPassword.jsp");
-                dispatcher.forward(request, response);
-            }
-        } else {
-            msg = "mật khẩu phải dài ít nhất 6 kí tự và có chứa ít nhất 1 kí tự số";
-            request.setAttribute("message", msg);
-            dispatcher = request.getRequestDispatcher("newPassword.jsp");
-            dispatcher.forward(request, response);
+        response.setContentType("text/html;charset=UTF-8");
+        try ( PrintWriter out = response.getWriter()) {
+            /* TODO output your page here. You may use following sample code. */
+            out.println("<!DOCTYPE html>");
+            out.println("<html>");
+            out.println("<head>");
+            out.println("<title>Servlet sliderList</title>");
+            out.println("</head>");
+            out.println("<body>");
+            out.println("<h1>Servlet sliderList at " + request.getContextPath() + "</h1>");
+            out.println("</body>");
+            out.println("</html>");
         }
     }
 
@@ -87,7 +64,25 @@ public class ControllerNewPass extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        DAOSlider dao = new DAOSlider();
+        HttpSession session = request.getSession();
+        Vector<Slider> sliderlist = new Vector<>();
+        String statusfilter = request.getParameter("statusfilter");
+            sliderlist = dao.getSlider("select * from slider");
+            session.setAttribute("sliderlist", sliderlist);
+        session.setAttribute("timetoday", getCurrentTimestamp());
+        if(statusfilter!=null){
+        if (statusfilter.equalsIgnoreCase("true")) {
+            sliderlist = dao.getSlider("select * from slider where SliderStatus=0");
+            session.setAttribute("sliderlist", sliderlist);
+        }
+        if (statusfilter.equalsIgnoreCase("false")) {
+            sliderlist = dao.getSlider("select * from slider where SliderStatus=1");
+            session.setAttribute("sliderlist", sliderlist);
+        }}
+
+        request.getRequestDispatcher("sliderList.jsp").forward(request, response);
+
     }
 
     /**

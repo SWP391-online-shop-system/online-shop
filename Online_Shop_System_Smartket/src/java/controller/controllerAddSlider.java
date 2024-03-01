@@ -4,30 +4,32 @@
  */
 package controller;
 
-import jakarta.servlet.RequestDispatcher;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
-import java.sql.Connection;
-import java.sql.DriverManager;
 import jakarta.servlet.ServletException;
+import jakarta.servlet.annotation.MultipartConfig;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
-import model.DAOforgotPass;
-import model.EncodeSHA;
+import jakarta.servlet.http.Part;
+import model.DAOProduct;
+import model.DAOProductImage;
+import model.DAOSlider;
+import view.Product;
+import view.ProductImage;
+import view.Slider;
+import view.User;
 
 /**
  *
- * @author admin
+ * @author 84395
  */
-@WebServlet(name = "ControllerNewPass", urlPatterns = {"/newPass"})
-public class ControllerNewPass extends HttpServlet {
+@WebServlet(name = "AddSlider", urlPatterns = {"/AddSlider"})
+@MultipartConfig
+
+public class controllerAddSlider extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -40,38 +42,18 @@ public class ControllerNewPass extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        DAOforgotPass dao = new DAOforgotPass();
-        HttpSession session = request.getSession();
-        String newPassword = request.getParameter("password");
-        String confPassword = request.getParameter("confPassword");
-        boolean check = dao.validatePassword(newPassword);
-        RequestDispatcher dispatcher = null;
-        String msg = null;
-        if (check == true) {
-            if (newPassword != null && confPassword != null && newPassword.equals(confPassword)) {
-                newPassword = EncodeSHA.transFer(newPassword);
-                int row = dao.rePass(newPassword, (String) session.getAttribute("email"));
-                if (row > 0) {
-                    msg = "đổi thành công";
-                    request.setAttribute("message", msg);
-                    dispatcher = request.getRequestDispatcher("newPassword.jsp");
-                } else {
-                    msg = "xảy ra lỗi";
-                    request.setAttribute("message", msg);
-                    dispatcher = request.getRequestDispatcher("newPassword.jsp");
-                }
-                dispatcher.forward(request, response);
-            } else {
-                msg = "mật khẩu xác nhận không trùng khớp";
-                request.setAttribute("message", msg);
-                dispatcher = request.getRequestDispatcher("newPassword.jsp");
-                dispatcher.forward(request, response);
-            }
-        } else {
-            msg = "mật khẩu phải dài ít nhất 6 kí tự và có chứa ít nhất 1 kí tự số";
-            request.setAttribute("message", msg);
-            dispatcher = request.getRequestDispatcher("newPassword.jsp");
-            dispatcher.forward(request, response);
+        response.setContentType("text/html;charset=UTF-8");
+        try ( PrintWriter out = response.getWriter()) {
+            /* TODO output your page here. You may use following sample code. */
+            out.println("<!DOCTYPE html>");
+            out.println("<html>");
+            out.println("<head>");
+            out.println("<title>Servlet controllerAddSlider</title>");
+            out.println("</head>");
+            out.println("<body>");
+            out.println("<h1>Servlet controllerAddSlider at " + request.getContextPath() + "</h1>");
+            out.println("</body>");
+            out.println("</html>");
         }
     }
 
@@ -101,7 +83,20 @@ public class ControllerNewPass extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        int sliderID1 = Integer.parseInt(request.getParameter("sliderID1").trim());
+        HttpSession session = request.getSession();
+        User u = (User) session.getAttribute("account");
+        String sliderLink1 = request.getParameter("sliderLink1");
+        String createDate1 = request.getParameter("createDate1");
+        boolean sliderStatus1 = Boolean.parseBoolean(request.getParameter("sliderStatus1"));
+        Part sliderImage1 = request.getPart("sliderImage1");
+        String fileName = sliderImage1.getSubmittedFileName();
+        String productImageURL = "images/slider/" + fileName;
+        sliderImage1.write(productImageURL);
+//        Slider newSlider = new Slider(sliderID1, u.getUserID(), fileName, sliderLink1, sliderStatus1, createDate1);
+        DAOSlider DAOSlider = new DAOSlider();
+//        int n = DAOSlider.insertSlider(newSlider);
+        response.sendRedirect("sliderList");
     }
 
     /**

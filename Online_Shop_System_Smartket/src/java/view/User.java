@@ -22,6 +22,14 @@ public class User {
     public User() {
     }
 
+    public User(String firstName, String lastName, String email, String password, String rePassword) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.email = email;
+        this.password = password;
+        this.rePassword = rePassword;
+    }
+
     public User(int userID, String firstName, String lastName, String address, String phoneNumber, String dateOfBirth, Boolean gender, String userImage, String password, String email, String lastLogin, int userStatus, int reportTo, int roleID) {
         this.userID = userID;
         this.firstName = firstName;
@@ -76,8 +84,6 @@ public class User {
         this.createDate = createDate;
     }
 
-    
-
     public User(String firstName, String lastName, String address, String phoneNumber, String dateOfBirth, Boolean gender, String userImage, String password, String email, String lastLogin, int userStatus, int reportTo, int roleID) {
         this.firstName = firstName;
         this.lastName = lastName;
@@ -94,7 +100,7 @@ public class User {
         this.roleID = roleID;
     }
 
-    public User(String firstName, String lastName, String email, String password, String rePassword,String createDate) {
+    public User(String firstName, String lastName, String email, String password, String rePassword, String createDate) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
@@ -258,7 +264,9 @@ public class User {
         } else {
             encryptedEmail.append(email); // Return original email if it's too short
         }
-        return encryptedEmail.toString();}
+        return encryptedEmail.toString();
+    }
+
     public Boolean getGender() {
         return gender;
     }

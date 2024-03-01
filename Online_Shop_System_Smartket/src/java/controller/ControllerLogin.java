@@ -51,54 +51,34 @@ public class ControllerLogin extends HttpServlet {
                     message = "Sai email.";
                     request.setAttribute("message", message);
                     request.getRequestDispatcher("HomePageURL").forward(request, response);
-                    return; // Stop further execution
                 } else {
                     session.setAttribute("account", user);
                     response.sendRedirect("HomePageURL");
-                    return; // Stop further execution
                 }
             }
             String email = request.getParameter("email");
             String pass = request.getParameter("pass");
             String passwordEncode = EncodeSHA.transFer(pass);
-
-// First, try to check with encoded password
             User user = dao.check(email, passwordEncode);
-
-// If user is not found, try checking with plain text password
             if (user == null) {
-                // Fetch user details by email without checking password
                 User userWithoutPasswordCheck = dao.checkAccountExist(email);
-
                 if (userWithoutPasswordCheck != null) {
-                    // Compare plain text password
                     if (pass.equals(userWithoutPasswordCheck.getPassword())) {
-                        // Password matched
                         user = userWithoutPasswordCheck;
                     }
                 }
             }
-
             if (user == null) {
-                // User not found or password doesn't match
                 request.setAttribute("activeLogin", "active");
                 message = "Sai tài khoản hoặc mật khẩu.";
                 request.setAttribute("message", message);
                 request.getRequestDispatcher("HomePageURL").forward(request, response);
-            } else if (user.getUserStatus() == 0) {
-                // User found but account is disabled
+            } else if (user.isUserStatus() == 0) {
                 request.setAttribute("activeLogin", "active");
-                message = "Tài khoản của bạn chưa xác nhận";
-                request.setAttribute("message", message);
-                request.getRequestDispatcher("HomePageURL").forward(request, response);
-            } else if (user.getUserStatus() == 2) {
-                // User found but account is disabled
-                request.setAttribute("activeLogin", "active");
-                message = "Tài khoản của bạn đã bị vô hiệu hóa";
+                message = "Tài khoản của bạn chưa xác thực";
                 request.setAttribute("message", message);
                 request.getRequestDispatcher("HomePageURL").forward(request, response);
             } else {
-                // Update last login time
                 dao.updateLastLogin(user.getUserID());
                 session.setAttribute("account", user);
                 if (user.getRoleID() == 2) {
@@ -107,49 +87,51 @@ public class ControllerLogin extends HttpServlet {
                     response.sendRedirect("HomePageURL");
                 }
             }
-
         }
     }
-    // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
-
-    /**
-     * Handles the HTTP <code>GET</code> method.
-     *
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
-    @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response)
+        // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
+        /**
+         * Handles the HTTP <code>GET</code> method.
+         *
+         * @param request servlet request
+         * @param response servlet response
+         * @throws ServletException if a servlet-specific error occurs
+         * @throws IOException if an I/O error occurs
+         */
+        @Override
+        protected void doGet
+        (HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        request.setAttribute("activeLogin", "active");
-        request.getRequestDispatcher("HomePageURL").forward(request, response);
-    }
+            request.setAttribute("activeLogin", "active");
+            request.getRequestDispatcher("HomePageURL").forward(request, response);
+        }
 
-    /**
-     * Handles the HTTP <code>POST</code> method.
-     *
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
-    @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response)
+        /**
+         * Handles the HTTP <code>POST</code> method.
+         *
+         * @param request servlet request
+         * @param response servlet response
+         * @throws ServletException if a servlet-specific error occurs
+         * @throws IOException if an I/O error occurs
+         */
+        @Override
+        protected void doPost
+        (HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+            processRequest(request, response);
 
-    }
+        }
 
-    /**
-     * Returns a short description of the servlet.
-     *
-     * @return a String containing servlet description
-     */
-    @Override
-    public String getServletInfo() {
+        /**
+         * Returns a short description of the servlet.
+         *
+         * @return a String containing servlet description
+         */
+        @Override
+        public String getServletInfo
+        
+            () {
         return "Short description";
-    }// </editor-fold>
+        }// </editor-fold>
 
-}
+    }

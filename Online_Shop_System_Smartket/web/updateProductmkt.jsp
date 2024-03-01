@@ -10,7 +10,10 @@
 <%@page import="model.*" %>
 <%@ page import="java.text.NumberFormat" %>
 <%@ page import="java.util.Locale" %>
-<%@page import="java.sql.ResultSet, java.sql.SQLException"%>
+<%@page import="java.sql.ResultSet, java.sql.SQLException, java.util.Vector"%>
+<%@ page import="java.text.SimpleDateFormat" %>
+<%@ page import="java.util.Date" %>
+
 <link rel="stylesheet" href="css/css_saleProductList/saleProductList.css"/>
 <link rel="stylesheet" href="css/css_mkt/style.css"/>
 <!DOCTYPE html>
@@ -27,13 +30,28 @@
         <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css">
         <link href="css/css_marketing_dashboard/marketing_dashboard_style.css" rel="stylesheet">
         <link href="vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">
-
+        <style>
+            .btnUpdate{
+                text-align: center;
+                margin-left: 45%;
+                width: 93px;
+                border-radius: 4px;
+                background: #66bb6a;
+                color: white;
+                padding-bottom: 4px;
+                transition: all 0.5s;
+                border: none;
+            }
+            .btnUpdate:hover{
+                transform: scale(0.95);
+            }
+        </style>
     </head>
     <body id="page-top">
         <div id="wrapper">
             <!-- Sidebar -->
             <ul class="navbar-nav sidebar sidebar-light accordion" id="accordionSidebar">
-                <a class="sidebar-brand d-flex align-items-center justify-content-center" href="index.html">
+                <a class="sidebar-brand d-flex align-items-center justify-content-center" href="HomePageURL">
                     <div class="sidebar-brand-icon">
                         <img style="height: 91px;
                              width: 133px;
@@ -58,7 +76,7 @@
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="ui-colors.html">
+                        <a class="nav-link" href="mktProductListURL">
                             <i class="fas fa-shopping-cart fa-2x text-success"></i>
                             <span>Sản phẩm</span>
                         </a>
@@ -89,16 +107,16 @@
                             <li class="nav-item dropdown no-arrow">
                                 <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown"
                                    aria-haspopup="true" aria-expanded="false">
-                                    <img class="img-profile rounded-circle" src="images/user/default_avatar.jpg" style="max-width: 60px">
-                                    <span class="ml-2 d-none d-lg-inline text-white small">Maman Ketoprak</span>
+                                    <img class="img-profile rounded-circle" src="images/user/${sessionScope.account.userImage}" style="max-width: 60px">
+                                    <span class="ml-2 d-none d-lg-inline text-white small">${sessionScope.account.firstName}&nbsp;${sessionScope.account.lastName}</span>
                                 </a>
                                 <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="userDropdown">
-                                    <a class="dropdown-item" href="#">
+                                    <a class="dropdown-item" href="#" >
                                         <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
                                         Hồ sơ
                                     </a>
                                     <div class="dropdown-divider"></div>
-                                    <a class="dropdown-item" href="javascript:void(0);" data-toggle="modal" data-target="#logoutModal">
+                                    <a class="dropdown-item" href="logout">
                                         <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
                                         Đăng xuất
                                     </a>
@@ -113,167 +131,184 @@
                         <div class="d-sm-flex align-items-center justify-content-between mb-4">
                             <h1 class="h3 mb-0 text-gray-800">Cập nhật sản phẩm</h1>
                             <ol class="breadcrumb">
-                                <li class="breadcrumb-item"><a href="HomePageURL">Trang chủ</a></li>
-                                <!--<li class="breadcrumb-item">Tables</li>-->
+                                <li class="breadcrumb-item"><a href="MarketingDashBoardURL">Trang chủ</a></li>
                                 <li class="breadcrumb-item active" aria-current="page">Cập nhật sản phẩm</li>
                             </ol>
                         </div>
-                        <div class="row">
-                            <%
-                int count = 0;
-                int cateId = 0;
-                Product p = (Product)request.getAttribute("product");
-                DAOProductImage daoPi = new DAOProductImage();
-                ProductImage pi = daoPi.getProductImageByProductID(p.getProductID());
-                ResultSet cate = daoPi.getData("select * from product where productID = "+p.getProductID());
-                while(cate.next()){
-                    cateId = cate.getInt("CategoryID");
-                }
-            ResultSet rss = daoPi.getData("select * from ProductImage where ProductId = "+p.getProductID());
-            while(rss.next()){
-            count++;
-            String paths = "D:\\Workspace\\SPRING2024\\online_shop_system\\Online_Shop_System_Smartket\\web\\" + rss.getString(3).replaceAll("/", "\\\\");
-                            %>
-                            <form action="EditProductmktURL" enctype='multipart/form-data' method="post">
-                                <div class="col-lg-4">
-                                    <div class="card mb-4">
-                                        <div class="card-body text-center">
-                                            <input type="hidden" name="service" value="updateImg"/>
-                                            <img style="height: 100px;
-                                                 width: 100px;" src="<%=rss.getString(2)%>" alt="alt"/>
-                                            <input type="file" name="productImageUrl" id="productImageUrl"value="<%=paths%>">
-                                            <input type="hidden" name="oldImageUrl" value="<%=rss.getString(2)%>">
-                                            <input type="hidden" name="cateId" value="<%=cateId%>">
-                                            <input type="hidden" name="proId" value="<%=rss.getInt(1)%>">
-                                            <button type="subnit">Save</button>
+                        <form action="EditProductmktURL" method="post" enctype='multipart/form-data' onsubmit="return validateForm()">
+                            <div style="display: flex;">
+                                <div class="card-body">
+                                    <input type="hidden" name="service" value="update">
+                                    <div class="row">
+                                        <div class="col-sm-3">
+                                            <p class="mb-0">ID</p>
+                                        </div>
+                                        <div class="col-sm-9">
+                                            <input type="text" name="productId" value="${product.productID}" readonly>
                                         </div>
                                     </div>
+                                    <hr>
+                                    <div class="row">
+                                        <div class="col-sm-3">
+                                            <p class="mb-0">Tên sản phẩm</p>
+                                        </div>
+                                        <div class="col-sm-9">
+                                            <input type="text" name="productName" value="${product.productName}">
+                                        </div>
+                                    </div>
+                                    <hr>
+                                    <div class="row">
+                                        <div class="col-sm-3">
+                                            <p class="mb-0">Loại sản phẩm</p>
+                                        </div>
+                                        <div class="col-sm-9">
+                                            <select name="categoryId">
+                                                <%
+                                                    DAOCategories dao = new DAOCategories();
+                                                    Product p1 = (Product)request.getAttribute("product");
+                                                    Vector<Categories> categories = dao.getCategories("Select * from categories");
+                                                    for(Categories categ: categories){%>
+                                                <option value="<%=categ.getCategoryID()%>"<%=categ.getCategoryID()== p1.getCategoryID() ? "selected": ""%> ><%=categ.getCategoryName()%></option>
+                                                <%}%>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <hr>
+                                    <div class="row">
+                                        <div class="col-sm-3">
+                                            <p class="mb-0">Mô tả sản phẩm</p>
+                                        </div>
+                                        <div class="col-sm-9">
+                                            <textarea name="productDescription"style="width: 300px;height: 140px;color: #a4a4a4;" value="${product.productDescription}">${product.productDescription}</textarea>
+                                        </div>
+                                    </div>
+                                    <hr>
+                                    <div class="row">
+                                        <div class="col-sm-3">
+                                            <p class="mb-0">Hàng trong kho</p>
+                                        </div>
+                                        <div class="col-sm-9">
+                                            <input type="number" name="unitInStock" id="unitInStock" value="${product.unitInStock}">
+                                        </div>
+                                    </div>
+                                    <hr>
+                                    <div class="row">
+                                        <div class="col-sm-3">
+                                            <p class="mb-0">Giá bán</p>
+                                        </div>
+                                        <div class="col-sm-9">
+                                            <input type="number" name="unitPrice" value="${product.unitPrice}">
+                                        </div>
+                                    </div>
+                                    <hr>
+                                    <div class="row">
+                                        <div class="col-sm-3">
+                                            <p class="mb-0">Giảm giá</p>
+                                        </div>
+                                        <div class="col-sm-9">
+                                            <input type="number" name="unitDiscount" value="${product.unitDiscount}">
+                                        </div>
+                                    </div>
+                                    <hr>
+                                    <div class="row">
+                                        <div class="col-sm-3">
+                                            <p class="mb-0">Ngày tạo</p>
+                                        </div>
+                                        <div class="col-sm-9">
+                                            <input type="text" name="createDate" id="createDate" value="${product.createDate}">
+                                        </div>
+                                    </div>
+                                    <hr>
+                                    <div class="row">
+                                        <div class="col-sm-3">
+                                            <p class="mb-0">Tổng số sản phẩm</p>
+                                        </div>
+                                        <div class="col-sm-9">
+                                            <input type="number" name="totalStock" id="totalStock" value="${product.totalStock}">
+                                        </div>
+                                    </div>
+                                    <hr>
+                                    <div class="row">
+                                        <div class="col-sm-3">
+                                            <p class="mb-0">Trạng thái sản phẩm</p>
+                                        </div>
+                                        <div class="col-sm-9">
+                                            <select name="productStatus" id="productStatus">
+                                                <option value="0" ${product.productStatus ? 'selected' : ''}>Kích Hoạt</option>
+                                                <option value="1" ${product.productStatus ? 'selected' : ''}>Vô hiệu hóa</option>
+                                            </select>
+                                        </div>
+                                    </div>
+
+                                    <script>
+                                        function handleRadioClick(clickedId) {
+                                            var radios = document.querySelectorAll('input[type="radio"]');
+                                            radios.forEach(function (radio) {
+                                                if (radio.id !== clickedId) {
+                                                    radio.checked = false;
+                                                }
+                                            });
+                                        }
+                                    </script>
                                 </div>
-                            </form>
-                            <%}%>
-                            <div class="col-lg-8">
-                                <div class="card mb-4">
-                                    <div class="card-body">
-                                        <form action="EditProductmktURL" method="post" enctype='multipart/form-data' onsubmit="return validateForm()">
-                                            <input type="hidden" name="service" value="update">
-                                            <div class="row">
-                                                <div class="col-sm-3">
-                                                    <p class="mb-0">ID</p>
-                                                </div>
-                                                <div class="col-sm-9">
-                                                    <input type="text" name="productId" value="${product.productID}" readonly>
-                                                </div>
-                                            </div>
-                                            <hr>
-                                            <div class="row">
-                                                <div class="col-sm-3">
-                                                    <p class="mb-0">Tên sản phẩm</p>
-                                                </div>
-                                                <div class="col-sm-9">
-                                                    <input type="text" name="productName" value="${product.productName}">
-                                                </div>
-                                            </div>
-                                            <hr>
-                                            <div class="row">
-                                                <div class="col-sm-3">
-                                                    <p class="mb-0">Loại</p>
-                                                </div>
-                                                <div class="col-sm-9">
-                                                    <input type="number" name="categoryId" value="${product.categoryID}">
-                                                </div>
-                                            </div>
-                                            <hr>
-                                            <div class="row">
-                                                <div class="col-sm-3">
-                                                    <p class="mb-0">Mô tả sản phẩm</p>
-                                                </div>
-                                                <div class="col-sm-9">
-                                                    <input type="text" name="productDescription" value="${product.productDescription}">
+                                <div style="flex: 0 0 40%;border-left: 1px dashed;">
+                                    <div class="card-body mb-8" style="flex: 0 0 40%;
+                                         max-width: 40%;
+                                         background: white;
+                                         border-radius: 10px;
+                                         margin-left: 15px;
+                                         max-width: 40%">
+                                        <div style="margin-left: 171px;
+                                             font-size: 20px;">Ảnh</div>
+
+                                        <% int count = 0;
+                                        int cateId = 0;
+                                        Product p = (Product) request.getAttribute("product");
+                                        DAOProductImage daoPi = new DAOProductImage();
+                                        ProductImage pi = daoPi.getProductImageByProductID(p.getProductID());
+                                        ResultSet cate = daoPi.getData("select * from product where productID = " + p.getProductID());
+                                        while (cate.next()) {
+                                            cateId = cate.getInt("CategoryID");
+                                        }
+                                        ResultSet rss = daoPi.getData("select * from ProductImage where ProductId = " + p.getProductID());
+                                        int radioChoice = (int)request.getAttribute("radioChoice");
+                                        while (rss.next()) {
+                                            count++;
+                                        %>
+                                        <div class="card-body text-center" style="width: 187px; margin-bottom: 20px;">
+                                            <div style="display: flex;">
+                                                <img style="min-width: 100px; height: 100px; width: 100px; margin-bottom: 5px;" src="<%=rss.getString(2)%>" alt="alt" />
+                                                <div style="flex: 0 0 89%; margin-top: 36px; margin-left: 50px">
+                                                    <input type="radio" id="html<%=count%>" name="default" <%=radioChoice==count?"checked":""%> onclick="handleRadioClick('html<%=count%>')"  value="<%=count%>" style="">
+                                                    <label for="html<%=count%>" style="font-size: 10px">Ảnh mặc định</label><br>
                                                 </div>
                                             </div>
-                                            <hr>
-                                            <div class="row">
-                                                <div class="col-sm-3">
-                                                    <p class="mb-0">Hàng trong kho</p>
-                                                </div>
-                                                <div class="col-sm-9">
-                                                    <input type="number" name="unitInStock" id="unitInStock" value="${product.unitInStock}">
-                                                </div>
-                                            </div>
-                                            <hr>
-                                            <div class="row">
-                                                <div class="col-sm-3">
-                                                    <p class="mb-0">Giá bán</p>
-                                                </div>
-                                                <div class="col-sm-9">
-                                                    <input type="number" name="unitPrice" value="${product.unitPrice}">
-                                                </div>
-                                            </div>
-                                            <hr>
-                                            <div class="row">
-                                                <div class="col-sm-3">
-                                                    <p class="mb-0">Giảm giá</p>
-                                                </div>
-                                                <div class="col-sm-9">
-                                                    <input type="number" name="unitDiscount" value="${product.unitDiscount}">
-                                                </div>
-                                            </div>
-                                            <hr>
-                                            <div class="row">
-                                                <div class="col-sm-3">
-                                                    <p class="mb-0">Ngày tạo</p>
-                                                </div>
-                                                <div class="col-sm-9">
-                                                    <input type="text" name="createDate" value="${product.createDate}">
-                                                </div>
-                                            </div>
-                                            <hr>
-                                            <div class="row">
-                                                <div class="col-sm-3">
-                                                    <p class="mb-0">Tổng số đánh giá</p>
-                                                </div>
-                                                <div class="col-sm-9">
-                                                    <input type="number" name="totalRate" value="${product.totalRate}">
-                                                </div>
-                                            </div>
-                                            <hr>
-                                            <div class="row">
-                                                <div class="col-sm-3">
-                                                    <p class="mb-0">Tổng số sản phẩm</p>
-                                                </div>
-                                                <div class="col-sm-9">
-                                                    <input type="number" name="totalStock" id="totalStock" value="${product.totalStock}">
-                                                </div>
-                                            </div>
-                                            <hr>
-                                            <div class="row">
-                                                <div class="col-sm-3">
-                                                    <p class="mb-0">Trạng thái sản phẩm</p>
-                                                </div>
-                                                <div class="col-sm-9">
-                                                    <select name="productStatus" id="productStatus">
-                                                        <option value="0" ${productStatus == 0 ? 'selected' : ''}>Hoạt động</option>
-                                                        <option value="1" ${productStatus == 1 ? 'selected' : ''}>Vô hiệu hóa</option>
-                                                    </select>
-                                                </div>
-                                            </div>
-                                            <input type="submit" value="Update">
-                                        </form>
+                                            <input type="file" style="font-size: 12px;" name="productImageUrl<%=count%>" id="productImageUrl" value="<%=rss.getString(2)%>">
+                                            <input type="hidden" name="oldImageUrl<%=count%>" value="<%=rss.getString(2)%>">
+                                            <input type="hidden" name="cateId" value="<%=cateId%>">
+                                            <input type="hidden" name="proId" value="<%=rss.getInt(1)%>">
+                                        </div>
+                                        <%}%>
+                                        <input type="hidden" name="countImg" value="<%=count%>">
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                            </body>
-                            <script>
-                                function validateForm() {
-                                    var unitInStock = parseInt(document.getElementById("unitInStock").value);
-                                    var totalStock = parseInt(document.getElementById("totalStock").value);
+                            <button class="btnUpdate"type="submit" value="Lưu">Lưu</button>
+                        </form>
+                    </div>
 
-                                    if (unitInStock > totalStock) {
-                                        alert("Hàng trong kho không thể lớn hơn Tổng số sản phẩm.");
-                                        return false;
-                                    }
-                                    return true;
-                                }
-                            </script>
-                            </html>
+                </div>
+                </body>
+                <script>
+                    function validateForm() {
+                        var unitInStock = parseInt(document.getElementById("unitInStock").value);
+                        var totalStock = parseInt(document.getElementById("totalStock").value);
+
+                        if (unitInStock > totalStock) {
+                            alert("Hàng trong kho không thể lớn hơn Tổng số sản phẩm.");
+                            return false;
+                        }
+                        return true;
+                    }
+                </script>
+                </html>

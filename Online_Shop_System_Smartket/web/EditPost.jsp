@@ -1,5 +1,6 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+         pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html lang="en">
     <head>
@@ -35,20 +36,19 @@
             <div id="editEmployeeModal">
                 <div class="modal-dialog">
                     <div class="modal-content">
-                        <form action="editAcc" method="post" enctype="multipart/form-data">
+                        <form action="editPost" method="post" enctype="multipart/form-data">
+                            <input type="hidden" name="service" value="upload"/>
                             <div class="modal-body">					
                                 <div class="form-group">
                                     <label>ID</label>
-                                    <input value="${blog.blogID}" name="id" type="text" class="form-control" readonly required>
+                                    <input value="${blog.blogID}" name="BlogID" type="text" class="form-control" readonly required>
                                 </div>
                                 <div class="form-group">
                                     <label>Danh mục</label>
-                                    <select name="category" class="form-select" aria-label="Default select example">
-                                        <c:forEach var="category" items="${categories}">
-                                            <option value="${category.categoryID}"<c:if test="${category.categoryID eq param.categoryId}">selected
-                                                    </c:if>
-                                                    >${category.categoryName}</option>
-                                        </c:forEach>					
+                                    <select class="form-control" name="categoryId">
+                                        <c:forEach var="category" items="${category}">
+                                            <option value="${category.categoryID}" ${category.categoryID eq blog.categoryID ? 'selected' : ''}>${category.categoryName}</option>
+                                        </c:forEach>
                                     </select>
                                 </div>
                                 <div class="form-group">
@@ -57,19 +57,19 @@
                                 </div>
                                 <div class="form-group">
                                     <label>Ảnh tác giả</label>
-                                    <img src="images/blog_author/${blog.authorImage}" alt="Ảnh tác giả">
-                                    <input type="file" 
-                                           class="form-control" name="authorImg" placeholder="Enter photo" required>
+                                    <img id="author-image" style="width: 350px;height: 200px;padding-left: 56px;padding-bottom: 15px" src="images/blog_author/${blog.authorImage}" alt="Ảnh tác giả">
+                                    <input value="${blog.authorImage}"  type="file" 
+                                           class="form-control" name="authorImg" placeholder="Enter photo" id="author-img-input">
                                 </div>
                                 <div class="form-group">
                                     <label>Ảnh bài đăng</label>
-                                    <img src="images/blog/${blog.blogImage}" alt="Ảnh bài đăng">
-                                    <input type="file" 
-                                           class="form-control" name="blogImg" placeholder="Enter photo" required>
+                                    <img  id="blog-image" style="width: 350px;height: 200px;padding-left: 45px;padding-bottom: 15px;padding-right: 12px"src="images/blog/${blog.blogImage}" alt="Ảnh bài đăng">
+                                    <input value="${blog.blogImage}"type="file" 
+                                           class="form-control" name="blogImg" placeholder="Enter photo" id="blog-img-input">
                                 </div>
                                 <div class="form-group">
                                     <label>Tiêu đề</label>
-                                    <textarea name="title" class="form-control" required>${blog.blogTitle}</textarea>
+                                    <input value="${blog.blogTitle}" name="title" type="text" class="form-control" required>
                                 </div>
                                 <div class="form-group">
                                     <label>Nội dung</label>
@@ -82,13 +82,13 @@
                                 <div class="form-group">
                                     <label>Trạng thái</label>
                                     <select name="hidden" class="form-select" aria-label="Default select example">
-                                        <option value="Hiện" >Hiện</option>
-                                        <option value="Ẩn" >Ẩn</option>
-                                        </select>
-                                    </div>
-                                    <div class="form-group">
-                                        <label>Ngày đăng</label>
-                                        <input value="${blog.createTime}" name="date" type="datetime" class="form-control" required>
+                                        <option value="1" ${blog.hiddenStatus eq 1 ? 'selected' : ''}>Hiện</option>
+                                        <option value="0" ${blog.hiddenStatus eq 0 ? 'selected' : ''}>Ẩn</option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label>Ngày đăng</label>
+                                    <input value="${blog.createTime.substring(0,10)}" name="date" type="date" class="form-control" required>
                                 </div>
                             </div>
                             <div class="modal-footer">
@@ -100,8 +100,23 @@
             </div>
 
         </div>
+        <script>
+            document.getElementById('author-img-input').addEventListener('change', function (e) {
+                var reader = new FileReader();
+                reader.onload = function (event) {
+                    document.getElementById('author-image').src = event.target.result;
+                };
+                reader.readAsDataURL(e.target.files[0]);
+            });
 
-
+            document.getElementById('blog-img-input').addEventListener('change', function (e) {
+                var reader = new FileReader();
+                reader.onload = function (event) {
+                    document.getElementById('blog-image').src = event.target.result;
+                };
+                reader.readAsDataURL(e.target.files[0]);
+            });
+        </script>
         <script src="js/manager.js" type="text/javascript"></script>
     </body>
 </html>

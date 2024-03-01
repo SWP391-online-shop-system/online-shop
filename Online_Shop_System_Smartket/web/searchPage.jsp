@@ -336,8 +336,8 @@
                                         <div class="row" style="display: contents">
                                             <%
                                                 DAOProduct dao = new DAOProduct();
-                                                ResultSet rsHotPro = dao.getData("select * from Product as p join ProductImage as pi on p.ProductID = pi.ProductID where  pi.ProductURL like '%_1%'\n"
-                                                +"group by p.ProductID having min(p.TotalStock - p.UnitInStock) > 0 order by (p.TotalStock - p.UnitInStock) desc limit 1");
+                                               ResultSet rsHotPro = dao.getData("select * from Product as p join ProductImage as pi on p.ProductID = pi.ProductID where  pi.ProductURL = pi.ProductURLShow \n"
+                                               +  "group by p.ProductID having min(p.TotalStock - p.UnitInStock) >0 order by (p.TotalStock - p.UnitInStock) desc limit 1");
                                             while(rsHotPro.next()) {
                                             %>
                                             <div class="product__item" style="border: 1px solid #c1e8c1ba;
@@ -348,7 +348,7 @@
                                                          margin-left: 25px;
                                                          margin-top: 10px;" src="<%=rsHotPro.getString("ProductURL")%>" alt="alt"/>
                                                     <%if(rsHotPro.getInt("UnitDiscount")!=0) {%>
-                                                    <div class="sale-cotification">Sale</div>
+                                                    <div class="sale-cotification" style="    margin-left: 77px;">Sale</div>
                                                     <%}%>
                                                     <%    ResultSet rsNew2Product = dao.getData("select * from product as p join productImage as pi "
                                                        + "on p.ProductID = pi.ProductID "
@@ -567,7 +567,7 @@
                                     <div class="product__item__pic set-bg">
                                         <img src="<%=rsPaging.getString("ProductURL")%>" alt="alt"/>
                                         <%if(rsPaging.getInt("UnitDiscount")!=0) {%>
-                                        <div class="sale-cotification">Sale</div>
+                                        <div class="sale-cotification"style="margin-left: 77px;">Sale</div>
                                         <%}%>
                                         <%    ResultSet rsNewProduct = dao.getData("select * from product as p join productImage as pi "
                                         + "on p.ProductID = pi.ProductID "

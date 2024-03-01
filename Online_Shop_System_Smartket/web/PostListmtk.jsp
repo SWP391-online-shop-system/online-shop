@@ -166,8 +166,8 @@
                                                         <div style="padding-top: 3px;">Trạng thái</div>
                                                         <select class="form-control" name="status" onchange="this.form.submit()">
                                                             <option value="">Tất cả</option>
-                                                            <option value="Hiện" <c:if test="${fn:contains(param.status,'Hiện')}">selected</c:if>>Hiện</option>
                                                             <option value="Ẩn" <c:if test="${fn:contains(param.status,'Ẩn')}">selected</c:if>>Ẩn</option>
+                                                            <option value="Hiện" <c:if test="${fn:contains(param.status,'Hiện')}">selected</c:if>>Hiện</option>
                                                             </select>
                                                         </div>
                                                         <input type="submit" style="display: none;">
@@ -204,7 +204,7 @@
                                                 <% try {
                                                     while(rs.next()) {
                                                         boolean HiddenStatus = rs.getBoolean("HiddenStatus");
-                                                        String status = (HiddenStatus) ? "Ẩn" : "Hiện";
+                                                        String status = (HiddenStatus) ? "Hiện" : "Ẩn";
                                                 %>
                                                 <tr>
                                                     <td><%=rs.getInt("BlogID")%></td>
@@ -221,7 +221,7 @@
                                                                 Hành động
                                                             </button>
                                                             <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                                                <a class="dropdown-item" href="blogdetail?bid=<%=rs.getInt("BlogID")%>">Xem</a>
+                                                                <a class="dropdown-item" href="view?BlogID=<%=rs.getInt("BlogID")%>">Xem</a>
                                                                 <a class="dropdown-item" href="editPost?BlogID=<%= rs.getInt("BlogID") %>">Chỉnh sửa</a>
                                                             </div>
                                                         </div>

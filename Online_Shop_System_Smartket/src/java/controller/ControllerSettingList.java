@@ -12,15 +12,15 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import java.sql.ResultSet;
-import model.DAOBlog;
-import model.DAOProduct;
+import model.DAOSetting;
+import view.Setting;
 
 /**
  *
  * @author admin
  */
-@WebServlet(name = "ControllerHomePage", urlPatterns = {"/HomePageURL"})
-public class ControllerHomePage extends HttpServlet {
+@WebServlet(name = "ControllerSettingList", urlPatterns = {"/SettingListURL"})
+public class ControllerSettingList extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -35,20 +35,10 @@ public class ControllerHomePage extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         try ( PrintWriter out = response.getWriter()) {
-            /* TODO output your page here. You may use following sample code. */
-            DAOBlog daoBlog = new DAOBlog();
-            DAOProduct dao = new DAOProduct();
-            ResultSet rsNewBlog = daoBlog.getData("select * from Blog order by CreateTime desc limit 1");
-            ResultSet rsFeatureBlog = daoBlog.getData("select * from Blog order by BlogRate desc limit 3");
-            ResultSet rsSlider = daoBlog.getData("select SliderImage, SliderLink from Slider");
-            request.setAttribute("rsSlider", rsSlider);
-            request.setAttribute("rsNewBlog", rsNewBlog);
-            request.setAttribute("rsFeatureBlog", rsFeatureBlog);
-            double maxValue = dao.getMaxUnitPrice();
-            double minValue = dao.getMinUnitPrice();
-            request.setAttribute("inputMinPrice", minValue);
-            request.setAttribute("inputMaxPrice", maxValue);
-            request.getRequestDispatcher("homepage.jsp").forward(request, response);
+            DAOSetting daoS = new DAOSetting();
+            ResultSet rsSetting = daoS.getData("select * from Setting");
+            request.setAttribute("rsSetting", rsSetting);
+            request.getRequestDispatcher("settingList.jsp").forward(request, response);
         }
     }
 
@@ -78,7 +68,18 @@ public class ControllerHomePage extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+
+        String valueSettingHomePage = (request.getParameter("valueSettingHomePage"));
+        int SettingID = Integer.parseInt(request.getParameter("SettingID"));
+        Setting editSetting = new Setting();
+        DAOSetting daoS = new DAOSetting();
+        editSetting = daoS.getSettingById(SettingID);
+        editSetting.setSettingValue(valueSettingHomePage);
+        daoS.updateSetting(editSetting);
+        System.out.println("updateComplete");
+        ResultSet rsSetting = daoS.getData("select * from Setting");
+        request.setAttribute("rsSetting", rsSetting);
+        request.getRequestDispatcher("settingList.jsp").forward(request, response);
     }
 
     /**

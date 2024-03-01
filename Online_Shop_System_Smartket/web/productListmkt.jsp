@@ -1,7 +1,7 @@
 <%-- 
-    Document   : test
-    Created on : Feb 22, 2024, 5:39:39 PM
-    Author     : HP
+    Document   : marketing_dashboard
+    Created on : Feb 1, 2024, 10:24:26 AM
+    Author     : admin
 --%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
@@ -33,11 +33,23 @@
         <link href="vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">
 
     </head>
+    <%
+    ResultSet rs = (ResultSet)request.getAttribute("data");
+    %>
+    <div class="container">
+        <% String message = (String)request.getParameter("message"); %>
+        <% if (message != null && !message.isEmpty()) { %>
+        <div class="alert alert-info" role="alert">
+            <%= message %>
+        </div>
+        <% } %>
+        <!-- Form content -->
+    </div>
     <body id="page-top">
         <div id="wrapper">
             <!-- Sidebar -->
             <ul class="navbar-nav sidebar sidebar-light accordion" id="accordionSidebar">
-                <a class="sidebar-brand d-flex align-items-center justify-content-center" href="HomePageURL">
+                <a class="sidebar-brand d-flex align-items-center justify-content-center" href="#">
                     <div class="sidebar-brand-icon">
                         <img style="height: 91px;
                              width: 133px;
@@ -68,7 +80,7 @@
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="ui-colors.html">
+                        <a class="nav-link" href="customerlist">
                             <i class="fas fa-users fa-2x text-info"></i>
                             <span>Khách hàng</span>
                         </a>
@@ -115,90 +127,99 @@
                     <!-- Container Fluid-->
                     <div class="container-fluid" id="container-wrapper">
                         <div class="d-sm-flex align-items-center justify-content-between mb-4">
-                            <h1 class="h3 mb-0 text-gray-800">Chi tiết sản phẩm</h1>
+                            <h1 class="h3 mb-0 text-gray-800">Danh sách sản phẩm</h1>
                             <ol class="breadcrumb">
                                 <li class="breadcrumb-item"><a href="MarketingDashBoardURL">Trang chủ</a></li>
                                 <!--<li class="breadcrumb-item">Tables</li>-->
-                                <li class="breadcrumb-item active" aria-current="page">Chi tiết sản phẩm</li>
+                                <li class="breadcrumb-item active" aria-current="page">Danh sách sản phẩm</li>
                             </ol>
                         </div>
+                        <!-- Row -->
+                        <a href="addProductmkt.jsp" style="margin-bottom: 10px" class="btn btn-secondary">Thêm sản phẩm mới</a>
                         <div class="row">
                             <!-- DataTable with Hover -->
                             <div class="col-lg-12">
                                 <div class="card mb-4">
                                     <div class="table-responsive p-3">
                                         <table class="table align-items-center table-flush table-hover" id="dataTableHover">
-                                            <thead class="thead-light">
-                                                <tr>
-                                                    <th>ID</th>
-                                                    <th style="min-width: 104px">Tên sản phẩm</th>
-                                                    <th style="max-height: 100px;">Ảnh</th>
-                                                    <th style="min-width: 109px;">Loại sản phẩm</th>
-                                                    <th>Mô tả sản phẩm</th>
-                                                    <th style="min-width: 120px;">Hàng trong kho</th>
-                                                    <th style="min-width: 60px;">Giá bán</th>
-                                                    <th style="min-width: 67px;">Giảm giá</th>
-                                                    <th style="min-width: 77px;">Ngày tạo</th>
-                                                    <th style="min-width: 130px;">Tổng số đánh giá</th>
-                                                    <th style="min-width: 137px;">Tổng số sản phẩm</th>
-                                                    <th style="min-width: 77px;">Trạng thái</th>
-                                                </tr>
-                                            </thead>
-                                            <tfoot>
-                                                <tr>
-                                                    <th>ID</th>
-                                                    <th style="min-width: 104px">Tên sản phẩm</th>
-                                                    <th style="max-height: 100px;">Ảnh</th>
-                                                    <th style="min-width: 109px;">Loại sản phẩm</th>
-                                                    <th>Mô tả sản phẩm</th>
-                                                    <th style="min-width: 120px;">Hàng trong kho</th>
-                                                    <th style="min-width: 60px;">Giá bán</th>
-                                                    <th style="min-width: 67px;">Giảm giá</th>
-                                                    <th style="min-width: 77px;">Ngày tạo</th>
-                                                    <th style="min-width: 130px;">Tổng số đánh giá</th>
-                                                    <th style="min-width: 137px;">Tổng số sản phẩm</th>
-                                                    <th style="min-width: 77px;">Trạng thái</th>
-                                                </tr>
-                                            </tfoot>
-                                            <tbody>
-                                                <%
-                ResultSet rs = (ResultSet) request.getAttribute("data");
-                if (rs != null) {
-                    try {
-                        while (rs.next()) {
-                        boolean productStatus = rs.getBoolean("productStatus");
+                                            <div style="display: flex;
+                                                 margin-left: 200px;
+                                                 margin-bottom: -30px;">
+                                                <form action="mktProductListURL" method="get" id="categoryForm">
+                                                    <div class="filter-group" style="display:flex;">
+                                                        <div style="padding-top: 3px;">Loại</div>
+                                                        <select class="form-control" name="categoryId" onchange="this.form.submit()">
+                                                            <option value="">Tất cả</option>
+                                                            <c:forEach var="category" items="${categories}">
+                                                                <option value="${category.categoryID}"<c:if test="${category.categoryID eq param.categoryId}">selected
+                                                                        </c:if>
+                                                                        >${category.categoryName}</option>
+                                                            </c:forEach>							
+                                                        </select>
+                                                    </div>
+                                                    <div class="filter-group" style="display:flex;">
+                                                        <div style="padding-top: 3px;">Trạng thái</div>
+                                                        <select class="form-control" name="status" onchange="this.form.submit()">
+                                                            <option value="">Tất cả</option>
+                                                            <option value="Còn hàng" <c:if test="${fn:contains(param.status,'Còn')}">selected</c:if>>Còn hàng</option>
+                                                            <option value="Hết hàng" <c:if test="${fn:contains(param.status,'Hết')}">selected</c:if>>Hết hàng</option>
+                                                            </select>
+                                                        </div>
+                                                        <input type="submit" style="display: none;">
+                                                    </form>
+                                                </div>
+                                                <thead class="thead-light">
+                                                    <tr>
+                                                        <th>ID</th>
+                                                        <th style="height: 100px">Ảnh</th>
+                                                        <th>Tiêu đề</th>
+                                                        <th style="min-width: 102px;">Loại sản phẩm</th>
+                                                        <th style="max-width: 56px;">Giá</th>
+                                                        <th>Trạng thái</th>						
+                                                        <th>Hành động</th>
+                                                    </tr>
+                                                </thead>
+                                                <tfoot>
+                                                    <tr>
+                                                        <th>ID</th>
+                                                        <th style="height: 100px">Ảnh</th>
+                                                        <th>Tiêu đề</th>
+                                                        <th style="min-width: 102px;">Loại sản phẩm</th>
+                                                        <th style="max-width: 56px;">Giá</th>
+                                                        <th style="width:87px; padding-left: 20px;">Trạng thái</th>						
+                                                        <th>Hành động</th>
+                                                    </tr>
+                                                </tfoot>
+                                                <tbody>
+                                                    <!-- Iterate over the result set -->
+                                                <% try {
+                                                    while(rs.next()) {
+                                                        int unitInStock = rs.getInt("UnitInStock");
+                                                        int totalStock = rs.getInt("TotalStock");
+                                                        String status = (unitInStock > 0 && unitInStock <= totalStock) ? "Còn Hàng" : "Hết Hàng";
                                                 %>
                                                 <tr>
-                                                    <td><%= rs.getInt("ProductID") %></td>
-                                                    <td><%= rs.getString("ProductName") %></td>
-                                                    <td><img style="width: 100px" src="<%= rs.getString("ProductURL") %>"/></td>
-                                                    <td><%= rs.getString("CategoryName") %></td>
-                                                    <td><textarea style="width: 300px;height: 140px;color: #a4a4a4;"><%= rs.getString("ProductDescription") %></textarea></td>
-                                                    <td><%= rs.getInt("UnitInStock") %></td>
+                                                    <td><%=rs.getInt("ProductID")%></td>
+                                                    <td><img style="width: 100px" src="<%=rs.getString("ProductURLShow")%>"/></td>
+                                                    <td><%=rs.getString("ProductName")%></td>
+                                                    <td><%=rs.getString("CategoryName")%></td>
                                                     <td><%= NumberFormat.getCurrencyInstance(new Locale("vi", "VN")).format(rs.getDouble("UnitPrice")) %></td>
-                                                    <td><%= rs.getInt("UnitDiscount") %></td>
-                                                    <td><%= rs.getString("CreateDate") %></td>
-                                                    <td><%= rs.getInt("TotalRate") %></td>
-                                                    <td><%= rs.getInt("TotalStock") %></td>
+                                                    <td><%= status %></td>
                                                     <td>
-                                                        <% 
-                                                            if (!productStatus) {
-                            out.println("Kích hoạt"); // Print "kích hoạt" if productStatus is true (or 1)
-                        } else {
-                            out.println("Vô hiệu hóa"); // Print "vô hiệu hóa" if productStatus is false (or 0)
-                        }
-                                                        %>
+                                                        <div class="dropdown">
+                                                            <button class="btn btn-secondary btn-sm dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                                Hành động
+                                                            </button>
+                                                            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                                                <a class="dropdown-item" href="mktViewProductURL?productId=<%= rs.getInt("ProductID") %>">Xem</a>
+                                                                <a class="dropdown-item" href="EditProductmktURL?productId=<%= rs.getInt("ProductID") %>">Chỉnh sửa</a>
+                                                            </div>
+                                                        </div>
                                                     </td>
                                                 </tr>
-                                                <% 
-                                                        }
-                                                    } catch (SQLException ex) {
-                                                        ex.printStackTrace();
-                                                    }
-                                                } else {
-                                                    // Handle null ResultSet
-                                                    out.println("<tr><td colspan='11'>No data available</td></tr>");
-                                                }
+                                                <% }
+                                                   } catch (SQLException ex) {
+                                                   }
                                                 %>
                                             </tbody>
                                         </table>
@@ -271,10 +292,15 @@
 
         <!-- Page level custom scripts -->
         <script>
-            $(document).ready(function () {
-                $('#dataTable').DataTable(); // ID From dataTable 
-                $('#dataTableHover').DataTable(); // ID From dataTable with Hover
-            });
+                                                            $(document).ready(function () {
+                                                                $('#dataTable').DataTable(); // ID From dataTable 
+                                                                $('#dataTableHover').DataTable(); // ID From dataTable with Hover
+                                                            });
+        </script>
+        <script>
+            function submitForm() {
+                document.getElementById('filterForm').submit();
+            }
         </script>
     </body>
 
