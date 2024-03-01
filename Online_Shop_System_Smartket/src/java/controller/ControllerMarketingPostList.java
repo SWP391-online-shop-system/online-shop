@@ -56,6 +56,14 @@ public class ControllerMarketingPostList extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         DAOBlog dao = new DAOBlog();
         DAOCategories daoCate = new DAOCategories();
+
+        String SBlogID = request.getParameter("BlogID");
+        if (SBlogID != null) {
+            String SHidden = request.getParameter("hidden");
+            int Hidden = Integer.parseInt(SHidden);
+            int ID = Integer.parseInt(SBlogID);
+            dao.ChangeHidden(Hidden,ID);
+        }
         String indexPage = request.getParameter("index");
         String categoryId = request.getParameter("categoryId");
         String status = request.getParameter("status"); // Get the status parameter
@@ -86,7 +94,6 @@ public class ControllerMarketingPostList extends HttpServlet {
         sql += " GROUP BY BlogID\n";
 
         rs = dao.getData(sql);
-
         int count = dao.getTotalBlog();
         int endPage = (int) Math.ceil((double) count / itemsPerPage);
         Vector<Categories> categories = daoCate.getCategories("SELECT * FROM categories");

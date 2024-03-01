@@ -92,8 +92,10 @@
                                 </div>
                             </div>
                             <div class="modal-footer">
-                                <input type="submit" class="btn btn-success" value="Edit">
+                                <input type="button" class="btn btn-danger" value="Quay lại" onclick="window.location.href='mtkPost';">
+                                <input type="submit" class="btn btn-success" value="Cập nhật">
                             </div>
+                                
                         </form>
                     </div>
                 </div>

@@ -139,7 +139,7 @@
                             }
                         </script>
 
-                        <a href="addPost?service=addProduct" class="btn btn-secondary">Thêm bài viết mới</a>
+                        <a href="addPost?service=addPost" class="btn btn-secondary">Thêm bài viết mới</a>
                         <div class="row">
                             <!-- DataTable with Hover -->
                             <div class="col-lg-12">
@@ -173,6 +173,7 @@
                                                         <input type="submit" style="display: none;">
                                                     </form>
                                                 </div>
+
                                                 <thead class="thead-light">
                                                     <tr>
                                                         <th>ID</th>
@@ -204,7 +205,9 @@
                                                 <% try {
                                                     while(rs.next()) {
                                                         boolean HiddenStatus = rs.getBoolean("HiddenStatus");
+                                                        String hidden = (HiddenStatus) ? "0" : "1";
                                                         String status = (HiddenStatus) ? "Hiện" : "Ẩn";
+                                                        int BlogID = rs.getInt("BlogID");
                                                 %>
                                                 <tr>
                                                     <td><%=rs.getInt("BlogID")%></td>
@@ -213,7 +216,9 @@
                                                     <td><%=rs.getString("BlogAuthor")%></td>
                                                     <td><%=rs.getString("CategoryName")%></td>
                                                     <td><%=rs.getInt("BlogRate")%> sao</td>
-                                                    <td><%= status %></td>
+                                                    <td>
+                                                        <input type="button" value="<%= status %>" onclick="window.location.href = 'mtkPost?BlogID=<%=rs.getInt("BlogID")%>&hidden=<%= hidden %>';">
+                                                    </td>
                                                     <td><%=rs.getDate("CreateTime")%> </td>
                                                     <td>
                                                         <div class="dropdown">
@@ -238,33 +243,33 @@
                             </div>
                         </div>
 
-                        
 
+
+                    </div>
+                    <!---Container Fluid-->
                 </div>
-                <!---Container Fluid-->
             </div>
-        </div>
 
-        <!-- Scroll to top -->
-        <a class="scroll-to-top rounded" href="#page-top">
-            <i class="fas fa-angle-up"></i>
-        </a>
-        <script src="vendor/jquery/jquery.min.js"></script>
-        <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-        <script src="vendor/jquery-easing/jquery.easing.min.js"></script>
-        <script src="js_marketing/ruang-admin.min.js"></script>
-        <script src="vendor/chart.js/Chart.min.js"></script>
-        <script src="js_marketing/demo/chart-area-demo.js"></script>  
-        <script src="vendor/datatables/jquery.dataTables.min.js"></script>
-        <script src="vendor/datatables/dataTables.bootstrap4.min.js"></script>
+            <!-- Scroll to top -->
+            <a class="scroll-to-top rounded" href="#page-top">
+                <i class="fas fa-angle-up"></i>
+            </a>
+            <script src="vendor/jquery/jquery.min.js"></script>
+            <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+            <script src="vendor/jquery-easing/jquery.easing.min.js"></script>
+            <script src="js_marketing/ruang-admin.min.js"></script>
+            <script src="vendor/chart.js/Chart.min.js"></script>
+            <script src="js_marketing/demo/chart-area-demo.js"></script>  
+            <script src="vendor/datatables/jquery.dataTables.min.js"></script>
+            <script src="vendor/datatables/dataTables.bootstrap4.min.js"></script>
 
-        <!-- Page level custom scripts -->
-        <script>
-                                                            $(document).ready(function () {
-                                                                $('#dataTable').DataTable(); // ID From dataTable 
-                                                                $('#dataTableHover').DataTable(); // ID From dataTable with Hover
-                                                            });
-        </script>
+            <!-- Page level custom scripts -->
+            <script>
+                                                                $(document).ready(function () {
+                                                                    $('#dataTable').DataTable(); // ID From dataTable 
+                                                                    $('#dataTableHover').DataTable(); // ID From dataTable with Hover
+                                                                });
+            </script>
     </body>
 
 </html>

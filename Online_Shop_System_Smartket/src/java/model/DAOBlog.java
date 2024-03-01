@@ -55,6 +55,48 @@ public class DAOBlog extends DBConnect {
 
     }
 
+    public int ChangeHidden(int HiddenStatus, int BlogID) {
+        int n = 0;
+        String sql = "UPDATE Blog\n"
+                + "SET HiddenStatus = ?\n"
+                + "WHERE BlogID = ?";
+        try {
+            // number ? = number fields
+            // index of ? start is 1
+            PreparedStatement pre = conn.prepareStatement(sql);
+            pre.setInt(1, HiddenStatus);
+            pre.setInt(2, BlogID);
+            n = pre.executeUpdate();
+        } catch (SQLException ex) {
+            Logger.getLogger(DAOCart.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return n;
+
+    }
+
+    public int addBlog(String BlogAuthor, int CategoryID, String AuthorImage, String BlogImage, String BlogTitle, String BlogContent, int HiddenStatus) {
+        int n = 0;
+        String sql = "INSERT INTO Blog (UserID, BlogAuthor, CategoryID, AuthorImage, BlogImage, BlogTitle, BlogContent, HiddenStatus, CreateTime)\n"
+                + "VALUES (2,?,?,?,?,?,?,?,curtime());";
+        try {
+            // number ? = number fields
+            // index of ? start is 1
+            PreparedStatement pre = conn.prepareStatement(sql);
+            pre.setString(1, BlogAuthor);
+            pre.setInt(2, CategoryID);
+            pre.setString(3, AuthorImage);
+            pre.setString(4, BlogImage);
+            pre.setString(5, BlogTitle);
+            pre.setString(6, BlogContent); // Fix the index from 6 to 7
+            pre.setInt(7, HiddenStatus);
+            n = pre.executeUpdate();
+        } catch (SQLException ex) {
+            Logger.getLogger(DAOCart.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return n;
+
+    }
+
     public Vector<Blog> getBlog(String sql) {
         Vector<Blog> vector = new Vector<>();
         try {
@@ -230,6 +272,7 @@ public class DAOBlog extends DBConnect {
                 );
             }
         } catch (Exception e) {
+            System.out.println("232" + e);
         }
         return null;
     }
@@ -388,7 +431,7 @@ public class DAOBlog extends DBConnect {
         DAOBlog dao = new DAOBlog();
         List<Categories> list = dao.getAllCategories();
         Blog b = dao.getBlogByID(1);
-        int count = dao.editBlog(2, "xu đinh", "aaron.jpg", "blog7", "chứt chứt", "hiohdskahfkjadlsfkjasfakjhas", 0, "2002-02-06", 7);
+        int count = dao.ChangeHidden(0,7);
         for (Categories o : list) {
             System.out.println(o);
         }

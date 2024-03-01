@@ -84,6 +84,10 @@
                                     <label>Ngày đăng</label>
                                     <input value="${blog.createTime}" name="date" type="datetime" class="form-control"readonly required>
                                 </div>
+                                <div class="modal-footer">
+                                <input type="button" class="btn btn-danger" value="Quay lại trang quản lí" onclick="window.location.href='mtkPost';">
+                                <input type="button" class="btn btn-success" value="Cập nhật lại" onclick="window.location.href='editPost?BlogID=${blog.blogID}';">
+                            </div>
                             </div>
                         </form>
                     </div>

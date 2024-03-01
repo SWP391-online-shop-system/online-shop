@@ -31,9 +31,8 @@ import view.Categories;
         maxFileSize = 1024 * 1024 * 10, // 10 MB
         maxRequestSize = 1024 * 1024 * 100 // 100 MB
 )
-@WebServlet(name = "ControlllerEditPost", urlPatterns = {"/editPost"})
-public class ControlllerEditPost extends HttpServlet {
-
+@WebServlet(name="ControllerAddPost", urlPatterns={"/addPost"})
+public class ControllerAddPost extends HttpServlet {
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -47,18 +46,11 @@ public class ControlllerEditPost extends HttpServlet {
             throws ServletException, IOException {
         String service = request.getParameter("service");
         DAOBlog dao = new DAOBlog();
-        String SBlogID = request.getParameter("BlogID");
-        int BlogID = Integer.parseInt(SBlogID);
-        Blog blog = dao.getBlogByID(BlogID);
-        if (service == null) {
-            service = "showDetail";
-        }
-        if (service.equals("showDetail")) {
-
+        
+        if (service.equals("addPost")) {
             List<Categories> categories = dao.getAllCategories();
-            request.setAttribute("blog", blog);
             request.setAttribute("category", categories);
-            request.getRequestDispatcher("EditPost.jsp").forward(request, response);
+            request.getRequestDispatcher("addPost.jsp").forward(request, response);
         }
         if (service.equals("upload")) {
             Part photo1 = request.getPart("authorImg");
@@ -70,13 +62,6 @@ public class ControlllerEditPost extends HttpServlet {
             String authorImg = getSubmittedFileName(photo1);
             String blogImg = getSubmittedFileName(photo2);
 
-            if (authorImg.equals("") || authorImg == null) {
-                authorImg = blog.getAuthorImage();
-            }
-            if (blogImg.equals("") || blogImg == null) {
-                blogImg = blog.getBlogImage();
-            }
-
             String imageDirectory = "/images/";
             String path1 = imageDirectory + "blog_author/" + authorImg;
             String path2 = imageDirectory + "blog/" + blogImg;
@@ -87,13 +72,6 @@ public class ControlllerEditPost extends HttpServlet {
             String realFileName1 = filename1;
             String realFileName2 = filename2;
 
-//            if (filename1.contains("\\build")) {
-//                realFileName1 = filename1.replace("\\build", "");
-//            }
-//
-//            if (filename2.contains("\\build")) {
-//                realFileName2 = filename2.replace("\\build", "");
-//            }
             if (photo1.getSize() > 0) {
                 photo1.write(realFileName1);
             }
@@ -106,24 +84,17 @@ public class ControlllerEditPost extends HttpServlet {
             String BlogAuthor = request.getParameter("author");
             String BlogTitle = request.getParameter("title");
             String BlogContent = request.getParameter("content");
-            String CreateTime = request.getParameter("date");
-//            String SBlogRate = request.getParameter("rate");
             String SHiddenStatus = request.getParameter("hidden");
             int CategoryID = Integer.parseInt(SCategoryID);
-//            int BlogRate = Integer.parseInt(SBlogRate);
             int HiddenStatus = Integer.parseInt(SHiddenStatus);
-            dao.editBlog(CategoryID, BlogAuthor, authorImg, blogImg, BlogTitle, BlogContent, HiddenStatus, CreateTime, BlogID);
-            List<Categories> categories = dao.getAllCategories();
-            request.setAttribute("blog", blog);
-            request.setAttribute("category", categories);
-            if (!(authorImg.equals(blog.getAuthorImage()) && blogImg.equals(blog.getBlogImage()))) {
+            dao.addBlog(BlogAuthor, CategoryID, authorImg, blogImg, BlogTitle, BlogContent, HiddenStatus);
                 try {
                     Thread.sleep(5000);
                 } catch (InterruptedException ex) {
-                    Logger.getLogger(ControlllerEditPost.class.getName()).log(Level.SEVERE, null, ex);
+                    Logger.getLogger(ControllerAddPost.class.getName()).log(Level.SEVERE, null, ex);
                 }
-            }
-            response.sendRedirect("view?BlogID=" + BlogID);
+            
+            response.sendRedirect("mtkPost");
         }
 
     }
