@@ -13,6 +13,8 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import java.sql.ResultSet;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import model.DAOFeedBack;
 import model.DAOLog;
 import model.DAOUser;
@@ -77,22 +79,29 @@ public class ControllerFeedBackDetail extends HttpServlet {
             int FeedBackID = Integer.parseInt(request.getParameter("FeedBackID"));
             FeedBack FeedBack = daoF.getFeedBackById(FeedBackID);
             request.setAttribute("data", FeedBack);
+            String StatusCheck = request.getParameter("checkStatus");
+            System.out.println("statusCheck = " + StatusCheck);
             String status = request.getParameter("status");
             String cusId_str = request.getParameter("uid");
             int cusId = Integer.parseInt(cusId_str); //nguoi phan hoi
-
+            System.out.println("status in servlet = " + status);
             String purpose = "";
             if (status.equals("1")) {
-                daoF.updateStatus(FeedBackID, 1);
-                purpose = "đã vô hiệu hóa phản hồi ";
-            } else {
                 daoF.updateStatus(FeedBackID, 0);
                 purpose = "đã kích hoạt phản hồi";
+            } else {
+                daoF.updateStatus(FeedBackID, 1);
+                purpose = "đã vô hiệu hóa phản hồi ";
             }
             Log log = new Log(cusId, updateBy, purpose);
             int n = daoLog.insertLog(log);
             ResultSet logger = daoU.getData("SELECT * FROM loghistory as log join `user` as u on log.UserId = u.UserID where u.UserId = " + cusId + " and purpose like '%phản hồi%'");
             request.setAttribute("log", logger);
+            try {
+                Thread.sleep(2000);
+            } catch (InterruptedException ex) {
+                Logger.getLogger(ControllerFeedBackDetail.class.getName()).log(Level.SEVERE, null, ex);
+            }
             request.getRequestDispatcher("FeedBackDetail.jsp").forward(request, response);
         }
     }

@@ -27,10 +27,12 @@
             .col-sm-3{
                 flex: 0 0 61%;
                 min-width: 33%;
+                font-size: 14px;
             }
             .col-sm-9{
                 flex: 0 0 67%;
                 min-width: 48%;
+                font-size: 14px;
             }
         </style>
     </head>
@@ -226,17 +228,15 @@
                                                 </div>
                                                 <hr>
                                                 <div class="col-sm-3" style="min-width: 250px;margin-bottom: 5px;">
-                                                        <p class="mb-0">Trạng thái: <%=fb.isFeedBackStatus()?"Đang vô hiệu hóa":"Đang được kích hoạt"%></p>
+                                                        <p class="mb-0">Trạng thái: <%=fb.isFeedBackStatus()?"Vô hiệu hóa":"Kích hoạt"%></p>
                                                     </div>
                                                     <form class="col-sm-9" id="myForm" method="get" action="FeedBackDetailURL">
                                                         <input type="hidden" id="statusInput" name="status" value="<%=fb.isFeedBackStatus()?"1":"0"%>">
                                                         <input type="hidden" name="FeedBackID" value="<%=fb.getFeedBackID()%>">
                                                         <input type="hidden" name="uid" value="<%=fb.getUserID()%>">
                                                         <div class="custom-control custom-switch">
-                                                            <input type="checkbox" class="custom-control-input" id="customSwitch1" onchange="document.getElementById('myForm').submit()"
-                                                               <%
-                                                                System.out.println("Feedback = "+fb.isFeedBackStatus());
-                                                                if(fb.isFeedBackStatus()){%> disable<%}%>>
+                                                        <input type="checkbox" class="custom-control-input" id="customSwitch1" onchange="this.form.submit()"
+                                                               <%=fb.isFeedBackStatus()?"unchecked":"checked"%>/>
                                                             <label class="custom-control-label" for="customSwitch1"></label>
                                                         </div>
                                                     </form>
@@ -278,17 +278,7 @@
                 <!---Container Fluid-->
             </div>
         </div>
-        <script>
-            window.onload = function () {
-                var statusString = "<%=fb.isFeedBackStatus()%>";
-                var status = parseInt(statusString, 10);
-                var switchInput = document.getElementById("customSwitch1");
-
-                // Cập nhật trạng thái của nút switch
-                switchInput.checked = (status === 1);
-            };
-</script>
-        <!-- Scroll to top -->
+       <!-- Scroll to top -->
         <a class="scroll-to-top rounded" href="#page-top">
             <i class="fas fa-angle-up"></i>
         </a>
@@ -300,27 +290,5 @@
         <script src="vendor/datatables/jquery.dataTables.min.js"></script>
         <script src="vendor/datatables/dataTables.bootstrap4.min.js"></script>
 
-        <!-- Page level custom scripts -->
-        <script type="text/javascript">
-            function updateStatus() {
-                var switchStatus = document.getElementById("customSwitch1").checked;
-                var hiddenInput = document.getElementById("statusInput");
-
-                // Cập nhật giá trị của trường ẩn trong form
-                hiddenInput.value = switchStatus;
-
-                // Gửi form
-                document.getElementById("myForm").submit();
-
-                window.onload = function () {
-                    var statusString = "<%=fb.isFeedBackStatus()%>";
-                    var status = parseInt(statusString, 10);
-                    console.log("status = " + status);
-                    var switchInput = document.getElementById("customSwitch1");
-                    // Cập nhật trạng thái của nút switch
-                    switchInput.checked = (status === 1);
-                };
-            }
-</script>
     </body>
 </html>
