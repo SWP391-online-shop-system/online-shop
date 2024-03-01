@@ -152,26 +152,69 @@
                                     <div class="table-responsive p-3">
                                         <table class="table align-items-center table-flush table-hover" id="dataTableHover" style="font-size: 14px;">
                                             <div style="display: flex;
-                                                 margin-left: 200px;
+                                                 margin-left: 157px;
                                                  margin-bottom: -30px;">
                                                 <%  DAOUser daoU = new DAOUser();
                                                     DAOProduct daoP = new DAOProduct();
                                                     User user = new User();
                                                     Product product = new Product();
                                                     int status = (int)request.getAttribute("status");
+                                                    int productID = (int)request.getAttribute("productID");
+                                                    int feedBackRate = (int)request.getAttribute("feedBackRate");
                                                     ResultSet rsFeedBack= (ResultSet)request.getAttribute("rsFeedBack");%>
                                                 <form action="FeedBackListURL" method="get">
                                                     <div class="filter-group" style="display:flex;">
                                                         <div style="padding-top: 16px;
-                                                             width: 81%;">Trạng thái</div>
+                                                             width: 76%;
+                                                             z-index: 99;">Trạng thái</div>
                                                         <select class="form-control" name="status" onchange="this.form.submit()" style="height: 34px;
                                                                 padding-top: 6px;
                                                                 margin-top: 10px;
-                                                                width: 153px;
+                                                                width: 118px;
+                                                                margin-left: -6px
                                                                 ">                                                            
                                                             <option value="2" <%if(status==2){%>selected<%}%>>Tất cả</option>                                                     
                                                             <option value="0" <%if(status==0){%>selected<%}%>>Hoạt động</option>                                                          
                                                             <option value="1" <%if(status==1){%>selected<%}%>>Vô hiệu hóa</option>                                                            
+                                                        </select>
+
+                                                        <div style="padding-top: 16px;
+                                                             width: 65%;
+                                                             margin-left: 14px;
+                                                             ">Sản phẩm</div>
+                                                        <select class="form-control" name="ProductID" onchange="this.form.submit()" style="height: 34px;
+                                                                padding-top: 6px;
+                                                                margin-top: 10px;
+                                                                width: 148px;
+                                                                z-index: 99;
+                                                                margin-left: 0px;
+                                                                ">
+                                                            <option value="0"<%=productID==0?"selected":""%>>Tất cả</option>
+                                                            <%
+                                                            ResultSet rsProductSelect= daoP.getData("select ProductID from FeedBack group by ProductID");
+                                                            while(rsProductSelect.next()){
+                                                            product = daoP.getProductById(rsProductSelect.getInt("ProductID"));
+                                                            %>
+                                                            <option value="<%=product.getProductID()%>" <%=(product.getProductID()==productID)?"selected":""%>><%=product.getProductName()%></option>                                                     
+                                                            <%}%>
+                                                        </select>
+
+                                                        <div style="padding-top: 16px;
+                                                             width: 65%;
+                                                             margin-right: -41px;
+                                                             margin-left: 18px;">Sao</div>
+
+                                                        <select class="form-control" name="ProductRate" onchange="this.form.submit()" style="    height: 34px;
+                                                                padding-top: 6px;
+                                                                margin-top: 10px;
+                                                                width: 153px;
+                                                                z-index: 99;
+                                                                margin-left: 3px;">
+                                                            <option value="0" <%=feedBackRate==0?"selected":""%>>Tất cả</option>
+                                                            <%ResultSet rsFeedRate = daoP.getData("select FeedBackRate from FeedBack group by FeedBackRate order by FeedBackRate");
+                                                            while(rsFeedRate.next()) {%>
+                                                            <option value="<%=rsFeedRate.getInt("FeedBackRate")%>"<%=rsFeedRate.getInt("FeedBackRate")==feedBackRate?"selected":""%>><%=rsFeedRate.getInt("FeedBackRate")%></option>                                                            
+                                                            <%}%>                                                            
                                                         </select>
                                                     </div>                                                   
                                                 </form>
