@@ -68,7 +68,7 @@
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="ui-colors.html">
+                        <a class="nav-link" href="FeedBackListURL">
                             <i class="fas fa-comments fa-2x text-info"></i>
                             <span>Phản hồi</span>
                         </a>

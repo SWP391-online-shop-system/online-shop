@@ -25,13 +25,12 @@ public class DAOOrder extends DBConnect {
                 + "`SaleID`,\n"
                 + "`OrderDate`,\n"
                 + "`StatusID`)\n"
-                + "VALUES(?,?,?,?);";
+                + "VALUES(?,?,?,0);";
         try {
             PreparedStatement pre = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
             pre.setInt(1, order.getUserID());
             pre.setInt(2, order.getSaleID());
             pre.setString(3,order.getOrderDate());
-            pre.setInt(4, order.getStatusID());
             n = pre.executeUpdate();
             ResultSet key = pre.getGeneratedKeys();
             if (key.next()) {
