@@ -220,7 +220,7 @@
                                                     <p class="mb-0">Ảnh sản phẩm</p>
                                                 </div>
                                                 <div class="col-sm-9">
-                                                    <input type="file" required name="productImageUrl">
+                                                    <input type="file" required name="productImageUrl" multiple>
                                                 </div>
                                             </div>
                                             <input type="submit" style="margin: 20px" name="submit" value="Thêm sản phẩm">

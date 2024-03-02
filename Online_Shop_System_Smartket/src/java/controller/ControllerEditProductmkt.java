@@ -118,8 +118,8 @@ public class ControllerEditProductmkt extends HttpServlet {
                             ProductImage pi = new ProductImage(productId, productImageURL, productImageURL);
                             daoPI.updateImage(productImageURL, productId, oldImageUrl);
                             System.out.println("realImg" + i + "!=null => ProductImageURL = " + productImageURL);
-                            imgURL.write("D:\\fpt\\Semeter_5\\SWP391\\Project_GitHub\\Online_Shop_System_Smartket\\web\\" + productImageURL);
-                            imgURL.write("D:\\fpt\\Semeter_5\\SWP391\\Project_GitHub\\Online_Shop_System_Smartket\\build\\web\\" + productImageURL);
+                            imgURL.write("D:\\project_github\\Online_Shop_System_Smartket\\web\\" + productImageURL);
+                            imgURL.write("D:\\project_github\\Online_Shop_System_Smartket\\build\\web\\" + productImageURL);
                         } else {
                             System.out.println("realImg = " + realImgURL + " == oldImageURL = " + oldImageUrl);
                             System.out.println("and PRoductimageURL = "+productImageURL);
@@ -285,17 +285,4 @@ public class ControllerEditProductmkt extends HttpServlet {
     public String getServletInfo() {
         return "Short description";
     }// </editor-fold>
-
-    private int countImg(int ProductID) {
-        int count = 0;
-        DAOProductImage dao = new DAOProductImage();
-        ResultSet rs = dao.getData("select count(*) from ProductImage where ProductID = " + ProductID);
-        try {
-            while (rs.next()) {
-                count = rs.getInt(1);
-            }
-        } catch (Exception e) {
-        }
-        return count;
-    }
 }

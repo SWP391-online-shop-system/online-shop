@@ -18,6 +18,9 @@ import view.ProductImage;
 import java.io.*;
 import java.net.URLEncoder;
 import java.nio.file.Paths;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
 import java.util.Vector;
 import model.DAOCategories;
 import view.Categories;
@@ -75,31 +78,37 @@ public class ControllerAddProductmkt extends HttpServlet {
         processRequest(request, response);
     }
 
-    protected void moveImage(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        int categoryId = Integer.parseInt(request.getParameter("categoryId"));
-        Part filePart = request.getPart("productImageUrl");
-
+    protected String moveAndRenameImage(Part filePart, int categoryId, int imageIndex) throws ServletException, IOException {
         String fileName = Paths.get(filePart.getSubmittedFileName()).getFileName().toString();
         String cateID = convertCate(categoryId);
 
-        // Extracting the name and tail from the file name
-        int index = fileName.lastIndexOf(".");
-        String name = fileName.substring(0, index);
-        String tail = fileName.substring(index);
+        // Constructing the new file name with the index
+        String newFileName = fileName.substring(0, fileName.lastIndexOf('.')) + "_" + imageIndex + fileName.substring(fileName.lastIndexOf('.'));
 
-        // Specify the destination directory
-        String destinationDirectory = "D:\\Workspace\\SPRING2024\\online_shop_system\\Online_Shop_System_Smartket\\web\\images\\product\\" + cateID + "\\" + name + "_1" + tail;
+        // Constructing the relative destination directory based on the category
+        String relativeDestinationDirectory = "images/product/" + cateID;
 
-        // Write the uploaded file to the destination directory
-        try ( InputStream fileContent = filePart.getInputStream();  OutputStream outputStream = new FileOutputStream(destinationDirectory)) {
+        // Create the directory if it doesn't exist
+        File directory = new File(relativeDestinationDirectory);
+        if (!directory.exists()) {
+            directory.mkdirs();
+        }
+
+        // Constructing the relative destination file path
+        String relativeDestinationFilePath = relativeDestinationDirectory + "/" + newFileName;
+
+        // Write the uploaded file to the destination directory with the new name
+        try ( InputStream fileContent = filePart.getInputStream();  OutputStream outputStream = new FileOutputStream(relativeDestinationFilePath)) {
             byte[] buffer = new byte[1024];
             int bytesRead;
             while ((bytesRead = fileContent.read(buffer)) != -1) {
                 outputStream.write(buffer, 0, bytesRead);
             }
-            System.out.println("File moved successfully to: " + destinationDirectory);
+            System.out.println("File moved successfully to: " + relativeDestinationFilePath);
+            return relativeDestinationFilePath; // Return the relative URL of the moved image
         } catch (IOException e) {
             System.err.println("Error moving file: " + e.getMessage());
+            return null;
         }
     }
 
@@ -161,18 +170,30 @@ public class ControllerAddProductmkt extends HttpServlet {
         int totalStock = Integer.parseInt(request.getParameter("totalStock"));
         String convert = convertCate(categoryId);
         Part productImageUrl_raw = request.getPart("productImageUrl");
-        String fileName = productImageUrl_raw.getSubmittedFileName();
-        int index = fileName.lastIndexOf(".");
-        String name = fileName.substring(0, index);
-        String tail = fileName.substring(index);
-        String productImageURL = "images/product/" + convert + "/" + name + "_1" + tail;
-        String productImageUrlShow = productImageURL;
         Product newProduct = new Product(productName, categoryId, productDescription, unitInStock, unitPrice, unitDiscount, totalStock);
         DAOProduct daoProduct = new DAOProduct();
         int n = daoProduct.insertProduct(newProduct);
+        Collection<Part> parts = request.getParts();
+        int imageIndex = 1; // Initialize the index for the first image
+        String firstImageUrl = null;
+        List<String> imageUrls = new ArrayList<>(); // List to store image URLs
+        for (Part part : parts) {
+            if ("productImageUrl".equals(part.getName())) {
+                // Move and rename the image, and get the new URL
+                String imageUrl = moveAndRenameImage(part, categoryId, imageIndex);
+                imageUrls.add(imageUrl); // Add the new image URL to the list
+                if (firstImageUrl == null) {
+                firstImageUrl = imageUrl; // Store the URL of the first image added
+            }
+                imageIndex++; // Increment the index for the next image
+            }
+        }
+
+        // Perform database insertion after moving all images
         DAOProductImage dao = new DAOProductImage();
-        dao.insertImage(new ProductImage(productID, productImageURL, productImageUrlShow));
-        moveImage(request, response);
+        for (String imageUrl : imageUrls) {
+            dao.insertImage(new ProductImage(productID, imageUrl, firstImageUrl)); // Assuming imageUrlShow is the same as imageUrl
+        }
         String st = (n > 0) ? "Thêm sản phẩm thành công" : "Thêm sản phẩm thất bại";
         Vector<Categories> categories = daoCategories.getCategories("SELECT * FROM categories");
         request.setAttribute("categories", categories);
