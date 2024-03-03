@@ -20,7 +20,7 @@ import view.ProductImage;
 public class DAOProductImage extends DBConnect {
 
     public ProductImage getProductImageByProductID(int ProductID) {
-        String sql = "select * from ProductImage where ProductID =? and ProductURL like '%_1%'";
+        String sql = "select * from ProductImage where ProductID = ?";
         try {
             PreparedStatement st = conn.prepareStatement(sql);
             st.setInt(1, ProductID);
@@ -28,12 +28,13 @@ public class DAOProductImage extends DBConnect {
             while (rs.next()) {
                 ProductImage pro = new ProductImage(
                         rs.getInt("ProductID"),
-                        rs.getString("ProductURL")
+                        rs.getString("ProductURL"),
+                        rs.getString("ProductURLShow")
                 );
                 return pro;
             }
         } catch (SQLException e) {
-            System.out.println(e);
+            System.out.println("sql error at line 36 in DAOProductImage: "+e);
         }
         return null;
     }

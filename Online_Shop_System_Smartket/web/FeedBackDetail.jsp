@@ -15,6 +15,7 @@
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
         <title>Thông Tin Khách Hàng</title>
+        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
         <script src="https://kit.fontawesome.com/ac74b86ade.js" crossorigin="anonymous"></script>
         <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
@@ -227,28 +228,28 @@
                                                     </div>
                                                 </div>
                                                 <hr>
+                                                <%int afterStatus = (int)request.getAttribute("afterStatus");%>
                                                 <div class="col-sm-3" style="min-width: 250px;margin-bottom: 5px;">
-                                                        <p class="mb-0">Trạng thái: <%=fb.isFeedBackStatus()?"Vô hiệu hóa":"Kích hoạt"%></p>
-                                                    </div>
+                                                    <p class="mb-0">Trạng thái: <span id="statusMess"><%=afterStatus==1?"Đã vô hiệu hóa":"Đang kích hoạt"%></span></p>
+                                                </div>
                                                     <form class="col-sm-9" id="myForm" method="get" action="FeedBackDetailURL">
                                                         <input type="hidden" id="statusInput" name="status" value="<%=fb.isFeedBackStatus()?"1":"0"%>">
                                                         <input type="hidden" name="FeedBackID" value="<%=fb.getFeedBackID()%>">
                                                         <input type="hidden" name="uid" value="<%=fb.getUserID()%>">
                                                         <div class="custom-control custom-switch">
-                                                        <input type="checkbox" class="custom-control-input" id="customSwitch1" onchange="this.form.submit()"
-                                                               <%=fb.isFeedBackStatus()?"unchecked":"checked"%>/>
+                                                            <input type="checkbox" class="custom-control-input" id="customSwitch1" onchange="updateStatus();"value="<%=fb.isFeedBackStatus()%>"
+                                                        <%=afterStatus==1?"":"checked"%>/>
                                                             <label class="custom-control-label" for="customSwitch1"></label>
                                                         </div>
                                                     </form>
-                                                
-                                                </div>
+                                                  </div>
                                                </div>
                                             </div>
                                         </div>
-                                <div class="row" style="    height: 300px;
+                                                               <div class="row" style="    height: 300px;
                                      width: 97%;
                                      max-height: 300px;
-                                     overflow-x: scroll;
+                                     overflow-y: scroll;
                                      margin: 0 auto;margin-bottom: 30px;">
                                     <div class="col-md-12">
                                         <div class="card mb-4 mb-md-0">
@@ -256,14 +257,14 @@
                                                 <p class="mb-4"style="
                                                    font-size: 20px;
                                                    color: black;">Lịch sử thay đổi trạng thái</p>
-                                                <div>
+                                                <div id="">
                                                     <%int countLog = 0;
                                                     while(logger.next()){
                                                     countLog++;
                                                         DAOUser dao = new DAOUser();
                                                         ResultSet mkt = dao.getData("SELECT * FROM online_shop_system.user where userID = " + logger.getInt(2));
                                                     %>
-                                                    <p style="margin-bottom: 15px;"><%=countLog%> - <%while(mkt.next()){%>Nhân viên <%=mkt.getString("FirstName")+" "+mkt.getString("LastName")%> <%}%>
+                                                    <p id="logcheck" style="margin-bottom: 15px;"><%=countLog%> - <%while(mkt.next()){%>Nhân viên <%=mkt.getString("FirstName")+" "+mkt.getString("LastName")%> <%}%>
                                                         đã <%=logger.getString(4)%> của <%=logger.getString("FirstName")+" "+logger.getString("LastName")%> vào <span style="color: black;"><%=logger.getString(3).substring(0,10)%>, lúc <%=logger.getString(3).substring(10)%></span></p>
                                                         <%}%>
                                                 </div>                                         
@@ -273,6 +274,33 @@
                                 </div>
                             </div>
                         </section>
+                        <script>
+                            function updateStatus() {
+                                var status = $('#customSwitch1').prop('checked') ? 0 : 1;
+                                var mess = document.getElementById("statusMess");
+                                var FeedBackID = $('input[name="FeedBackID"]').val();
+                                var uid = $('input[name="uid"]').val();
+                                var service = "updateStatus";
+                                if (status === 1) {
+                                    mess.innerHTML = 'Đã vô hiệu hóa';
+                                }
+                                if (status === 0) {
+                                    mess.innerHTML = 'Đang kích hoạt';
+                                }
+
+                                $.ajax({
+                                    url: "FeedBackDetailURL",
+                                    type: 'GET',
+                                    data: {service: service, status: (status === 0 ? 1 : 0), FeedBackID: FeedBackID, uid: uid},
+                                    success: function (data) {
+                                        // Update specific element in the JSP with the new data
+                                        $("#page-top").html(data);
+                                    },
+                                    error: function (xhr, status, error) {
+                                    }
+                                });
+                            }
+                        </script>
                     </div>      
                 </div>
                 <!---Container Fluid-->
