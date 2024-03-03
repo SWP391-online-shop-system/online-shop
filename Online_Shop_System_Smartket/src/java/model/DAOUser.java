@@ -440,7 +440,7 @@ public class DAOUser extends DBConnect {
                 result = "<span class=\"badge badge-success\">Hoạt động</span>";
                 break;
             case 2:
-                result = "<span class=\"badge badge-danger\">Khóa</span>";
+                result = "<span class=\"badge badge-danger\">Vô hiệu hóa</span>";
                 break;
         }
         return result;

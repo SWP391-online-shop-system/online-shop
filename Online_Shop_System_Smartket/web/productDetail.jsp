@@ -28,15 +28,19 @@
         <link rel="stylesheet" href="css/css_productList/style.css"/>
         <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet" />
         <script src="https://kit.fontawesome.com/ac74b86ade.js" crossorigin="anonymous"></script>
-
+        <style>
+            body{
+                background: white;
+            }
+        </style>
     </head>
     <body>
         <%DecimalFormat df = new DecimalFormat("###,###");
             df.setMaximumFractionDigits(8);%>
-        <!-- start header -->
-        <div class="header">
+        <!-- comment start -->
+        <div class="header" style="margin-top: 21px;">
             <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-            <div class="header-title"style="margin-top: -19px;">
+            <div class="header-title" style="margin-top: -16px;">
                 <div class="header-title-left">
                     <ul>
                         <li>
@@ -71,8 +75,8 @@
                             </head>
                             <body> 
                                 <%
-                                    String message = (String)request.getAttribute("message");
-                                    String messagesu = (String)request.getAttribute("messageSignUp");
+                                    String message1 = (String)request.getAttribute("message");
+                                    String messagesu1 = (String)request.getAttribute("messageSignUp");
                                     String msg1 = (String)request.getAttribute("msg1");
                                 %>
                                 <c:if test="${sessionScope.account.roleID == 5}">
@@ -114,7 +118,7 @@
                                                color: red;
                                                font-size: 20px;
                                                font-weight: 700;
-                                               text-align: left;"><%=(message == null) ? "" : message%></p>
+                                               text-align: left;"><%=(message1 == null) ? "" : message1%></p>
                                             <div class="form-element">
                                                 <label for="email">Email</label>
                                                 <input type="email" id="email" name="email" placeholder="Nhập email" required 
@@ -219,7 +223,7 @@
                                                color: red;
                                                font-size: 20px;
                                                font-weight: 700;
-                                               text-align: left;"><%=(messagesu == null) ? "" : messagesu%></p>
+                                               text-align: left;"><%=(messagesu1 == null) ? "" : messagesu1%></p>
                                             <div class="form-element">
                                                 <button type="submit" >Đăng kí</button>
                                             </div>
@@ -234,12 +238,12 @@
                         </html>
                     </div>
                 </div>
-            </div>
-            <div class="header-content">
+            </div>  
+            <div class="header-content" style="margin-bottom: 20px;">
                 <div class="header-content-logo">
                     <a href="HomePageURL"><img src="images/logo/logo.png"alt="404"/></a>
                 </div>
-                <div class="header-content-menu" style="padding: 67px 0px;">
+                <div class="header-content-menu">
                     <ul>
                         <li class="active"><a href="HomePageURL">Trang chủ</a></li>
                         <li><a href="ProductListURL?service=ShowAllProduct">Mua hàng</a></li>
@@ -260,31 +264,33 @@
                             <li><a href="profileUser.jsp">Tài khoản</a></li>
                         </c:if>            </ul>
                 </div>
-                <div class="header-content-right-menu"style="padding: 21px 0px;">
+                <div class="header-content-right-menu">
                     <ul>
                         <li class="margin-unit"><a href="#" title="Đơn hàng của tôi"><i class="fa-solid fa-file-invoice-dollar"></i></i></a></li>
                             <c:if test="${sessionScope.account == null}">
                             <li><a href="loginURL" onclick="alertOpenCart()"title="Giỏ hàng của tôi"><i class="fa-solid fa-cart-shopping"></i></a></li>
                                 </c:if>
                                 <c:if test="${sessionScope.account != null}">
-                            <li>
+                            <li>      
                                 <%
-                                    HttpSession session2 = request.getSession();
-                                    User user = (User) session2.getAttribute("account");
-                                    int userID = user.getUserID();
-                                    DAOCart daoC = new DAOCart();
-                                    ResultSet rs = daoC.getData("SELECT count(*) as count FROM Cart AS c JOIN Product AS p ON c.ProductID = p.ProductID where userID = "+userID+"");
-                                    while(rs.next()){
+                                HttpSession session2 = request.getSession();
+                                User user = (User) session2.getAttribute("account");
+                                int userID = user.getUserID();
+                                DAOCart dao = new DAOCart();
+                                ResultSet rs = dao.getData("SELECT count(*) as count FROM Cart AS c JOIN Product AS p ON c.ProductID = p.ProductID where userID = "+userID+"");
+                                while(rs.next()){
                                 %>
-                                <span class="count-cart" style="margin-right: -11px;
+                                <span class="count-cart" id="countCart" style="position: absolute;
+                                      margin-left: 17px;
                                       background-color: #ff0000;
                                       color: #ffffff;
                                       border-radius: 50%;
                                       padding: 0px 5px;
-                                      font-size: 17px;"><%=rs.getInt(1)%></span>
-                                <%
-                                    }
-                                %>
+                                      font-size: 13px;
+                                      z-index: 9;
+                                      top: 11px;
+                                      left: 3px;"><%=rs.getInt(1)%></span>
+                                <%}%>
                                 <a href="CartURL" title="Giỏ hàng của tôi"><i class="fa-solid fa-cart-shopping"></i></a>
                             </li>
                         </c:if>
@@ -297,6 +303,7 @@
                 alert('Đăng nhập để xem giỏ hàng của bạn');
             }
         </script>
+        <!-- comment end-->
         <div class="mainPage">
             <div>
                 <div class="shop__sidebar__search">

@@ -369,7 +369,7 @@
                                     <%}}%>
 
                                     <div class="card-footer text-center">
-                                        <a class="m-0 small text-primary card-link" href="#">Quản lí ngay <i
+                                        <a class="m-0 small text-primary card-link" href="mktProductListURL">Quản lí ngay <i
                                                 class="fas fa-chevron-right"></i></a>
                                     </div>
                                 </div>
@@ -390,7 +390,7 @@
                                             <input style="background-color: #1ab365!important;"class="date-chooser" type="date" name="userWeekTo" disabled/>
                                             <input type="hidden" name="weekFrom" value="<%=(formatWeekFrom==null || formatWeekFrom.equals(""))?curDate:formatWeekFrom%>"  />
                                         </form>
-                                        <a class="m-0 float-right btn btn-danger btn-sm" href="#">Quản lí ngay
+                                        <a class="m-0 float-right btn btn-danger btn-sm" href="customerlist">Quản lí ngay
                                             <i class="fas fa-chevron-right" style="margin-left: 8px;"></i></a>
                                     </div>
                                     <div class="table-responsive">
@@ -436,7 +436,7 @@
                                     <%}else{
                                         while(rsNewFeedBack.next()){%>
                                     <div class="customer-message align-items-center">
-                                        <a href="#" style="font-weight: 500;" >
+                                        <a style="font-weight: 500;" >
                                             <div class="text-truncate message-title"><%=rsNewFeedBack.getString(5)%>
                                             </div>
                                             <div class="small text-gray-500 message-time" style="font-weight: 500"><%=rsNewFeedBack.getString(4)%>&nbsp;·&nbsp;<%=rsNewFeedBack.getString(7)%></div></br>
@@ -451,7 +451,7 @@
                                     <%}}%>
                                     <div>
                                         <div class="card-footer text-center">
-                                            <a class="m-0 small text-primary card-link" href="#">Quản lí ngay
+                                            <a class="m-0 small text-primary card-link" href="FeedBackListURL">Quản lí ngay
                                                 <i class="fas fa-chevron-right"></i></a>
                                         </div>
                                     </div>
