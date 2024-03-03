@@ -7,24 +7,28 @@ package controller;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
+import jakarta.servlet.annotation.MultipartConfig;
+import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
-import java.sql.ResultSet;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Vector;
-import model.DAOProduct;
-import static model.DAOProduct.getCurrentTimestamp;
+import jakarta.servlet.http.Part;
 import model.DAOSlider;
 import view.Slider;
+import view.User;
 
 /**
  *
  * @author 84395
  */
-public class sliderList extends HttpServlet {
+@WebServlet(name = "updateslider", urlPatterns = {"/updateslider"})
+@MultipartConfig(
+        fileSizeThreshold = 1024 * 1024 * 1, // 1 MB
+        maxFileSize = 1024 * 1024 * 10, // 10 MB
+        maxRequestSize = 1024 * 1024 * 100 // 100 MB
+)
+public class controllerUpdateSlider extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -43,10 +47,10 @@ public class sliderList extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet sliderList</title>");
+            out.println("<title>Servlet controllerAddSlider</title>");
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet sliderList at " + request.getContextPath() + "</h1>");
+            out.println("<h1>Servlet controllerAddSlider at " + request.getContextPath() + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
@@ -64,26 +68,7 @@ public class sliderList extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        DAOSlider dao = new DAOSlider();
-        HttpSession session = request.getSession();
-        Vector<Slider> sliderlist = new Vector<>();
-        String statusfilter = request.getParameter("statusfilter");
-            sliderlist = dao.getSlider("select * from slider");
-            session.setAttribute("sliderlist", sliderlist);
-        session.setAttribute("timetoday", getCurrentTimestamp());
-        if(statusfilter!=null){
-        if (statusfilter.equalsIgnoreCase("true")) {
-            sliderlist = dao.getSlider("select * from slider where SliderStatus=0");
-            session.setAttribute("sliderlist", sliderlist);
-        }
-        if (statusfilter.equalsIgnoreCase("false")) {
-            sliderlist = dao.getSlider("select * from slider where SliderStatus=1");
-            session.setAttribute("sliderlist", sliderlist);
-        }}
-
-        request.getRequestDispatcher("sliderList.jsp").forward(request, response);
-
-          
+        processRequest(request, response);
     }
 
     /**
@@ -97,7 +82,33 @@ public class sliderList extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        int sliderID1 = Integer.parseInt(request.getParameter("updatesliderid").trim());
+        String sliderLink1 = request.getParameter("updateLink");
+        boolean sliderStatus1 = Boolean.parseBoolean(request.getParameter("updateStatus"));
+        System.out.println("dcm status "+request.getParameter("updateStatus"));
+        String newImageName = "slide" + sliderID1;
+        Part sliderpart = request.getPart("updateImg");
+                System.out.println("0000000+"+sliderpart);
+        String slidername = sliderpart.getSubmittedFileName();
+        System.out.println("0000000+"+sliderpart.getSubmittedFileName());
+        int dotIndex = slidername.lastIndexOf(".");
+        System.out.println("0000000+"+slidername);
+        if(!slidername.equals("")){
+        String result = newImageName + slidername.substring(dotIndex);
+        String path = "images/slider/" + result;
+        String realFileName = request.getServletContext().getRealPath(path);
+        String realFileName1 = realFileName.replace("\\build", "");
+        for (Part part : request.getParts()) {
+            part.write(realFileName);
+            part.write(realFileName1);
+        }}
+        DAOSlider DAOSlider = new DAOSlider();
+        Slider slider = DAOSlider.getaSlider("select * from slider where sliderId = " + sliderID1);
+        slider.setSliderLink(sliderLink1);
+        slider.setSliderStatus(sliderStatus1);
+        System.out.println(slider.isSliderStatus());
+        int n = DAOSlider.updateProduct(slider);
+        response.sendRedirect("sliderList");
     }
 
     /**
