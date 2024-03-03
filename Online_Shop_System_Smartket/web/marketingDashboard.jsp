@@ -80,7 +80,7 @@
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="ui-colors.html">
+                        <a class="nav-link" href="FeedBackListURL">
                             <i class="fas fa-comments fa-2x text-info"></i>
                             <span>Phản hồi</span>
                         </a>
@@ -212,7 +212,7 @@
                                                     if(rsUserCount.next()) {%>
                                                     <div class="h5 mb-0 font-weight-bold text-gray-800"><%=rsUserCount.getInt(1)%>&nbsp;khách hàng</div>
                                                     <%}
-                                                    ResultSet rsUserTrend = daoUser.getData("select count(UserID) from User where CreateDate between (curdate() - interval 6 day) and  curdate() and UserStatus = 1 and RoleID = 1;");
+                                                    ResultSet rsUserTrend = daoUser.getData("select count(UserID) from User where CreateDate between (curdate() - interval 6 day) and  now() and UserStatus = 1 and RoleID = 1;");
                                                     if(rsUserTrend.next()){
                                                     if(rsUserTrend.getInt(1) == 0) {%>
                                                     <div class="mt-2 mb-0 text-muted text-xs">

@@ -32,6 +32,25 @@
     <%
         Product product = (Product)request.getAttribute("product");
     %>
+    <style>
+        .btnUpdate{
+            text-align: center;
+            margin-left: 45%;
+            width: 125px;
+            border-radius: 4px;
+            background: #66bb6a;
+            color: white;
+            padding-bottom: 4px;
+            transition: all 0.5s;
+            border: none;
+        }
+        .btnUpdate:hover{
+            transform: scale(0.95);
+        }
+        input, select, textarea{
+            width : 200px;
+        }
+    </style>
     <script>
         function validateForm() {
             var unitInStock = parseInt(document.getElementById("unitInStock").value);
@@ -48,7 +67,7 @@
         <div id="wrapper">
             <!-- Sidebar -->
             <ul class="navbar-nav sidebar sidebar-light accordion" id="accordionSidebar">
-                <a class="sidebar-brand d-flex align-items-center justify-content-center" href="HomePageURL">
+                <a class="sidebar-brand d-flex align-items-center justify-content-center" href="MarketingDashBoardURL">
                     <div class="sidebar-brand-icon">
                         <img style="height: 91px;
                              width: 133px;
@@ -58,7 +77,7 @@
                 <div style="position: sticky; top: 30px;">
                     <hr class="sidebar-divider wee-0" style="margin: 0px;">
                     <li class="nav-item active">
-                        <a class="nav-link" href="index.html">
+                        <a class="nav-link" href="MarketingDashBoardURL">
                             <i class="fas fa-fw fa-tachometer-alt"></i>
                             <span>Thống kê</span></a>
                     </li>
@@ -67,25 +86,25 @@
                         Quản lí
                     </div>
                     <li class="nav-item">
-                        <a class="nav-link" href="ui-colors.html">
+                        <a class="nav-link" href="mtkPost">
                             <i class="fas fa-calendar fa-2x text-primary"></i>
                             <span>Bài đăng</span>
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="ui-colors.html">
+                        <a class="nav-link" href="mktProductListURL">
                             <i class="fas fa-shopping-cart fa-2x text-success"></i>
                             <span>Sản phẩm</span>
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="ui-colors.html">
+                        <a class="nav-link" href="customerlist">
                             <i class="fas fa-users fa-2x text-info"></i>
                             <span>Khách hàng</span>
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="ui-colors.html">
+                        <a class="nav-link" href="FeedBackListURL">
                             <i class="fas fa-comments fa-2x text-info"></i>
                             <span>Phản hồi</span>
                         </a>
@@ -199,7 +218,7 @@
                                             <hr>
                                             <div class="row">
                                                 <div class="col-sm-3">
-                                                    <p class="mb-0">Giảm giá</p>%
+                                                    <p class="mb-0">Giảm giá(%)</p>
                                                 </div>
                                                 <div class="col-sm-9">
                                                     <input type="number" required name="unitDiscount" value="${unitDiscount}">
@@ -220,11 +239,17 @@
                                                     <p class="mb-0">Ảnh sản phẩm</p>
                                                 </div>
                                                 <div class="col-sm-9">
-                                                    <input type="file" required name="productImageUrl">
+                                                    <input type="file" required name="productImageUrl" multiple>
                                                 </div>
                                             </div>
-                                            <input type="submit" style="margin: 20px" name="submit" value="Thêm sản phẩm">
-                                            <input type="reset" style="margin: 20px" value="Xóa hết">
+                                            <button class="btnUpdate" type="submit" style="height: 33px;
+                                                    font-size: 14px;
+                                                    margin: 20px;
+                                                    margin-left: -2px;margin-right: 47px;" name="submit" value="Thêm sản phẩm">Thêm sản phẩm</button>
+                                            <button class="btnUpdate" type="reset" style="height: 33px;
+                                                    font-size: 14px;
+                                                    margin: 20px;
+                                                    margin-left: -2px;" value="Xóa hết">Xóa hết</button>
                                         </form>
                                     </div>
                                 </div>

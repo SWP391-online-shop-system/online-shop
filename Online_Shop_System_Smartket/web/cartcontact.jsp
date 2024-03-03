@@ -565,35 +565,7 @@
                                 </div>
                             </div>
                             <div style="text-align: end;">Tổng đơn hàng: <%=decimalFormat.format(totalprice)%>đ</div>
-                            <!-- Modal Long -->
-                            <div class="modal fade" id="exampleModalLong" tabindex="-1" role="dialog"
-                                 aria-labelledby="exampleModalLongTitle" aria-hidden="true">
-                                <div class="modal-dialog" role="document">
-                                    <div class="modal-content">
-                                        <div class="modal-header">
-                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                                <span aria-hidden="true">&times;</span>
-                                            </button>
-                                        </div>
-                                        <div class="modal-body" style="text-align: center">
-                                            <h4>Mã của bạn đã được gửi đến email đăng kí nhận hàng</h4>
-                                            <p>Vui lòng điền mã OTP để xác nhận</p>
-
-                                            <div class="otp-field mb-4">
-                                                <input type="number" />
-                                            </div>
-
-                                            <button type="submit" name="submit" class="btn-back" style="margin: 0">Đặt Hàng</button>
-                                            <p class="resend text-muted mb-0">
-                                                Bạn không nhận được mã? <a href="">Gửi lại mã</a>
-                                            </p>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <button type="submit" class="btn-back" data-toggle="" data-target="#exampleModalLong"
-                                    id="#modalLong">Đặt Hàng</button>
-
+                            <button type="submit" class="btn-back">Đặt Hàng</button>
                         </div>
                     </div>
                 </form>

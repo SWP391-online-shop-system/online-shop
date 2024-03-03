@@ -19,14 +19,13 @@ public class DBConnect {
             Class.forName("com.mysql.cj.jdbc.Driver");
             //connect
             conn = DriverManager.getConnection(url, user, pass);
-            System.out.println("connected");
         } catch (ClassNotFoundException | SQLException ex) {
             Logger.getLogger(DBConnect.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
     public DBConnect() {
-        this("jdbc:mysql://localhost:3306/Online_Shop_System", "root", "Matkhau22");
+        this("jdbc:mysql://localhost:3306/Online_Shop_System", "duong", "123456");
     }
 
     public ResultSet getData(String sql) {

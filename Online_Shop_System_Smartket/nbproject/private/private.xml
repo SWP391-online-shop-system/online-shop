@@ -3,13 +3,9 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Users/admin/Desktop/online_shop_systemGitHub/Online_Shop_System_Smartket/web/addPost.jsp</file>
-            <file>file:/C:/Users/admin/Desktop/online_shop_systemGitHub/Online_Shop_System_Smartket/web/EditPost.jsp</file>
-            <file>file:/C:/Users/admin/Desktop/online_shop_systemGitHub/Online_Shop_System_Smartket/web/forgotpass.jsp</file>
-            <file>file:/C:/Users/admin/Desktop/online_shop_systemGitHub/Online_Shop_System_Smartket/web/PostListmtk.jsp</file>
-            <file>file:/C:/Users/admin/Desktop/online_shop_systemGitHub/Online_Shop_System_Smartket/web/newPassword.jsp</file>
-            <file>file:/C:/Users/admin/Desktop/online_shop_systemGitHub/Online_Shop_System_Smartket/src/java/controller/ControllerForgotPass.java</file>
-            <file>file:/C:/Users/admin/Desktop/online_shop_systemGitHub/Online_Shop_System_Smartket/web/EnterOtp.jsp</file>
+            <file>file:/D:/project_github/Online_Shop_System_Smartket/web/addProductmkt.jsp</file>
+            <file>file:/D:/project_github/Online_Shop_System_Smartket/src/java/model/DAOProductImage.java</file>
+            <file>file:/D:/project_github/Online_Shop_System_Smartket/src/java/controller/ControllerAddProductmkt.java</file>
         </group>
     </open-files>
 </project-private>

@@ -68,7 +68,7 @@
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="ui-colors.html">
+                        <a class="nav-link" href="FeedBackListURL">
                             <i class="fas fa-comments fa-2x text-info"></i>
                             <span>Phản hồi</span>
                         </a>
@@ -138,7 +138,7 @@
                         </div>
                         <%sessionMessage.removeAttribute("message");%>
                         <div class="row">
-                            <button style="margin-left: 13px;margin-bottom: 5px;" type="button" class="btn btn-outline-primary" data-toggle="modal" data-target="#exampleModalLong"
+                            <button style="margin-left: 13px;margin-bottom: 5px;" type="button" class="btn btn-secondary" data-toggle="modal" data-target="#exampleModalLong"
                                     id="#modalLong">Thêm Khách Hàng Mới</button>
 
                         </div>
@@ -146,9 +146,6 @@
                             <!-- DataTable with Hover -->
                             <div class="col-lg-12">
                                 <div class="card mb-4">                                 
-                                    <!--                                    <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-                                                                            <h6 class="m-0 font-weight-bold text-primary">DataTables with Hover</h6>
-                                                                        </div>-->
                                     <div class="table-responsive p-3">
                                         <table class="table align-items-center table-flush table-hover" id="dataTableHover" style="font-size: 14px;">
                                             <div style="display: flex;
