@@ -369,7 +369,7 @@
                                border: 2px solid #e5e5e5;
                                height: 36px;
                                margin-left: 20px;" name="keyWord" type="text" placeholder="Search...">
-                        <button type="submit"><i class="fa-solid fa-magnifying-glass"></i></button>
+                        <button type="submit" style="padding-right: 35px;"><i class="fa-solid fa-magnifying-glass"></i></button>
                     </form>
                 </div>
                 <div class="hottest-pro"style="margin-left: 23px;">
@@ -459,7 +459,8 @@
                         } else {
                         CategoryID = Integer.parseInt(CategoryID_raw);
                         }
-                        ResultSet rsCategory = (ResultSet)request.getAttribute("CategoryResult");
+                        DAOCategories daoCate = new DAOCategories();
+                        ResultSet rsCategory = daoCate.getData("Select * from Categories");
                     %>
                     <div id="collapseOne" class="collapse show" data-parent="#accordionExample">
                         <div class="card-body">
@@ -484,28 +485,10 @@
                 </div>
             </div>  
             <div class="card" style="align-items: center">
-                <div class="cart" style="flex: 0">
-                    <div class="row justify-content-center">
-                        <div class="card bg-white mb-5 mt-5 border-0" style="box-shadow: 0 12px 15px rgba(0, 0, 0, 0.02);">
-                            <div class="card-body p-5 text-center">
-                                <h4>Mã của bạn đã được gửi đến email đăng kí nhận hàng</h4>
-                                <p>Vui lòng điền mã OTP để xác nhận</p>
-
-                                <div class="otp-field mb-4">
-                                    <input type="number" id="otp1"/>
-                                    <input type="number" id="otp2" disabled />
-                                    <input type="number" id="otp3" disabled />
-                                    <input type="number" id="otp4" disabled />
-                                    <input type="number" id="otp5" disabled />
-                                    <input type="number" id="otp6" disabled />
-                                </div>
-                                <button class="btn btn-primary" style="cursor: pointer" onclick="verifyOTP()">Xác nhận</button>
-                                <p class="resend text-muted mb-0">
-                                    Bạn không nhận được mã? <a href="CartcontactOTPVerify?service=reSendOTP">Gửi lại mã</a>
-                                </p>
-                            </div>
-                        </div>
-                    </div>
+                    <h4>Vui lòng quét mã QR bên dưới để thực hiện chuyển khoản thanh toán đơn hàng</h4>
+                <div class="cart" style="flex: 0; width:43%;">
+                    <%String QrPath = (String)request.getAttribute("QrPath");%>
+                    <img style="width:100%;height:100%" src="<%=QrPath%>" alt="alt"/>
                 </div>
             </div>
         </section>

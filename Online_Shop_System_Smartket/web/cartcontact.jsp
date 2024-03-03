@@ -492,13 +492,13 @@
                                     <div class="form-group">
                                         <label>Địa Chỉ Người Nhận
                                         </label><br/>
-                                        <select name="city" id="city" onchange="updateAddress();">
+                                        <select name="city" id="city" onchange="updateAddress();" required>
                                             <option value="" selected>Tỉnh thành</option>           
                                         </select>
-                                        <select name="district" id="district" onchange="updateAddress();">
+                                        <select name="district" id="district" onchange="updateAddress();" required>
                                             <option value="" selected>Quận huyện</option>
                                         </select>
-                                        <select name="ward" id="ward" onchange="updateAddress();">
+                                        <select name="ward" id="ward" onchange="updateAddress();" required>
                                             <option value="" selected>Phường xã</option>
                                         </select>
                                     </div>
@@ -565,6 +565,7 @@
                                 </div>
                             </div>
                             <div style="text-align: end;">Tổng đơn hàng: <%=decimalFormat.format(totalprice)%>đ</div>
+                            <input type="hidden" name="totalPrice" value="<%=totalprice%>"/>
                             <button type="submit" class="btn-back">Đặt Hàng</button>
                         </div>
                     </div>

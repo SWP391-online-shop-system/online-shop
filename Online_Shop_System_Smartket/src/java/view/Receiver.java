@@ -83,5 +83,10 @@ public class Receiver {
     public void setReceEmail(String receEmail) {
         this.receEmail = receEmail;
     }
+
+    @Override
+    public String toString() {
+        return "Receiver{" + "orderID=" + orderID + ", receName=" + receName + ", recePhone=" + recePhone + ", receAdress=" + receAdress + ", receEmail=" + receEmail + ", note=" + note + '}';
+    }
     
 }

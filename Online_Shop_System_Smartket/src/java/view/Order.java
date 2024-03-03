@@ -15,23 +15,33 @@ public class Order {
     private String orderDate;
     private String shippedDate;
     private int statusID;
+    private double totalPrice;
 
     public Order() {
     }
 
-    public Order(int orderID, int userID, int saleID, String orderDate, String shippedDate, int statusID) {
-        this.orderID = orderID;
+    public Order(int userID, int saleID, String orderDate, String shippedDate, int statusID) {
         this.userID = userID;
         this.saleID = saleID;
         this.orderDate = orderDate;
         this.shippedDate = shippedDate;
         this.statusID = statusID;
     }
-    public Order(int userID, int saleID, String orderDate, int statusID) {
+
+    public Order(int userID, int saleID, int statusID, double totalPrice) {
         this.userID = userID;
         this.saleID = saleID;
-        this.orderDate = orderDate;
         this.statusID = statusID;
+        this.totalPrice = totalPrice;
+    }
+
+
+    public double getTotalPrice() {
+        return totalPrice;
+    }
+
+    public void setTotalPrice(double totalPrice) {
+        this.totalPrice = totalPrice;
     }
 
     public int getOrderID() {
