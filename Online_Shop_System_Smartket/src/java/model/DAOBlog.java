@@ -245,6 +245,25 @@ public class DAOBlog extends DBConnect {
         return list;
     }
 
+    public List<Blog> getAuthor() {
+        List<Blog> list = new ArrayList<>();
+        String sql = "SELECT DISTINCT BlogAuthor\n"
+                + "FROM blog;";
+        try {
+            Statement state = conn.createStatement(
+                    ResultSet.TYPE_SCROLL_SENSITIVE,
+                    ResultSet.CONCUR_UPDATABLE);
+            ResultSet rs = state.executeQuery(sql);
+            while (rs.next()) {
+                list.add(new Blog(
+                        rs.getString(1)
+                ));
+            }
+        } catch (Exception e) {
+        }
+        return list;
+    }
+
     public Blog getBlogByID(int Bid) {
         List<Blog> list = new ArrayList<>();
         String sql = "SELECT * \n"
@@ -429,10 +448,10 @@ public class DAOBlog extends DBConnect {
 
     public static void main(String[] args) {
         DAOBlog dao = new DAOBlog();
-        List<Categories> list = dao.getAllCategories();
+        List<Blog> list = dao.getAuthor();
         Blog b = dao.getBlogByID(1);
-        int count = dao.ChangeHidden(0,7);
-        for (Categories o : list) {
+        int count = dao.ChangeHidden(0, 7);
+        for (Blog o : list) {
             System.out.println(o);
         }
         System.out.println(count);

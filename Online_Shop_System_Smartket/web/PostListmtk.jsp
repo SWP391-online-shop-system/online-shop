@@ -139,14 +139,14 @@
                             }
                         </script>
 
-                        <a href="addPost?service=addPost" class="btn btn-secondary">Thêm bài viết mới</a>
+                        <a style="margin-bottom: 10px;" href="addPost?service=addPost" class="btn btn-secondary">Thêm bài viết mới</a>
                         <div class="row">
                             <!-- DataTable with Hover -->
                             <div class="col-lg-12">
                                 <div class="card mb-4">
                                     <div class="table-responsive p-3">
                                         <table class="table align-items-center table-flush table-hover" id="dataTableHover">
-                                            <div style="display: flex;
+                                            <div style="display: inline-grid;
                                                  margin-left: 200px;
                                                  margin-bottom: -30px;">
                                                 <form action="mtkPost" method="get" id="categoryForm">
@@ -163,10 +163,23 @@
                                                     </div>
                                                     <!-- Your other form elements -->
                                                     <div class="filter-group" style="display:flex;">
-                                                        <div style="padding-top: 3px;">Trạng thái</div>
-                                                        <select class="form-control" name="status" onchange="this.form.submit()">
+                                                        <div style="padding-top: 3px;">Tác Giả</div>
+                                                        <select class="form-control" name="author" onchange="this.form.submit()">
                                                             <option value="">Tất cả</option>
-                                                            <option value="Ẩn" <c:if test="${fn:contains(param.status,'Ẩn')}">selected</c:if>>Ẩn</option>
+                                                            <c:forEach var="author" items="${author}">
+                                                                <option value="${author.blogAuthor}" <c:if test="${author.blogAuthor eq check}">selected
+                                                                        </c:if>
+                                                                        >${author.blogAuthor}</option>
+                                                            </c:forEach>							
+                                                        </select>
+                                                        </div>
+                                                        <input type="submit" style="display: none;">
+
+                                                        <div class="filter-group" style="display:flex;">
+                                                            <div style="padding-top: 3px;">Trạng thái</div>
+                                                            <select class="form-control" name="status" onchange="this.form.submit()">
+                                                                <option value="">Tất cả</option>
+                                                                <option value="Ẩn" <c:if test="${fn:contains(param.status,'Ẩn')}">selected</c:if>>Ẩn</option>
                                                             <option value="Hiện" <c:if test="${fn:contains(param.status,'Hiện')}">selected</c:if>>Hiện</option>
                                                             </select>
                                                         </div>
@@ -265,10 +278,10 @@
 
             <!-- Page level custom scripts -->
             <script>
-                                                                $(document).ready(function () {
-                                                                    $('#dataTable').DataTable(); // ID From dataTable 
-                                                                    $('#dataTableHover').DataTable(); // ID From dataTable with Hover
-                                                                });
+                                                            $(document).ready(function () {
+                                                                $('#dataTable').DataTable(); // ID From dataTable 
+                                                                $('#dataTableHover').DataTable(); // ID From dataTable with Hover
+                                                            });
             </script>
     </body>
 
