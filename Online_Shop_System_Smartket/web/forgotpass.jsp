@@ -58,7 +58,7 @@ body {
 		<div class="row justify-content-center">
 			<div class="col-lg-8 col-md-10">
 				<div class="forgot">
-					<h2>Quên mật khẩu?</h2>
+                                    <h2 style="color: #28a745">Quên mật khẩu?</h2>
 					<p>làm theo hướng dẫn dưới đây để tạo mật khẩu mới</p>
 					<ol class="list-unstyled">
 						<li><span class="text-primary text-medium">1. </span>Điền địa chỉ email đã đăng kí của bạn vào mục bên dưới</li>

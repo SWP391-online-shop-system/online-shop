@@ -72,13 +72,12 @@ public class ControllerEditProductmkt extends HttpServlet {
                 int unitInStock = Integer.parseInt(request.getParameter("unitInStock"));
                 double unitPrice = Double.parseDouble(request.getParameter("unitPrice"));
                 int unitDiscount = Integer.parseInt(request.getParameter("unitDiscount"));
-                String createDate = request.getParameter("createDate");
                 int totalStock = Integer.parseInt(request.getParameter("totalStock"));
                 int productStatusValue = Integer.parseInt(request.getParameter("productStatus"));
                 boolean productStatus = (productStatusValue == 0);
                 int n = 0;
                 Product product = new Product(productId, productName, categoryId, productDescription,
-                        unitInStock, unitPrice, unitDiscount, createDate, totalStock, productStatus);
+                        unitInStock, unitPrice, unitDiscount, totalStock, productStatus);
                 n = dao.updateProduct(product);
 
                 int countImg = Integer.parseInt(request.getParameter("countImg"));

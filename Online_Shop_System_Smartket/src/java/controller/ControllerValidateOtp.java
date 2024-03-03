@@ -51,6 +51,8 @@ public class ControllerValidateOtp extends HttpServlet {
 
             if (currentTime <= otpExpirationTime) {
                 if (value == otp) {
+                    String msg = "điền mật khẩu mới vào biểu mẫu bên dưới";
+                    request.setAttribute("message", msg);
                     request.setAttribute("email", request.getParameter("email"));
                     request.setAttribute("status", "success");
                     dispatcher = request.getRequestDispatcher("newPassword.jsp");

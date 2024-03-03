@@ -47,7 +47,7 @@
         <div id="wrapper">
             <!-- Sidebar -->
             <ul class="navbar-nav sidebar sidebar-light accordion" id="accordionSidebar">
-                <a class="sidebar-brand d-flex align-items-center justify-content-center" href="index.html">
+                <a class="sidebar-brand d-flex align-items-center justify-content-center" href="MarketingDashBoardURL">
                     <div class="sidebar-brand-icon">
                         <img style="height: 91px;
                              width: 133px;
@@ -57,7 +57,7 @@
                 <div style="position: sticky; top: 30px;">
                     <hr class="sidebar-divider wee-0" style="margin: 0px;">
                     <li class="nav-item active">
-                        <a class="nav-link" href="index.html">
+                        <a class="nav-link" href="MarketingDashBoardURL">
                             <i class="fas fa-fw fa-tachometer-alt"></i>
                             <span>Thống kê</span></a>
                     </li>
@@ -66,25 +66,25 @@
                         Quản lí
                     </div>
                     <li class="nav-item">
-                        <a class="nav-link" href="ui-colors.html">
+                        <a class="nav-link" href="mtkPost">
                             <i class="fas fa-calendar fa-2x text-primary"></i>
                             <span>Bài đăng</span>
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="ui-colors.html">
+                        <a class="nav-link" href="mktProductListURL">
                             <i class="fas fa-shopping-cart fa-2x text-success"></i>
                             <span>Sản phẩm</span>
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="ui-colors.html">
+                        <a class="nav-link" href="customerlist">
                             <i class="fas fa-users fa-2x text-info"></i>
                             <span>Khách hàng</span>
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="ui-colors.html">
+                        <a class="nav-link" href="FeedBackListURL">
                             <i class="fas fa-comments fa-2x text-info"></i>
                             <span>Phản hồi</span>
                         </a>
@@ -139,14 +139,14 @@
                             }
                         </script>
 
-                        <a href="addPost?service=addProduct" class="btn btn-secondary">Thêm bài viết mới</a>
+                        <a style="margin-bottom: 10px;" href="addPost?service=addPost" class="btn btn-secondary">Thêm bài viết mới</a>
                         <div class="row">
                             <!-- DataTable with Hover -->
                             <div class="col-lg-12">
                                 <div class="card mb-4">
                                     <div class="table-responsive p-3">
                                         <table class="table align-items-center table-flush table-hover" id="dataTableHover">
-                                            <div style="display: flex;
+                                            <div style="display: inline-grid;
                                                  margin-left: 200px;
                                                  margin-bottom: -30px;">
                                                 <form action="mtkPost" method="get" id="categoryForm">
@@ -163,16 +163,30 @@
                                                     </div>
                                                     <!-- Your other form elements -->
                                                     <div class="filter-group" style="display:flex;">
-                                                        <div style="padding-top: 3px;">Trạng thái</div>
-                                                        <select class="form-control" name="status" onchange="this.form.submit()">
+                                                        <div style="padding-top: 3px;">Tác Giả</div>
+                                                        <select class="form-control" name="author" onchange="this.form.submit()">
                                                             <option value="">Tất cả</option>
-                                                            <option value="Ẩn" <c:if test="${fn:contains(param.status,'Ẩn')}">selected</c:if>>Ẩn</option>
+                                                            <c:forEach var="author" items="${author}">
+                                                                <option value="${author.blogAuthor}" <c:if test="${author.blogAuthor eq check}">selected
+                                                                        </c:if>
+                                                                        >${author.blogAuthor}</option>
+                                                            </c:forEach>							
+                                                        </select>
+                                                        </div>
+                                                        <input type="submit" style="display: none;">
+
+                                                        <div class="filter-group" style="display:flex;">
+                                                            <div style="padding-top: 3px;">Trạng thái</div>
+                                                            <select class="form-control" name="status" onchange="this.form.submit()">
+                                                                <option value="">Tất cả</option>
+                                                                <option value="Ẩn" <c:if test="${fn:contains(param.status,'Ẩn')}">selected</c:if>>Ẩn</option>
                                                             <option value="Hiện" <c:if test="${fn:contains(param.status,'Hiện')}">selected</c:if>>Hiện</option>
                                                             </select>
                                                         </div>
                                                         <input type="submit" style="display: none;">
                                                     </form>
                                                 </div>
+
                                                 <thead class="thead-light">
                                                     <tr>
                                                         <th>ID</th>
@@ -204,7 +218,9 @@
                                                 <% try {
                                                     while(rs.next()) {
                                                         boolean HiddenStatus = rs.getBoolean("HiddenStatus");
+                                                        String hidden = (HiddenStatus) ? "0" : "1";
                                                         String status = (HiddenStatus) ? "Hiện" : "Ẩn";
+                                                        int BlogID = rs.getInt("BlogID");
                                                 %>
                                                 <tr>
                                                     <td><%=rs.getInt("BlogID")%></td>
@@ -213,7 +229,9 @@
                                                     <td><%=rs.getString("BlogAuthor")%></td>
                                                     <td><%=rs.getString("CategoryName")%></td>
                                                     <td><%=rs.getInt("BlogRate")%> sao</td>
-                                                    <td><%= status %></td>
+                                                    <td>
+                                                        <input type="button" value="<%= status %>" onclick="window.location.href = 'mtkPost?BlogID=<%=rs.getInt("BlogID")%>&hidden=<%= hidden %>';">
+                                                    </td>
                                                     <td><%=rs.getDate("CreateTime")%> </td>
                                                     <td>
                                                         <div class="dropdown">
@@ -238,33 +256,33 @@
                             </div>
                         </div>
 
-                        
 
+
+                    </div>
+                    <!---Container Fluid-->
                 </div>
-                <!---Container Fluid-->
             </div>
-        </div>
 
-        <!-- Scroll to top -->
-        <a class="scroll-to-top rounded" href="#page-top">
-            <i class="fas fa-angle-up"></i>
-        </a>
-        <script src="vendor/jquery/jquery.min.js"></script>
-        <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-        <script src="vendor/jquery-easing/jquery.easing.min.js"></script>
-        <script src="js_marketing/ruang-admin.min.js"></script>
-        <script src="vendor/chart.js/Chart.min.js"></script>
-        <script src="js_marketing/demo/chart-area-demo.js"></script>  
-        <script src="vendor/datatables/jquery.dataTables.min.js"></script>
-        <script src="vendor/datatables/dataTables.bootstrap4.min.js"></script>
+            <!-- Scroll to top -->
+            <a class="scroll-to-top rounded" href="#page-top">
+                <i class="fas fa-angle-up"></i>
+            </a>
+            <script src="vendor/jquery/jquery.min.js"></script>
+            <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+            <script src="vendor/jquery-easing/jquery.easing.min.js"></script>
+            <script src="js_marketing/ruang-admin.min.js"></script>
+            <script src="vendor/chart.js/Chart.min.js"></script>
+            <script src="js_marketing/demo/chart-area-demo.js"></script>  
+            <script src="vendor/datatables/jquery.dataTables.min.js"></script>
+            <script src="vendor/datatables/dataTables.bootstrap4.min.js"></script>
 
-        <!-- Page level custom scripts -->
-        <script>
+            <!-- Page level custom scripts -->
+            <script>
                                                             $(document).ready(function () {
                                                                 $('#dataTable').DataTable(); // ID From dataTable 
                                                                 $('#dataTableHover').DataTable(); // ID From dataTable with Hover
                                                             });
-        </script>
+            </script>
     </body>
 
 </html>
