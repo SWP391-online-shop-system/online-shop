@@ -112,13 +112,15 @@ public class ControllerSearchPage extends HttpServlet {
                         if (count % 12 != 0) {
                             endPage++;
                         }
+                        System.out.println("1");
                         request.setAttribute("endPage", endPage);
-                        ResultSet rsPaging = dao.getData("select * from product as p join ProductImage as pi on p.ProductID = pi.ProductID where pi.ProductURL like '%_1%' \n"
-                                + " and p.ProductName like N'%" + keyWord + "%' and p.UnitPrice between " + minValue + " and " + maxValue + " order by " + filterChoice + " limit 12 offset " + ((index - 1) * 12));
+                        ResultSet rsPaging = dao.getData("select * from product as p join ProductImage as pi on p.ProductID = pi.ProductID where pi.ProductURL = pi.ProductURLShow \n"
+                                + " and p.UnitPrice between " + minValue + " and " + maxValue + " and p.ProductName like N'%" + keyWord + "%' order by " + filterChoice + " limit 12 offset " + ((index - 1) * 12));
                         request.setAttribute("rsPaging", rsPaging);
                         request.setAttribute("index", index);
                     } else {
                         if (type.equals("showSale")) {
+                            System.out.println("2");
                             String index_raw = request.getParameter("index");
                             int index = 1;
                             if (index_raw != null) {
@@ -130,8 +132,8 @@ public class ControllerSearchPage extends HttpServlet {
                                 endPage++;
                             }
                             request.setAttribute("endPage", endPage);
-                            ResultSet rsPaging = dao.getData("select * from product as p join ProductImage as pi on p.ProductID = pi.ProductID where pi.ProductURL like '%_1%' \n"
-                                    + "and p.UnitDiscount != 0 and p.ProductName like N'%" + keyWord + "%' and p.UnitPrice between " + minValue + " and " + maxValue + " order by " + filterChoice + " limit 12 offset " + ((index - 1) * 12));
+                            ResultSet rsPaging = dao.getData("select * from product as p join ProductImage as pi on p.ProductID = pi.ProductID where pi.ProductURL = pi.ProductURLShow \n"
+                                    + "and p.UnitDiscount != 0 and p.UnitPrice between " + minValue + " and " + maxValue + " and p.ProductName like N'%" + keyWord + "%' order by " + filterChoice + " limit 12 offset " + ((index - 1) * 12));
                             request.setAttribute("rsPaging", rsPaging);
                             request.setAttribute("index", index);
                         }
@@ -145,7 +147,7 @@ public class ControllerSearchPage extends HttpServlet {
                         resultRate = "and p.TotalRate =" + TotalRate + " ";
                     }
                     if (type == null || type.equals("")) {
-                        System.out.println("IN here at type = null");
+                        System.out.println("3");
                         String index_raw = request.getParameter("index");
                         int index = 1;
                         if (index_raw != null) {
@@ -157,14 +159,13 @@ public class ControllerSearchPage extends HttpServlet {
                             endPage++;
                         }
                         request.setAttribute("endPage", endPage);
-                        ResultSet rsPaging = dao.getData("select * from product as p join ProductImage as pi on p.ProductID = pi.ProductID where pi.ProductURL like '%_1%' \n"
-                                + resultRate + "and p.ProductName like N'%" + keyWord + "%' and p.UnitPrice between " + minValue + " and " + maxValue + " order by " + filterChoice + " limit 12 offset " + ((index - 1) * 12));
+                        ResultSet rsPaging = dao.getData("select * from product as p join ProductImage as pi on p.ProductID = pi.ProductID where pi.ProductURL = pi.ProductURLShow \n"
+                                + resultRate + " and p.UnitPrice between " + minValue + " and " + maxValue + " and p.ProductName like N'%" + keyWord + "%' order by " + filterChoice + " limit 12 offset " + ((index - 1) * 12));
                         request.setAttribute("rsPaging", rsPaging);
                         request.setAttribute("index", index);
-                        System.out.println("index here = " + index);
-                        System.out.println("endPage here = " + endPage);
                     } else {
                         if (type.equals("showSale")) {
+                            System.out.println("3");
                             String index_raw = request.getParameter("index");
                             int index = 1;
                             if (index_raw != null) {
@@ -176,8 +177,8 @@ public class ControllerSearchPage extends HttpServlet {
                                 endPage++;
                             }
                             request.setAttribute("endPage", endPage);
-                            ResultSet rsPaging = dao.getData("select * from product as p join ProductImage as pi on p.ProductID = pi.ProductID where pi.ProductURL like '%_1%' \n"
-                                    + resultRate + "and p.UnitDiscount != 0 and p.ProductName like N'%" + keyWord + "%' and p.UnitPrice between " + minValue + " and " + maxValue + " order by " + filterChoice + " limit 12 offset " + ((index - 1) * 12));
+                            ResultSet rsPaging = dao.getData("select * from product as p join ProductImage as pi on p.ProductID = pi.ProductID where pi.ProductURL = pi.ProductURLShow \n"
+                                    + resultRate + " and p.UnitPrice between " + minValue + " and " + maxValue + " and p.UnitDiscount != 0 and p.ProductName like N'%" + keyWord + "%' order by " + filterChoice + " limit 12 offset " + ((index - 1) * 12));
                             request.setAttribute("rsPaging", rsPaging);
                             request.setAttribute("index", index);
                         }
@@ -188,6 +189,7 @@ public class ControllerSearchPage extends HttpServlet {
                 filterChoice = "p.CreateDate asc";
                 if (TotalRate_raw == null || TotalRate_raw.equals("")) {
                     if (type == null || type.equals("")) {
+                        System.out.println("4");
                         String index_raw = request.getParameter("index");
                         int index = 1;
                         if (index_raw != null) {
@@ -199,12 +201,13 @@ public class ControllerSearchPage extends HttpServlet {
                             endPage++;
                         }
                         request.setAttribute("endPage", endPage);
-                        ResultSet rsPaging = dao.getData("select * from product as p join ProductImage as pi on p.ProductID = pi.ProductID where pi.ProductURL like '%_1%' \n"
-                                + "and p.ProductName like N'%" + keyWord + "%' and p.UnitPrice between " + minValue + " and " + maxValue + " order by " + filterChoice + " limit 12 offset " + ((index - 1) * 12));
+                        ResultSet rsPaging = dao.getData("select * from product as p join ProductImage as pi on p.ProductID = pi.ProductID where pi.ProductURL = pi.ProductURLShow \n"
+                                + " and p.UnitPrice between " + minValue + " and " + maxValue + " and p.ProductName like N'%" + keyWord + "%' order by " + filterChoice + " limit 12 offset " + ((index - 1) * 12));
                         request.setAttribute("rsPaging", rsPaging);
                         request.setAttribute("index", index);
                     } else {
                         if (type.equals("showSale")) {
+                            System.out.println("5");
                             String index_raw = request.getParameter("index");
                             int index = 1;
                             if (index_raw != null) {
@@ -216,8 +219,8 @@ public class ControllerSearchPage extends HttpServlet {
                                 endPage++;
                             }
                             request.setAttribute("endPage", endPage);
-                            ResultSet rsPaging = dao.getData("select * from product as p join ProductImage as pi on p.ProductID = pi.ProductID where pi.ProductURL like '%_1%' \n"
-                                    + "and p.UnitDiscount != 0 and p.ProductName like N'%" + keyWord + "%' and p.UnitPrice between " + minValue + " and " + maxValue + " order by " + filterChoice + " limit 12 offset " + ((index - 1) * 12));
+                            ResultSet rsPaging = dao.getData("select * from product as p join ProductImage as pi on p.ProductID = pi.ProductID where pi.ProductURL = pi.ProductURLShow \n"
+                                    + "and p.UnitDiscount != 0  and p.UnitPrice between " + minValue + " and " + maxValue + " and p.ProductName like N'%" + keyWord + "%' order by " + filterChoice + " limit 12 offset " + ((index - 1) * 12));
                             request.setAttribute("rsPaging", rsPaging);
                             request.setAttribute("index", index);
                         }
@@ -232,6 +235,7 @@ public class ControllerSearchPage extends HttpServlet {
                         resultRate = "and p.TotalRate =" + TotalRate + " ";
                     }
                     if (type == null || type.equals("")) {
+                        System.out.println("6");
                         String index_raw = request.getParameter("index");
                         int index = 1;
                         if (index_raw != null) {
@@ -243,12 +247,13 @@ public class ControllerSearchPage extends HttpServlet {
                             endPage++;
                         }
                         request.setAttribute("endPage", endPage);
-                        ResultSet rsPaging = dao.getData("select * from product as p join ProductImage as pi on p.ProductID = pi.ProductID where pi.ProductURL like '%_1%' \n"
-                                + resultRate + "and p.ProductName like N'%" + keyWord + "%' and p.UnitPrice between " + minValue + " and " + maxValue + " order by " + filterChoice + " limit 12 offset " + ((index - 1) * 12));
+                        ResultSet rsPaging = dao.getData("select * from product as p join ProductImage as pi on p.ProductID = pi.ProductID where pi.ProductURL = pi.ProductURLShow \n"
+                                + resultRate + " and p.UnitPrice between " + minValue + " and " + maxValue + " and p.ProductName like N'%" + keyWord + "%' order by " + filterChoice + " limit 12 offset " + ((index - 1) * 12));
                         request.setAttribute("rsPaging", rsPaging);
                         request.setAttribute("index", index);
                     } else {
                         if (type.equals("showSale")) {
+                            System.out.println("7");
                             String index_raw = request.getParameter("index");
                             int index = 1;
                             if (index_raw != null) {
@@ -260,8 +265,8 @@ public class ControllerSearchPage extends HttpServlet {
                                 endPage++;
                             }
                             request.setAttribute("endPage", endPage);
-                            ResultSet rsPaging = dao.getData("select * from product as p join ProductImage as pi on p.ProductID = pi.ProductID where pi.ProductURL like '%_1%' \n"
-                                    + resultRate + "and p.UnitDiscount != 0 and p.ProductName like N'%" + keyWord + "%' and p.UnitPrice between " + minValue + " and " + maxValue + " order by " + filterChoice + " limit 12 offset " + ((index - 1) * 12));
+                            ResultSet rsPaging = dao.getData("select * from product as p join ProductImage as pi on p.ProductID = pi.ProductID where pi.ProductURL = pi.ProductURLShow \n"
+                                    + resultRate + "and p.UnitDiscount != 0  and p.UnitPrice between " + minValue + " and " + maxValue + " and p.ProductName like N'%" + keyWord + "%' order by " + filterChoice + " limit 12 offset " + ((index - 1) * 12));
                             request.setAttribute("rsPaging", rsPaging);
                             request.setAttribute("index", index);
                         }
@@ -283,8 +288,8 @@ public class ControllerSearchPage extends HttpServlet {
                             endPage++;
                         }
                         request.setAttribute("endPage", endPage);
-                        ResultSet rsPaging = dao.getData("select * from product as p join ProductImage as pi on p.ProductID = pi.ProductID where pi.ProductURL like '%_1%' \n"
-                                + "and p.ProductName like N'%" + keyWord + "%' and p.UnitPrice between " + minValue + " and " + maxValue + " order by " + filterChoice + " limit 12 offset " + ((index - 1) * 12));
+                        ResultSet rsPaging = dao.getData("select * from product as p join ProductImage as pi on p.ProductID = pi.ProductID where pi.ProductURL = pi.ProductURLShow \n"
+                                + " and p.UnitPrice between " + minValue + " and " + maxValue + " and p.ProductName like N'%" + keyWord + "%' order by " + filterChoice + " limit 12 offset " + ((index - 1) * 12));
                         request.setAttribute("rsPaging", rsPaging);
                         request.setAttribute("index", index);
                     } else {
@@ -300,8 +305,8 @@ public class ControllerSearchPage extends HttpServlet {
                                 endPage++;
                             }
                             request.setAttribute("endPage", endPage);
-                            ResultSet rsPaging = dao.getData("select * from product as p join ProductImage as pi on p.ProductID = pi.ProductID where pi.ProductURL like '%_1%' \n"
-                                    + "and p.UnitDiscount != 0 and p.ProductName like N'%" + keyWord + "%' and p.UnitPrice between " + minValue + " and " + maxValue + " order by " + filterChoice + " limit 12 offset " + ((index - 1) * 12));
+                            ResultSet rsPaging = dao.getData("select * from product as p join ProductImage as pi on p.ProductID = pi.ProductID where pi.ProductURL = pi.ProductURLShow \n"
+                                    + " and p.UnitPrice between " + minValue + " and " + maxValue + " and p.UnitDiscount != 0 and p.ProductName like N'%" + keyWord + "%' order by " + filterChoice + " limit 12 offset " + ((index - 1) * 12));
                             request.setAttribute("rsPaging", rsPaging);
                             request.setAttribute("index", index);
                         }
@@ -326,8 +331,8 @@ public class ControllerSearchPage extends HttpServlet {
                             endPage++;
                         }
                         request.setAttribute("endPage", endPage);
-                        ResultSet rsPaging = dao.getData("select * from product as p join ProductImage as pi on p.ProductID = pi.ProductID where pi.ProductURL like '%_1%' \n"
-                                + resultRate + "and p.ProductName like N'%" + keyWord + "%' and p.UnitPrice between " + minValue + " and " + maxValue + " order by " + filterChoice + " limit 12 offset " + ((index - 1) * 12));
+                        ResultSet rsPaging = dao.getData("select * from product as p join ProductImage as pi on p.ProductID = pi.ProductID where pi.ProductURL = pi.ProductURLShow \n"
+                                + resultRate + " and p.UnitPrice between " + minValue + " and " + maxValue + " and p.ProductName like N'%" + keyWord + "%' order by " + filterChoice + " limit 12 offset " + ((index - 1) * 12));
                         request.setAttribute("rsPaging", rsPaging);
                         request.setAttribute("index", index);
                     } else {
@@ -344,8 +349,8 @@ public class ControllerSearchPage extends HttpServlet {
                                 endPage++;
                             }
                             request.setAttribute("endPage", endPage);
-                            ResultSet rsPaging = dao.getData("select * from product as p join ProductImage as pi on p.ProductID = pi.ProductID where pi.ProductURL like '%_1%' \n"
-                                    + resultRate + "and p.UnitDiscount != 0 and p.ProductName like N'%" + keyWord + "%' and p.UnitPrice between " + minValue + " and " + maxValue + " order by " + filterChoice + " limit 12 offset " + ((index - 1) * 12));
+                            ResultSet rsPaging = dao.getData("select * from product as p join ProductImage as pi on p.ProductID = pi.ProductID where pi.ProductURL = pi.ProductURLShow \n"
+                                    + resultRate + "and p.UnitDiscount != 0  and p.UnitPrice between " + minValue + " and " + maxValue + " and p.ProductName like N'%" + keyWord + "%' order by " + filterChoice + " limit 12 offset " + ((index - 1) * 12));
                             request.setAttribute("rsPaging", rsPaging);
                             request.setAttribute("index", index);
                         }
@@ -367,8 +372,8 @@ public class ControllerSearchPage extends HttpServlet {
                             endPage++;
                         }
                         request.setAttribute("endPage", endPage);
-                        ResultSet rsPaging = dao.getData("select * from product as p join ProductImage as pi on p.ProductID = pi.ProductID where pi.ProductURL like '%_1%' \n"
-                                + " and p.ProductName like N'%" + keyWord + "%' and p.UnitPrice between " + minValue + " and " + maxValue + " order by " + filterChoice + " limit 12 offset " + ((index - 1) * 12));
+                        ResultSet rsPaging = dao.getData("select * from product as p join ProductImage as pi on p.ProductID = pi.ProductID where pi.ProductURL = pi.ProductURLShow \n"
+                                + " and p.UnitPrice between " + minValue + " and " + maxValue + " and p.ProductName like N'%" + keyWord + "%' order by " + filterChoice + " limit 12 offset " + ((index - 1) * 12));
                         request.setAttribute("rsPaging", rsPaging);
                         request.setAttribute("index", index);
                     } else {
@@ -384,8 +389,8 @@ public class ControllerSearchPage extends HttpServlet {
                                 endPage++;
                             }
                             request.setAttribute("endPage", endPage);
-                            ResultSet rsPaging = dao.getData("select * from product as p join ProductImage as pi on p.ProductID = pi.ProductID where pi.ProductURL like '%_1%' \n"
-                                    + "and p.UnitDiscount != 0 and p.ProductName like N'%" + keyWord + "%' and p.UnitPrice between " + minValue + " and " + maxValue + " order by " + filterChoice + " limit 12 offset " + ((index - 1) * 12));
+                            ResultSet rsPaging = dao.getData("select * from product as p join ProductImage as pi on p.ProductID = pi.ProductID where pi.ProductURL = pi.ProductURLShow \n"
+                                    + " and p.UnitPrice between " + minValue + " and " + maxValue + " and p.UnitDiscount != 0 and p.ProductName like N'%" + keyWord + "%' order by " + filterChoice + " limit 12 offset " + ((index - 1) * 12));
                             request.setAttribute("rsPaging", rsPaging);
                             request.setAttribute("index", index);
                         }
@@ -410,8 +415,8 @@ public class ControllerSearchPage extends HttpServlet {
                             endPage++;
                         }
                         request.setAttribute("endPage", endPage);
-                        ResultSet rsPaging = dao.getData("select * from product as p join ProductImage as pi on p.ProductID = pi.ProductID where pi.ProductURL like '%_1%' \n"
-                                + resultRate + "and p.ProductName like N'%" + keyWord + "%' and p.UnitPrice between " + minValue + " and " + maxValue + " order by " + filterChoice + " limit 12 offset " + ((index - 1) * 12));
+                        ResultSet rsPaging = dao.getData("select * from product as p join ProductImage as pi on p.ProductID = pi.ProductID where pi.ProductURL = pi.ProductURLShow \n"
+                                + " and p.UnitPrice between " + minValue + " and " + maxValue + " " + resultRate + "and p.ProductName like N'%" + keyWord + "%' order by " + filterChoice + " limit 12 offset " + ((index - 1) * 12));
                         request.setAttribute("rsPaging", rsPaging);
                         request.setAttribute("index", index);
 
@@ -428,8 +433,8 @@ public class ControllerSearchPage extends HttpServlet {
                                 endPage++;
                             }
                             request.setAttribute("endPage", endPage);
-                            ResultSet rsPaging = dao.getData("select * from product as p join ProductImage as pi on p.ProductID = pi.ProductID where pi.ProductURL like '%_1%' \n"
-                                    + resultRate + "and p.ProductName like N'%" + keyWord + "%' and p.UnitPrice between " + minValue + " and " + maxValue + " order by " + filterChoice + " limit 12 offset " + ((index - 1) * 12));
+                            ResultSet rsPaging = dao.getData("select * from product as p join ProductImage as pi on p.ProductID = pi.ProductID where pi.ProductURL = pi.ProductURLShow \n"
+                                    + " and p.UnitPrice between " + minValue + " and " + maxValue + " " + resultRate + "and p.ProductName like N'%" + keyWord + "%' order by " + filterChoice + " limit 12 offset " + ((index - 1) * 12));
                             request.setAttribute("rsPaging", rsPaging);
                             request.setAttribute("index", index);
                         }
