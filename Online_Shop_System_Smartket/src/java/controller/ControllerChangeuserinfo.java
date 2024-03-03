@@ -119,7 +119,7 @@ public class ControllerChangeuserinfo extends HttpServlet {
                 part.write(realFileName1);
             }
             use.setUserImage(result);
-            session.setAttribute("account",use);
+            session.setAttribute("account", use);
             int n = daoU.updateUserImage(UserID, result);
             if (n > 0) {
                 mess = "Tải ảnh lên thành công";
@@ -127,7 +127,14 @@ public class ControllerChangeuserinfo extends HttpServlet {
                 mess = null;
             }
             request.setAttribute("mess", mess);
-            request.getRequestDispatcher("profileUser.jsp").forward(request, response);
+            try {
+                // Introduce a 1-second delay
+                Thread.sleep(2000); // 1000 milliseconds = 1 second
+                request.getRequestDispatcher("profileUser.jsp").forward(request, response);
+            } catch (InterruptedException e) {
+                // Handle any potential interruption exception
+                e.printStackTrace();
+            }
         }
         if (service.equals("changepassword")) {
             String messa = "";
@@ -158,8 +165,7 @@ public class ControllerChangeuserinfo extends HttpServlet {
             String phoneNumber1 = request.getParameter("phoneNumber1");
             String dateOfBirth1 = request.getParameter("dateOfBirth1");
             boolean gender1 = Boolean.parseBoolean(request.getParameter("gender1"));
-            System.out.println("???"+request.getParameter("gender1"));
-            System.out.println("???"+gender1);
+            System.out.println("gender1 = " + gender1);
             HttpSession session = request.getSession();
             User use = (User) session.getAttribute("account");
             DAOUser dao = new DAOUser();

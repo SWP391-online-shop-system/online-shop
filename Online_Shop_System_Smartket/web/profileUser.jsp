@@ -11,7 +11,7 @@
         <%@page import="java.sql.ResultSet"%>
         <%@page import="java.text.DecimalFormat" %>
         <!DOCTYPE html> 
-   
+
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script src="https://kit.fontawesome.com/ac74b86ade.js" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/swiper/swiper-bundle.min.js"></script>
@@ -24,7 +24,7 @@
     <script src="https://kit.fontawesome.com/ac74b86ade.js" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
     <script src="https://kit.fontawesome.com/ac74b86ade.js" crossorigin="anonymous"></script>
-     <style>
+    <style>
         body{
             margin: 5px -5px;
         }
@@ -83,7 +83,7 @@
 <body>
     <jsp:include page="include/header.jsp"/>
 
-    
+
     <%String messaa = (String)request.getAttribute("messaa");
     if(messaa==null){%>
 
@@ -265,7 +265,12 @@
                                         <p class="mb-0">Giới tính</p>
                                     </div>
                                     <div class="col-sm-9">
-                                        <p class="text-muted mb-0"><%=rsProfile.getBoolean("Gender")?"Nam" : "Nữ"%></p>
+                                        <p class="text-muted mb-0"><c:if test="${sessionScope.account.gender}">
+                                                Nam
+                                            </c:if>
+                                            <c:if test="${!sessionScope.account.gender}">
+                                                Nữ
+                                            </c:if></p>
                                     </div>
                                 </div>
                                 <hr>
@@ -307,7 +312,7 @@
                                     </div>
                                     <div class="col-sm-7">
                                         <p class="text-muted mb-0">
-                                             <c:if test="${sessionScope.account.address==null}">
+                                            <c:if test="${sessionScope.account.address==null}">
                                                 Chưa cập nhật
                                             </c:if>
                                             <c:if test="${sessionScope.account.address!=null}">
@@ -328,7 +333,13 @@
                                     </div>
                                     <div class="col-sm-5" style="flex: 0 0 34%;">
 
-                                        <button type="button" class="btn-submitform btn btn-primary" style="    margin-top: -7px;background: #5bbc5b;box-shadow: none;border: none;" 
+                                        <button type="button" class="btn-submitform btn btn-primary" style="margin-top: -7px;
+                                                background: #5bbc5b;
+                                                box-shadow: none;
+                                                border: none;
+                                                height: 35px;
+                                                width: 121px;
+                                                margin-left: -33px;" 
                                                 data-toggle="modal" data-target="#exampleModal1"
                                                 id="#myBtn">
                                             Đổi mật khẩu
