@@ -29,7 +29,25 @@
         <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css">
         <link href="css/css_marketing_dashboard/marketing_dashboard_style.css" rel="stylesheet">
         <link href="vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">
-
+        <style>
+            .filter-group select.form-control {
+                width: 102px;
+                height: 31px;
+                font-size: 13px;
+                margin-left: 14px;
+                margin-right: 21px;
+                padding: 4px;
+            }
+            #statuss{
+                width: 85px;
+                height: 24px;
+                font-size: 14px;
+                color: white;
+                background: #66bb6a;
+                border: none;
+                border-radius: 4px;
+            }
+        </style>
     </head>
     <%
     ResultSet rs = (ResultSet)request.getAttribute("data");
@@ -51,7 +69,7 @@
                     <div class="sidebar-brand-icon">
                         <img style="height: 91px;
                              width: 133px;
-                             margin-bottom: -18px;" src="images/logo/logo.png">
+                             margin-bottom: -18px;z-index: 99;" src="images/logo/logo.png">
                     </div>
                 </a>
                 <div style="position: sticky; top: 30px;">
@@ -104,7 +122,7 @@
                                 <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown"
                                    aria-haspopup="true" aria-expanded="false">
                                     <img class="img-profile rounded-circle" src="images/user/default_avatar.jpg" style="max-width: 60px">
-                                    <span class="ml-2 d-none d-lg-inline text-white small">Maman Ketoprak</span>
+                                    <span class="ml-2 d-none d-lg-inline text-white small"></span>
                                 </a>
                                 <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="userDropdown">
                                     <a class="dropdown-item" href="#">
@@ -150,40 +168,41 @@
                                                  margin-left: 200px;
                                                  margin-bottom: -30px;">
                                                 <form action="mtkPost" method="get" id="categoryForm">
-                                                    <div class="filter-group" style="display:flex;">
-                                                        <div style="padding-top: 3px;">Danh mục</div>
-                                                        <select class="form-control" name="categoryId" onchange="this.form.submit()">
-                                                            <option value="">Tất cả</option>
-                                                            <c:forEach var="category" items="${categories}">
-                                                                <option value="${category.categoryID}"<c:if test="${category.categoryID eq param.categoryId}">selected
-                                                                        </c:if>
-                                                                        >${category.categoryName}</option>
-                                                            </c:forEach>							
-                                                        </select>
-                                                    </div>
-                                                    <!-- Your other form elements -->
-                                                    <div class="filter-group" style="display:flex;">
-                                                        <div style="padding-top: 3px;">Tác Giả</div>
-                                                        <select class="form-control" name="author" onchange="this.form.submit()">
-                                                            <option value="">Tất cả</option>
-                                                            <c:forEach var="author" items="${author}">
-                                                                <option value="${author.blogAuthor}" <c:if test="${author.blogAuthor eq check}">selected
-                                                                        </c:if>
-                                                                        >${author.blogAuthor}</option>
-                                                            </c:forEach>							
-                                                        </select>
+                                                    <div style="display: flex;margin-left: -19px;">
+                                                        <div class="filter-group" style="display:flex;">
+                                                            <div style="padding-top: 3px;">Danh mục</div>
+                                                            <select class="form-control" name="categoryId" onchange="this.form.submit()">
+                                                                <option value="">Tất cả</option>
+                                                                <c:forEach var="category" items="${categories}">
+                                                                    <option value="${category.categoryID}"<c:if test="${category.categoryID eq param.categoryId}">selected
+                                                                            </c:if>
+                                                                            >${category.categoryName}</option>
+                                                                </c:forEach>							
+                                                            </select>
+                                                        </div>
+                                                        <!-- Your other form elements -->
+                                                        <div class="filter-group" style="display:flex;">
+                                                            <div style="padding-top: 3px;">Tác Giả</div>
+                                                            <select class="form-control" name="author" onchange="this.form.submit()">
+                                                                <option value="">Tất cả</option>
+                                                                <c:forEach var="author" items="${author}">
+                                                                    <option value="${author.blogAuthor}" <c:if test="${author.blogAuthor eq check}">selected
+                                                                            </c:if>
+                                                                            >${author.blogAuthor}</option>
+                                                                </c:forEach>							
+                                                            </select>
                                                         </div>
                                                         <input type="submit" style="display: none;">
-
                                                         <div class="filter-group" style="display:flex;">
                                                             <div style="padding-top: 3px;">Trạng thái</div>
                                                             <select class="form-control" name="status" onchange="this.form.submit()">
                                                                 <option value="">Tất cả</option>
-                                                                <option value="Ẩn" <c:if test="${fn:contains(param.status,'Ẩn')}">selected</c:if>>Ẩn</option>
-                                                            <option value="Hiện" <c:if test="${fn:contains(param.status,'Hiện')}">selected</c:if>>Hiện</option>
-                                                            </select>
+                                                                <option value="Ẩn" <c:if test="${fn:contains(param.status,'Vô hiệu hóa')}">selected</c:if>>Vô hiệu hóa</option>
+                                                                <option value="Hiện" <c:if test="${fn:contains(param.status,'Kích hoạt')}">selected</c:if>>Kích hoạt</option>
+                                                                </select>
+                                                            </div>
+                                                            <input type="submit" style="display: none;">
                                                         </div>
-                                                        <input type="submit" style="display: none;">
                                                     </form>
                                                 </div>
 
@@ -191,12 +210,12 @@
                                                     <tr>
                                                         <th>ID</th>
                                                         <th>Ảnh</th>
-                                                        <th>Tiêu đề</th>
-                                                        <th>Tác Giả</th>
-                                                        <th>Danh mục</th>
-                                                        <th>Đánh Giá</th>
+                                                        <th style="min-width: 220px;">Tiêu đề</th>
+                                                        <th style="min-width: 70px">Tác Giả</th>
+                                                        <th style="min-width: 150px;">Danh mục</th>
+                                                        <th style="min-width: 90px;">Đánh Giá</th>
                                                         <th>Trạng thái</th>		
-                                                        <th>Ngày đăng</th>
+                                                        <th style="min-width: 120px">Ngày đăng</th>
                                                         <th>Hành động</th>
                                                     </tr>
                                                 </thead>
@@ -219,7 +238,7 @@
                                                     while(rs.next()) {
                                                         boolean HiddenStatus = rs.getBoolean("HiddenStatus");
                                                         String hidden = (HiddenStatus) ? "0" : "1";
-                                                        String status = (HiddenStatus) ? "Hiện" : "Ẩn";
+                                                        String status = (HiddenStatus) ? "Kích hoạt" : "Vô hiệu hóa";
                                                         int BlogID = rs.getInt("BlogID");
                                                 %>
                                                 <tr>
@@ -230,7 +249,7 @@
                                                     <td><%=rs.getString("CategoryName")%></td>
                                                     <td><%=rs.getInt("BlogRate")%> sao</td>
                                                     <td>
-                                                        <input type="button" value="<%= status %>" onclick="window.location.href = 'mtkPost?BlogID=<%=rs.getInt("BlogID")%>&hidden=<%= hidden %>';">
+                                                        <input id="statuss" style="<%=status.equals("Kích hoạt")?"":"background: red;"%>" type="button" value="<%= status %>" onclick="window.location.href = 'mtkPost?BlogID=<%=rs.getInt("BlogID")%>&hidden=<%= hidden %>';">
                                                     </td>
                                                     <td><%=rs.getDate("CreateTime")%> </td>
                                                     <td>

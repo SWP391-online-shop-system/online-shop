@@ -131,7 +131,7 @@
                         <div class="row mb-3">
                             <!-- Earnings (Monthly) Card Example -->
                             <div class="col-xl-3 col-md-6 mb-4">
-                                <a href="mktPost" style="text-decoration: none;">
+                                <a href="mtkPost" style="text-decoration: none;">
                                     <div class="card h-100">
                                         <div class="card-body">
                                             <div class="row align-items-center">
