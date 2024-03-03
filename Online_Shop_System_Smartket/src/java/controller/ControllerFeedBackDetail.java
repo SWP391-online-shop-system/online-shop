@@ -72,6 +72,11 @@ public class ControllerFeedBackDetail extends HttpServlet {
         if (oldUser == null) {
             response.sendRedirect("HomePageURL");
         } else {
+            System.out.println("ajax move to servlet!");
+            String service = request.getParameter("service");
+            if (service == null || service.equals("")) {
+                service = "";
+            }
             int updateBy = oldUser.getUserID(); // nhan vien
             DAOFeedBack daoF = new DAOFeedBack();
             DAOUser daoU = new DAOUser();
@@ -80,28 +85,35 @@ public class ControllerFeedBackDetail extends HttpServlet {
             FeedBack FeedBack = daoF.getFeedBackById(FeedBackID);
             request.setAttribute("data", FeedBack);
             String StatusCheck = request.getParameter("checkStatus");
-            System.out.println("statusCheck = " + StatusCheck);
             String status = request.getParameter("status");
             String cusId_str = request.getParameter("uid");
             int cusId = Integer.parseInt(cusId_str); //nguoi phan hoi
-            System.out.println("status in servlet = " + status);
-            String purpose = "";
-            if (status.equals("1")) {
-                daoF.updateStatus(FeedBackID, 0);
-                purpose = "đã kích hoạt phản hồi";
-            } else {
-                daoF.updateStatus(FeedBackID, 1);
-                purpose = "đã vô hiệu hóa phản hồi ";
+            String purpose;
+            int afterStatus = Integer.parseInt(status);
+            if (service.equals("updateStatus")) {
+                System.out.println("in updateStatus");
+                if (status.equals("1")) {
+                    afterStatus = 0;
+                    daoF.updateStatus(FeedBackID, 0);
+                    purpose = "đã kích hoạt phản hồi";
+                    System.out.println("updateed status from off to on");
+                } else {
+                    daoF.updateStatus(FeedBackID, 1);
+                    afterStatus = 1;
+                    purpose = "đã vô hiệu hóa phản hồi ";
+                    System.out.println("updateed status from on to off");
+                }
+                Log log = new Log(cusId, updateBy, purpose);
+                int n = daoLog.insertLog(log);
             }
-            Log log = new Log(cusId, updateBy, purpose);
-            int n = daoLog.insertLog(log);
-            ResultSet logger = daoU.getData("SELECT * FROM loghistory as log join `user` as u on log.UserId = u.UserID where u.UserId = " + cusId + " and purpose like '%phản hồi%'");
+//            try {
+//                Thread.sleep(1000);
+//            } catch (InterruptedException e) {
+//                e.printStackTrace();
+//            }
+            request.setAttribute("afterStatus", afterStatus);
+            ResultSet logger = daoU.getData("SELECT * FROM loghistory as log join `user` as u on log.UserId = u.UserID where u.UserId = " + cusId + " and purpose like '%phản hồi%' order by updateAt desc");
             request.setAttribute("log", logger);
-            try {
-                Thread.sleep(2000);
-            } catch (InterruptedException ex) {
-                Logger.getLogger(ControllerFeedBackDetail.class.getName()).log(Level.SEVERE, null, ex);
-            }
             request.getRequestDispatcher("FeedBackDetail.jsp").forward(request, response);
         }
     }

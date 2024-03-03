@@ -9,30 +9,14 @@ package view;
  * @author trant
  */
 public class Order {
+
     private int orderID;
     private int userID;
     private int saleID;
     private String orderDate;
     private String shippedDate;
     private int statusID;
-
-    public Order() {
-    }
-
-    public Order(int orderID, int userID, int saleID, String orderDate, String shippedDate, int statusID) {
-        this.orderID = orderID;
-        this.userID = userID;
-        this.saleID = saleID;
-        this.orderDate = orderDate;
-        this.shippedDate = shippedDate;
-        this.statusID = statusID;
-    }
-    public Order(int userID, int saleID, String orderDate, int statusID) {
-        this.userID = userID;
-        this.saleID = saleID;
-        this.orderDate = orderDate;
-        this.statusID = statusID;
-    }
+    private String QrImage;
 
     public int getOrderID() {
         return orderID;
@@ -81,5 +65,18 @@ public class Order {
     public void setStatusID(int statusID) {
         this.statusID = statusID;
     }
-    
+
+    public String getQrImage() {
+        return QrImage;
+    }
+
+    public void setQrImage(String QrImage) {
+        this.QrImage = QrImage;
+    }
+
+    @Override
+    public String toString() {
+        return "Order{" + "orderID=" + orderID + ", userID=" + userID + ", saleID=" + saleID + ", orderDate=" + orderDate + ", shippedDate=" + shippedDate + ", statusID=" + statusID + ", QrImage=" + QrImage + '}';
+    }
+
 }
