@@ -17,6 +17,10 @@
             .form-gap {
                 padding-top: 70px;
             }
+            .green-button {
+                background-color: #28a745;
+                color: white;
+            }
         </style>
     </head>
 
@@ -39,7 +43,7 @@ if(request.getAttribute("message")!=null)
 }
 		  
                                 %>
-                              
+
                                 <div class="row">
                                     <div class="col-md-12 text-center">
                                         <p>Không nhận được email? <a href="resendOTP" class="resend-link">Gửi lại email</a></p>
@@ -71,7 +75,7 @@ if(request.getAttribute("message")!=null)
                                         </div>
                                         <div class="form-group">
                                             <input name="recover-submit"
-                                                   class="btn btn-lg btn-primary btn-block"
+                                                   class="btn btn-lg btn-primary btn-block green-button"
                                                    value="Tạo mật khẩu mới" type="submit">
                                         </div>
 
