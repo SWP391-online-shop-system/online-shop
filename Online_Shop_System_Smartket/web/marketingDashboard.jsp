@@ -43,7 +43,7 @@
         <div id="wrapper">
             <!-- Sidebar -->
             <ul class="navbar-nav sidebar sidebar-light accordion" id="accordionSidebar">
-                <a class="sidebar-brand d-flex align-items-center justify-content-center" href="index.html">
+                <a class="sidebar-brand d-flex align-items-center justify-content-center" href="MarketingDashBoardURL">
                     <div class="sidebar-brand-icon">
                         <img style="height: 91px;
                              width: 133px;
@@ -62,7 +62,7 @@
                         Quản lí
                     </div>
                     <li class="nav-item">
-                        <a class="nav-link" href="#">
+                        <a class="nav-link" href="mtkPost">
                             <i class="fas fa-calendar fa-2x text-primary"></i>
                             <span>Bài đăng</span>
                         </a>
@@ -131,7 +131,7 @@
                         <div class="row mb-3">
                             <!-- Earnings (Monthly) Card Example -->
                             <div class="col-xl-3 col-md-6 mb-4">
-                                <a href="1" style="text-decoration: none;">
+                                <a href="mktPost" style="text-decoration: none;">
                                     <div class="card h-100">
                                         <div class="card-body">
                                             <div class="row align-items-center">
@@ -166,7 +166,7 @@
                             </div>
                             <!-- Earnings (Annual) Card Example -->
                             <div class="col-xl-3 col-md-6 mb-4">
-                                <a href="2" style="text-decoration: none;">
+                                <a href="mktProductListURL" style="text-decoration: none;">
                                     <div class="card h-100">
                                         <div class="card-body">
                                             <div class="row no-gutters align-items-center">
@@ -236,7 +236,7 @@
                             </div>
                             <!-- Pending Requests Card Example -->
                             <div class="col-xl-3 col-md-6 mb-4">
-                                <a href="4" style="text-decoration: none;">
+                                <a href="FeedBackListURL" style="text-decoration: none;">
                                     <div class="card h-100">
                                         <div class="card-body">
                                             <div class="row no-gutters align-items-center">
@@ -291,11 +291,12 @@
                                         %>
                                         <span  class="m-0 text-primary" style="margin-right: -12px;" >từ</span>
                                         <form action="MarketingDashBoardURL" method="GET">
-                                            <input style="background-color: #1ab365!important;" id="dateInputFrom" class="date-chooser" type="date" name="weekFrom" value="<%=(formatWeekFrom==null || formatWeekFrom.equals(""))?curDate:formatWeekFrom%>" onchange="autoUpdateWeekTo(this.value);this.form.submit();"/>
+                                            <input style="background-color: #1ab365!important;" id="dateInputFrom" class="date-chooser" type="date" name="weekFrom" value="<%=(formatWeekFrom==null || formatWeekFrom.equals(""))?curDate:formatWeekFrom%>" onchange="autoUpdateWeekTo(this.value); updateWeek();"/>
                                             <span  class="m-0 text-primary">đến</span>
                                             <input style="background-color: #1ab365!important;" id="dateInputTo" class="date-chooser" type="date" name="weekTo" disabled/>                                           
                                             <input type="hidden" name="userWeekFrom" value="<%=(formatUserWeekFrom==null || formatUserWeekFrom.equals(""))?curDate1:formatUserWeekFrom%>"/>
                                         </form>
+
                                         <%
                                         ResultSet rsProductSold = (ResultSet)request.getAttribute("rsProductSold");
                                         int countDate=0;
@@ -316,6 +317,22 @@
                                                 window.addEventListener('load', function () {
                                                     drawChart();
                                                 });
+                                                function updateWeek() {
+                                                    var weekFrom = document.getElementById("dateInputFrom").value;
+                                                    var userWeekFrom = document.getElementById("dateUserInputFrom").value;
+                                                    $.ajax({
+                                                        url: "MarketingDashBoardURL",
+                                                        type: 'GET',
+                                                        data: {weekFrom: weekFrom, userWeekFrom: userWeekFrom},
+                                                        success: function (data) {
+                                                            // Update specific element in the JSP with the new data
+                                                            $("#page-top").html(data);
+                                                            drawChart();
+                                                        },
+                                                        error: function (xhr, status, error) {
+                                                        }
+                                                    });
+                                                }
                                             </script>
                                         </div>
                                     </div>
@@ -368,8 +385,7 @@
                                         <span  class="m-0 text-primary">từ</span>
                                         <form action="MarketingDashBoardURL" method="GET">
                                             <input style="background-color: #1ab365!important;" id="dateUserInputFrom" class="date-chooser" type="date" name="userWeekFrom" value="<%=(formatUserWeekFrom==null || formatUserWeekFrom.equals(""))?curDate1:formatUserWeekFrom%>" onchange="autoUpdateWeekToUser(this.value);
-
-                                                    this.form.submit();"/>
+                                                    updateWeek();"/>
                                             <span class="m-0 text-primary">đến</span>
                                             <input style="background-color: #1ab365!important;"class="date-chooser" type="date" name="userWeekTo" disabled/>
                                             <input type="hidden" name="weekFrom" value="<%=(formatWeekFrom==null || formatWeekFrom.equals(""))?curDate:formatWeekFrom%>"  />

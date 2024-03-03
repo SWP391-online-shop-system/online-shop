@@ -140,7 +140,6 @@
                         <div class="row">
                             <button style="margin-left: 13px;margin-bottom: 5px;" type="button" class="btn btn-secondary" data-toggle="modal" data-target="#exampleModalLong"
                                     id="#modalLong">Thêm Khách Hàng Mới</button>
-
                         </div>
                         <div class="row">
                             <!-- DataTable with Hover -->
@@ -156,7 +155,7 @@
                                                     <div class="filter-group" style="display:flex;">
                                                         <div style="padding-top: 16px;
                                                              width: 81%;">Trạng thái</div>
-                                                        <select class="form-control" name="status" onchange="this.form.submit()">                                                            
+                                                        <select class="form-control" name="status" onchange="this.form.submit()" style="height: 33px;margin-top: 12px;">                                                            
                                                             <option value="3" <%if(status.equals("3")){%>selected<%}%>>Tất cả</option>                                                     
                                                             <option value="1" <%if(status.equals("1")){%>selected<%}%>>Hoạt động</option>                                                          
                                                             <option value="2" <%if(status.equals("2")){%>selected<%}%>>Vô hiệu hóa</option>                                                            

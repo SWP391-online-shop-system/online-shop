@@ -128,7 +128,7 @@
                                         <div class="card mb-4">
                                             <div class="card-body text-center">
                                                 <img src="images/user/<%=rs.getString("UserImage")%>" alt="avatar"
-                                                     class="rounded-circle img-fluid" style="width: 150px;">
+                                                     class="rounded-circle img-fluid" style="width: 150px;border: 1px solid">
                                             </div>
                                             <p style="text-align: center">Mã Khách Hàng: <%=rs.getInt(1)%></p>
                                         </div>
@@ -138,55 +138,55 @@
                                         <div class="card mb-4">
                                             <div class="card-body">
                                                 <div class="row">
-                                                    <div class="col-sm-3">
-                                                        <p class="mb-0">Full Name</p>
+                                                    <div class="col-sm-4">
+                                                        <p class="mb-0">Họ và tên</p>
                                                     </div>
-                                                    <div class="col-sm-9">
+                                                    <div class="col-sm-8">
                                                         <p><%=rs.getString(2)+" "+rs.getString(3)%></p>
                                                     </div>
                                                 </div>
                                                 <hr>
                                                 <div class="row">
-                                                    <div class="col-sm-3">
+                                                    <div class="col-sm-4">
                                                         <p class="mb-0">Email</p>
                                                     </div>
-                                                    <div class="col-sm-9">
+                                                    <div class="col-sm-8">
                                                         <p class="text-muted mb-0"> <%=rs.getString("Email")%></p>
                                                     </div>
                                                 </div>
                                                 <hr>
                                                 <div class="row">
-                                                    <div class="col-sm-3">
-                                                        <p class="mb-0">Phone</p>
+                                                    <div class="col-sm-4">
+                                                        <p class="mb-0">Số điện thoại</p>
                                                     </div>
-                                                    <div class="col-sm-9">
-                                                        <p class="text-muted mb-0"><%=(rs.getString("PhoneNumber")==null)?"N/A":rs.getString("PhoneNumber")%></p>
-                                                    </div>
-                                                </div>
-                                                <hr>
-                                                <div class="row">
-                                                    <div class="col-sm-3">
-                                                        <p class="mb-0">Address</p>
-                                                    </div>
-                                                    <div class="col-sm-9">
-                                                        <p class="text-muted mb-0"><%=(rs.getString("Address")==null)?"N/A":""%></p>
+                                                    <div class="col-sm-8">
+                                                        <p class="text-muted mb-0"><%=(rs.getString("PhoneNumber")==null)?"Chưa cập nhật":rs.getString("PhoneNumber")%></p>
                                                     </div>
                                                 </div>
                                                 <hr>
                                                 <div class="row">
-                                                    <div class="col-sm-3">
-                                                        <p class="mb-0">DateOfBirth</p>
+                                                    <div class="col-sm-4">
+                                                        <p class="mb-0">Địa chỉ</p>
                                                     </div>
-                                                    <div class="col-sm-9">
-                                                        <p class="text-muted mb-0"><%=(rs.getString("DateOfBirth")==null)?"N/A":""%></p>
+                                                    <div class="col-sm-8">
+                                                        <p class="text-muted mb-0"><%=(rs.getString("Address")==null)?"Chưa cập nhật":""%></p>
                                                     </div>
                                                 </div>
                                                 <hr>
                                                 <div class="row">
-                                                    <div class="col-sm-3">
-                                                        <p class="mb-0">Gender</p>
+                                                    <div class="col-sm-4">
+                                                        <p class="mb-0">Ngày sinh</p>
                                                     </div>
-                                                    <div class="col-sm-9"><%
+                                                    <div class="col-sm-8">
+                                                        <p class="text-muted mb-0"><%=(rs.getString("DateOfBirth")==null)?"Chưa cập nhật":""%></p>
+                                                    </div>
+                                                </div>
+                                                <hr>
+                                                <div class="row">
+                                                    <div class="col-sm-4">
+                                                        <p class="mb-0">Giới tính</p>
+                                                    </div>
+                                                    <div class="col-sm-8"><%
     String gender = rs.getString("Gender");
     String displayGender = "";
     if (gender == null || gender.equals("0")) {
@@ -209,19 +209,19 @@
                                                 </div>
                                                 <hr>
                                                 <div class="row">
-                                                    <div class="col-sm-3">
-                                                        <p class="mb-0">LastLogin</p>
+                                                    <div class="col-sm-4">
+                                                        <p class="mb-0">Đăng nhập lần cuối</p>
                                                     </div>
-                                                    <div class="col-sm-9">
+                                                    <div class="col-sm-8">
                                                         <p class="text-muted mb-0"><%=rs.getString("LastLogin")%></p>
                                                     </div>
                                                 </div>
                                                 <hr>
                                                 <div class="row">
-                                                    <div class="col-sm-3">
-                                                        <p class="mb-0">UserStatus</p>
+                                                    <div class="col-sm-4">
+                                                        <p class="mb-0">Trạng thái</p>
                                                     </div>
-                                                    <form class="col-sm-9" id="myForm" method="get" action="customerDetail">
+                                                    <form class="col-sm-8" id="myForm" method="get" action="customerDetail">
                                                         <input type="hidden" id="statusInput" name="status" value="<%=status%>">
                                                         <input type="hidden" name="uid" value="<%=rs.getInt(1)%>">
                                                         <div class="custom-control custom-switch">
@@ -243,10 +243,10 @@
                                                 </div>
                                                 <hr>
                                                 <div class="row">
-                                                    <div class="col-sm-3">
-                                                        <p class="mb-0">CreateDate</p>
+                                                    <div class="col-sm-4">
+                                                        <p class="mb-0">Ngày tạo tài khoản</p>
                                                     </div>
-                                                    <div class="col-sm-9">
+                                                    <div class="col-sm-8">
                                                         <p class="text-muted mb-0"><%=rs.getString("CreateDate")%></p>
                                                     </div>
                                                 </div>
@@ -256,18 +256,6 @@
                                     </div>
                                     <%}%>
                                 </div>
-                                <!--                                <div class="row" style="margin-bottom: 30px">
-                                                                    <div class="col-md-12">
-                                                                        <div class="card mb-4 mb-md-0">
-                                                                            <div class="card-body">
-                                                                                <p class="mb-4">Lịch sử hoạt động</p>
-                                                                                <div>
-                                
-                                                                                </div>                                         
-                                                                            </div>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>-->
                                 <div class="row" style="margin-bottom: 36px">
                                     <div class="col-md-12">
                                         <div class="card mb-4 mb-md-0">
@@ -291,35 +279,6 @@
                                 </div>
                             </div>
                         </section>
-                        <!--                        <div class="row">
-                                                     DataTable with Hover 
-                                                    <div class="col-lg-12">
-                                                        <div class="card mb-4">                                 
-                                                                                                <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-                                                                                                    <h6 class="m-0 font-weight-bold text-primary">DataTables with Hover</h6>
-                                                                                                </div>
-                                                            <div class="table-responsive p-3">
-                                                                <table class="table align-items-center table-flush table-hover" id="dataTableHover" style="font-size: 16px;
-                                                                       ">
-                                                                    <thead class="thead-light">
-                                                                        <tr>
-                                                                            <th style="text-align: center;">STT</th>
-                                                                            <th style="text-align: center;width: 128.4432px;">Tên Khách Hàng</th>
-                                                                            <th style="text-align: center;">Email</th>
-                                                                            <th style="text-align: center; width: 0">Giới Tính</th>
-                                                                            <th style="text-align: center;width: 112.2955px">Số Điện Thoại</th>						
-                                                                            <th style="text-align: center; width:89.73860000000002px">Trạng Thái</th>						
-                                                                            <th style="text-align: center;">Lần Đăng Nhập Cuối</th>
-                                                                        </tr>
-                                                                    </thead>
-                        
-                                                                    
-                                                                </table>
-                                                            </div>                                    
-                                                        </div>
-                                                    </div>
-                                                </div>-->
-                        <!--Row-->
                     </div>      
                 </div>
                 <!---Container Fluid-->
