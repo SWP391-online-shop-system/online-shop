@@ -44,8 +44,7 @@ public class ControllerCustomerDetail extends HttpServlet {
             DAOLog daoLog = new DAOLog();
             String status = request.getParameter("status");
             String cusId_str = request.getParameter("uid");
-//            int updateBy = user.getUserID();
-            int updateBy = 4;
+            int updateBy = user.getUserID();
             String purpose = "";
             int cusId = Integer.parseInt(cusId_str);
             if (status.equals("1")) {

@@ -268,7 +268,11 @@
                                                                         </div>
                                                                     </div>
                                                                 </div>-->
-                                <div class="row" style="margin-bottom: 36px">
+                                <div class="row" style="height: 300px;
+                                     width: 97%;
+                                     max-height: 300px;
+                                     overflow-y: scroll;
+                                     margin: 0 auto;margin-bottom: 30px;">
                                     <div class="col-md-12">
                                         <div class="card mb-4 mb-md-0">
                                             <div class="card-body">
