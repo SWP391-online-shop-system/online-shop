@@ -68,6 +68,9 @@
                 color:black;
                 text-decoration: none;
             }
+            footer{
+                font-family: ui-monospace;
+            }
         </style>
     </head>
 
@@ -510,11 +513,6 @@
                                     <input type="text" class="form-control" id="" placeholder="" readonly<%=rsReceiver.getString("ReceiverAddress")%>> 
                                 </div>
                                 <hr class="mb-4">
-                                <div class="custom-control custom-checkbox">
-                                    <input type="checkbox" class="custom-control-input" id="save-info">
-                                    <label class="custom-control-label" for="save-info">Save this information for next time</label>
-                                </div>
-                                <hr class="mb-1"> 
                             </form>
                             <%}%>
                         </div>
@@ -537,16 +535,16 @@
                                         }
                                     %>
                                     <div class="d-flex">
-                                        <div class="font-weight-bold">Mã đơn hàng</div>
+                                        <div class="font-weight-bold">Mã đơn hàng:</div>
                                         <div class="ml-auto font-weight-bold"><%=rsOrder.getInt("OrderID")%></div>
                                     </div>
                                     <hr class="my-1">
                                     <div class="d-flex">
-                                        <h4 style="font-size: 16px;margin-bottom: 6px;margin-top: 9px;">Ngày đặt hàng</h4>
+                                        <h4 style="font-size: 16px;margin-bottom: 6px;margin-top: 9px;">Ngày đặt hàng:</h4>
                                         <div class="ml-auto"><%=rsOrder.getString("OrderDate")%></div>
                                     </div>
                                     <div class="d-flex">
-                                        <h4 style="font-size: 16px;margin-bottom: 6px;margin-top: 9px;">Trạng thái đơn hàng</h4>
+                                        <h4 style="font-size: 16px;margin-bottom: 6px;margin-top: 9px;">Trạng thái đơn hàng:</h4>
                                         <div class="ml-auto font-weight-bold"><%=status%></div>
                                     </div>
                                     <hr class="my-1">
@@ -583,7 +581,7 @@
                                         ProductImage productImage = daoI.getProductImageByProductID(product.getProductID());
                                         Categories categories = daoCate.getCategoriesById(product.getCategoryID());
                                         %>
-                                        <div class="rounded p-2 bg-light" style="margin-bottom: 10px;">
+                                        <div class="rounded p-2 bg-light" style="margin-bottom: 15px;">
                                             <div class="media mb-2 border-bottom" style="display: block;">
                                                 <div>
                                                     <table>
@@ -611,25 +609,82 @@
                     </div>
                 </div>
             </div>
-
         </div>
-    </div>
-    <!-- End Cart -->
-    <!-- ALL JS FILES -->
-    <script src="js_orderdetail/jquery-3.2.1.min.js"></script>
-    <script src="js_orderdetail/popper.min.js"></script>
-    <script src="js_orderdetail/bootstrap.min.js"></script>
-    <!-- ALL PLUGINS -->
-    <script src="js_orderdetail/jquery.superslides.min.js"></script>
-    <script src="js_orderdetail/bootstrap-select.js"></script>
-    <script src="js_orderdetail/inewsticker.js"></script>
-    <script src="js_orderdetail/bootsnav.js."></script>
-    <script src="js_orderdetail/images-loded.min.js"></script>
-    <script src="js_orderdetail/isotope.min.js"></script>
-    <script src="js_orderdetail/owl.carousel.min.js"></script>
-    <script src="js_orderdetail/baguetteBox.min.js"></script>
-    <script src="js_orderdetail/form-validator.min.js"></script>
-    <script src="js_orderdetail/contact-form-script.js"></script>
-    <script src="js_orderdetail/custom.js"></script>
-</body>
+        <footer class="footer_1">
+            <div class="container_1" style="height: 270px;padding-top: 28px;">
+                <div class="row_1">
+                    <div class="col_1" id="company" style="font-family: ui-monospace;">
+                        <img style="width: 176px;
+                             margin-bottom: -19px;
+                             margin-top: 10px;height: 136px;" src="images/logo/logo.png" alt="" class="logo_1">
+                        <p style="font-family: ui-monospace;font-size: 15px;color: white;">
+                            công ty Smartket Việt Nam, 54 Liễu Giai, quận Ba Đình, Hà Nội 
+                        </p>
+                        <div class="social_1">
+                            <a href="#"><i class="fab fa-facebook"></i></a>
+                            <a href="#"><i class="fa-brands fa-x-twitter"></i></a>
+                        </div>
+                    </div>
+
+
+                    <div class="col_1" id="services" style="font-family: ui-monospace;">
+                        <h3 class="footer_title_1" style="font-family: ui-monospace;">Dịch vụ</h3>
+                        <div class="links_1">
+                            <a href="#">Tuyển dụng</a>
+                            <a href="#">Quảng cáo</a>
+                            <a href="#">Chính sách</a>
+                        </div>
+                    </div>
+
+                    <div class="col_1" id="useful-links" style="margin-left: 50px;margin-right: 50px;font-family: ui-monospace;">
+                        <h3 class="footer_title_1" style="font-family: ui-monospace;">Đường dẫn</h3>
+                        <div class="links_1">
+                            <a href="#">Về chúng tôi</a>
+                            <a href="#">Danh mục</a>
+                            <a href="#">Tin tức</a>
+                            <a href="#">Hỗ trợ</a>
+                        </div>
+                    </div>
+
+                    <div class="col_1" id="contact" style="font-family: ui-monospace;">
+                        <h3 class="footer_title_1" style="font-family: ui-monospace;">Liên hệ</h3>
+                        <div class="contact-details_1">
+                            <i class="fa-regular fa-envelope"></i>
+                            <p style="color: white;">Smartket@gmail.com</p>
+                        </div>
+                        <div class="contact-details_1" style="font-family: ui-monospace;">
+                            <i class="fa fa-phone"></i>
+                            <p style="color: white;">+84 99.999.999</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row_1">
+                    <div class="form_1" style="margin-top: -56px;">
+                        <form action="">
+                            <input class="email-input_1" style="height: 40px;" type="text" placeholder="Email here...">
+                            <button class="email-button_1" style="height: 43px;padding-top: 10px;"><i class="fa fa-paper-plane"></i></button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </footer>
+        <!-- End Cart -->
+        <!-- ALL JS FILES -->
+        <script src="js_orderdetail/jquery-3.2.1.min.js"></script>
+        <script src="js_orderdetail/popper.min.js"></script>
+        <script src="js_orderdetail/bootstrap.min.js"></script>
+        <!-- ALL PLUGINS -->
+        <script src="js_orderdetail/jquery.superslides.min.js"></script>
+        <script src="js_orderdetail/bootstrap-select.js"></script>
+        <script src="js_orderdetail/inewsticker.js"></script>
+        <script src="js_orderdetail/bootsnav.js."></script>
+        <script src="js_orderdetail/images-loded.min.js"></script>
+        <script src="js_orderdetail/isotope.min.js"></script>
+        <script src="js_orderdetail/owl.carousel.min.js"></script>
+        <script src="js_orderdetail/baguetteBox.min.js"></script>
+        <script src="js_orderdetail/form-validator.min.js"></script>
+        <script src="js_orderdetail/contact-form-script.js"></script>
+        <script src="js_orderdetail/custom.js"></script>
+    </body>
 </html>

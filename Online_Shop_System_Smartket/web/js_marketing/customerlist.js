@@ -20,7 +20,7 @@ $(document).ready(function () {
 });
 
 function Customerdetail(uid) {
-    var url = "customerlist?service=showDetail&uid="+uid;
+    var url = "customerDetail?uid="+uid;
     window.location.href = url;
 }
 function convertLastLoginToTimeFromNow() {
