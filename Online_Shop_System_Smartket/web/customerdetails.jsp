@@ -68,7 +68,7 @@
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="ui-colors.html">
+                        <a class="nav-link" href="FeedBackListURL">
                             <i class="fas fa-comments fa-2x text-info"></i>
                             <span>Phản hồi</span>
                         </a>
@@ -128,7 +128,7 @@
                                         <div class="card mb-4">
                                             <div class="card-body text-center">
                                                 <img src="images/user/<%=rs.getString("UserImage")%>" alt="avatar"
-                                                     class="rounded-circle img-fluid" style="width: 150px;">
+                                                     class="rounded-circle img-fluid" style="width: 150px;border: 1px solid">
                                             </div>
                                             <p style="text-align: center">Mã Khách Hàng: <%=rs.getInt(1)%></p>
                                         </div>
@@ -138,55 +138,55 @@
                                         <div class="card mb-4">
                                             <div class="card-body">
                                                 <div class="row">
-                                                    <div class="col-sm-3">
-                                                        <p class="mb-0">Full Name</p>
+                                                    <div class="col-sm-4">
+                                                        <p class="mb-0">Họ và tên</p>
                                                     </div>
-                                                    <div class="col-sm-9">
+                                                    <div class="col-sm-8">
                                                         <p><%=rs.getString(2)+" "+rs.getString(3)%></p>
                                                     </div>
                                                 </div>
                                                 <hr>
                                                 <div class="row">
-                                                    <div class="col-sm-3">
+                                                    <div class="col-sm-4">
                                                         <p class="mb-0">Email</p>
                                                     </div>
-                                                    <div class="col-sm-9">
+                                                    <div class="col-sm-8">
                                                         <p class="text-muted mb-0"> <%=rs.getString("Email")%></p>
                                                     </div>
                                                 </div>
                                                 <hr>
                                                 <div class="row">
-                                                    <div class="col-sm-3">
-                                                        <p class="mb-0">Phone</p>
+                                                    <div class="col-sm-4">
+                                                        <p class="mb-0">Số điện thoại</p>
                                                     </div>
-                                                    <div class="col-sm-9">
-                                                        <p class="text-muted mb-0"><%=(rs.getString("PhoneNumber")==null)?"N/A":rs.getString("PhoneNumber")%></p>
-                                                    </div>
-                                                </div>
-                                                <hr>
-                                                <div class="row">
-                                                    <div class="col-sm-3">
-                                                        <p class="mb-0">Address</p>
-                                                    </div>
-                                                    <div class="col-sm-9">
-                                                        <p class="text-muted mb-0"><%=(rs.getString("Address")==null)?"N/A":""%></p>
+                                                    <div class="col-sm-8">
+                                                        <p class="text-muted mb-0"><%=(rs.getString("PhoneNumber")==null)?"Chưa cập nhật":rs.getString("PhoneNumber")%></p>
                                                     </div>
                                                 </div>
                                                 <hr>
                                                 <div class="row">
-                                                    <div class="col-sm-3">
-                                                        <p class="mb-0">DateOfBirth</p>
+                                                    <div class="col-sm-4">
+                                                        <p class="mb-0">Địa chỉ</p>
                                                     </div>
-                                                    <div class="col-sm-9">
-                                                        <p class="text-muted mb-0"><%=(rs.getString("DateOfBirth")==null)?"N/A":""%></p>
+                                                    <div class="col-sm-8">
+                                                        <p class="text-muted mb-0"><%=(rs.getString("Address")==null)?"Chưa cập nhật":""%></p>
                                                     </div>
                                                 </div>
                                                 <hr>
                                                 <div class="row">
-                                                    <div class="col-sm-3">
-                                                        <p class="mb-0">Gender</p>
+                                                    <div class="col-sm-4">
+                                                        <p class="mb-0">Ngày sinh</p>
                                                     </div>
-                                                    <div class="col-sm-9"><%
+                                                    <div class="col-sm-8">
+                                                        <p class="text-muted mb-0"><%=(rs.getString("DateOfBirth")==null)?"Chưa cập nhật":""%></p>
+                                                    </div>
+                                                </div>
+                                                <hr>
+                                                <div class="row">
+                                                    <div class="col-sm-4">
+                                                        <p class="mb-0">Giới tính</p>
+                                                    </div>
+                                                    <div class="col-sm-8"><%
     String gender = rs.getString("Gender");
     String displayGender = "";
     if (gender == null || gender.equals("0")) {
@@ -209,44 +209,66 @@
                                                 </div>
                                                 <hr>
                                                 <div class="row">
-                                                    <div class="col-sm-3">
-                                                        <p class="mb-0">LastLogin</p>
+                                                    <div class="col-sm-4">
+                                                        <p class="mb-0">Đăng nhập lần cuối</p>
                                                     </div>
-                                                    <div class="col-sm-9">
+                                                    <div class="col-sm-8">
                                                         <p class="text-muted mb-0"><%=rs.getString("LastLogin")%></p>
                                                     </div>
                                                 </div>
                                                 <hr>
                                                 <div class="row">
-                                                    <div class="col-sm-3">
-                                                        <p class="mb-0">UserStatus</p>
+                                                    <div class="col-sm-4">
+                                                        <p class="mb-0">Trạng thái</p>
                                                     </div>
-                                                    <form class="col-sm-9" id="myForm" method="get" action="customerDetail">
+                                                    <form class="col-sm-8" id="myForm" method="get" action="customerDetail">
                                                         <input type="hidden" id="statusInput" name="status" value="<%=status%>">
-                                                        <input type="hidden" name="uid" value="<%=rs.getInt(1)%>">
-                                                        <div class="custom-control custom-switch">
-                                                            <input type="checkbox" class="custom-control-input" id="customSwitch1" onchange="document.getElementById('myForm').submit()"
-                                                                   <%if(status.equals("0")){%> disabled<%}%>>
-                                                            <label class="custom-control-label" for="customSwitch1"></label>
+                                                        <input type="hidden" id="uidStatus" name="uid" value="<%=rs.getInt(1)%>">
+                                                        <div class="custom-control custom-switch" style="float: left;padding: 0;">
+                                                            <div style="display: flex;margin-left: 35px;">
+                                                                <div style="">
+                                                                    <input type="checkbox" class="custom-control-input" id="customSwitch1" onchange="updateStatus();"
+                                                                           <%if(status.equals("0")){%>disabled<%}%>> 
+                                                                    <label class="custom-control-label" for="customSwitch1"></label>
+                                                                </div>
+                                                                <div id="statusMess"></div>
+                                                            </div>
                                                         </div>
                                                     </form>
                                                     <script>
-                                                        window.onload = function () {
-                                                            var statusString = "<%=status%>";
-                                                            var status = parseInt(statusString, 10);
-                                                            var switchInput = document.getElementById("customSwitch1");
-
-                                                            // Cập nhật trạng thái của nút switch
-                                                            switchInput.checked = (status === 1);
-                                                        };
+                                                        function updateStatus() {
+                                                            var status = document.getElementById("statusInput");
+                                                            var uid = document.getElementById("uidStatus");
+                                                            var mess = document.getElementById("statusMess");
+                                                            var service = "updateStatus";
+                                                            if (status.value === '1') {
+                                                                console.log("status = 1");
+                                                                mess.innerHTML = 'Đã vô hiệu hóa';
+                                                            }
+                                                            if (status.value === '0') {
+                                                                console.log("status = 0");
+                                                                mess.innerHTML = 'Đang kích hoạt';
+                                                            }
+                                                            $.ajax({
+                                                                url: "customerDetail",
+                                                                type: 'GET',
+                                                                data: {status: (status === '0' ? '1' : '0'), uid: uid},
+                                                                success: function (data) {
+                                                                    // Update specific element in the JSP with the new data
+                                                                    $("#page-top").html(data);
+                                                                },
+                                                                error: function (xhr, status, error) {
+                                                                }
+                                                            });
+                                                        }
                                                     </script>
                                                 </div>
                                                 <hr>
                                                 <div class="row">
-                                                    <div class="col-sm-3">
-                                                        <p class="mb-0">CreateDate</p>
+                                                    <div class="col-sm-4">
+                                                        <p class="mb-0">Ngày tạo tài khoản</p>
                                                     </div>
-                                                    <div class="col-sm-9">
+                                                    <div class="col-sm-8">
                                                         <p class="text-muted mb-0"><%=rs.getString("CreateDate")%></p>
                                                     </div>
                                                 </div>
@@ -256,19 +278,11 @@
                                     </div>
                                     <%}%>
                                 </div>
-                                <!--                                <div class="row" style="margin-bottom: 30px">
-                                                                    <div class="col-md-12">
-                                                                        <div class="card mb-4 mb-md-0">
-                                                                            <div class="card-body">
-                                                                                <p class="mb-4">Lịch sử hoạt động</p>
-                                                                                <div>
-                                
-                                                                                </div>                                         
-                                                                            </div>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>-->
-                                <div class="row" style="margin-bottom: 36px">
+                                <div class="row" style="height: 300px;
+                                     width: 97%;
+                                     max-height: 300px;
+                                     overflow-y: scroll;
+                                     margin: 0 auto;margin-bottom: 30px;">
                                     <div class="col-md-12">
                                         <div class="card mb-4 mb-md-0">
                                             <div class="card-body">
@@ -291,34 +305,6 @@
                                 </div>
                             </div>
                         </section>
-                        <!--                        <div class="row">
-                                                     DataTable with Hover 
-                                                    <div class="col-lg-12">
-                                                        <div class="card mb-4">                                 
-                                                                                                <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-                                                                                                    <h6 class="m-0 font-weight-bold text-primary">DataTables with Hover</h6>
-                                                                                                </div>
-                                                            <div class="table-responsive p-3">
-                                                                <table class="table align-items-center table-flush table-hover" id="dataTableHover" style="font-size: 16px;
-                                                                       ">
-                                                                    <thead class="thead-light">
-                                                                        <tr>
-                                                                            <th style="text-align: center;">STT</th>
-                                                                            <th style="text-align: center;width: 128.4432px;">Tên Khách Hàng</th>
-                                                                            <th style="text-align: center;">Email</th>
-                                                                            <th style="text-align: center; width: 0">Giới Tính</th>
-                                                                            <th style="text-align: center;width: 112.2955px">Số Điện Thoại</th>						
-                                                                            <th style="text-align: center; width:89.73860000000002px">Trạng Thái</th>						
-                                                                            <th style="text-align: center;">Lần Đăng Nhập Cuối</th>
-                                                                        </tr>
-                                                                    </thead>
-                        
-                                                                    
-                                                                </table>
-                                                            </div>                                    
-                                                        </div>
-                                                    </div>
-                                                </div>-->
                         <!--Row-->
                     </div>      
                 </div>
@@ -338,17 +324,5 @@
         <script src="vendor/datatables/dataTables.bootstrap4.min.js"></script>
 
         <!-- Page level custom scripts -->
-        <script type="text/javascript">
-                                                        function updateStatus() {
-                                                            var switchStatus = document.getElementById("customSwitch1").checked;
-                                                            var hiddenInput = document.getElementById("statusInput");
-
-                                                            // Cập nhật giá trị của trường ẩn trong form
-                                                            hiddenInput.value = switchStatus;
-
-                                                            // Gửi form
-                                                            document.getElementById("myForm").submit();
-                                                        }
-        </script>
     </body>
 </html>

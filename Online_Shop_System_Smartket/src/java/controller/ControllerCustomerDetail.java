@@ -12,6 +12,7 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
+import java.sql.ResultSet;
 import model.DAOLog;
 import model.DAOUser;
 import view.Log;
@@ -42,23 +43,34 @@ public class ControllerCustomerDetail extends HttpServlet {
             User user = (User) session.getAttribute("account");
             DAOUser daoU = new DAOUser();
             DAOLog daoLog = new DAOLog();
-            String status = request.getParameter("status");
-            String cusId_str = request.getParameter("uid");
-//            int updateBy = user.getUserID();
-            int updateBy = 4;
-            String purpose = "";
-            int cusId = Integer.parseInt(cusId_str);
-            if (status.equals("1")) {
-                daoU.updateStatus(cusId, 2);
-                purpose = "đã vô hiệu hóa";
-            } else {
-                daoU.updateStatus(cusId, 1);
-                purpose = "đã kích hoạt";
+            String service = request.getParameter("service");
+            if (service == null) {
+                service = "showDetail";
             }
-            Log log = new Log(cusId, updateBy, purpose);
-            int n = daoLog.insertLog(log);
-            
-            response.sendRedirect("customerlist?service=showDetail&uid=" + cusId);
+            if (service.equals("showDetail")) {
+                String cusID = request.getParameter("uid");
+                ResultSet rs = daoU.getData("SELECT * FROM `user` where userID = " + cusID);
+                ResultSet log = daoU.getData("SELECT * FROM loghistory as log join `user` as u on log.UserId = u.UserID where u.UserId = " + cusID + " order by updateAt desc ");
+                request.setAttribute("data", rs);
+                request.setAttribute("log", log);
+                request.getRequestDispatcher("customerdetails.jsp").forward(request, response);
+            }
+            if (service.equals("updateStatus")) {
+                String status = request.getParameter("status");
+                String cusId_str = request.getParameter("uid");
+                int updateBy = user.getUserID();
+                String purpose = "";
+                int cusId = Integer.parseInt(cusId_str);
+                if (status.equals("1")) {
+                    daoU.updateStatus(cusId, 2);
+                    purpose = "đã vô hiệu hóa";
+                } else {
+                    daoU.updateStatus(cusId, 1);
+                    purpose = "đã kích hoạt";
+                }
+                Log log = new Log(cusId, updateBy, purpose);
+                int n = daoLog.insertLog(log);
+            }
         }
     }
 
