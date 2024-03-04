@@ -18,6 +18,9 @@ public class Receiver {
     private String RceiverAddress;
     private String note;
 
+    public Receiver() {
+    }
+
     public Receiver(int OrderID, String ReceiverName, String ReceiverPhoneNumber, String ReceiverEmail, String RceiverAddress, String note) {
         this.OrderID = OrderID;
         this.ReceiverName = ReceiverName;
@@ -26,7 +29,7 @@ public class Receiver {
         this.RceiverAddress = RceiverAddress;
         this.note = note;
     }
-
+    
     @Override
     public String toString() {
         return "Receiver{" + "OrderID=" + OrderID + ", ReceiverName=" + ReceiverName + ", ReceiverGender=" + ReceiverGender + ", ReceiverPhoneNumber=" + ReceiverPhoneNumber + ", ReceiverEmail=" + ReceiverEmail + ", RceiverAddress=" + RceiverAddress + ", note=" + note + '}';
