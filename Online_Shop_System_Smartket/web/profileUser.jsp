@@ -41,7 +41,6 @@
         }
         .btn-submitform{
             margin-top: 15px;
-            /* float: right; */
             padding: 7px 15px;
             background: #5bbc5b;
             border: none;
@@ -77,13 +76,300 @@
         .move-trans{
 
         }
+        .input-update{
+            height: 30px;
+            margin-left: 35px;
+            width: 220px;
+        }
+        .table-separate{
+            border-collapse: separate;
+
+        }
+
+        input[type='radio']:checked:after {
+            width: 15px;
+            height: 15px;
+            border-radius: 15px;
+            top: -5px;
+            left: -1px;
+            position: relative;
+            background-color: #6dd46d;
+            content: '';
+            display: inline-block;
+            visibility: visible;
+            border: 2px solid white;
+        }
     </style>
 </head>
 
 <body>
-    <jsp:include page="include/header.jsp"/>
+    <!-- comment start -->
+    <div class="header" style="margin-top: 21px;">
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <div class="header-title" style="margin-top: -16px;">
+            <div class="header-title-left">
+                <ul>
+                    <li>
+                        <div class="header-email">
+                            <i class="fa-regular fa-envelope"></i>
+                            <span class="header-email-title">SmartketFPT@gmail.com</span>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="header-support">
+                            <div><a href="#">Hỗ trợ</a></div>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+            <div class="header-title-right">
+                <div class="header-title-right-social">
+                    <div><a href="#" title="Trang Facebook chúng tôi"><i class="fa-brands fa-facebook"></i></a></div>
+                    <div><a href="#" title="Trang Twitter của chúng tôi"><i class="fa-brands fa-x-twitter"></i></a></div>
+                </div>
+                <div class="header-title-right-about">
+                    <a href="#">Về chúng tôi</a>
+                </div>
+                <div class="header-title-right-login">
+                    <!DOCTYPE html>
+                    <html lang="en">
+                        <head>
+                            <meta charset="UTF-8">
+                            <meta name="viewport" content="width=device-width, initial-scale=1.0">
+                            <title>Smarket</title>
+                            <link rel="stylesheet" href="css/login.css"/>
+                        </head>
+                        <body> 
+                            <%
+                                String message1 = (String)request.getAttribute("message");
+                                String messagesu1 = (String)request.getAttribute("messageSignUp");
+                                String msg1 = (String)request.getAttribute("msg1");
+                            %>
+                            <c:if test="${sessionScope.account.roleID == 5}">
+                                <a href="#"style="margin-right: 50px;">ADMIN</a>
+
+                            </c:if>
+                            <c:if test="${sessionScope.account.roleID == 4}">
+                                <a href="#">SALE MANAGER</a>
 
 
+                            </c:if>
+                            <c:if test="${sessionScope.account.roleID == 3}">
+                                <a href="#">SALE</a>
+
+
+                            </c:if>
+                            <c:if test="${sessionScope.account.roleID == 2}">
+                                <a href="#">Marketing</a>
+                            </c:if>
+                            <c:if test="${sessionScope.account != null}">
+                                <a href="logout">Đăng xuất</a>
+                                <a href="profileUser.jsp"><img style="width: 30px;
+                                                               height: 30px;
+                                                               margin-right: -10px;
+                                                               margin-bottom: -8px;
+                                                               margin-left: 7px;
+                                                               border-radius: 50%;" class="styling1" src="images/user/default_avatar.jpg" alt="Admin Image"></a>
+                                </c:if>
+                                <c:if test="${sessionScope.account == null}">
+                                <button href="#" style="border: none; font-size:16px; font-family: math;" id="show-login">Đăng nhập</button>
+                            </c:if>
+                            <!-- Login Pop-up Form -->
+                            <form action="loginURL" method="post">
+                                <div class="popup ${requestScope.activeLogin}" id="loginPopup">
+                                    <div class="close-btn" onclick="togglePopup('loginPopup')">x</div>
+                                    <div class="form">
+                                        <h2>Đăng nhập</h2>
+                                        <p class="text-danger" style="
+                                           color: red;
+                                           font-size: 20px;
+                                           font-weight: 700;
+                                           text-align: left;"><%=(message1 == null) ? "" : message1%></p>
+                                        <div class="form-element">
+                                            <label for="email">Email</label>
+                                            <input type="email" id="email" name="email" placeholder="Nhập email" required 
+                                                   oninvalid="this.setCustomValidity('Vui lòng điền thông tin này và bao gồm @')" 
+                                                   oninput="setCustomValidity('')">
+                                        </div>
+                                        <div class="form-element">
+                                            <label for="password">Mật khẩu</label>
+                                            <input type="password" id="pass" name="pass" placeholder="Nhập mật khẩu" required 
+                                                   oninvalid="this.setCustomValidity('Vui lòng điền thông tin này')" 
+                                                   oninput="setCustomValidity('')">
+                                        </div>
+                                        <div class="form-element">
+                                            <button type="submit" value="login" >Đăng nhập</button>
+                                        </div>
+                                        <div class="form-element">
+                                            <button id="showSignup" onclick="togglePopup('signupPopup')">Đăng kí</button>
+                                        </div>
+                                        <div class="form-element">
+                                            <a href="#">Quên mật khẩu?</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
+
+                            <!-- Registration Pop-up Form -->
+                            <form action="signupURL" method="post">
+                                <input type="hidden" name="service" value="signupRegister">
+                                <div class="popup ${requestScope.activeSignUp}" id="signupPopup">
+                                    <div class="close-btn" onclick="togglePopup('signupPopup')">x</div>
+                                    <div class="form">
+                                        <h2>Đăng kí</h2>
+                                        <%User u = (User)request.getAttribute("lastUser");
+                                    if(u == null) {%>
+                                        <div class="form-element">
+                                            <label for="registerEmail">Họ</label>
+                                            <input type="text" name="rFName" placeholder="Nhập họ" required 
+                                                   pattern="[A-Za-zÀ-ỹ ]+" oninvalid="this.setCustomValidity('Vui lòng điền thông tin này, Không bao gồm số và kí tự đặc biệt')" 
+                                                   oninput="setCustomValidity('')" >
+                                        </div>
+                                        <div class="form-element">
+                                            <label for="registerEmail">Tên</label>
+                                            <input type="text" name="rLName" placeholder="Nhập Tên" required
+                                                   pattern="[A-Za-zÀ-ỹ ]+" oninvalid="this.setCustomValidity('Vui lòng điền thông tin này, Không bao gồm số và kí tự đặc biệt')" 
+                                                   oninput="setCustomValidity('')" >
+                                        </div>
+                                        <div class="form-element" style="margin-top: 28px;">
+                                            <label for="registerEmail">Email</label>
+                                            <input type="email" name="remail" placeholder="Nhập email"required
+                                                   oninvalid="this.setCustomValidity('Vui lòng điền thông tin này và bao gồm @')" 
+                                                   oninput="setCustomValidity('')" >
+                                        </div>
+                                        <div class="form-element">
+                                            <label for="registerPassword">Mật khẩu</label>
+                                            <input type="password" name="rpass" placeholder="Nhập mật khẩu" required
+                                                   minlength="6" title="Mật khẩu phải chứa từ 6 đến 8 ký tự" 
+                                                   oninvalid="this.setCustomValidity('Vui lòng điền thông tin này')" 
+                                                   oninput="setCustomValidity('')">
+                                        </div>
+                                        <div class="form-element">
+                                            <label for="registerPassword">Nhập lại mật khẩu</label>
+                                            <input type="password" name="rrepass" placeholder="Nhập lại mật khẩu" required
+                                                   title="Mật khẩu phải chứa từ 6 đến 8 ký tự" 
+                                                   oninvalid="this.setCustomValidity('Vui lòng điền thông tin này')" 
+                                                   oninput="setCustomValidity('')">
+                                        </div>
+                                        <%} else {%>
+                                        <div class="form-element">
+                                            <label for="registerEmail">Họ</label>
+                                            <input type="text" name="rFName" placeholder="Nhập họ" required 
+                                                   pattern="[A-Za-zÀ-ỹ ]+" oninvalid="this.setCustomValidity('Vui lòng điền thông tin này, Không bao gồm số và kí tự đặc biệt')" 
+                                                   oninput="setCustomValidity('')" value="<%=u.getLastName()%>">
+                                        </div>
+                                        <div class="form-element">
+                                            <label for="registerEmail">Tên</label>
+                                            <input type="text" name="rLName" placeholder="Nhập Tên" required
+                                                   pattern="[A-Za-zÀ-ỹ ]+" oninvalid="this.setCustomValidity('Vui lòng điền thông tin này, Không bao gồm số và kí tự đặc biệt')" 
+                                                   oninput="setCustomValidity('')" value="<%=u.getFirstName()%>">
+                                        </div>
+                                        <div class="form-element" style="margin-top: 28px;">
+                                            <label for="registerEmail">Email</label>
+                                            <input type="email" name="remail" placeholder="Nhập email"required
+                                                   oninvalid="this.setCustomValidity('Vui lòng điền thông tin này và bao gồm @')" 
+                                                   oninput="setCustomValidity('')" value="<%=u.getEmail()%>">
+                                        </div>
+                                        <div class="form-element">
+                                            <label for="registerPassword">Mật khẩu</label>
+                                            <input type="password" name="rpass" placeholder="Nhập mật khẩu" required
+                                                   minlength="6" title="Mật khẩu phải chứa từ 6 đến 8 ký tự" 
+                                                   oninvalid="this.setCustomValidity('Vui lòng điền thông tin này')" 
+                                                   oninput="setCustomValidity('')"value="<%=u.getPassword()%>">
+                                        </div>
+                                        <div class="form-element">
+                                            <label for="registerPassword">Nhập lại mật khẩu</label>
+                                            <input type="password" name="rrepass" placeholder="Nhập lại mật khẩu" required
+                                                   title="Mật khẩu phải chứa từ 6 đến 8 ký tự" 
+                                                   oninvalid="this.setCustomValidity('Vui lòng điền thông tin này')" 
+                                                   oninput="setCustomValidity('')"value="<%=u.getRePassword()%>">
+                                        </div>
+                                        <%}%>
+                                        <p class="text-danger" style="
+                                           color: red;
+                                           font-size: 20px;
+                                           font-weight: 700;
+                                           text-align: left;"><%=(messagesu1 == null) ? "" : messagesu1%></p>
+                                        <div class="form-element">
+                                            <button type="submit" >Đăng kí</button>
+                                        </div>
+                                        Ðã có tài khoản?<a id="loginAfterRegister" href="#">Đăng nhập ngay</a>
+                                    </div>
+                                </div>
+                            </form>
+                        </body>
+                        <script src="js/login.js">
+
+                        </script>
+                    </html>
+                </div>
+            </div>
+        </div>  
+        <div class="header-content" style="margin-bottom: 20px;">
+            <div class="header-content-logo">
+                <a href="HomePageURL"><img src="images/logo/logo.png"alt="404"/></a>
+            </div>
+            <div class="header-content-menu">
+                <ul>
+                    <li class="active"><a href="HomePageURL">Trang chủ</a></li>
+                    <li><a href="ProductListURL?service=ShowAllProduct">Mua hàng</a></li>
+                    <li>
+                        <a href="#">Trang</a>
+                        <ul class="header-content-menu-drop-down">
+                            <c:if test="${sessionScope.account == null}">
+                                <li><a href="loginURL" onclick="alertOpenCart()">Giỏ hàng của tôi</a></li>
+                                </c:if>
+                                <c:if test="${sessionScope.account != null}">
+                                <li><a href="CartURL">Giỏ hàng của tôi</a></li>
+                                </c:if>
+                            <li><a href="#">Đơn hàng của tôi</a></li>
+                        </ul>
+                    </li>
+                    <li><a href="blog">Blog</a></li>
+                        <c:if test="${sessionScope.account != null}">
+                        <li><a href="profileUser.jsp">Tài khoản</a></li>
+                    </c:if>            </ul>
+            </div>
+            <div class="header-content-right-menu">
+                <ul>
+                    <li class="margin-unit"><a href="#" title="Đơn hàng của tôi"><i class="fa-solid fa-file-invoice-dollar"></i></i></a></li>
+                        <c:if test="${sessionScope.account == null}">
+                        <li><a href="loginURL" onclick="alertOpenCart()"title="Giỏ hàng của tôi"><i class="fa-solid fa-cart-shopping"></i></a></li>
+                            </c:if>
+                            <c:if test="${sessionScope.account != null}">
+                        <li>      
+                            <%
+                            HttpSession session2 = request.getSession();
+                            User user = (User) session2.getAttribute("account");
+                            int userID = user.getUserID();
+                            DAOCart dao = new DAOCart();
+                            ResultSet rs = dao.getData("SELECT count(*) as count FROM Cart AS c JOIN Product AS p ON c.ProductID = p.ProductID where userID = "+userID+"");
+                            while(rs.next()){
+                            %>
+                            <span class="count-cart" id="countCart" style="position: absolute;
+                                  margin-left: 17px;
+                                  background-color: #ff0000;
+                                  color: #ffffff;
+                                  border-radius: 50%;
+                                  padding: 0px 5px;
+                                  font-size: 13px;
+                                  z-index: 9;
+                                  top: 11px;
+                                  left: 3px;"><%=rs.getInt(1)%></span>
+                            <%}%>
+                            <a href="CartURL" title="Giỏ hàng của tôi"><i class="fa-solid fa-cart-shopping"></i></a>
+                        </li>
+                    </c:if>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <script>
+        function alertOpenCart() {
+            alert('Đăng nhập để xem giỏ hàng của bạn');
+        }
+    </script>
+    <!-- comment end-->
     <%String messaa = (String)request.getAttribute("messaa");
     if(messaa==null){%>
 
@@ -94,7 +380,7 @@
          height: 71px;
          float: right;
          position: absolute;
-         top: 51%;
+         top: 32%;
          right: 21px;
          z-index: 99;" role="alert">
         <button type="button" class="close" data-dismiss="alert" aria-label="Close">
@@ -183,14 +469,17 @@
                     </nav>
                 </div>
             </div>
-            <%
+            <%String newAvt = (String)request.getAttribute("newAvt");
             ResultSet rsProfile = (ResultSet)request.getAttribute("rsProfile");
             if(rsProfile.next()){%>
             <div class="row">
                 <div class="col-lg-4">
                     <div class="card mb-4">
+                        
                         <div class="card-body text-center">
-                            <img src="images/user/${sessionScope.account.userImage}" alt="avatar" class="rounded-circle img-fluid" style="width: 150px;">
+                            <img src="images/user/<%=newAvt%>" alt="avatar" class="rounded-circle img-fluid" style="width: 132px;
+                                 border-radius: 70px;
+                                 height: 126px;">
                             <h5 class="my-3">${sessionScope.account.firstName}&nbsp;${sessionScope.account.lastName}</h5>
                             <p class="text-muted mb-1">
                                 <%
@@ -283,8 +572,8 @@
                                     <div class="col-sm-7">
                                         <%
                                         String email = rsProfile.getString("Email");
-                                        User u = new User();
-                                        String result = u.encryptEmail(email);
+                                        User u1 = new User();
+                                        String result = u1.encryptEmail(email);
                                         %>
                                         <p class="text-muted mb-0"><%=result%></p>
                                     </div>
@@ -378,56 +667,64 @@
 
                         <div style="color: red;">${sessionScope.input}</div>
 
-                        <table cellspacing="15" ">
+                        <table class="table-separate" cellspacing="15" ">
                             <input type="hidden" name="UserID" value="${sessionScope.account.userID}"/>
                             <tr>   
-                                <td style=" font-size: 1.2em; text-align: right;color: #909fa9;font-family: monospace">Họ </td>
-                                <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
-                                <td><input type="text" name="firstName1" required value="${sessionScope.account.firstName}"  /></td>
+                                <td style="">Họ</td>
+                                <td><input class="input-update"  type="text" name="firstName1" required value="${sessionScope.account.firstName}"  /></td>
                             </tr>
 
                             <tr>
-                                <td style="font-size: 1.2em; text-align: right;color: #909fa9;font-family: monospace">Tên </td>
-                                <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
-                                <td><input type="text" name="lastName1" required value="${sessionScope.account.lastName}"  /></td>                                </tr>
+                                <td style="">Tên</td>
+                                <td><input class="input-update"  type="text" name="lastName1" required value="${sessionScope.account.lastName}"  /></td>                                </tr>
                             <tr>
-                                <td style="font-size: 1.2em; text-align: right;color: #909fa9;font-family: monospace">Email </td>
-                                <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
-                                <td>${sessionScope.account.email}  </td>
+                                <td style="">Email</td>
+                                <td><input class="input-update" style="border: 1px dashed;" type="email" readonly value="${sessionScope.account.email}"/></td>
                             </tr>
                             <tr>
-                                <td style="font-size: 1.2em; text-align: right;color: #909fa9;font-family: monospace">Số điện thoại</td>
-                                <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
-                                <td><input type="text" name="phoneNumber1" placeholder="Nhập Số Điện Thoại" class="form-control"
+                                <td style="">Số điện thoại</td>
+                                <td><input class="input-update"  type="text" name="phoneNumber1" placeholder="Nhập Số Điện Thoại" class="form-control"
                                            minlength="10" maxlength="10" required=""
                                            pattern="[0-9 ]+" oninvalid="this.setCustomValidity('Vui lòng điền thông tin này, Không bao gồm chữ cái và kí tự đặc biệt')" 
-                                           oninput="setCustomValidity(''); validateInput(this)" value="${sessionScope.account.phoneNumber}"  /></td>
+                                           oninput="setCustomValidity(''); validateInput(this)" value="${sessionScope.account.phoneNumber}"/></td>
                             </tr>
                             <tr>
-                                <td style="font-size: 1.2em; text-align: right;color: #909fa9;font-family: monospace">Địa chỉ </td>
-                                <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
-                                <td><input type="text" name="address1" required value="${sessionScope.account.address} "  /></td>
+                                <td style="">Địa chỉ</td>
+                                <td><input class="input-update"  type="text" name="address1" required value="${sessionScope.account.address}"/></td>
                             </tr>
                             <tr>
-                                <td style="font-size: 1.2em; text-align: right;color: #909fa9;font-family: monospace">Ngày sinh </td>
-                                <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+                                <td style="">Ngày sinh</td>
                                 <td>
-                                    <input type="date" name="dateOfBirth1"value="${sessionScope.account.dateOfBirth}">
+                                    <input class="input-update" type="date" id="dateOfBirth" name="dateOfBirth1"value="${sessionScope.account.dateOfBirth}" onchange="validateDate()">
+                                    <div id="statusDate" style="color:red;font-size: 12px;margin-left:33px;"></div>
                                 </td>
                             </tr>
+                            <script>
+                                validateDate();
+                                function validateDate() {
+                                    var status = document.getElementById("statusDate");
+                                    var inputDate = new Date(document.getElementById('dateOfBirth').value);
+                                    var today = new Date();
+                                    if (inputDate > today) {
+                                        status.innerHTML = 'Ngày sinh của bạn không được vượt quá hôm nay'
+                                        document.getElementById('dateOfBirth').value = ''; // Clear the input field
+                                    } else {
+                                        status.innerHTML = '';
+                                    }
+                                }
+                            </script>
                             <tr>
-                                <td style="font-size: 1.2em; text-align: right;color: #909fa9;font-family: monospace">Giới tính </td>
-                                <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
-                                <td><input type="radio" name="gender1" value="true"<c:if test="${sessionScope.account.gender}">checked</c:if>/> Nam
-                                    <input type="radio" name="gender1"  value="false" <c:if test="${!sessionScope.account.gender}">checked</c:if> /> Nữ
+                                <td style="">Giới tính</td>
+                                <td><input style="margin-left: 35px;width: 15px;" type="radio" name="gender1" value="true"<c:if test="${sessionScope.account.gender}">checked</c:if>/> Nam
+                                    <input style="    margin-left: 20px;width: 15px;"type="radio" name="gender1"  value="false" <c:if test="${!sessionScope.account.gender}">checked</c:if>/> Nữ
                                     </td>
                                 </tr>
 
                             </table>
                         </div>
                         <div class="modal-footer">
-                            <button type="button" class="btn btn-outline-primary" data-dismiss="modal">Đóng</button>
-                            <button type="submit" class="btn btn-primary">Lưu thay đổi</button>
+                            <button type="button" class="btn-submitform" data-dismiss="modal">Đóng</button>
+                            <button type="submit" class="btn-submitform">Lưu thay đổi</button>
                         </div>
                     </div></form>
             </div>
@@ -446,29 +743,29 @@
                         <div class="modal-body">
 
                             <div style="color: red;">${sessionScope.input}</div>
-                        <table cellspacing="15"   style="margin: 0 auto;margin-top: 15px;">
+                        <table class="table-separate" cellspacing="15"   style="margin: 0 auto;margin-top: 15px;">
                             <input type="hidden" name="service" value="changepassword"/>
                             <input type="hidden" name="UserID" value="${sessionScope.account.userID}"/>
                             <tr>   
-                                <td style=" font-size: 1.2em; text-align: right;color: #909fa9;font-family: monospace">Nhập mật khẩu cũ </td>
-                                <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
-                                <td><input  class="form-control"  style="width: 223px;margin: 0 auto;height: 30px;border: 1px solid;border-radius: 4px;" 
-                                            type="password" id="" name="oldPass" placeholder="Nhập mật khẩu" required>  </td>
+                                <td style=" ">Nhập mật khẩu cũ </td>
+                                <td><input class="input-update" class="form-control"   
+                                           type="password" id="" name="oldPass" placeholder="Nhập mật khẩu" required style="margin-left:14px;">  </td>
                             </tr>
 
                             <tr>
-                                <td style="font-size: 1.2em; text-align: right;color: #909fa9;font-family: monospace">Nhập mật khẩu mới </td>
-                                <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
-                                <td><input  class="form-control"  style="width: 223px;margin: 0 auto;height: 30px;border: 1px solid;border-radius: 4px;"
-                                            type="password" id="registerPassword" name="pass" placeholder="Nhập mật khẩu" required class="form-control"
-                                            minlength="6" maxlength="15" 
-                                            title="Mật khẩu phải chứa từ 6 đến 15 ký tự" 
-                                            oninvalid="this.setCustomValidity('Vui lòng điền thông tin này')" 
-                                            oninput="setCustomValidity(''); validateInput(this);validatePasswordMatch(this)">   </td>                                </tr>
+                                <td style="">Nhập mật khẩu mới </td>
+                                <td>
+                                    <input class="input-update" class="form-control"  
+                                           type="password"  style="margin-left:14px;" id="registerPassword" name="pass" placeholder="Nhập mật khẩu" required class="form-control"
+                                           minlength="6" maxlength="15" 
+                                           title="Mật khẩu phải chứa từ 6 đến 15 ký tự" 
+                                           oninvalid="this.setCustomValidity('Vui lòng điền thông tin này')" 
+                                           oninput="setCustomValidity(''); validateInput(this);validatePasswordMatch(this)">   
+                                </td>                               
+                            </tr>
                             <tr>
-                                <td style="font-size: 1.2em; text-align: right;color: #909fa9;font-family: monospace">Nhập lại mật khẩu mới </td>
-                                <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
-                                <td><input class="form-control" type="password" style="width: 223px;margin: 0 auto;height: 30px;border: 1px solid;border-radius: 4px;"
+                                <td style="">Nhập lại mật khẩu mới </td>
+                                <td><input class="input-update" class="form-control" type="password"  style="margin-left:14px;"
                                            id="registerPasswordConfirm" name="repass" placeholder="Nhập lại mật khẩu" required class="form-control"
                                            minlength="6" maxlength="15"
                                            title="Mật khẩu phải chứa từ 6 đến 15 ký tự" 
@@ -476,7 +773,8 @@
                                            oninput="setCustomValidity(''); validateInput(this);validatePasswordMatch(this)">
                                     <div class="invalid-feedback" style="padding-right: 94px;" id="passwordMismatch">
                                         Mật khẩu không khớp
-                                    </div> </td>
+                                    </div> 
+                                </td>
                             </tr>
                         </table>        
 
