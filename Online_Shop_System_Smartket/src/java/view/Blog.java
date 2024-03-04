@@ -38,6 +38,10 @@ public class Blog {
         this.CreateTime = CreateTime;
     }
 
+    public Blog(String BlogAuthor) {
+        this.BlogAuthor = BlogAuthor;
+    }
+
     public int getBlogID() {
         return BlogID;
     }

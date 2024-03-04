@@ -57,8 +57,8 @@ public class ControllerCartCompletion extends HttpServlet {
                 LocalDate orderDate = LocalDate.now();
                 DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
                 String orderDateStr = orderDate.format(formatter);
-                Order orders = new Order(userID, 3, orderDateStr, 1);
-                int orderID = daoOrder.insertOrderByPreparedReturnId(orders);
+//                Order orders = new Order(userID, 3, orderDateStr, 1);
+//                int orderID = daoOrder.insertOrderByPreparedReturnId(orders);
                 String name = request.getParameter("name");
                 String phone = request.getParameter("phone");
                 String email = request.getParameter("email");
@@ -68,8 +68,8 @@ public class ControllerCartCompletion extends HttpServlet {
                 String addressdetail = request.getParameter("addressdetail");
                 String note = request.getParameter("note");
                 String adress = addressdetail + " " + ward + " " + district + " " + city;
-                Receiver rece = new Receiver(orderID, name, phone, adress, email, note);
-                daoRece.insertReceiverByPrepared(rece);
+//                Receiver rece = new Receiver(orderID, name, phone, adress, email, note);
+//                daoRece.insertReceiverByPrepared(rece);
                 try {
                     ResultSet listCart = daoCart.getData("SELECT * FROM Cart AS c JOIN Product AS p ON c.ProductID = p.ProductID\n"
                             + "join ProductImage as pi on p.ProductID = pi.ProductID\n"

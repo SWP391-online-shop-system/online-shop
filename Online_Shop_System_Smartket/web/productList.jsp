@@ -298,16 +298,12 @@
                                       background-color: #ff0000;
                                       color: #ffffff;
                                       border-radius: 50%;
-                                      padding: 0px 4px;
-                                      font-size: 15px;
+                                      padding: 0px 5px;
+                                      font-size: 13px;
                                       z-index: 9;
                                       top: 11px;
-                                      left: 3px;
-                                      font-family: none;
-                                      line-height: normal;"><%=rs.getInt(1)%></span>
-                                <%
-                                    }
-                                %>
+                                      left: 3px;"><%=rs.getInt(1)%></span>
+                                <%}%>
                                 <a href="CartURL" title="Giỏ hàng của tôi"><i class="fa-solid fa-cart-shopping"></i></a>
                             </li>
                         </c:if>

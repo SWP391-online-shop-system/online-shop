@@ -256,7 +256,23 @@
                                     </div>
                                     <%}%>
                                 </div>
-                                <div class="row" style="margin-bottom: 36px">
+                                <!--                                <div class="row" style="margin-bottom: 30px">
+                                                                    <div class="col-md-12">
+                                                                        <div class="card mb-4 mb-md-0">
+                                                                            <div class="card-body">
+                                                                                <p class="mb-4">Lịch sử hoạt động</p>
+                                                                                <div>
+                                
+                                                                                </div>                                         
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>-->
+                                <div class="row" style="height: 300px;
+                                     width: 97%;
+                                     max-height: 300px;
+                                     overflow-y: scroll;
+                                     margin: 0 auto;margin-bottom: 30px;">
                                     <div class="col-md-12">
                                         <div class="card mb-4 mb-md-0">
                                             <div class="card-body">
@@ -279,6 +295,35 @@
                                 </div>
                             </div>
                         </section>
+                        <!--                        <div class="row">
+                                                     DataTable with Hover 
+                                                    <div class="col-lg-12">
+                                                        <div class="card mb-4">                                 
+                                                                                                <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                                                                                                    <h6 class="m-0 font-weight-bold text-primary">DataTables with Hover</h6>
+                                                                                                </div>
+                                                            <div class="table-responsive p-3">
+                                                                <table class="table align-items-center table-flush table-hover" id="dataTableHover" style="font-size: 16px;
+                                                                       ">
+                                                                    <thead class="thead-light">
+                                                                        <tr>
+                                                                            <th style="text-align: center;">STT</th>
+                                                                            <th style="text-align: center;width: 128.4432px;">Tên Khách Hàng</th>
+                                                                            <th style="text-align: center;">Email</th>
+                                                                            <th style="text-align: center; width: 0">Giới Tính</th>
+                                                                            <th style="text-align: center;width: 112.2955px">Số Điện Thoại</th>						
+                                                                            <th style="text-align: center; width:89.73860000000002px">Trạng Thái</th>						
+                                                                            <th style="text-align: center;">Lần Đăng Nhập Cuối</th>
+                                                                        </tr>
+                                                                    </thead>
+                        
+                                                                    
+                                                                </table>
+                                                            </div>                                    
+                                                        </div>
+                                                    </div>
+                                                </div>-->
+                        <!--Row-->
                     </div>      
                 </div>
                 <!---Container Fluid-->

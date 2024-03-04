@@ -85,27 +85,30 @@ public class ControllerAddProductmkt extends HttpServlet {
         // Constructing the new file name with the index
         String newFileName = fileName.substring(0, fileName.lastIndexOf('.')) + "_" + imageIndex + fileName.substring(fileName.lastIndexOf('.'));
 
-        // Constructing the relative destination directory based on the category
-        String relativeDestinationDirectory = "images/product/" + cateID;
+        // Constructing the destination directory based on the category
+        String destinationDirectory = "D:/project_github/Online_Shop_System_Smartket/web/images/product/" + cateID;
 
-        // Create the directory if it doesn't exist
-        File directory = new File(relativeDestinationDirectory);
+        // Create the destination directory if it doesn't exist
+        File directory = new File(destinationDirectory);
         if (!directory.exists()) {
             directory.mkdirs();
         }
 
-        // Constructing the relative destination file path
-        String relativeDestinationFilePath = relativeDestinationDirectory + "/" + newFileName;
+        // Constructing the destination file path
+        String destinationFilePath = destinationDirectory + "/" + newFileName;
 
         // Write the uploaded file to the destination directory with the new name
-        try ( InputStream fileContent = filePart.getInputStream();  OutputStream outputStream = new FileOutputStream(relativeDestinationFilePath)) {
+        try ( InputStream fileContent = filePart.getInputStream();  OutputStream outputStream = new FileOutputStream(destinationFilePath)) {
             byte[] buffer = new byte[1024];
             int bytesRead;
             while ((bytesRead = fileContent.read(buffer)) != -1) {
                 outputStream.write(buffer, 0, bytesRead);
             }
-            System.out.println("File moved successfully to: " + relativeDestinationFilePath);
-            return relativeDestinationFilePath; // Return the relative URL of the moved image
+            System.out.println("File moved successfully to: " + destinationFilePath);
+
+            // Construct and return the relative URL of the moved image
+            String relativeUrl = "images/product/" + cateID + "/" + newFileName;
+            return relativeUrl;
         } catch (IOException e) {
             System.err.println("Error moving file: " + e.getMessage());
             return null;
@@ -183,8 +186,8 @@ public class ControllerAddProductmkt extends HttpServlet {
                 String imageUrl = moveAndRenameImage(part, categoryId, imageIndex);
                 imageUrls.add(imageUrl); // Add the new image URL to the list
                 if (firstImageUrl == null) {
-                firstImageUrl = imageUrl; // Store the URL of the first image added
-            }
+                    firstImageUrl = imageUrl; // Store the URL of the first image added
+                }
                 imageIndex++; // Increment the index for the next image
             }
         }
@@ -192,7 +195,9 @@ public class ControllerAddProductmkt extends HttpServlet {
         // Perform database insertion after moving all images
         DAOProductImage dao = new DAOProductImage();
         for (String imageUrl : imageUrls) {
-            dao.insertImage(new ProductImage(productID, imageUrl, firstImageUrl)); // Assuming imageUrlShow is the same as imageUrl
+            // Extract relative path
+            String relativeImageUrl = imageUrl.substring(imageUrl.indexOf("images"));
+            dao.insertImage(new ProductImage(productID, relativeImageUrl, firstImageUrl)); // Assuming imageUrlShow is the same as imageUrl
         }
         String st = (n > 0) ? "Thêm sản phẩm thành công" : "Thêm sản phẩm thất bại";
         Vector<Categories> categories = daoCategories.getCategories("SELECT * FROM categories");

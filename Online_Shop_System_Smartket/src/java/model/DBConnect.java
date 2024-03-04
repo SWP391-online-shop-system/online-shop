@@ -77,21 +77,6 @@ public class DBConnect {
     public static void main(String[] args) throws SQLException {
         DBConnect dao = new DBConnect();
 
-        String sql1 = "SET @value = (SELECT SettingValue FROM Setting WHERE SettingID = 1);";
-        dao.getData(sql1);
-
-        String sql2 = "SELECT p.*, pi.* "
-                + "FROM product AS p "
-                + "JOIN productImage AS pi ON p.ProductID = pi.ProductID "
-                + "WHERE pi.ProductURL = pi.ProductURLShow "
-                + "ORDER BY p.TotalRate DESC "
-                + "LIMIT @value;";
-
-        ResultSet rsNewProduct = dao.getData(sql2);
-
-        while (rsNewProduct.next()) {
-            System.out.println(rsNewProduct.getInt(1));
-        }
 
     }
 }

@@ -83,6 +83,7 @@ public class sliderList extends HttpServlet {
 
         request.getRequestDispatcher("sliderList.jsp").forward(request, response);
 
+          
     }
 
     /**
