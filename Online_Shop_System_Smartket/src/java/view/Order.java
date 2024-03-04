@@ -9,6 +9,7 @@ package view;
  * @author trant
  */
 public class Order {
+
     private int orderID;
     private int userID;
     private int saleID;
@@ -16,6 +17,7 @@ public class Order {
     private String shippedDate;
     private int statusID;
     private double totalPrice;
+    private String QrImage;
 
     public Order() {
     }
@@ -91,5 +93,18 @@ public class Order {
     public void setStatusID(int statusID) {
         this.statusID = statusID;
     }
-    
+
+    public String getQrImage() {
+        return QrImage;
+    }
+
+    public void setQrImage(String QrImage) {
+        this.QrImage = QrImage;
+    }
+
+    @Override
+    public String toString() {
+        return "Order{" + "orderID=" + orderID + ", userID=" + userID + ", saleID=" + saleID + ", orderDate=" + orderDate + ", shippedDate=" + shippedDate + ", statusID=" + statusID + ", QrImage=" + QrImage + '}';
+    }
+
 }

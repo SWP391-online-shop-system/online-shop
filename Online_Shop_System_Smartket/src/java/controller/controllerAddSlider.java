@@ -14,11 +14,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import jakarta.servlet.http.Part;
-import model.DAOProduct;
-import model.DAOProductImage;
 import model.DAOSlider;
-import view.Product;
-import view.ProductImage;
 import view.Slider;
 import view.User;
 
@@ -27,8 +23,11 @@ import view.User;
  * @author 84395
  */
 @WebServlet(name = "AddSlider", urlPatterns = {"/AddSlider"})
-@MultipartConfig
-
+@MultipartConfig(
+        fileSizeThreshold = 1024 * 1024 * 1, // 1 MB
+        maxFileSize = 1024 * 1024 * 10, // 10 MB
+        maxRequestSize = 1024 * 1024 * 100 // 100 MB
+)
 public class controllerAddSlider extends HttpServlet {
 
     /**
@@ -86,16 +85,25 @@ public class controllerAddSlider extends HttpServlet {
         int sliderID1 = Integer.parseInt(request.getParameter("sliderID1").trim());
         HttpSession session = request.getSession();
         User u = (User) session.getAttribute("account");
+        int userID= u.getUserID();
         String sliderLink1 = request.getParameter("sliderLink1");
         String createDate1 = request.getParameter("createDate1");
         boolean sliderStatus1 = Boolean.parseBoolean(request.getParameter("sliderStatus1"));
-        Part sliderImage1 = request.getPart("sliderImage1");
-        String fileName = sliderImage1.getSubmittedFileName();
-        String productImageURL = "images/slider/" + fileName;
-        sliderImage1.write(productImageURL);
-//        Slider newSlider = new Slider(sliderID1, u.getUserID(), fileName, sliderLink1, sliderStatus1, createDate1);
+        String newImageName = "slide" + sliderID1;
+        Part sliderpart = request.getPart("sliderImage1");
+        String slidername = sliderpart.getSubmittedFileName();
+        int dotIndex = slidername.lastIndexOf(".");
+        String result = newImageName + slidername.substring(dotIndex);
+        String path = "images/slider/" + result;
+        String realFileName = request.getServletContext().getRealPath(path);
+        String realFileName1 = realFileName.replace("\\build", "");
+        for (Part part : request.getParts()) {
+            part.write(realFileName);
+            part.write(realFileName1);
+        }
+        Slider newSlider = new Slider(sliderID1, userID, newImageName, sliderLink1, sliderStatus1, createDate1);
         DAOSlider DAOSlider = new DAOSlider();
-//        int n = DAOSlider.insertSlider(newSlider);
+        int n = DAOSlider.insertSlider(newSlider);
         response.sendRedirect("sliderList");
     }
 

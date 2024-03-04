@@ -12,12 +12,13 @@
     </editor-bookmarks>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/E:/FPT/Spring2024/SWP391/online_shop_system_github/Online_Shop_System_Smartket/src/java/controller/ControllerCartCompletion.java</file>
-            <file>file:/E:/FPT/Spring2024/SWP391/online_shop_system_github/Online_Shop_System_Smartket/web/cartcontact.jsp</file>
-            <file>file:/E:/FPT/Spring2024/SWP391/online_shop_system_github/Online_Shop_System_Smartket/src/java/controller/ControllerCartcontactOTP.java</file>
-            <file>file:/E:/FPT/Spring2024/SWP391/online_shop_system_github/Online_Shop_System_Smartket/src/java/model/DAOProduct.java</file>
-            <file>file:/E:/FPT/Spring2024/SWP391/online_shop_system_github/Online_Shop_System_Smartket/src/java/model/DAOOrder.java</file>
-            <file>file:/E:/FPT/Spring2024/SWP391/online_shop_system_github/Online_Shop_System_Smartket/web/cartcontactOTP.jsp</file>
+            <file>file:/E:/FPT/Spring2024/SWP391/online_shop_system_github/Online_Shop_System_Smartket/src/java/controller/ControllerCustomerDetail.java</file>
+            <file>file:/E:/FPT/Spring2024/SWP391/online_shop_system_github/Online_Shop_System_Smartket/web/customerlist.jsp</file>
+            <file>file:/E:/FPT/Spring2024/SWP391/online_shop_system_github/Online_Shop_System_Smartket/web/FeedBackDetail.jsp</file>
+            <file>file:/E:/FPT/Spring2024/SWP391/online_shop_system_github/Online_Shop_System_Smartket/web/customerdetails.jsp</file>
+            <file>file:/E:/FPT/Spring2024/SWP391/online_shop_system_github/Online_Shop_System_Smartket/src/java/controller/ControllerCustomerList.java</file>
+            <file>file:/E:/FPT/Spring2024/SWP391/online_shop_system_github/Online_Shop_System_Smartket/src/java/controller/ControllerFeedBackDetail.java</file>
+            <file>file:/E:/FPT/Spring2024/SWP391/online_shop_system_github/Online_Shop_System_Smartket/web/js_marketing/customerlist.js</file>
         </group>
     </open-files>
 </project-private>

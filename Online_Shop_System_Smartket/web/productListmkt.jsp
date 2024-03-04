@@ -6,7 +6,8 @@
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@page import="java.sql.ResultSet"%>
-<%@page import="java.text.SimpleDateFormat"%>
+<%@page import="java.text.DecimalFormat" %>
+<%@page import="java.text.SimpleDateFormat" %>
 <%@page import="java.util.Date"%>
 <%@ page import="java.text.NumberFormat" %>
 <%@ page import="java.util.Locale" %>
@@ -37,19 +38,27 @@
     ResultSet rs = (ResultSet)request.getAttribute("data");
     %>
     <div class="container">
-        <% String message = (String)request.getParameter("message"); %>
+        <% String message = (String)request.getParameter("message");
+        String errorMessage = (String) request.getAttribute("errorMessage");
+        %>
         <% if (message != null && !message.isEmpty()) { %>
         <div class="alert alert-info" role="alert">
             <%= message %>
         </div>
         <% } %>
-        <!-- Form content -->
+        <%DecimalFormat df = new DecimalFormat("###,###");
+            df.setMaximumFractionDigits(8);%>
+        <%if (errorMessage != null) {%>
+        <div class="alert alert-info" role="alert">
+            <%= errorMessage %>
+        </div>
+        <%}%>
     </div>
     <body id="page-top">
         <div id="wrapper">
             <!-- Sidebar -->
             <ul class="navbar-nav sidebar sidebar-light accordion" id="accordionSidebar">
-                <a class="sidebar-brand d-flex align-items-center justify-content-center" href="#">
+                <a class="sidebar-brand d-flex align-items-center justify-content-center" href="MarketingDashBoardURL">
                     <div class="sidebar-brand-icon">
                         <img style="height: 91px;
                              width: 133px;
@@ -59,7 +68,7 @@
                 <div style="position: sticky; top: 30px;">
                     <hr class="sidebar-divider wee-0" style="margin: 0px;">
                     <li class="nav-item active">
-                        <a class="nav-link" href="index.html">
+                        <a class="nav-link" href="MarketingDashBoardURL">
                             <i class="fas fa-fw fa-tachometer-alt"></i>
                             <span>Thống kê</span></a>
                     </li>
@@ -68,7 +77,7 @@
                         Quản lí
                     </div>
                     <li class="nav-item">
-                        <a class="nav-link" href="ui-colors.html">
+                        <a class="nav-link" href="mtkPost">
                             <i class="fas fa-calendar fa-2x text-primary"></i>
                             <span>Bài đăng</span>
                         </a>
@@ -86,7 +95,7 @@
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="ui-colors.html">
+                        <a class="nav-link" href="FeedBackListURL">
                             <i class="fas fa-comments fa-2x text-info"></i>
                             <span>Phản hồi</span>
                         </a>
@@ -203,7 +212,7 @@
                                                     <td><img style="width: 100px" src="<%=rs.getString("ProductURLShow")%>"/></td>
                                                     <td><%=rs.getString("ProductName")%></td>
                                                     <td><%=rs.getString("CategoryName")%></td>
-                                                    <td><%= NumberFormat.getCurrencyInstance(new Locale("vi", "VN")).format(rs.getDouble("UnitPrice")) %></td>
+                                                    <td><%= df.format(rs.getDouble("UnitPrice")) %></td>
                                                     <td><%= status %></td>
                                                     <td>
                                                         <div class="dropdown">
@@ -289,11 +298,11 @@
         <script src="js_marketing/demo/chart-area-demo.js"></script>  
         <script src="vendor/datatables/jquery.dataTables.min.js"></script>
         <script src="vendor/datatables/dataTables.bootstrap4.min.js"></script>
+        <script src="js_marketing/productlist.js"></script>
 
         <!-- Page level custom scripts -->
         <script>
                                                             $(document).ready(function () {
-                                                                $('#dataTable').DataTable(); // ID From dataTable 
                                                                 $('#dataTableHover').DataTable(); // ID From dataTable with Hover
                                                             });
         </script>

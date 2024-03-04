@@ -80,7 +80,14 @@ public class ControllerCustomerList extends HttpServlet {
                 session.setAttribute("message", message);
                 response.sendRedirect("customerlist");
             }
-
+            if (service.equals("showDetail")) {
+                String cusID = request.getParameter("uid");
+                ResultSet rs = dao.getData("SELECT * FROM `user` where userID = " + cusID);
+                ResultSet log = dao.getData("SELECT * FROM loghistory as log join `user` as u on log.UserId = u.UserID where u.UserId = " + cusID+" order by updateAt desc ");
+                request.setAttribute("data", rs);
+                request.setAttribute("log", log);
+                request.getRequestDispatcher("customerdetails.jsp").forward(request, response);
+            }
             if (service.equals("fillterStatus")) {
                 String status = request.getParameter("status");
                 String sql = "SELECT * FROM online_shop_system.user where roleID = 1";

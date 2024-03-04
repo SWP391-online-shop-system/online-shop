@@ -472,8 +472,8 @@
                                 String email = user1.getEmail();
                             %>
                             <div class="">
-                                <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between" style="margin-top: -53px;margin-bottom: -16px;">
-                                    <h6 class="m-0 font-weight-bold text-primary"style="font-size: 24px;">Thông tin người nhận</h6>
+                                <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between" style="margin-top: -67px;margin-bottom: -16px;">
+                                    <h6 class="m-0 font-weight-bold "style="font-size: 21px; color:black;">Thông tin người nhận</h6>
                                 </div>
                                 <div class="card-body" style="font-size: 17px;">
                                     <div class="form-group">
@@ -515,11 +515,12 @@
                             </div>
                         </div>
                         <div class="summary-order" style="flex: 0 0 46%;border-radius: 3px;">
-                            <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between" style="margin-top: 13px;
-                                 margin-bottom: -16px;    background-color: #f8f8f89c;">
+                            <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between" style="    margin-top: -14px;
+                                 margin-bottom: 6px;
+                                 background-color: #f8f8f89c; color: black;">
                                 <%ResultSet rsGetQuan = daoP.getData("select count(productID) from Cart where UserID = "+userID);
                                 if(rsGetQuan.next()) {%>
-                                <h6 class="m-0 font-weight-bold text-primary"style="font-size: 24px;">Thông tin đơn hàng (<%=rsGetQuan.getInt(1)%> sản phẩm)</h6>
+                                <h6 class="m-0 font-weight-bold"style="font-size: 21px;">Thông tin đơn hàng (<%=rsGetQuan.getInt(1)%> sản phẩm)</h6>
                                 <%}%>
                             </div>
                             <div class="big-summary-product">

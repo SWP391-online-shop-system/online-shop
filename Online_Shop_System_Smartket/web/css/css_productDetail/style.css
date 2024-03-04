@@ -1,6 +1,5 @@
 body{
     margin-top:20px;
-    background:#eee;
 }
 
 
@@ -326,6 +325,8 @@ body{
     margin-bottom: 0px;
     border-radius: 32px;
     margin-right: 8px;
+    border: 1px solid #989898;
+
 }
 .mainPage{
     display: flex;

@@ -125,7 +125,7 @@
                     <!-- Container Fluid-->
                     <div class="container-fluid" id="container-wrapper">
                         <div class="d-sm-flex align-items-center justify-content-between mb-4">
-                            <h1 class="h3 mb-0 text-gray-800">Slider List</h1>
+                            <h1 class="h3 mb-0 text-gray-800">Danh sách Slider </h1>
                             <ol class="breadcrumb">
                                 <li class="breadcrumb-item"><a href="http://localhost:8080/Smartket/HomePageURL">Home</a></li>
                                 <!--<li class="breadcrumb-item">Tables</li>-->
@@ -248,7 +248,7 @@
                     <div class="modal fade" id="exampleModalLong" tabindex="-1" role="dialog"
                          aria-labelledby="exampleModalLongTitle" aria-hidden="true">
                         <div class="modal-dialog" role="document">
-                            <form action="AddSlider" method="post">
+                            <form action="AddSlider" method="post"  enctype="multipart/form-data">
                                 <div class="modal-content">
                                     <div class="modal-header">
                                         <h5 class="modal-title" id="exampleModalLongTitle">Thêm slider mới</h5>
@@ -272,7 +272,7 @@
                                         </div>
 
                                         <div class="form-element">
-                                            <label for="registerEmail">Slider: </label>
+                                            <label>Slider: </label>
                                             <input name="sliderImage1" type= "file"
                                                    required><br>
                                         </div>
@@ -289,11 +289,11 @@
                                             <label>Trạng thái: </label>
                                             <div style="display:flex; flex: 40%">
                                                 <div class="custom-control custom-radio" style="margin-right: 15px;">
-                                                    <input type="radio" id="customRadio3" name="sliderStatus1" class="custom-control-input" value="true" required>
+                                                    <input type="radio" id="customRadio3" name="sliderStatus1" class="custom-control-input" value="false" required>
                                                     <label class="custom-control-label" for="customRadio3">Hiện</label>
                                                 </div>
                                                 <div class="custom-control custom-radio">
-                                                    <input type="radio" id="customRadio4" name="sliderStatus1" class="custom-control-input" value="false" required>
+                                                    <input type="radio" id="customRadio4" name="sliderStatus1" class="custom-control-input" value="true" required>
                                                     <label class="custom-control-label" for="customRadio4">Ẩn</label>
                                                 </div>
                                             </div>
@@ -301,7 +301,7 @@
 
                                     </div>
                                     <div class="modal-footer">
-                                        <button type="button" class="btn btn-outline-primary" data-dismiss="modal">Đóng</button>
+                                        <button type="button" class="btn btn-outline-primary" data-dismiss="modal">Close</button>
                                         <button type="submit" class="btn btn-primary">Thêm slider</button>
                                     </div>
                                 </div>

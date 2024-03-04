@@ -68,7 +68,7 @@
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="ui-colors.html">
+                        <a class="nav-link" href="FeedBackListURL">
                             <i class="fas fa-comments fa-2x text-info"></i>
                             <span>Phản hồi</span>
                         </a>
@@ -140,15 +140,11 @@
                         <div class="row">
                             <button style="margin-left: 13px;margin-bottom: 5px;" type="button" class="btn btn-secondary" data-toggle="modal" data-target="#exampleModalLong"
                                     id="#modalLong">Thêm Khách Hàng Mới</button>
-
                         </div>
                         <div class="row">
                             <!-- DataTable with Hover -->
                             <div class="col-lg-12">
                                 <div class="card mb-4">                                 
-                                    <!--                                    <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-                                                                            <h6 class="m-0 font-weight-bold text-primary">DataTables with Hover</h6>
-                                                                        </div>-->
                                     <div class="table-responsive p-3">
                                         <table class="table align-items-center table-flush table-hover" id="dataTableHover" style="font-size: 14px;">
                                             <div style="display: flex;
@@ -159,7 +155,7 @@
                                                     <div class="filter-group" style="display:flex;">
                                                         <div style="padding-top: 16px;
                                                              width: 81%;">Trạng thái</div>
-                                                        <select class="form-control" name="status" onchange="this.form.submit()">                                                            
+                                                        <select class="form-control" name="status" onchange="this.form.submit()" style="height: 33px;margin-top: 12px;">                                                            
                                                             <option value="3" <%if(status.equals("3")){%>selected<%}%>>Tất cả</option>                                                     
                                                             <option value="1" <%if(status.equals("1")){%>selected<%}%>>Hoạt động</option>                                                          
                                                             <option value="2" <%if(status.equals("2")){%>selected<%}%>>Vô hiệu hóa</option>                                                            

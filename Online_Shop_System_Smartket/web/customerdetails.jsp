@@ -5,7 +5,7 @@
 --%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
-<%@page import="java.sql.ResultSet,model.DAOUser"%>
+<%@page import="java.sql.ResultSet,model.*, view.*"%>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -13,6 +13,7 @@
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
         <title>Thông Tin Khách Hàng</title>
+        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
         <script src="https://kit.fontawesome.com/ac74b86ade.js" crossorigin="anonymous"></script>
         <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
@@ -26,7 +27,6 @@
         <%
           ResultSet rs = (ResultSet)request.getAttribute("data");
           ResultSet log = (ResultSet)request.getAttribute("log");
-          
         %>
         <div id="wrapper">
             <!-- Sidebar -->
@@ -117,12 +117,12 @@
                         </div>
 
                         <!-- Row -->
-                        <a href="customerlist" style="color: white"><button class="btn btn-primary mb-1">Quay lại</button></a>
+
                         <section>
                             <div class=" ">                                
                                 <div class="row">
-                                    <%
-                                        while(rs.next()){
+                                    <%int afterStatus = (int)request.getAttribute("afterStatus");
+                                    if(rs.next()){
                                     %>
                                     <div class="col-lg-2">
                                         <div class="card mb-4">
@@ -132,7 +132,7 @@
                                             </div>
                                             <p style="text-align: center">Mã Khách Hàng: <%=rs.getInt(1)%></p>
                                         </div>
-
+                                        <div style="margin-left: 25px; margin-top: -10px;"><a href="customerlist" style="color: white"><button class="btn btn-primary mb-1">Quay lại</button></a></div>
                                     </div>
                                     <div class="col-lg-8">
                                         <div class="card mb-4">
@@ -186,25 +186,8 @@
                                                     <div class="col-sm-4">
                                                         <p class="mb-0">Giới tính</p>
                                                     </div>
-                                                    <div class="col-sm-8"><%
-    String gender = rs.getString("Gender");
-    String displayGender = "";
-    if (gender == null || gender.equals("0")) {
-        displayGender = "Nữ";
-    } else {
-        displayGender = "Nam";
-    }
-    String status = rs.getString("UserStatus");
-    String displayStatus = "";
-    if (status.equals("0")) {
-        displayStatus = "Không hoạt động";
-    } else if(status.equals("2")){
-        displayStatus = "Bị chặn";
-    }else {
-        displayStatus = "Hoạt động";
-    }
-                                                        %>
-                                                        <p class="text-muted mb-0"><%=displayGender%></p>
+                                                    <div class="col-sm-8">
+                                                        <p class="text-muted mb-0"><%=(rs.getBoolean("Gender"))?"Nu":"Nam"%></p>
                                                     </div>
                                                 </div>
                                                 <hr>
@@ -222,46 +205,19 @@
                                                         <p class="mb-0">Trạng thái</p>
                                                     </div>
                                                     <form class="col-sm-8" id="myForm" method="get" action="customerDetail">
-                                                        <input type="hidden" id="statusInput" name="status" value="<%=status%>">
-                                                        <input type="hidden" id="uidStatus" name="uid" value="<%=rs.getInt(1)%>">
+                                                        <input type="hidden" id="statusInput" name="status" value="<%=rs.getInt("UserStatus")%>">
+                                                        <input type="hidden" id="uidStatus" name="uid" value="<%=rs.getInt("UserID")%>">
                                                         <div class="custom-control custom-switch" style="float: left;padding: 0;">
                                                             <div style="display: flex;margin-left: 35px;">
                                                                 <div style="">
                                                                     <input type="checkbox" class="custom-control-input" id="customSwitch1" onchange="updateStatus();"
-                                                                           <%if(status.equals("0")){%>disabled<%}%>> 
+                                                                           <%if(rs.getInt("UserStatus")==0){%>disabled<%}%> <%=(afterStatus==2?"checked":"")%>> 
                                                                     <label class="custom-control-label" for="customSwitch1"></label>
                                                                 </div>
-                                                                <div id="statusMess"></div>
+                                                                <div id="statusMess"><%=afterStatus==2?"Đang kích hoạt":"Đã vô hiệu hóa"%></div>
                                                             </div>
                                                         </div>
                                                     </form>
-                                                    <script>
-                                                        function updateStatus() {
-                                                            var status = document.getElementById("statusInput");
-                                                            var uid = document.getElementById("uidStatus");
-                                                            var mess = document.getElementById("statusMess");
-                                                            var service = "updateStatus";
-                                                            if (status.value === '1') {
-                                                                console.log("status = 1");
-                                                                mess.innerHTML = 'Đã vô hiệu hóa';
-                                                            }
-                                                            if (status.value === '0') {
-                                                                console.log("status = 0");
-                                                                mess.innerHTML = 'Đang kích hoạt';
-                                                            }
-                                                            $.ajax({
-                                                                url: "customerDetail",
-                                                                type: 'GET',
-                                                                data: {status: (status === '0' ? '1' : '0'), uid: uid},
-                                                                success: function (data) {
-                                                                    // Update specific element in the JSP with the new data
-                                                                    $("#page-top").html(data);
-                                                                },
-                                                                error: function (xhr, status, error) {
-                                                                }
-                                                            });
-                                                        }
-                                                    </script>
                                                 </div>
                                                 <hr>
                                                 <div class="row">
@@ -273,46 +229,70 @@
                                                     </div>
                                                 </div>
                                             </div>
+                                            <hr>
                                         </div>
-
                                     </div>
-                                    <%}%>
+
                                 </div>
-                                <div class="row" style="height: 300px;
-                                     width: 97%;
-                                     max-height: 300px;
-                                     overflow-y: scroll;
-                                     margin: 0 auto;margin-bottom: 30px;">
-                                    <div class="col-md-12">
-                                        <div class="card mb-4 mb-md-0">
-                                            <div class="card-body">
-                                                <p class="mb-4">Lịch sử thay đổi trạng thái:</p>
-                                                <div>
-                                                    <%
-                                       while(log.next()){
-                                                    %>
-                                                    <%
-                                                        DAOUser dao = new DAOUser();
-                                                        ResultSet mkt = dao.getData("SELECT * FROM online_shop_system.user where userID = " + log.getInt(2));
-                                                    %>
-                                                    <p>- <%while(mkt.next()){%>Nhân viên <%=mkt.getString("FirstName")+" "+mkt.getString("LastName")%> <%}%>
-                                                        đã <%=log.getString(4)%> <%=log.getString("FirstName")+" "+log.getString("LastName")%> vào <%=log.getString(3)%></p>
-                                                        <%}%>
-                                                </div>                                         
-                                            </div>
+                                <%}%>
+
+                            </div>
+                            <div class="row" style="height: 300px;
+                                 width: 97%;
+                                 max-height: 300px;
+                                 overflow-y: scroll;
+                                 margin: 0 auto;margin-bottom: 30px;">
+                                <div class="col-md-12">
+                                    <div class="card mb-4 mb-md-0">
+                                        <div class="card-body">
+                                            <p class="mb-4">Lịch sử thay đổi trạng thái:</p>
+                                            <div>
+                                                <%int countLog = 0;while(log.next()){countLog++;%>
+                                                <%DAOUser dao = new DAOUser();
+                                                ResultSet mkt = dao.getData("SELECT * FROM online_shop_system.user where userID = " + log.getInt(2));%>
+                                                <p><%=countLog%>. <%while(mkt.next()){%>Nhân viên <%=mkt.getString("FirstName")+" "+mkt.getString("LastName")%> <%}%>
+                                                    đã <%=log.getString(4)%> <%=log.getString("FirstName")+" "+log.getString("LastName")%> vào <%=log.getString(3)%></p>
+                                                    <%}%>
+                                            </div>                                         
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                        </section>
-                        <!--Row-->
-                    </div>      
+                    </div>
+                    </section>
                 </div>
                 <!---Container Fluid-->
             </div>
         </div>
+        <script>
+            function updateStatus() {
+                console.log("updateStatus start");
+                var status = $('#customSwitch1').prop('checked') ? 1 : 2;
+                var uid = document.getElementById("uidStatus").value;
+                var mess = document.getElementById("statusMess");
+                if (status === 1) {
+                    mess.innerHTML = 'Đã vô hiệu hóa';
+                }
+                if (status === 2) {
+                    mess.innerHTML = 'Đang kích hoạt';
+                }
+
+                $.ajax({
+                    url: "customerDetail",
+                    type: 'GET',
+                    data: {status: status, uid: uid},
+                    success: function (data) {
+
+                        $("#page-top").html(data);
+                    },
+                    error: function (xhr, status, error) {
+                        // Handle error if needed
+                    }
+                });
+            }
+        </script>
         <!-- Scroll to top -->
-        <a class="scroll-to-top rounded" href="#page-top">
+        <a class="scroll-to-top rounded" href="#">
             <i class="fas fa-angle-up"></i>
         </a>
         <script src="vendor/jquery/jquery.min.js"></script>

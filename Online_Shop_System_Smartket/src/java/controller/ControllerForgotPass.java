@@ -56,7 +56,7 @@ public class ControllerForgotPass extends HttpServlet {
             if (check != null) {
                 // sending otp
                 Random rand = new Random();
-                otpvalue = rand.nextInt(1255650);
+                otpvalue = rand.nextInt(900000) + 100000;
 
                 String to = email;// change accordingly
                 // Get the session object
