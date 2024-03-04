@@ -174,35 +174,48 @@ public class ControllerAddProductmkt extends HttpServlet {
         String convert = convertCate(categoryId);
         Part productImageUrl_raw = request.getPart("productImageUrl");
         Product newProduct = new Product(productName, categoryId, productDescription, unitInStock, unitPrice, unitDiscount, totalStock);
-        DAOProduct daoProduct = new DAOProduct();
-        int n = daoProduct.insertProduct(newProduct);
         Collection<Part> parts = request.getParts();
         int imageIndex = 1; // Initialize the index for the first image
         String firstImageUrl = null;
         List<String> imageUrls = new ArrayList<>(); // List to store image URLs
+        boolean hasInvalidImage = false; // Flag to track if there is any invalid image
         for (Part part : parts) {
             if ("productImageUrl".equals(part.getName())) {
-                // Move and rename the image, and get the new URL
-                String imageUrl = moveAndRenameImage(part, categoryId, imageIndex);
-                imageUrls.add(imageUrl); // Add the new image URL to the list
-                if (firstImageUrl == null) {
-                    firstImageUrl = imageUrl; // Store the URL of the first image added
+                if (part.getContentType() != null && part.getContentType().startsWith("image/")) {
+                    String imageUrl = moveAndRenameImage(part, categoryId, imageIndex);
+                    imageUrls.add(imageUrl); // Add the new image URL to the list
+                    if (firstImageUrl == null) {
+                        firstImageUrl = imageUrl; // Store the URL of the first image added
+                    }
+                    imageIndex++; // Increment the index for the next image
+                } else {
+                    // Set flag indicating there is an invalid image
+                    hasInvalidImage = true;
+                    // Set error message for invalid image file
+                    request.setAttribute("errorMessage", "File ảnh không hợp lệ: " + part.getSubmittedFileName());
+                    // Redirect back to the form page with error message
+                    request.getRequestDispatcher("addProductmkt.jsp").forward(request, response);
+                    return; // Stop further processing
                 }
-                imageIndex++; // Increment the index for the next image
             }
         }
 
-        // Perform database insertion after moving all images
-        DAOProductImage dao = new DAOProductImage();
-        for (String imageUrl : imageUrls) {
-            // Extract relative path
-            String relativeImageUrl = imageUrl.substring(imageUrl.indexOf("images"));
-            dao.insertImage(new ProductImage(productID, relativeImageUrl, firstImageUrl)); // Assuming imageUrlShow is the same as imageUrl
+        // Check if there is any invalid image before inserting into the database
+        if (!hasInvalidImage) {
+            // Perform database insertion after moving all images
+            DAOProduct daoProduct = new DAOProduct();
+            int n = daoProduct.insertProduct(newProduct);
+            DAOProductImage dao = new DAOProductImage();
+            for (String imageUrl : imageUrls) {
+                // Extract relative path
+                String relativeImageUrl = imageUrl.substring(imageUrl.indexOf("images"));
+                dao.insertImage(new ProductImage(productID, relativeImageUrl, firstImageUrl)); // Assuming imageUrlShow is the same as imageUrl
+            }
+            String st = (n > 0) ? "Thêm sản phẩm thành công" : "Thêm sản phẩm thất bại";
+            Vector<Categories> categories = daoCategories.getCategories("SELECT * FROM categories");
+            request.setAttribute("categories", categories);
+            response.sendRedirect("mktProductListURL?message=" + URLEncoder.encode(st, "UTF-8"));
         }
-        String st = (n > 0) ? "Thêm sản phẩm thành công" : "Thêm sản phẩm thất bại";
-        Vector<Categories> categories = daoCategories.getCategories("SELECT * FROM categories");
-        request.setAttribute("categories", categories);
-        response.sendRedirect("mktProductListURL?message=" + URLEncoder.encode(st, "UTF-8"));
     }
 
     /**

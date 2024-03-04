@@ -63,6 +63,21 @@
             return true;
         }
     </script>
+    <div class="container">
+        <% String message = (String)request.getParameter("message");
+        String errorMessage = (String) request.getAttribute("errorMessage");
+        %>
+        <% if (message != null && !message.isEmpty()) { %>
+        <div class="alert alert-info" role="alert">
+            <%= message %>
+        </div>
+        <% } %>
+        <%if (errorMessage != null) {%>
+        <div class="alert alert-info" role="alert">
+            <%= errorMessage %>
+        </div>
+        <%}%>
+    </div>
     <body id="page-top">
         <div id="wrapper">
             <!-- Sidebar -->
