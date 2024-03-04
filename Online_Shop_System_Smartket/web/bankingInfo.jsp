@@ -47,6 +47,30 @@
                 cursor: pointer;
                 transform: scale(0.95);
             }
+            .otp-field {
+                flex-direction: row;
+                column-gap: 10px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+            }
+
+            .otp-field input {
+                height: 45px;
+                width: 42px;
+                border-radius: 6px;
+                outline: none;
+                font-size: 1.125rem;
+                text-align: center;
+                border: 1px solid #ddd;
+            }
+            .otp-field input:focus {
+                box-shadow: 0 1px 0 rgba(0, 0, 0, 0.1);
+            }
+            .otp-field input::-webkit-inner-spin-button,
+            .otp-field input::-webkit-outer-spin-button {
+                display: none;
+            }
 
             .resend {
                 font-size: 12px;
@@ -57,7 +81,7 @@
         <%
             HttpSession session3 = request.getSession();
             User user1 = (User) session3.getAttribute("account");
-           ResultSet rs = (ResultSet)request.getAttribute("data");
+//           ResultSet rs = (ResultSet)request.getAttribute("data");
            String message ="";
            DecimalFormat decimalFormat = new DecimalFormat("#,###.#");
            double totalprice = 0;
@@ -345,7 +369,7 @@
                                border: 2px solid #e5e5e5;
                                height: 36px;
                                margin-left: 20px;" name="keyWord" type="text" placeholder="Search...">
-                        <button type="submit"><i class="fa-solid fa-magnifying-glass"></i></button>
+                        <button type="submit" style="padding-right: 35px;"><i class="fa-solid fa-magnifying-glass"></i></button>
                     </form>
                 </div>
                 <div class="hottest-pro"style="margin-left: 23px;">
@@ -435,7 +459,8 @@
                         } else {
                         CategoryID = Integer.parseInt(CategoryID_raw);
                         }
-                        ResultSet rsCategory = (ResultSet)request.getAttribute("CategoryResult");
+                        DAOCategories daoCate = new DAOCategories();
+                        ResultSet rsCategory = daoCate.getData("Select * from Categories");
                     %>
                     <div id="collapseOne" class="collapse show" data-parent="#accordionExample">
                         <div class="card-body">
@@ -459,190 +484,23 @@
                     </div>
                 </div>
             </div>  
-            <div class="card">
-                <form action="CartCompletion" method="post">
-                    <div class="row">
-                        <div class="cart-contact" style="flex: 0 0 49%;border-radius: 3px;margin: 0px 14px 0px 16px;">
-                            <%
-                                int userID = user1.getUserID();
-                                String firstName = user1.getFirstName();
-                                String lastName = user1.getLastName();
-                                String address = user1.getAddress();
-                                String phone = user1.getPhoneNumber();
-                                String email = user1.getEmail();
-                            %>
-                            <div class="">
-                                <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between" style="margin-top: -67px;margin-bottom: -16px;">
-                                    <h6 class="m-0 font-weight-bold "style="font-size: 21px; color:black;">Thông tin người nhận</h6>
-                                </div>
-                                <div class="card-body" style="font-size: 17px;">
-                                    <div class="form-group">
-                                        <label for="exampleInputEmail1">Tên người nhận</label>
-                                        <input name="name" type="text" value="<%=firstName+" "+lastName%>" required autofocus class="form-control" id="" aria-describedby="emailHelp"
-                                               placeholder="Nhập tên...">
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="exampleInputPassword1">Số điện thoại người nhận</label>
-                                        <input name="phone" value="<%if(phone != null){%><%=phone%><%}%>"required class="form-control" id="" placeholder="Nhập số điện thoại...">
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="exampleInputPassword1">Email</label>
-                                        <input name="email" value="<%=email%>"required class="form-control" id="" placeholder="Nhập email...">
-                                    </div>
-                                    <div class="form-group">
-                                        <label>Địa Chỉ Người Nhận
-                                        </label><br/>
-                                        <select name="city" id="city" onchange="updateAddress();" required>
-                                            <option value="" selected>Tỉnh thành</option>           
-                                        </select>
-                                        <select name="district" id="district" onchange="updateAddress();" required>
-                                            <option value="" selected>Quận huyện</option>
-                                        </select>
-                                        <select name="ward" id="ward" onchange="updateAddress();" required>
-                                            <option value="" selected>Phường xã</option>
-                                        </select>
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="exampleInputPassword1">Địa chỉ cụ thể</label>
-                                        <textarea name="addressdetail" required class="form-control" id="exampleInputPassword1"></textarea>
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="exampleInputPassword1">Ghi chú</label>
-                                        <textarea name="note" class="form-control"></textarea>
-                                    </div>
-                                </div>
-                                <button id="goBackButton" class="btn-back">Trở về</button>
-                            </div>
-                        </div>
-                        <div class="summary-order" style="flex: 0 0 46%;border-radius: 3px;">
-                            <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between" style="    margin-top: -14px;
-                                 margin-bottom: 6px;
-                                 background-color: #f8f8f89c; color: black;">
-                                <%ResultSet rsGetQuan = daoP.getData("select count(productID) from Cart where UserID = "+userID);
-                                if(rsGetQuan.next()) {%>
-                                <h6 class="m-0 font-weight-bold"style="font-size: 21px;">Thông tin đơn hàng (<%=rsGetQuan.getInt(1)%> sản phẩm)</h6>
-                                <%}%>
-                            </div>
-                            <div class="big-summary-product">
-                                <div class="summary-product">
-                                    <table style="width: 100%;">
-                                        <tbody>
-                                            <tr class="row-edit">
-                                                <td style="padding: 0px 88px 0px 0px;"">Sản phẩm</td>
-                                                <td>Số lượng</td>
-                                                <td style="border-right: none;">Giá tiền</td>
-                                            </tr>
-                                            <%
-                                               try {
-                                                   while (rs.next()){
-                                                    double unitPrice = rs.getDouble("UnitPrice");
-                                                    double totalunitprice = unitPrice*rs.getInt("Quantity");
-                                                    totalprice += totalunitprice;
-                                            %>   
-                                            <tr class="row-edit">
-                                                <td>
-                                                    <div style="display: flex;
-                                                         width: 205px;text-align: left;align-items: center;
-                                                         flex-direction: row;">
-                                                        <img class="img-fluid" style="margin-right: 10px;padding: 0;"src="<%=rs.getString("ProductURL")%>">
-                                                        <div style=""><%=rs.getString("ProductName")%></div>
-                                                    </div>
-                                                </td>
-                                                <td>
-                                                    <%=rs.getInt("Quantity")%>
-                                                </td>
-                                                <td style="border-right: none;">
-                                                    <%=decimalFormat.format(rs.getInt("Quantity")*(rs.getDouble("UnitPrice") * (100 - rs.getInt("UnitDiscount")) / 100 ))%>đ
-                                                </td>
-                                            </tr>
-                                            <%}
-                                                rs.close(); 
-                                                } catch (SQLException e) {
-                                                 e.printStackTrace();
-                                                }
-                                            %>
-                                        </tbody>
-                                    </table>
-                                </div>
-                            </div>
-                            <div style="text-align: end;">Tổng đơn hàng: <%=decimalFormat.format(totalprice)%>đ</div>
-                            <input type="hidden" name="totalPrice" value="<%=totalprice%>"/>
-                            <button type="submit" class="btn-back">Đặt Hàng</button>
-                        </div>
-                    </div>
-                </form>
+            <div class="card" style="align-items: center">
+                    <h4>Vui lòng quét mã QR bên dưới để thực hiện chuyển khoản thanh toán đơn hàng</h4>
+                <div class="cart" style="flex: 0; width:43%;">
+                    <%String QrPath = (String)request.getAttribute("QrPath");%>
+                    <img style="width:100%;height:100%" src="<%=QrPath%>" alt="alt"/>
+                </div>
             </div>
         </section>
         <!-- Form Basic -->
 
         <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.21.1/axios.min.js"></script>
-        <script>
-                                            var citis = document.getElementById("city");
-                                            var districts = document.getElementById("district");
-                                            var wards = document.getElementById("ward");
-                                            var Parameter = {
-                                                url: "https://raw.githubusercontent.com/kenzouno1/DiaGioiHanhChinhVN/master/data.json",
-                                                method: "GET",
-                                                responseType: "application/json",
-                                            };
-                                            var promise = axios(Parameter);
-                                            promise.then(function (result) {
-                                                renderCity(result.data);
-                                            });
-
-                                            function renderCity(data) {
-                                                for (const x of data) {
-                                                    var opt = document.createElement('option');
-                                                    opt.value = x.Name;
-                                                    opt.text = x.Name;
-                                                    opt.setAttribute('data-id', x.Id);
-                                                    citis.options.add(opt);
-                                                }
-                                                citis.onchange = function () {
-                                                    district.length = 1;
-                                                    ward.length = 1;
-                                                    if (this.options[this.selectedIndex].dataset.id != "") {
-                                                        const result = data.filter(n => n.Id === this.options[this.selectedIndex].dataset.id);
-
-                                                        for (const k of result[0].Districts) {
-                                                            var opt = document.createElement('option');
-                                                            opt.value = k.Name;
-                                                            opt.text = k.Name;
-                                                            opt.setAttribute('data-id', k.Id);
-                                                            district.options.add(opt);
-                                                        }
-                                                    }
-                                                };
-                                                district.onchange = function () {
-                                                    ward.length = 1;
-                                                    const dataCity = data.filter((n) => n.Id === citis.options[citis.selectedIndex].dataset.id);
-                                                    if (this.options[this.selectedIndex].dataset.id != "") {
-                                                        const dataWards = dataCity[0].Districts.filter(n => n.Id === this.options[this.selectedIndex].dataset.id)[0].Wards;
-
-                                                        for (const w of dataWards) {
-                                                            var opt = document.createElement('option');
-                                                            opt.value = w.Name;
-                                                            opt.text = w.Name;
-                                                            opt.setAttribute('data-id', w.Id);
-                                                            wards.options.add(opt);
-                                                        }
-                                                    }
-                                                };
-                                            }
-                                            document.getElementById("goBackButton").addEventListener("click", function () {
-                                                window.history.back();
-                                            });
-                                            function updateAddress() {
-                                                var city = document.getElementById("city").value;
-                                                var district = document.getElementById("district").value;
-                                                var ward = document.getElementById("ward").value;
-                                                var addressDetail = city + ', ' + district + ', ' + ward;
-                                                document.getElementById("exampleInputPassword1").value = addressDetail;
-                                            }
-        </script>
         <script src="vendor/jquery/jquery.min.js"></script>
         <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
         <script src="vendor/jquery-easing/jquery.easing.min.js"></script>
         <script src="js/ruang-admin.min.js"></script>
+        <script src="js/verify.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
     </body>
 </html>
