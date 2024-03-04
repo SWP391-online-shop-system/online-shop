@@ -272,9 +272,30 @@ public class DAOUser extends DBConnect {
         return n;
     }
 
+    public int updateProfile(User user) {
+        int n = 0;
+        String sql = "update User set FirstName = ?, LastName= ?, Address= ?, PhoneNumber = ?, DateOfBirth = ?, Gender = ? WHERE UserID = ?;";
+        try {
+            // number ? = number fields
+            // index of ? start is 1
+            PreparedStatement pre = conn.prepareStatement(sql);
+            pre.setString(1, user.getFirstName());
+            pre.setString(2, user.getLastName());
+            pre.setString(3, user.getAddress());
+            pre.setString(4, user.getPhoneNumber());
+            pre.setString(5, user.getDateOfBirth());
+            pre.setBoolean(6, user.isGender());
+            pre.setInt(7, user.getUserID());
+            n = pre.executeUpdate();
+        } catch (SQLException ex) {
+            Logger.getLogger(DAOUser.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return n;
+    }
+
     public int updateUserImage(int userID, String userImage) {
         int n = 0;
-        String sql = "update User set UserImage = '?' where UserID = ?";
+        String sql = "update User set UserImage = ? where UserID = ?";
         try {
             PreparedStatement pre = conn.prepareStatement(sql);
             pre.setString(1, userImage);
@@ -319,6 +340,20 @@ public class DAOUser extends DBConnect {
             Logger.getLogger(DAOUser.class.getName()).log(Level.SEVERE, null, ex);
         }
         return vector;
+    }
+
+    public int updatepassword(int userID, String pw) {
+        int n = 0;
+        String sql = "update User set Password = ? where UserID = ?";
+        try {
+            PreparedStatement pre = conn.prepareStatement(sql);
+            pre.setString(1, pw);
+            pre.setInt(2, userID);
+            n = pre.executeUpdate();
+        } catch (SQLException ex) {
+            Logger.getLogger(DAOUser.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return n;
     }
 
     public User check(String email, String pass) {
@@ -440,7 +475,7 @@ public class DAOUser extends DBConnect {
                 result = "<span class=\"badge badge-success\">Hoạt động</span>";
                 break;
             case 2:
-                result = "<span class=\"badge badge-danger\">Khóa</span>";
+                result = "<span class=\"badge badge-danger\">Vô hiệu hóa</span>";
                 break;
         }
         return result;

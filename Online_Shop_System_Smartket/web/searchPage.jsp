@@ -336,19 +336,21 @@
                                         <div class="row" style="display: contents">
                                             <%
                                                 DAOProduct dao = new DAOProduct();
-                                               ResultSet rsHotPro = dao.getData("select * from Product as p join ProductImage as pi on p.ProductID = pi.ProductID where  pi.ProductURL = pi.ProductURLShow \n"
-                                               +  "group by p.ProductID having min(p.TotalStock - p.UnitInStock) >0 order by (p.TotalStock - p.UnitInStock) desc limit 1");
+                                                ResultSet rsHotPro = dao.getData("select * from Product as p join ProductImage as pi on p.ProductID = pi.ProductID where  pi.ProductURL like '%_1%'\n"
+                                                +"group by p.ProductID having min(p.TotalStock - p.UnitInStock) > 0 order by (p.TotalStock - p.UnitInStock) desc limit 1");
                                             while(rsHotPro.next()) {
                                             %>
                                             <div class="product__item" style="border: 1px solid #c1e8c1ba;
                                                  border-radius: 40px;">
                                                 <div class="product__item__pic set-bg" style="height: 201px;">
-                                                    <img style="width: 192px;
-                                                         height: 174px;
-                                                         margin-left: 25px;
-                                                         margin-top: 10px;" src="<%=rsHotPro.getString("ProductURL")%>" alt="alt"/>
+                                                    <a href="ProductDetailURL?ProductID=<%=rsHotPro.getInt(1)%>">
+                                                        <img style="width: 192px;
+                                                             height: 174px;
+                                                             margin-left: 25px;
+                                                             margin-top: 10px;" src="<%=rsHotPro.getString("ProductURL")%>" alt="alt"/>
+                                                    </a>
                                                     <%if(rsHotPro.getInt("UnitDiscount")!=0) {%>
-                                                    <div class="sale-cotification" style="    margin-left: 77px;">Sale</div>
+                                                    <div class="sale-cotification">Sale</div>
                                                     <%}%>
                                                     <%    ResultSet rsNew2Product = dao.getData("select * from product as p join productImage as pi "
                                                        + "on p.ProductID = pi.ProductID "
@@ -361,7 +363,13 @@
                                                 </div>
                                                 <div class="product__item__text">
                                                     <h6 style="margin-left: 34px;"><%=rsHotPro.getString("ProductName")%></h6>
-                                                    <a href="#" class="add-cart" style="left: 12px;">+ Thêm vào giỏ</a><a style="margin-left: 136px;" href="#">Mua ngay</a>
+                                                    <%
+                                                    User testU = (User)session.getAttribute("account");
+                                                    if(testU==null){%>
+                                                    <a onclick="alertOpenCart();" class="add-cart" style="left: 12px;">+ Thêm vào giỏ</a><a style="margin-left: 136px;" href="#">Mua ngay</a>
+                                                    <%}else{%>
+                                                    <a href="CartURL?service=addcart&pid=<%=rsHotPro.getInt(1)%>&quan=1" class="add-cart" style="left: 12px;">+ Thêm vào giỏ</a><a style="margin-left: 136px;" href="#">Mua ngay</a>
+                                                    <%}%>
                                                     <div style="display: flex;">
                                                         <div class="rating" style="margin-left: 30px;">
                                                             <%int star = (int)rsHotPro.getInt("totalRate");
@@ -373,14 +381,14 @@
                                                     </div>
                                                     <div style="display: flex;flex-direction: row;justify-content: space-between;">
                                                         <%if(rsHotPro.getInt("UnitDiscount")!= 0){%>
-                                                        <div style="color: red;font-weight: 700;font-size: 15px; flex: 0 0 50%; text-decoration: line-through;"><%=df.format(rsHotPro.getDouble("UnitPrice"))%></div>
-                                                        <div style="color: #0d0d0d;font-weight: 700;font-size: 15px; flex: 0 0 50%"><%=df.format(rsHotPro.getDouble("UnitPrice")*(100-rsHotPro.getInt("UnitDiscount"))/100)%></div>
+                                                        <div style="color: red;font-weight: 700;font-size: 15px; flex: 0 0 50%; text-decoration: line-through;"><%=df.format(rsHotPro.getDouble("UnitPrice"))%>đ</div>
+                                                        <div style="color: #0d0d0d;font-weight: 700;font-size: 15px; flex: 0 0 50%"><%=df.format(rsHotPro.getDouble("UnitPrice")*(100-rsHotPro.getInt("UnitDiscount"))/100)%>đ</div>
                                                         <%} else {%>
                                                         <div style="font-weight: 700;
                                                              font-size: 15px;
                                                              flex: -2 0 43%;
                                                              margin-left: 146px;
-                                                             margin-top: -26px;"><%=df.format(rsHotPro.getDouble("UnitPrice"))%></div>
+                                                             margin-top: -26px;"><%=df.format(rsHotPro.getDouble("UnitPrice"))%>đ</div>
                                                         <%}%>
                                                     </div>
                                                 </div>
@@ -420,9 +428,9 @@
                                                             type = "";
                                                                 }
                                                             %>
-                                                        <li class="unique-li" style="<%=type.equals("showSale")?"background: #0091ff2b; width:190px;":""%>"><a style=" color: #f7a749;" href="ProductListURL?keyWord=${keyWord}&TotalRate=<%=TotalRate%>&type=showSale&CategoryID=${categoryID}&filterChoice=${filterChoice}&inputMinPrice=${oldMinPrice}&inputMaxPrice=${oldMaxPrice}">Đang giảm giá</a></li>
+                                                        <li class="unique-li" style="<%=type.equals("showSale")?"background: #0091ff2b; width:190px;":""%>"><a style=" color: #f7a749;" href="searchPageURL?keyWord=${keyWord}&TotalRate=<%=TotalRate%>&type=showSale&CategoryID=${categoryID}&filterChoice=${filterChoice}&inputMinPrice=${oldMinPrice}&inputMaxPrice=${oldMaxPrice}">Đang giảm giá</a></li>
                                                             <%while(rsCategory.next()) {%>
-                                                        <li style="<%=CategoryID==rsCategory.getInt(1) ? "background: #0091ff2b; width:190px;":""%>"><a href="ProductListURL?keyWord=${keyWord}&type=<%=type%>&CategoryID=<%=rsCategory.getInt(1)%>&index=1"><%=rsCategory.getString(2)%></a></li>
+                                                        <li style="<%=CategoryID==rsCategory.getInt(1) ? "background: #0091ff2b; width:190px;":""%>"><a href="searchPageURL?keyWord=${keyWord}&type=<%=type%>&CategoryID=<%=rsCategory.getInt(1)%>&TotalRate=<%=TotalRate%>&index=1"><%=rsCategory.getString(2)%></a></li>
                                                             <%}%>
                                                     </ul>
                                                 </div>
@@ -494,6 +502,7 @@
                                                     <form action="searchPageURL" method="GET">
                                                         <input type="hidden" name="keyWord" value="${keyWord}"/>
                                                         <input type="hidden" name="type" value="${type}"/>
+                                                        <input type="hidden" name="CategoryID" value="${categoryID}"/>
                                                         <input type="hidden" name="TotalRate" value="${TotalRate}"/>
                                                         <div class="progress1"></div>
                                                         <div class="range-input">
@@ -501,8 +510,8 @@
                                                             <input name="inputMaxPrice" class="range-max" max="${maxPrice}" type="range" value="<%=(oldMaxPrice==null ? maxPrice : oldMaxPrice)%>">
                                                         </div>
                                                         <div class="range-text">
-                                                            <div class="text-min"><%=df.format(oldMinPrice==null ? minPrice : oldMinPrice)%></div>
-                                                            <div class="text-max"><%=df.format(oldMaxPrice==null ? maxPrice : oldMaxPrice)%></div>
+                                                            <div class="text-min"><%=df.format(oldMinPrice==null ? minPrice : oldMinPrice)%>đ</div>
+                                                            <div class="text-max"><%=df.format(oldMaxPrice==null ? maxPrice : oldMaxPrice)%>đ</div>
                                                         </div>
                                                         <button class="submit-price-form" type="submit">Lọc</button>
                                                     </form>
@@ -558,16 +567,18 @@
                             <%
                                 ResultSet rsPaging = (ResultSet)request.getAttribute("rsPaging");
                                 if(!rsPaging.isBeforeFirst()) {%>
-                            <div class="notify-empty">Không có sản phẩm nào</div>
+                            <div class="notify-empty" style="color: black;">Không có sản phẩm nào</div>
                             <%}
                             while(rsPaging.next()) {
                             %>
                             <div class="col-lg-4 col-md-6 col-sm-6">
                                 <div class="product__item">
                                     <div class="product__item__pic set-bg">
-                                        <img src="<%=rsPaging.getString("ProductURL")%>" alt="alt"/>
+                                        <a href="ProductDetailURL?ProductID=<%=rsPaging.getInt(1)%>">
+                                            <img src="<%=rsPaging.getString("ProductURL")%>" alt="alt"/>
+                                        </a>
                                         <%if(rsPaging.getInt("UnitDiscount")!=0) {%>
-                                        <div class="sale-cotification"style="margin-left: 77px;">Sale</div>
+                                        <div class="sale-cotification">Sale</div>
                                         <%}%>
                                         <%    ResultSet rsNewProduct = dao.getData("select * from product as p join productImage as pi "
                                         + "on p.ProductID = pi.ProductID "
@@ -580,7 +591,12 @@
                                     </div>
                                     <div class="product__item__text">
                                         <h6><%=rsPaging.getString("ProductName")%></h6>
-                                        <a href="#" class="add-cart">+ Thêm vào giỏ</a><a style="margin-left: 136px;" href="#">Mua ngay</a>
+                                        <% User testU2 = (User)session.getAttribute("account");
+                                        if(testU2 == null){%>
+                                        <a onclick="alertOpenCart();"class="add-cart">+ Thêm vào giỏ</a><a style="margin-left: 136px;" href="#">Mua ngay</a>
+                                        <%}else{%>
+                                        <a href="CartURL?service=addcart&pid=<%=rsPaging.getInt(1)%>&quan=1" class="add-cart">+ Thêm vào giỏ</a><a style="margin-left: 136px;" href="#">Mua ngay</a>
+                                        <%}%>
                                         <div style="display: flex;">
                                             <div class="rating">
                                                 <%int star = (int)rsPaging.getInt("totalRate");
@@ -613,10 +629,10 @@
                                     <c:set value="${requestScope.keyWord}" var="keyWord"/>
                                     <c:forEach begin="1" end="${endPage}" var="i">
                                         <c:if test="${requestScope.index == i}">
-                                            <a class="active" style="background: #7fad39;border-color: #7fad39;color: #ffffff;" href="searchPageURL?keyWord=${keyWord}&type=<%=type%>&TotalRate=<%=TotalRate%>&index=${i}&filterChoice=<%=filterChoice%>&inputMinPrice=<%=oldMinPrice%>&inputMaxPrice=<%=oldMaxPrice%>">${i}</a>
+                                            <a class="active" style="background: #7fad39;border-color: #7fad39;color: #ffffff;" href="searchPageURL?keyWord=${keyWord}&CategoryID=${categoryID}&type=<%=type%>&TotalRate=<%=TotalRate%>&index=${i}&filterChoice=<%=filterChoice%>&inputMinPrice=<%=oldMinPrice%>&inputMaxPrice=<%=oldMaxPrice%>">${i}</a>
                                         </c:if>
                                         <c:if test="${requestScope.index != i}">
-                                            <a class="active" href="searchPageURL?keyWord=${keyWord}&type=<%=type%>&TotalRate=<%=TotalRate%>&index=${i}&filterChoice=<%=filterChoice%>&inputMinPrice=<%=oldMinPrice%>&inputMaxPrice=<%=oldMaxPrice%>">${i}</a>
+                                            <a class="active" href="searchPageURL?keyWord=${keyWord}&CategoryID=${categoryID}&type=<%=type%>&TotalRate=<%=TotalRate%>&index=${i}&filterChoice=<%=filterChoice%>&inputMinPrice=<%=oldMinPrice%>&inputMaxPrice=<%=oldMaxPrice%>">${i}</a>
                                         </c:if>
                                     </c:forEach>
                                 </div>
@@ -628,7 +644,7 @@
         </section>
         <!-- Shop Section End -->
 
-        <!-- Footer Section Begin -->
+        <!-- Footer Section án egin -->
         <footer class="footer_1">
             <div class="container_1" style="height: 270px;padding-top: 28px;">
                 <div class="row_1">
