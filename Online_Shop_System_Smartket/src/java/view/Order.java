@@ -17,6 +17,7 @@ public class Order {
     private String shippedDate;
     private int statusID;
     private double totalPrice;
+    private String QrImage;
 
     public Order() {
     }
