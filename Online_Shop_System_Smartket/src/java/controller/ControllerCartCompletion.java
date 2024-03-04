@@ -47,39 +47,47 @@ public class ControllerCartCompletion extends HttpServlet {
             DAOOrder daoOrder = new DAOOrder();
             DAOCart daoCart = new DAOCart();
             DAOReceiver daoRece = new DAOReceiver();
+            DAOOrderDetails daoDetail = new DAOOrderDetails();
             User user = (User) session.getAttribute("account");
             int userID = user.getUserID();
-            String submit = request.getParameter("submit");
-            ResultSet rsCategory = daoCart.getData("Select * from Categories");
-            request.setAttribute("CategoryResult", rsCategory);
-            request.getRequestDispatcher("cartcompletion.jsp").forward(request, response);
-            if (submit != null) {
-                LocalDate orderDate = LocalDate.now();
-                DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-                String orderDateStr = orderDate.format(formatter);
-//                Order orders = new Order(userID, 3, orderDateStr, 1);
-//                int orderID = daoOrder.insertOrderByPreparedReturnId(orders);
-                String name = request.getParameter("name");
-                String phone = request.getParameter("phone");
-                String email = request.getParameter("email");
-                String city = request.getParameter("city");
-                String district = request.getParameter("district");
-                String ward = request.getParameter("ward");
-                String addressdetail = request.getParameter("addressdetail");
-                String note = request.getParameter("note");
-                String adress = addressdetail + " " + ward + " " + district + " " + city;
-//                Receiver rece = new Receiver(orderID, name, phone, adress, email, note);
-//                daoRece.insertReceiverByPrepared(rece);
-                try {
-                    ResultSet listCart = daoCart.getData("SELECT * FROM Cart AS c JOIN Product AS p ON c.ProductID = p.ProductID\n"
-                            + "join ProductImage as pi on p.ProductID = pi.ProductID\n"
-                            + "where c.UserID = " + userID + " ;");
-                    while (listCart.next()) {
-                        
-                    }
-                } catch (SQLException e) {
+            int saleId = 0;
+            int quantityOfSale = 0;
+            try {
+                ResultSet sale = daoOrder.getData("SELECT * FROM online_shop_system.sale order by OrderQuantity asc limit 1;");
+                while (sale.next()) {
+                    saleId = sale.getInt(1);
+                    quantityOfSale = sale.getInt(2);
                 }
+                sale.close();
+            } catch (SQLException e) {
             }
+            quantityOfSale++;
+            daoOrder.updateSale(saleId, quantityOfSale);
+            String totalPrice_str = request.getParameter("totalPrice");
+            Double totalPrice = Double.parseDouble(totalPrice_str);
+            Order orders = new Order(userID, saleId, 1, totalPrice);
+            int orderID = daoOrder.insertOrderByPreparedReturnId(orders);
+            String name = request.getParameter("name");
+            String phone = request.getParameter("phone");
+            String email = request.getParameter("email");
+//            String city = request.getParameter("city");
+//            String district = request.getParameter("district");
+//            String ward = request.getParameter("ward");
+            String adress = request.getParameter("addressdetail");
+            String note = request.getParameter("note");
+//            Receiver rece = new Receiver(orderID, name, phone, adress, email, note);
+//            daoRece.insertReceiverByPrepared(rece);
+            try {
+                ResultSet listCart = daoCart.getData("SELECT * FROM Cart as c join product as p on c.ProductID = p.ProductID where UserID = " + userID);
+                while (listCart.next()) {
+                    OrderDetails details = new OrderDetails(listCart.getInt("ProductID"), orderID, listCart.getInt("Quantity"), listCart.getInt("UnitPrice"), listCart.getInt("UnitDiscount"));
+                    daoDetail.insertOrderDetailsByPrepared(details);
+                }
+                listCart.close();
+            } catch (SQLException e) {
+            }
+            daoCart.deleteAllCart(userID);
+            response.sendRedirect("CartcontactOTPVerify?email="+email+"&oid="+orderID);
         }
     }
 
