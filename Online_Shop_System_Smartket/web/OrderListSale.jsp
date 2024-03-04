@@ -29,7 +29,7 @@
         <link href="images/logo/logo.png" rel="icon">
         <title>Danh sách Order</title>
         <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
-        <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css">
+        <link href="vendor/bootstrap/css/orderList.css" rel="stylesheet" type="text/css">
         <link href="css/css_saleProductList/orderlist.css" rel="stylesheet">
         <link href="vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">
     </head>
@@ -99,78 +99,60 @@
                                             <div style="display: flex;
                                                  margin-left: 200px;
                                                  margin-bottom: -30px;">
-                                                <form action="OrderListURL" method="get" class="form-control" onchange="this.form.submit()>
-                                                    <div class="filter-group" style="display:flex;">
-                                                        From: <input type="date" name="fromDate" value="<%= request.getParameter("fromDate") %>">
-                                                        To: <input type="date" name="toDate" value="<%= request.getParameter("toDate") %>">
-                                                        </form>
+                                                <form action="OrderListURL" method="get" class="form-control" onchange="this.form.submit()">
+                                                    <div class="filter-group" style="display:flex;margin-left: 15px;">
+                                                        <div style="margin-right: 10px;">From: <input type="date" name="fromDate" value="<%= request.getParameter("fromDate") %>"></div>
+                                                        <div>To: <input type="date" name="toDate" value="<%= request.getParameter("toDate") %>"></div>
                                                     </div>
-                                                    <thead class="thead-light">
-                                                        <tr>
-                                                            <th>ID</th>
-                                                            <th>Tên khách hàng</th>
-                                                            <th>Tên sản phẩm</th>
-                                                            <th>Số lượng</th>
-                                                            <th>Tổng giá tiền</th>
-                                                            <th>Ngày tạo đơn</th>
-                                                            <th>Trạng thái</th>
-                                                        </tr>
-                                                    </thead>
-                                                    <tfoot>
-                                                        <tr>
-                                                            <th>ID</th>
-                                                            <th>Tên khách hàng</th>
-                                                            <th>Tên sản phẩm</th>
-                                                            <th>Số lượng</th>
-                                                            <th>Tổng giá tiền</th>
-                                                            <th>Ngày tạo đơn</th>
-                                                            <th>Trạng thái</th>
-                                                        </tr>
-                                                    </tfoot>
-                                                    <tbody>
-                                                        <% try {
-                                                            while(rs.next()) {
-                                                        %>
-                                                        <tr>
-                                                            <td><%=rs.getInt("OrderID")%></td>
-                                                            <td><%=rs.getString("FullName")%></td>
-                                                            <td><%=rs.getString("ProductName")%></td>
-                                                            <td><%=rs.getInt("Quantity")%></td>
-                                                            <td><%= df.format(rs.getDouble("TotalPrice")) %></td>
-                                                            <td><%=rs.getString("OrderDate")%></td>
-                                                            <td><%=rs.getString("StatusName")%></td>
-                                                        </tr>
-                                                        <% }
-                                                           } catch (SQLException ex) {
-                                                           }
-                                                        %>
-                                                    </tbody>
-                                                    </table>
+                                                    <input type="submit" value="Lọc" style="margin-left: 12px;">
+                                                </form>
                                             </div>
+                                            <thead class="thead-light">
+                                                <tr>
+                                                    <th>ID</th>
+                                                    <th>Tên khách hàng</th>
+                                                    <th>Tên sản phẩm</th>
+                                                    <th>Số lượng</th>
+                                                    <th>Tổng giá tiền</th>
+                                                    <th>Ngày tạo đơn</th>
+                                                    <th>Tên nhân viên</th>
+                                                    <th>Trạng thái</th>
+                                                </tr>
+                                            </thead>
+                                            <tfoot>
+                                                <tr>
+                                                    <th>ID</th>
+                                                    <th>Tên khách hàng</th>
+                                                    <th>Tên sản phẩm</th>
+                                                    <th>Số lượng</th>
+                                                    <th>Tổng giá tiền</th>
+                                                    <th>Ngày tạo đơn</th>
+                                                    <th>Tên nhân viên</th>
+                                                    <th>Trạng thái</th>
+                                                </tr>
+                                            </tfoot>
+                                            <tbody>
+                                                <% try {
+                                                    while(rs.next()) {
+                                                %>
+                                                <tr>
+                                                    <td><%=rs.getInt("OrderID")%></td>
+                                                    <td><%=rs.getString("FullName")%></td>
+                                                    <td><%=rs.getString("ProductName")%></td>
+                                                    <td><%=rs.getInt("Quantity")%></td>
+                                                    <td><%= df.format(rs.getDouble("TotalPrice")) %></td>
+                                                    <td><%=rs.getString("OrderDate")%></td>
+                                                    <td><%=rs.getString("StatusName")%></td>
+                                                </tr>
+                                                <% }
+                                                   } catch (SQLException ex) {
+                                                   }
+                                                %>
+                                            </tbody>
+                                        </table>
                                     </div>
                                 </div>
                             </div>
-                            <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabelLogout"
-                                 aria-hidden="true">
-                                <div class="modal-dialog" role="document">
-                                    <div class="modal-content">
-                                        <div class="modal-header">
-                                            <h5 class="modal-title" id="exampleModalLabelLogout">Ohh No!</h5>
-                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                                <span aria-hidden="true">&times;</span>
-                                            </button>
-                                        </div>
-                                        <div class="modal-body">
-                                            <p>Are you sure you want to logout?</p>
-                                        </div>
-                                        <div class="modal-footer">
-                                            <button type="button" class="btn btn-outline-primary" data-dismiss="modal">Cancel</button>
-                                            <a href="login.html" class="btn btn-primary">Logout</a>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-
                         </div>
                         <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabelLogout"
                              aria-hidden="true">
@@ -194,30 +176,52 @@
                         </div>
 
                     </div>
-                    <!---Container Fluid-->
-                </div>
-            </div>
+                    <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabelLogout"
+                         aria-hidden="true">
+                        <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="exampleModalLabelLogout">Ohh No!</h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <div class="modal-body">
+                                    <p>Are you sure you want to logout?</p>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-outline-primary" data-dismiss="modal">Cancel</button>
+                                    <a href="login.html" class="btn btn-primary">Logout</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
 
-            <!-- Scroll to top -->
-            <a class="scroll-to-top rounded" href="#page-top">
-                <i class="fas fa-angle-up"></i>
-            </a>
-            <script src="vendor/jquery/jquery.min.js"></script>
-            <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-            <script src="vendor/jquery-easing/jquery.easing.min.js"></script>
-            <script src="js_marketing/ruang-admin.min.js"></script>
-            <script src="vendor/chart.js/Chart.min.js"></script>
-            <script src="js_marketing/demo/chart-area-demo.js"></script>  
-            <script src="vendor/datatables/jquery.dataTables.min.js"></script>
-            <script src="vendor/datatables/dataTables.bootstrap4.min.js"></script>
-            <script src="js_sale/orderlist.js"></script>
-            <!-- Page level custom scripts -->
-            <script>
-                $(document).ready(function () {
-                    $('#dataTableHover').DataTable(); // ID From dataTable with Hover
-                });
-            </script>
-            <script>
+                </div>
+                <!---Container Fluid-->
+            </div>
+        </div>
+
+        <!-- Scroll to top -->
+        <a class="scroll-to-top rounded" href="#page-top">
+            <i class="fas fa-angle-up"></i>
+        </a>
+        <script src="vendor/jquery/jquery.min.js"></script>
+        <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+        <script src="vendor/jquery-easing/jquery.easing.min.js"></script>
+        <script src="js_marketing/ruang-admin.min.js"></script>
+        <script src="vendor/chart.js/Chart.min.js"></script>
+        <script src="js_marketing/demo/chart-area-demo.js"></script>  
+        <script src="vendor/datatables/jquery.dataTables.min.js"></script>
+        <script src="vendor/datatables/dataTables.bootstrap4.min.js"></script>
+        <script src="js_sale/orderlist.js"></script>
+        <!-- Page level custom scripts -->
+        <script>
+                                                    $(document).ready(function () {
+                                                        $('#dataTableHover').DataTable(); // ID From dataTable with Hover
+                                                    });
+        </script>
+        <script>
             function submitForm() {
                 document.getElementById('filterForm').submit();
             }
