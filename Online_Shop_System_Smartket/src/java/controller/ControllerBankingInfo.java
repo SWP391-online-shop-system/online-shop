@@ -14,21 +14,14 @@ import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import model.DAOCart;
 import model.DAOOrder;
-import model.DAOOrderDetails;
-import model.DAOReceiver;
-import view.Order;
-import view.OrderDetails;
-import view.Receiver;
-import view.User;
 
 /**
  *
  * @author trant
  */
-@WebServlet(name = "ControllerCartCompletion", urlPatterns = {"/CartCompletion"})
-public class ControllerCartCompletion extends HttpServlet {
+@WebServlet(name = "ControllerBankingInfo", urlPatterns = {"/BankingInfo"})
+public class ControllerBankingInfo extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -44,50 +37,23 @@ public class ControllerCartCompletion extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         try ( PrintWriter out = response.getWriter()) {
             HttpSession session = request.getSession();
+            String orderId_str = (String)session.getAttribute("orderId");
+            int orderId = Integer.parseInt(orderId_str);
             DAOOrder daoOrder = new DAOOrder();
-            DAOCart daoCart = new DAOCart();
-            DAOReceiver daoRece = new DAOReceiver();
-            DAOOrderDetails daoDetail = new DAOOrderDetails();
-            User user = (User) session.getAttribute("account");
-            int userID = user.getUserID();
-            int saleId = 0;
-            int quantityOfSale = 0;
+            
+            double totalPriceDB = 0;
+            ResultSet rs = daoOrder.getData("SELECT * FROM online_shop_system.order where OrderID = "+orderId);
             try {
-                ResultSet sale = daoOrder.getData("SELECT * FROM online_shop_system.sale order by OrderQuantity asc limit 1;");
-                while (sale.next()) {
-                    saleId = sale.getInt(1);
-                    quantityOfSale = sale.getInt(2);
+                while(rs.next()){
+                    totalPriceDB = rs.getDouble("TotalPrice");
                 }
-                sale.close();
+                rs.close();
             } catch (SQLException e) {
             }
-            quantityOfSale++;
-            daoOrder.updateSale(saleId, quantityOfSale);
-            String totalPrice_str = request.getParameter("totalPrice");
-            Double totalPrice = Double.parseDouble(totalPrice_str);
-            Order orders = new Order(userID, saleId, 1, totalPrice);
-            int orderID = daoOrder.insertOrderByPreparedReturnId(orders);
-            String name = request.getParameter("name");
-            String phone = request.getParameter("phone");
-            String email = request.getParameter("email");
-//            String city = request.getParameter("city");
-//            String district = request.getParameter("district");
-//            String ward = request.getParameter("ward");
-            String adress = request.getParameter("addressdetail");
-            String note = request.getParameter("note");
-            Receiver rece = new Receiver(orderID, name, phone, adress, email, note);
-            daoRece.insertReceiverByPrepared(rece);
-            try {
-                ResultSet listCart = daoCart.getData("SELECT * FROM Cart as c join product as p on c.ProductID = p.ProductID where UserID = " + userID);
-                while (listCart.next()) {
-                    OrderDetails details = new OrderDetails(listCart.getInt("ProductID"), orderID, listCart.getInt("Quantity"), listCart.getInt("UnitPrice"), listCart.getInt("UnitDiscount"));
-                    daoDetail.insertOrderDetailsByPrepared(details);
-                }
-                listCart.close();
-            } catch (SQLException e) {
-            }
-            daoCart.deleteAllCart(userID);
-            response.sendRedirect("CartcontactOTPVerify?email="+email+"&oid="+orderID);
+            int totalPrice = (int)totalPriceDB;
+            String QrPath = "https://img.vietqr.io/image/BIDV-0398707242-compact2.png?amount="+totalPrice+"&addInfo=Smartket "+orderId+"&accountName=Smartket";
+            request.setAttribute("QrPath", QrPath);
+            request.getRequestDispatcher("bankingInfo.jsp").forward(request, response);
         }
     }
 
