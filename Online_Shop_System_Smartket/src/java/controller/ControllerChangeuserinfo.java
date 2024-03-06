@@ -114,10 +114,8 @@ public class ControllerChangeuserinfo extends HttpServlet {
             String path = "images/user/" + result;
             String realFileName = request.getServletContext().getRealPath(path);
             String realFileName1 = realFileName.replace("\\build", "");
-            for (Part part : request.getParts()) {
-                part.write(realFileName);
-                part.write(realFileName1);
-            }
+            filePart.write(realFileName);
+            filePart.write(realFileName1);
             use.setUserImage(result);
             session.setAttribute("account", use);
             int n = daoU.updateUserImage(UserID, result);
@@ -129,7 +127,7 @@ public class ControllerChangeuserinfo extends HttpServlet {
             request.setAttribute("mess", mess);
             try {
                 // Introduce a 1-second delay
-                Thread.sleep(2000); // 1000 milliseconds = 1 second
+                Thread.sleep(5000); // 1000 milliseconds = 1 second
                 request.getRequestDispatcher("profileUser.jsp").forward(request, response);
             } catch (InterruptedException e) {
                 // Handle any potential interruption exception
@@ -165,7 +163,6 @@ public class ControllerChangeuserinfo extends HttpServlet {
             String phoneNumber1 = request.getParameter("phoneNumber1");
             String dateOfBirth1 = request.getParameter("dateOfBirth1");
             boolean gender1 = Boolean.parseBoolean(request.getParameter("gender1"));
-            System.out.println("gender1 = " + gender1);
             HttpSession session = request.getSession();
             User use = (User) session.getAttribute("account");
             DAOUser dao = new DAOUser();

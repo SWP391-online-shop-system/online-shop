@@ -47,6 +47,30 @@
                 cursor: pointer;
                 transform: scale(0.95);
             }
+            .otp-field {
+                flex-direction: row;
+                column-gap: 10px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+            }
+
+            .otp-field input {
+                height: 45px;
+                width: 42px;
+                border-radius: 6px;
+                outline: none;
+                font-size: 1.125rem;
+                text-align: center;
+                border: 1px solid #ddd;
+            }
+            .otp-field input:focus {
+                box-shadow: 0 1px 0 rgba(0, 0, 0, 0.1);
+            }
+            .otp-field input::-webkit-inner-spin-button,
+            .otp-field input::-webkit-outer-spin-button {
+                display: none;
+            }
 
             .resend {
                 font-size: 12px;
@@ -57,7 +81,7 @@
         <%
             HttpSession session3 = request.getSession();
             User user1 = (User) session3.getAttribute("account");
-           ResultSet rs = (ResultSet)request.getAttribute("data");
+//           ResultSet rs = (ResultSet)request.getAttribute("data");
            String message ="";
            DecimalFormat decimalFormat = new DecimalFormat("#,###.#");
            double totalprice = 0;
@@ -458,79 +482,42 @@
                         </div>
                     </div>
                 </div>
+            </div>  
+            <div class="card" style="align-items: center">
+                <div class="cart" style="flex: 0">
+                    <div class="row justify-content-center">
+                        <div class="card bg-white mb-5 mt-5 border-0" style="box-shadow: 0 12px 15px rgba(0, 0, 0, 0.02);">
+                            <div class="card-body p-5 text-center">
+                                <h4>Mã của bạn đã được gửi đến email đăng kí nhận hàng</h4>
+                                <p>Vui lòng điền mã OTP để xác nhận</p>
+
+                                <div class="otp-field mb-4">
+                                    <input type="number" id="otp1"/>
+                                    <input type="number" id="otp2" disabled />
+                                    <input type="number" id="otp3" disabled />
+                                    <input type="number" id="otp4" disabled />
+                                    <input type="number" id="otp5" disabled />
+                                    <input type="number" id="otp6" disabled />
+                                </div>
+                                <button class="btn btn-primary" style="cursor: pointer" onclick="verifyOTP()">Xác nhận</button>
+                                <p class="resend text-muted mb-0">
+                                    Bạn không nhận được mã? <a href="CartcontactOTPVerify?service=reSendOTP">Gửi lại mã</a>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
-                                <div class="cart"></div>
         </section>
         <!-- Form Basic -->
 
         <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.21.1/axios.min.js"></script>
-        <script>
-                                            var citis = document.getElementById("city");
-                                            var districts = document.getElementById("district");
-                                            var wards = document.getElementById("ward");
-                                            var Parameter = {
-                                                url: "https://raw.githubusercontent.com/kenzouno1/DiaGioiHanhChinhVN/master/data.json",
-                                                method: "GET",
-                                                responseType: "application/json",
-                                            };
-                                            var promise = axios(Parameter);
-                                            promise.then(function (result) {
-                                                renderCity(result.data);
-                                            });
-
-                                            function renderCity(data) {
-                                                for (const x of data) {
-                                                    var opt = document.createElement('option');
-                                                    opt.value = x.Name;
-                                                    opt.text = x.Name;
-                                                    opt.setAttribute('data-id', x.Id);
-                                                    citis.options.add(opt);
-                                                }
-                                                citis.onchange = function () {
-                                                    district.length = 1;
-                                                    ward.length = 1;
-                                                    if (this.options[this.selectedIndex].dataset.id != "") {
-                                                        const result = data.filter(n => n.Id === this.options[this.selectedIndex].dataset.id);
-
-                                                        for (const k of result[0].Districts) {
-                                                            var opt = document.createElement('option');
-                                                            opt.value = k.Name;
-                                                            opt.text = k.Name;
-                                                            opt.setAttribute('data-id', k.Id);
-                                                            district.options.add(opt);
-                                                        }
-                                                    }
-                                                };
-                                                district.onchange = function () {
-                                                    ward.length = 1;
-                                                    const dataCity = data.filter((n) => n.Id === citis.options[citis.selectedIndex].dataset.id);
-                                                    if (this.options[this.selectedIndex].dataset.id != "") {
-                                                        const dataWards = dataCity[0].Districts.filter(n => n.Id === this.options[this.selectedIndex].dataset.id)[0].Wards;
-
-                                                        for (const w of dataWards) {
-                                                            var opt = document.createElement('option');
-                                                            opt.value = w.Name;
-                                                            opt.text = w.Name;
-                                                            opt.setAttribute('data-id', w.Id);
-                                                            wards.options.add(opt);
-                                                        }
-                                                    }
-                                                };
-                                            }
-                                            document.getElementById("goBackButton").addEventListener("click", function () {
-                                                window.history.back();
-                                            });
-                                            function updateAddress() {
-                                                var city = document.getElementById("city").value;
-                                                var district = document.getElementById("district").value;
-                                                var ward = document.getElementById("ward").value;
-                                                var addressDetail = city + ', ' + district + ', ' + ward;
-                                                document.getElementById("exampleInputPassword1").value = addressDetail;
-                                            }
-        </script>
         <script src="vendor/jquery/jquery.min.js"></script>
         <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
         <script src="vendor/jquery-easing/jquery.easing.min.js"></script>
         <script src="js/ruang-admin.min.js"></script>
+        <script src="js/verify.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
     </body>
 </html>
