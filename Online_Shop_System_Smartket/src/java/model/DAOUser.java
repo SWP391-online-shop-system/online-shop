@@ -8,6 +8,8 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Vector;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -479,5 +481,46 @@ public class DAOUser extends DBConnect {
                 break;
         }
         return result;
+    }
+
+    public List<User> getUsersByRoleID(int roleID) {
+        List<User> users = new ArrayList<>();
+        PreparedStatement statement = null;
+        ResultSet resultSet = null;
+
+        try {
+            // Assuming the table name is "user" and the column name for RoleID is "RoleID"
+            String query = "SELECT * FROM user WHERE RoleID = ?";
+            statement = conn.prepareStatement(query);
+            statement.setInt(1, roleID);
+            resultSet = statement.executeQuery();
+
+            while (resultSet.next()) {
+                User user = new User();
+                user.setUserID(resultSet.getInt("UserID"));
+                user.setFirstName(resultSet.getString("FirstName"));
+                user.setLastName(resultSet.getString("LastName"));
+                user.setRoleID(resultSet.getInt("RoleID"));
+                // Add any other necessary fields
+
+                users.add(user);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace(); // Handle or log the exception as needed
+        } finally {
+            // Close the statement and result set in finally block
+            try {
+                if (resultSet != null) {
+                    resultSet.close();
+                }
+                if (statement != null) {
+                    statement.close();
+                }
+            } catch (SQLException e) {
+                e.printStackTrace(); // Handle or log the exception as needed
+            }
+        }
+
+        return users;
     }
 }

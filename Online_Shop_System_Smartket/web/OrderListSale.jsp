@@ -15,7 +15,7 @@
 <%@page import="view.*" %>
 <%@page import="model.*" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
-<%@page import="java.sql.ResultSet, java.sql.SQLException"%>
+<%@page import="java.sql.ResultSet, java.sql.SQLException, java.util.List"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html lang="en">
@@ -35,6 +35,7 @@
     </head>
     <%
         ResultSet rs = (ResultSet)request.getAttribute("data");
+        ResultSet rs1 = (ResultSet)request.getAttribute("data1");
     %>
     <div class="container">
         <% String message = (String)request.getParameter("message");
@@ -59,7 +60,7 @@
             <div id="content-wrapper" class="d-flex flex-column">
                 <div id="content">
                     <nav class="navbar navbar-expand navbar-light bg-navbar topbar mb-4 static-top">
-                        <div style="font-weight: 700;color: white;font-size: 37px;letter-spacing: 2px;font-family: Nunito,-apple-system,BlinkMacSystemFont"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol","Noto Color Emoji";">Trang marketing</div>
+                        <div style="font-weight: 700;color: white;font-size: 37px;letter-spacing: 2px;font-family: Nunito,-apple-system,BlinkMacSystemFont"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol","Noto Color Emoji";">Trang Sale</div>
                         <ul class="navbar-nav ml-auto">
                             <div class="topbar-divider d-none d-sm-block"></div>
                             <li class="nav-item dropdown no-arrow">
@@ -84,10 +85,10 @@
                     </nav>
                     <div class="container-fluid" id="container-wrapper">
                         <div class="d-sm-flex align-items-center justify-content-between mb-4">
-                            <h1 class="h3 mb-0 text-gray-800">Danh sách Order</h1>
+                            <h1 class="h3 mb-0 text-gray-800">Danh sách sản phẩm</h1>
                             <ol class="breadcrumb">
                                 <li class="breadcrumb-item"><a href="OrderListURL">Home</a></li>
-                                <li class="breadcrumb-item active" aria-current="page">Danh sách Order</li>
+                                <li class="breadcrumb-item active" aria-current="page">Danh sách sản phẩm</li>
                             </ol>
                         </div>
                         <div class="row">
@@ -99,12 +100,34 @@
                                             <div style="display: flex;
                                                  margin-left: 200px;
                                                  margin-bottom: -30px;">
-                                                <form action="OrderListURL" method="get" class="form-control" onchange="this.form.submit()">
-                                                    <div class="filter-group" style="display:flex;margin-left: 15px;">
-                                                        <div style="margin-right: 10px;">From: <input type="date" name="fromDate" value="<%= request.getParameter("fromDate") %>"></div>
-                                                        <div>To: <input type="date" name="toDate" value="<%= request.getParameter("toDate") %>"></div>
+                                                <form action="OrderListURL" method="get" class="form-control">
+                                                    <div class="filter-group" style="display:flex;margin-left: -28px;">
+                                                        <div style="margin-right: 10px;">Từ: <input type="date" name="fromDate" value="${param.fromDate}" onchange="this.form.submit()"></div>
+                                                        <div>Đến: <input type="date" name="toDate" value="${param.toDate}" onchange="this.form.submit()"></div>
+                                                        <div>
+                                                            <label for="saleName">Tên nhân viên: </label>
+                                                            <select name="saleName" onchange="this.form.submit()">
+                                                                <option value="">Tất cả</option>
+                                                                <c:forEach var="user" items="${user}">
+                                                                    <option value="${user.userID}"<c:if test="${user.userID eq param.saleName}"> selected</c:if>>
+                                                                        ${user.firstName} ${user.lastName}
+                                                                    </option>
+                                                                </c:forEach>
+                                                            </select>
+                                                        </div>
                                                     </div>
-                                                    <input type="submit" value="Lọc" style="margin-left: 12px;">
+                                                    <div>
+                                                        <label for="statusName">Trạng thái:</label>
+                                                        <select name="statusName" style="width: 115px;" onchange="this.form.submit()">
+                                                            <option value="">Tất cả</option>
+                                                            <c:forEach var="status" items="${status}">
+                                                                <option value="${status.statusName}" <c:if test="${status.statusName eq param.statusName}">selected</c:if>>
+                                                                    ${status.statusName}
+                                                                </option>
+                                                            </c:forEach>
+                                                        </select>
+                                                    </div>
+                                                    <input type="submit" value="Lọc" style="margin-left: 12px;" hidden>
                                                 </form>
                                             </div>
                                             <thead class="thead-light">
@@ -135,13 +158,14 @@
                                                 <% try {
                                                     while(rs.next()) {
                                                 %>
-                                                <tr>
+                                                <tr onclick="Orderdetail(<%=rs.getInt("OrderID")%>)">
                                                     <td><%=rs.getInt("OrderID")%></td>
                                                     <td><%=rs.getString("FullName")%></td>
                                                     <td><%=rs.getString("ProductName")%></td>
                                                     <td><%=rs.getInt("Quantity")%></td>
                                                     <td><%= df.format(rs.getDouble("TotalPrice")) %></td>
                                                     <td><%=rs.getString("OrderDate")%></td>
+                                                    <td><%=rs.getString("SaleName")%></td>
                                                     <td><%=rs.getString("StatusName")%></td>
                                                 </tr>
                                                 <% }
@@ -217,9 +241,9 @@
         <script src="js_sale/orderlist.js"></script>
         <!-- Page level custom scripts -->
         <script>
-                                                    $(document).ready(function () {
-                                                        $('#dataTableHover').DataTable(); // ID From dataTable with Hover
-                                                    });
+                                                            $(document).ready(function () {
+                                                                $('#dataTableHover').DataTable(); // ID From dataTable with Hover
+                                                            });
         </script>
         <script>
             function submitForm() {

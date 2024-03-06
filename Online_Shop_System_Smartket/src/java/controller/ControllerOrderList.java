@@ -13,11 +13,15 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import java.sql.ResultSet;
 import java.time.LocalDate;
+import java.util.List;
 import java.util.Vector;
 import model.DAOCategories;
 import model.DAOOrder;
 import model.DAOProduct;
+import model.DAOUser;
 import view.Categories;
+import view.Status;
+import view.User;
 
 /**
  *
@@ -41,9 +45,10 @@ public class ControllerOrderList extends HttpServlet {
         try ( PrintWriter out = response.getWriter()) {
             /* TODO output your page here. You may use following sample code. */
             DAOOrder dao = new DAOOrder();
+            DAOUser daoU = new DAOUser();
             String fromDate = request.getParameter("fromDate");
             String toDate = request.getParameter("toDate");
-
+            String statusName = request.getParameter("statusName");
             // Check if fromDate and toDate are empty, then set them to null
             if (fromDate != null && fromDate.isEmpty()) {
                 fromDate = null;
@@ -52,21 +57,35 @@ public class ControllerOrderList extends HttpServlet {
                 toDate = null;
             }
 
-            // Construct SQL query with optional date range
-            String sqlQuery = "SELECT o.OrderID, CONCAT(u.FirstName, ' ', u.LastName) AS FullName, "
-                    + "(SELECT p.ProductName FROM product p "
-                    + "WHERE p.ProductID = (SELECT ProductID FROM orderdetail WHERE OrderID = o.OrderID LIMIT 1) LIMIT 1) AS ProductName, "
-                    + "o.Quantity, o.TotalPrice, o.OrderDate, s.StatusName "
-                    + "FROM `Order` AS o "
-                    + "JOIN user AS u ON o.UserID = u.UserID "
-                    + "JOIN status s ON s.StatusID = o.StatusID ";
+            String sqlQuery = "SELECT o.OrderID, CONCAT(u.FirstName, ' ', u.LastName) AS FullName,\n"
+                    + "(SELECT p.ProductName \n"
+                    + "FROM product p \n"
+                    + "WHERE p.ProductID = (SELECT ProductID FROM orderdetail WHERE OrderID = o.OrderID LIMIT 1)\n"
+                    + "LIMIT 1) AS ProductName, COUNT(od.OrderID) AS Quantity, o.TotalPrice, o.OrderDate, "
+                    + "CONCAT(u_sale.FirstName, ' ', u_sale.LastName) AS SaleName, StatusName\n"
+                    + "FROM `Order` AS o \n"
+                    + "JOIN user AS u ON o.UserID = u.UserID\n"
+                    + "JOIN user AS u_sale ON o.saleID = u_sale.userID\n"
+                    + "JOIN status s ON s.StatusID = o.StatusID\n"
+                    + "JOIN orderDetail od ON o.OrderID = od.OrderID";
 
-            // Append date range condition if fromDate and toDate are not null
             if (fromDate != null && toDate != null) {
-                sqlQuery += "WHERE o.OrderDate BETWEEN '" + fromDate + "' AND '" + toDate + "'";
+                sqlQuery += " WHERE o.OrderDate BETWEEN '" + fromDate + "' AND '" + toDate + "'";
             }
-
+            String selectedSaleUserID = request.getParameter("saleName");
+            if (selectedSaleUserID != null && !selectedSaleUserID.isEmpty() && !selectedSaleUserID.equals("Tất cả")) {
+                sqlQuery += " AND o.SaleID = '" + selectedSaleUserID + "'";
+            }
+            if (statusName != null && !statusName.isEmpty()) {
+                sqlQuery += " AND s.StatusName = '" + statusName + "'";
+            }
+            System.out.println(statusName);
+            sqlQuery += " GROUP BY o.OrderID, u.FirstName, u.LastName, u_sale.FirstName, u_sale.LastName, s.StatusName";
             ResultSet rs = dao.getData(sqlQuery);
+            Vector<User> user = daoU.getUser("select * from User where roleID = 3");
+            Vector<Status> status = dao.getStatus("select * from status");
+            request.setAttribute("user", user);
+            request.setAttribute("status", status);
             request.setAttribute("data", rs);
             request.getRequestDispatcher("OrderListSale.jsp").forward(request, response);
         }
