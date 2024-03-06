@@ -9,61 +9,86 @@ package view;
  * @author trant
  */
 public class Receiver {
-    private int orderID;
-    private String receName;
-    private String recePhone;
-    private String receAdress;
-    private String receEmail;
+
+    private int OrderID;
+    private String ReceiverName;
+    private int ReceiverGender;
+    private String ReceiverPhoneNumber;
+    private String ReceiverEmail;
+    private String RceiverAddress;
+    private String note;
 
     public Receiver() {
     }
 
-    public Receiver(int orderID, String receName, String recePhone, String receAdress, String receEmail) {
-        this.orderID = orderID;
-        this.receName = receName;
-        this.recePhone = recePhone;
-        this.receAdress = receAdress;
-        this.receEmail = receEmail;
+    public Receiver(int OrderID, String ReceiverName, String ReceiverPhoneNumber, String ReceiverEmail, String RceiverAddress, String note) {
+        this.OrderID = OrderID;
+        this.ReceiverName = ReceiverName;
+        this.ReceiverPhoneNumber = ReceiverPhoneNumber;
+        this.ReceiverEmail = ReceiverEmail;
+        this.RceiverAddress = RceiverAddress;
+        this.note = note;
+    }
+    
+    @Override
+    public String toString() {
+        return "Receiver{" + "OrderID=" + OrderID + ", ReceiverName=" + ReceiverName + ", ReceiverGender=" + ReceiverGender + ", ReceiverPhoneNumber=" + ReceiverPhoneNumber + ", ReceiverEmail=" + ReceiverEmail + ", RceiverAddress=" + RceiverAddress + ", note=" + note + '}';
     }
 
     public int getOrderID() {
-        return orderID;
+        return OrderID;
     }
 
-    public void setOrderID(int orderID) {
-        this.orderID = orderID;
+    public void setOrderID(int OrderID) {
+        this.OrderID = OrderID;
     }
 
-    public String getReceName() {
-        return receName;
+    public String getReceiverName() {
+        return ReceiverName;
     }
 
-    public void setReceName(String receName) {
-        this.receName = receName;
+    public void setReceiverName(String ReceiverName) {
+        this.ReceiverName = ReceiverName;
     }
 
-    public String getRecePhone() {
-        return recePhone;
+    public int getReceiverGender() {
+        return ReceiverGender;
     }
 
-    public void setRecePhone(String recePhone) {
-        this.recePhone = recePhone;
+    public void setReceiverGender(int ReceiverGender) {
+        this.ReceiverGender = ReceiverGender;
     }
 
-    public String getReceAdress() {
-        return receAdress;
+    public String getReceiverPhoneNumber() {
+        return ReceiverPhoneNumber;
     }
 
-    public void setReceAdress(String receAdress) {
-        this.receAdress = receAdress;
+    public void setReceiverPhoneNumber(String ReceiverPhoneNumber) {
+        this.ReceiverPhoneNumber = ReceiverPhoneNumber;
     }
 
-    public String getReceEmail() {
-        return receEmail;
+    public String getReceiverEmail() {
+        return ReceiverEmail;
     }
 
-    public void setReceEmail(String receEmail) {
-        this.receEmail = receEmail;
+    public void setReceiverEmail(String ReceiverEmail) {
+        this.ReceiverEmail = ReceiverEmail;
     }
-    
+
+    public String getRceiverAddress() {
+        return RceiverAddress;
+    }
+
+    public void setRceiverAddress(String RceiverAddress) {
+        this.RceiverAddress = RceiverAddress;
+    }
+
+    public String getNote() {
+        return note;
+    }
+
+    public void setNote(String note) {
+        this.note = note;
+    }
+
 }

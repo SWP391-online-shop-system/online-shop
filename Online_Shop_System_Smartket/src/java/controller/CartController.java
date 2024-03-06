@@ -15,6 +15,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import model.DAOCart;
 import model.DAOProduct;
 
@@ -63,18 +64,34 @@ public class CartController extends HttpServlet {
             }
             if (service.equals("addcart")) {
                 String pid_raw = request.getParameter("pid");
-                String quantity_String = request.getParameter("quan");
                 int pid = Integer.parseInt(pid_raw);
-                int quantity = Integer.parseInt(quantity_String);
+                int quantity = 1;
                 if (dao.productExistsInCart(userID, pid) == false) {
-                    quantity = 1;
-                    int n = dao.insertCartByPrepared(new Cart(userID, pid, quantity));
-                    response.sendRedirect("HomePageURL");
+                    int count = 0;
+                    dao.insertCartByPrepared(new Cart(userID, pid, quantity));
+                    ResultSet countPro = dao.getData("SELECT count(*) as count FROM Cart AS c JOIN Product AS p ON c.ProductID = p.ProductID where userID = " + userID + "");
+                    try {
+                        while (countPro.next()) {
+                            count = countPro.getInt(1);
+                        }
+                        countPro.close();
+                    } catch (SQLException e) {
+                    }
+                    response.getWriter().write(String.valueOf(count));
                 } else {
+                    int count = 0;
                     Cart cart = dao.getCartByUser(userID, pid);
                     cart.setQuantity(cart.getQuantity() + quantity);
                     int n = dao.updateCartByUserAndPro(cart, userID, pid);
-                    response.sendRedirect("HomePageURL");
+                    ResultSet countPro = dao.getData("SELECT count(*) as count FROM Cart AS c JOIN Product AS p ON c.ProductID = p.ProductID where userID = " + userID + "");
+                    try {
+                        while (countPro.next()) {
+                            count = countPro.getInt(1);
+                        }
+                        countPro.close();
+                    } catch (SQLException e) {
+                    }
+                    response.getWriter().write(String.valueOf(count));
                 }
             }
             if (service.equals("deleteCart")) {

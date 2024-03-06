@@ -1,6 +1,6 @@
 <%-- 
-    Document   : viewProduct
-    Created on : Feb 15, 2024, 1:59:07 PM
+    Document   : test
+    Created on : Feb 22, 2024, 5:39:39 PM
     Author     : HP
 --%>
 
@@ -37,7 +37,7 @@
         <div id="wrapper">
             <!-- Sidebar -->
             <ul class="navbar-nav sidebar sidebar-light accordion" id="accordionSidebar">
-                <a class="sidebar-brand d-flex align-items-center justify-content-center" href="index.html">
+                <a class="sidebar-brand d-flex align-items-center justify-content-center" href="HomePageURL">
                     <div class="sidebar-brand-icon">
                         <img style="height: 91px;
                              width: 133px;
@@ -62,7 +62,7 @@
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="ui-colors.html">
+                        <a class="nav-link" href="mktProductListURL">
                             <i class="fas fa-shopping-cart fa-2x text-success"></i>
                             <span>Sản phẩm</span>
                         </a>
@@ -93,16 +93,16 @@
                             <li class="nav-item dropdown no-arrow">
                                 <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown"
                                    aria-haspopup="true" aria-expanded="false">
-                                    <img class="img-profile rounded-circle" src="images/user/default_avatar.jpg" style="max-width: 60px">
-                                    <span class="ml-2 d-none d-lg-inline text-white small">Maman Ketoprak</span>
+                                    <img class="img-profile rounded-circle" src="images/user/${sessionScope.account.userImage}" style="max-width: 60px">
+                                    <span class="ml-2 d-none d-lg-inline text-white small">${sessionScope.account.firstName}&nbsp;${sessionScope.account.lastName}</span>
                                 </a>
                                 <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="userDropdown">
-                                    <a class="dropdown-item" href="#">
+                                    <a class="dropdown-item" href="#" >
                                         <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
                                         Hồ sơ
                                     </a>
                                     <div class="dropdown-divider"></div>
-                                    <a class="dropdown-item" href="javascript:void(0);" data-toggle="modal" data-target="#logoutModal">
+                                    <a class="dropdown-item" href="logout">
                                         <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
                                         Đăng xuất
                                     </a>
@@ -115,11 +115,11 @@
                     <!-- Container Fluid-->
                     <div class="container-fluid" id="container-wrapper">
                         <div class="d-sm-flex align-items-center justify-content-between mb-4">
-                            <h1 class="h3 mb-0 text-gray-800">Product Detail</h1>
+                            <h1 class="h3 mb-0 text-gray-800">Chi tiết sản phẩm</h1>
                             <ol class="breadcrumb">
-                                <li class="breadcrumb-item"><a href="./">Home</a></li>
+                                <li class="breadcrumb-item"><a href="MarketingDashBoardURL">Trang chủ</a></li>
                                 <!--<li class="breadcrumb-item">Tables</li>-->
-                                <li class="breadcrumb-item active" aria-current="page">Product Detail</li>
+                                <li class="breadcrumb-item active" aria-current="page">Chi tiết sản phẩm</li>
                             </ol>
                         </div>
                         <div class="row">
@@ -131,33 +131,33 @@
                                             <thead class="thead-light">
                                                 <tr>
                                                     <th>ID</th>
-                                                    <th>Tên sản phẩm</th>
-                                                    <th>Ảnh</th>
-                                                    <th>Loại</th>
+                                                    <th style="min-width: 104px">Tên sản phẩm</th>
+                                                    <th style="max-height: 100px;">Ảnh</th>
+                                                    <th style="min-width: 109px;">Loại sản phẩm</th>
                                                     <th>Mô tả sản phẩm</th>
-                                                    <th>Hàng trong kho</th>
-                                                    <th>Giá bán</th>
-                                                    <th>Giảm giá</th>
-                                                    <th>Ngày tạo</th>
-                                                    <th>Tổng số đánh giá</th>
-                                                    <th>Tổng số sản phẩm</th>
-                                                    <th>Ngày tạo</th>
+                                                    <th style="min-width: 120px;">Hàng trong kho</th>
+                                                    <th style="min-width: 60px;">Giá bán</th>
+                                                    <th style="min-width: 67px;">Giảm giá</th>
+                                                    <th style="min-width: 77px;">Ngày tạo</th>
+                                                    <th style="min-width: 130px;">Tổng số đánh giá</th>
+                                                    <th style="min-width: 137px;">Tổng số sản phẩm</th>
+                                                    <th style="min-width: 77px;">Trạng thái</th>
                                                 </tr>
                                             </thead>
                                             <tfoot>
                                                 <tr>
                                                     <th>ID</th>
-                                                    <th>Tên sản phẩm</th>
-                                                    <th>Ảnh</th>
-                                                    <th>Loại</th>
+                                                    <th style="min-width: 104px">Tên sản phẩm</th>
+                                                    <th style="max-height: 100px;">Ảnh</th>
+                                                    <th style="min-width: 109px;">Loại sản phẩm</th>
                                                     <th>Mô tả sản phẩm</th>
-                                                    <th>Hàng trong kho</th>
-                                                    <th>Giá bán</th>
-                                                    <th>Giảm giá</th>
-                                                    <th>Ngày tạo</th>
-                                                    <th>Tổng số đánh giá</th>
-                                                    <th>Tổng số sản phẩm</th>
-                                                    <th>Ngày tạo</th>
+                                                    <th style="min-width: 120px;">Hàng trong kho</th>
+                                                    <th style="min-width: 60px;">Giá bán</th>
+                                                    <th style="min-width: 67px;">Giảm giá</th>
+                                                    <th style="min-width: 77px;">Ngày tạo</th>
+                                                    <th style="min-width: 130px;">Tổng số đánh giá</th>
+                                                    <th style="min-width: 137px;">Tổng số sản phẩm</th>
+                                                    <th style="min-width: 77px;">Trạng thái</th>
                                                 </tr>
                                             </tfoot>
                                             <tbody>
@@ -165,21 +165,30 @@
                 ResultSet rs = (ResultSet) request.getAttribute("data");
                 if (rs != null) {
                     try {
-                        while (rs.next()) { 
+                        while (rs.next()) {
+                        boolean productStatus = rs.getBoolean("productStatus");
                                                 %>
                                                 <tr>
                                                     <td><%= rs.getInt("ProductID") %></td>
                                                     <td><%= rs.getString("ProductName") %></td>
                                                     <td><img style="width: 100px" src="<%= rs.getString("ProductURL") %>"/></td>
                                                     <td><%= rs.getString("CategoryName") %></td>
-                                                    <td><textarea style="width: 140px; height: 140px"><%= rs.getString("ProductDescription") %></textarea></td>
+                                                    <td><textarea style="width: 300px;height: 140px;color: #a4a4a4;"><%= rs.getString("ProductDescription") %></textarea></td>
                                                     <td><%= rs.getInt("UnitInStock") %></td>
                                                     <td><%= NumberFormat.getCurrencyInstance(new Locale("vi", "VN")).format(rs.getDouble("UnitPrice")) %></td>
                                                     <td><%= rs.getInt("UnitDiscount") %></td>
                                                     <td><%= rs.getString("CreateDate") %></td>
                                                     <td><%= rs.getInt("TotalRate") %></td>
                                                     <td><%= rs.getInt("TotalStock") %></td>
-                                                    <td><%= rs.getString("CreateDate") %></td>
+                                                    <td>
+                                                        <% 
+                                                            if (!productStatus) {
+                            out.println("Kích hoạt"); // Print "kích hoạt" if productStatus is true (or 1)
+                        } else {
+                            out.println("Vô hiệu hóa"); // Print "vô hiệu hóa" if productStatus is false (or 0)
+                        }
+                                                        %>
+                                                    </td>
                                                 </tr>
                                                 <% 
                                                         }

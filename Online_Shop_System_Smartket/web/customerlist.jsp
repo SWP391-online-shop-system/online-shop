@@ -68,7 +68,7 @@
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="ui-colors.html">
+                        <a class="nav-link" href="FeedBackListURL">
                             <i class="fas fa-comments fa-2x text-info"></i>
                             <span>Phản hồi</span>
                         </a>
@@ -87,8 +87,8 @@
                             <li class="nav-item dropdown no-arrow">
                                 <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown"
                                    aria-haspopup="true" aria-expanded="false">
-                                    <img class="img-profile rounded-circle" src="images/user/default_avatar.jpg" style="max-width: 60px">
-                                    <span class="ml-2 d-none d-lg-inline text-white small">Maman Ketoprak</span>
+                                    <img class="img-profile rounded-circle" src="images/user/${sessionScope.account.userImage}" style="max-width: 60px">
+                                    <span class="ml-2 d-none d-lg-inline text-white small">${sessionScope.account.firstName}&nbsp;${sessionScope.account.lastName}</span>
                                 </a>
                                 <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="userDropdown">
                                     <a class="dropdown-item" href="#">
@@ -96,7 +96,7 @@
                                         Hồ sơ
                                     </a>
                                     <div class="dropdown-divider"></div>
-                                    <a class="dropdown-item" href="javascript:void(0);" data-toggle="modal" data-target="#logoutModal">
+                                    <a class="dropdown-item" href="logout">
                                         <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
                                         Đăng xuất
                                     </a>
@@ -138,20 +138,34 @@
                         </div>
                         <%sessionMessage.removeAttribute("message");%>
                         <div class="row">
-                            <button style="margin-left: 13px;margin-bottom: 5px;" type="button" class="btn btn-outline-primary" data-toggle="modal" data-target="#exampleModalLong"
+                            <button style="margin-left: 13px;margin-bottom: 5px;" type="button" class="btn btn-secondary" data-toggle="modal" data-target="#exampleModalLong"
                                     id="#modalLong">Thêm Khách Hàng Mới</button>
-
                         </div>
                         <div class="row">
                             <!-- DataTable with Hover -->
                             <div class="col-lg-12">
                                 <div class="card mb-4">                                 
-                                    <!--                                    <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-                                                                            <h6 class="m-0 font-weight-bold text-primary">DataTables with Hover</h6>
-                                                                        </div>-->
                                     <div class="table-responsive p-3">
-                                        <table class="table align-items-center table-flush table-hover" id="dataTableHover" style="font-size: 14px;
-                                               ">
+                                        <table class="table align-items-center table-flush table-hover" id="dataTableHover" style="font-size: 14px;">
+                                            <div style="display: flex;
+                                                 margin-left: 200px;
+                                                 margin-bottom: -30px;">
+                                                <%String status = (String)request.getAttribute("status");%>
+                                                <form action="customerlist" method="get">
+                                                    <div class="filter-group" style="display:flex;">
+                                                        <div style="padding-top: 16px;
+                                                             width: 81%;">Trạng thái</div>
+                                                        <select class="form-control" name="status" onchange="this.form.submit()" style="height: 33px;margin-top: 12px;">                                                            
+                                                            <option value="3" <%if(status.equals("3")){%>selected<%}%>>Tất cả</option>                                                     
+                                                            <option value="1" <%if(status.equals("1")){%>selected<%}%>>Hoạt động</option>                                                          
+                                                            <option value="2" <%if(status.equals("2")){%>selected<%}%>>Vô hiệu hóa</option>                                                            
+                                                            <option value="0" <%if(status.equals("0")){%>selected<%}%>>Chưa xác nhận</option>							
+                                                        </select>
+                                                    </div>                                                   
+                                                    <input type="submit" style="display: none;">
+                                                    <input type="hidden" name="service" value="fillterStatus"/>
+                                                </form>
+                                            </div>
                                             <thead class="thead-light">
                                                 <tr>
                                                     <th style="text-align: center; width: 0">ID</th>
@@ -174,7 +188,7 @@
                                                         <td>${cus.phoneNumber ? '':'Không'}</td>                        
                                                         <td><c:if test="${cus.userStatus == 0}"><span class="badge badge-info">Chưa xác nhận</span></c:if>
                                                             <c:if test="${cus.userStatus == 1}"><span class="badge badge-success">Hoạt động</span></c:if>
-                                                            <c:if test="${cus.userStatus == 2}"><span class="badge badge-danger">Bị chặn</span></c:if>
+                                                            <c:if test="${cus.userStatus == 2}"><span class="badge badge-danger">Vô hiệu hóa</span></c:if>
                                                         <td title="${cus.lastLogin}">${cus.lastLogin}</td>
                                                     </tr>
                                                 </c:forEach>    
@@ -268,8 +282,8 @@
                                             </div>
                                         </div>
                                         <div class="modal-footer">
-                                            <button type="button" class="btn btn-outline-primary" data-dismiss="modal">Close</button>
-                                            <button type="submit" class="btn btn-primary">Save changes</button>
+                                            <button type="button" class="btn btn-outline-primary" data-dismiss="modal">Đóng</button>
+                                            <button type="submit" class="btn btn-primary">Lưu</button>
                                         </div>
                                     </div>
                                 </form>

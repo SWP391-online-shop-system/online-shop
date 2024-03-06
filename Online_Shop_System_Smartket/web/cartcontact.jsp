@@ -47,6 +47,10 @@
                 cursor: pointer;
                 transform: scale(0.95);
             }
+
+            .resend {
+                font-size: 12px;
+            }
         </style>
     </head>
     <body>
@@ -456,7 +460,7 @@
                 </div>
             </div>  
             <div class="card">
-                <form action="action">
+                <form action="CartCompletion" method="post">
                     <div class="row">
                         <div class="cart-contact" style="flex: 0 0 49%;border-radius: 3px;margin: 0px 14px 0px 16px;">
                             <%
@@ -468,8 +472,8 @@
                                 String email = user1.getEmail();
                             %>
                             <div class="">
-                                <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between" style="margin-top: -53px;margin-bottom: -16px;">
-                                    <h6 class="m-0 font-weight-bold text-primary"style="font-size: 24px;">Thông tin người nhận</h6>
+                                <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between" style="margin-top: -67px;margin-bottom: -16px;">
+                                    <h6 class="m-0 font-weight-bold "style="font-size: 21px; color:black;">Thông tin người nhận</h6>
                                 </div>
                                 <div class="card-body" style="font-size: 17px;">
                                     <div class="form-group">
@@ -488,13 +492,13 @@
                                     <div class="form-group">
                                         <label>Địa Chỉ Người Nhận
                                         </label><br/>
-                                        <select name="city" id="city" onchange="updateAddress();">
+                                        <select name="city" id="city" onchange="updateAddress();" required>
                                             <option value="" selected>Tỉnh thành</option>           
                                         </select>
-                                        <select name="district" id="district" onchange="updateAddress();">
+                                        <select name="district" id="district" onchange="updateAddress();" required>
                                             <option value="" selected>Quận huyện</option>
                                         </select>
-                                        <select name="ward" id="ward" onchange="updateAddress();">
+                                        <select name="ward" id="ward" onchange="updateAddress();" required>
                                             <option value="" selected>Phường xã</option>
                                         </select>
                                     </div>
@@ -502,16 +506,21 @@
                                         <label for="exampleInputPassword1">Địa chỉ cụ thể</label>
                                         <textarea name="addressdetail" required class="form-control" id="exampleInputPassword1"></textarea>
                                     </div>
+                                    <div class="form-group">
+                                        <label for="exampleInputPassword1">Ghi chú</label>
+                                        <textarea name="note" class="form-control"></textarea>
+                                    </div>
                                 </div>
                                 <button id="goBackButton" class="btn-back">Trở về</button>
                             </div>
                         </div>
                         <div class="summary-order" style="flex: 0 0 46%;border-radius: 3px;">
-                            <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between" style="margin-top: 13px;
-                                 margin-bottom: -16px;    background-color: #f8f8f89c;">
+                            <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between" style="    margin-top: -14px;
+                                 margin-bottom: 6px;
+                                 background-color: #f8f8f89c; color: black;">
                                 <%ResultSet rsGetQuan = daoP.getData("select count(productID) from Cart where UserID = "+userID);
                                 if(rsGetQuan.next()) {%>
-                                <h6 class="m-0 font-weight-bold text-primary"style="font-size: 24px;">Thông tin đơn hàng (<%=rsGetQuan.getInt(1)%> sản phẩm)</h6>
+                                <h6 class="m-0 font-weight-bold"style="font-size: 21px;">Thông tin đơn hàng (<%=rsGetQuan.getInt(1)%> sản phẩm)</h6>
                                 <%}%>
                             </div>
                             <div class="big-summary-product">
@@ -528,7 +537,7 @@
                                                    while (rs.next()){
                                                     double unitPrice = rs.getDouble("UnitPrice");
                                                     double totalunitprice = unitPrice*rs.getInt("Quantity");
-                                                    totalprice += rs.getInt("Quantity")*unitPrice;
+                                                    totalprice += totalunitprice;
                                             %>   
                                             <tr class="row-edit">
                                                 <td>
@@ -546,18 +555,19 @@
                                                     <%=decimalFormat.format(rs.getInt("Quantity")*(rs.getDouble("UnitPrice") * (100 - rs.getInt("UnitDiscount")) / 100 ))%>đ
                                                 </td>
                                             </tr>
-                                        <%}
-                                            rs.close(); 
-                                            } catch (SQLException e) {
-                                             e.printStackTrace();
-                                            }
-                                        %>
+                                            <%}
+                                                rs.close(); 
+                                                } catch (SQLException e) {
+                                                 e.printStackTrace();
+                                                }
+                                            %>
                                         </tbody>
                                     </table>
                                 </div>
                             </div>
-
-                            <button type="submit" name="submit" class="btn-back">Đặt Hàng</button>
+                            <div style="text-align: end;">Tổng đơn hàng: <%=decimalFormat.format(totalprice)%>đ</div>
+                            <input type="hidden" name="totalPrice" value="<%=totalprice%>"/>
+                            <button type="submit" class="btn-back">Đặt Hàng</button>
                         </div>
                     </div>
                 </form>

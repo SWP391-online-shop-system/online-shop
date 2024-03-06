@@ -16,6 +16,8 @@ import jakarta.servlet.http.Part;
 import java.io.File;
 import java.util.List;
 import java.util.Vector;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import model.DAOBlog;
 import model.DAOCategories;
 import view.Blog;
@@ -48,12 +50,12 @@ public class ControlllerEditPost extends HttpServlet {
         String SBlogID = request.getParameter("BlogID");
         int BlogID = Integer.parseInt(SBlogID);
         Blog blog = dao.getBlogByID(BlogID);
+        List<Categories> categories = dao.getAllCategories();
         if (service == null) {
             service = "showDetail";
         }
         if (service.equals("showDetail")) {
 
-            List<Categories> categories = dao.getAllCategories();
             request.setAttribute("blog", blog);
             request.setAttribute("category", categories);
             request.getRequestDispatcher("EditPost.jsp").forward(request, response);
@@ -62,11 +64,22 @@ public class ControlllerEditPost extends HttpServlet {
             Part photo1 = request.getPart("authorImg");
             Part photo2 = request.getPart("blogImg");
 
+            System.out.println("photo1" + photo1);
+            System.out.println("photo2" + photo2);
+
             String authorImg = getSubmittedFileName(photo1);
             String blogImg = getSubmittedFileName(photo2);
 
-            String path1 = "images/blog_author/" + photo1.getSubmittedFileName();
-            String path2 = "images/blog/" + photo2.getSubmittedFileName();
+            if (authorImg.equals("") || authorImg == null) {
+                authorImg = blog.getAuthorImage();
+            }
+            if (blogImg.equals("") || blogImg == null) {
+                blogImg = blog.getBlogImage();
+            }
+
+            String imageDirectory = "/images/";
+            String path1 = imageDirectory + "blog_author/" + authorImg;
+            String path2 = imageDirectory + "blog/" + blogImg;
 
             String filename1 = request.getServletContext().getRealPath(path1);
             String filename2 = request.getServletContext().getRealPath(path2);
@@ -74,28 +87,26 @@ public class ControlllerEditPost extends HttpServlet {
             String realFileName1 = filename1;
             String realFileName2 = filename2;
 
-            if (filename1.contains("\\build")) {
-                realFileName1 = filename1.replace("\\build", "");
-            }
-
-            if (filename2.contains("\\build")) {
-                realFileName2 = filename2.replace("\\build", "");
-            }
-
-            System.out.println(realFileName1);
-            System.out.println(realFileName2);
+//            if (filename1.contains("\\build")) {
+//                realFileName1 = filename1.replace("\\build", "");
+//            }
+//
+//            if (filename2.contains("\\build")) {
+//                realFileName2 = filename2.replace("\\build", "");
+//            }
             if (photo1.getSize() > 0) {
                 photo1.write(realFileName1);
-            } 
+            }
 
             if (photo2.getSize() > 0) {
                 photo2.write(realFileName2);
-            } 
+            }
 
             String SCategoryID = request.getParameter("categoryId");
             String BlogAuthor = request.getParameter("author");
             String BlogTitle = request.getParameter("title");
             String BlogContent = request.getParameter("content");
+
             String CreateTime = request.getParameter("date");
 //            String SBlogRate = request.getParameter("rate");
             String SHiddenStatus = request.getParameter("hidden");
@@ -103,9 +114,15 @@ public class ControlllerEditPost extends HttpServlet {
 //            int BlogRate = Integer.parseInt(SBlogRate);
             int HiddenStatus = Integer.parseInt(SHiddenStatus);
             dao.editBlog(CategoryID, BlogAuthor, authorImg, blogImg, BlogTitle, BlogContent, HiddenStatus, CreateTime, BlogID);
-            List<Categories> categories = dao.getAllCategories();
             request.setAttribute("blog", blog);
             request.setAttribute("category", categories);
+            if (!(authorImg.equals(blog.getAuthorImage()) && blogImg.equals(blog.getBlogImage()))) {
+                try {
+                    Thread.sleep(5000);
+                } catch (InterruptedException ex) {
+                    Logger.getLogger(ControlllerEditPost.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
             response.sendRedirect("view?BlogID=" + BlogID);
         }
 

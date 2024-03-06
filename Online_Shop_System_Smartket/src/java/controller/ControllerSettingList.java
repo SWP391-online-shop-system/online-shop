@@ -11,24 +11,16 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import jakarta.servlet.http.HttpSession;
 import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
-import model.DAOCart;
-import model.DAOOrder;
-import model.DAOReceiver;
-import view.Order;
-import view.Receiver;
-import view.User;
+import model.DAOSetting;
+import view.Setting;
 
 /**
  *
- * @author trant
+ * @author admin
  */
-@WebServlet(name = "ControllerOrder", urlPatterns = {"/OrderURL"})
-public class ControllerOrder extends HttpServlet {
+@WebServlet(name = "ControllerSettingList", urlPatterns = {"/SettingListURL"})
+public class ControllerSettingList extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -43,39 +35,10 @@ public class ControllerOrder extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         try ( PrintWriter out = response.getWriter()) {
-            HttpSession session = request.getSession();
-            DAOOrder daoOrder = new DAOOrder();
-            DAOCart daoCart = new DAOCart();
-            DAOReceiver daoRece = new DAOReceiver();
-            User user = (User) session.getAttribute("account");
-            int userID = user.getUserID();
-            String submit = request.getParameter("submit");
-            if (submit != null) {
-                LocalDate orderDate = LocalDate.now();
-                DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-                String orderDateStr = orderDate.format(formatter);
-                Order orders = new Order(userID, 3, orderDateStr, 1);
-                int orderID = daoOrder.insertUserByPreparedReturnId(orders);
-                String name = request.getParameter("name");
-                String phone = request.getParameter("phone");
-                String email = request.getParameter("email");
-                String city = request.getParameter("city");
-                String district = request.getParameter("district");
-                String ward = request.getParameter("ward");
-                String addressdetail = request.getParameter("addressdetail");
-                String adress = addressdetail +" "+ward+" "+ district+" "+ city;
-                Receiver rece = new Receiver(orderID, name, phone, adress, email);
-                daoRece.insertReceiverByPrepared(rece);
-                try {
-                    ResultSet listCart = daoCart.getData("SELECT * FROM Cart AS c JOIN Product AS p ON c.ProductID = p.ProductID\n"
-                            + "join ProductImage as pi on p.ProductID = pi.ProductID\n"
-                            + "where c.UserID = " + userID + " ;");
-                    while (listCart.next()) {                        
-                        
-                    }
-                } catch (SQLException e) {
-                }
-            }
+            DAOSetting daoS = new DAOSetting();
+            ResultSet rsSetting = daoS.getData("select * from Setting");
+            request.setAttribute("rsSetting", rsSetting);
+            request.getRequestDispatcher("settingList.jsp").forward(request, response);
         }
     }
 
@@ -105,7 +68,18 @@ public class ControllerOrder extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+
+        String valueSettingHomePage = (request.getParameter("valueSettingHomePage"));
+        int SettingID = Integer.parseInt(request.getParameter("SettingID"));
+        Setting editSetting = new Setting();
+        DAOSetting daoS = new DAOSetting();
+        editSetting = daoS.getSettingById(SettingID);
+        editSetting.setSettingValue(valueSettingHomePage);
+        daoS.updateSetting(editSetting);
+        System.out.println("updateComplete");
+        ResultSet rsSetting = daoS.getData("select * from Setting");
+        request.setAttribute("rsSetting", rsSetting);
+        request.getRequestDispatcher("settingList.jsp").forward(request, response);
     }
 
     /**

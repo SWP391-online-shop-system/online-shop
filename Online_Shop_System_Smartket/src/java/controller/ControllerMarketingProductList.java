@@ -82,7 +82,7 @@ public class ControllerMarketingProductList extends HttpServlet {
         Vector<Categories> categories = daoCate.getCategories("SELECT * FROM categories");
         request.setAttribute("categories", categories);
         request.setAttribute("data", rs);
-        request.getRequestDispatcher("productListmkt1.jsp").forward(request, response);
+        request.getRequestDispatcher("productListmkt.jsp").forward(request, response);
     }
     /**
      * Handles the HTTP <code>POST</code> method.

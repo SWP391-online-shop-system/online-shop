@@ -28,12 +28,16 @@
         <link rel="stylesheet" href="css/css_productList/style.css"/>
         <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet" />
         <script src="https://kit.fontawesome.com/ac74b86ade.js" crossorigin="anonymous"></script>
-
+        <style>
+            body{
+                background: white;
+            }
+        </style>
     </head>
     <body>
         <%DecimalFormat df = new DecimalFormat("###,###");
             df.setMaximumFractionDigits(8);%>
-        <!-- start header -->
+        <!-- comment start -->
         <div class="header" style="margin-top: 21px;">
             <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
             <div class="header-title" style="margin-top: -16px;">
@@ -97,7 +101,7 @@
                                     <a href="profileUser.jsp"><img style="width: 30px;
                                                                    height: 30px;
                                                                    margin-right: -10px;
-                                                                   margin-bottom: 3px;
+                                                                   margin-bottom: -8px;
                                                                    margin-left: 7px;
                                                                    border-radius: 50%;" class="styling1" src="images/user/default_avatar.jpg" alt="Admin Image"></a>
                                     </c:if>
@@ -267,29 +271,26 @@
                             <li><a href="loginURL" onclick="alertOpenCart()"title="Giỏ hàng của tôi"><i class="fa-solid fa-cart-shopping"></i></a></li>
                                 </c:if>
                                 <c:if test="${sessionScope.account != null}">
-                            <li>
+                            <li>      
                                 <%
-                                    HttpSession session2 = request.getSession();
-                                    User user = (User) session2.getAttribute("account");
-                                    int userID = user.getUserID();
-                                    DAOCart dao = new DAOCart();
-                                    
-                                    ResultSet rs1 = dao.getData("SELECT count(*) as count FROM Cart AS c JOIN Product AS p ON c.ProductID = p.ProductID where userID = "+userID+"");
-                                    while(rs1.next()){
+                                HttpSession session2 = request.getSession();
+                                User user = (User) session2.getAttribute("account");
+                                int userID = user.getUserID();
+                                DAOCart dao = new DAOCart();
+                                ResultSet rs = dao.getData("SELECT count(*) as count FROM Cart AS c JOIN Product AS p ON c.ProductID = p.ProductID where userID = "+userID+"");
+                                while(rs.next()){
                                 %>
-                                <span class="count-cart" style="position: absolute;
+                                <span class="count-cart" id="countCart" style="position: absolute;
                                       margin-left: 17px;
                                       background-color: #ff0000;
                                       color: #ffffff;
                                       border-radius: 50%;
-                                      padding: 0px 4px;
-                                      font-size: 15px;
+                                      padding: 0px 5px;
+                                      font-size: 13px;
                                       z-index: 9;
                                       top: 11px;
-                                      left: 3px;"><%=rs1.getInt(1)%></span>
-                                <%
-                                    }
-                                %>
+                                      left: 3px;"><%=rs.getInt(1)%></span>
+                                <%}%>
                                 <a href="CartURL" title="Giỏ hàng của tôi"><i class="fa-solid fa-cart-shopping"></i></a>
                             </li>
                         </c:if>
@@ -302,6 +303,7 @@
                 alert('Đăng nhập để xem giỏ hàng của bạn');
             }
         </script>
+        <!-- comment end-->
         <div class="mainPage">
             <div>
                 <div class="shop__sidebar__search">
@@ -315,8 +317,8 @@
                     <div class="row" style="display: contents">
                         <%
                             DAOProduct dao = new DAOProduct();
-                            ResultSet rsHotPro = dao.getData("select * from Product as p join ProductImage as pi on p.ProductID = pi.ProductID where  pi.ProductURL like '%_1%'\n"
-                            +"group by p.ProductID having min(p.TotalStock - p.UnitInStock) > 0");
+                            ResultSet rsHotPro = dao.getData("select * from Product as p join ProductImage as pi on p.ProductID = pi.ProductID where  pi.ProductURL = pi.ProductURLShow \n"
+                                               +  "group by p.ProductID having min(p.TotalStock - p.UnitInStock) >0 order by (p.TotalStock - p.UnitInStock) desc limit 1");
                         if(rsHotPro.next()) {
                         %>
                         <div class="product__item" style="border: 1px solid #c1e8c1ba;
@@ -454,7 +456,7 @@
                                         </div>
                                         <% } else { %>
                                         <div class="item">
-                                            <img src="<%=listUrls.get(i)%>" class="img-responsive" alt style="height: 253px;width: 253px;margin-left: 48px;"/>
+                                            <img src="<%=listUrls.get(i)%>" class="img-responsive" alt style="height: 335px;width: 253px;margin-left: 48px;"/>
                                         </div>
                                         <%}}%>
                                     </div>
@@ -465,17 +467,10 @@
                             <div class="row">
                                 <div style="text-align: center;margin-top: 23px;">
                                     <form class="frm">
-                                        <div style="display: flex;width: 368px;height: 48px;margin-left: 20px;
-                                             margin-top: -20px;">
-                                            <div style="margin: 4px 10px -3px 0px;font-size: 15px;">Số lượng</div>
-                                            <div>
-                                                <div class="value-button" id="decrease" onclick="decreaseValue()" value="Decrease Value"><i class="fa-solid fa-minus" style="font-size: 14px;"></i></div>
-                                                <input type="number" id="number" value="1" min="1" />
-                                                <div class="value-button" style="flex: 0 0 70%" id="increase" onclick="increaseValue()" value="Increase Value"><i class="fa-solid fa-plus" style="font-size: 14px;"></i></div>
-                                            </div>
-                                            <div style="    font-size: 15px;margin: 5px 0px -10px 10px;">Còn lại trong kho: <%=newPro.getUnitInStock()%></div>
-                                        </div>
-                                        <button type="submit" class="btn btn-success btn-lg" style="padding: 4px 11px;border-radius: 2px;margin-left: 4px;margin-bottom: 1px;">Mua ngay</button>
+                                        <div class="value-button" id="decrease" onclick="decreaseValue()" value="Decrease Value"><i class="fa-solid fa-minus" style="font-size: 14px;"></i></div>
+                                        <input type="number" id="number" value="0" />
+                                        <div class="value-button" id="increase" onclick="increaseValue()" value="Increase Value"><i class="fa-solid fa-plus" style="font-size: 14px;"></i></div><br/>
+                                        <button type="submit" class="btn btn-success btn-lg" style="padding: 4px 11px;">Mua ngay</button>
                                     </form>
                                 </div>
                             </div>
@@ -573,7 +568,7 @@
                                                     </div>
                                                     <br/>
                                                     <span><%=rsFeedBack.getString(4)%></span>
-                                                    <ul class="list-inline font-xs" style="margin-bottom: 30px;">
+                                                    <ul class="list-inline font-xs" style="margin-bottom: 50px;">
                                                         <li style="float:left">
                                                             <small class="text-muted pull-right ultra-light"><%=rsFeedBack.getString(5)%> </small>
                                                         </li>
@@ -594,19 +589,20 @@
         <script src="https://code.jquery.com/jquery-1.10.2.min.js"></script>
         <script src="https://netdna.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
         <script type="text/javascript">
-                                                    function increaseValue() {
-                                                        var value = parseInt(document.getElementById('number').value, 10);
-                                                        value = isNaN(value) ? 0 : value;
-                                                        value++;
-                                                        document.getElementById('number').value = value;
-                                                    }
+                                            function increaseValue() {
+                                                var value = parseInt(document.getElementById('number').value, 10);
+                                                value = isNaN(value) ? 0 : value;
+                                                value++;
+                                                document.getElementById('number').value = value;
+                                            }
 
-                                                    function decreaseValue() {
-                                                        var value = parseInt(document.getElementById('number').value, 10);
-                                                        value = isNaN(value) ? 0 : value;
-                                                        value <= 1 ? value = 1 : value--;
-                                                        document.getElementById('number').value = value;
-                                                    }
+                                            function decreaseValue() {
+                                                var value = parseInt(document.getElementById('number').value, 10);
+                                                value = isNaN(value) ? 0 : value;
+                                                value < 1 ? value = 1 : '';
+                                                value--;
+                                                document.getElementById('number').value = value;
+                                            }
         </script>
     </body>
 </html>

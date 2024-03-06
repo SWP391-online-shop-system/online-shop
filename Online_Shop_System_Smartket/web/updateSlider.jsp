@@ -1,15 +1,7 @@
-<%-- 
-    Document   : marketing_dashboard
-    Created on : Feb 1, 2024, 10:24:26 AM
-    Author     : admin
---%>
-
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@page import="java.sql.ResultSet"%>
 <%@page import="java.text.SimpleDateFormat"%>
 <%@page import="java.util.Date"%>
-<%@ page import="java.text.NumberFormat" %>
-<%@ page import="java.util.Locale" %>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page import="view.*" %>
 <%@page import="model.*" %>
@@ -26,7 +18,7 @@
         <meta name="description" content="">
         <meta name="author" content="">
         <link href="images/logo/logo.png" rel="icon">
-        <title>Trang marketing</title>
+        <title>Slider add</title>
         <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
         <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css">
         <link href="css/css_marketing_dashboard/marketing_dashboard_style.css" rel="stylesheet">
@@ -34,22 +26,25 @@
 
     </head>
     <%
-    ResultSet rs = (ResultSet)request.getAttribute("data");
+        Product product = (Product)request.getAttribute("product");
     %>
-    <div class="container">
-        <% String message = (String)request.getParameter("message"); %>
-        <% if (message != null && !message.isEmpty()) { %>
-        <div class="alert alert-info" role="alert">
-            <%= message %>
-        </div>
-        <% } %>
-        <!-- Form content -->
-    </div>
+    <script>
+        function validateForm() {
+            var unitInStock = parseInt(document.getElementById("unitInStock").value);
+            var totalStock = parseInt(document.getElementById("totalStock").value);
+
+            if (unitInStock > totalStock) {
+                alert("Hàng trong kho không thể lớn hơn Tổng số sản phẩm.");
+                return false;
+            }
+            return true;
+        }
+    </script>
     <body id="page-top">
         <div id="wrapper">
             <!-- Sidebar -->
             <ul class="navbar-nav sidebar sidebar-light accordion" id="accordionSidebar">
-                <a class="sidebar-brand d-flex align-items-center justify-content-center" href="index.html">
+                <a class="sidebar-brand d-flex align-items-center justify-content-center" href="http://localhost:8080/Smartket/HomePageURL">
                     <div class="sidebar-brand-icon">
                         <img style="height: 91px;
                              width: 133px;
@@ -99,7 +94,7 @@
                 <div id="content">
                     <!-- TopBar -->
                     <nav class="navbar navbar-expand navbar-light bg-navbar topbar mb-4 static-top">
-                        <div style="font-weight: 700;color: white;font-size: 37px;letter-spacing: 2px;font-family: Nunito,-apple-system,BlinkMacSystemFont"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol","Noto Color Emoji";">Trang marketing</div>
+                        <div style="font-weight: 700;color: white;font-size: 37px;letter-spacing: 2px;font-family: Nunito,-apple-system,BlinkMacSystemFont"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol","Noto Color Emoji";">Slider</div>
                         <ul class="navbar-nav ml-auto">
                             <div class="topbar-divider d-none d-sm-block"></div>
                             <li class="nav-item dropdown no-arrow">
@@ -127,107 +122,58 @@
                     <!-- Container Fluid-->
                     <div class="container-fluid" id="container-wrapper">
                         <div class="d-sm-flex align-items-center justify-content-between mb-4">
-                            <h1 class="h3 mb-0 text-gray-800">Danh sách sản phẩm</h1>
+                            <h1 class="h3 mb-0 text-gray-800">Slider Detail</h1>
                             <ol class="breadcrumb">
-                                <li class="breadcrumb-item"><a href="./">Trang chủ</a></li>
+                                <li class="breadcrumb-item"><a href="http://localhost:8080/Smartket/HomePageURL">Home</a></li>
                                 <!--<li class="breadcrumb-item">Tables</li>-->
-                                <li class="breadcrumb-item active" aria-current="page">Danh sách sản phẩm</li>
+                                <li class="breadcrumb-item active" aria-current="page">Slider Detail</li>
                             </ol>
                         </div>
-                        <!-- Row -->
-                        <a href="addProductmkt.jsp" class="btn btn-secondary">Thêm sản phẩm mới</a>
                         <div class="row">
                             <!-- DataTable with Hover -->
                             <div class="col-lg-12">
                                 <div class="card mb-4">
                                     <div class="table-responsive p-3">
-                                        <table class="table align-items-center table-flush table-hover" id="dataTableHover">
-                                            <div style="display: flex;
-                                                 margin-left: 200px;
-                                                 margin-bottom: -30px;">
-                                                <form action="mktProductListURL" method="get" id="categoryForm">
-                                                    <div class="filter-group" style="display:flex;">
-                                                        <div style="padding-top: 3px;">Loại</div>
-                                                        <select class="form-control" name="categoryId" onchange="this.form.submit()">
-                                                            <option value="">Tất cả</option>
-                                                            <c:forEach var="category" items="${categories}">
-                                                                <option value="${category.categoryID}"<c:if test="${category.categoryID eq param.categoryId}">selected
-                                                                        </c:if>
-                                                                        >${category.categoryName}</option>
-                                                            </c:forEach>							
-                                                        </select>
-                                                    </div>
-                                                    <div class="filter-group" style="display:flex;">
-                                                        <div style="padding-top: 3px;">Trạng thái</div>
-                                                        <select class="form-control" name="status" onchange="this.form.submit()">
-                                                            <option value="">Tất cả</option>
-                                                            <option value="Còn hàng" <c:if test="${fn:contains(param.status,'Còn')}">selected</c:if>>Còn hàng</option>
-                                                            <option value="Hết hàng" <c:if test="${fn:contains(param.status,'Hết')}">selected</c:if>>Hết hàng</option>
-                                                            </select>
-                                                        </div>
-                                                        <input type="submit" style="display: none;">
-                                                    </form>
-                                                </div>
+                                        <form action="AddSlider" method="post" enctype='multipart/form-data' onsubmit="return validateForm()">
+                                            <table class="table align-items-center table-flush table-hover" id="dataTableHover">
                                                 <thead class="thead-light">
                                                     <tr>
-                                                        <th>ID</th>
-                                                        <th>Ảnh</th>
-                                                        <th>Tiêu đề</th>
-                                                        <th>Loại</th>
-                                                        <th>Giá</th>
-                                                        <th>Trạng thái</th>						
-                                                        <th>Hành động</th>
+                                                        <th>Mã Slider</th>
+                                                        <th>Mã nhân viên</th>
+                                                        <th>Slider</th>
+                                                        <th>SliderLink</th>
+                                                        <th>Ngày tạo</th>
+                                                        <th>Trạng thái</th>	
                                                     </tr>
                                                 </thead>
-                                                <tfoot>
-                                                    <tr>
-                                                        <th>ID</th>
-                                                        <th>Ảnh</th>
-                                                        <th>Tiêu đề</th>
-                                                        <th>Loại</th>
-                                                        <th>Giá</th>
-                                                        <th style="width:87px; padding-left: 20px;">Trạng thái</th>						
-                                                        <th>Hành động</th>
-                                                    </tr>
-                                                </tfoot>
                                                 <tbody>
-                                                    <!-- Iterate over the result set -->
-                                                <% try {
-                                                    while(rs.next()) {
-                                                        int unitInStock = rs.getInt("UnitInStock");
-                                                        int totalStock = rs.getInt("TotalStock");
-                                                        String status = (unitInStock > 0 && unitInStock <= totalStock) ? "Còn Hàng" : "Hết Hàng";
-                                                %>
-                                                <tr>
-                                                    <td><%=rs.getInt("ProductID")%></td>
-                                                    <td><img style="width: 100px" src="<%=rs.getString("ProductURLShow")%>"/></td>
-                                                    <td><%=rs.getString("ProductName")%></td>
-                                                    <td><%=rs.getString("CategoryName")%></td>
-                                                    <td><%= NumberFormat.getCurrencyInstance(new Locale("vi", "VN")).format(rs.getDouble("UnitPrice")) %></td>
-                                                    <td><%= status %></td>
-                                                    <td>
-                                                        <div class="dropdown">
-                                                            <button class="btn btn-secondary btn-sm dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                                                Hành động
-                                                            </button>
-                                                            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                                                <a class="dropdown-item" href="mktViewProductURL?productId=<%= rs.getInt("ProductID") %>">Xem</a>
-                                                                <a class="dropdown-item" href="EditProductmktURL?productId=<%= rs.getInt("ProductID") %>">Chỉnh sửa</a>
-                                                            </div>
-                                                        </div>
-                                                    </td>
+                                                    <tr> <%
+                                                        DAOProduct dao = new DAOProduct();
+                                                        ResultSet rsPro = dao.getData("select * from slider where sliderID ="+${update});
+                                                        if(rsPro.next()) {%>
+                                                <input type="hidden" name ="sliderID2" value="<%=rsPro.getInt(1) + 1%>">
+                                                <%}%>
+                                                <td><%=rsPro.getInt(1)%></td>
+                                                <input type="hidden" name ="userID1" value="<%=rsPro.getInt(1)%>">
+                                                <td><%=rsPro.getInt(2)%></td>
+                                                <td><input name="sliderImage2" type= "file"> <br>
+                                                    <button type="submit">Tải lên</button></td>
+                                                <td><textarea name="sliderLink2"><%=rsPro.getString(4)%></textarea></td>
+                                                <input type="hidden" name ="createDate2" value="<%=rsPro.getString(4)%>">
+                                                <td><%=rsPro.getString(5)%></td>
+                                                <td><input type="radio" name="sliderStatus2" value="true" > hiện <br>
+                                                    <input type="radio" name="sliderStatus2" value="false" checked> ẩn
+                                                </td>
                                                 </tr>
-                                                <% }
-                                                   } catch (SQLException ex) {
-                                                   }
-                                                %>
-                                            </tbody>
-                                        </table>
+                                                </tbody>
+                                            </table>
+                                            <input type="submit" name="submit" value="Add Slider">
+                                            <input type="reset" value="Clear">
+                                        </form>
                                     </div>
                                 </div>
                             </div>
                         </div>
-
                         <!-- Modal Logout -->
                         <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabelLogout"
                              aria-hidden="true">
@@ -289,19 +235,11 @@
         <script src="js_marketing/demo/chart-area-demo.js"></script>  
         <script src="vendor/datatables/jquery.dataTables.min.js"></script>
         <script src="vendor/datatables/dataTables.bootstrap4.min.js"></script>
-
-        <!-- Page level custom scripts -->
         <script>
-                                                            $(document).ready(function () {
-                                                                $('#dataTable').DataTable(); // ID From dataTable 
-                                                                $('#dataTableHover').DataTable(); // ID From dataTable with Hover
-                                                            });
-        </script>
-        <script>
-            function submitForm() {
-                document.getElementById('filterForm').submit();
-            }
+                                            $(document).ready(function () {
+                                                $('#dataTable').DataTable(); // ID From dataTable 
+                                                $('#dataTableHover').DataTable(); // ID From dataTable with Hover
+                                            });
         </script>
     </body>
-
 </html>

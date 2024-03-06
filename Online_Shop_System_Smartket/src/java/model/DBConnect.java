@@ -19,7 +19,6 @@ public class DBConnect {
             Class.forName("com.mysql.cj.jdbc.Driver");
             //connect
             conn = DriverManager.getConnection(url, user, pass);
-            System.out.println("connected");
         } catch (ClassNotFoundException | SQLException ex) {
             Logger.getLogger(DBConnect.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -41,6 +40,15 @@ public class DBConnect {
 
         }
         return rs;
+    }
+
+    public void executeSQL(String sql) {
+        try {
+            Statement state = conn.createStatement();
+            state.executeUpdate(sql);
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
     }
 
     /**
@@ -66,7 +74,9 @@ public class DBConnect {
         }
     }
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws SQLException {
+        DBConnect dao = new DBConnect();
+
 
     }
 }

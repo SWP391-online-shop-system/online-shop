@@ -7,13 +7,15 @@
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto|Varela+Round">
-        <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
-        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
-        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
-        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-        <link href="css/manager.css" rel="stylesheet" type="text/css"/>
+        <title>Thông tin bài viết</title>
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
+        <script src="https://kit.fontawesome.com/ac74b86ade.js" crossorigin="anonymous"></script>
+        <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+        <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css">
+        <link href="css/css_marketing_dashboard/marketing_dashboard_style.css" rel="stylesheet">
+        <link href="vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">
+        <link rel="shortcut icon" href="images/logo/logo.png" type="image/png">
+        
         <style>
             img{
                 width: 200px;
@@ -21,18 +23,93 @@
             }
         </style>
     <body>
-        <div class="container">
-            <div class="table-wrapper">
-                <div class="table-title">
-                    <div class="row">
-                        <div class="col-sm-6">
-                            <h2>Thông tin<b>Bài đăng</b></h2>
-                        </div>
-                        <div class="col-sm-6">
-                        </div>
+        <div id="wrapper">
+            <!-- Sidebar -->
+           <ul class="navbar-nav sidebar sidebar-light accordion" id="accordionSidebar">
+                <a class="sidebar-brand d-flex align-items-center justify-content-center" href="MarketingDashBoardURL">
+                    <div class="sidebar-brand-icon">
+                        <img style="height: 91px;
+                             width: 133px;
+                             margin-bottom: -18px;" src="images/logo/logo.png">
                     </div>
+                </a>
+                <div style="position: sticky; top: 30px;">
+                    <hr class="sidebar-divider wee-0" style="margin: 0px;">
+                    <li class="nav-item active">
+                        <a class="nav-link" href="MarketingDashBoardURL">
+                            <i class="fas fa-fw fa-tachometer-alt"></i>
+                            <span>Thống kê</span></a>
+                    </li>
+                    <hr class="sidebar-divider">
+                    <div class="sidebar-heading">
+                        Quản lí
+                    </div>
+                    <li class="nav-item">
+                        <a class="nav-link" href="mtkPost">
+                            <i class="fas fa-calendar fa-2x text-primary"></i>
+                            <span>Bài đăng</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="mktProductListURL">
+                            <i class="fas fa-shopping-cart fa-2x text-success"></i>
+                            <span>Sản phẩm</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="customerlist">
+                            <i class="fas fa-users fa-2x text-info"></i>
+                            <span>Khách hàng</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="FeedBackListURL">
+                            <i class="fas fa-comments fa-2x text-info"></i>
+                            <span>Phản hồi</span>
+                        </a>
+                    </li>
+                    <hr class="sidebar-divider">
                 </div>
-            </div>
+            </ul>
+            <!-- Sidebar -->
+            <div id="content-wrapper" class="d-flex flex-column">
+                <div id="content">
+                    <!-- TopBar -->
+                    <nav class="navbar navbar-expand navbar-light bg-navbar topbar mb-4 static-top">
+                        <div style="font-weight: 700;color: white;font-size: 37px;letter-spacing: 2px;font-family: Nunito,-apple-system,BlinkMacSystemFont"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol","Noto Color Emoji";">Trang marketing</div>
+                        <ul class="navbar-nav ml-auto">
+                            <div class="topbar-divider d-none d-sm-block"></div>
+                            <li class="nav-item dropdown no-arrow">
+                                <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown"
+                                   aria-haspopup="true" aria-expanded="false">
+                                    <img class="img-profile rounded-circle" src="images/user/${sessionScope.account.userImage}" style="max-width: 60px">
+                                    <span class="ml-2 d-none d-lg-inline text-white small">${sessionScope.account.firstName}&nbsp;${sessionScope.account.lastName}</span>
+                                </a>
+                                <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="userDropdown">
+                                    <a class="dropdown-item" href="#">
+                                        <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
+                                        Hồ sơ
+                                    </a>
+                                    <div class="dropdown-divider"></div>
+                                    <a class="dropdown-item" href="logout">
+                                        <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
+                                        Đăng xuất
+                                    </a>
+                                </div>
+                            </li>
+                        </ul>
+                    </nav>
+                    <!-- Topbar -->
+
+                    <!-- Container Fluid-->
+                    <div class="container-fluid" id="container-wrapper">
+                        <div class="d-sm-flex align-items-center justify-content-between mb-4">
+                            <h1 class="h3 mb-0 text-gray-800">Thông tin bài biết</h1>
+                            <ol class="breadcrumb">
+                                <li class="breadcrumb-item"><a href="./">Trang Chủ</a></li>
+                                <li class="breadcrumb-item active">Thông tin bài biết</li>
+                            </ol>
+                        </div>
             <div id="editEmployeeModal">
                 <div class="modal-dialog">
                     <div class="modal-content">
@@ -84,6 +161,10 @@
                                     <label>Ngày đăng</label>
                                     <input value="${blog.createTime}" name="date" type="datetime" class="form-control"readonly required>
                                 </div>
+                                <div class="modal-footer">
+                                <input type="button" class="btn btn-danger" value="Quay lại trang quản lí" onclick="window.location.href='mtkPost';">
+                                <input type="button" class="btn btn-success" value="Cập nhật lại" onclick="window.location.href='editPost?BlogID=${blog.blogID}';">
+                            </div>
                             </div>
                         </form>
                     </div>

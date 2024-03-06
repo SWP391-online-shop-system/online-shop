@@ -1567,3 +1567,12 @@ body.sidebar-toggled footer.sticky-footer{
 .form-element input{
     flex: 40%;
 }
+.buttonsubmit-update{
+    margin-top: 5px;
+    border: none;
+    background: #7eb47e;
+    color: white;
+    float: left;
+    font-size: 13px;
+    border-radius: 2px;
+}

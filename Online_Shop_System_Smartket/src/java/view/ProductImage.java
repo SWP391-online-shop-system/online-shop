@@ -22,7 +22,7 @@ public class ProductImage {
         this.ProductURL = ProductURL;
         this.ProductURLShow = ProductURLShow;
     }
-    
+
     public ProductImage(int ProductID, String ProductURL) {
         this.ProductID = ProductID;
         this.ProductURL = ProductURL;
