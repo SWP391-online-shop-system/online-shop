@@ -9,13 +9,14 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <title>Sửa bài viết</title>
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
+        <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
         <script src="https://kit.fontawesome.com/ac74b86ade.js" crossorigin="anonymous"></script>
         <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
         <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css">
         <link href="css/css_marketing_dashboard/marketing_dashboard_style.css" rel="stylesheet">
         <link href="vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">
         <link rel="shortcut icon" href="images/logo/logo.png" type="image/png">
-        
+
         <style>
             img{
                 width: 200px;
@@ -110,92 +111,112 @@
                                 <li class="breadcrumb-item active">Chỉnh sửa bài viết</li>
                             </ol>
                         </div>
-            <div id="editEmployeeModal">
-                <div class="modal-dialog">
-                    <div class="modal-content">
-                        <form action="editPost" method="post" enctype="multipart/form-data">
-                            <input type="hidden" name="service" value="upload"/>
-                            <div class="modal-body">					
-                                <div class="form-group">
-                                    <label>ID</label>
-                                    <input value="${blog.blogID}" name="BlogID" type="text" class="form-control" readonly required>
-                                </div>
-                                <div class="form-group">
-                                    <label>Danh mục</label>
-                                    <select class="form-control" name="categoryId">
-                                        <c:forEach var="category" items="${category}">
-                                            <option value="${category.categoryID}" ${category.categoryID eq blog.categoryID ? 'selected' : ''}>${category.categoryName}</option>
-                                        </c:forEach>
-                                    </select>
-                                </div>
-                                <div class="form-group">
-                                    <label>Tác giả</label>
-                                    <input value="${blog.blogAuthor}" name="author" type="text" class="form-control" required>
-                                </div>
-                                <div class="form-group">
-                                    <label>Ảnh tác giả</label>
-                                    <img id="author-image" style="width: 350px;height: 200px;padding-left: 56px;padding-bottom: 15px" src="images/blog_author/${blog.authorImage}" alt="Ảnh tác giả">
-                                    <input value="${blog.authorImage}"  type="file" 
-                                           class="form-control" name="authorImg" placeholder="Enter photo" id="author-img-input">
-                                </div>
-                                <div class="form-group">
-                                    <label>Ảnh bài đăng</label>
-                                    <img  id="blog-image" style="width: 350px;height: 200px;padding-left: 45px;padding-bottom: 15px;padding-right: 12px"src="images/blog/${blog.blogImage}" alt="Ảnh bài đăng">
-                                    <input value="${blog.blogImage}"type="file" 
-                                           class="form-control" name="blogImg" placeholder="Enter photo" id="blog-img-input">
-                                </div>
-                                <div class="form-group">
-                                    <label>Tiêu đề</label>
-                                    <input value="${blog.blogTitle}" name="title" type="text" class="form-control" required>
-                                </div>
-                                <div class="form-group">
-                                    <label>Nội dung</label>
-                                    <textarea name="content" class="form-control" required>${blog.blogContent}</textarea>
-                                </div>
-                                <div class="form-group">
-                                    <label>Đánh Giá</label>
-                                    <input value="${blog.blogRate} sao" name="rate" type="text" class="form-control" readonly required>
-                                </div>
-                                <div class="form-group">
-                                    <label>Trạng thái</label>
-                                    <select name="hidden" class="form-select" aria-label="Default select example">
-                                        <option value="1" ${blog.hiddenStatus eq 1 ? 'selected' : ''}>Hiện</option>
-                                        <option value="0" ${blog.hiddenStatus eq 0 ? 'selected' : ''}>Ẩn</option>
-                                    </select>
-                                </div>
-                                <div class="form-group">
-                                    <label>Ngày đăng</label>
-                                    <input value="${blog.createTime.substring(0,10)}" name="date" type="date" class="form-control" required>
+                        <div id="editEmployeeModal">
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+                                    <form id="myForm" action="editPost" method="post" enctype="multipart/form-data">
+                                        <input type="hidden" name="service" value="upload"/>
+                                        <div class="modal-body">					
+                                            <div class="form-group">
+                                                <label>ID</label>
+                                                <input value="${blog.blogID}" name="BlogID" type="text" class="form-control" readonly required>
+                                            </div>
+                                            <div class="form-group">
+                                                <label>Danh mục</label>
+                                                <select class="form-control" name="categoryId">
+                                                    <c:forEach var="category" items="${category}">
+                                                        <option value="${category.categoryID}" ${category.categoryID eq blog.categoryID ? 'selected' : ''}>${category.categoryName}</option>
+                                                    </c:forEach>
+                                                </select>
+                                            </div>
+                                            <div class="form-group">
+                                                <label>Tác giả</label>
+                                                <input value="${blog.blogAuthor}" name="author" type="text" class="form-control" required>
+                                            </div>
+                                            <div class="form-group">
+                                                <label>Ảnh tác giả</label>
+                                                <img id="author-image" style="width: 350px;height: 200px;padding-left: 56px;padding-bottom: 15px" src="images/blog_author/${blog.authorImage}" alt="Ảnh tác giả">
+                                                <input value="${blog.authorImage}"  type="file" 
+                                                       class="form-control" name="authorImg" placeholder="Enter photo" id="author-img-input">
+                                            </div>
+                                            <div class="form-group">
+                                                <label>Ảnh bài đăng</label>
+                                                <img  id="blog-image" style="width: 350px;height: 200px;padding-left: 45px;padding-bottom: 15px;padding-right: 12px"src="images/blog/${blog.blogImage}" alt="Ảnh bài đăng">
+                                                <input value="${blog.blogImage}"type="file" 
+                                                       class="form-control" name="blogImg" placeholder="Enter photo" id="blog-img-input">
+                                            </div>
+                                            <div class="form-group">
+                                                <label>Tiêu đề</label>
+                                                <input value="${blog.blogTitle}" name="title" type="text" class="form-control" required>
+                                            </div>
+                                            <div class="form-group">
+                                                <label>Nội dung</label>
+                                                <textarea name="content" class="form-control" required>${blog.blogContent}</textarea>
+                                            </div>
+                                            <div class="form-group">
+                                                <label>Đánh Giá</label>
+                                                <input value="${blog.blogRate} sao" name="rate" type="text" class="form-control" readonly required>
+                                            </div>
+                                            <div class="form-group">
+                                                <label>Trạng thái</label>
+                                                <select name="hidden" class="form-select" aria-label="Default select example">
+                                                    <option value="1" ${blog.hiddenStatus eq 1 ? 'selected' : ''}>Hiện</option>
+                                                    <option value="0" ${blog.hiddenStatus eq 0 ? 'selected' : ''}>Ẩn</option>
+                                                </select>
+                                            </div>
+                                            <div class="form-group">
+                                                <label>Ngày đăng</label>
+                                                <input value="${blog.createTime.substring(0,10)}" name="date" type="date" class="form-control" required>
+                                            </div>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <input type="button" class="btn btn-danger" value="Quay lại" onclick="window.location.href = 'mtkPost';">
+                                            <input type="submit" class="btn btn-success" value="Cập nhật">
+                                        </div>
+
+                                    </form>
                                 </div>
                             </div>
-                            <div class="modal-footer">
-                                <input type="button" class="btn btn-danger" value="Quay lại" onclick="window.location.href='mtkPost';">
-                                <input type="submit" class="btn btn-success" value="Cập nhật">
-                            </div>
-                                
-                        </form>
+                        </div>
+
                     </div>
-                </div>
-            </div>
+                    <script>
+                        document.getElementById('author-img-input').addEventListener('change', function (e) {
+                            var reader = new FileReader();
+                            reader.onload = function (event) {
+                                document.getElementById('author-image').src = event.target.result;
+                            };
+                            reader.readAsDataURL(e.target.files[0]);
+                        });
 
-        </div>
-        <script>
-            document.getElementById('author-img-input').addEventListener('change', function (e) {
-                var reader = new FileReader();
-                reader.onload = function (event) {
-                    document.getElementById('author-image').src = event.target.result;
-                };
-                reader.readAsDataURL(e.target.files[0]);
-            });
+                        document.getElementById('blog-img-input').addEventListener('change', function (e) {
+                            var reader = new FileReader();
+                            reader.onload = function (event) {
+                                document.getElementById('blog-image').src = event.target.result;
+                            };
+                            reader.readAsDataURL(e.target.files[0]);
+                        });
+                        
+                        var form = document.getElementById("myForm");
 
-            document.getElementById('blog-img-input').addEventListener('change', function (e) {
-                var reader = new FileReader();
-                reader.onload = function (event) {
-                    document.getElementById('blog-image').src = event.target.result;
-                };
-                reader.readAsDataURL(e.target.files[0]);
-            });
-        </script>
-        <script src="js/manager.js" type="text/javascript"></script>
-    </body>
-</html>
+                        form.addEventListener("submit", function (event) {
+                            event.preventDefault(); // Ngăn chặn hành vi mặc định của biểu mẫu
+
+                            var textarea = form.querySelector('textarea[name="content"]');
+                            var contentLength = textarea.value.length;
+
+                            if (contentLength < 150) {
+                                Swal.fire({
+                                    icon: 'error',
+                                    title: 'Lỗi',
+                                    text: 'Nội dung phải có ít nhất 150 ký tự.'
+                                });
+                            } else {
+                                // Gửi biểu mẫu nếu điều kiện hợp lệ
+                                form.submit();
+                            }
+                        });
+                    </script>
+                    <script src="js/manager.js" type="text/javascript"></script>
+                    </body>
+                    </html>

@@ -50,12 +50,12 @@ public class ControlllerEditPost extends HttpServlet {
         String SBlogID = request.getParameter("BlogID");
         int BlogID = Integer.parseInt(SBlogID);
         Blog blog = dao.getBlogByID(BlogID);
+        List<Categories> categories = dao.getAllCategories();
         if (service == null) {
             service = "showDetail";
         }
         if (service.equals("showDetail")) {
 
-            List<Categories> categories = dao.getAllCategories();
             request.setAttribute("blog", blog);
             request.setAttribute("category", categories);
             request.getRequestDispatcher("EditPost.jsp").forward(request, response);
@@ -106,6 +106,7 @@ public class ControlllerEditPost extends HttpServlet {
             String BlogAuthor = request.getParameter("author");
             String BlogTitle = request.getParameter("title");
             String BlogContent = request.getParameter("content");
+
             String CreateTime = request.getParameter("date");
 //            String SBlogRate = request.getParameter("rate");
             String SHiddenStatus = request.getParameter("hidden");
@@ -113,7 +114,6 @@ public class ControlllerEditPost extends HttpServlet {
 //            int BlogRate = Integer.parseInt(SBlogRate);
             int HiddenStatus = Integer.parseInt(SHiddenStatus);
             dao.editBlog(CategoryID, BlogAuthor, authorImg, blogImg, BlogTitle, BlogContent, HiddenStatus, CreateTime, BlogID);
-            List<Categories> categories = dao.getAllCategories();
             request.setAttribute("blog", blog);
             request.setAttribute("category", categories);
             if (!(authorImg.equals(blog.getAuthorImage()) && blogImg.equals(blog.getBlogImage()))) {

@@ -197,8 +197,8 @@
                                                             <div style="padding-top: 3px;">Trạng thái</div>
                                                             <select class="form-control" name="status" onchange="this.form.submit()">
                                                                 <option value="">Tất cả</option>
-                                                                <option value="Ẩn" <c:if test="${fn:contains(param.status,'Vô hiệu hóa')}">selected</c:if>>Vô hiệu hóa</option>
-                                                                <option value="Hiện" <c:if test="${fn:contains(param.status,'Kích hoạt')}">selected</c:if>>Kích hoạt</option>
+                                                                <option value="Ẩn" <c:if test="${fn:contains(param.status,'Ẩn')}">selected</c:if>>Vô hiệu hóa</option>
+                                                                <option value="Hiện" <c:if test="${fn:contains(param.status,'Hiện')}">selected</c:if>>Kích hoạt</option>
                                                                 </select>
                                                             </div>
                                                             <input type="submit" style="display: none;">

@@ -31,8 +31,9 @@ import view.Categories;
         maxFileSize = 1024 * 1024 * 10, // 10 MB
         maxRequestSize = 1024 * 1024 * 100 // 100 MB
 )
-@WebServlet(name="ControllerAddPost", urlPatterns={"/addPost"})
+@WebServlet(name = "ControllerAddPost", urlPatterns = {"/addPost"})
 public class ControllerAddPost extends HttpServlet {
+
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -46,9 +47,8 @@ public class ControllerAddPost extends HttpServlet {
             throws ServletException, IOException {
         String service = request.getParameter("service");
         DAOBlog dao = new DAOBlog();
-        
+        List<Categories> categories = dao.getAllCategories();
         if (service.equals("addPost")) {
-            List<Categories> categories = dao.getAllCategories();
             request.setAttribute("category", categories);
             request.getRequestDispatcher("addPost.jsp").forward(request, response);
         }
@@ -87,13 +87,14 @@ public class ControllerAddPost extends HttpServlet {
             String SHiddenStatus = request.getParameter("hidden");
             int CategoryID = Integer.parseInt(SCategoryID);
             int HiddenStatus = Integer.parseInt(SHiddenStatus);
+
             dao.addBlog(BlogAuthor, CategoryID, authorImg, blogImg, BlogTitle, BlogContent, HiddenStatus);
-                try {
-                    Thread.sleep(5000);
-                } catch (InterruptedException ex) {
-                    Logger.getLogger(ControllerAddPost.class.getName()).log(Level.SEVERE, null, ex);
-                }
-            
+            try {
+                Thread.sleep(5000);
+            } catch (InterruptedException ex) {
+                Logger.getLogger(ControllerAddPost.class.getName()).log(Level.SEVERE, null, ex);
+            }
+
             response.sendRedirect("mtkPost");
         }
 
