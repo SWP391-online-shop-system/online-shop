@@ -50,17 +50,17 @@
         <div id="wrapper">
             <!-- Sidebar -->
             <ul class="navbar-nav sidebar sidebar-light accordion" id="accordionSidebar">
-                <a class="sidebar-brand d-flex align-items-center justify-content-center" href="index.html">
+                <a class="sidebar-brand d-flex align-items-center justify-content-center" href="marketingDashBoardURL">
                     <div class="sidebar-brand-icon">
                         <img style="height: 91px;
                              width: 133px;
-                             margin-bottom: -18px;" src="images/logo/logo.png">
+                             margin-bottom: -18px;z-index: 99;" src="images/logo/logo.png">
                     </div>
                 </a>
                 <div style="position: sticky; top: 30px;">
                     <hr class="sidebar-divider wee-0" style="margin: 0px;">
                     <li class="nav-item active">
-                        <a class="nav-link" href="index.html">
+                        <a class="nav-link" href="marketingDashBoardURL">
                             <i class="fas fa-fw fa-tachometer-alt"></i>
                             <span>Thống kê</span></a>
                     </li>
@@ -69,25 +69,25 @@
                         Quản lí
                     </div>
                     <li class="nav-item">
-                        <a class="nav-link" href="ui-colors.html">
+                        <a class="nav-link" href="marketingPost">
                             <i class="fas fa-calendar fa-2x text-primary"></i>
                             <span>Bài đăng</span>
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="ui-colors.html">
+                        <a class="nav-link" href="marketingProductListURL">
                             <i class="fas fa-shopping-cart fa-2x text-success"></i>
                             <span>Sản phẩm</span>
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="customerlist">
+                        <a class="nav-link" href="marketingCustomerlist">
                             <i class="fas fa-users fa-2x text-info"></i>
                             <span>Khách hàng</span>
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="ui-colors.html">
+                        <a class="nav-link" href="marketingFeedBackListURL">
                             <i class="fas fa-comments fa-2x text-info"></i>
                             <span>Phản hồi</span>
                         </a>
@@ -136,7 +136,7 @@
                         </div>
 
                         <!-- Row -->
-                        <form action="FeedBackListURL" method="get">
+                        <form action="marketingFeedBackListURL" method="get">
                             <button class="btn btn-primary mb-1" onclick="this.form.submit()"  style="color: white;position: absolute;
                                     top: 26%;
                                     left: 22%;z-index: 99">Quay lại</button>    
@@ -232,7 +232,7 @@
                                                 <div class="col-sm-3" style="min-width: 250px;margin-bottom: 5px;">
                                                     <p class="mb-0">Trạng thái: <span id="statusMess"><%=afterStatus==1?"Đã vô hiệu hóa":"Đang kích hoạt"%></span></p>
                                                 </div>
-                                                    <form class="col-sm-9" id="myForm" method="get" action="FeedBackDetailURL">
+                                                    <form class="col-sm-9" id="myForm" method="get" action="marketingFeedBackDetailURL">
                                                         <input type="hidden" id="statusInput" name="status" value="<%=fb.isFeedBackStatus()?"1":"0"%>">
                                                         <input type="hidden" name="FeedBackID" value="<%=fb.getFeedBackID()%>">
                                                         <input type="hidden" name="uid" value="<%=fb.getUserID()%>">
@@ -289,7 +289,7 @@
                                 }
 
                                 $.ajax({
-                                    url: "FeedBackDetailURL",
+                                    url: "marketingFeedBackDetailURL",
                                     type: 'GET',
                                     data: {service: service, status: (status === 0 ? 1 : 0), FeedBackID: FeedBackID, uid: uid},
                                     success: function (data) {

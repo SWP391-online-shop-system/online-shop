@@ -22,7 +22,7 @@ import view.User;
  *
  * @author trant
  */
-@WebServlet(name = "ControllerCustomerList", urlPatterns = {"/customerlist"})
+@WebServlet(name = "ControllerCustomerList", urlPatterns = {"/marketingCustomerlist"})
 public class ControllerCustomerList extends HttpServlet {
 
     /**
@@ -78,7 +78,7 @@ public class ControllerCustomerList extends HttpServlet {
                     }
                 }
                 session.setAttribute("message", message);
-                response.sendRedirect("customerlist");
+                response.sendRedirect("marketingCustomerlist");
             }
             if (service.equals("showDetail")) {
                 String cusID = request.getParameter("uid");

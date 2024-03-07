@@ -31,7 +31,7 @@ import view.Categories;
         maxFileSize = 1024 * 1024 * 10, // 10 MB
         maxRequestSize = 1024 * 1024 * 100 // 100 MB
 )
-@WebServlet(name = "ControlllerEditPost", urlPatterns = {"/editPost"})
+@WebServlet(name = "ControlllerEditPost", urlPatterns = {"/marketingEditPost"})
 public class ControlllerEditPost extends HttpServlet {
 
     /**
@@ -123,7 +123,7 @@ public class ControlllerEditPost extends HttpServlet {
                     Logger.getLogger(ControlllerEditPost.class.getName()).log(Level.SEVERE, null, ex);
                 }
             }
-            response.sendRedirect("view?BlogID=" + BlogID);
+            response.sendRedirect("marketingViewPost?BlogID=" + BlogID);
         }
 
     }

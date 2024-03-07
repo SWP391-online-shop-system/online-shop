@@ -19,7 +19,7 @@ import view.FeedBack;
  *
  * @author admin
  */
-@WebServlet(name = "ControllerFeedBackList", urlPatterns = {"/FeedBackListURL"})
+@WebServlet(name = "ControllerFeedBackList", urlPatterns = {"/marketingFeedBackListURL"})
 public class ControllerFeedBackList extends HttpServlet {
 
     /**

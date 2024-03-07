@@ -31,7 +31,7 @@ import view.Categories;
         maxFileSize = 1024 * 1024 * 10, // 10 MB
         maxRequestSize = 1024 * 1024 * 100 // 100 MB
 )
-@WebServlet(name = "ControllerAddPost", urlPatterns = {"/addPost"})
+@WebServlet(name = "ControllerAddPost", urlPatterns = {"/marketingAddPost"})
 public class ControllerAddPost extends HttpServlet {
 
     /**
@@ -95,7 +95,7 @@ public class ControllerAddPost extends HttpServlet {
                 Logger.getLogger(ControllerAddPost.class.getName()).log(Level.SEVERE, null, ex);
             }
 
-            response.sendRedirect("mtkPost");
+            response.sendRedirect("marketingPost");
         }
 
     }

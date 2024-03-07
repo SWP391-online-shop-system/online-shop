@@ -34,7 +34,7 @@ import view.ProductImage;
  *
  * @author HP
  */
-@WebServlet(name = "ControllerEditProductmkt", urlPatterns = {"/EditProductmktURL"})
+@WebServlet(name = "ControllerEditProductmkt", urlPatterns = {"/marketingEditProduct"})
 @MultipartConfig(
         fileSizeThreshold = 1024 * 1024 * 1, // 1 MB
         maxFileSize = 1024 * 1024 * 10, // 10 MB
@@ -135,7 +135,7 @@ public class ControllerEditProductmkt extends HttpServlet {
                 }
                 request.setAttribute("radioChoice", radioChoice);
                 String st = (n > 0) ? "Cập nhật sản phẩm thành công" : "Cập nhật sản phẩm thất bại";
-                response.sendRedirect("mktProductListURL?message=" + URLEncoder.encode(st, "UTF-8"));
+                response.sendRedirect("marketingProductListURL?message=" + URLEncoder.encode(st, "UTF-8"));
             }
             if (service.isEmpty()) {
                 int productId = Integer.parseInt(request.getParameter("productId"));

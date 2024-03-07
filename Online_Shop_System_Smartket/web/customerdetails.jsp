@@ -31,17 +31,17 @@
         <div id="wrapper">
             <!-- Sidebar -->
             <ul class="navbar-nav sidebar sidebar-light accordion" id="accordionSidebar">
-                <a class="sidebar-brand d-flex align-items-center justify-content-center" href="index.html">
+                <a class="sidebar-brand d-flex align-items-center justify-content-center" href="marketingDashBoardURL">
                     <div class="sidebar-brand-icon">
                         <img style="height: 91px;
                              width: 133px;
-                             margin-bottom: -18px;" src="images/logo/logo.png">
+                             margin-bottom: -18px;z-index: 99;" src="images/logo/logo.png">
                     </div>
                 </a>
                 <div style="position: sticky; top: 30px;">
                     <hr class="sidebar-divider wee-0" style="margin: 0px;">
                     <li class="nav-item active">
-                        <a class="nav-link" href="index.html">
+                        <a class="nav-link" href="marketingDashBoardURL">
                             <i class="fas fa-fw fa-tachometer-alt"></i>
                             <span>Thống kê</span></a>
                     </li>
@@ -50,25 +50,25 @@
                         Quản lí
                     </div>
                     <li class="nav-item">
-                        <a class="nav-link" href="ui-colors.html">
+                        <a class="nav-link" href="marketingPost">
                             <i class="fas fa-calendar fa-2x text-primary"></i>
                             <span>Bài đăng</span>
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="ui-colors.html">
+                        <a class="nav-link" href="marketingProductListURL">
                             <i class="fas fa-shopping-cart fa-2x text-success"></i>
                             <span>Sản phẩm</span>
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="customerlist">
+                        <a class="nav-link" href="marketingCustomerlist">
                             <i class="fas fa-users fa-2x text-info"></i>
                             <span>Khách hàng</span>
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="FeedBackListURL">
+                        <a class="nav-link" href="marketingFeedBackListURL">
                             <i class="fas fa-comments fa-2x text-info"></i>
                             <span>Phản hồi</span>
                         </a>
@@ -132,7 +132,7 @@
                                             </div>
                                             <p style="text-align: center">Mã Khách Hàng: <%=rs.getInt(1)%></p>
                                         </div>
-                                        <div style="margin-left: 25px; margin-top: -10px;"><a href="customerlist" style="color: white"><button class="btn btn-primary mb-1">Quay lại</button></a></div>
+                                        <div style="margin-left: 25px; margin-top: -10px;"><a href="marketingCustomerlist" style="color: white"><button class="btn btn-primary mb-1">Quay lại</button></a></div>
                                     </div>
                                     <div class="col-lg-8">
                                         <div class="card mb-4">
@@ -204,7 +204,7 @@
                                                     <div class="col-sm-4">
                                                         <p class="mb-0">Trạng thái</p>
                                                     </div>
-                                                    <form class="col-sm-8" id="myForm" method="get" action="customerDetail">
+                                                    <form class="col-sm-8" id="myForm" method="get" action="marketingCustomerDetail">
                                                         <input type="hidden" id="statusInput" name="status" value="<%=rs.getInt("UserStatus")%>">
                                                         <input type="hidden" id="uidStatus" name="uid" value="<%=rs.getInt("UserID")%>">
                                                         <div class="custom-control custom-switch" style="float: left;padding: 0;">
@@ -278,7 +278,7 @@
                 }
 
                 $.ajax({
-                    url: "customerDetail",
+                    url: "marketingCustomerDetail",
                     type: 'GET',
                     data: {status: status, uid: uid},
                     success: function (data) {

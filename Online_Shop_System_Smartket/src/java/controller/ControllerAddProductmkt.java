@@ -29,7 +29,7 @@ import view.Categories;
  *
  * @author HP
  */
-@WebServlet(name = "ControllerAddProductmkt", urlPatterns = {"/AddProductmktURL"})
+@WebServlet(name = "ControllerAddProductmkt", urlPatterns = {"/marketingAddProductmktURL"})
 @MultipartConfig(
         fileSizeThreshold = 1024 * 1024 * 1, // 1 MB
         maxFileSize = 1024 * 1024 * 10, // 10 MB
@@ -214,7 +214,7 @@ public class ControllerAddProductmkt extends HttpServlet {
             String st = (n > 0) ? "Thêm sản phẩm thành công" : "Thêm sản phẩm thất bại";
             Vector<Categories> categories = daoCategories.getCategories("SELECT * FROM categories");
             request.setAttribute("categories", categories);
-            response.sendRedirect("mktProductListURL?message=" + URLEncoder.encode(st, "UTF-8"));
+            response.sendRedirect("marketingProductListURL?message=" + URLEncoder.encode(st, "UTF-8"));
         }
     }
 
