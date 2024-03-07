@@ -14,6 +14,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import jakarta.servlet.http.Part;
+import java.io.File;
 import java.sql.ResultSet;
 import view.User;
 import model.DAOUser;
@@ -112,27 +113,30 @@ public class ControllerChangeuserinfo extends HttpServlet {
             int dotIndex = fileName.lastIndexOf(".");
             String result = newImageName + fileName.substring(dotIndex);
             String path = "images/user/" + result;
-            String realFileName = request.getServletContext().getRealPath(path);
+            String realFileName = getServletContext().getRealPath(path);
             String realFileName1 = realFileName.replace("\\build", "");
-            filePart.write(realFileName);
+            File file = new File(realFileName1);
+            file.delete();
+           // filePart.write(realFileName);
             filePart.write(realFileName1);
+            int n =0;
+            n= daoU.updateUserImage(UserID, result);
             use.setUserImage(result);
             session.setAttribute("account", use);
-            int n = daoU.updateUserImage(UserID, result);
             if (n > 0) {
                 mess = "Tải ảnh lên thành công";
             } else {
                 mess = null;
             }
             request.setAttribute("mess", mess);
-            try {
-                // Introduce a 1-second delay
-                Thread.sleep(5000); // 1000 milliseconds = 1 second
+              try {
+                //Introduce a 1-second delay
+                   Thread.sleep(2000); // 1000 milliseconds = 1 second
                 request.getRequestDispatcher("profileUser.jsp").forward(request, response);
-            } catch (InterruptedException e) {
+              } catch (InterruptedException e) {
                 // Handle any potential interruption exception
-                e.printStackTrace();
-            }
+                   e.printStackTrace();
+               }
         }
         if (service.equals("changepassword")) {
             String messa = "";
