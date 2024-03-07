@@ -5,6 +5,9 @@
         <group>
             <file>file:/D:/project_github/Online_Shop_System_Smartket/src/java/controller/ControllerOrderList.java</file>
             <file>file:/D:/project_github/Online_Shop_System_Smartket/web/OrderListSale.jsp</file>
+            <file>file:/D:/project_github/Online_Shop_System_Smartket/src/java/model/DAOOrder.java</file>
+            <file>file:/D:/project_github/Online_Shop_System_Smartket/web/OrderDetail.jsp</file>
+            <file>file:/D:/project_github/Online_Shop_System_Smartket/web/js_sale/orderlist.js</file>
         </group>
     </open-files>
 </project-private>

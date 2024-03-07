@@ -157,21 +157,34 @@
                                             <tbody>
                                                 <% try {
                                                     while(rs.next()) {
+                                                    boolean isEmployeeDisplayed = false;
                                                 %>
-                                                <tr onclick="Orderdetail(<%=rs.getInt("OrderID")%>)">
-                                                    <td><%=rs.getInt("OrderID")%></td>
-                                                    <td><%=rs.getString("FullName")%></td>
-                                                    <td><%=rs.getString("ProductName")%></td>
-                                                    <td><%=rs.getInt("Quantity")%></td>
-                                                    <td><%= df.format(rs.getDouble("TotalPrice")) %></td>
-                                                    <td><%=rs.getString("OrderDate")%></td>
-                                                    <td><%=rs.getString("SaleName")%></td>
-                                                    <td><%=rs.getString("StatusName")%></td>
-                                                </tr>
-                                                <% }
-                                                   } catch (SQLException ex) {
-                                                   }
-                                                %>
+                                            <form id="updateSaleForm" action="OrderListURL" method="post">
+                                                <input type="hidden" id="orderID" name="orderID" value="<%=rs.getInt("OrderID")%>"> 
+                                            </form>
+                                            <tr>
+                                                <td onclick="Orderdetail(<%=rs.getInt("OrderID")%>)"><%=rs.getInt("OrderID")%></td>
+                                                <td><%=rs.getString("FullName")%></td>
+                                                <td><%=rs.getString("ProductName")%></td>
+                                                <td><%=rs.getInt("Quantity")%></td>
+                                                <td><%= df.format(rs.getDouble("TotalPrice")) %></td>
+                                                <td><%=rs.getString("OrderDate")%></td>
+                                                <td>
+                                                    <select name="saleName" onchange="updateSale(this)">
+                                                        <option value="<%=rs.getString("SaleName")%>"><%=rs.getString("SaleName")%></option>
+                                                        <c:forEach var="user" items="${user}">
+                                                            <option value="${user.userID}">
+                                                                ${user.firstName} ${user.lastName}
+                                                            </option>
+                                                        </c:forEach>
+                                                    </select>
+                                                </td>
+                                                <td><%=rs.getString("StatusName")%></td>
+                                            </tr>
+                                            <% }
+                                               } catch (SQLException ex) {
+                                               }
+                                            %>
                                             </tbody>
                                         </table>
                                     </div>
@@ -241,13 +254,21 @@
         <script src="js_sale/orderlist.js"></script>
         <!-- Page level custom scripts -->
         <script>
-                                                            $(document).ready(function () {
-                                                                $('#dataTableHover').DataTable(); // ID From dataTable with Hover
-                                                            });
+                                                        $(document).ready(function () {
+                                                            $('#dataTableHover').DataTable(); // ID From dataTable with Hover
+                                                        });
         </script>
         <script>
             function submitForm() {
                 document.getElementById('filterForm').submit();
+            }
+        </script>
+        <script>
+            function updateSale(selectElement) {
+                document.getElementById("orderID").value = orderID;
+            }
+            function selectOrder(orderID) {
+                document.getElementById("orderID").value = orderID;
             }
         </script>
     </body>

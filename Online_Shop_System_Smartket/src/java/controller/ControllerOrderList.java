@@ -117,6 +117,10 @@ public class ControllerOrderList extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        String newSaleUserID = request.getParameter("saleName"); 
+        String orderID = request.getParameter("orderID"); 
+        DAOOrder dao = new DAOOrder();
+        dao.UpdateSaleID(Integer.parseInt(orderID), Integer.parseInt(newSaleUserID));
         processRequest(request, response);
     }
 

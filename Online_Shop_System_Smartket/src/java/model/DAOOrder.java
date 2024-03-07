@@ -97,4 +97,20 @@ public class DAOOrder extends DBConnect {
         return vector;
     }
 
+    public int UpdateSaleID(int sID, int orderID) {
+        int n = 0;
+        String sql = "UPDATE `online_shop_system`.`order`\n"
+                + "SET\n"
+                + "`SaleID` = ?\n"
+                + "WHERE `OrderID` = ?;";
+        try {
+            PreparedStatement pre = conn.prepareStatement(sql);
+            pre.setInt(1, sID);
+            pre.setInt(2, orderID);
+            n = pre.executeUpdate();
+        } catch (SQLException ex) {
+            Logger.getLogger(DAOCart.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return n;
+    }
 }
