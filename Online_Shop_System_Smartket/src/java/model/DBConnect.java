@@ -77,6 +77,5 @@ public class DBConnect {
     public static void main(String[] args) throws SQLException {
         DBConnect dao = new DBConnect();
 
-
     }
 }

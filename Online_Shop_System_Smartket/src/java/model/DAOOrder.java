@@ -8,9 +8,12 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.Vector;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import view.Categories;
 import view.Order;
+import view.Status;
 
 /**
  *
@@ -73,5 +76,47 @@ public class DAOOrder extends DBConnect {
             Logger.getLogger(DAOCart.class.getName()).log(Level.SEVERE, null, ex);
         }
         return n;
+    }
+
+    public Vector<Status> getStatus(String sql) {
+        Vector<Status> vector = new Vector<>();
+        try ( Statement state = conn.createStatement(
+                ResultSet.TYPE_SCROLL_SENSITIVE,
+                ResultSet.CONCUR_UPDATABLE);  ResultSet rs = state.executeQuery(sql)) {
+
+            while (rs.next()) {
+                int statusID = rs.getInt(1);
+                String statusName = rs.getString(2);
+                Status status = new Status(statusID, statusName);
+                vector.add(status);
+            }
+        } catch (SQLException ex) {
+            // Handle SQLException appropriately
+            Logger.getLogger(DAOOrder.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return vector;
+    }
+
+    public int UpdateSaleID(int sID, int orderID) {
+        int n = 0;
+        String sql = "UPDATE `online_shop_system`.`order`\n"
+                + "SET\n"
+                + "`SaleID` = ?\n"
+                + "WHERE `OrderID` = ?;";
+        try {
+            PreparedStatement pre = conn.prepareStatement(sql);
+            pre.setInt(1, sID);
+            pre.setInt(2, orderID);
+            n = pre.executeUpdate();
+        } catch (SQLException ex) {
+            Logger.getLogger(DAOCart.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return n;
+    }
+    public static void main(String[] args) {
+        DAOOrder dao = new DAOOrder();
+        int n = 0;
+        n = dao.UpdateSaleID(3, 5);
+        System.out.println(n);
     }
 }

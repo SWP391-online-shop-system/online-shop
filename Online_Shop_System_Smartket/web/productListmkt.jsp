@@ -299,7 +299,6 @@
         <script src="vendor/datatables/jquery.dataTables.min.js"></script>
         <script src="vendor/datatables/dataTables.bootstrap4.min.js"></script>
         <script src="js_marketing/productlist.js"></script>
-
         <!-- Page level custom scripts -->
         <script>
                                                             $(document).ready(function () {
