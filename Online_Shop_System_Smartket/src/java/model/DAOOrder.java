@@ -30,7 +30,7 @@ public class DAOOrder extends DBConnect {
             PreparedStatement pre = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
             pre.setInt(1, order.getUserID());
             pre.setInt(2, order.getSaleID());
-            pre.setString(3,order.getOrderDate());
+            pre.setString(3, order.getOrderDate());
             n = pre.executeUpdate();
             ResultSet key = pre.getGeneratedKeys();
             if (key.next()) {

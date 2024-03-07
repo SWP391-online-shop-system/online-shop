@@ -102,10 +102,11 @@ public class ControllerChangeuserinfo extends HttpServlet {
         User user = daoU.getUserByUserID(UserID);
         ResultSet rsProfile = daoU.getData("select * from User where UserID = " + UserID);
         request.setAttribute("rsProfile", rsProfile);
+
         if (service.equals("upload")) {
+            String mess = "";
             HttpSession session = request.getSession();
             User use = (User) session.getAttribute("account");
-            String mess = "";
             String newImageName = "AvatarUser" + UserID;
             Part filePart = request.getPart("file");
             String fileName = filePart.getSubmittedFileName();
@@ -114,8 +115,9 @@ public class ControllerChangeuserinfo extends HttpServlet {
             String path = "images/user/" + result;
             String realFileName = request.getServletContext().getRealPath(path);
             String realFileName1 = realFileName.replace("\\build", "");
-            filePart.write(realFileName);
             filePart.write(realFileName1);
+//            filePart.write(realFileName);
+            System.out.println("result = " + result);
             use.setUserImage(result);
             session.setAttribute("account", use);
             int n = daoU.updateUserImage(UserID, result);

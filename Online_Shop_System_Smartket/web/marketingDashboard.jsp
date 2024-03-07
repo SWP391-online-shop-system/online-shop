@@ -30,7 +30,6 @@
         <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
         <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css">
         <link href="css/css_marketing_dashboard/marketing_dashboard_style.css" rel="stylesheet">
-
     </head>
 
     <body id="page-top">
@@ -301,7 +300,6 @@
                                         ResultSet rsProductSold = (ResultSet)request.getAttribute("rsProductSold");
                                         int countDate=0;
                                         while(rsProductSold.next()) {
-                                        System.out.println("rsProductSold = "+rsProductSold.getInt(2)+" at day "+rsProductSold.getString(1));
                                         countDate++;
                                         %>
                                         <div id="DataSold<%=countDate%>" style="display: none;"><%=rsProductSold.getInt(2)%></div>
