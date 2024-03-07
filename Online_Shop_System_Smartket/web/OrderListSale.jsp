@@ -101,11 +101,11 @@
                                                  margin-left: 200px;
                                                  margin-bottom: -30px;">
                                                 <form action="OrderListURL" method="get" class="form-control">
-                                                    <div class="filter-group" style="display:flex;margin-left: -28px;">
-                                                        <div style="margin-right: 10px;">Từ: <input type="date" name="fromDate" value="${param.fromDate}" onchange="this.form.submit()"></div>
-                                                        <div>Đến: <input type="date" name="toDate" value="${param.toDate}" onchange="this.form.submit()"></div>
-                                                        <div>
-                                                            <label for="saleName">Tên nhân viên: </label>
+                                                    <div class="filter-group" style="display:flex;margin-left: -28px; align-items: center;">
+                                                        <div style="margin-right: 10px;margin-top: 10px;">Từ: <input type="date" name="fromDate" value="${param.fromDate}" onchange="this.form.submit()"></div>
+                                                        <div style="margin-right: 10px;margin-top: 10px;">Đến: <input type="date" name="toDate" value="${param.toDate}" onchange="this.form.submit()"></div>
+                                                        <div style="margin-top: 10px;margin-left: 20px;padding-top: 10px;">
+                                                            <label for="saleName" style="margin-left: 15px;">Tên nhân viên: </label>
                                                             <select name="saleName" onchange="this.form.submit()">
                                                                 <option value="">Tất cả</option>
                                                                 <c:forEach var="user" items="${user}">
@@ -116,8 +116,8 @@
                                                             </select>
                                                         </div>
                                                     </div>
-                                                    <div>
-                                                        <label for="statusName">Trạng thái:</label>
+                                                        <div style="margin-top: 10px;margin-left: 20px;padding-top: 10px;">
+                                                        <label for="statusName" style="margin-left: 15px;">Trạng thái:</label>
                                                         <select name="statusName" style="width: 115px;" onchange="this.form.submit()">
                                                             <option value="">Tất cả</option>
                                                             <c:forEach var="status" items="${status}">
@@ -142,49 +142,39 @@
                                                     <th>Trạng thái</th>
                                                 </tr>
                                             </thead>
-                                            <tfoot>
-                                                <tr>
-                                                    <th>ID</th>
-                                                    <th>Tên khách hàng</th>
-                                                    <th>Tên sản phẩm</th>
-                                                    <th>Số lượng</th>
-                                                    <th>Tổng giá tiền</th>
-                                                    <th>Ngày tạo đơn</th>
-                                                    <th>Tên nhân viên</th>
-                                                    <th>Trạng thái</th>
-                                                </tr>
-                                            </tfoot>
                                             <tbody>
                                                 <% try {
                                                     while(rs.next()) {
                                                     boolean isEmployeeDisplayed = false;
                                                 %>
-                                            <form id="updateSaleForm" action="OrderListURL" method="post">
-                                                <input type="hidden" id="orderID" name="orderID" value="<%=rs.getInt("OrderID")%>"> 
-                                            </form>
-                                            <tr>
-                                                <td onclick="Orderdetail(<%=rs.getInt("OrderID")%>)"><%=rs.getInt("OrderID")%></td>
-                                                <td><%=rs.getString("FullName")%></td>
-                                                <td><%=rs.getString("ProductName")%></td>
-                                                <td><%=rs.getInt("Quantity")%></td>
-                                                <td><%= df.format(rs.getDouble("TotalPrice")) %></td>
-                                                <td><%=rs.getString("OrderDate")%></td>
-                                                <td>
-                                                    <select name="saleName" onchange="updateSale(this)">
-                                                        <option value="<%=rs.getString("SaleName")%>"><%=rs.getString("SaleName")%></option>
-                                                        <c:forEach var="user" items="${user}">
-                                                            <option value="${user.userID}">
-                                                                ${user.firstName} ${user.lastName}
-                                                            </option>
-                                                        </c:forEach>
-                                                    </select>
-                                                </td>
-                                                <td><%=rs.getString("StatusName")%></td>
-                                            </tr>
-                                            <% }
-                                               } catch (SQLException ex) {
-                                               }
-                                            %>
+                                                <tr>
+                                                    <td onclick="Orderdetail(<%=rs.getInt("OrderID")%>)"><%=rs.getInt("OrderID")%></td>
+                                                    <td><%=rs.getString("FullName")%></td>
+                                                    <td><%=rs.getString("ProductName")%></td>
+                                                    <td><%=rs.getInt("Quantity")%></td>
+                                                    <td><%= df.format(rs.getDouble("TotalPrice")) %></td>
+                                                    <td><%=rs.getString("OrderDate")%></td>
+                                                    <td>
+                                                        <form action="OrderListURL" method="post">
+                                                            <input type="hidden" name="orderID" value="<%=rs.getInt("OrderID")%>">
+                                                            <select name="saleID" onchange="this.form.submit()">
+                                                                <%
+                                                                while(rs1.next()){%>
+                                                                <option <%=rs.getInt("SaleID")==rs1.getInt(1)?"selected":""%> 
+                                                                    value="<%=rs1.getInt(1)%>"><%=rs1.getString(2)%></option>
+                                                                <%}
+                                                                %>
+                                                                <%   rs1.beforeFirst();
+                                                                %>
+                                                            </select>
+                                                        </form>
+                                                    </td>
+                                                    <td><%=rs.getString("StatusName")%></td>
+                                                </tr>
+                                                <% }
+                                                   } catch (SQLException ex) {
+                                                   }
+                                                %>
                                             </tbody>
                                         </table>
                                     </div>
@@ -254,22 +244,9 @@
         <script src="js_sale/orderlist.js"></script>
         <!-- Page level custom scripts -->
         <script>
-                                                        $(document).ready(function () {
-                                                            $('#dataTableHover').DataTable(); // ID From dataTable with Hover
-                                                        });
-        </script>
-        <script>
-            function submitForm() {
-                document.getElementById('filterForm').submit();
-            }
-        </script>
-        <script>
-            function updateSale(selectElement) {
-                document.getElementById("orderID").value = orderID;
-            }
-            function selectOrder(orderID) {
-                document.getElementById("orderID").value = orderID;
-            }
+                                                                $(document).ready(function () {
+                                                                    $('#dataTableHover').DataTable(); // ID From dataTable with Hover
+                                                                });
         </script>
     </body>
 

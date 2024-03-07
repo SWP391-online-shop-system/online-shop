@@ -113,4 +113,10 @@ public class DAOOrder extends DBConnect {
         }
         return n;
     }
+    public static void main(String[] args) {
+        DAOOrder dao = new DAOOrder();
+        int n = 0;
+        n = dao.UpdateSaleID(3, 5);
+        System.out.println(n);
+    }
 }

@@ -56,18 +56,16 @@ public class ControllerOrderList extends HttpServlet {
             if (toDate != null && toDate.isEmpty()) {
                 toDate = null;
             }
-
-            String sqlQuery = "SELECT o.OrderID, CONCAT(u.FirstName, ' ', u.LastName) AS FullName,\n"
+            String sqlQuery = "SELECT o.OrderID,CONCAT(u.FirstName, ' ', u.LastName) AS FullName, o.SaleID,\n"
                     + "(SELECT p.ProductName \n"
-                    + "FROM product p \n"
-                    + "WHERE p.ProductID = (SELECT ProductID FROM orderdetail WHERE OrderID = o.OrderID LIMIT 1)\n"
-                    + "LIMIT 1) AS ProductName, COUNT(od.OrderID) AS Quantity, o.TotalPrice, o.OrderDate, "
-                    + "CONCAT(u_sale.FirstName, ' ', u_sale.LastName) AS SaleName, StatusName\n"
+                    + "     FROM product p \n"
+                    + "     WHERE p.ProductID = (SELECT ProductID FROM orderdetail WHERE OrderID = o.OrderID LIMIT 1)\n"
+                    + "     LIMIT 1) AS ProductName,COUNT(od.OrderID) AS Quantity,o.TotalPrice,o.OrderDate,CONCAT(u_sale.FirstName, ' ', u_sale.LastName) AS SaleName,StatusName\n"
                     + "FROM `Order` AS o \n"
                     + "JOIN user AS u ON o.UserID = u.UserID\n"
                     + "JOIN user AS u_sale ON o.saleID = u_sale.userID\n"
                     + "JOIN status s ON s.StatusID = o.StatusID\n"
-                    + "JOIN orderDetail od ON o.OrderID = od.OrderID";
+                    + "JOIN orderDetail od on o.OrderID = od.OrderID";
 
             if (fromDate != null && toDate != null) {
                 sqlQuery += " WHERE o.OrderDate BETWEEN '" + fromDate + "' AND '" + toDate + "'";
@@ -79,13 +77,14 @@ public class ControllerOrderList extends HttpServlet {
             if (statusName != null && !statusName.isEmpty()) {
                 sqlQuery += " AND s.StatusName = '" + statusName + "'";
             }
-            System.out.println(statusName);
             sqlQuery += " GROUP BY o.OrderID, u.FirstName, u.LastName, u_sale.FirstName, u_sale.LastName, s.StatusName";
             ResultSet rs = dao.getData(sqlQuery);
             Vector<User> user = daoU.getUser("select * from User where roleID = 3");
             Vector<Status> status = dao.getStatus("select * from status");
+            ResultSet rs1 = dao.getData("select UserID,CONCAT(FirstName, ' ', LastName) AS FullName  from User where roleID = 3");
             request.setAttribute("user", user);
             request.setAttribute("status", status);
+            request.setAttribute("data1", rs1);
             request.setAttribute("data", rs);
             request.getRequestDispatcher("OrderListSale.jsp").forward(request, response);
         }
@@ -117,11 +116,11 @@ public class ControllerOrderList extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        String newSaleUserID = request.getParameter("saleName"); 
-        String orderID = request.getParameter("orderID"); 
+        int sID = Integer.parseInt(request.getParameter("saleID"));
+        int orderID = Integer.parseInt(request.getParameter("orderID"));
         DAOOrder dao = new DAOOrder();
-        dao.UpdateSaleID(Integer.parseInt(orderID), Integer.parseInt(newSaleUserID));
-        processRequest(request, response);
+        dao.UpdateSaleID(sID, orderID);
+        response.sendRedirect("OrderListURL");
     }
 
     /**
