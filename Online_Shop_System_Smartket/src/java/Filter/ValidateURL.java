@@ -120,22 +120,22 @@ public class ValidateURL implements Filter {
         } else {
 
             User a = (User) session.getAttribute("account");
-            if (url.startsWith("/marketing")) {
+            if (url.startsWith("/marketing")||url.startsWith("/Marketing")) {
                 if (session.getAttribute("account") == null) {
                     res.sendRedirect("loginURL");
                 } else {
                     if (!(a.getRoleID() == 2)) {
-                        res.sendRedirect("error404.jsp");
+                        res.sendRedirect("404");
                     }
                 }
             }
 
-            if (url.startsWith("/admin")) {
+            if (url.startsWith("/admin")||url.startsWith("/Admin")) {
                 if (session.getAttribute("account") == null) {
                     res.sendRedirect("loginURL");
                 } else {
                     if (!(a.getRoleID() == 5)) {
-                        res.sendRedirect("error404.jsp");
+                        res.sendRedirect("404");
                     }
                 }
             }
@@ -145,7 +145,7 @@ public class ValidateURL implements Filter {
                     res.sendRedirect("loginURL");
                 } else {
                     if (!(a.getRoleID() == 3)) {
-                        res.sendRedirect("error404.jsp");
+                        res.sendRedirect("404");
                     }
                 }
             }
@@ -155,7 +155,7 @@ public class ValidateURL implements Filter {
                     res.sendRedirect("loginURL");
                 } else {
                     if (!(a.getRoleID() == 4)) {
-                        res.sendRedirect("error404.jsp");
+                        res.sendRedirect("404");
                     }
                 }
             }
