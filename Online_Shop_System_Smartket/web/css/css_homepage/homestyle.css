@@ -1264,6 +1264,7 @@ a{
     position: relative;
     z-index: 3;
     margin-left: 51px;
+    margin-top: 53px;
 }
 .content-title6:before{
     content: " ";

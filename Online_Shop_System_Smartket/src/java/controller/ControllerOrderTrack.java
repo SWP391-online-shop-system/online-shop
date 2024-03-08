@@ -18,7 +18,7 @@ import model.DAOOrder;
  *
  * @author admin
  */
-@WebServlet(name = "ControllerOrderTrack", urlPatterns = {"/OrderTrackURL"})
+@WebServlet(name = "ControllerOrderTrack", urlPatterns = {"/adminOrderTrackURL"})
 public class ControllerOrderTrack extends HttpServlet {
 
     /**

@@ -52,7 +52,6 @@
             }
         </style>
     </head>
-
     <body id="page-top">
         <%DecimalFormat df = new DecimalFormat("###,###");
          df.setMaximumFractionDigits(8);
@@ -90,7 +89,7 @@
                     </li>
                     <hr class="sidebar-divider">
                     <li class="nav-item">
-                        <a class="nav-link" href="OrderTrackURL">
+                        <a class="nav-link" href="adminOrderTrackURL?status=all&orderFrom=&orderTo=">
                             <i class="fas fa-calendar fa-2x text-primary"></i>
                             <span>Đơn hàng</span>
                         </a>
@@ -116,6 +115,14 @@
                                         <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
                                         Hồ sơ
                                     </a>
+                                    <a class="dropdown-item" href="#">
+                                        <i class="fas fa-cogs fa-sm fa-fw mr-2 text-gray-400"></i>
+                                        Cài đặt
+                                    </a>
+                                    <a class="dropdown-item" href="#">
+                                        <i class="fas fa-list fa-sm fa-fw mr-2 text-gray-400"></i>
+                                        Lịch sử thay đổi
+                                    </a>
                                     <div class="dropdown-divider"></div>
                                     <a class="dropdown-item" href="logout">
                                         <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
@@ -140,7 +147,7 @@
                         <div class="row mb-3">
                             <!-- Earnings (Monthly) Card Example -->
                             <div class="col-xl-3 col-md-6 mb-4 trans">
-                                <a href="mtkPost" style="text-decoration: none;">
+                                <a href="adminOrderTrackURL?status=1&orderFrom=&orderTo=" style="text-decoration: none;">
                                     <div class="card h-100" style="background: #fff8ee;">
                                         <div class="card-body">
                                             <div class="row align-items-center">
@@ -173,7 +180,7 @@
                             </div>
                             <!-- Earnings (Annual) Card Example -->
                             <div class="col-xl-3 col-md-6 mb-4 trans">
-                                <a href="mktProductListURL" style="text-decoration: none;">
+                                <a href="adminOrderTrackURL?status=3&orderFrom=&orderTo=" style="text-decoration: none;">
                                     <div class="card h-100" style="background: #e6ecff;">
                                         <div class="card-body">
                                             <div class="row no-gutters align-items-center">
@@ -206,7 +213,7 @@
                             </div>
                             <!-- New User Card Example -->
                             <div class="col-xl-3 col-md-6 mb-4 trans">
-                                <a href="customerlist" style="text-decoration: none;">
+                                <a href="adminOrderTrackURL?status=4&orderFrom=&orderTo=" style="text-decoration: none;">
                                     <div class="card h-100" style="background: #d9ffda;">
                                         <div class="card-body">
                                             <div class="row no-gutters align-items-center">
@@ -239,7 +246,7 @@
                             </div>
                             <!-- Pending Requests Card Example -->
                             <div class="col-xl-3 col-md-6 mb-4 trans">
-                                <a href="FeedBackListURL" style="text-decoration: none;">
+                                <a href="adminOrderTrackURL?status=5&orderFrom=&orderTo=" style="text-decoration: none;">
                                     <div class="card h-100" style="background: #fff1f1;">
                                         <div class="card-body">
                                             <div class="row no-gutters align-items-center">
@@ -289,7 +296,7 @@
                                        String curDate1 = dateFormat1.format(currentDate1);
                                         %>
                                         <span  class="m-0 text-primary" style="margin-right: -12px;" >từ</span>
-                                        <form action="AdminDashBoard" method="GET">
+                                        <form action="adminDashBoard" method="GET">
                                             <input style="background-color: #1ab365!important;" id="dateInputFrom" class="date-chooser" type="date" name="weekFrom" value="<%=(formatWeekFrom==null || formatWeekFrom.equals(""))?curDate:formatWeekFrom%>" onchange="autoUpdateWeekTo(this.value); updateWeek();"/>
                                             <span  class="m-0 text-primary">đến</span>
                                             <input style="background-color: #1ab365!important;" id="dateInputTo" class="date-chooser" type="date" name="weekTo" disabled/>                                           
@@ -364,7 +371,7 @@
                                 <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
                                     <h6 class="m-0 font-weight-bold text-primary">Nguời dùng</h6>
                                     <span  class="m-0 text-primary">từ</span>
-                                    <form action="AdminDashBoard" method="GET">
+                                    <form action="AdminDashBoardURLA" method="GET">
                                         <input style="background-color: #1ab365!important;" id="dateUserInputFrom" class="date-chooser" type="date" name="userWeekFrom" value="<%=(formatUserWeekFrom==null || formatUserWeekFrom.equals(""))?curDate1:formatUserWeekFrom%>" 
                                                onchange="autoUpdateWeekToUser(this.value);updateWeek();"/>
                                         <span class="m-0 text-primary">đến</span>

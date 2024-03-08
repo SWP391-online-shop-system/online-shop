@@ -72,7 +72,7 @@
                     </li>
                     <hr class="sidebar-divider">
                     <li class="nav-item">
-                        <a class="nav-link" href="OrderTrackURL">
+                        <a class="nav-link" href="adminOrderTrackURL">
                             <i class="fas fa-calendar fa-2x text-primary"></i>
                             <span>Đơn hàng</span>
                         </a>
@@ -84,7 +84,7 @@
                 <div id="content">
                     <!-- TopBar -->
                     <nav class="navbar navbar-expand navbar-light bg-navbar topbar mb-4 static-top">
-                        <div style="font-weight: 700;color: white;font-size: 37px;letter-spacing: 2px;font-family: Nunito,-apple-system,BlinkMacSystemFont"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol","Noto Color Emoji";">Trang marketing</div>
+                        <div style="font-weight: 700;color: white;font-size: 37px;letter-spacing: 2px;font-family: Nunito,-apple-system,BlinkMacSystemFont"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol","Noto Color Emoji";">Trang admin</div>
                         <ul class="navbar-nav ml-auto">
                             <div class="topbar-divider d-none d-sm-block"></div>
                             <li class="nav-item dropdown no-arrow">
@@ -112,7 +112,7 @@
                     <!-- Container Fluid-->
                     <div class="container-fluid" id="container-wrapper">
                         <div class="d-sm-flex align-items-center justify-content-between mb-4">
-                            <h1 class="h3 mb-0 text-gray-800">Danh Sách Ph</h1>
+                            <h1 class="h3 mb-0 text-gray-800">Danh Sách Đơn hàng</h1>
                             <ol class="breadcrumb">
                                 <li class="breadcrumb-item"><a href="./">Trang Chủ</a></li>
                                 <li class="breadcrumb-item active">Danh Sách đơn hàng</li>
@@ -144,7 +144,7 @@
                                                     String orderFrom = (String)request.getAttribute("orderFrom");
                                                     String orderTo = (String)request.getAttribute("orderTo");
                                                     ResultSet rsOrder= (ResultSet)request.getAttribute("rsOrder");%>
-                                                <form action="OrderTrackURL" method="get">
+                                                <form action="adminOrderTrackURL" method="get">
                                                     <div class="filter-group" style="display:flex;align-items: center;">
                                                         <div class="statusForm">Trạng thái đơn</div>
                                                         <%ResultSet rsStatus = daoOrd.getData("select * from Status");%>
