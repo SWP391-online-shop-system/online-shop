@@ -11,6 +11,7 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import java.net.URLEncoder;
 import java.sql.ResultSet;
 import java.time.LocalDate;
 import java.util.List;
@@ -27,7 +28,7 @@ import view.User;
  *
  * @author HP
  */
-@WebServlet(name = "ControllerOrderList", urlPatterns = {"/OrderListURL"})
+@WebServlet(name = "ControllerOrderList", urlPatterns = {"/saleManagerOrderListURL"})
 public class ControllerOrderList extends HttpServlet {
 
     /**
@@ -119,8 +120,9 @@ public class ControllerOrderList extends HttpServlet {
         int sID = Integer.parseInt(request.getParameter("saleID"));
         int orderID = Integer.parseInt(request.getParameter("orderID"));
         DAOOrder dao = new DAOOrder();
-        dao.UpdateSaleID(sID, orderID);
-        response.sendRedirect("OrderListURL");
+        int n = dao.UpdateSaleID(sID, orderID);
+        String st = (n > 0) ? "Cập nhật nhân viên thành công" : "Cập nhật nhân viên thất bại";
+        response.sendRedirect("saleManagerOrderListURL?message=" + URLEncoder.encode(st, "UTF-8"));
     }
 
     /**

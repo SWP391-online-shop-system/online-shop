@@ -113,10 +113,31 @@ public class DAOOrder extends DBConnect {
         }
         return n;
     }
+    public int updateStatus1(int statusID, int orderId) {
+        int n = 0;
+        String sql = "UPDATE `online_shop_system`.`order`\n"
+                + "SET\n"
+                + "`StatusID` = ?\n"
+                + "WHERE `OrderID` = ?;";
+        try {
+            PreparedStatement pre = conn.prepareStatement(sql);
+            pre.setInt(1, statusID);
+            pre.setInt(2, orderId);
+            n = pre.executeUpdate();
+        } catch (SQLException ex) {
+            Logger.getLogger(DAOCart.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return n;
+    }
     public static void main(String[] args) {
         DAOOrder dao = new DAOOrder();
         int n = 0;
-        n = dao.UpdateSaleID(3, 5);
+        n = dao.updateStatus1(4, 5);
+        if(n > 0){
+            System.out.println("OK");
+        }else {
+            System.out.println("Not ok");
+        }
         System.out.println(n);
     }
 }

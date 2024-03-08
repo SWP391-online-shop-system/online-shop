@@ -19,7 +19,7 @@ $(document).ready(function () {
     }); // ID From dataTable with Hover
 });
 function Orderdetail(oID) {
-    var url = "OrderDetailURL?oID="+oID;
+    var url = "saleOrderDetailURL?oID="+oID;
     window.location.href = url;
 }
 

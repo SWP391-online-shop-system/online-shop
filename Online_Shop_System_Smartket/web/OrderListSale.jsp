@@ -27,7 +27,7 @@
         <meta name="description" content="">
         <meta name="author" content="">
         <link href="images/logo/logo.png" rel="icon">
-        <title>Danh sách Order</title>
+        <title>Danh sách đơn hàng</title>
         <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
         <link href="vendor/bootstrap/css/orderList.css" rel="stylesheet" type="text/css">
         <link href="css/css_saleProductList/orderlist.css" rel="stylesheet">
@@ -37,23 +37,6 @@
         ResultSet rs = (ResultSet)request.getAttribute("data");
         ResultSet rs1 = (ResultSet)request.getAttribute("data1");
     %>
-    <div class="container">
-        <% String message = (String)request.getParameter("message");
-        String errorMessage = (String) request.getAttribute("errorMessage");
-        %>
-        <% if (message != null && !message.isEmpty()) { %>
-        <div class="alert alert-info" role="alert">
-            <%= message %>
-        </div>
-        <% } %>
-        <%DecimalFormat df = new DecimalFormat("###,###");
-            df.setMaximumFractionDigits(8);%>
-        <%if (errorMessage != null) {%>
-        <div class="alert alert-info" role="alert">
-            <%= errorMessage %>
-        </div>
-        <%}%>
-    </div>
     <body id="page-top">
         <div id="wrapper">
             <!-- Sidebar -->
@@ -83,12 +66,29 @@
                             </li>
                         </ul>
                     </nav>
+                    <div class="container">
+                        <% String message = (String)request.getParameter("message");
+                        String errorMessage = (String) request.getAttribute("errorMessage");
+                        %>
+                        <% if (message != null && !message.isEmpty()) { %>
+                        <div class="alert alert-info" role="alert">
+                            <%= message %>
+                        </div>
+                        <% } %>
+                        <%DecimalFormat df = new DecimalFormat("###,###");
+            df.setMaximumFractionDigits(8);%>
+                        <%if (errorMessage != null) {%>
+                        <div class="alert alert-info" role="alert">
+                            <%= errorMessage %>
+                        </div>
+                        <%}%>
+                    </div>
                     <div class="container-fluid" id="container-wrapper">
                         <div class="d-sm-flex align-items-center justify-content-between mb-4">
-                            <h1 class="h3 mb-0 text-gray-800">Danh sách sản phẩm</h1>
+                            <h1 class="h3 mb-0 text-gray-800">Danh sách đơn hàng</h1>
                             <ol class="breadcrumb">
-                                <li class="breadcrumb-item"><a href="OrderListURL">Home</a></li>
-                                <li class="breadcrumb-item active" aria-current="page">Danh sách sản phẩm</li>
+                                <li class="breadcrumb-item"><a href="saleManagerOrderListURL">Home</a></li>
+                                <li class="breadcrumb-item active" aria-current="page">Danh sách đơn hàng</li>
                             </ol>
                         </div>
                         <div class="row">
@@ -100,7 +100,7 @@
                                             <div style="display: flex;
                                                  margin-left: 200px;
                                                  margin-bottom: -30px;">
-                                                <form action="OrderListURL" method="get" class="form-control">
+                                                <form action="saleManagerOrderListURL" method="get" class="form-control">
                                                     <div class="filter-group" style="display:flex;margin-left: -28px; align-items: center;">
                                                         <div style="margin-right: 10px;margin-top: 10px;">Từ: <input type="date" name="fromDate" value="${param.fromDate}" onchange="this.form.submit()"></div>
                                                         <div style="margin-right: 10px;margin-top: 10px;">Đến: <input type="date" name="toDate" value="${param.toDate}" onchange="this.form.submit()"></div>
@@ -116,7 +116,7 @@
                                                             </select>
                                                         </div>
                                                     </div>
-                                                        <div style="margin-top: 10px;margin-left: 20px;padding-top: 10px;">
+                                                    <div style="margin-top: 10px;margin-left: 20px;padding-top: 10px;">
                                                         <label for="statusName" style="margin-left: 15px;">Trạng thái:</label>
                                                         <select name="statusName" style="width: 115px;" onchange="this.form.submit()">
                                                             <option value="">Tất cả</option>
@@ -155,7 +155,7 @@
                                                     <td><%= df.format(rs.getDouble("TotalPrice")) %></td>
                                                     <td><%=rs.getString("OrderDate")%></td>
                                                     <td>
-                                                        <form action="OrderListURL" method="post">
+                                                        <form action="saleManagerOrderListURL" method="post">
                                                             <input type="hidden" name="orderID" value="<%=rs.getInt("OrderID")%>">
                                                             <select name="saleID" onchange="this.form.submit()">
                                                                 <%

@@ -11,6 +11,7 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import java.net.URLEncoder;
 import java.sql.ResultSet;
 import model.DAOOrder;
 
@@ -18,7 +19,7 @@ import model.DAOOrder;
  *
  * @author HP
  */
-@WebServlet(name = "ControllerOrderDetail", urlPatterns = {"/OrderDetailURL"})
+@WebServlet(name = "ControllerOrderDetail", urlPatterns = {"/saleOrderDetailURL"})
 public class ControllerOrderDetail extends HttpServlet {
 
     /**
@@ -39,12 +40,12 @@ public class ControllerOrderDetail extends HttpServlet {
             String oID = request.getParameter("oID");
             int id = Integer.parseInt(oID);
             String OrderID = request.getParameter("OrderID");
-            String sql = "select o.OrderID,CONCAT(u.FirstName, ' ', u.LastName) AS FullName,u.Email,u.PhoneNumber,\n"
-                    + "o.OrderDate,o.TotalPrice,CONCAT(u_sale.FirstName, ' ', u_sale.LastName) AS SaleName, s.StatusName\n"
-                    + "from `order` as o\n"
-                    + "Join User as u on u.UserID = o.UserID\n"
-                    + "JOIN user AS u_sale ON o.saleID = u_sale.userID\n"
-                    + "Join status as s on s.StatusID = o.StatusID Where o.OrderID = " + id;
+            String sql = "select o.OrderID,CONCAT(u.FirstName, ' ', u.LastName) AS FullName,u.Email,u.PhoneNumber, s.StatusID,\n"
+                    + "                    o.OrderDate,o.TotalPrice,CONCAT(u_sale.FirstName, ' ', u_sale.LastName) AS SaleName, s.StatusName\n"
+                    + "                    from `order` as o\n"
+                    + "                    Join User as u on u.UserID = o.UserID\n"
+                    + "                    JOIN user AS u_sale ON o.saleID = u_sale.userID\n"
+                    + "                    Join status as s on s.StatusID = o.StatusID Where o.OrderID = " + id;
             ResultSet rs = dao.getData(sql);
             String sql1 = "select * from receiver where OrderID = " + id;
             ResultSet rs1 = dao.getData(sql1);
@@ -56,6 +57,9 @@ public class ControllerOrderDetail extends HttpServlet {
                     + "Join `order` o on o.OrderID = od.OrderID\n"
                     + "Where od.OrderID = " + id;
             ResultSet rs2 = dao.getData(sql2);
+            String sql3 = "select * from status";
+            ResultSet rs3 = dao.getData(sql3);
+            request.setAttribute("data3", rs3);
             request.setAttribute("data", rs);
             request.setAttribute("data1", rs1);
             request.setAttribute("data2", rs2);
@@ -89,7 +93,12 @@ public class ControllerOrderDetail extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        int statusID = Integer.parseInt(request.getParameter("status"));
+        int orderID = Integer.parseInt(request.getParameter("orderID"));
+        DAOOrder dao = new DAOOrder();
+        int n = dao.updateStatus1(statusID,orderID);
+        String st = (n > 0) ? "Cập nhật trạng thái thành công" : "Cập nhật trạng thái thất bại";
+        response.sendRedirect("saleManagerOrderListURL?message=" + URLEncoder.encode(st, "UTF-8"));
     }
 
     /**
