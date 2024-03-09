@@ -11,19 +11,17 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import model.DAOBlog;
-import model.DAOProduct;
+import model.DAOOrder;
 
 /**
  *
- * @author admin
+ * @author trant
  */
-@WebServlet(name = "ControllerHomePage", urlPatterns = {"/HomePageURL"})
-public class ControllerHomePage extends HttpServlet {
+@WebServlet(name = "ControllerBankingInfo", urlPatterns = {"/BankingInfo"})
+public class ControllerBankingInfo extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -38,34 +36,28 @@ public class ControllerHomePage extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         try ( PrintWriter out = response.getWriter()) {
-            /* TODO output your page here. You may use following sample code. */
-            DAOBlog daoBlog = new DAOBlog();
-            DAOProduct dao = new DAOProduct();
-            ResultSet rsNewBlog = daoBlog.getData("select * from Blog where HiddenStatus = 0 order by CreateTime desc limit 1 ");
-            ResultSet rsFeatureBlog = daoBlog.getData("select * from Blog where HiddenStatus = 0 order by BlogRate desc limit 3");
-            ResultSet rsSlider = daoBlog.getData("select SliderImage, SliderLink from Slider where SliderStatus = 0");
-            int settingPage = 0;
-            ResultSet rsSettingPage = dao.getData("select * from Setting where SettingID = 1");
-            if (rsSettingPage.next()) {
-                settingPage = Integer.parseInt(rsSettingPage.getString("SettingValue"));
+            HttpSession session = request.getSession();
+            String orderId_str = (String)session.getAttribute("orderId");
+            int orderId = Integer.parseInt(orderId_str);
+            DAOOrder daoOrder = new DAOOrder();
+            
+            double totalPriceDB = 0;
+            ResultSet rs = daoOrder.getData("SELECT * FROM online_shop_system.order where OrderID = "+orderId);
+            try {
+                while(rs.next()){
+                    totalPriceDB = rs.getDouble("TotalPrice");
+                }
+                rs.close();
+            } catch (SQLException e) {
             }
-            ResultSet rsNewProduct = dao.getData("select * from product as p join productImage as pi on p.ProductID = pi.ProductID "
-                    + "where pi.ProductURL = pi.ProductURLShow and p.ProductStatus = 0 order by p.CreateDate desc limit " + settingPage);
-            request.setAttribute("rsNewProduct", rsNewProduct);
-            request.setAttribute("rsSlider", rsSlider);
-            request.setAttribute("rsNewBlog", rsNewBlog);
-            request.setAttribute("rsFeatureBlog", rsFeatureBlog);
-            double maxValue = dao.getMaxUnitPrice();
-            double minValue = dao.getMinUnitPrice();
-            request.setAttribute("inputMinPrice", minValue);
-            request.setAttribute("inputMaxPrice", maxValue);
-            request.getRequestDispatcher("homepage.jsp").forward(request, response);
-        } catch (SQLException ex) {
-            request.getRequestDispatcher("400").forward(request, response);
+            int totalPrice = (int)totalPriceDB;
+            String QrPath = "https://img.vietqr.io/image/BIDV-0398707242-compact2.png?amount="+totalPrice+"&addInfo=Smartket "+orderId+"&accountName=Smartket";
+            request.setAttribute("QrPath", QrPath);
+            request.getRequestDispatcher("bankingInfo.jsp").forward(request, response);
         }
     }
 
-// <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
+    // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
      * Handles the HTTP <code>GET</code> method.
      *

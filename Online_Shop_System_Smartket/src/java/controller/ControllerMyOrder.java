@@ -11,19 +11,17 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import model.DAOBlog;
-import model.DAOProduct;
+import model.DAOOrder;
+import view.User;
 
 /**
  *
  * @author admin
  */
-@WebServlet(name = "ControllerHomePage", urlPatterns = {"/HomePageURL"})
-public class ControllerHomePage extends HttpServlet {
+@WebServlet(name = "ControllerMyOrder", urlPatterns = {"/MyOrderURL"})
+public class ControllerMyOrder extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -38,34 +36,41 @@ public class ControllerHomePage extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         try ( PrintWriter out = response.getWriter()) {
-            /* TODO output your page here. You may use following sample code. */
-            DAOBlog daoBlog = new DAOBlog();
-            DAOProduct dao = new DAOProduct();
-            ResultSet rsNewBlog = daoBlog.getData("select * from Blog where HiddenStatus = 0 order by CreateTime desc limit 1 ");
-            ResultSet rsFeatureBlog = daoBlog.getData("select * from Blog where HiddenStatus = 0 order by BlogRate desc limit 3");
-            ResultSet rsSlider = daoBlog.getData("select SliderImage, SliderLink from Slider where SliderStatus = 0");
-            int settingPage = 0;
-            ResultSet rsSettingPage = dao.getData("select * from Setting where SettingID = 1");
-            if (rsSettingPage.next()) {
-                settingPage = Integer.parseInt(rsSettingPage.getString("SettingValue"));
+            DAOOrder daoOrd = new DAOOrder();
+            HttpSession session = request.getSession();
+            User user = (User) session.getAttribute("account");
+            
+            String message = "";
+
+            if (user == null) {
+                message = "can dang nhap";
+                request.setAttribute("message", message);
+                request.getRequestDispatcher("loginURL").forward(request, response);
+            } else {
+                int UserID = user.getUserID();
+                String indexPage = request.getParameter("index");
+                if (indexPage == null) {
+                    indexPage = "1";
+                }
+                int index = Integer.parseInt(indexPage);
+                int pagingindex = (index - 1) * 3;
+                ResultSet rsOrderGroup = daoOrd.getData("SELECT * FROM `order` as o\n"
+                        + "JOIN `OrderDetail` as od ON o.orderID = od.orderID\n"
+                        + "where o.UserID = " + UserID + " group BY o.orderID limit " + pagingindex + ", 3");
+                int count = daoOrd.getTotalOrderOfUser(UserID);
+                int endPage = count / 3;
+                if (count % 3 != 0) {
+                    endPage++;
+                }
+                request.setAttribute("rsOrderGroup", rsOrderGroup);
+                request.setAttribute("endP", endPage);
+                request.setAttribute("tag", index);
+                request.getRequestDispatcher("MyOrder.jsp").forward(request, response);
             }
-            ResultSet rsNewProduct = dao.getData("select * from product as p join productImage as pi on p.ProductID = pi.ProductID "
-                    + "where pi.ProductURL = pi.ProductURLShow and p.ProductStatus = 0 order by p.CreateDate desc limit " + settingPage);
-            request.setAttribute("rsNewProduct", rsNewProduct);
-            request.setAttribute("rsSlider", rsSlider);
-            request.setAttribute("rsNewBlog", rsNewBlog);
-            request.setAttribute("rsFeatureBlog", rsFeatureBlog);
-            double maxValue = dao.getMaxUnitPrice();
-            double minValue = dao.getMinUnitPrice();
-            request.setAttribute("inputMinPrice", minValue);
-            request.setAttribute("inputMaxPrice", maxValue);
-            request.getRequestDispatcher("homepage.jsp").forward(request, response);
-        } catch (SQLException ex) {
-            request.getRequestDispatcher("400").forward(request, response);
         }
     }
 
-// <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
+    // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
      * Handles the HTTP <code>GET</code> method.
      *

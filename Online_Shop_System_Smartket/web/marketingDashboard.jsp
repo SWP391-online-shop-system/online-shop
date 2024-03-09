@@ -42,17 +42,17 @@
         <div id="wrapper">
             <!-- Sidebar -->
             <ul class="navbar-nav sidebar sidebar-light accordion" id="accordionSidebar">
-                <a class="sidebar-brand d-flex align-items-center justify-content-center" href="MarketingDashBoardURL">
+                <a class="sidebar-brand d-flex align-items-center justify-content-center" href="marketingDashBoardURL">
                     <div class="sidebar-brand-icon">
                         <img style="height: 91px;
                              width: 133px;
-                             margin-bottom: -18px;" src="images/logo/logo.png">
+                             margin-bottom: -18px;z-index: 99;" src="images/logo/logo.png">
                     </div>
                 </a>
                 <div style="position: sticky; top: 30px;">
                     <hr class="sidebar-divider wee-0" style="margin: 0px;">
                     <li class="nav-item active">
-                        <a class="nav-link" href="MarketingDashBoardURL">
+                        <a class="nav-link" href="marketingDashBoardURL">
                             <i class="fas fa-fw fa-tachometer-alt"></i>
                             <span>Thống kê</span></a>
                     </li>
@@ -61,25 +61,25 @@
                         Quản lí
                     </div>
                     <li class="nav-item">
-                        <a class="nav-link" href="mtkPost">
+                        <a class="nav-link" href="marketingPost">
                             <i class="fas fa-calendar fa-2x text-primary"></i>
                             <span>Bài đăng</span>
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="mktProductListURL">
+                        <a class="nav-link" href="marketingProductListURL">
                             <i class="fas fa-shopping-cart fa-2x text-success"></i>
                             <span>Sản phẩm</span>
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="customerlist">
+                        <a class="nav-link" href="marketingCustomerlist">
                             <i class="fas fa-users fa-2x text-info"></i>
                             <span>Khách hàng</span>
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="FeedBackListURL">
+                        <a class="nav-link" href="marketingFeedBackListURL">
                             <i class="fas fa-comments fa-2x text-info"></i>
                             <span>Phản hồi</span>
                         </a>
@@ -165,7 +165,7 @@
                             </div>
                             <!-- Earnings (Annual) Card Example -->
                             <div class="col-xl-3 col-md-6 mb-4">
-                                <a href="mktProductListURL" style="text-decoration: none;">
+                                <a href="marketingProductListURL" style="text-decoration: none;">
                                     <div class="card h-100">
                                         <div class="card-body">
                                             <div class="row no-gutters align-items-center">
@@ -289,7 +289,7 @@
                                        String curDate1 = dateFormat1.format(currentDate1);
                                         %>
                                         <span  class="m-0 text-primary" style="margin-right: -12px;" >từ</span>
-                                        <form action="MarketingDashBoardURL" method="GET">
+                                        <form action="Marketingm" method="GET">
                                             <input style="background-color: #1ab365!important;" id="dateInputFrom" class="date-chooser" type="date" name="weekFrom" value="<%=(formatWeekFrom==null || formatWeekFrom.equals(""))?curDate:formatWeekFrom%>" onchange="autoUpdateWeekTo(this.value); updateWeek();"/>
                                             <span  class="m-0 text-primary">đến</span>
                                             <input style="background-color: #1ab365!important;" id="dateInputTo" class="date-chooser" type="date" name="weekTo" disabled/>                                           
@@ -319,7 +319,7 @@
                                                     var weekFrom = document.getElementById("dateInputFrom").value;
                                                     var userWeekFrom = document.getElementById("dateUserInputFrom").value;
                                                     $.ajax({
-                                                        url: "MarketingDashBoardURL",
+                                                        url: "Marketingm",
                                                         type: 'GET',
                                                         data: {weekFrom: weekFrom, userWeekFrom: userWeekFrom},
                                                         success: function (data) {
@@ -367,7 +367,7 @@
                                     <%}}%>
 
                                     <div class="card-footer text-center">
-                                        <a class="m-0 small text-primary card-link" href="mktProductListURL">Quản lí ngay <i
+                                        <a class="m-0 small text-primary card-link" href="marketingProductListURL">Quản lí ngay <i
                                                 class="fas fa-chevron-right"></i></a>
                                     </div>
                                 </div>
@@ -381,7 +381,7 @@
                                     <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
                                         <h6 class="m-0 font-weight-bold text-primary">Khách hàng mới</h6>
                                         <span  class="m-0 text-primary">từ</span>
-                                        <form action="MarketingDashBoardURL" method="GET">
+                                        <form action="marketingDashBoardURL" method="GET">
                                             <input style="background-color: #1ab365!important;" id="dateUserInputFrom" class="date-chooser" type="date" name="userWeekFrom" value="<%=(formatUserWeekFrom==null || formatUserWeekFrom.equals(""))?curDate1:formatUserWeekFrom%>" onchange="autoUpdateWeekToUser(this.value);
                                                     updateWeek();"/>
                                             <span class="m-0 text-primary">đến</span>

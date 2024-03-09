@@ -25,7 +25,7 @@ import view.Product;
  *
  * @author HP
  */
-@WebServlet(name = "ControllerSaleProductList", urlPatterns = {"/mktProductListURL"})
+@WebServlet(name = "ControllerSaleProductList", urlPatterns = {"/marketingProductListURL"})
 public class ControllerMarketingProductList extends HttpServlet {
 
     /**

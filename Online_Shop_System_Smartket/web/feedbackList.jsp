@@ -34,17 +34,17 @@
         <div id="wrapper">
             <!-- Sidebar -->
             <ul class="navbar-nav sidebar sidebar-light accordion" id="accordionSidebar">
-                <a class="sidebar-brand d-flex align-items-center justify-content-center" href="HomePageURL">
+                <a class="sidebar-brand d-flex align-items-center justify-content-center" href="marketingDashBoardURL">
                     <div class="sidebar-brand-icon">
                         <img style="height: 91px;
                              width: 133px;
-                             margin-bottom: -18px;" src="images/logo/logo.png">
+                             margin-bottom: -18px;z-index: 99;" src="images/logo/logo.png">
                     </div>
                 </a>
                 <div style="position: sticky; top: 30px;">
                     <hr class="sidebar-divider wee-0" style="margin: 0px;">
                     <li class="nav-item active">
-                        <a class="nav-link" href="MarketingDashBoardURL">
+                        <a class="nav-link" href="marketingDashBoardURL">
                             <i class="fas fa-fw fa-tachometer-alt"></i>
                             <span>Thống kê</span></a>
                     </li>
@@ -53,25 +53,25 @@
                         Quản lí
                     </div>
                     <li class="nav-item">
-                        <a class="nav-link" href="#">
+                        <a class="nav-link" href="marketingPost">
                             <i class="fas fa-calendar fa-2x text-primary"></i>
                             <span>Bài đăng</span>
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="mktProductListURL">
+                        <a class="nav-link" href="marketingProductListURL">
                             <i class="fas fa-shopping-cart fa-2x text-success"></i>
                             <span>Sản phẩm</span>
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="customerlist">
+                        <a class="nav-link" href="marketingCustomerlist">
                             <i class="fas fa-users fa-2x text-info"></i>
                             <span>Khách hàng</span>
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="FeedBackListURL">
+                        <a class="nav-link" href="marketingFeedBackListURL">
                             <i class="fas fa-comments fa-2x text-info"></i>
                             <span>Phản hồi</span>
                         </a>
@@ -162,7 +162,7 @@
                                                     int productID = (int)request.getAttribute("productID");
                                                     int feedBackRate = (int)request.getAttribute("feedBackRate");
                                                     ResultSet rsFeedBack= (ResultSet)request.getAttribute("rsFeedBack");%>
-                                                <form action="FeedBackListURL" method="get">
+                                                <form action="marketingFeedBackListURL" method="get">
                                                     <div class="filter-group" style="display:flex;">
                                                         <div style="padding-top: 16px;
                                                              width: 76%;
@@ -368,7 +368,7 @@
         </div>
         <script>
             function FeedBackdetail(FeedBackID, UserID, FeedBackStatus) {
-                var url = "FeedBackDetailURL?FeedBackID=" + FeedBackID + "&uid=" + UserID + "&status=" + FeedBackStatus;
+                var url = "marketingFeedBackDetailURL?FeedBackID=" + FeedBackID + "&uid=" + UserID + "&status=" + FeedBackStatus;
                 window.location.href = url;
             }
         </script>

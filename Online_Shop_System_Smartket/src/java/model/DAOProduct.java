@@ -147,6 +147,23 @@ public class DAOProduct extends DBConnect {
         return n;
     }
 
+    public int updateUnitInStock(int proId, int stock) {
+        int n = 0;
+        String sql = "UPDATE `online_shop_system`.`product`\n"
+                + "SET\n"
+                + "`UnitInStock` = ?\n"
+                + "WHERE `ProductID` = ?;";
+        try {
+            PreparedStatement pre = conn.prepareStatement(sql);
+            pre.setInt(1, stock);
+            pre.setInt(2, proId);
+            n = pre.executeUpdate();
+        } catch (SQLException e) {
+            System.out.println(e);
+        }
+        return n;
+    }
+
     public Product getProductById(int productID) {
 
         String sql = "select * from Product where ProductStatus = 0 and ProductID =?";

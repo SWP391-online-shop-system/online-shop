@@ -38,7 +38,9 @@
     ResultSet rs = (ResultSet)request.getAttribute("data");
     %>
     <div class="container">
-        <% String message = (String)request.getParameter("message"); %>
+        <% String message = (String)request.getParameter("message");
+        String errorMessage = (String) request.getAttribute("errorMessage");
+        %>
         <% if (message != null && !message.isEmpty()) { %>
         <div class="alert alert-info" role="alert">
             <%= message %>
@@ -46,23 +48,27 @@
         <% } %>
         <%DecimalFormat df = new DecimalFormat("###,###");
             df.setMaximumFractionDigits(8);%>
-        <!-- Form content -->
+        <%if (errorMessage != null) {%>
+        <div class="alert alert-info" role="alert">
+            <%= errorMessage %>
+        </div>
+        <%}%>
     </div>
     <body id="page-top">
         <div id="wrapper">
             <!-- Sidebar -->
             <ul class="navbar-nav sidebar sidebar-light accordion" id="accordionSidebar">
-                <a class="sidebar-brand d-flex align-items-center justify-content-center" href="MarketingDashBoardURL">
+                <a class="sidebar-brand d-flex align-items-center justify-content-center" href="marketingDashBoardURL">
                     <div class="sidebar-brand-icon">
                         <img style="height: 91px;
                              width: 133px;
-                             margin-bottom: -18px;" src="images/logo/logo.png">
+                             margin-bottom: -18px;z-index: 99;" src="images/logo/logo.png">
                     </div>
                 </a>
                 <div style="position: sticky; top: 30px;">
                     <hr class="sidebar-divider wee-0" style="margin: 0px;">
                     <li class="nav-item active">
-                        <a class="nav-link" href="MarketingDashBoardURL">
+                        <a class="nav-link" href="marketingDashBoardURL">
                             <i class="fas fa-fw fa-tachometer-alt"></i>
                             <span>Thống kê</span></a>
                     </li>
@@ -71,25 +77,25 @@
                         Quản lí
                     </div>
                     <li class="nav-item">
-                        <a class="nav-link" href="mtkPost">
+                        <a class="nav-link" href="marketingPost">
                             <i class="fas fa-calendar fa-2x text-primary"></i>
                             <span>Bài đăng</span>
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="mktProductListURL">
+                        <a class="nav-link" href="marketingProductListURL">
                             <i class="fas fa-shopping-cart fa-2x text-success"></i>
                             <span>Sản phẩm</span>
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="customerlist">
+                        <a class="nav-link" href="marketingCustomerlist">
                             <i class="fas fa-users fa-2x text-info"></i>
                             <span>Khách hàng</span>
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="FeedBackListURL">
+                        <a class="nav-link" href="marketingFeedBackListURL">
                             <i class="fas fa-comments fa-2x text-info"></i>
                             <span>Phản hồi</span>
                         </a>
@@ -132,7 +138,7 @@
                         <div class="d-sm-flex align-items-center justify-content-between mb-4">
                             <h1 class="h3 mb-0 text-gray-800">Danh sách sản phẩm</h1>
                             <ol class="breadcrumb">
-                                <li class="breadcrumb-item"><a href="MarketingDashBoardURL">Trang chủ</a></li>
+                                <li class="breadcrumb-item"><a href="marketingDashBoardURL">Trang chủ</a></li>
                                 <!--<li class="breadcrumb-item">Tables</li>-->
                                 <li class="breadcrumb-item active" aria-current="page">Danh sách sản phẩm</li>
                             </ol>
@@ -148,7 +154,7 @@
                                             <div style="display: flex;
                                                  margin-left: 200px;
                                                  margin-bottom: -30px;">
-                                                <form action="mktProductListURL" method="get" id="categoryForm">
+                                                <form action="marketingProductListURL" method="get" id="categoryForm">
                                                     <div class="filter-group" style="display:flex;">
                                                         <div style="padding-top: 3px;">Loại</div>
                                                         <select class="form-control" name="categoryId" onchange="this.form.submit()">
@@ -214,8 +220,8 @@
                                                                 Hành động
                                                             </button>
                                                             <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                                                <a class="dropdown-item" href="mktViewProductURL?productId=<%= rs.getInt("ProductID") %>">Xem</a>
-                                                                <a class="dropdown-item" href="EditProductmktURL?productId=<%= rs.getInt("ProductID") %>">Chỉnh sửa</a>
+                                                                <a class="dropdown-item" href="marketingViewProductURL?productId=<%= rs.getInt("ProductID") %>">Xem</a>
+                                                                <a class="dropdown-item" href="marketingEditProduct?productId=<%= rs.getInt("ProductID") %>">Chỉnh sửa</a>
                                                             </div>
                                                         </div>
                                                     </td>
@@ -293,7 +299,6 @@
         <script src="vendor/datatables/jquery.dataTables.min.js"></script>
         <script src="vendor/datatables/dataTables.bootstrap4.min.js"></script>
         <script src="js_marketing/productlist.js"></script>
-
         <!-- Page level custom scripts -->
         <script>
                                                             $(document).ready(function () {

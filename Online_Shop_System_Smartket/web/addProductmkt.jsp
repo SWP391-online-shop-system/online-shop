@@ -63,21 +63,36 @@
             return true;
         }
     </script>
+    <div class="container">
+        <% String message = (String)request.getParameter("message");
+        String errorMessage = (String) request.getAttribute("errorMessage");
+        %>
+        <% if (message != null && !message.isEmpty()) { %>
+        <div class="alert alert-info" role="alert">
+            <%= message %>
+        </div>
+        <% } %>
+        <%if (errorMessage != null) {%>
+        <div class="alert alert-info" role="alert">
+            <%= errorMessage %>
+        </div>
+        <%}%>
+    </div>
     <body id="page-top">
         <div id="wrapper">
             <!-- Sidebar -->
             <ul class="navbar-nav sidebar sidebar-light accordion" id="accordionSidebar">
-                <a class="sidebar-brand d-flex align-items-center justify-content-center" href="MarketingDashBoardURL">
+                <a class="sidebar-brand d-flex align-items-center justify-content-center" href="marketingDashBoardURL">
                     <div class="sidebar-brand-icon">
                         <img style="height: 91px;
                              width: 133px;
-                             margin-bottom: -18px;" src="images/logo/logo.png">
+                             margin-bottom: -18px;z-index: 99;" src="images/logo/logo.png">
                     </div>
                 </a>
                 <div style="position: sticky; top: 30px;">
                     <hr class="sidebar-divider wee-0" style="margin: 0px;">
                     <li class="nav-item active">
-                        <a class="nav-link" href="MarketingDashBoardURL">
+                        <a class="nav-link" href="marketingDashBoardURL">
                             <i class="fas fa-fw fa-tachometer-alt"></i>
                             <span>Thống kê</span></a>
                     </li>
@@ -86,25 +101,25 @@
                         Quản lí
                     </div>
                     <li class="nav-item">
-                        <a class="nav-link" href="mtkPost">
+                        <a class="nav-link" href="marketingPost">
                             <i class="fas fa-calendar fa-2x text-primary"></i>
                             <span>Bài đăng</span>
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="mktProductListURL">
+                        <a class="nav-link" href="marketingProductListURL">
                             <i class="fas fa-shopping-cart fa-2x text-success"></i>
                             <span>Sản phẩm</span>
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="customerlist">
+                        <a class="nav-link" href="marketingCustomerlist">
                             <i class="fas fa-users fa-2x text-info"></i>
                             <span>Khách hàng</span>
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="FeedBackListURL">
+                        <a class="nav-link" href="marketingFeedBackListURL">
                             <i class="fas fa-comments fa-2x text-info"></i>
                             <span>Phản hồi</span>
                         </a>
@@ -147,7 +162,7 @@
                         <div class="d-sm-flex align-items-center justify-content-between mb-4">
                             <h1 class="h3 mb-0 text-gray-800">Thêm sản phẩm</h1>
                             <ol class="breadcrumb">
-                                <li class="breadcrumb-item"><a href="mktProductListURL">Trang sản phẩm</a></li>
+                                <li class="breadcrumb-item"><a href="marketingProductListURL">Trang sản phẩm</a></li>
                                 <!--<li class="breadcrumb-item">Tables</li>-->
                                 <li class="breadcrumb-item active" aria-current="page">Thêm sản phẩm</li>
                             </ol>
@@ -156,7 +171,7 @@
                             <div class="col-lg-8">
                                 <div class="card mb-4">
                                     <div class="card-body">
-                                        <form action="AddProductmktURL" method="post" enctype='multipart/form-data' onsubmit="return validateForm()">
+                                        <form action="marketingAddProductmktURL" method="post" enctype='multipart/form-data' onsubmit="return validateForm()">
                                             <%
                                                         DAOProduct dao = new DAOProduct();
                                                         ResultSet rsPro = dao.getData("select * from Product order by ProductID desc limit 1");
