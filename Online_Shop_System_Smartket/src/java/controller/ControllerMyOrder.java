@@ -39,10 +39,10 @@ public class ControllerMyOrder extends HttpServlet {
             DAOOrder daoOrd = new DAOOrder();
             HttpSession session = request.getSession();
             User user = (User) session.getAttribute("account");
-            
             String message = "";
-
+            System.out.println("user="+ user);
             if (user == null) {
+                System.out.println("if null");
                 message = "can dang nhap";
                 request.setAttribute("message", message);
                 request.getRequestDispatcher("loginURL").forward(request, response);

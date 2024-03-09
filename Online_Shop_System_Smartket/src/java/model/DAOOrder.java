@@ -78,6 +78,60 @@ public class DAOOrder extends DBConnect {
         return n;
     }
 
+
+    public Vector<Status> getStatus(String sql) {
+        Vector<Status> vector = new Vector<>();
+        try ( Statement state = conn.createStatement(
+                ResultSet.TYPE_SCROLL_SENSITIVE,
+                ResultSet.CONCUR_UPDATABLE);  ResultSet rs = state.executeQuery(sql)) {
+
+            while (rs.next()) {
+                int statusID = rs.getInt(1);
+                String statusName = rs.getString(2);
+                Status status = new Status(statusID, statusName);
+                vector.add(status);
+            }
+        } catch (SQLException ex) {
+            // Handle SQLException appropriately
+            Logger.getLogger(DAOOrder.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return vector;
+    }
+
+    public int UpdateSaleID(int sID, int orderID) {
+        int n = 0;
+        String sql = "UPDATE `online_shop_system`.`order`\n"
+                + "SET\n"
+                + "`SaleID` = ?\n"
+                + "WHERE `OrderID` = ?;";
+        try {
+            PreparedStatement pre = conn.prepareStatement(sql);
+            pre.setInt(1, sID);
+            pre.setInt(2, orderID);
+            n = pre.executeUpdate();
+        } catch (SQLException ex) {
+            Logger.getLogger(DAOCart.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return n;
+    }
+    public int updateStatus1(int statusID, int orderId) {
+        int n = 0;
+        String sql = "UPDATE `online_shop_system`.`order`\n"
+                + "SET\n"
+                + "`StatusID` = ?\n"
+                + "WHERE `OrderID` = ?;";
+        try {
+            PreparedStatement pre = conn.prepareStatement(sql);
+            pre.setInt(1, statusID);
+            pre.setInt(2, orderId);
+            n = pre.executeUpdate();
+        } catch (SQLException ex) {
+            Logger.getLogger(DAOCart.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return n;
+    }
+    
+
     public Status getStatusById(int StatusID) {
 
         String sql = "select * from `Status` where StatusID =?";
