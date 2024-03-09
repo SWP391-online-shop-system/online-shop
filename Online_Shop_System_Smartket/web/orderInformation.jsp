@@ -516,7 +516,9 @@
                             </form>
                             <%}%>
                         </div>
-                        <button class="btn-rebuy" style="margin-top: 17px;width: 70px;"><a style="color: white;font-size: 14px;"href="#">Trở về</a></button>
+                        <button class="btn-rebuy" style="margin-top: 17px;width: 70px;float:left;"><a style="color: white;font-size: 14px;"href="#">Trở về</a></button>
+                        <button class="btn-rebuy" style="width: 70px;height: 26px;margin-top: 17px;font-size: 14px;"><a style="color: white;" href="#">Mua lại</a></button>
+
                     </div>
                     <div class="col-sm-6 col-lg-6 mb-3"style="flex: 0 0 40%">
                         <div class="row">
@@ -593,12 +595,12 @@
                                                                      margin-right: 12px;" src="<%=productImage.getProductURLShow()%>"/></td>
                                                             <td style="font-size: 14px;width: 160px;"><div class="media-body"> <a href="ProductDetailURL?ProductID=<%=product.getProductID()%>"><%=product.getProductName()%></a></td>
                                                             <td style="font-size: 14px;padding-left: 25px;"><%=categories.getCategoryName()%></td>
-                                                        <button class="btn-rebuy" style="margin: 14px 1px 0px 0px;"><a style="color: white;" href="#">Mua lại</a></button>
+
                                                         </tr>
                                                     </table>
                                                 </div>
-                                                <div class="small text-muted" style="color: black;">Giá tiền:&nbsp;<%=df.format(rsOrderDetail.getDouble("UnitPrice"))%>đ<span class="mx-2">|</span> Số lượng:&nbsp;<%=rsOrderDetail.getInt("QuantityPerUnit")%> <span class="mx-2">|
-                                                    </span> Tổng tiền:&nbsp;<%=df.format(rsOrderDetail.getDouble("UnitPrice")*rsOrderDetail.getInt("QuantityPerUnit"))%>đ<button class="btn-rebuy" style="width: 88px;"><a style="color: white">Gửi phản hồi</a></button></div>
+                                                <div class="small text-muted" style="color: black;">Giá tiền:&nbsp;<%=df.format(rsOrderDetail.getDouble("UnitPrice"))%>đ<span class="mx-2" style="margin-left: 4px !important;margin-right: 4px !important;">|</span> Số lượng:&nbsp;<%=rsOrderDetail.getInt("QuantityPerUnit")%> <span class="mx-2"style="margin-left: 4px !important;margin-right: 4px !important;">|
+                                                    </span> Tổng tiền:&nbsp;<%=df.format(rsOrderDetail.getDouble("UnitPrice")*rsOrderDetail.getInt("QuantityPerUnit"))%>đ<button class="btn-rebuy" style="width: 88px;margin-top: -6px;"><a style="color: white">Gửi phản hồi</a></button></div>
                                             </div>
                                         </div>    
                                         <%}%>

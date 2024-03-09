@@ -288,7 +288,7 @@
                                     User user = (User) session2.getAttribute("account");
                                     int userID = user.getUserID();
                                     DAOCart dao = new DAOCart();
-                                    ResultSet rs = dao.getData("SELECT count(*) as count FROM Cart AS c JOIN Product AS p ON c.ProductID = p.ProductID where userID = "+userID+"");
+                                    ResultSet rs = dao.getData("SELECT count(*) as count FROM Cart AS c JOIN Product AS p ON c.ProductID = p.ProductID where ProductStatus = 0 and userID = "+userID+"");
                                     while(rs.next()){
                                 %>
                                 <span class="count-cart" style="margin-right: -11px;
@@ -336,7 +336,7 @@
                                         <div class="row" style="display: contents">
                                             <%
                                                 DAOProduct dao = new DAOProduct();
-                                                ResultSet rsHotPro = dao.getData("select * from Product as p join ProductImage as pi on p.ProductID = pi.ProductID where  pi.ProductURL like '%_1%'\n"
+                                                ResultSet rsHotPro = dao.getData("select * from Product as p join ProductImage as pi on p.ProductID = pi.ProductID where ProductStatus = 0 and pi.ProductURL = pi.ProductURLShow\n"
                                                 +"group by p.ProductID having min(p.TotalStock - p.UnitInStock) > 0 order by (p.TotalStock - p.UnitInStock) desc limit 1");
                                             while(rsHotPro.next()) {
                                             %>
@@ -354,7 +354,7 @@
                                                     <%}%>
                                                     <%    ResultSet rsNew2Product = dao.getData("select * from product as p join productImage as pi "
                                                        + "on p.ProductID = pi.ProductID "
-                                                       + "where pi.ProductURL like '%_1%' "
+                                                       + "where ProductStatus = 0 and pi.ProductURL = pi.ProductURLShow "
                                                        + "order by p.CreateDate desc limit 6 ");
                                                          while(rsNew2Product.next()) {
                                                             if(rsHotPro.getString("CreateDate").substring(0,10).equals(rsNew2Product.getString("CreateDate").substring(0,10))){%>
@@ -582,7 +582,7 @@
                                         <%}%>
                                         <%    ResultSet rsNewProduct = dao.getData("select * from product as p join productImage as pi "
                                         + "on p.ProductID = pi.ProductID "
-                                        + "where pi.ProductURL like '%_1%' "
+                                        + "where pi.ProductURL = pi.ProductURLShow "
                                         + "order by p.CreateDate desc limit 6 ");
                                         while(rsNewProduct.next()) {
                                              if(rsPaging.getString("CreateDate").substring(0,10).equals(rsNewProduct.getString("CreateDate").substring(0,10))){%>

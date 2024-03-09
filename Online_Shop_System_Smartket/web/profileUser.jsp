@@ -477,7 +477,7 @@
                     <div class="card mb-4">
                         
                         <div class="card-body text-center">
-                            <img src="images/user/<%=newAvt%>" alt="avatar" class="rounded-circle img-fluid" style="width: 132px;
+                            <img src="images/user/${sessionScope.account.userImage}" alt="avatar" class="rounded-circle img-fluid" style="width: 132px;
                                  border-radius: 70px;
                                  height: 126px;">
                             <h5 class="my-3">${sessionScope.account.firstName}&nbsp;${sessionScope.account.lastName}</h5>

@@ -12,6 +12,7 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import model.DAOProduct;
 
 /**
@@ -76,10 +77,9 @@ public class ControllerOrderInformation extends HttpServlet {
         ResultSet rsOrder = daoPro.getData("select * from `Order` where OrderID =" + OrderID);
         request.setAttribute("rsOrder", rsOrder);
         //get data from OrderDetail
-         ResultSet rsOrderDetail = daoPro.getData("select * from OrderDetail where OrderID =" + OrderID);
+        ResultSet rsOrderDetail = daoPro.getData("select * from OrderDetail where OrderID =" + OrderID);
         request.setAttribute("rsOrderDetail", rsOrderDetail);
         request.setAttribute("OrderID", OrderID);
-        
         request.getRequestDispatcher("orderInformation.jsp").forward(request, response);
     }
 

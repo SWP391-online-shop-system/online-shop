@@ -34,7 +34,7 @@
         <title>San pham</title>
 
         <!-- Css Styles -->
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+      
         <link rel="stylesheet" href="css/css_header/header.css" type="text/css">
         <link rel="stylesheet" href="css/css_productList/bootstrap.min.css" type="text/css">
         <link rel="stylesheet" href="css/css_productList/font-awesome.min.css" type="text/css">
@@ -339,7 +339,7 @@
                                         <div class="row" style="display: contents">
                                             <%
                                                 DAOProduct dao = new DAOProduct();
-                                                ResultSet rsHotPro = dao.getData("select * from Product as p join ProductImage as pi on p.ProductID = pi.ProductID where  pi.ProductURL = pi.ProductURLShow \n"
+                                                ResultSet rsHotPro = dao.getData("select * from Product as p join ProductImage as pi on p.ProductID = pi.ProductID where p.ProductStatus = 0 and  pi.ProductURL = pi.ProductURLShow \n"
                                                +  "group by p.ProductID having min(p.TotalStock - p.UnitInStock) >0 order by (p.TotalStock - p.UnitInStock) desc limit 1");
                                             if(rsHotPro.next()) {
                                             %>
@@ -356,7 +356,7 @@
                                                     <%}%>
                                                     <%    ResultSet rsNew2Product = dao.getData("select * from product as p join productImage as pi "
                                                        + "on p.ProductID = pi.ProductID "
-                                                       + "where pi.ProductURL like '%_1%' "
+                                                       + "where p.ProductStatus = 0 and pi.ProductURL = pi.ProductURLShow "
                                                        + "order by p.CreateDate desc limit 6 ");
                                                          while(rsNew2Product.next()) {
                                                             if(rsHotPro.getString("CreateDate").substring(0,10).equals(rsNew2Product.getString("CreateDate").substring(0,10))){%>
@@ -395,7 +395,6 @@
                                                     </div>
                                                 </div>
                                             </div>
-
                                             <%}%>
                                         </div>
                                     </div>

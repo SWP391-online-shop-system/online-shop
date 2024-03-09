@@ -37,7 +37,7 @@ public class DBConnect {
                     ResultSet.CONCUR_UPDATABLE);
             rs = state.executeQuery(sql);
         } catch (SQLException ex) {
-
+            System.err.println("GetData wrong sql: "+ex);
         }
         return rs;
     }

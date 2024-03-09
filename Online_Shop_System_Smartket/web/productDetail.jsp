@@ -20,17 +20,38 @@
 <html lang="en">
     <head>
         <meta charset="utf-8">
-        <title>product full detail - Bootdey.com</title>
+        <title>Chi tiết sản phẩm</title>
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <link href="https://netdna.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet">
+        <link rel="stylesheet" href="css/css_productList/font-awesome.min.css" type="text/css">
+        <link rel="stylesheet" href="css/css_productList/elegant-icons.css" type="text/css">
+        <link rel="stylesheet" href="css/css_productList/magnific-popup.css" type="text/css">
+        <link rel="stylesheet" href="css/css_productList/nice-select.css" type="text/css">
+        <link rel="stylesheet" href="css/css_productList/owl.carousel.min.css" type="text/css">
+        <link rel="stylesheet" href="css/css_productList/slicknav.min.css" type="text/css">
         <link rel="stylesheet" href="css/css_productDetail/style.css"/>
         <link rel="stylesheet" href="css/css_header/header.css"/>
+        <link rel="stylesheet" href="css/css_footer/footer.css"/>
         <link rel="stylesheet" href="css/css_productList/style.css"/>
         <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet" />
         <script src="https://kit.fontawesome.com/ac74b86ade.js" crossorigin="anonymous"></script>
         <style>
             body{
                 background: white;
+            }
+            .shop__sidebar__accordion .card-heading a::after, .shop__sidebar__accordion .card-heading > a.active[aria-expanded="false"]::after {
+                content: "";
+                font-family: FontAwesome;
+                font-size: 24px;
+                font-weight: 700;
+                color: rgb(17, 17, 17);
+                position: absolute;
+                right: 0px;
+                top: 2px;
+                line-height: 20px;
+            }
+            *, ::after, ::before {
+                box-sizing: border-box;
             }
         </style>
     </head>
@@ -347,7 +368,7 @@
                             </div>
                             <div class="product__item__text">
                                 <h6 style="text-align: center;"><%=rsHotPro.getString("ProductName")%></h6>
-                                <a href="#" class="add-cart" style="left: 12px;">+ Thêm vào giỏ</a><a style="margin-left: 136px;" href="#">Mua ngay</a>
+                                <a href="cartDetailURL?serivce=addcart" class="add-cart" style="left: 12px;">+ Thêm vào giỏ</a><a style="margin-left: 136px;" href="#">Mua ngay</a>
                                 <div style="display: flex;">
                                     <div class="rating" style="margin-left: 30px;">
                                         <%int star = (int)rsHotPro.getInt("totalRate");
@@ -466,7 +487,9 @@
                             </div>
                             <div class="row">
                                 <div style="text-align: center;margin-top: 23px;">
-                                    <form class="frm">
+                                    <form action="cartContactURL" class="frm">
+                                        <input type="hidden" name="uid"/>
+                                        <input type="hidden" name="qu"/>
                                         <div class="value-button" id="decrease" onclick="decreaseValue()" value="Decrease Value"><i class="fa-solid fa-minus" style="font-size: 14px;"></i></div>
                                         <input type="number" id="number" value="0" />
                                         <div class="value-button" id="increase" onclick="increaseValue()" value="Increase Value"><i class="fa-solid fa-plus" style="font-size: 14px;"></i></div><br/>
@@ -586,6 +609,66 @@
                 </div>
             </div>
         </div>
+        <!-- Footer Section Begin -->
+        <footer class="footer_1">
+            <div class="container_1" style="height: 270px;padding-top: 28px;">
+                <div class="row_1">
+                    <div class="col_1" id="company">
+                        <img style="width: 176px;
+                             margin-bottom: -19px;
+                             margin-top: 10px;height: 136px;" src="images/logo/logo.png" alt="" class="logo_1">
+                        <p style="font-family: poppins;font-size: 15px;color: white;">
+                            công ty Smartket Việt Nam, 54 Liễu Giai, quận Ba Đình, Hà Nội 
+                        </p>
+                        <div class="social_1">
+                            <a href="#"><i class="fab fa-facebook"></i></a>
+                            <a href="#"><i class="fa-brands fa-x-twitter"></i></a>
+                        </div>
+                    </div>
+
+
+                    <div class="col_1" id="services">
+                        <h3 class="footer_title_1">Dịch vụ</h3>
+                        <div class="links_1">
+                            <a href="#">Tuyển dụng</a>
+                            <a href="#">Quảng cáo</a>
+                            <a href="#">Chính sách</a>
+                        </div>
+                    </div>
+
+                    <div class="col_1" id="useful-links" style="margin-left: 50px;margin-right: 50px;">
+                        <h3 class="footer_title_1">Đường dẫn</h3>
+                        <div class="links_1">
+                            <a href="#">Về chúng tôi</a>
+                            <a href="#">Danh mục</a>
+                            <a href="#">Tin tức</a>
+                            <a href="#">Hỗ trợ</a>
+                        </div>
+                    </div>
+
+                    <div class="col_1" id="contact">
+                        <h3 class="footer_title_1">Liên hệ</h3>
+                        <div class="contact-details_1">
+                            <i class="fa-regular fa-envelope"></i>
+                            <p style="color: white;">Smartket@gmail.com</p>
+                        </div>
+                        <div class="contact-details_1">
+                            <i class="fa fa-phone"></i>
+                            <p style="color: white;">+84 99.999.999</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row_1">
+                    <div class="form_1" style="margin-top: -56px;">
+                        <form action="">
+                            <input class="email-input_1" style="height: 40px;" type="text" placeholder="Email here...">
+                            <button class="email-button_1" style="height: 43px;padding-top: 10px;"><i class="fa fa-paper-plane"></i></button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </footer>
         <script src="https://code.jquery.com/jquery-1.10.2.min.js"></script>
         <script src="https://netdna.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
         <script type="text/javascript">
@@ -604,5 +687,6 @@
                                                 document.getElementById('number').value = value;
                                             }
         </script>
+
     </body>
 </html>

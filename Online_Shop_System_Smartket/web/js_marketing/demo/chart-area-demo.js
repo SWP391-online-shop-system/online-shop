@@ -134,7 +134,7 @@ function drawChart() {
             datasets: [{
                     label: "thu nhập: ",
                     lineTension: 0.3,
-                    backgroundColor: "rgba(78, 115, 223, 0.5)",
+                    backgroundColor: "#edb9ff",
                     borderColor: "rgba(78, 115, 223, 1)",
                     pointRadius: 3,
                     pointBackgroundColor: "rgba(78, 115, 223, 1)",
