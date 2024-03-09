@@ -26,17 +26,17 @@
         <div id="wrapper">
             <!-- Sidebar -->
            <ul class="navbar-nav sidebar sidebar-light accordion" id="accordionSidebar">
-                <a class="sidebar-brand d-flex align-items-center justify-content-center" href="MarketingDashBoardURL">
+                <a class="sidebar-brand d-flex align-items-center justify-content-center" href="marketingDashBoardURL">
                     <div class="sidebar-brand-icon">
                         <img style="height: 91px;
                              width: 133px;
-                             margin-bottom: -18px;" src="images/logo/logo.png">
+                             margin-bottom: -18px;z-index: 99;" src="images/logo/logo.png">
                     </div>
                 </a>
                 <div style="position: sticky; top: 30px;">
                     <hr class="sidebar-divider wee-0" style="margin: 0px;">
                     <li class="nav-item active">
-                        <a class="nav-link" href="MarketingDashBoardURL">
+                        <a class="nav-link" href="marketingDashBoardURL">
                             <i class="fas fa-fw fa-tachometer-alt"></i>
                             <span>Thống kê</span></a>
                     </li>
@@ -45,25 +45,25 @@
                         Quản lí
                     </div>
                     <li class="nav-item">
-                        <a class="nav-link" href="mtkPost">
+                        <a class="nav-link" href="marketingPost">
                             <i class="fas fa-calendar fa-2x text-primary"></i>
                             <span>Bài đăng</span>
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="mktProductListURL">
+                        <a class="nav-link" href="marketingProductListURL">
                             <i class="fas fa-shopping-cart fa-2x text-success"></i>
                             <span>Sản phẩm</span>
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="customerlist">
+                        <a class="nav-link" href="marketingCustomerlist">
                             <i class="fas fa-users fa-2x text-info"></i>
                             <span>Khách hàng</span>
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="FeedBackListURL">
+                        <a class="nav-link" href="marketingFeedBackListURL">
                             <i class="fas fa-comments fa-2x text-info"></i>
                             <span>Phản hồi</span>
                         </a>
@@ -113,7 +113,7 @@
             <div id="editEmployeeModal">
                 <div class="modal-dialog">
                     <div class="modal-content">
-                        <form action="view" method="post" >
+                        <form action="marketingViewPost" method="post" >
                             <div class="modal-body">					
                                 <div class="form-group">
                                     <label>ID</label>
@@ -162,8 +162,8 @@
                                     <input value="${blog.createTime}" name="date" type="datetime" class="form-control"readonly required>
                                 </div>
                                 <div class="modal-footer">
-                                <input type="button" class="btn btn-danger" value="Quay lại trang quản lí" onclick="window.location.href='mtkPost';">
-                                <input type="button" class="btn btn-success" value="Cập nhật lại" onclick="window.location.href='editPost?BlogID=${blog.blogID}';">
+                                <input type="button" class="btn btn-danger" value="Quay lại trang quản lí" onclick="window.location.href='marketingPost';">
+                                <input type="button" class="btn btn-success" value="Cập nhật lại" onclick="window.location.href='marketingEditPost?BlogID=${blog.blogID}';">
                             </div>
                             </div>
                         </form>

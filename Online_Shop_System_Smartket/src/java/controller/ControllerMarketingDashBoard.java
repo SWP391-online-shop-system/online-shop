@@ -26,7 +26,7 @@ import model.DAOUser;
  *
  * @author admin
  */
-@WebServlet(name = "ControllerMarketingDashBoard", urlPatterns = {"/MarketingDashBoardURL"})
+@WebServlet(name = "ControllerMarketingDashBoard", urlPatterns = {"/marketingDashBoardURL"})
 public class ControllerMarketingDashBoard extends HttpServlet {
 
     /**

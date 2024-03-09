@@ -65,7 +65,7 @@
         <div id="wrapper">
             <!-- Sidebar -->
             <ul class="navbar-nav sidebar sidebar-light accordion" id="accordionSidebar">
-                <a class="sidebar-brand d-flex align-items-center justify-content-center" href="MarketingDashBoardURL">
+                <a class="sidebar-brand d-flex align-items-center justify-content-center" href="marketingDashBoardURL">
                     <div class="sidebar-brand-icon">
                         <img style="height: 91px;
                              width: 133px;
@@ -75,7 +75,7 @@
                 <div style="position: sticky; top: 30px;">
                     <hr class="sidebar-divider wee-0" style="margin: 0px;">
                     <li class="nav-item active">
-                        <a class="nav-link" href="MarketingDashBoardURL">
+                        <a class="nav-link" href="marketingDashBoardURL">
                             <i class="fas fa-fw fa-tachometer-alt"></i>
                             <span>Thống kê</span></a>
                     </li>
@@ -84,25 +84,25 @@
                         Quản lí
                     </div>
                     <li class="nav-item">
-                        <a class="nav-link" href="mtkPost">
+                        <a class="nav-link" href="marketingPost">
                             <i class="fas fa-calendar fa-2x text-primary"></i>
                             <span>Bài đăng</span>
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="mktProductListURL">
+                        <a class="nav-link" href="marketingProductListURL">
                             <i class="fas fa-shopping-cart fa-2x text-success"></i>
                             <span>Sản phẩm</span>
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="customerlist">
+                        <a class="nav-link" href="marketingCustomerlist">
                             <i class="fas fa-users fa-2x text-info"></i>
                             <span>Khách hàng</span>
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="FeedBackListURL">
+                        <a class="nav-link" href="marketingFeedBackListURL">
                             <i class="fas fa-comments fa-2x text-info"></i>
                             <span>Phản hồi</span>
                         </a>
@@ -157,7 +157,7 @@
                             }
                         </script>
 
-                        <a style="margin-bottom: 10px;" href="addPost?service=addPost" class="btn btn-secondary">Thêm bài viết mới</a>
+                        <a style="margin-bottom: 10px;" href="marketingAddPost?service=addPost" class="btn btn-secondary">Thêm bài viết mới</a>
                         <div class="row">
                             <!-- DataTable with Hover -->
                             <div class="col-lg-12">
@@ -167,7 +167,7 @@
                                             <div style="display: inline-grid;
                                                  margin-left: 200px;
                                                  margin-bottom: -30px;">
-                                                <form action="mtkPost" method="get" id="categoryForm">
+                                                <form action="marketingPost" method="get" id="categoryForm">
                                                     <div style="display: flex;margin-left: -19px;">
                                                         <div class="filter-group" style="display:flex;">
                                                             <div style="padding-top: 3px;">Danh mục</div>
@@ -249,7 +249,7 @@
                                                     <td><%=rs.getString("CategoryName")%></td>
                                                     <td><%=rs.getInt("BlogRate")%> sao</td>
                                                     <td>
-                                                        <input id="statuss" style="<%=status.equals("Kích hoạt")?"":"background: red;"%>" type="button" value="<%= status %>" onclick="window.location.href = 'mtkPost?BlogID=<%=rs.getInt("BlogID")%>&hidden=<%= hidden %>';">
+                                                        <input id="statuss" style="<%=status.equals("Kích hoạt")?"":"background: red;"%>" type="button" value="<%= status %>" onclick="window.location.href = 'marketingPost?BlogID=<%=rs.getInt("BlogID")%>&hidden=<%= hidden %>';">
                                                     </td>
                                                     <td><%=rs.getDate("CreateTime")%> </td>
                                                     <td>
@@ -258,8 +258,8 @@
                                                                 Hành động
                                                             </button>
                                                             <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                                                <a class="dropdown-item" href="view?BlogID=<%=rs.getInt("BlogID")%>">Xem</a>
-                                                                <a class="dropdown-item" href="editPost?BlogID=<%= rs.getInt("BlogID") %>">Chỉnh sửa</a>
+                                                                <a class="dropdown-item" href="marketingViewPost?BlogID=<%=rs.getInt("BlogID")%>">Xem</a>
+                                                                <a class="dropdown-item" href="marketingEditPost?BlogID=<%= rs.getInt("BlogID") %>">Chỉnh sửa</a>
                                                             </div>
                                                         </div>
                                                     </td>

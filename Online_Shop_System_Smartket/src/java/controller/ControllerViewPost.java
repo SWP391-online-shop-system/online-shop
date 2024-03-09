@@ -21,7 +21,7 @@ import view.Categories;
  *
  * @author admin
  */
-@WebServlet(name="ControllerViewPost", urlPatterns={"/view"})
+@WebServlet(name="ControllerViewPost", urlPatterns={"/marketingViewPost"})
 public class ControllerViewPost extends HttpServlet {
    
     /** 

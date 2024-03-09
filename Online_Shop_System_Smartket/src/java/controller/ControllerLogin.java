@@ -82,7 +82,7 @@ public class ControllerLogin extends HttpServlet {
                 dao.updateLastLogin(user.getUserID());
                 session.setAttribute("account", user);
                 if (user.getRoleID() == 2) {
-                    response.sendRedirect("MarketingDashBoardURL");
+                    response.sendRedirect("marketingDashBoardURL");
                 } else {
                     response.sendRedirect("HomePageURL");
                 }

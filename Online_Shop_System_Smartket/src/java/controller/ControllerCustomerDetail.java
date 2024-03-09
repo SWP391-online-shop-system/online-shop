@@ -22,7 +22,7 @@ import view.User;
  *
  * @author trant
  */
-@WebServlet(name = "ControllerCustomerDetail", urlPatterns = {"/customerDetail"})
+@WebServlet(name = "ControllerCustomerDetail", urlPatterns = {"/marketingCustomerDetail"})
 public class ControllerCustomerDetail extends HttpServlet {
 
     /**

@@ -6,39 +6,40 @@ package view;
 
 /**
  *
- * @author HP
+ * @author admin
  */
 public class Status {
-    private int statusID;
-    private String statusName;
+
+    private int StatusID;
+    private String StatusName;
 
     public Status() {
     }
 
-    public Status(int statusID, String statusName) {
-        this.statusID = statusID;
-        this.statusName = statusName;
+    public Status(int StatusID, String StatusName) {
+        this.StatusID = StatusID;
+        this.StatusName = StatusName;
     }
 
     public int getStatusID() {
-        return statusID;
+        return StatusID;
     }
 
-    public void setStatusID(int statusID) {
-        this.statusID = statusID;
+    public void setStatusID(int StatusID) {
+        this.StatusID = StatusID;
     }
 
     public String getStatusName() {
-        return statusName;
+        return StatusName;
     }
 
-    public void setStatusName(String statusName) {
-        this.statusName = statusName;
+    public void setStatusName(String StatusName) {
+        this.StatusName = StatusName;
     }
 
     @Override
     public String toString() {
-        return "Status{" + "statusID=" + statusID + ", statusName=" + statusName + '}';
+        return "Status{" + "StatusID=" + StatusID + ", StatusName=" + StatusName + '}';
     }
-    
+
 }

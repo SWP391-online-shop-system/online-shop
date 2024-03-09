@@ -11,16 +11,17 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 import java.sql.ResultSet;
-import model.DAOProduct;
+import model.DAOOrder;
+import view.User;
 
 /**
  *
- * @author HP
+ * @author admin
  */
-//@WebServlet(name = "ControllerViewProductmkt", urlPatterns = {"/mktViewProductURL"})
-@WebServlet(name = "ControllerViewProductmkt", urlPatterns = {"/marketingViewProductURL"})
-public class ControllerViewProductmkt extends HttpServlet {
+@WebServlet(name = "ControllerMyOrder", urlPatterns = {"/MyOrderURL"})
+public class ControllerMyOrder extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -35,8 +36,37 @@ public class ControllerViewProductmkt extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         try ( PrintWriter out = response.getWriter()) {
-            /* TODO output your page here. You may use following sample code. */
+            DAOOrder daoOrd = new DAOOrder();
+            HttpSession session = request.getSession();
+            User user = (User) session.getAttribute("account");
+            
+            String message = "";
 
+            if (user == null) {
+                message = "can dang nhap";
+                request.setAttribute("message", message);
+                request.getRequestDispatcher("loginURL").forward(request, response);
+            } else {
+                int UserID = user.getUserID();
+                String indexPage = request.getParameter("index");
+                if (indexPage == null) {
+                    indexPage = "1";
+                }
+                int index = Integer.parseInt(indexPage);
+                int pagingindex = (index - 1) * 3;
+                ResultSet rsOrderGroup = daoOrd.getData("SELECT * FROM `order` as o\n"
+                        + "JOIN `OrderDetail` as od ON o.orderID = od.orderID\n"
+                        + "where o.UserID = " + UserID + " group BY o.orderID limit " + pagingindex + ", 3");
+                int count = daoOrd.getTotalOrderOfUser(UserID);
+                int endPage = count / 3;
+                if (count % 3 != 0) {
+                    endPage++;
+                }
+                request.setAttribute("rsOrderGroup", rsOrderGroup);
+                request.setAttribute("endP", endPage);
+                request.setAttribute("tag", index);
+                request.getRequestDispatcher("MyOrder.jsp").forward(request, response);
+            }
         }
     }
 
@@ -52,16 +82,7 @@ public class ControllerViewProductmkt extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        DAOProduct dao = new DAOProduct();
-        String pID = request.getParameter("productId");
-        int id = Integer.parseInt(pID);
-        ResultSet rs = dao.getData("SELECT *"
-                + "FROM product AS p \n"
-                + "JOIN productImage AS pi ON p.ProductID = pi.ProductID\n"
-                + "JOIN Categories AS c ON p.CategoryID = c.CategoryID\n"
-                + "where p.ProductID = " + id);
-        request.setAttribute("data", rs);
-        request.getRequestDispatcher("viewProductmkt.jsp").forward(request, response);
+        processRequest(request, response);
     }
 
     /**

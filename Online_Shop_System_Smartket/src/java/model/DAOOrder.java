@@ -9,6 +9,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.Vector;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import view.Categories;
@@ -78,6 +80,7 @@ public class DAOOrder extends DBConnect {
         return n;
     }
 
+
     public Vector<Status> getStatus(String sql) {
         Vector<Status> vector = new Vector<>();
         try ( Statement state = conn.createStatement(
@@ -139,5 +142,48 @@ public class DAOOrder extends DBConnect {
             System.out.println("Not ok");
         }
         System.out.println(n);
+
+    public Status getStatusById(int StatusID) {
+
+        String sql = "select * from `Status` where StatusID =?";
+        try {
+            PreparedStatement st = conn.prepareStatement(sql);
+            st.setInt(1, StatusID);
+            ResultSet rs = st.executeQuery();
+            while (rs.next()) {
+                Status pro = new Status(
+                        rs.getInt("StatusID"),
+                        rs.getString("StatusName")
+                );
+                return pro;
+            }
+        } catch (SQLException e) {
+            System.out.println(e);
+        }
+        return null;
+    }
+    
+    public int getTotalOrderOfUser(int userID) {
+        String sql = "select count(*) from `order` where UserID = ?";
+        try {
+            Statement state = conn.createStatement(
+                    ResultSet.TYPE_SCROLL_SENSITIVE,
+                    ResultSet.CONCUR_UPDATABLE);
+            PreparedStatement st = conn.prepareStatement(sql);
+            st.setInt(1, userID);
+            ResultSet rs = st.executeQuery();
+            while (rs.next()) {
+                return rs.getInt(1);
+            }
+        } catch (Exception e) {
+        }
+        return 0;
+    }
+    
+    public static void main(String[] args) {
+        DAOOrder dao =new DAOOrder();
+        int a = dao.getTotalOrderOfUser(10);
+        System.out.println(a);
+
     }
 }

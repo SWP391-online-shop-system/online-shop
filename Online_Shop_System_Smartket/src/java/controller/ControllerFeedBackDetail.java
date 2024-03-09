@@ -26,7 +26,7 @@ import view.User;
  *
  * @author admin
  */
-@WebServlet(name = "ControllerFeedBackDetail", urlPatterns = {"/FeedBackDetailURL"})
+@WebServlet(name = "ControllerFeedBackDetail", urlPatterns = {"/marketingFeedBackDetailURL"})
 public class ControllerFeedBackDetail extends HttpServlet {
 
     /**
