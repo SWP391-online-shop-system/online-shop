@@ -516,7 +516,7 @@
                             </form>
                             <%}%>
                         </div>
-                        <button class="btn-rebuy" style="margin-top: 17px;width: 70px;float:left;"><a style="color: white;font-size: 14px;"href="#">Trở về</a></button>
+                        <button class="btn-rebuy" style="margin-top: 17px;width: 70px;float:left;"><a style="color: white;font-size: 14px;"href="MyOrderURL">Trở về</a></button>
                         <button class="btn-rebuy" style="width: 70px;height: 26px;margin-top: 17px;font-size: 14px;"><a style="color: white;" href="#">Mua lại</a></button>
 
                     </div>

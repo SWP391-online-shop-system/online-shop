@@ -14,6 +14,7 @@ import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import java.sql.ResultSet;
 import model.DAOOrder;
+import model.DAOProduct;
 import view.User;
 
 /**
@@ -37,9 +38,10 @@ public class ControllerMyOrder extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         try ( PrintWriter out = response.getWriter()) {
             DAOOrder daoOrd = new DAOOrder();
+            DAOProduct daoPro = new DAOProduct();
             HttpSession session = request.getSession();
             User user = (User) session.getAttribute("account");
-            
+
             String message = "";
 
             if (user == null) {
@@ -47,6 +49,12 @@ public class ControllerMyOrder extends HttpServlet {
                 request.setAttribute("message", message);
                 request.getRequestDispatcher("loginURL").forward(request, response);
             } else {
+                double maxValue = daoPro.getMaxUnitPrice();
+                double minValue = daoPro.getMinUnitPrice();
+                request.setAttribute("inputMinPrice", minValue);
+                request.setAttribute("inputMaxPrice", maxValue);
+                ResultSet rsCategory = daoPro.getData("Select * from Categories");
+                request.setAttribute("CategoryResult", rsCategory);
                 int UserID = user.getUserID();
                 String indexPage = request.getParameter("index");
                 if (indexPage == null) {

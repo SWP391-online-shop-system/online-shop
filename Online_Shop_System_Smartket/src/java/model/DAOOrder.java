@@ -80,7 +80,6 @@ public class DAOOrder extends DBConnect {
         return n;
     }
 
-
     public Vector<Status> getStatus(String sql) {
         Vector<Status> vector = new Vector<>();
         try ( Statement state = conn.createStatement(
@@ -116,6 +115,7 @@ public class DAOOrder extends DBConnect {
         }
         return n;
     }
+
     public int updateStatus1(int statusID, int orderId) {
         int n = 0;
         String sql = "UPDATE `online_shop_system`.`order`\n"
@@ -132,16 +132,6 @@ public class DAOOrder extends DBConnect {
         }
         return n;
     }
-    public static void main(String[] args) {
-        DAOOrder dao = new DAOOrder();
-        int n = 0;
-        n = dao.updateStatus1(4, 5);
-        if(n > 0){
-            System.out.println("OK");
-        }else {
-            System.out.println("Not ok");
-        }
-        System.out.println(n);
 
     public Status getStatusById(int StatusID) {
 
@@ -162,7 +152,7 @@ public class DAOOrder extends DBConnect {
         }
         return null;
     }
-    
+
     public int getTotalOrderOfUser(int userID) {
         String sql = "select count(*) from `order` where UserID = ?";
         try {
@@ -179,11 +169,5 @@ public class DAOOrder extends DBConnect {
         }
         return 0;
     }
-    
-    public static void main(String[] args) {
-        DAOOrder dao =new DAOOrder();
-        int a = dao.getTotalOrderOfUser(10);
-        System.out.println(a);
 
-    }
 }
