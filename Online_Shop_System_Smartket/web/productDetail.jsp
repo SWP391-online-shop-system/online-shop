@@ -82,10 +82,10 @@
                         <div><a href="#" title="Trang Facebook chúng tôi"><i class="fa-brands fa-facebook"></i></a></div>
                         <div><a href="#" title="Trang Twitter của chúng tôi"><i class="fa-brands fa-x-twitter"></i></a></div>
                     </div>
-                    <div class="header-title-right-about">
+                    <div class="header-title-right-about" style="font-size: 14px;">
                         <a href="#">Về chúng tôi</a>
                     </div>
-                    <div class="header-title-right-login">
+                    <div class="header-title-right-login" style="font-size: 14px;">
                         <!DOCTYPE html>
                         <html lang="en">
                             <head>
@@ -122,7 +122,7 @@
                                     <a href="profileUser.jsp"><img style="width: 30px;
                                                                    height: 30px;
                                                                    margin-right: -10px;
-                                                                   margin-bottom: -8px;
+                                                                   margin-bottom: -1px;
                                                                    margin-left: 7px;
                                                                    border-radius: 50%;" class="styling1" src="images/user/default_avatar.jpg" alt="Admin Image"></a>
                                     </c:if>
@@ -380,14 +380,14 @@
                                 </div>
                                 <div style="display: flex;flex-direction: row;justify-content: space-between;">
                                     <%if(rsHotPro.getInt("UnitDiscount")!= 0){%>
-                                    <div style="color: red;font-weight: 700;font-size: 15px; flex: 0 0 50%; text-decoration: line-through;"><%=df.format(rsHotPro.getDouble("UnitPrice"))%></div>
-                                    <div style="color: #0d0d0d;font-weight: 700;font-size: 15px; flex: 0 0 50%"><%=df.format(rsHotPro.getDouble("UnitPrice")*(100-rsHotPro.getInt("UnitDiscount"))/100)%></div>
+                                    <div style="color: red;font-weight: 700;font-size: 15px; flex: 0 0 50%; text-decoration: line-through;"><%=df.format(rsHotPro.getDouble("UnitPrice"))%>đ</div>
+                                    <div style="color: #0d0d0d;font-weight: 700;font-size: 15px; flex: 0 0 50%"><%=df.format(rsHotPro.getDouble("UnitPrice")*(100-rsHotPro.getInt("UnitDiscount"))/100)%>đ</div>
                                     <%} else {%>
                                     <div style="font-weight: 700;
                                          font-size: 15px;
                                          flex: -2 0 43%;
                                          margin-left: 146px;
-                                         margin-top: -26px;"><%=df.format(rsHotPro.getDouble("UnitPrice"))%></div>
+                                         margin-top: -26px;"><%=df.format(rsHotPro.getDouble("UnitPrice"))%>đ</div>
                                     <%}%>
                                 </div>
                             </div>
