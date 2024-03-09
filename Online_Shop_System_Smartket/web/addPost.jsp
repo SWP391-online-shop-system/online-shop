@@ -157,8 +157,8 @@
                                             <div class="form-group">
                                                 <label>Trạng thái</label>
                                                 <select name="hidden" class="form-select" aria-label="Default select example">
-                                                    <option value="1">Hiện</option>
-                                                    <option value="0">Ẩn</option>
+                                                    <option value="0">Hiện</option>
+                                                    <option value="1">Ẩn</option>
                                                 </select>
                                             </div>
                                         </div>

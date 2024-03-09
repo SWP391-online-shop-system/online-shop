@@ -160,8 +160,8 @@
                                             <div class="form-group">
                                                 <label>Trạng thái</label>
                                                 <select name="hidden" class="form-select" aria-label="Default select example">
-                                                    <option value="1" ${blog.hiddenStatus eq 1 ? 'selected' : ''}>Hiện</option>
-                                                    <option value="0" ${blog.hiddenStatus eq 0 ? 'selected' : ''}>Ẩn</option>
+                                                    <option value="1" ${blog.hiddenStatus eq 0 ? 'selected' : ''}>Hiện</option>
+                                                    <option value="0" ${blog.hiddenStatus eq 1 ? 'selected' : ''}>Ẩn</option>
                                                 </select>
                                             </div>
                                             <div class="form-group">

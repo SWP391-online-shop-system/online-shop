@@ -133,7 +133,7 @@ public class DAOBlog extends DBConnect {
         List<Blog> list = new ArrayList<>();
         String sql = "select * from Blog\n"
                 + "where BlogTitle like ?\n"
-                + "and HiddenStatus = 1\n"
+                + "and HiddenStatus = 0\n"
                 + "order by BlogID desc\n"
                 + "LIMIT ?, 6";
         try {
@@ -167,7 +167,7 @@ public class DAOBlog extends DBConnect {
         List<Blog> list = new ArrayList<>();
         String sql = "select * from Blog\n"
                 + "where CategoryID like ?\n"
-                + "and HiddenStatus =1\n"
+                + "and HiddenStatus =0\n"
                 + "order by BlogID desc\n"
                 + "LIMIT ?, 6";
         try {
@@ -200,7 +200,7 @@ public class DAOBlog extends DBConnect {
     public List<Blog> getAllBlog() {
         List<Blog> list = new ArrayList<>();
         String sql = "select * from Blog\n"
-                + "where HiddenStatus =1";
+                + "where HiddenStatus =0";
         try {
             Statement state = conn.createStatement(
                     ResultSet.TYPE_SCROLL_SENSITIVE,
@@ -300,7 +300,7 @@ public class DAOBlog extends DBConnect {
         List<Blog> list = new ArrayList<>();
         String sql = "SELECT*\n"
                 + "FROM Blog\n"
-                + "where HiddenStatus =1\n"
+                + "where HiddenStatus =0\n"
                 + "ORDER BY BlogID DESC\n"
                 + "LIMIT 3";
         try {
@@ -331,7 +331,7 @@ public class DAOBlog extends DBConnect {
         List<Blog> list = new ArrayList<>();
         String sql = "SELECT * \n"
                 + "FROM Blog\n"
-                + "where HiddenStatus =1\n"
+                + "where HiddenStatus =0\n"
                 + "order by BlogRate desc\n"
                 + "LIMIT 3";
         try {
@@ -361,7 +361,7 @@ public class DAOBlog extends DBConnect {
     public int getTotalSearchBlog(String txtSearch) {
         String sql = "select count(*) from Blog\n"
                 + "where BlogTitle like ?\n"
-                + "and HiddenStatus =1\n";
+                + "and HiddenStatus =0\n";
         try {
             Statement state = conn.createStatement(
                     ResultSet.TYPE_SCROLL_SENSITIVE,
@@ -380,7 +380,7 @@ public class DAOBlog extends DBConnect {
     public int getTotalBlog() {
         String sql = "SELECT count(*)\n"
                 + "FROM Blog\n"
-                + "where HiddenStatus =1\n";
+                + "where HiddenStatus =0\n";
         try {
             Statement state = conn.createStatement(
                     ResultSet.TYPE_SCROLL_SENSITIVE,
@@ -397,7 +397,7 @@ public class DAOBlog extends DBConnect {
     public int getTotalCategoriesBlog(int Cid) {
         String sql = "select count(*) from Blog\n"
                 + "where CategoryID like ?\n"
-                + "and HiddenStatus =1\n";
+                + "and HiddenStatus =0\n";
         try {
             Statement state = conn.createStatement(
                     ResultSet.TYPE_SCROLL_SENSITIVE,
@@ -417,7 +417,7 @@ public class DAOBlog extends DBConnect {
         List<Blog> list = new ArrayList<>();
         String sql = "SELECT*\n"
                 + "FROM Blog\n"
-                + "where HiddenStatus =1\n"
+                + "where HiddenStatus =0\n"
                 + "order by BlogID desc\n"
                 + "LIMIT ?, 6";
         try {

@@ -151,7 +151,7 @@
                                 </div>
                                 <div class="form-group">
                                     <label>Trạng thái</label>
-                                    <input value="${blog.hiddenStatus == 1 ? 'Hiện' : 'Ẩn'}" name="rate" type="text" class="form-control" readonly required>
+                                    <input value="${blog.hiddenStatus == 0 ? 'Hiện' : 'Ẩn'}" name="rate" type="text" class="form-control" readonly required>
                                 </div>
                                 <div class="form-group">
                                     <label>Đánh giá</label>
