@@ -87,13 +87,13 @@ public class ControlllerEditPost extends HttpServlet {
             String realFileName1 = filename1;
             String realFileName2 = filename2;
 
-//            if (filename1.contains("\\build")) {
-//                realFileName1 = filename1.replace("\\build", "");
-//            }
-//
-//            if (filename2.contains("\\build")) {
-//                realFileName2 = filename2.replace("\\build", "");
-//            }
+            if (filename1.contains("\\build")) {
+                realFileName1 = filename1.replace("\\build", "");
+            }
+
+            if (filename2.contains("\\build")) {
+                realFileName2 = filename2.replace("\\build", "");
+            }
             if (photo1.getSize() > 0) {
                 photo1.write(realFileName1);
             }
