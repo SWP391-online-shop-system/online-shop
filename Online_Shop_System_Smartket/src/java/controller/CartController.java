@@ -128,26 +128,26 @@ public class CartController extends HttpServlet {
                 int n = dao.deleteAllCart(userID);
                 response.sendRedirect("CartURL");
             }
-            if (service.equals("incquantity")) {
-                String pid_raw = request.getParameter("proid");
-                int pid = Integer.parseInt(pid_raw);
-                Cart cart = dao.getCartByUser(userID, pid);
-                cart.setQuantity(cart.getQuantity() + 1);
-                int n = dao.updateCartByUserAndPro(cart, userID, pid);
-                response.sendRedirect("CartURL");
-            }
-            if (service.equals("decquantity")) {
-                String pid_raw = request.getParameter("proid");
-                int pid = Integer.parseInt(pid_raw);
-                Cart cart = dao.getCartByUser(userID, pid);
-                if (cart.getQuantity() <= 1) {
-                    int n = dao.deleteCart(userID, pid);
-
-                }
-                cart.setQuantity(cart.getQuantity() - 1);
-                int n = dao.updateCartByUserAndPro(cart, userID, pid);
-                response.sendRedirect("CartURL");
-            }
+//            if (service.equals("incquantity")) {
+//                String pid_raw = request.getParameter("proid");
+//                int pid = Integer.parseInt(pid_raw);
+//                Cart cart = dao.getCartByUser(userID, pid);
+//                cart.setQuantity(cart.getQuantity() + 1);
+//                int n = dao.updateCartByUserAndPro(cart, userID, pid);
+//                response.sendRedirect("CartURL");
+//            }
+//            if (service.equals("decquantity")) {
+//                String pid_raw = request.getParameter("proid");
+//                int pid = Integer.parseInt(pid_raw);
+//                Cart cart = dao.getCartByUser(userID, pid);
+//                if (cart.getQuantity() <= 1) {
+//                    int n = dao.deleteCart(userID, pid);
+//
+//                }
+//                cart.setQuantity(cart.getQuantity() - 1);
+//                int n = dao.updateCartByUserAndPro(cart, userID, pid);
+//                response.sendRedirect("CartURL");
+//            }
 
         }
     }

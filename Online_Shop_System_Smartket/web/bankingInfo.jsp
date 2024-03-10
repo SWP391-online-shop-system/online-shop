@@ -25,7 +25,7 @@
         <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css">
         <link href="css/ruang-admin.min.css" rel="stylesheet">
         <script src="https://kit.fontawesome.com/ac74b86ade.js" crossorigin="anonymous"></script>
-        <title>Giỏ Hàng</title>
+        <title>Thông tin thanh toán</title>
         <style>
             body{
                 margin: 5px -5px;
