@@ -521,7 +521,12 @@
                         </div>
                         <button class="btn-rebuy" style="margin-top: 17px;width: 70px;float:left;"><a style="color: white;font-size: 14px;"href="MyOrderURL">Trở về</a></button>
 
-                        <button style="width: 104px; height: 26px;margin-top: 63px; font-size: 14px; margin-right: -71px;color:white;" type="button" class="btn-rebuy" data-toggle="modal" data-target="#exampleModalLong"
+                        <button style="    width: 104px;
+                                height: 26px;
+                                margin-top: 14px;
+                                font-size: 14px;
+                                margin-right: -1px;
+                                color: white;" type="button" class="btn-rebuy" data-toggle="modal" data-target="#exampleModalLong"
                                 id="#modalLong">Mã thanh toán</button>
                     </div>
 

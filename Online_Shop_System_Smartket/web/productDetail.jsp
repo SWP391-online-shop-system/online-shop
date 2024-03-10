@@ -448,7 +448,7 @@
                 <!-- end header -->
                 <div class="product-content product-wrap clearfix product-deatil">
                     <div class="row">
-                        <%
+                        <% int ProductID = 0;
                         ResultSet rsDetail = (ResultSet)request.getAttribute("rsDetail");
                         Product newPro  = new Product();
                         List<String> listUrls = new ArrayList<>();
@@ -460,6 +460,7 @@
                                     <ol class="carousel-indicators">
                                         <%
                                         while(rsDetail.next()){
+                                        ProductID = rsDetail.getInt("ProductID");
                                         newPro = dao.getProductById(rsDetail.getInt("ProductID"));
                                         listUrls.add(rsDetail.getString(13));
                                         countNode++;
@@ -487,11 +488,11 @@
                             </div>
                             <div class="row">
                                 <div style="text-align: center;margin-top: 23px;">
-                                    <form action="cartContactURL" class="frm">
-                                        <input type="hidden" name="uid"/>
-                                        <input type="hidden" name="qu"/>
+                                    <form action="CartURL" class="frm">
+                                        <input type="hidden" name="service" value="buyNow"/>
+                                        <input type="hidden" name="pid" value="<%=ProductID%>"/>
                                         <div class="value-button" id="decrease" onclick="decreaseValue()" value="Decrease Value"><i class="fa-solid fa-minus" style="font-size: 14px;"></i></div>
-                                        <input type="number" id="number" value="0" />
+                                        <input name="quantity" type="number" id="number" value="1" />
                                         <div class="value-button" id="increase" onclick="increaseValue()" value="Increase Value"><i class="fa-solid fa-plus" style="font-size: 14px;"></i></div><br/>
                                         <button type="submit" class="btn btn-success btn-lg" style="padding: 4px 11px;">Mua ngay</button>
                                     </form>
@@ -599,7 +600,7 @@
                                                 </li>
                                                 <%}}%>
                                             </ul>
-                                            
+
                                         </div>
                                     </div>
                                 </div>
@@ -678,6 +679,7 @@
                                                 value = isNaN(value) ? 0 : value;
                                                 value++;
                                                 document.getElementById('number').value = value;
+                                                document.getElementById("number")
                                             }
 
                                             function decreaseValue() {
