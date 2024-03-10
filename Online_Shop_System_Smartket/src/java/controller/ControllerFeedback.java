@@ -12,16 +12,15 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 import jakarta.servlet.http.Part;
+import java.sql.ResultSet;
 import java.io.File;
-import java.util.List;
-import java.util.Vector;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import model.DAOBlog;
-import model.DAOCategories;
-import view.Blog;
-import view.Categories;
+import model.DAOFeedBack;
+import model.DAOProduct;
+import view.User;
 
 /**
  *
@@ -31,8 +30,8 @@ import view.Categories;
         maxFileSize = 1024 * 1024 * 10, // 10 MB
         maxRequestSize = 1024 * 1024 * 100 // 100 MB
 )
-@WebServlet(name = "ControllerAddPost", urlPatterns = {"/marketingAddPost"})
-public class ControllerAddPost extends HttpServlet {
+@WebServlet(name = "ControllerFeedback", urlPatterns = {"/feedback"})
+public class ControllerFeedback extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -45,67 +44,56 @@ public class ControllerAddPost extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        String service = request.getParameter("service");
-        DAOBlog dao = new DAOBlog();
-        List<Categories> categories = dao.getAllCategories();
-        if (service.equals("addPost")) {
-            request.setAttribute("category", categories);
-            request.getRequestDispatcher("addPost.jsp").forward(request, response);
-        }
-        if (service.equals("upload")) {
-            Part photo1 = request.getPart("authorImg");
-            Part photo2 = request.getPart("blogImg");
+        response.setContentType("text/html;charset=UTF-8");
+        DAOFeedBack dao = new DAOFeedBack();
+        DAOProduct daoP = new DAOProduct();
+        HttpSession session = request.getSession();
+        User user = (User) session.getAttribute("account");
+        if (user == null) {
+            response.sendRedirect("HomePageURL");
+        } else {
+            String service = request.getParameter("service");
+            String pID = request.getParameter("ProductID");
+            int ProductID = Integer.parseInt(pID);
+            if (service.equals("gofeedback")) {
+                ResultSet rsProduct = daoP.getData("select * from product as p\n"
+                        + " JOIN productimage as i ON p.ProductID = i.ProductID where p.ProductID = " + pID + " and i.ProductURL=i.ProductURLShow;");
+                request.setAttribute("rsProduct", rsProduct);
+                request.getRequestDispatcher("feedback.jsp").forward(request, response);
+            }
 
-            System.out.println("photo1" + photo1);
-            System.out.println("photo2" + photo2);
-
-            String authorImg = getSubmittedFileName(photo1);
-            String blogImg = getSubmittedFileName(photo2);
-
-            String imageDirectory = "/images/";
-            String path1 = imageDirectory + "blog_author/" + authorImg;
-            String path2 = imageDirectory + "blog/" + blogImg;
-
-            String filename1 = request.getServletContext().getRealPath(path1);
-            String filename2 = request.getServletContext().getRealPath(path2);
-
-            String realFileName1 = filename1;
-            String realFileName2 = filename2;
-            
-            if (filename1.contains("\\build")) {
+            if (service.equals("upload")) {
+                Part photo1 = request.getPart("feedbackImg");
+                System.out.println("photo1" + photo1);
+                String feedbackImg = getSubmittedFileName(photo1);
+                System.out.println("215615415165165" + feedbackImg);
+                String imageDirectory = "/images/";
+                String path1 = imageDirectory + "feedback/" + feedbackImg;
+                String filename1 = request.getServletContext().getRealPath(path1);
+                String realFileName1 = filename1;
+                System.out.println("215615415165165" + realFileName1);
+                if (filename1.contains("\\build")) {
                 realFileName1 = filename1.replace("\\build", "");
             }
-
-            if (filename2.contains("\\build")) {
-                realFileName2 = filename2.replace("\\build", "");
+                if (photo1.getSize() > 0) {
+                    photo1.write(realFileName1);
+                }
+                String msgFeedback = request.getParameter("msg");
+                String SRate = request.getParameter("rate");
+                if (SRate == null) {
+                    SRate ="1";
+                }
+                int rate = Integer.parseInt(SRate);
+                int UserID = user.getUserID();
+                dao.addFeedback(ProductID, UserID, feedbackImg, msgFeedback, rate);
+                try {
+                    Thread.sleep(5000);
+                } catch (InterruptedException ex) {
+                    Logger.getLogger(ControllerAddPost.class.getName()).log(Level.SEVERE, null, ex);
+                }
+                response.sendRedirect("ProductDetailURL?ProductID=" + ProductID);
             }
-
-            if (photo1.getSize() > 0) {
-                photo1.write(realFileName1);
-            }
-
-            if (photo2.getSize() > 0) {
-                photo2.write(realFileName2);
-            }
-
-            String SCategoryID = request.getParameter("categoryId");
-            String BlogAuthor = request.getParameter("author");
-            String BlogTitle = request.getParameter("title");
-            String BlogContent = request.getParameter("content");
-            String SHiddenStatus = request.getParameter("hidden");
-            int CategoryID = Integer.parseInt(SCategoryID);
-            int HiddenStatus = Integer.parseInt(SHiddenStatus);
-
-            dao.addBlog(BlogAuthor, CategoryID, authorImg, blogImg, BlogTitle, BlogContent, HiddenStatus);
-            try {
-                Thread.sleep(5000);
-            } catch (InterruptedException ex) {
-                Logger.getLogger(ControllerAddPost.class.getName()).log(Level.SEVERE, null, ex);
-            }
-
-            response.sendRedirect("marketingPost");
         }
-
     }
 
     private String getSubmittedFileName(Part part) {
@@ -117,10 +105,6 @@ public class ControllerAddPost extends HttpServlet {
             }
         }
         return null;
-    }
-
-    private String removeBuildPath(String filename) {
-        return filename.replace("\\build", "");
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

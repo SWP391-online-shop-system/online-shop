@@ -21,6 +21,7 @@ import jakarta.servlet.http.HttpSession;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import jdk.nashorn.internal.ir.BreakNode;
 import view.User;
 
 /**
@@ -114,7 +115,6 @@ public class ValidateURL implements Filter {
         HttpServletResponse res = (HttpServletResponse) response;
         HttpSession session = req.getSession();
         String url = req.getServletPath();
-        System.out.println("url = " + url);
 
         if (url.endsWith(".jsp") && !url.contains("error404.jsp")) {
             res.sendRedirect("HomePageURL");
@@ -140,17 +140,44 @@ public class ValidateURL implements Filter {
                     }
                 }
             }
-//            //salemanagerOrderList
+
 //            if (url.startsWith("/sale")) {
 //                if (session.getAttribute("account") == null) {
 //                    res.sendRedirect("loginURL");
 //                } else {
-//                    if (!(a.getRoleID() == 3)) {
-//                        res.sendRedirect("404");
+//                    if (url.contains("saleManager")) {
+//                        if (!(a.getRoleID() == 4)) {
+//                            res.sendRedirect("404");
+//                        } else {
+//                            if (!(a.getRoleID() == 3)) {
+//                                res.sendRedirect("404");
+//                            }
+//                        }
 //                    }
 //                }
 //            }
-//
+            if (url.startsWith("/sale")) {
+                if (!url.contains("saleOrderDetailURL")) {
+                    if (session.getAttribute("account") == null) {
+                        res.sendRedirect("loginURL");
+                    } else if (url.contains("saleManager")) {
+                        if (a.getRoleID() != 4) {
+                            res.sendRedirect("404");
+                        }
+                    } else if (a.getRoleID() != 3) {
+                        res.sendRedirect("404");
+                    }
+                }else{
+                    if (session.getAttribute("account") == null) {
+                        res.sendRedirect("loginURL");
+                    }else{
+                        if (a.getRoleID() != 3 || a.getRoleID() != 4) {
+                        res.sendRedirect("404");
+                    }
+                    }
+                }
+            }
+
 //            if (url.startsWith("/saleManager")) {
 //                if (session.getAttribute("account") == null) {
 //                    res.sendRedirect("loginURL");
@@ -160,7 +187,6 @@ public class ValidateURL implements Filter {
 //                    }
 //                }
 //            }
-
             Throwable problem = null;
             try {
                 chain.doFilter(request, response);

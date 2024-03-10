@@ -4,6 +4,8 @@ package view;
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
+
+
 /**
  *
  * @author admin
@@ -19,6 +21,9 @@ public class FeedBack {
     private String FeedBackDate;
     private boolean FeedBackStatus;
 
+    public FeedBack() {
+    }
+
     public FeedBack(int FeedBackID, int ProductID, int UserID, String FeedBackImage, String FeedBackContent, int FeedBackRate, String FeedBackDate, boolean FeedBackStatus) {
         this.FeedBackID = FeedBackID;
         this.ProductID = ProductID;
@@ -28,14 +33,6 @@ public class FeedBack {
         this.FeedBackRate = FeedBackRate;
         this.FeedBackDate = FeedBackDate;
         this.FeedBackStatus = FeedBackStatus;
-    }
-
-    public FeedBack() {
-    }
-
-    @Override
-    public String toString() {
-        return "FeedBack{" + "FeedBackID=" + FeedBackID + ", ProductID=" + ProductID + ", UserID=" + UserID + ", FeedBackImage=" + FeedBackImage + ", FeedBackContent=" + FeedBackContent + ", FeedBackRate=" + FeedBackRate + ", FeedBackDate=" + FeedBackDate + ", FeedBackStatus=" + FeedBackStatus + '}';
     }
 
     public int getFeedBackID() {
@@ -101,5 +98,12 @@ public class FeedBack {
     public void setFeedBackStatus(boolean FeedBackStatus) {
         this.FeedBackStatus = FeedBackStatus;
     }
+
+    @Override
+    public String toString() {
+        return "FeedBack{" + "FeedBackID=" + FeedBackID + ", ProductID=" + ProductID + ", UserID=" + UserID + ", FeedBackImage=" + FeedBackImage + ", FeedBackContent=" + FeedBackContent + ", FeedBackRate=" + FeedBackRate + ", FeedBackDate=" + FeedBackDate + ", FeedBackStatus=" + FeedBackStatus + '}';
+    }
+
+    
 
 }

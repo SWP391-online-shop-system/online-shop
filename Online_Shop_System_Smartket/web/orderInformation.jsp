@@ -600,7 +600,7 @@
                                                     </table>
                                                 </div>
                                                 <div class="small text-muted" style="color: black;">Giá tiền:&nbsp;<%=df.format(rsOrderDetail.getDouble("UnitPrice"))%>đ<span class="mx-2" style="margin-left: 4px !important;margin-right: 4px !important;">|</span> Số lượng:&nbsp;<%=rsOrderDetail.getInt("QuantityPerUnit")%> <span class="mx-2"style="margin-left: 4px !important;margin-right: 4px !important;">|
-                                                    </span> Tổng tiền:&nbsp;<%=df.format(rsOrderDetail.getDouble("UnitPrice")*rsOrderDetail.getInt("QuantityPerUnit"))%>đ<button class="btn-rebuy" style="width: 88px;margin-top: -6px;"><a style="color: white">Gửi phản hồi</a></button></div>
+                                                    </span> Tổng tiền:&nbsp;<%=df.format(rsOrderDetail.getDouble("UnitPrice")*rsOrderDetail.getInt("QuantityPerUnit"))%>đ<button class="btn-rebuy" style="width: 88px;margin-top: -6px;"><a href="feedback?service=gofeedback&ProductID=<%=product.getProductID()%>" style="color: white">Gửi phản hồi</a></button></div>
                                             </div>
                                         </div>    
                                         <%}%>

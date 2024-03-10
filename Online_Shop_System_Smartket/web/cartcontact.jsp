@@ -280,7 +280,7 @@
                                     <c:if test="${sessionScope.account != null}">
                                     <li><a href="CartURL">Giỏ hàng của tôi</a></li>
                                     </c:if>
-                                <li><a href="#">Đơn hàng của tôi</a></li>
+                                <li><a href="MyOrderURL">Đơn hàng của tôi</a></li>
                             </ul>
                         </li>
                         <li><a href="blog">Blog</a></li>
@@ -291,7 +291,7 @@
                 </div>
                 <div class="header-content-right-menu">
                     <ul>
-                        <li class="margin-unit"><a href="#" title="Đơn hàng của tôi"><i class="fa-solid fa-file-invoice-dollar"></i></i></a></li>
+                        <li class="margin-unit"><a href="MyOrderURL" title="Đơn hàng của tôi"><i class="fa-solid fa-file-invoice-dollar"></i></i></a></li>
                             <c:if test="${sessionScope.account == null}">
                             <li><a href="loginURL" onclick="alertOpenCart()"title="Giỏ hàng của tôi"><i class="fa-solid fa-cart-shopping"></i></a></li>
                                 </c:if>
