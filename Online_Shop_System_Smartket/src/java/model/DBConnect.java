@@ -25,7 +25,7 @@ public class DBConnect {
     }
 
     public DBConnect() {
-        this("jdbc:mysql://localhost:3306/Online_Shop_System", "root", "27062003");
+        this("jdbc:mysql://localhost:3306/Online_Shop_System", "root", "12345678");
     }
 
     public ResultSet getData(String sql) {
@@ -37,7 +37,7 @@ public class DBConnect {
                     ResultSet.CONCUR_UPDATABLE);
             rs = state.executeQuery(sql);
         } catch (SQLException ex) {
-
+            Logger.getLogger(DBConnect.class.getName()).log(Level.SEVERE, null, ex);
         }
         return rs;
     }
@@ -76,7 +76,9 @@ public class DBConnect {
 
     public static void main(String[] args) throws SQLException {
         DBConnect dao = new DBConnect();
-
-
+        ResultSet rsAddress = dao.getData("SELECT * FROM online_shop_system.addressuser where UserID = 5;");
+        if(rsAddress.next()){
+            System.out.println(rsAddress.getBoolean("Gender"));
+        }
     }
 }
