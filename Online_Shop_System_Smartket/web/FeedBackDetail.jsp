@@ -35,6 +35,14 @@
                 min-width: 48%;
                 font-size: 14px;
             }
+            #hoverImg{
+                width: 123px;
+                height: 121px;
+                transition: all 0.5s;
+            }
+            #hoverImg:hover{
+                transform: scale(1.3);
+            }
         </style>
     </head>
     <body id="page-top">
@@ -224,7 +232,7 @@
                                                         <p class="mb-0">Ảnh đính kèm</p>
                                                     </div>
                                                     <div class="col-sm-9">
-                                                        <img src="images/<%=fb.getFeedBackImage()%>"/>
+                                                        <img id="hoverImg" src="images/feedback/<%=fb.getFeedBackImage()%>"/>
                                                     </div>
                                                 </div>
                                                 <hr>

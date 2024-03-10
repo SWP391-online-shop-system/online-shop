@@ -196,7 +196,7 @@
                                                     <td><%=OrderUser.getFirstName()+" "+OrderUser.getLastName()%></td>
                                                     <td><%=rsOrder.getDouble("TotalPrice")%></td>
                                                     <td><%=rsOrder.getString("OrderDate")%></td>
-                                                    <td><%=rsOrder.getString("ShippedDate").substring(0,10)%></td>                        
+                                                    <td><%=rsOrder.getString("ShippedDate")==null?"Chưa cập nhật":rsOrder.getString("ShippedDate").substring(0,10)%></td>                        
                                                     <td><%=status.getStatusName()%></td>                        
                                                     <td><%=OrderSale.getFirstName()+" "+OrderSale.getLastName()%></td>
                                                 </tr>

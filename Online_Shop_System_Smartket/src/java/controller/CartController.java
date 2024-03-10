@@ -16,8 +16,13 @@ import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.Vector;
 import model.DAOCart;
+import model.DAOOrder;
+import model.DAOOrderDetails;
 import model.DAOProduct;
+import view.Order;
+import view.OrderDetails;
 
 /**
  *
@@ -39,6 +44,8 @@ public class CartController extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         try ( PrintWriter out = response.getWriter()) {
+            DAOOrder daoOrd = new DAOOrder();
+            DAOOrderDetails daoDetail = new DAOOrderDetails();
             HttpSession session = request.getSession();
             String service = request.getParameter("service");
             DAOCart dao = new DAOCart();
@@ -83,6 +90,23 @@ public class CartController extends HttpServlet {
                     Cart cart = dao.getCartByUser(userID, pid);
                     cart.setQuantity(cart.getQuantity() + quantity);
                     int n = dao.updateCartByUserAndPro(cart, userID, pid);
+                    ResultSet countPro = dao.getData("SELECT count(*) as count FROM Cart AS c JOIN Product AS p ON c.ProductID = p.ProductID where userID = " + userID + "");
+                    try {
+                        while (countPro.next()) {
+                            count = countPro.getInt(1);
+                        }
+                        countPro.close();
+                    } catch (SQLException e) {
+                    }
+                    response.getWriter().write(String.valueOf(count));
+                }
+            }
+            if (service.equals("rebuy")) {
+                int count = 0;
+                String OrderID = request.getParameter("OrderID");
+                Vector<OrderDetails> list = daoDetail.getOrderDetailsById(Integer.parseInt(OrderID));
+                for (OrderDetails o : list) {
+                    dao.insertCartByPrepared(new Cart(userID, o.getProductID(), o.getQuantity()));
                     ResultSet countPro = dao.getData("SELECT count(*) as count FROM Cart AS c JOIN Product AS p ON c.ProductID = p.ProductID where userID = " + userID + "");
                     try {
                         while (countPro.next()) {
