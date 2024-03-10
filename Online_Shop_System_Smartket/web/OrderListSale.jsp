@@ -111,6 +111,7 @@
                                                                 <c:forEach var="user" items="${user}">
                                                                     <option value="${user.userID}"<c:if test="${user.userID eq param.saleName}"> selected</c:if>>
                                                                         ${user.firstName} ${user.lastName}
+                                                                    <a href="../src/java/Filter/ValidateURL.java"></a>
                                                                     </option>
                                                                 </c:forEach>
                                                             </select>
