@@ -157,7 +157,13 @@ public class ValidateURL implements Filter {
 //                }
 //            }
             if (url.startsWith("/sale")) {
-                if (!url.contains("saleOrderDetailURL")) {
+                if (url.contains("saleOrderDetailURL")) {
+                    if (session.getAttribute("account") == null) {
+                        res.sendRedirect("loginURL");
+                    } else if (a.getRoleID() != 3 && a.getRoleID() != 4) {
+                        res.sendRedirect("404");
+                    }
+                } else {
                     if (session.getAttribute("account") == null) {
                         res.sendRedirect("loginURL");
                     } else if (url.contains("saleManager")) {
@@ -166,14 +172,6 @@ public class ValidateURL implements Filter {
                         }
                     } else if (a.getRoleID() != 3) {
                         res.sendRedirect("404");
-                    }
-                }else{
-                    if (session.getAttribute("account") == null) {
-                        res.sendRedirect("loginURL");
-                    }else{
-                        if (a.getRoleID() != 3 || a.getRoleID() != 4) {
-                        res.sendRedirect("404");
-                    }
                     }
                 }
             }
