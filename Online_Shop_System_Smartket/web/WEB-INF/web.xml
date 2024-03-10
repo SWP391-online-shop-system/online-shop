@@ -14,7 +14,7 @@
     </servlet>
     <servlet-mapping>
         <servlet-name>sliderList</servlet-name>
-        <url-pattern>/sliderList</url-pattern>
+        <url-pattern>/marketingSliderList</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

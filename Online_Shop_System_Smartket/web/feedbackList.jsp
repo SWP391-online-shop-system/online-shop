@@ -115,7 +115,7 @@
                             <h1 class="h3 mb-0 text-gray-800">Danh Sách Ph</h1>
                             <ol class="breadcrumb">
                                 <li class="breadcrumb-item"><a href="./">Trang Chủ</a></li>
-                                <li class="breadcrumb-item active">Danh Sách Khách Hàng</li>
+                                <li class="breadcrumb-item active">Danh Sách Phản hồi</li>
                             </ol>
                         </div>
 

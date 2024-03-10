@@ -13,6 +13,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import static model.DAOProduct.getCurrentTimestamp;
 import view.Slider;
+import view.User;
 
 /**
  *
@@ -138,8 +139,7 @@ public class DAOSlider extends DBConnect {
             }
 
         } catch (SQLException ex) {
-            Logger.getLogger(DAOProduct.class
-                    .getName()).log(Level.SEVERE, null, ex);
+            System.out.println("sql errot at 141 in DAOSlider: "+ex);
         }
         return s;
     }
@@ -166,5 +166,18 @@ public class DAOSlider extends DBConnect {
             System.out.println(e);
         }
         return vector;
+    }
+     public int updateStatus(int SliderID, int SliderStatus) {
+        int n = 0;
+        String sql = "UPDATE `online_shop_system`.`Slider`\n"
+                + "SET`SliderStatus` = ? WHERE `SliderID` = ?;";
+        try {
+            PreparedStatement pre = conn.prepareStatement(sql);
+            pre.setInt(1, SliderStatus);
+            pre.setInt(2, SliderID);
+            n = pre.executeUpdate();
+        } catch (SQLException ex) {
+        }
+        return n;
     }
 }
