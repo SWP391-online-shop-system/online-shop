@@ -29,6 +29,7 @@ public class DAOFeedBack extends DBConnect {
                         rs.getInt("FeedBackID"),
                         rs.getInt("ProductID"),
                         rs.getInt("UserID"),
+                        rs.getString("FeedBackImage"),
                         rs.getString("FeedBackContent"),
                         rs.getInt("FeedBackRate"),
                         rs.getString("FeedBackDate"),

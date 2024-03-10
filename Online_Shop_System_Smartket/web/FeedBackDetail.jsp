@@ -221,6 +221,15 @@
                                                 <hr>
                                                 <div class="row">
                                                     <div class="col-sm-3">
+                                                        <p class="mb-0">Ảnh đính kèm</p>
+                                                    </div>
+                                                    <div class="col-sm-9">
+                                                        <img src="images/<%=fb.getFeedBackImage()%>"/>
+                                                    </div>
+                                                </div>
+                                                <hr>
+                                                <div class="row">
+                                                    <div class="col-sm-3">
                                                         <p class="mb-0">Nội dung đánh giá</p>
                                                     </div>
                                                     <div class="col-sm-9">

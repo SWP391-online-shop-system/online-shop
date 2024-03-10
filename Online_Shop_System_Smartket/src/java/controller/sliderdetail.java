@@ -19,7 +19,7 @@ import view.Slider;
  *
  * @author 84395
  */
-@WebServlet(name = "sliderdetail", urlPatterns = {"/sliderdetail"})
+@WebServlet(name = "sliderdetail", urlPatterns = {"/marketingSliderdetail"})
 public class sliderdetail extends HttpServlet {
 
     /**
