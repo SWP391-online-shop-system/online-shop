@@ -78,7 +78,7 @@ public class ControllerOrderList extends HttpServlet {
                     + "JOIN orderDetail od on o.OrderID = od.OrderID";
 
             if (fromDate != null && toDate != null) {
-                sqlQuery += " WHERE o.OrderDate BETWEEN '" + fromDate + "' AND '" + toDate + "'";
+                sqlQuery += " WHERE o.OrderDate >= '" + fromDate + "' AND o.OrderDate <='" + toDate + "'";
             }
             String selectedSaleUserID = request.getParameter("saleName");
             if (selectedSaleUserID != null && !selectedSaleUserID.isEmpty() && !selectedSaleUserID.equals("Tất cả")) {
@@ -88,6 +88,7 @@ public class ControllerOrderList extends HttpServlet {
                 sqlQuery += " AND s.StatusName = '" + statusName + "'";
             }
             sqlQuery += " GROUP BY o.OrderID, u.FirstName, u.LastName, u_sale.FirstName, u_sale.LastName, s.StatusName";
+            System.out.println("sql = "+sqlQuery);
             ResultSet rs = dao.getData(sqlQuery);
             Vector<User> user = daoU.getUser("select * from User where roleID = 3");
             Vector<Status> status = dao.getStatus("select * from status");
