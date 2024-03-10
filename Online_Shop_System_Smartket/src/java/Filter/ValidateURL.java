@@ -114,13 +114,14 @@ public class ValidateURL implements Filter {
         HttpServletResponse res = (HttpServletResponse) response;
         HttpSession session = req.getSession();
         String url = req.getServletPath();
+        System.out.println("url = " + url);
 
         if (url.endsWith(".jsp") && !url.contains("error404.jsp")) {
             res.sendRedirect("HomePageURL");
         } else {
 
             User a = (User) session.getAttribute("account");
-            if (url.startsWith("/marketing")||url.startsWith("/Marketing")) {
+            if (url.startsWith("/marketing") || url.startsWith("/Marketing")) {
                 if (session.getAttribute("account") == null) {
                     res.sendRedirect("loginURL");
                 } else {
@@ -130,7 +131,7 @@ public class ValidateURL implements Filter {
                 }
             }
 
-            if (url.startsWith("/admin")||url.startsWith("/Admin")) {
+            if (url.startsWith("/admin") || url.startsWith("/Admin")) {
                 if (session.getAttribute("account") == null) {
                     res.sendRedirect("loginURL");
                 } else {
@@ -139,26 +140,26 @@ public class ValidateURL implements Filter {
                     }
                 }
             }
-
-            if (url.startsWith("/sale")) {
-                if (session.getAttribute("account") == null) {
-                    res.sendRedirect("loginURL");
-                } else {
-                    if (!(a.getRoleID() == 3)) {
-                        res.sendRedirect("404");
-                    }
-                }
-            }
-
-            if (url.startsWith("/saleManager")) {
-                if (session.getAttribute("account") == null) {
-                    res.sendRedirect("loginURL");
-                } else {
-                    if (!(a.getRoleID() == 4)) {
-                        res.sendRedirect("404");
-                    }
-                }
-            }
+//            //salemanagerOrderList
+//            if (url.startsWith("/sale")) {
+//                if (session.getAttribute("account") == null) {
+//                    res.sendRedirect("loginURL");
+//                } else {
+//                    if (!(a.getRoleID() == 3)) {
+//                        res.sendRedirect("404");
+//                    }
+//                }
+//            }
+//
+//            if (url.startsWith("/saleManager")) {
+//                if (session.getAttribute("account") == null) {
+//                    res.sendRedirect("loginURL");
+//                } else {
+//                    if (!(a.getRoleID() == 4)) {
+//                        res.sendRedirect("404");
+//                    }
+//                }
+//            }
 
             Throwable problem = null;
             try {

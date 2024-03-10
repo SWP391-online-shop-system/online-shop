@@ -75,8 +75,8 @@ public class ControllerCartCompletion extends HttpServlet {
 //            String ward = request.getParameter("ward");
             String adress = request.getParameter("addressdetail");
             String note = request.getParameter("note");
-            Receiver rece = new Receiver(orderID, name, phone, adress, email, note);
-            daoRece.insertReceiverByPrepared(rece);
+//            Receiver rece = new Receiver(orderID, name, phone, adress, email, note);
+//            daoRece.insertReceiverByPrepared(rece);
             try {
                 ResultSet listCart = daoCart.getData("SELECT * FROM Cart as c join product as p on c.ProductID = p.ProductID where UserID = " + userID);
                 while (listCart.next()) {

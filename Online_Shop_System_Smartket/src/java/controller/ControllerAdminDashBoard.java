@@ -58,6 +58,7 @@ public class ControllerAdminDashBoard extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        
         DAOOrder daoOrd = new DAOOrder();
         //start first section
         ResultSet rsOrderProcessCount = daoOrd.getData("select count(OrderID) from `Order` where StatusID = 1");
@@ -79,7 +80,6 @@ public class ControllerAdminDashBoard extends HttpServlet {
         String userWeekFrom = request.getParameter("userWeekFrom");
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
         String filterValue = request.getParameter("filterValue");
-        System.out.println("filterValue ="+filterValue);
         if (filterValue == null || filterValue.equals("")) {
             filterValue = "filterAll";
         }

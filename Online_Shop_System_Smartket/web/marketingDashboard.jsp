@@ -84,6 +84,12 @@
                             <span>Phản hồi</span>
                         </a>
                     </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="marketingSliderList">
+                            <i class="fas fa-comments fa-2x text-info"></i>
+                            <span>Slider</span>
+                        </a>
+                    </li>
                     <hr class="sidebar-divider">
                 </div>
             </ul>
@@ -130,7 +136,7 @@
                         <div class="row mb-3">
                             <!-- Earnings (Monthly) Card Example -->
                             <div class="col-xl-3 col-md-6 mb-4">
-                                <a href="mtkPost" style="text-decoration: none;">
+                                <a href="marketingPost" style="text-decoration: none;">
                                     <div class="card h-100">
                                         <div class="card-body">
                                             <div class="row align-items-center">
@@ -200,7 +206,7 @@
                             </div>
                             <!-- New User Card Example -->
                             <div class="col-xl-3 col-md-6 mb-4">
-                                <a href="customerlist" style="text-decoration: none;">
+                                <a href="marketingCustomerlist" style="text-decoration: none;">
                                     <div class="card h-100">
                                         <div class="card-body">
                                             <div class="row no-gutters align-items-center">
@@ -235,7 +241,7 @@
                             </div>
                             <!-- Pending Requests Card Example -->
                             <div class="col-xl-3 col-md-6 mb-4">
-                                <a href="FeedBackListURL" style="text-decoration: none;">
+                                <a href="marketingFeedBackListURL" style="text-decoration: none;">
                                     <div class="card h-100">
                                         <div class="card-body">
                                             <div class="row no-gutters align-items-center">
@@ -388,7 +394,7 @@
                                             <input style="background-color: #1ab365!important;"class="date-chooser" type="date" name="userWeekTo" disabled/>
                                             <input type="hidden" name="weekFrom" value="<%=(formatWeekFrom==null || formatWeekFrom.equals(""))?curDate:formatWeekFrom%>"  />
                                         </form>
-                                        <a class="m-0 float-right btn btn-danger btn-sm" href="customerlist">Quản lí ngay
+                                        <a class="m-0 float-right btn btn-danger btn-sm" href="marketingCustomerlist">Quản lí ngay
                                             <i class="fas fa-chevron-right" style="margin-left: 8px;"></i></a>
                                     </div>
                                     <div class="table-responsive">
@@ -449,7 +455,7 @@
                                     <%}}%>
                                     <div>
                                         <div class="card-footer text-center">
-                                            <a class="m-0 small text-primary card-link" href="FeedBackListURL">Quản lí ngay
+                                            <a class="m-0 small text-primary card-link" href="marketingFeedBackListURL">Quản lí ngay
                                                 <i class="fas fa-chevron-right"></i></a>
                                         </div>
                                     </div>

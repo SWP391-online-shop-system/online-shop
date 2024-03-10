@@ -72,7 +72,6 @@ public class ControllerFeedBackDetail extends HttpServlet {
         if (oldUser == null) {
             response.sendRedirect("HomePageURL");
         } else {
-            System.out.println("ajax move to servlet!");
             String service = request.getParameter("service");
             if (service == null || service.equals("")) {
                 service = "";
@@ -84,7 +83,6 @@ public class ControllerFeedBackDetail extends HttpServlet {
             int FeedBackID = Integer.parseInt(request.getParameter("FeedBackID"));
             FeedBack FeedBack = daoF.getFeedBackById(FeedBackID);
             request.setAttribute("data", FeedBack);
-            String StatusCheck = request.getParameter("checkStatus");
             String status = request.getParameter("status");
             String cusId_str = request.getParameter("uid");
             int cusId = Integer.parseInt(cusId_str); //nguoi phan hoi

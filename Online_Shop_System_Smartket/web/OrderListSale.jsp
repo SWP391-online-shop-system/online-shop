@@ -98,15 +98,15 @@
                                     <div class="table-responsive p-3">
                                         <table class="table align-items-center table-flush table-hover" id="dataTableHover">
                                             <div style="display: flex;
-                                                 margin-left: 200px;
-                                                 margin-bottom: -30px;">
+                                                 margin-left: 200px;margin-bottom: -29px;
+                                                 ">
                                                 <form action="saleManagerOrderListURL" method="get" class="form-control">
                                                     <div class="filter-group" style="display:flex;margin-left: -28px; align-items: center;">
-                                                        <div style="margin-right: 10px;margin-top: 10px;">Từ: <input type="date" name="fromDate" value="${param.fromDate}" onchange="this.form.submit()"></div>
-                                                        <div style="margin-right: 10px;margin-top: 10px;">Đến: <input type="date" name="toDate" value="${param.toDate}" onchange="this.form.submit()"></div>
-                                                        <div style="margin-top: 10px;margin-left: 20px;padding-top: 10px;">
-                                                            <label for="saleName" style="margin-left: 15px;">Tên nhân viên: </label>
-                                                            <select name="saleName" onchange="this.form.submit()">
+                                                        <div style="margin-right: 12px;">Từ: <input type="date" name="fromDate" value="${param.fromDate}" onchange="this.form.submit()"></div>
+                                                        <div style="margin-right: 12px;">Đến: <input type="date" name="toDate" value="${param.toDate}" onchange="this.form.submit()"></div>
+                                                        <div style="margin-right: 12px;">
+                                                            <label for="saleName" style="margin: 0;">Tên nhân viên: </label>
+                                                            <select name="saleName" onchange="this.form.submit()" style="z-index: 99">
                                                                 <option value="">Tất cả</option>
                                                                 <c:forEach var="user" items="${user}">
                                                                     <option value="${user.userID}"<c:if test="${user.userID eq param.saleName}"> selected</c:if>>
@@ -115,10 +115,10 @@
                                                                 </c:forEach>
                                                             </select>
                                                         </div>
+                                                        <div style="">
+                                                            <label for="statusName" style="margin: 0; margin-right: 5px;z-index: 99;">Trạng thái:</label>
                                                     </div>
-                                                    <div style="margin-top: 10px;margin-left: 20px;padding-top: 10px;">
-                                                        <label for="statusName" style="margin-left: 15px;">Trạng thái:</label>
-                                                        <select name="statusName" style="width: 115px;" onchange="this.form.submit()">
+                                                        <select name="statusName" style="width: 115px;z-index: 99;" onchange="this.form.submit()">
                                                             <option value="">Tất cả</option>
                                                             <c:forEach var="status" items="${status}">
                                                                 <option value="${status.statusName}" <c:if test="${status.statusName eq param.statusName}">selected</c:if>>

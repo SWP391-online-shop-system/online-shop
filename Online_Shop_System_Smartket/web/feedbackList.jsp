@@ -112,10 +112,10 @@
                     <!-- Container Fluid-->
                     <div class="container-fluid" id="container-wrapper">
                         <div class="d-sm-flex align-items-center justify-content-between mb-4">
-                            <h1 class="h3 mb-0 text-gray-800">Danh Sách Ph</h1>
+                            <h1 class="h3 mb-0 text-gray-800">Danh Sách Phản hồi</h1>
                             <ol class="breadcrumb">
                                 <li class="breadcrumb-item"><a href="./">Trang Chủ</a></li>
-                                <li class="breadcrumb-item active">Danh Sách Khách Hàng</li>
+                                <li class="breadcrumb-item active">Danh Sách Phản hồi</li>
                             </ol>
                         </div>
 
@@ -140,11 +140,6 @@
                             <%}}%>
                         </div>
                         <%sessionMessage.removeAttribute("message");%>
-                        <div class="row">
-                            <button style="margin-left: 13px;margin-bottom: 5px;" type="button" class="btn btn-secondary" data-toggle="modal" data-target="#exampleModalLong"
-                                    id="#modalLong">Thêm Khách Hàng Mới</button>
-
-                        </div>
                         <div class="row">
                             <!-- DataTable with Hover -->
                             <div class="col-lg-12">
