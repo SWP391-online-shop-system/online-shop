@@ -163,7 +163,7 @@
                       if(rsProduct.next()){
         %>
         <div style="display:flex; margin-left: 150px;">
-            <div class="form-box" style="height: 300px; width: 300px"> 
+            <div class="form-box" style="height: 380px; width: 330px"> 
                 <div style="margin-bottom: 25px;
                      font-size: 20px;" class="textup"> 
                     <i  class="fa fa-solid "></i> 
