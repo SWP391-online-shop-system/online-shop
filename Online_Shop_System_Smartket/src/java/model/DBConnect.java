@@ -25,7 +25,7 @@ public class DBConnect {
     }
 
     public DBConnect() {
-        this("jdbc:mysql://localhost:3306/Online_Shop_System", "root", "Matkhau22");
+        this("jdbc:mysql://localhost:3306/Online_Shop_System", "root", "12345678");
     }
 
     public ResultSet getData(String sql) {
@@ -37,7 +37,7 @@ public class DBConnect {
                     ResultSet.CONCUR_UPDATABLE);
             rs = state.executeQuery(sql);
         } catch (SQLException ex) {
-            System.err.println("GetData wrong sql: "+ex);
+            Logger.getLogger(DBConnect.class.getName()).log(Level.SEVERE, null, ex);
         }
         return rs;
     }
