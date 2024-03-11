@@ -12,7 +12,7 @@ public class Receiver {
 
     private int OrderID;
     private String ReceiverName;
-    private int ReceiverGender;
+    private Boolean ReceiverGender;
     private String ReceiverPhoneNumber;
     private String ReceiverEmail;
     private String RceiverAddress;
@@ -24,6 +24,16 @@ public class Receiver {
     public Receiver(int OrderID, String ReceiverName, String ReceiverPhoneNumber, String ReceiverEmail, String RceiverAddress, String note) {
         this.OrderID = OrderID;
         this.ReceiverName = ReceiverName;
+        this.ReceiverPhoneNumber = ReceiverPhoneNumber;
+        this.ReceiverEmail = ReceiverEmail;
+        this.RceiverAddress = RceiverAddress;
+        this.note = note;
+    }
+
+    public Receiver(int OrderID, String ReceiverName, Boolean ReceiverGender, String ReceiverPhoneNumber, String ReceiverEmail, String RceiverAddress, String note) {
+        this.OrderID = OrderID;
+        this.ReceiverName = ReceiverName;
+        this.ReceiverGender = ReceiverGender;
         this.ReceiverPhoneNumber = ReceiverPhoneNumber;
         this.ReceiverEmail = ReceiverEmail;
         this.RceiverAddress = RceiverAddress;
@@ -51,11 +61,11 @@ public class Receiver {
         this.ReceiverName = ReceiverName;
     }
 
-    public int getReceiverGender() {
+    public Boolean getReceiverGender() {
         return ReceiverGender;
     }
 
-    public void setReceiverGender(int ReceiverGender) {
+    public void setReceiverGender(Boolean ReceiverGender) {
         this.ReceiverGender = ReceiverGender;
     }
 

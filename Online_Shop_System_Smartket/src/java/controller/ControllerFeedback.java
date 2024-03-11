@@ -47,6 +47,12 @@ public class ControllerFeedback extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         DAOFeedBack dao = new DAOFeedBack();
         DAOProduct daoP = new DAOProduct();
+        double maxValue = daoP.getMaxUnitPrice();
+        double minValue = daoP.getMinUnitPrice();
+        request.setAttribute("inputMinPrice", minValue);
+        request.setAttribute("inputMaxPrice", maxValue);
+        ResultSet rsCategory = daoP.getData("Select * from Categories");
+        request.setAttribute("CategoryResult", rsCategory);
         HttpSession session = request.getSession();
         User user = (User) session.getAttribute("account");
         if (user == null) {
@@ -73,15 +79,15 @@ public class ControllerFeedback extends HttpServlet {
                 String realFileName1 = filename1;
                 System.out.println("215615415165165" + realFileName1);
                 if (filename1.contains("\\build")) {
-                realFileName1 = filename1.replace("\\build", "");
-            }
+                    realFileName1 = filename1.replace("\\build", "");
+                }
                 if (photo1.getSize() > 0) {
                     photo1.write(realFileName1);
                 }
                 String msgFeedback = request.getParameter("msg");
                 String SRate = request.getParameter("rate");
                 if (SRate == null) {
-                    SRate ="1";
+                    SRate = "1";
                 }
                 int rate = Integer.parseInt(SRate);
                 int UserID = user.getUserID();

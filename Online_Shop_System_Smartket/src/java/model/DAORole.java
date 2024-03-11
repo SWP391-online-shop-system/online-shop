@@ -11,7 +11,7 @@ import view.Role;
 
 /**
  *
- * @author admin
+ * @author trant
  */
 public class DAORole extends DBConnect {
 

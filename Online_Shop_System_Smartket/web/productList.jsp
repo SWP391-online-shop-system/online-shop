@@ -34,7 +34,7 @@
         <title>San pham</title>
 
         <!-- Css Styles -->
-      
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
         <link rel="stylesheet" href="css/css_header/header.css" type="text/css">
         <link rel="stylesheet" href="css/css_productList/bootstrap.min.css" type="text/css">
         <link rel="stylesheet" href="css/css_productList/font-awesome.min.css" type="text/css">
@@ -370,7 +370,7 @@
                                                     if(testUser == null) {%>
                                                     <a onclick="alertOpenCart();" style="left: 12px;">+ Thêm vào giỏ</a><a style="margin-left: 136px;" href="#">Mua ngay</a>
                                                     <%} else{%>
-                                                    <a href="#" onclick="addToCart(<%=rsHotPro.getInt("ProductID")%>)" class="add-cart" style="left: 12px;">+ Thêm vào giỏ</a><a style="margin-left: 136px;" href="#">Mua ngay</a>
+                                                    <a href="" onclick="addToCart(<%=rsHotPro.getInt("ProductID")%>)" class="add-cart" style="left: 12px;">+ Thêm vào giỏ</a><a style="margin-left: 136px;" href="#">Mua ngay</a>
                                                     <%}%>
                                                     <div style="display: flex;">
                                                         <div class="rating" style="margin-left: 30px;">
@@ -739,7 +739,7 @@
             </div>
         </div>
         <script src="js/price.js"></script>
-        <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+        <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10" type="text/javascript"></script>
     </body>
 
 </html>
