@@ -115,7 +115,6 @@ public class ValidateURL implements Filter {
         HttpServletResponse res = (HttpServletResponse) response;
         HttpSession session = req.getSession();
         String url = req.getServletPath();
-        System.out.println("url = " + url);
 
         if (url.endsWith(".jsp") && !url.contains("error404.jsp")) {
             res.sendRedirect("HomePageURL");

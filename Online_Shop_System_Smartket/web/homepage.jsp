@@ -16,6 +16,7 @@
     <head>
         <link rel="stylesheet" href="css/login.css"/>
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
         <script src="https://kit.fontawesome.com/ac74b86ade.js" crossorigin="anonymous"></script>
         <script src="https://cdn.jsdelivr.net/npm/swiper/swiper-bundle.min.js"></script>
         <link rel="stylesheet" href="css/css_productList/bootstrap.min.css" type="text/css">
@@ -25,9 +26,6 @@
         <link rel="stylesheet" href="css/css_productList/nice-select.css" type="text/css">
         <link rel="stylesheet" href="css/css_productList/slicknav.min.css" type="text/css">
         <link rel="stylesheet" href="css/css_productList/style.css" type="text/css">
-        <!--        <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
-                <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css">
-                <link href="css/ruang-admin.min.css" rel="stylesheet">-->
         <link rel="stylesheet" href="css/css_homepage/homestyle.css"/>
         <link rel="stylesheet" href="css/css_footer/footer.css"/>
         <link rel="stylesheet" href="css/css_header/header.css"/>
@@ -356,7 +354,7 @@
                                           sessionScope.account.gender == null ||
                                           sessionScope.account.address == null}">
                             <li title="Cập nhật hồ sơ của bạn!"><div style="background: red;width: 10px;height: 10px;border-radius: 50%;position: absolute;left: 102px;
-                                     top: -2px;"></div><a href="ChangeuserinfoURL?UserID=${sessionScope.account.userID}">Tài khoản</a></li>
+                                                                     top: -2px;"></div><a href="ChangeuserinfoURL?UserID=${sessionScope.account.userID}">Tài khoản</a></li>
                                 </c:if>
                                 <c:if test="${sessionScope.account.phoneNumber != null &&
                                               sessionScope.account.dateOfBirth != null &&
@@ -542,7 +540,7 @@
                                             if(testus==null) {%>
                                         <a onclick="alertOpenCart();" class="add-cart"style="">+ Thêm vào giỏ</a><a style="margin-left: 166px;" href="#">Mua ngay</a>
                                         <%}else{%>
-                                        <a href="CartURL?service=addcart&pid=<%=rsNewProduct.getInt(1)%>&quan=1" class="add-cart"style="margin-left: 29px;">+ Thêm vào giỏ</a><a style="margin-left: 166px;" href="#">Mua ngay</a>
+                                        <a href="" onclick="addToCart(<%=rsNewProduct.getInt(1)%>)" class="add-cart"style="margin-left: 29px;">+ Thêm vào giỏ</a><a style="margin-left: 166px;" href="#">Mua ngay</a>
                                         <%}%>
                                         <div style="display: flex;">
                                             <div class="rating">
@@ -602,7 +600,7 @@
                                                 <a onclick="alertOpenCart();" class="add-cart"style="">+ Thêm vào giỏ</a><a style="margin-left: 136px;" href="#">Mua ngay</a>
                                             </c:if>
                                             <c:if test="${sessionScope.account!=null}">
-                                                <a href="CartURL?service=addcart&pid=<%=rsFeatureProduct.getInt("ProductID")%>&quan=1" class="add-cart"style="">+ Thêm vào giỏ</a><a style="margin-left: 136px;" href="#">Mua ngay</a>
+                                                <a href="#" onclick="addToCart(<%=rsFeatureProduct.getInt(1)%>)" class="add-cart" class="add-cart"style="">+ Thêm vào giỏ</a><a style="margin-left: 136px;" href="#">Mua ngay</a>
                                             </c:if>
                                             <div style="display: flex;">
                                                 <div class="rating">
@@ -819,4 +817,5 @@
 <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 <script src="vendor/jquery-easing/jquery.easing.min.js"></script>
 <script src="js_marketing/ruang-admin.min.js"></script>
+<script src="js/price.js"></script>
 </html>

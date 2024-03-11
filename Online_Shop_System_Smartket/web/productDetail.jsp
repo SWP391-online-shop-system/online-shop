@@ -557,7 +557,7 @@
                                     <li class="active"><a href="#more-information" data-toggle="tab" class="no-margin">Mô tả sản phẩm</a></li>
                                     <li class><a href="#reviews" data-toggle="tab">Đánh giá</a></li>
                                 </ul>
-                                <div id="myTabContent" class="tab-content">
+                                <div id="myTabContent" class="tab-content" style="height: 300px; overflow-y: scroll">
                                     <div class="tab-pane fade active in" id="more-information">
                                         <br/>
                                         <strong><%=newPro.getProductName()%></strong>

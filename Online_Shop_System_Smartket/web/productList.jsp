@@ -34,7 +34,7 @@
         <title>San pham</title>
 
         <!-- Css Styles -->
-      
+        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
         <link rel="stylesheet" href="css/css_header/header.css" type="text/css">
         <link rel="stylesheet" href="css/css_productList/bootstrap.min.css" type="text/css">
         <link rel="stylesheet" href="css/css_productList/font-awesome.min.css" type="text/css">
