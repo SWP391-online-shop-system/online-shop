@@ -32,6 +32,25 @@
     <%
         Product product = (Product)request.getAttribute("product");
     %>
+    <style>
+        .btnUpdate{
+            text-align: center;
+            margin-left: 45%;
+            width: 125px;
+            border-radius: 4px;
+            background: #66bb6a;
+            color: white;
+            padding-bottom: 4px;
+            transition: all 0.5s;
+            border: none;
+        }
+        .btnUpdate:hover{
+            transform: scale(0.95);
+        }
+        input, select, textarea{
+            width : 200px;
+        }
+    </style>
     <script>
         function validateForm() {
             var unitInStock = parseInt(document.getElementById("unitInStock").value);
@@ -44,21 +63,36 @@
             return true;
         }
     </script>
+    <div class="container">
+        <% String message = (String)request.getParameter("message");
+        String errorMessage = (String) request.getAttribute("errorMessage");
+        %>
+        <% if (message != null && !message.isEmpty()) { %>
+        <div class="alert alert-info" role="alert">
+            <%= message %>
+        </div>
+        <% } %>
+        <%if (errorMessage != null) {%>
+        <div class="alert alert-info" role="alert">
+            <%= errorMessage %>
+        </div>
+        <%}%>
+    </div>
     <body id="page-top">
         <div id="wrapper">
             <!-- Sidebar -->
             <ul class="navbar-nav sidebar sidebar-light accordion" id="accordionSidebar">
-                <a class="sidebar-brand d-flex align-items-center justify-content-center" href="HomePageURL">
+                <a class="sidebar-brand d-flex align-items-center justify-content-center" href="marketingDashBoardURL">
                     <div class="sidebar-brand-icon">
                         <img style="height: 91px;
                              width: 133px;
-                             margin-bottom: -18px;" src="images/logo/logo.png">
+                             margin-bottom: -18px;z-index: 99;" src="images/logo/logo.png">
                     </div>
                 </a>
                 <div style="position: sticky; top: 30px;">
                     <hr class="sidebar-divider wee-0" style="margin: 0px;">
                     <li class="nav-item active">
-                        <a class="nav-link" href="index.html">
+                        <a class="nav-link" href="marketingDashBoardURL">
                             <i class="fas fa-fw fa-tachometer-alt"></i>
                             <span>Thống kê</span></a>
                     </li>
@@ -67,25 +101,25 @@
                         Quản lí
                     </div>
                     <li class="nav-item">
-                        <a class="nav-link" href="ui-colors.html">
+                        <a class="nav-link" href="marketingPost">
                             <i class="fas fa-calendar fa-2x text-primary"></i>
                             <span>Bài đăng</span>
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="ui-colors.html">
+                        <a class="nav-link" href="marketingProductListURL">
                             <i class="fas fa-shopping-cart fa-2x text-success"></i>
                             <span>Sản phẩm</span>
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="ui-colors.html">
+                        <a class="nav-link" href="marketingCustomerlist">
                             <i class="fas fa-users fa-2x text-info"></i>
                             <span>Khách hàng</span>
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="ui-colors.html">
+                        <a class="nav-link" href="marketingFeedBackListURL">
                             <i class="fas fa-comments fa-2x text-info"></i>
                             <span>Phản hồi</span>
                         </a>
@@ -128,7 +162,7 @@
                         <div class="d-sm-flex align-items-center justify-content-between mb-4">
                             <h1 class="h3 mb-0 text-gray-800">Thêm sản phẩm</h1>
                             <ol class="breadcrumb">
-                                <li class="breadcrumb-item"><a href="mktProductListURL">Trang sản phẩm</a></li>
+                                <li class="breadcrumb-item"><a href="marketingProductListURL">Trang sản phẩm</a></li>
                                 <!--<li class="breadcrumb-item">Tables</li>-->
                                 <li class="breadcrumb-item active" aria-current="page">Thêm sản phẩm</li>
                             </ol>
@@ -137,7 +171,7 @@
                             <div class="col-lg-8">
                                 <div class="card mb-4">
                                     <div class="card-body">
-                                        <form action="AddProductmktURL" method="post" enctype='multipart/form-data' onsubmit="return validateForm()">
+                                        <form action="marketingAddProductmktURL" method="post" enctype='multipart/form-data' onsubmit="return validateForm()">
                                             <%
                                                         DAOProduct dao = new DAOProduct();
                                                         ResultSet rsPro = dao.getData("select * from Product order by ProductID desc limit 1");
@@ -199,7 +233,7 @@
                                             <hr>
                                             <div class="row">
                                                 <div class="col-sm-3">
-                                                    <p class="mb-0">Giảm giá</p>%
+                                                    <p class="mb-0">Giảm giá(%)</p>
                                                 </div>
                                                 <div class="col-sm-9">
                                                     <input type="number" required name="unitDiscount" value="${unitDiscount}">
@@ -220,11 +254,17 @@
                                                     <p class="mb-0">Ảnh sản phẩm</p>
                                                 </div>
                                                 <div class="col-sm-9">
-                                                    <input type="file" required name="productImageUrl">
+                                                    <input type="file" required name="productImageUrl" multiple>
                                                 </div>
                                             </div>
-                                            <input type="submit" style="margin: 20px" name="submit" value="Thêm sản phẩm">
-                                            <input type="reset" style="margin: 20px" value="Xóa hết">
+                                            <button class="btnUpdate" type="submit" style="height: 33px;
+                                                    font-size: 14px;
+                                                    margin: 20px;
+                                                    margin-left: -2px;margin-right: 47px;" name="submit" value="Thêm sản phẩm">Thêm sản phẩm</button>
+                                            <button class="btnUpdate" type="reset" style="height: 33px;
+                                                    font-size: 14px;
+                                                    margin: 20px;
+                                                    margin-left: -2px;" value="Xóa hết">Xóa hết</button>
                                         </form>
                                     </div>
                                 </div>

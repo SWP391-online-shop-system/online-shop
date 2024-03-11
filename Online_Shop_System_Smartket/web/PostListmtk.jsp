@@ -29,7 +29,25 @@
         <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css">
         <link href="css/css_marketing_dashboard/marketing_dashboard_style.css" rel="stylesheet">
         <link href="vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">
-
+        <style>
+            .filter-group select.form-control {
+                width: 102px;
+                height: 31px;
+                font-size: 13px;
+                margin-left: 14px;
+                margin-right: 21px;
+                padding: 4px;
+            }
+            #statuss{
+                width: 85px;
+                height: 24px;
+                font-size: 14px;
+                color: white;
+                background: #66bb6a;
+                border: none;
+                border-radius: 4px;
+            }
+        </style>
     </head>
     <%
     ResultSet rs = (ResultSet)request.getAttribute("data");
@@ -47,17 +65,17 @@
         <div id="wrapper">
             <!-- Sidebar -->
             <ul class="navbar-nav sidebar sidebar-light accordion" id="accordionSidebar">
-                <a class="sidebar-brand d-flex align-items-center justify-content-center" href="index.html">
+                <a class="sidebar-brand d-flex align-items-center justify-content-center" href="marketingDashBoardURL">
                     <div class="sidebar-brand-icon">
                         <img style="height: 91px;
                              width: 133px;
-                             margin-bottom: -18px;" src="images/logo/logo.png">
+                             margin-bottom: -18px;z-index: 99;" src="images/logo/logo.png">
                     </div>
                 </a>
                 <div style="position: sticky; top: 30px;">
                     <hr class="sidebar-divider wee-0" style="margin: 0px;">
                     <li class="nav-item active">
-                        <a class="nav-link" href="index.html">
+                        <a class="nav-link" href="marketingDashBoardURL">
                             <i class="fas fa-fw fa-tachometer-alt"></i>
                             <span>Thống kê</span></a>
                     </li>
@@ -66,25 +84,25 @@
                         Quản lí
                     </div>
                     <li class="nav-item">
-                        <a class="nav-link" href="ui-colors.html">
+                        <a class="nav-link" href="marketingPost">
                             <i class="fas fa-calendar fa-2x text-primary"></i>
                             <span>Bài đăng</span>
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="ui-colors.html">
+                        <a class="nav-link" href="marketingProductListURL">
                             <i class="fas fa-shopping-cart fa-2x text-success"></i>
                             <span>Sản phẩm</span>
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="ui-colors.html">
+                        <a class="nav-link" href="marketingCustomerlist">
                             <i class="fas fa-users fa-2x text-info"></i>
                             <span>Khách hàng</span>
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="ui-colors.html">
+                        <a class="nav-link" href="marketingFeedBackListURL">
                             <i class="fas fa-comments fa-2x text-info"></i>
                             <span>Phản hồi</span>
                         </a>
@@ -104,7 +122,7 @@
                                 <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown"
                                    aria-haspopup="true" aria-expanded="false">
                                     <img class="img-profile rounded-circle" src="images/user/default_avatar.jpg" style="max-width: 60px">
-                                    <span class="ml-2 d-none d-lg-inline text-white small">Maman Ketoprak</span>
+                                    <span class="ml-2 d-none d-lg-inline text-white small"></span>
                                 </a>
                                 <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="userDropdown">
                                     <a class="dropdown-item" href="#">
@@ -139,50 +157,65 @@
                             }
                         </script>
 
-                        <a href="addPost?service=addProduct" class="btn btn-secondary">Thêm bài viết mới</a>
+                        <a style="margin-bottom: 10px;" href="marketingAddPost?service=addPost" class="btn btn-secondary">Thêm bài viết mới</a>
                         <div class="row">
                             <!-- DataTable with Hover -->
                             <div class="col-lg-12">
                                 <div class="card mb-4">
                                     <div class="table-responsive p-3">
                                         <table class="table align-items-center table-flush table-hover" id="dataTableHover">
-                                            <div style="display: flex;
+                                            <div style="display: inline-grid;
                                                  margin-left: 200px;
                                                  margin-bottom: -30px;">
-                                                <form action="mtkPost" method="get" id="categoryForm">
-                                                    <div class="filter-group" style="display:flex;">
-                                                        <div style="padding-top: 3px;">Danh mục</div>
-                                                        <select class="form-control" name="categoryId" onchange="this.form.submit()">
-                                                            <option value="">Tất cả</option>
-                                                            <c:forEach var="category" items="${categories}">
-                                                                <option value="${category.categoryID}"<c:if test="${category.categoryID eq param.categoryId}">selected
-                                                                        </c:if>
-                                                                        >${category.categoryName}</option>
-                                                            </c:forEach>							
-                                                        </select>
-                                                    </div>
-                                                    <!-- Your other form elements -->
-                                                    <div class="filter-group" style="display:flex;">
-                                                        <div style="padding-top: 3px;">Trạng thái</div>
-                                                        <select class="form-control" name="status" onchange="this.form.submit()">
-                                                            <option value="">Tất cả</option>
-                                                            <option value="Ẩn" <c:if test="${fn:contains(param.status,'Ẩn')}">selected</c:if>>Ẩn</option>
-                                                            <option value="Hiện" <c:if test="${fn:contains(param.status,'Hiện')}">selected</c:if>>Hiện</option>
+                                                <form action="marketingPost" method="get" id="categoryForm">
+                                                    <div style="display: flex;margin-left: -19px;">
+                                                        <div class="filter-group" style="display:flex;">
+                                                            <div style="padding-top: 3px;">Danh mục</div>
+                                                            <select class="form-control" name="categoryId" onchange="this.form.submit()">
+                                                                <option value="">Tất cả</option>
+                                                                <c:forEach var="category" items="${categories}">
+                                                                    <option value="${category.categoryID}"<c:if test="${category.categoryID eq param.categoryId}">selected
+                                                                            </c:if>
+                                                                            >${category.categoryName}</option>
+                                                                </c:forEach>							
+                                                            </select>
+                                                        </div>
+                                                        <!-- Your other form elements -->
+                                                        <div class="filter-group" style="display:flex;">
+                                                            <div style="padding-top: 3px;">Tác Giả</div>
+                                                            <select class="form-control" name="author" onchange="this.form.submit()">
+                                                                <option value="">Tất cả</option>
+                                                                <c:forEach var="author" items="${author}">
+                                                                    <option value="${author.blogAuthor}" <c:if test="${author.blogAuthor eq check}">selected
+                                                                            </c:if>
+                                                                            >${author.blogAuthor}</option>
+                                                                </c:forEach>							
                                                             </select>
                                                         </div>
                                                         <input type="submit" style="display: none;">
+                                                        <div class="filter-group" style="display:flex;">
+                                                            <div style="padding-top: 3px;">Trạng thái</div>
+                                                            <select class="form-control" name="status" onchange="this.form.submit()">
+                                                                <option value="">Tất cả</option>
+                                                                <option value="Ẩn" <c:if test="${fn:contains(param.status,'Ẩn')}">selected</c:if>>Vô hiệu hóa</option>
+                                                                <option value="Hiện" <c:if test="${fn:contains(param.status,'Hiện')}">selected</c:if>>Kích hoạt</option>
+                                                                </select>
+                                                            </div>
+                                                            <input type="submit" style="display: none;">
+                                                        </div>
                                                     </form>
                                                 </div>
+
                                                 <thead class="thead-light">
                                                     <tr>
                                                         <th>ID</th>
                                                         <th>Ảnh</th>
-                                                        <th>Tiêu đề</th>
-                                                        <th>Tác Giả</th>
-                                                        <th>Danh mục</th>
-                                                        <th>Đánh Giá</th>
+                                                        <th style="min-width: 220px;">Tiêu đề</th>
+                                                        <th style="min-width: 70px">Tác Giả</th>
+                                                        <th style="min-width: 150px;">Danh mục</th>
+                                                        <th style="min-width: 90px;">Đánh Giá</th>
                                                         <th>Trạng thái</th>		
-                                                        <th>Ngày đăng</th>
+                                                        <th style="min-width: 120px">Ngày đăng</th>
                                                         <th>Hành động</th>
                                                     </tr>
                                                 </thead>
@@ -204,7 +237,9 @@
                                                 <% try {
                                                     while(rs.next()) {
                                                         boolean HiddenStatus = rs.getBoolean("HiddenStatus");
-                                                        String status = (HiddenStatus) ? "Hiện" : "Ẩn";
+                                                        String hidden = (HiddenStatus) ? "0" : "1";
+                                                        String status = (HiddenStatus) ? "Vô hiệu hóa" : "Kích hoạt";
+                                                        int BlogID = rs.getInt("BlogID");
                                                 %>
                                                 <tr>
                                                     <td><%=rs.getInt("BlogID")%></td>
@@ -213,7 +248,9 @@
                                                     <td><%=rs.getString("BlogAuthor")%></td>
                                                     <td><%=rs.getString("CategoryName")%></td>
                                                     <td><%=rs.getInt("BlogRate")%> sao</td>
-                                                    <td><%= status %></td>
+                                                    <td>
+                                                        <input id="statuss" style="<%=status.equals("Kích hoạt")?"":"background: red;"%>" type="button" value="<%= status %>" onclick="window.location.href = 'marketingPost?BlogID=<%=rs.getInt("BlogID")%>&hidden=<%= hidden %>';">
+                                                    </td>
                                                     <td><%=rs.getDate("CreateTime")%> </td>
                                                     <td>
                                                         <div class="dropdown">
@@ -221,8 +258,8 @@
                                                                 Hành động
                                                             </button>
                                                             <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                                                <a class="dropdown-item" href="view?BlogID=<%=rs.getInt("BlogID")%>">Xem</a>
-                                                                <a class="dropdown-item" href="editPost?BlogID=<%= rs.getInt("BlogID") %>">Chỉnh sửa</a>
+                                                                <a class="dropdown-item" href="marketingViewPost?BlogID=<%=rs.getInt("BlogID")%>">Xem</a>
+                                                                <a class="dropdown-item" href="marketingEditPost?BlogID=<%= rs.getInt("BlogID") %>">Chỉnh sửa</a>
                                                             </div>
                                                         </div>
                                                     </td>
@@ -238,33 +275,33 @@
                             </div>
                         </div>
 
-                        
 
+
+                    </div>
+                    <!---Container Fluid-->
                 </div>
-                <!---Container Fluid-->
             </div>
-        </div>
 
-        <!-- Scroll to top -->
-        <a class="scroll-to-top rounded" href="#page-top">
-            <i class="fas fa-angle-up"></i>
-        </a>
-        <script src="vendor/jquery/jquery.min.js"></script>
-        <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-        <script src="vendor/jquery-easing/jquery.easing.min.js"></script>
-        <script src="js_marketing/ruang-admin.min.js"></script>
-        <script src="vendor/chart.js/Chart.min.js"></script>
-        <script src="js_marketing/demo/chart-area-demo.js"></script>  
-        <script src="vendor/datatables/jquery.dataTables.min.js"></script>
-        <script src="vendor/datatables/dataTables.bootstrap4.min.js"></script>
+            <!-- Scroll to top -->
+            <a class="scroll-to-top rounded" href="#page-top">
+                <i class="fas fa-angle-up"></i>
+            </a>
+            <script src="vendor/jquery/jquery.min.js"></script>
+            <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+            <script src="vendor/jquery-easing/jquery.easing.min.js"></script>
+            <script src="js_marketing/ruang-admin.min.js"></script>
+            <script src="vendor/chart.js/Chart.min.js"></script>
+            <script src="js_marketing/demo/chart-area-demo.js"></script>  
+            <script src="vendor/datatables/jquery.dataTables.min.js"></script>
+            <script src="vendor/datatables/dataTables.bootstrap4.min.js"></script>
 
-        <!-- Page level custom scripts -->
-        <script>
+            <!-- Page level custom scripts -->
+            <script>
                                                             $(document).ready(function () {
                                                                 $('#dataTable').DataTable(); // ID From dataTable 
                                                                 $('#dataTableHover').DataTable(); // ID From dataTable with Hover
                                                             });
-        </script>
+            </script>
     </body>
 
 </html>

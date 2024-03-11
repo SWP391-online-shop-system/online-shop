@@ -20,7 +20,7 @@ import view.Product;
  *
  * @author HP
  */
-@WebServlet(name = "ControllerSearchMKT", urlPatterns = {"/ControllerSearchMKTURL"})
+@WebServlet(name = "ControllerSearchMKT", urlPatterns = {"/marketingControllerSearch"})
 public class ControllerSearchMKT extends HttpServlet {
 
     /**

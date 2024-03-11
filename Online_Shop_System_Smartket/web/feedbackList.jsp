@@ -34,17 +34,17 @@
         <div id="wrapper">
             <!-- Sidebar -->
             <ul class="navbar-nav sidebar sidebar-light accordion" id="accordionSidebar">
-                <a class="sidebar-brand d-flex align-items-center justify-content-center" href="HomePageURL">
+                <a class="sidebar-brand d-flex align-items-center justify-content-center" href="marketingDashBoardURL">
                     <div class="sidebar-brand-icon">
                         <img style="height: 91px;
                              width: 133px;
-                             margin-bottom: -18px;" src="images/logo/logo.png">
+                             margin-bottom: -18px;z-index: 99;" src="images/logo/logo.png">
                     </div>
                 </a>
                 <div style="position: sticky; top: 30px;">
                     <hr class="sidebar-divider wee-0" style="margin: 0px;">
                     <li class="nav-item active">
-                        <a class="nav-link" href="MarketingDashBoardURL">
+                        <a class="nav-link" href="marketingDashBoardURL">
                             <i class="fas fa-fw fa-tachometer-alt"></i>
                             <span>Thống kê</span></a>
                     </li>
@@ -53,25 +53,25 @@
                         Quản lí
                     </div>
                     <li class="nav-item">
-                        <a class="nav-link" href="#">
+                        <a class="nav-link" href="marketingPost">
                             <i class="fas fa-calendar fa-2x text-primary"></i>
                             <span>Bài đăng</span>
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="mktProductListURL">
+                        <a class="nav-link" href="marketingProductListURL">
                             <i class="fas fa-shopping-cart fa-2x text-success"></i>
                             <span>Sản phẩm</span>
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="customerlist">
+                        <a class="nav-link" href="marketingCustomerlist">
                             <i class="fas fa-users fa-2x text-info"></i>
                             <span>Khách hàng</span>
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="ui-colors.html">
+                        <a class="nav-link" href="marketingFeedBackListURL">
                             <i class="fas fa-comments fa-2x text-info"></i>
                             <span>Phản hồi</span>
                         </a>
@@ -112,10 +112,10 @@
                     <!-- Container Fluid-->
                     <div class="container-fluid" id="container-wrapper">
                         <div class="d-sm-flex align-items-center justify-content-between mb-4">
-                            <h1 class="h3 mb-0 text-gray-800">Danh Sách Khách Hàng</h1>
+                            <h1 class="h3 mb-0 text-gray-800">Danh Sách Phản hồi</h1>
                             <ol class="breadcrumb">
                                 <li class="breadcrumb-item"><a href="./">Trang Chủ</a></li>
-                                <li class="breadcrumb-item active">Danh Sách Khách Hàng</li>
+                                <li class="breadcrumb-item active">Danh Sách Phản hồi</li>
                             </ol>
                         </div>
 
@@ -141,39 +141,77 @@
                         </div>
                         <%sessionMessage.removeAttribute("message");%>
                         <div class="row">
-                            <button style="margin-left: 13px;margin-bottom: 5px;" type="button" class="btn btn-secondary" data-toggle="modal" data-target="#exampleModalLong"
-                                    id="#modalLong">Thêm Khách Hàng Mới</button>
-
-                        </div>
-                        <div class="row">
                             <!-- DataTable with Hover -->
                             <div class="col-lg-12">
                                 <div class="card mb-4">                                 
                                     <div class="table-responsive p-3">
                                         <table class="table align-items-center table-flush table-hover" id="dataTableHover" style="font-size: 14px;">
                                             <div style="display: flex;
-                                                 margin-left: 200px;
+                                                 margin-left: 157px;
                                                  margin-bottom: -30px;">
                                                 <%  DAOUser daoU = new DAOUser();
                                                     DAOProduct daoP = new DAOProduct();
                                                     User user = new User();
                                                     Product product = new Product();
                                                     int status = (int)request.getAttribute("status");
+                                                    int productID = (int)request.getAttribute("productID");
+                                                    int feedBackRate = (int)request.getAttribute("feedBackRate");
                                                     ResultSet rsFeedBack= (ResultSet)request.getAttribute("rsFeedBack");%>
-                                                <form action="FeedBackList" method="get">
+                                                <form action="marketingFeedBackListURL" method="get">
                                                     <div class="filter-group" style="display:flex;">
                                                         <div style="padding-top: 16px;
-                                                             width: 81%;">Trạng thái</div>
+                                                             width: 76%;
+                                                             z-index: 99;">Trạng thái</div>
                                                         <select class="form-control" name="status" onchange="this.form.submit()" style="height: 34px;
                                                                 padding-top: 6px;
-                                                                margin-top: 10px;">                                                            
+                                                                margin-top: 10px;
+                                                                width: 118px;
+                                                                margin-left: -6px
+                                                                ">                                                            
                                                             <option value="2" <%if(status==2){%>selected<%}%>>Tất cả</option>                                                     
                                                             <option value="0" <%if(status==0){%>selected<%}%>>Hoạt động</option>                                                          
                                                             <option value="1" <%if(status==1){%>selected<%}%>>Vô hiệu hóa</option>                                                            
                                                         </select>
+
+                                                        <div style="padding-top: 16px;
+                                                             width: 65%;
+                                                             margin-left: 14px;
+                                                             ">Sản phẩm</div>
+                                                        <select class="form-control" name="ProductID" onchange="this.form.submit()" style="height: 34px;
+                                                                padding-top: 6px;
+                                                                margin-top: 10px;
+                                                                width: 148px;
+                                                                z-index: 99;
+                                                                margin-left: 0px;
+                                                                ">
+                                                            <option value="0"<%=productID==0?"selected":""%>>Tất cả</option>
+                                                            <%
+                                                            ResultSet rsProductSelect= daoP.getData("select ProductID from FeedBack group by ProductID");
+                                                            while(rsProductSelect.next()){
+                                                            product = daoP.getProductById(rsProductSelect.getInt("ProductID"));
+                                                            %>
+                                                            <option value="<%=product.getProductID()%>" <%=(product.getProductID()==productID)?"selected":""%>><%=product.getProductName()%></option>                                                     
+                                                            <%}%>
+                                                        </select>
+
+                                                        <div style="padding-top: 16px;
+                                                             width: 65%;
+                                                             margin-right: -41px;
+                                                             margin-left: 18px;">Sao</div>
+
+                                                        <select class="form-control" name="ProductRate" onchange="this.form.submit()" style="    height: 34px;
+                                                                padding-top: 6px;
+                                                                margin-top: 10px;
+                                                                width: 153px;
+                                                                z-index: 99;
+                                                                margin-left: 3px;">
+                                                            <option value="0" <%=feedBackRate==0?"selected":""%>>Tất cả</option>
+                                                            <%ResultSet rsFeedRate = daoP.getData("select FeedBackRate from FeedBack group by FeedBackRate order by FeedBackRate");
+                                                            while(rsFeedRate.next()) {%>
+                                                            <option value="<%=rsFeedRate.getInt("FeedBackRate")%>"<%=rsFeedRate.getInt("FeedBackRate")==feedBackRate?"selected":""%>><%=rsFeedRate.getInt("FeedBackRate")%></option>                                                            
+                                                            <%}%>                                                            
+                                                        </select>
                                                     </div>                                                   
-                                                    <input type="submit" style="display: none;">
-                                                    <input type="hidden" name="service" value="fillterStatus"/>
                                                 </form>
                                             </div>
                                             <thead class="thead-light">
@@ -183,7 +221,8 @@
                                                     <th style="text-align: center;width: 188.727px">Phản hồi bởi</th>
                                                     <th style="text-align: center; width: 59.1023px">Nội dung</th>
                                                     <th style="text-align: center;width: 98px">Đánh giá</th>						
-                                                    <th style="text-align: center; width:67.5114px">Ngày đăng</th>						
+                                                    <th style="text-align: center;
+                                                        width: 101.1562px;">Ngày đăng</th>						
                                                     <th style="text-align: center;width: 98px">Trạng thái</th>
                                                 </tr>
                                             </thead>
@@ -193,21 +232,31 @@
                                                     user = daoU.getUserByUserID(rsFeedBack.getInt("UserID"));
                                                     product = daoP.getProductById(rsFeedBack.getInt("ProductID"));
                                                 %>
-                                                <tr style="text-align: center; cursor: pointer" onclick="FeedBackdetail(<%=rsFeedBack.getInt("FeedBackID")%>,<%=rsFeedBack.getInt("FeedBackStatus")%>)">
+                                                <tr style="text-align: center; cursor: pointer" onclick="FeedBackdetail(<%=rsFeedBack.getInt("FeedBackID")%>,<%=rsFeedBack.getInt("UserID")%>,<%=rsFeedBack.getInt("FeedBackStatus")%>)">
                                                     <td><%=rsFeedBack.getInt("FeedBackID")%></td>
                                                     <td><%=product.getProductName()%></td>
                                                     <td><%=user.getFirstName()+" "+user.getLastName()%></td>
                                                     <td>
-                                                        <textarea style="width: 140px; height: 60px; font-size: 13px;">
+                                                        <textarea style="width: 177px;
+                                                                  height: 71px;
+                                                                  font-size: 13px;">
                                                             <%=rsFeedBack.getString("FeedBackContent")%>
                                                         </textarea></td>
                                                     <td><%=rsFeedBack.getInt("FeedBackRate")%></td>                        
                                                     <td><%=rsFeedBack.getString("FeedBackDate")%></td>                        
-                                                    <%if(rsFeedBack.getBoolean("FeedBackStatus")==false) {%>
-                                                    <td><span class="badge badge-success">Hoạt động</span></td>
-                                                    <%}else{%>
-                                                    <td><span class="badge badge-danger">Vô hiệu hóa</span></td>
-                                                    <%}%>
+                                                    <td>
+                                                        <%if(rsFeedBack.getBoolean("FeedBackStatus")){%>
+                                                        <span class="badge badge-danger"style="height: 20px;
+                                                              font-size: 10px;
+                                                              padding: 5px;
+                                                              ">Vô hiệu hóa</span>
+                                                        <%}else{%>
+                                                        <span class="badge badge-success" style="height: 20px;
+                                                              font-size: 10px;
+                                                              padding: 5px;
+                                                              ">Hoạt động</span>
+                                                        <%}%>
+                                                    </td>
                                                 </tr>
                                                 <%}%>
                                             </tbody>
@@ -243,9 +292,7 @@
                                                 <input type="text" name="LName" placeholder="Nhập Tên" required class="form-control"
                                                        pattern="[A-Za-zÀ-ỹ ]+" oninvalid="this.setCustomValidity('Vui lòng điền thông tin này, Không bao gồm số và kí tự đặc biệt')" 
                                                        oninput="setCustomValidity(''); validateInput(this)" >
-                                            </div>    height: 34px;
-                                            padding-top: 6px;
-                                            margin-top: 10px;
+                                            </div>
                                             <div class="form-element">
                                                 <label>Giới tính</label>
                                                 <div style="display:flex; flex: 40%">
@@ -315,8 +362,8 @@
             </div>
         </div>
         <script>
-            function FeedBackdetail(uid, stat) {
-                var url = "FeedBackDetailURL?uid=" + uid + "&status=" + stat;
+            function FeedBackdetail(FeedBackID, UserID, FeedBackStatus) {
+                var url = "marketingFeedBackDetailURL?FeedBackID=" + FeedBackID + "&uid=" + UserID + "&status=" + FeedBackStatus;
                 window.location.href = url;
             }
         </script>
@@ -327,14 +374,11 @@
         <script src="vendor/jquery/jquery.min.js"></script>
         <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
         <script src="vendor/jquery-easing/jquery.easing.min.js"></script>
-        <!--        <script src="js_marketing/ruang-admin.min.js"></script>
-        --><script src="js_marketing/customerlist.js"></script>  
+        <script src="js_marketing/ruang-admin.min.js"></script>
         <script src="vendor/datatables/jquery.dataTables.min.js"></script>
         <script src="vendor/datatables/dataTables.bootstrap4.min.js"></script>
+        <script src="js_marketing/feedbacklist.js"></script>
 
         <!-- Page level custom scripts -->
-        <script>
-
-        </script>
     </body>
 </html>

@@ -13,6 +13,8 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import java.sql.ResultSet;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import model.DAOFeedBack;
 import model.DAOLog;
 import model.DAOUser;
@@ -24,7 +26,7 @@ import view.User;
  *
  * @author admin
  */
-@WebServlet(name = "ControllerFeedBackDetail", urlPatterns = {"/FeedBackDetailURL"})
+@WebServlet(name = "ControllerFeedBackDetail", urlPatterns = {"/marketingFeedBackDetailURL"})
 public class ControllerFeedBackDetail extends HttpServlet {
 
     /**
@@ -70,30 +72,46 @@ public class ControllerFeedBackDetail extends HttpServlet {
         if (oldUser == null) {
             response.sendRedirect("HomePageURL");
         } else {
+            String service = request.getParameter("service");
+            if (service == null || service.equals("")) {
+                service = "";
+            }
             int updateBy = oldUser.getUserID(); // nhan vien
             DAOFeedBack daoF = new DAOFeedBack();
             DAOUser daoU = new DAOUser();
             DAOLog daoLog = new DAOLog();
-            int FeedBackID = Integer.parseInt(request.getParameter("uid"));
+            int FeedBackID = Integer.parseInt(request.getParameter("FeedBackID"));
             FeedBack FeedBack = daoF.getFeedBackById(FeedBackID);
             request.setAttribute("data", FeedBack);
             String status = request.getParameter("status");
-            System.out.println("status = "+status);
             String cusId_str = request.getParameter("uid");
             int cusId = Integer.parseInt(cusId_str); //nguoi phan hoi
-
-            String purpose = "";
-            if (status.equals("1")) {
-                daoU.updateStatus(cusId, 2);
-                purpose = "đã vô hiệu hóa phản hồi ";
-            } else {
-                daoU.updateStatus(cusId, 1);
-                purpose = "đã kích hoạt phản hồi";
+            String purpose;
+            int afterStatus = Integer.parseInt(status);
+            if (service.equals("updateStatus")) {
+                System.out.println("in updateStatus");
+                if (status.equals("1")) {
+                    afterStatus = 0;
+                    daoF.updateStatus(FeedBackID, 0);
+                    purpose = "đã kích hoạt phản hồi";
+                    System.out.println("updateed status from off to on");
+                } else {
+                    daoF.updateStatus(FeedBackID, 1);
+                    afterStatus = 1;
+                    purpose = "đã vô hiệu hóa phản hồi ";
+                    System.out.println("updateed status from on to off");
+                }
+                Log log = new Log(cusId, updateBy, purpose);
+                int n = daoLog.insertLog(log);
             }
-            Log log = new Log(cusId, updateBy, purpose);
-            int n = daoLog.insertLog(log);
-            ResultSet logger = daoU.getData("SELECT * FROM loghistory as log join `user` as u on log.UserId = u.UserID where u.UserId = " + cusId);
-                request.setAttribute("log", logger);
+//            try {
+//                Thread.sleep(1000);
+//            } catch (InterruptedException e) {
+//                e.printStackTrace();
+//            }
+            request.setAttribute("afterStatus", afterStatus);
+            ResultSet logger = daoU.getData("SELECT * FROM loghistory as log join `user` as u on log.UserId = u.UserID where u.UserId = " + cusId + " and purpose like '%phản hồi%' order by updateAt desc");
+            request.setAttribute("log", logger);
             request.getRequestDispatcher("FeedBackDetail.jsp").forward(request, response);
         }
     }

@@ -41,20 +41,16 @@ public class ControllerHomePage extends HttpServlet {
             /* TODO output your page here. You may use following sample code. */
             DAOBlog daoBlog = new DAOBlog();
             DAOProduct dao = new DAOProduct();
-            ResultSet rsNewBlog = daoBlog.getData("select * from Blog order by CreateTime desc limit 1");
-            ResultSet rsFeatureBlog = daoBlog.getData("select * from Blog order by BlogRate desc limit 3");
-            ResultSet rsSlider = daoBlog.getData("select SliderImage, SliderLink from Slider");
+            ResultSet rsNewBlog = daoBlog.getData("select * from Blog where HiddenStatus = 0 order by CreateTime desc limit 1 ");
+            ResultSet rsFeatureBlog = daoBlog.getData("select * from Blog where HiddenStatus = 0 order by BlogRate desc limit 3");
+            ResultSet rsSlider = daoBlog.getData("select SliderImage, SliderLink from Slider where SliderStatus = 0");
             int settingPage = 0;
             ResultSet rsSettingPage = dao.getData("select * from Setting where SettingID = 1");
-            try {
-                if (rsSettingPage.next()) {
-                    settingPage = Integer.parseInt(rsSettingPage.getString("SettingValue"));
-                }
-            } catch (SQLException ex) {
-                Logger.getLogger(ControllerHomePage.class.getName()).log(Level.SEVERE, null, ex);
+            if (rsSettingPage.next()) {
+                settingPage = Integer.parseInt(rsSettingPage.getString("SettingValue"));
             }
             ResultSet rsNewProduct = dao.getData("select * from product as p join productImage as pi on p.ProductID = pi.ProductID "
-                    + "where pi.ProductURL = pi.ProductURLShow order by p.CreateDate desc limit "+settingPage);
+                    + "where pi.ProductURL = pi.ProductURLShow and p.ProductStatus = 0 order by p.CreateDate desc limit " + settingPage);
             request.setAttribute("rsNewProduct", rsNewProduct);
             request.setAttribute("rsSlider", rsSlider);
             request.setAttribute("rsNewBlog", rsNewBlog);
@@ -64,10 +60,12 @@ public class ControllerHomePage extends HttpServlet {
             request.setAttribute("inputMinPrice", minValue);
             request.setAttribute("inputMaxPrice", maxValue);
             request.getRequestDispatcher("homepage.jsp").forward(request, response);
+        } catch (SQLException ex) {
+            request.getRequestDispatcher("400").forward(request, response);
         }
     }
 
-    // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
+// <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
      * Handles the HTTP <code>GET</code> method.
      *

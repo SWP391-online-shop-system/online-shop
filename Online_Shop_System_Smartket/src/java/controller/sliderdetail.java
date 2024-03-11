@@ -19,7 +19,7 @@ import view.Slider;
  *
  * @author 84395
  */
-@WebServlet(name = "sliderdetail", urlPatterns = {"/sliderdetail"})
+@WebServlet(name = "sliderdetail", urlPatterns = {"/marketingSliderdetail"})
 public class sliderdetail extends HttpServlet {
 
     /**
@@ -35,9 +35,9 @@ public class sliderdetail extends HttpServlet {
             throws ServletException, IOException {
         String id = request.getParameter("id");
         DAOSlider DAOSlider = new DAOSlider();
-//        Slider slider = DAOSlider.getaSlider("select * from slider where sliderId = " + id);
+   Slider slider = DAOSlider.getaSlider("select * from slider where sliderId = " + id);
         HttpSession session = request.getSession();
-//        session.setAttribute("getaSlider", slider);
+      session.setAttribute("getaSlider", slider);
         request.getRequestDispatcher("sliderdetail.jsp").forward(request, response);
 
     }

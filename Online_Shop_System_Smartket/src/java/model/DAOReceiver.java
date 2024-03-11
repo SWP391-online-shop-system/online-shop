@@ -14,7 +14,7 @@ import view.Receiver;
  *
  * @author trant
  */
-public class DAOReceiver extends DBConnect{
+public class DAOReceiver extends DBConnect {
 
     public int insertReceiverByPrepared(Receiver receiver) {
         int n = 0;
@@ -23,15 +23,20 @@ public class DAOReceiver extends DBConnect{
                 + "`ReceiverName`,\n"
                 + "`ReceiverPhoneNumber`,\n"
                 + "`ReceiverAddress`,\n"
+                + "`ReceiverEmail`,\n"
+                + "`ReceiverGender`,\n"
                 + "`Note`)\n"
-                + "VALUES(?,?,?,?);";
+                + "VALUES\n"
+                + "(?,?,?,?,?,?,?);";
         try {
             PreparedStatement pre = conn.prepareStatement(sql);
             pre.setInt(1, receiver.getOrderID());
-            pre.setString(2, receiver.getReceName());
-            pre.setString(3, receiver.getRecePhone());
-            pre.setString(4, receiver.getReceAdress());
-            pre.setString(5, receiver.getNote());
+            pre.setString(2, receiver.getReceiverName());
+            pre.setString(3, receiver.getReceiverPhoneNumber());
+            pre.setString(4, receiver.getRceiverAddress());
+            pre.setString(5, receiver.getReceiverEmail());
+            pre.setBoolean(6, receiver.getReceiverGender());
+            pre.setString(7, receiver.getNote());
             n = pre.executeUpdate();
         } catch (SQLException ex) {
             Logger.getLogger(DAOReceiver.class.getName()).log(Level.SEVERE, null, ex);

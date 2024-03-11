@@ -29,7 +29,20 @@
         <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css">
         <link href="css/css_marketing_dashboard/marketing_dashboard_style.css" rel="stylesheet">
         <link href="vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">
-
+        <style>
+            table{
+                text-align: center;
+            }
+            #tronclick:hover{
+                cursor: pointer;
+            }
+            #imageonclick img {
+                transition: all 0.5s;
+            }
+            #imageonclick img:hover{
+                transform: scale(1.6);
+            }
+        </style>
     </head>
     <%
     ResultSet rs = (ResultSet)request.getAttribute("data");
@@ -66,7 +79,7 @@
                         Quản lí
                     </div>
                     <li class="nav-item">
-                        <a class="nav-link" href="http://localhost:8080/Smartket/sliderList">
+                        <a class="nav-link" href="http://localhost:8080/Smartket/marketingSliderList">
                             <i class="fas fa-calendar fa-2x text-primary"></i>
                             <span>Slider</span>
                         </a>
@@ -125,16 +138,16 @@
                     <!-- Container Fluid-->
                     <div class="container-fluid" id="container-wrapper">
                         <div class="d-sm-flex align-items-center justify-content-between mb-4">
-                            <h1 class="h3 mb-0 text-gray-800">Slider List</h1>
+                            <h1 class="h3 mb-0 text-gray-800">Danh sách Slider </h1>
                             <ol class="breadcrumb">
-                                <li class="breadcrumb-item"><a href="http://localhost:8080/Smartket/HomePageURL">Home</a></li>
+                                <li class="breadcrumb-item"><a href="http://localhost:8080/Smartket/HomePageURL">Trang chủ</a></li>
                                 <!--<li class="breadcrumb-item">Tables</li>-->
-                                <li class="breadcrumb-item active" aria-current="page">Slider List</li>
+                                <li class="breadcrumb-item active" aria-current="page">Slider</li>
                             </ol>
                         </div>
                         <!-- Row -->
                         <div class="row">
-                            <button style="margin-left: 13px;margin-bottom: 5px;" type="button" class="btn btn-outline-primary" data-toggle="modal" data-target="#exampleModalLong"
+                            <button style="margin-left: 13px;margin-bottom: 8px;" type="button" class="btn btn-secondary" data-toggle="modal" data-target="#exampleModalLong"
                                     id="#modalLong">Thêm slider mới</button>
 
                         </div>
@@ -147,7 +160,7 @@
                                             <div style="display: flex;
                                                  margin-left: 200px;
                                                  margin-bottom: -30px;">
-                                                <form action="sliderList" method="get" id="categoryForm">
+                                                <form action="marketingSliderList" method="get" id="categoryForm">
                                                     <div class="filter-group" style="display:flex;">
                                                         <div style="padding-top: 3px;">Trạng thái</div>
                                                         <select class="form-control" name="statusfilter" onchange="this.form.submit()">
@@ -162,37 +175,36 @@
                                                 <thead class="thead-light">
                                                     <tr>
                                                         <th>ID</th>
-                                                        <th>Mã nhân viên</th>
+                                                        <th style="width: 123.9479px">Mã Nhân viên</th>
                                                         <th>Slider</th>
-                                                        <th>SliderLink</th>
+                                                        <th>Đường dẫn</th>
                                                         <th>Ngày tạo</th>
                                                         <th>Trạng thái</th>						
                                                     </tr> 
                                                 </thead>
-                                                <tfoot>
-                                                    <tr>
-                                                        <th>ID</th>
-                                                        <th>Mã nhân viên</th>
-                                                        <th>Slider</th>
-                                                        <th>SliderLink</th>
-                                                        <th>Ngày tạo</th>
-                                                        <th>Trạng thái</th>						
-                                                    </tr>
-                                                </tfoot>
                                                 <tbody>
                                                 <c:forEach items="${sessionScope.sliderlist}" var="s">
-                                                    <tr onclick="sliderDetail(${s.sliderID})">
-                                                        <td>${s.sliderID}</td>
+                                                    <tr>
+                                                        <td id="tronclick" onclick="sliderDetail(${s.sliderID},${s.sliderStatus})">${s.sliderID}</td>
                                                         <td>${s.userID}</td>
-                                                        <td><img  style="height: 91px;
-                                                                  width: 133px;
-                                                                  " src="images/slider/${s.sliderImage}" alt="alt"/></td>
+                                                        <td id="imageonclick"><img  style="height: 91px;width: 133px;" src="images/slider/${s.sliderImage}" alt="alt"/></td>
                                                         <td><a href="${s.sliderLink}">${s.sliderLink}</a></td>
                                                         <td>${s.createDate}</td> 
                                                         <td><c:choose>
-                                                                <c:when test="${!s.sliderStatus}">hiện</c:when>
-                                                                <c:otherwise>ẩn</c:otherwise>
-                                                            </c:choose></td> 
+                                                                <c:when test="${!s.sliderStatus}"> 
+                                                                    <span class="badge badge-success" style="height: 20px;
+                                                                          font-size: 10px;
+                                                                          padding: 5px;
+                                                                          ">Hoạt động</span>
+                                                                </c:when>
+                                                                <c:otherwise>
+                                                                    <span class="badge badge-danger"style="height: 20px;
+                                                                          font-size: 10px;
+                                                                          padding: 5px;
+                                                                          ">Vô hiệu hóa</span>
+                                                                </c:otherwise>
+                                                            </c:choose>
+                                                        </td> 
                                                     </tr>
                                                 </c:forEach>    
                                             </tbody>
@@ -248,7 +260,7 @@
                     <div class="modal fade" id="exampleModalLong" tabindex="-1" role="dialog"
                          aria-labelledby="exampleModalLongTitle" aria-hidden="true">
                         <div class="modal-dialog" role="document">
-                            <form action="AddSlider" method="post">
+                            <form action="AddSlider" method="post"  enctype="multipart/form-data">
                                 <div class="modal-content">
                                     <div class="modal-header">
                                         <h5 class="modal-title" id="exampleModalLongTitle">Thêm slider mới</h5>
@@ -272,7 +284,7 @@
                                         </div>
 
                                         <div class="form-element">
-                                            <label for="registerEmail">Slider: </label>
+                                            <label>Slider: </label>
                                             <input name="sliderImage1" type= "file"
                                                    required><br>
                                         </div>
@@ -289,11 +301,11 @@
                                             <label>Trạng thái: </label>
                                             <div style="display:flex; flex: 40%">
                                                 <div class="custom-control custom-radio" style="margin-right: 15px;">
-                                                    <input type="radio" id="customRadio3" name="sliderStatus1" class="custom-control-input" value="true" required>
+                                                    <input type="radio" id="customRadio3" name="sliderStatus1" class="custom-control-input" value="false" required>
                                                     <label class="custom-control-label" for="customRadio3">Hiện</label>
                                                 </div>
                                                 <div class="custom-control custom-radio">
-                                                    <input type="radio" id="customRadio4" name="sliderStatus1" class="custom-control-input" value="false" required>
+                                                    <input type="radio" id="customRadio4" name="sliderStatus1" class="custom-control-input" value="true" required>
                                                     <label class="custom-control-label" for="customRadio4">Ẩn</label>
                                                 </div>
                                             </div>
@@ -301,7 +313,7 @@
 
                                     </div>
                                     <div class="modal-footer">
-                                        <button type="button" class="btn btn-outline-primary" data-dismiss="modal">Đóng</button>
+                                        <button type="button" class="btn btn-outline-primary" data-dismiss="modal">Close</button>
                                         <button type="submit" class="btn btn-primary">Thêm slider</button>
                                     </div>
                                 </div>
@@ -327,17 +339,17 @@
 
             <!-- Page level custom scripts -->
             <script>
-                                                        $(document).ready(function () {
-                                                            $('#dataTable').DataTable(); // ID From dataTable 
-                                                            $('#dataTableHover').DataTable(); // ID From dataTable with Hover
-                                                        });
+                                                            $(document).ready(function () {
+                                                                $('#dataTable').DataTable(); // ID From dataTable 
+                                                                $('#dataTableHover').DataTable(); // ID From dataTable with Hover
+                                                            });
             </script>
             <script>
                 function submitForm() {
                     document.getElementById('filterForm').submit();
                 }
-                function sliderDetail(id) {
-                    var url = "sliderdetail?id=" + id;
+                function sliderDetail(id,status) {
+                    var url = "marketingSliderdetail?id=" + id+"&status="+(status==="false"?0:"1");
                     window.location.href = url;
                 }
             </script>

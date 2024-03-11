@@ -51,6 +51,7 @@ public class DAOCart extends DBConnect {
             pre.setInt(1, userID);
             pre.setInt(2, proID);
             n = pre.executeUpdate();
+            pre.close();
         } catch (SQLException ex) {
             Logger.getLogger(DAOCart.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -112,6 +113,24 @@ public class DAOCart extends DBConnect {
             pre.setInt(3, cart.getQuantity());
             pre.setInt(4, oldid);
             pre.setInt(5, proid);
+            n = pre.executeUpdate();
+        } catch (SQLException ex) {
+            Logger.getLogger(DAOCart.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return n;
+
+    }
+    public int updateCartQuantity(int userId, int proid, int quantity) {
+        int n = 0;
+        String sql = "UPDATE `online_shop_system`.`cart`\n"
+                + "SET\n"
+                + "`Quantity` = ?\n"
+                + "WHERE `UserID` = ? and `ProductID` = ? ;";
+        try {
+            PreparedStatement pre = conn.prepareStatement(sql);
+            pre.setInt(1, quantity);
+            pre.setInt(2, userId);
+            pre.setInt(3, proid);
             n = pre.executeUpdate();
         } catch (SQLException ex) {
             Logger.getLogger(DAOCart.class.getName()).log(Level.SEVERE, null, ex);

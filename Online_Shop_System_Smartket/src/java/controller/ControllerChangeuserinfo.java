@@ -54,6 +54,12 @@ public class ControllerChangeuserinfo extends HttpServlet {
             if (service.equals("upload")) {
 
             }
+            if (service.equals("changepassword")) {
+
+            }
+            if (service.equals("changeprofile")) {
+
+            }
             request.getRequestDispatcher("profileUser.jsp").forward(request, response);
         }
     }
@@ -96,24 +102,85 @@ public class ControllerChangeuserinfo extends HttpServlet {
         User user = daoU.getUserByUserID(UserID);
         ResultSet rsProfile = daoU.getData("select * from User where UserID = " + UserID);
         request.setAttribute("rsProfile", rsProfile);
+
         if (service.equals("upload")) {
             String mess = "";
+            HttpSession session = request.getSession();
+            User use = (User) session.getAttribute("account");
             String newImageName = "AvatarUser" + UserID;
             Part filePart = request.getPart("file");
             String fileName = filePart.getSubmittedFileName();
             int dotIndex = fileName.lastIndexOf(".");
             String result = newImageName + fileName.substring(dotIndex);
-            for (Part part : request.getParts()) {
-                part.write("D:\\fpt\\Semeter_5\\SWP391\\Project\\Online_Shop_System_Smartket\\web\\images\\user\\" + result);
-            }
-            user.setUserImage(result);
-            int n = daoU.updateUser(user);
+            String path = "images/user/" + result;
+            String realFileName = request.getServletContext().getRealPath(path);
+            String realFileName1 = realFileName.replace("\\build", "");
+            filePart.write(realFileName1);
+//            filePart.write(realFileName);
+            System.out.println("result = " + result);
+            use.setUserImage(result);
+            session.setAttribute("account", use);
+            int n = daoU.updateUserImage(UserID, result);
             if (n > 0) {
                 mess = "Tải ảnh lên thành công";
             } else {
                 mess = null;
             }
             request.setAttribute("mess", mess);
+            try {
+                // Introduce a 1-second delay
+                Thread.sleep(5000); // 1000 milliseconds = 1 second
+                request.getRequestDispatcher("profileUser.jsp").forward(request, response);
+            } catch (InterruptedException e) {
+                // Handle any potential interruption exception
+                e.printStackTrace();
+            }
+        }
+        if (service.equals("changepassword")) {
+            String messa = "";
+            String oldPassword = request.getParameter("oldPass");
+            String newPassword = request.getParameter("repass");
+            HttpSession session = request.getSession();
+            User use = (User) session.getAttribute("account");
+            DAOUser dao = new DAOUser();
+            User checkOldpassword = dao.check(use.getEmail(), oldPassword);
+            if (checkOldpassword == null) {
+                messa = "Nhập sai mật khẩu cũ!!";
+                request.setAttribute("messa", messa);
+                request.getRequestDispatcher("profileUser.jsp").forward(request, response);
+            } else {
+                //   use.setPassword(newPassword);
+                dao.updatepassword(use.getUserID(), newPassword);
+                messa = "Thay đổi mật khẩu thành công";
+                request.setAttribute("messa", messa);
+                request.getRequestDispatcher("profileUser.jsp").forward(request, response);
+            }
+        }
+
+        if (service.equals("changeprofile")) {
+            String messaa = "";
+            String firstName1 = request.getParameter("firstName1");
+            String lastName1 = request.getParameter("lastName1");
+            String address1 = request.getParameter("address1");
+            String phoneNumber1 = request.getParameter("phoneNumber1");
+            String dateOfBirth1 = request.getParameter("dateOfBirth1");
+            boolean gender1 = Boolean.parseBoolean(request.getParameter("gender1"));
+            HttpSession session = request.getSession();
+            User use = (User) session.getAttribute("account");
+            DAOUser dao = new DAOUser();
+            use.setFirstName(firstName1);
+            use.setAddress(address1);
+            use.setDateOfBirth(dateOfBirth1);
+            use.setLastName(lastName1);
+            use.setPhoneNumber(phoneNumber1);
+            use.setGender(gender1);
+            int n = dao.updateProfile(use);
+            if (n > 0) {
+                messaa = "Thay đổi thông tin thành công";
+            } else {
+                messaa = null;
+            }
+            request.setAttribute("messaa", messaa);
             request.getRequestDispatcher("profileUser.jsp").forward(request, response);
         }
     }

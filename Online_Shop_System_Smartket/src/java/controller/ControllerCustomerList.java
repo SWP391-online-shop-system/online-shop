@@ -22,7 +22,7 @@ import view.User;
  *
  * @author trant
  */
-@WebServlet(name = "ControllerCustomerList", urlPatterns = {"/customerlist"})
+@WebServlet(name = "ControllerCustomerList", urlPatterns = {"/marketingCustomerlist"})
 public class ControllerCustomerList extends HttpServlet {
 
     /**
@@ -78,12 +78,12 @@ public class ControllerCustomerList extends HttpServlet {
                     }
                 }
                 session.setAttribute("message", message);
-                response.sendRedirect("customerlist");
+                response.sendRedirect("marketingCustomerlist");
             }
             if (service.equals("showDetail")) {
                 String cusID = request.getParameter("uid");
                 ResultSet rs = dao.getData("SELECT * FROM `user` where userID = " + cusID);
-                ResultSet log = dao.getData("SELECT * FROM loghistory as log join `user` as u on log.UserId = u.UserID where u.UserId = " + cusID);
+                ResultSet log = dao.getData("SELECT * FROM loghistory as log join `user` as u on log.UserId = u.UserID where u.UserId = " + cusID+" order by updateAt desc ");
                 request.setAttribute("data", rs);
                 request.setAttribute("log", log);
                 request.getRequestDispatcher("customerdetails.jsp").forward(request, response);

@@ -134,7 +134,7 @@
                             <div class="col-lg-12">
                                 <div class="card mb-4">
                                     <div class="table-responsive p-3">
-                                        <form action="updateslider" method="post" enctype='multipart/form-data' ">
+                                        <form action="updateslider" method="post" enctype='multipart/form-data'>
                                             <table class="table align-items-center table-flush table-hover" id="dataTableHover">
                                                 <thead class="thead-light">
                                                     <tr>
@@ -153,12 +153,13 @@
                                                         <td><img  style="height: 91px;
                                                                   width: 133px;
                                                                   " src="images/slider/${sessionScope.getaSlider.sliderImage}" alt="alt"/>
-                                                            <input name="updateImg" type= "file"> <br>
+                                                            <input name="updateImg" type= "file" value=""> <br>
+                                                            <input name="updatesliderid" type= "hidden" value="${sessionScope.getaSlider.sliderID}"> <br>
                                                         <td><textarea  name="updateLink" >${sessionScope.getaSlider.sliderLink} </textarea></td>
                                                         <td>${sessionScope.getaSlider.createDate}</td>
 
-                                                        <td><input type="radio" name="updateStatus" value="true"<c:if test="${!sessionScope.getaSlider.sliderStatus}">checked</c:if>> hiện <br>
-                                                            <input type="radio" name="updateStatus" value="false" <c:if test="${sessionScope.getaSlider.sliderStatus}">checked</c:if>> ẩn
+                                                        <td><input type="radio" name="updateStatus" value="false"<c:if test="${!sessionScope.getaSlider.sliderStatus}">checked</c:if>> hiện <br>
+                                                            <input type="radio" name="updateStatus" value="true" <c:if test="${sessionScope.getaSlider.sliderStatus}">checked</c:if>> ẩn
                                                         </td>
                                                     </tr>
                                                 </tbody>

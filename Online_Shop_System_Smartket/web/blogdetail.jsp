@@ -116,6 +116,27 @@
                     </div>
                 </div>
             </div>
+            <div class="container mt-5 mb-5">
+                <div class="d-flex justify-content-end row">
+                    <div class="d-flex flex-column col-md-8">
+                        <div class="coment-bottom bg-white p-2 px-4">
+                            <div  class="d-flex flex-row add-comment-section mt-4 mb-4"><img style="width: 110px;" class="img-fluid img-responsive rounded-circle mr-2" src="https://i.imgur.com/qdiP4DB.jpg" >
+                                <textarea id="id" name="name" rows="4" cols="10" class="form-control mr-3" placeholder="Add comment"></textarea></div>
+                            <input style="    margin-top: -20px;
+                                   margin-left: 390px;" type="submit" class="btn btn-success" value="Tải bình luận">
+                            <div
+                                class="commented-section mt-2">
+                                <div class="d-flex flex-row align-items-center commented-user">
+                                    <div><img style="width: 50px;" class="img-fluid img-responsive rounded-circle mr-2" src="https://i.imgur.com/qdiP4DB.jpg"> </div>
+                                <h5 class="mr-2">Corey oates</h5><span class="dot mb-1"></span><span class="mb-1 ml-2">4 hours ago</span>
+                                </div>
+                                <div class="comment-text-sm"><span>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</span></div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </section>
         <!-- Blog Details Section End -->
 

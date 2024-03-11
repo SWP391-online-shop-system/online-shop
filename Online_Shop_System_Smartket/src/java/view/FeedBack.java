@@ -1,8 +1,10 @@
+package view;
+
 /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package view;
+
 
 /**
  *
@@ -13,6 +15,7 @@ public class FeedBack {
     private int FeedBackID;
     private int ProductID;
     private int UserID;
+    private String FeedBackImage;
     private String FeedBackContent;
     private int FeedBackRate;
     private String FeedBackDate;
@@ -21,10 +24,11 @@ public class FeedBack {
     public FeedBack() {
     }
 
-    public FeedBack(int FeedBackID, int ProductID, int UserID, String FeedBackContent, int FeedBackRate, String FeedBackDate, boolean FeedBackStatus) {
+    public FeedBack(int FeedBackID, int ProductID, int UserID, String FeedBackImage, String FeedBackContent, int FeedBackRate, String FeedBackDate, boolean FeedBackStatus) {
         this.FeedBackID = FeedBackID;
         this.ProductID = ProductID;
         this.UserID = UserID;
+        this.FeedBackImage = FeedBackImage;
         this.FeedBackContent = FeedBackContent;
         this.FeedBackRate = FeedBackRate;
         this.FeedBackDate = FeedBackDate;
@@ -53,6 +57,14 @@ public class FeedBack {
 
     public void setUserID(int UserID) {
         this.UserID = UserID;
+    }
+
+    public String getFeedBackImage() {
+        return FeedBackImage;
+    }
+
+    public void setFeedBackImage(String FeedBackImage) {
+        this.FeedBackImage = FeedBackImage;
     }
 
     public String getFeedBackContent() {
@@ -89,7 +101,9 @@ public class FeedBack {
 
     @Override
     public String toString() {
-        return "FeedBack{" + "FeedBackID=" + FeedBackID + ", ProductID=" + ProductID + ", UserID=" + UserID + ", FeedBackContent=" + FeedBackContent + ", FeedBackRate=" + FeedBackRate + ", FeedBackDate=" + FeedBackDate + ", FeedBackStatus=" + FeedBackStatus + '}';
+        return "FeedBack{" + "FeedBackID=" + FeedBackID + ", ProductID=" + ProductID + ", UserID=" + UserID + ", FeedBackImage=" + FeedBackImage + ", FeedBackContent=" + FeedBackContent + ", FeedBackRate=" + FeedBackRate + ", FeedBackDate=" + FeedBackDate + ", FeedBackStatus=" + FeedBackStatus + '}';
     }
+
+    
 
 }

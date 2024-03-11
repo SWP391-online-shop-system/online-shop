@@ -284,29 +284,26 @@
                             <li><a href="loginURL" onclick="alertOpenCart()"title="Giỏ hàng của tôi"><i class="fa-solid fa-cart-shopping"></i></a></li>
                                 </c:if>
                                 <c:if test="${sessionScope.account != null}">
-                            <li>
+                            <li>      
                                 <%
-                                    HttpSession session2 = request.getSession();
-                                    User user = (User) session2.getAttribute("account");
-                                    int userID = user.getUserID();
-                                    DAOCart dao = new DAOCart();
-                                    
-                                    ResultSet rs1 = dao.getData("SELECT count(*) as count FROM Cart AS c JOIN Product AS p ON c.ProductID = p.ProductID where userID = "+userID+"");
-                                    while(rs1.next()){
+                                HttpSession session2 = request.getSession();
+                                User user = (User) session2.getAttribute("account");
+                                int userID = user.getUserID();
+                                DAOCart dao = new DAOCart();
+                                ResultSet rs = dao.getData("SELECT count(*) as count FROM Cart AS c JOIN Product AS p ON c.ProductID = p.ProductID where userID = "+userID+"");
+                                while(rs.next()){
                                 %>
-                                <span class="count-cart" style="position: absolute;
+                                <span class="count-cart" id="countCart" style="position: absolute;
                                       margin-left: 17px;
                                       background-color: #ff0000;
                                       color: #ffffff;
                                       border-radius: 50%;
-                                      padding: 0px 4px;
-                                      font-size: 15px;
+                                      padding: 0px 5px;
+                                      font-size: 13px;
                                       z-index: 9;
                                       top: 11px;
-                                      left: 3px;"><%=rs1.getInt(1)%></span>
-                                <%
-                                    }
-                                %>
+                                      left: 3px;"><%=rs.getInt(1)%></span>
+                                <%}%>
                                 <a href="CartURL" title="Giỏ hàng của tôi"><i class="fa-solid fa-cart-shopping"></i></a>
                             </li>
                         </c:if>
@@ -342,7 +339,7 @@
                                         <div class="row" style="display: contents">
                                             <%
                                                 DAOProduct dao = new DAOProduct();
-                                                ResultSet rsHotPro = dao.getData("select * from Product as p join ProductImage as pi on p.ProductID = pi.ProductID where  pi.ProductURL = pi.ProductURLShow \n"
+                                                ResultSet rsHotPro = dao.getData("select * from Product as p join ProductImage as pi on p.ProductID = pi.ProductID where p.ProductStatus = 0 and  pi.ProductURL = pi.ProductURLShow \n"
                                                +  "group by p.ProductID having min(p.TotalStock - p.UnitInStock) >0 order by (p.TotalStock - p.UnitInStock) desc limit 1");
                                             if(rsHotPro.next()) {
                                             %>
@@ -359,7 +356,7 @@
                                                     <%}%>
                                                     <%    ResultSet rsNew2Product = dao.getData("select * from product as p join productImage as pi "
                                                        + "on p.ProductID = pi.ProductID "
-                                                       + "where pi.ProductURL like '%_1%' "
+                                                       + "where p.ProductStatus = 0 and pi.ProductURL = pi.ProductURLShow "
                                                        + "order by p.CreateDate desc limit 6 ");
                                                          while(rsNew2Product.next()) {
                                                             if(rsHotPro.getString("CreateDate").substring(0,10).equals(rsNew2Product.getString("CreateDate").substring(0,10))){%>
@@ -373,7 +370,7 @@
                                                     if(testUser == null) {%>
                                                     <a onclick="alertOpenCart();" style="left: 12px;">+ Thêm vào giỏ</a><a style="margin-left: 136px;" href="#">Mua ngay</a>
                                                     <%} else{%>
-                                                    <a href="CartURL?service=addcart&pid=<%=rsHotPro.getInt("ProductID")%>&quan=1" class="add-cart" style="left: 12px;">+ Thêm vào giỏ</a><a style="margin-left: 136px;" href="#">Mua ngay</a>
+                                                    <a href="" onclick="addToCart(<%=rsHotPro.getInt("ProductID")%>)" class="add-cart" style="left: 12px;">+ Thêm vào giỏ</a><a style="margin-left: 136px;" href="#">Mua ngay</a>
                                                     <%}%>
                                                     <div style="display: flex;">
                                                         <div class="rating" style="margin-left: 30px;">
@@ -398,7 +395,6 @@
                                                     </div>
                                                 </div>
                                             </div>
-
                                             <%}%>
                                         </div>
                                     </div>
@@ -614,7 +610,7 @@
                                            if(testUser2==null) {%>
                                         <a onclick="alertOpenCart()" class="add-cart">+ Thêm vào giỏ</a><a style="margin-left: 136px;" href="#">Mua ngay</a>
                                         <%}else{%>
-                                        <a href="CartURL?service=addcart&pid=<%=rsPaging.getInt(1)%>&quan=1" class="add-cart">+ Thêm vào giỏ</a><a style="margin-left: 136px;" href="#">Mua ngay</a>
+                                        <a href="#" onclick="addToCart(<%=rsPaging.getInt(1)%>)" class="add-cart">+ Thêm vào giỏ</a><a style="margin-left: 136px;" href="#">Mua ngay</a>
 
                                         <%}%>
                                         <div style="display: flex;">
@@ -743,6 +739,7 @@
             </div>
         </div>
         <script src="js/price.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10" type="text/javascript"></script>
     </body>
 
 </html>

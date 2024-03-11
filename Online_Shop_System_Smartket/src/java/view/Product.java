@@ -53,7 +53,7 @@ public class Product {
         this.TotalStock = TotalStock;
     }
 
-    public Product(int ProductID, String ProductName, int CategoryID, String ProductDescription, int UnitInStock, double UnitPrice, int UnitDiscount, String CreateDate, int TotalStock, boolean productStatus) {
+    public Product(int ProductID, String ProductName, int CategoryID, String ProductDescription, int UnitInStock, double UnitPrice, int UnitDiscount, int TotalStock, boolean productStatus) {
         this.ProductID = ProductID;
         this.ProductName = ProductName;
         this.CategoryID = CategoryID;
@@ -61,7 +61,6 @@ public class Product {
         this.UnitInStock = UnitInStock;
         this.UnitPrice = UnitPrice;
         this.UnitDiscount = UnitDiscount;
-        this.CreateDate = CreateDate;
         this.TotalStock = TotalStock;
         this.productStatus = productStatus;
     }

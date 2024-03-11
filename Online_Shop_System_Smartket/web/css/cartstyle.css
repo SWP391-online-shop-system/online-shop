@@ -314,13 +314,14 @@ aside p {
 }
 .cart-contact{
     background-color: #fff;
-    padding: 14vh 5vh;
+    padding: 9vh 5vh;
     border-bottom-left-radius: 1rem;
     border-top-left-radius: 1rem;
     flex: 82%;
     box-shadow: 0 6px 20px 0 rgba(0, 0, 0, 0.19);
     border-radius: 1rem;
     border: transparent;
+    padding-bottom: 5px;
 }
 .cart-contact input{
     margin-top: -5px;
@@ -334,7 +335,7 @@ aside p {
 }
 .cart-contact select{
     font-size: 13px;
-    width: 137px;
+    width: 126px;
     height: 35px;
     padding: 7px;
 }

@@ -16,6 +16,7 @@
     <head>
         <link rel="stylesheet" href="css/login.css"/>
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
         <script src="https://kit.fontawesome.com/ac74b86ade.js" crossorigin="anonymous"></script>
         <script src="https://cdn.jsdelivr.net/npm/swiper/swiper-bundle.min.js"></script>
         <link rel="stylesheet" href="css/css_productList/bootstrap.min.css" type="text/css">
@@ -25,9 +26,6 @@
         <link rel="stylesheet" href="css/css_productList/nice-select.css" type="text/css">
         <link rel="stylesheet" href="css/css_productList/slicknav.min.css" type="text/css">
         <link rel="stylesheet" href="css/css_productList/style.css" type="text/css">
-        <!--        <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
-                <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css">
-                <link href="css/ruang-admin.min.css" rel="stylesheet">-->
         <link rel="stylesheet" href="css/css_homepage/homestyle.css"/>
         <link rel="stylesheet" href="css/css_footer/footer.css"/>
         <link rel="stylesheet" href="css/css_header/header.css"/>
@@ -151,17 +149,12 @@
                                 %>
                                 <c:if test="${sessionScope.account.roleID == 5}">
                                     <a href="#"style="margin-right: 50px;">ADMIN</a>
-
                                 </c:if>
                                 <c:if test="${sessionScope.account.roleID == 4}">
                                     <a href="#">SALE MANAGER</a>
-
-
                                 </c:if>
                                 <c:if test="${sessionScope.account.roleID == 3}">
                                     <a href="#">SALE</a>
-
-
                                 </c:if>
                                 <c:if test="${sessionScope.account.roleID == 2}">
                                     <a href="#">Marketing</a>
@@ -351,47 +344,56 @@
                                 <c:if test="${sessionScope.account != null}">
                                 <li><a href="CartURL">Giỏ hàng của tôi</a></li>
                                 </c:if>
-                            <li><a href="#">Đơn hàng của tôi</a></li>
+                            <li><a href="MyOrderURL">Đơn hàng của tôi</a></li>
                         </ul>
                     </li>
                     <li><a href="blog">Blog</a></li>
                         <c:if test="${sessionScope.account != null}">
-                        <li><a href="ChangeuserinfoURL?UserID=${sessionScope.account.userID}">Tài khoản</a></li>
-                    </c:if>            </ul>
+                            <c:if test="${sessionScope.account.phoneNumber == null ||
+                                          sessionScope.account.dateOfBirth == null ||
+                                          sessionScope.account.gender == null ||
+                                          sessionScope.account.address == null}">
+                            <li title="Cập nhật hồ sơ của bạn!"><div style="background: red;width: 10px;height: 10px;border-radius: 50%;position: absolute;left: 102px;
+                                                                     top: -2px;"></div><a href="ChangeuserinfoURL?UserID=${sessionScope.account.userID}">Tài khoản</a></li>
+                                </c:if>
+                                <c:if test="${sessionScope.account.phoneNumber != null &&
+                                              sessionScope.account.dateOfBirth != null &&
+                                              sessionScope.account.gender != null &&
+                                              sessionScope.account.address != null}">
+                            <li><a href="ChangeuserinfoURL?UserID=${sessionScope.account.userID}">Tài khoản</a></li>
+                            </c:if>
+                        </c:if>            
+                </ul>
             </div>
             <div class="header-content-right-menu">
                 <ul>
-                    <li class="margin-unit"><a href="#" title="Đơn hàng của tôi"><i class="fa-solid fa-file-invoice-dollar"></i></i></a></li>
+                    <li class="margin-unit"><a href="MyOrderURL" title="Đơn hàng của tôi"><i class="fa-solid fa-file-invoice-dollar"></i></i></a></li>
                         <c:if test="${sessionScope.account == null}">
                         <li><a href="loginURL" onclick="alertOpenCart()"title="Giỏ hàng của tôi"><i class="fa-solid fa-cart-shopping"></i></a></li>
                             </c:if>
                             <c:if test="${sessionScope.account != null}">
-                        <li>
-                            <%
+                        <li>      
+                                <%
                                 HttpSession session2 = request.getSession();
                                 User user = (User) session2.getAttribute("account");
                                 int userID = user.getUserID();
                                 DAOCart dao = new DAOCart();
                                 ResultSet rs = dao.getData("SELECT count(*) as count FROM Cart AS c JOIN Product AS p ON c.ProductID = p.ProductID where userID = "+userID+"");
                                 while(rs.next()){
-                            %>
-                            <span class="count-cart" style="position: absolute;
-                                  margin-left: 17px;
-                                  background-color: #ff0000;
-                                  color: #ffffff;
-                                  border-radius: 50%;
-                                  padding: 0px 4px;
-                                  font-size: 15px;
-                                  z-index: 9;
-                                  top: 11px;
-                                  left: 3px;
-                                  font-family: none;
-                                  line-height: normal;"><%=rs.getInt(1)%></span>
-                            <%
-                                }
-                            %>
-                            <a href="CartURL" title="Giỏ hàng của tôi"><i class="fa-solid fa-cart-shopping"></i></a>
-                        </li>
+                                %>
+                                <span class="count-cart" id="countCart" style="position: absolute;
+                                      margin-left: 17px;
+                                      background-color: #ff0000;
+                                      color: #ffffff;
+                                      border-radius: 50%;
+                                      padding: 0px 5px;
+                                      font-size: 13px;
+                                      z-index: 9;
+                                      top: 11px;
+                                      left: 3px;"><%=rs.getInt(1)%></span>
+                                <%}%>
+                                <a href="CartURL" title="Giỏ hàng của tôi"><i class="fa-solid fa-cart-shopping"></i></a>
+                            </li>
                     </c:if>
                 </ul>
             </div>
@@ -497,7 +499,7 @@
                                 <%
                                 DAOCategories daoCate = new DAOCategories();
                                  DAOProduct dao = new DAOProduct();
-                                Vector<Categories> CateList = daoCate.getCategories("select * from Categories");
+                                Vector<Categories> CateList = daoCate.getCategories("select * from Categories where CategoryStatus = 0;");
                                 for(Categories cate: CateList){%>
                                 <li><a href="ProductListURL?service=ShowCategory&CategoryID=<%=cate.getCategoryID()%>&index=1"><%=cate.getCategoryName()%></a></li> 
                                     <%}%>
@@ -521,8 +523,8 @@
                                         <%}%>
                                         <%ResultSet rsNewestProduct = dao.getData("select * from product as p join productImage as pi "
                                            + "on p.ProductID = pi.ProductID "
-                                           + "where pi.ProductURL = pi.ProductURLShow "
-                                           + "order by p.CreateDate desc limit 6 ");
+                                           + "where pi.ProductURL = pi.ProductURLShow and p.ProductStatus = 0 "
+                                           + "order by p.CreateDate desc limit 6");
                                              while(rsNewestProduct.next()) {
                                                 if(rsNewProduct.getString("CreateDate").substring(0,10).equals(rsNewProduct.getString("CreateDate").substring(0,10))){%>
                                         <div class="sale-cotification">Mới</div>
@@ -534,7 +536,7 @@
                                             if(testus==null) {%>
                                         <a onclick="alertOpenCart();" class="add-cart"style="">+ Thêm vào giỏ</a><a style="margin-left: 166px;" href="#">Mua ngay</a>
                                         <%}else{%>
-                                        <a href="CartURL?service=addcart&pid=<%=rsNewProduct.getInt(1)%>&quan=1" class="add-cart"style="margin-left: 29px;">+ Thêm vào giỏ</a><a style="margin-left: 166px;" href="#">Mua ngay</a>
+                                        <a onclick="addToCart(<%=rsNewProduct.getInt(1)%>)" href="#" class="add-cart"style="margin-left: 29px;">+ Thêm vào giỏ</a><a style="margin-left: 166px;" href="#">Mua ngay</a>
                                         <%}%>
                                         <div style="display: flex;">
                                             <div class="rating">
@@ -575,14 +577,14 @@
                                        
                             ResultSet rsFeatureProduct = dao.getData("select * from product as p join productImage as pi "
                                     + "on p.ProductID = pi.ProductID "
-                                    + "where pi.ProductURL like '%_1%' "
-                                    + "order by p.TotalRate desc limit 6;");
+                                    + "where p.ProductStatus = 0 and pi.ProductURL = pi.ProductURLShow "
+                                    + "order by p.TotalRate desc limit 6");
                             while(rsFeatureProduct.next()) {%>
                                 <div class="col-lg-4 col-md-6 col-sm-6">
                                     <div class="product__item">
                                         <div class="product__item__pic set-bg" style="height: 250px;">
-                                            <a href="ProductDetailURL?ProductID=<%=rsFeatureProduct.getInt(1)%>">
-                                                <img src="<%=rsFeatureProduct.getString(13)%>" alt="alt"/>
+                                            <a href="ProductDetailURL?ProductID=<%=rsFeatureProduct.getInt("ProductID")%>">
+                                                <img src="<%=rsFeatureProduct.getString("ProductURLShow")%>" alt="alt"/>
                                             </a>
                                             <%if(rsFeatureProduct.getInt("UnitDiscount")!=0) {%>
                                             <div class="sale-cotification">Sale</div>
@@ -594,7 +596,7 @@
                                                 <a onclick="alertOpenCart();" class="add-cart"style="">+ Thêm vào giỏ</a><a style="margin-left: 136px;" href="#">Mua ngay</a>
                                             </c:if>
                                             <c:if test="${sessionScope.account!=null}">
-                                                <a href="CartURL?service=addcart&pid=<%=rsFeatureProduct.getInt(1)%>&quan=1" class="add-cart"style="">+ Thêm vào giỏ</a><a style="margin-left: 136px;" href="#">Mua ngay</a>
+                                                <a href="#" onclick="addToCart(<%=rsFeatureProduct.getInt("ProductID")%>)" class="add-cart"style="">+ Thêm vào giỏ</a><a style="margin-left: 136px;" href="#">Mua ngay</a>
                                             </c:if>
                                             <div style="display: flex;">
                                                 <div class="rating">
@@ -752,63 +754,65 @@
 </body>
 <script src="js/script.js"></script>
 <script type="text/javascript">
-                                            var counter = 1;
-                                            setInterval(function () {
-                                                document.getElementById('radio' + counter).checked = true;
-                                                counter++;
-                                                console.log(counter);
-                                                if (counter == 5) {
-                                                    counter = 1;
-                                                }
-                                            }, 5000);
-                                            function alertOpenCart() {
-                                                alert('Đăng nhập để xem giỏ hàng của bạn');
-                                            }
-                                            window.onload = function () {
-                                                // Lấy giá trị của tham số section từ URL
-                                                var sectionId = '<%=request.getParameter("section") %>';
-
-                                                // Nếu sectionId không rỗng, thì cuộn đến phần có id tương ứng
-                                                if (sectionId) {
-                                                    var targetSection = document.getElementById(sectionId);
-                                                    if (targetSection) {
-                                                        targetSection.scrollIntoView({behavior: 'smooth'});
+                                                    var counter = 1;
+                                                    setInterval(function () {
+                                                        document.getElementById('radio' + counter).checked = true;
+                                                        counter++;
+                                                        console.log(counter);
+                                                        if (counter == 5) {
+                                                            counter = 1;
+                                                        }
+                                                    }, 5000);
+                                                    function alertOpenCart() {
+                                                        alert('Đăng nhập để xem giỏ hàng của bạn');
                                                     }
-                                                }
-                                            };
+                                                    window.onload = function () {
+                                                        // Lấy giá trị của tham số section từ URL
+                                                        var sectionId = '<%=request.getParameter("section") %>';
 
-                                            function scrollToNew() {
-                                                // Calculate the middle of the page
-                                                const middle = window.innerHeight + 90;
-                                                // Scroll to the middle of the page
-                                                window.scrollTo({
-                                                    top: middle,
-                                                    behavior: 'smooth' // Optional: Add smooth scrolling effect
-                                                });
-                                            }
-                                            function scrollToFeature() {
-                                                // Calculate the middle of the page
-                                                const middle = window.innerHeight * 2.3;
+                                                        // Nếu sectionId không rỗng, thì cuộn đến phần có id tương ứng
+                                                        if (sectionId) {
+                                                            var targetSection = document.getElementById(sectionId);
+                                                            if (targetSection) {
+                                                                targetSection.scrollIntoView({behavior: 'smooth'});
+                                                            }
+                                                        }
+                                                    };
 
-                                                // Scroll to the middle of the page
-                                                window.scrollTo({
-                                                    top: middle,
-                                                    behavior: 'smooth' // Optional: Add smooth scrolling effect
-                                                });
-                                            }
-                                            function scrollToBlog() {
-                                                // Calculate the middle of the page
-                                                const middle = window.innerHeight * 3;
+                                                    function scrollToNew() {
+                                                        // Calculate the middle of the page
+                                                        const middle = window.innerHeight + 90;
+                                                        // Scroll to the middle of the page
+                                                        window.scrollTo({
+                                                            top: middle,
+                                                            behavior: 'smooth' // Optional: Add smooth scrolling effect
+                                                        });
+                                                    }
+                                                    function scrollToFeature() {
+                                                        // Calculate the middle of the page
+                                                        const middle = window.innerHeight * 2.3;
 
-                                                // Scroll to the middle of the page
-                                                window.scrollTo({
-                                                    top: middle,
-                                                    behavior: 'smooth' // Optional: Add smooth scrolling effect
-                                                });
-                                            }
+                                                        // Scroll to the middle of the page
+                                                        window.scrollTo({
+                                                            top: middle,
+                                                            behavior: 'smooth' // Optional: Add smooth scrolling effect
+                                                        });
+                                                    }
+                                                    function scrollToBlog() {
+                                                        // Calculate the middle of the page
+                                                        const middle = window.innerHeight * 3;
+
+                                                        // Scroll to the middle of the page
+                                                        window.scrollTo({
+                                                            top: middle,
+                                                            behavior: 'smooth' // Optional: Add smooth scrolling effect
+                                                        });
+                                                    }
 </script>
 <script src="vendor/jquery/jquery.min.js"></script>
 <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 <script src="vendor/jquery-easing/jquery.easing.min.js"></script>
 <script src="js_marketing/ruang-admin.min.js"></script>
+<script src="js/price.js" type="text/javascript"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@10" ></script>
 </html>

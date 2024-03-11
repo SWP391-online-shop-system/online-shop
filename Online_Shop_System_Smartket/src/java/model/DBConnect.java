@@ -19,7 +19,6 @@ public class DBConnect {
             Class.forName("com.mysql.cj.jdbc.Driver");
             //connect
             conn = DriverManager.getConnection(url, user, pass);
-            System.out.println("connected");
         } catch (ClassNotFoundException | SQLException ex) {
             Logger.getLogger(DBConnect.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -38,7 +37,7 @@ public class DBConnect {
                     ResultSet.CONCUR_UPDATABLE);
             rs = state.executeQuery(sql);
         } catch (SQLException ex) {
-
+            System.err.println("GetData wrong sql: "+ex);
         }
         return rs;
     }
@@ -77,22 +76,6 @@ public class DBConnect {
 
     public static void main(String[] args) throws SQLException {
         DBConnect dao = new DBConnect();
-
-        String sql1 = "SET @value = (SELECT SettingValue FROM Setting WHERE SettingID = 1);";
-        dao.getData(sql1);
-
-        String sql2 = "SELECT p.*, pi.* "
-                + "FROM product AS p "
-                + "JOIN productImage AS pi ON p.ProductID = pi.ProductID "
-                + "WHERE pi.ProductURL = pi.ProductURLShow "
-                + "ORDER BY p.TotalRate DESC "
-                + "LIMIT @value;";
-
-        ResultSet rsNewProduct = dao.getData(sql2);
-
-        while (rsNewProduct.next()) {
-            System.out.println(rsNewProduct.getInt(1));
-        }
 
     }
 }

@@ -12,7 +12,15 @@
             rel='stylesheet'>
         <script type='text/javascript'
         src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js'></script>
+        <!-- Liên kết với Bootstrap CSS -->
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+
+        <!-- Liên kết với FontAwesome CSS -->
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css">
+
         <style>
+
+
             .placeicon {
                 font-family: fontawesome
             }
@@ -47,16 +55,31 @@
                                     <!-- User Name Input -->
                                     <div class="form-group row justify-content-center px-3">
                                         <div class="col-9 px-0">
-                                            <input type="password" name="password" placeholder="&#xf084; &nbsp; Mật khẩu mới"
-                                                   class="form-control border-info placeicon">
+                                            <div class="input-group">
+                                                <input type="password" name="password" placeholder="&#xf084; &nbsp; Mật khẩu mới"
+                                                       class="form-control border-info placeicon">
+                                                <div class="input-group-append">
+                                                    <span class="input-group-text toggle-password">
+                                                        <i class="far fa-eye"></i>
+                                                    </span>
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
+
                                     <!-- Password Input -->
                                     <div class="form-group row justify-content-center px-3">
                                         <div class="col-9 px-0">
-                                            <input type="password" name="confPassword"
-                                                   placeholder="&#xf084; &nbsp; Xác nhận mật khẩu mới"
-                                                   class="form-control border-info placeicon">
+                                            <div class="input-group">
+                                                <input type="password" name="confPassword"
+                                                       placeholder="&#xf084; &nbsp; Xác nhận mật khẩu mới"
+                                                       class="form-control border-info placeicon">
+                                                <div class="input-group-append">
+                                                    <span class="input-group-text toggle-password">
+                                                        <i class="far fa-eye"></i>
+                                                    </span>
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
 
@@ -77,6 +100,21 @@
         </div>
         <script type='text/javascript'
         src='https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.bundle.min.js'></script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 
+        <!-- Script để chuyển đổi hiển thị mật khẩu -->
+        <script>
+            $(document).ready(function () {
+                $('.toggle-password').click(function () {
+                    $(this).toggleClass('active');
+                    var input = $(this).parent().prev('input');
+                    if (input.attr('type') === 'password') {
+                        input.attr('type', 'text');
+                    } else {
+                        input.attr('type', 'password');
+                    }
+                });
+            });
+        </script>
     </body>
 </html>

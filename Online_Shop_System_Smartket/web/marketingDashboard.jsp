@@ -30,7 +30,6 @@
         <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
         <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css">
         <link href="css/css_marketing_dashboard/marketing_dashboard_style.css" rel="stylesheet">
-
     </head>
 
     <body id="page-top">
@@ -43,17 +42,17 @@
         <div id="wrapper">
             <!-- Sidebar -->
             <ul class="navbar-nav sidebar sidebar-light accordion" id="accordionSidebar">
-                <a class="sidebar-brand d-flex align-items-center justify-content-center" href="index.html">
+                <a class="sidebar-brand d-flex align-items-center justify-content-center" href="marketingDashBoardURL">
                     <div class="sidebar-brand-icon">
                         <img style="height: 91px;
                              width: 133px;
-                             margin-bottom: -18px;" src="images/logo/logo.png">
+                             margin-bottom: -18px;z-index: 99;" src="images/logo/logo.png">
                     </div>
                 </a>
                 <div style="position: sticky; top: 30px;">
                     <hr class="sidebar-divider wee-0" style="margin: 0px;">
                     <li class="nav-item active">
-                        <a class="nav-link" href="MarketingDashBoardURL">
+                        <a class="nav-link" href="marketingDashBoardURL">
                             <i class="fas fa-fw fa-tachometer-alt"></i>
                             <span>Thống kê</span></a>
                     </li>
@@ -62,27 +61,33 @@
                         Quản lí
                     </div>
                     <li class="nav-item">
-                        <a class="nav-link" href="#">
+                        <a class="nav-link" href="marketingPost">
                             <i class="fas fa-calendar fa-2x text-primary"></i>
                             <span>Bài đăng</span>
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="mktProductListURL">
+                        <a class="nav-link" href="marketingProductListURL">
                             <i class="fas fa-shopping-cart fa-2x text-success"></i>
                             <span>Sản phẩm</span>
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="customerlist">
+                        <a class="nav-link" href="marketingCustomerlist">
                             <i class="fas fa-users fa-2x text-info"></i>
                             <span>Khách hàng</span>
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="ui-colors.html">
+                        <a class="nav-link" href="marketingFeedBackListURL">
                             <i class="fas fa-comments fa-2x text-info"></i>
                             <span>Phản hồi</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="marketingSliderList">
+                            <i class="fas fa-comments fa-2x text-info"></i>
+                            <span>Slider</span>
                         </a>
                     </li>
                     <hr class="sidebar-divider">
@@ -131,7 +136,7 @@
                         <div class="row mb-3">
                             <!-- Earnings (Monthly) Card Example -->
                             <div class="col-xl-3 col-md-6 mb-4">
-                                <a href="1" style="text-decoration: none;">
+                                <a href="marketingPost" style="text-decoration: none;">
                                     <div class="card h-100">
                                         <div class="card-body">
                                             <div class="row align-items-center">
@@ -166,7 +171,7 @@
                             </div>
                             <!-- Earnings (Annual) Card Example -->
                             <div class="col-xl-3 col-md-6 mb-4">
-                                <a href="2" style="text-decoration: none;">
+                                <a href="marketingProductListURL" style="text-decoration: none;">
                                     <div class="card h-100">
                                         <div class="card-body">
                                             <div class="row no-gutters align-items-center">
@@ -201,7 +206,7 @@
                             </div>
                             <!-- New User Card Example -->
                             <div class="col-xl-3 col-md-6 mb-4">
-                                <a href="customerlist" style="text-decoration: none;">
+                                <a href="marketingCustomerlist" style="text-decoration: none;">
                                     <div class="card h-100">
                                         <div class="card-body">
                                             <div class="row no-gutters align-items-center">
@@ -236,7 +241,7 @@
                             </div>
                             <!-- Pending Requests Card Example -->
                             <div class="col-xl-3 col-md-6 mb-4">
-                                <a href="4" style="text-decoration: none;">
+                                <a href="marketingFeedBackListURL" style="text-decoration: none;">
                                     <div class="card h-100">
                                         <div class="card-body">
                                             <div class="row no-gutters align-items-center">
@@ -290,17 +295,17 @@
                                        String curDate1 = dateFormat1.format(currentDate1);
                                         %>
                                         <span  class="m-0 text-primary" style="margin-right: -12px;" >từ</span>
-                                        <form action="MarketingDashBoardURL" method="GET">
-                                            <input style="background-color: #1ab365!important;" id="dateInputFrom" class="date-chooser" type="date" name="weekFrom" value="<%=(formatWeekFrom==null || formatWeekFrom.equals(""))?curDate:formatWeekFrom%>" onchange="autoUpdateWeekTo(this.value);this.form.submit();"/>
+                                        <form action="Marketingm" method="GET">
+                                            <input style="background-color: #1ab365!important;" id="dateInputFrom" class="date-chooser" type="date" name="weekFrom" value="<%=(formatWeekFrom==null || formatWeekFrom.equals(""))?curDate:formatWeekFrom%>" onchange="autoUpdateWeekTo(this.value); updateWeek();"/>
                                             <span  class="m-0 text-primary">đến</span>
                                             <input style="background-color: #1ab365!important;" id="dateInputTo" class="date-chooser" type="date" name="weekTo" disabled/>                                           
                                             <input type="hidden" name="userWeekFrom" value="<%=(formatUserWeekFrom==null || formatUserWeekFrom.equals(""))?curDate1:formatUserWeekFrom%>"/>
                                         </form>
+
                                         <%
                                         ResultSet rsProductSold = (ResultSet)request.getAttribute("rsProductSold");
                                         int countDate=0;
                                         while(rsProductSold.next()) {
-                                        System.out.println("rsProductSold = "+rsProductSold.getInt(2)+" at day "+rsProductSold.getString(1));
                                         countDate++;
                                         %>
                                         <div id="DataSold<%=countDate%>" style="display: none;"><%=rsProductSold.getInt(2)%></div>
@@ -316,6 +321,22 @@
                                                 window.addEventListener('load', function () {
                                                     drawChart();
                                                 });
+                                                function updateWeek() {
+                                                    var weekFrom = document.getElementById("dateInputFrom").value;
+                                                    var userWeekFrom = document.getElementById("dateUserInputFrom").value;
+                                                    $.ajax({
+                                                        url: "Marketingm",
+                                                        type: 'GET',
+                                                        data: {weekFrom: weekFrom, userWeekFrom: userWeekFrom},
+                                                        success: function (data) {
+                                                            // Update specific element in the JSP with the new data
+                                                            $("#page-top").html(data);
+                                                            drawChart();
+                                                        },
+                                                        error: function (xhr, status, error) {
+                                                        }
+                                                    });
+                                                }
                                             </script>
                                         </div>
                                     </div>
@@ -352,7 +373,7 @@
                                     <%}}%>
 
                                     <div class="card-footer text-center">
-                                        <a class="m-0 small text-primary card-link" href="#">Quản lí ngay <i
+                                        <a class="m-0 small text-primary card-link" href="marketingProductListURL">Quản lí ngay <i
                                                 class="fas fa-chevron-right"></i></a>
                                     </div>
                                 </div>
@@ -366,15 +387,14 @@
                                     <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
                                         <h6 class="m-0 font-weight-bold text-primary">Khách hàng mới</h6>
                                         <span  class="m-0 text-primary">từ</span>
-                                        <form action="MarketingDashBoardURL" method="GET">
+                                        <form action="marketingDashBoardURL" method="GET">
                                             <input style="background-color: #1ab365!important;" id="dateUserInputFrom" class="date-chooser" type="date" name="userWeekFrom" value="<%=(formatUserWeekFrom==null || formatUserWeekFrom.equals(""))?curDate1:formatUserWeekFrom%>" onchange="autoUpdateWeekToUser(this.value);
-
-                                                    this.form.submit();"/>
+                                                    updateWeek();"/>
                                             <span class="m-0 text-primary">đến</span>
                                             <input style="background-color: #1ab365!important;"class="date-chooser" type="date" name="userWeekTo" disabled/>
                                             <input type="hidden" name="weekFrom" value="<%=(formatWeekFrom==null || formatWeekFrom.equals(""))?curDate:formatWeekFrom%>"  />
                                         </form>
-                                        <a class="m-0 float-right btn btn-danger btn-sm" href="#">Quản lí ngay
+                                        <a class="m-0 float-right btn btn-danger btn-sm" href="marketingCustomerlist">Quản lí ngay
                                             <i class="fas fa-chevron-right" style="margin-left: 8px;"></i></a>
                                     </div>
                                     <div class="table-responsive">
@@ -420,7 +440,7 @@
                                     <%}else{
                                         while(rsNewFeedBack.next()){%>
                                     <div class="customer-message align-items-center">
-                                        <a href="#" style="font-weight: 500;" >
+                                        <a style="font-weight: 500;" >
                                             <div class="text-truncate message-title"><%=rsNewFeedBack.getString(5)%>
                                             </div>
                                             <div class="small text-gray-500 message-time" style="font-weight: 500"><%=rsNewFeedBack.getString(4)%>&nbsp;·&nbsp;<%=rsNewFeedBack.getString(7)%></div></br>
@@ -435,7 +455,7 @@
                                     <%}}%>
                                     <div>
                                         <div class="card-footer text-center">
-                                            <a class="m-0 small text-primary card-link" href="#">Quản lí ngay
+                                            <a class="m-0 small text-primary card-link" href="marketingFeedBackListURL">Quản lí ngay
                                                 <i class="fas fa-chevron-right"></i></a>
                                         </div>
                                     </div>

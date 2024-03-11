@@ -15,6 +15,7 @@
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
         <title>Thông Tin Khách Hàng</title>
+        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
         <script src="https://kit.fontawesome.com/ac74b86ade.js" crossorigin="anonymous"></script>
         <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
@@ -27,10 +28,20 @@
             .col-sm-3{
                 flex: 0 0 61%;
                 min-width: 33%;
+                font-size: 14px;
             }
             .col-sm-9{
                 flex: 0 0 67%;
                 min-width: 48%;
+                font-size: 14px;
+            }
+            #hoverImg{
+                width: 123px;
+                height: 121px;
+                transition: all 0.5s;
+            }
+            #hoverImg:hover{
+                transform: scale(1.3);
             }
         </style>
     </head>
@@ -47,17 +58,17 @@
         <div id="wrapper">
             <!-- Sidebar -->
             <ul class="navbar-nav sidebar sidebar-light accordion" id="accordionSidebar">
-                <a class="sidebar-brand d-flex align-items-center justify-content-center" href="index.html">
+                <a class="sidebar-brand d-flex align-items-center justify-content-center" href="marketingDashBoardURL">
                     <div class="sidebar-brand-icon">
                         <img style="height: 91px;
                              width: 133px;
-                             margin-bottom: -18px;" src="images/logo/logo.png">
+                             margin-bottom: -18px;z-index: 99;" src="images/logo/logo.png">
                     </div>
                 </a>
                 <div style="position: sticky; top: 30px;">
                     <hr class="sidebar-divider wee-0" style="margin: 0px;">
                     <li class="nav-item active">
-                        <a class="nav-link" href="index.html">
+                        <a class="nav-link" href="marketingDashBoardURL">
                             <i class="fas fa-fw fa-tachometer-alt"></i>
                             <span>Thống kê</span></a>
                     </li>
@@ -66,25 +77,25 @@
                         Quản lí
                     </div>
                     <li class="nav-item">
-                        <a class="nav-link" href="ui-colors.html">
+                        <a class="nav-link" href="marketingPost">
                             <i class="fas fa-calendar fa-2x text-primary"></i>
                             <span>Bài đăng</span>
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="ui-colors.html">
+                        <a class="nav-link" href="marketingProductListURL">
                             <i class="fas fa-shopping-cart fa-2x text-success"></i>
                             <span>Sản phẩm</span>
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="customerlist">
+                        <a class="nav-link" href="marketingCustomerlist">
                             <i class="fas fa-users fa-2x text-info"></i>
                             <span>Khách hàng</span>
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="ui-colors.html">
+                        <a class="nav-link" href="marketingFeedBackListURL">
                             <i class="fas fa-comments fa-2x text-info"></i>
                             <span>Phản hồi</span>
                         </a>
@@ -133,9 +144,12 @@
                         </div>
 
                         <!-- Row -->
-                        <a href="customerlist" style="color: white;    position: absolute;
-                           top: 26%;
-                           left: 22%;"><button class="btn btn-primary mb-1">Quay lại</button></a>
+                        <form action="marketingFeedBackListURL" method="get">
+                            <button class="btn btn-primary mb-1" onclick="this.form.submit()"  style="color: white;position: absolute;
+                                    top: 26%;
+                                    left: 22%;z-index: 99">Quay lại</button>    
+                        </form>
+
                         <section>
                             <div class=" ">                                
                                 <div class="row">
@@ -215,6 +229,15 @@
                                                 <hr>
                                                 <div class="row">
                                                     <div class="col-sm-3">
+                                                        <p class="mb-0">Ảnh đính kèm</p>
+                                                    </div>
+                                                    <div class="col-sm-9">
+                                                        <img id="hoverImg" src="images/feedback/<%=fb.getFeedBackImage()%>"/>
+                                                    </div>
+                                                </div>
+                                                <hr>
+                                                <div class="row">
+                                                    <div class="col-sm-3">
                                                         <p class="mb-0">Nội dung đánh giá</p>
                                                     </div>
                                                     <div class="col-sm-9">
@@ -222,42 +245,44 @@
                                                     </div>
                                                 </div>
                                                 <hr>
-                                                    <div class="col-sm-3">
-                                                        <p class="mb-0">Trạng thái</p>
-                                                    </div>
-                                                    <form class="col-sm-9" id="myForm" method="get" action="FeedBackDetailURL">
-                                                        <input type="hidden" id="statusInput" name="status" value="<%=fb.isFeedBackStatus()%>">
-                                                        <input type="hidden" name="UserID" value="<%=user.getUserID()%>">
+                                                <%int afterStatus = (int)request.getAttribute("afterStatus");%>
+                                                <div class="col-sm-3" style="min-width: 250px;margin-bottom: 5px;">
+                                                    <p class="mb-0">Trạng thái: <span id="statusMess"><%=afterStatus==1?"Đã vô hiệu hóa":"Đang kích hoạt"%></span></p>
+                                                </div>
+                                                    <form class="col-sm-9" id="myForm" method="get" action="marketingFeedBackDetailURL">
+                                                        <input type="hidden" id="statusInput" name="status" value="<%=fb.isFeedBackStatus()?"1":"0"%>">
+                                                        <input type="hidden" name="FeedBackID" value="<%=fb.getFeedBackID()%>">
+                                                        <input type="hidden" name="uid" value="<%=fb.getUserID()%>">
                                                         <div class="custom-control custom-switch">
-                                                            <input type="checkbox" class="custom-control-input" id="customSwitch1" onchange="document.getElementById('myForm').submit()"
-                                                        <%if(fb.isFeedBackStatus()){%> disabled<%}%>>
+                                                            <input type="checkbox" class="custom-control-input" id="customSwitch1" onchange="updateStatus();"value="<%=fb.isFeedBackStatus()%>"
+                                                        <%=afterStatus==1?"":"checked"%>/>
                                                             <label class="custom-control-label" for="customSwitch1"></label>
                                                         </div>
                                                     </form>
-                                                </div>
+                                                  </div>
                                                </div>
                                             </div>
                                         </div>
-                                <div class="row" style="    height: 300px;
+                                                               <div class="row" style="    height: 300px;
                                      width: 97%;
                                      max-height: 300px;
-                                     overflow-x: scroll;
+                                     overflow-y: scroll;
                                      margin: 0 auto;margin-bottom: 30px;">
                                     <div class="col-md-12">
                                         <div class="card mb-4 mb-md-0">
                                             <div class="card-body">
-                                                <p class="mb-4"style="text-align: center;
+                                                <p class="mb-4"style="
                                                    font-size: 20px;
                                                    color: black;">Lịch sử thay đổi trạng thái</p>
-                                                <div>
+                                                <div id="">
                                                     <%int countLog = 0;
                                                     while(logger.next()){
                                                     countLog++;
                                                         DAOUser dao = new DAOUser();
                                                         ResultSet mkt = dao.getData("SELECT * FROM online_shop_system.user where userID = " + logger.getInt(2));
                                                     %>
-                                                    <p style="margin-bottom: 15px;text-align: center;"><%=countLog%> - <%while(mkt.next()){%>Nhân viên <%=mkt.getString("FirstName")+" "+mkt.getString("LastName")%> <%}%>
-                                                        đã <%=logger.getString(4)%> <%=logger.getString("FirstName")+" "+logger.getString("LastName")%> vào <span style="color: black;"><%=logger.getString(3).substring(0,10)%>, lúc <%=logger.getString(3).substring(10)%></span></p>
+                                                    <p id="logcheck" style="margin-bottom: 15px;"><%=countLog%> - <%while(mkt.next()){%>Nhân viên <%=mkt.getString("FirstName")+" "+mkt.getString("LastName")%> <%}%>
+                                                        đã <%=logger.getString(4)%> của <%=logger.getString("FirstName")+" "+logger.getString("LastName")%> vào <span style="color: black;"><%=logger.getString(3).substring(0,10)%>, lúc <%=logger.getString(3).substring(10)%></span></p>
                                                         <%}%>
                                                 </div>                                         
                                             </div>
@@ -266,22 +291,39 @@
                                 </div>
                             </div>
                         </section>
+                        <script>
+                            function updateStatus() {
+                                var status = $('#customSwitch1').prop('checked') ? 0 : 1;
+                                var mess = document.getElementById("statusMess");
+                                var FeedBackID = $('input[name="FeedBackID"]').val();
+                                var uid = $('input[name="uid"]').val();
+                                var service = "updateStatus";
+                                if (status === 1) {
+                                    mess.innerHTML = 'Đã vô hiệu hóa';
+                                }
+                                if (status === 0) {
+                                    mess.innerHTML = 'Đang kích hoạt';
+                                }
+
+                                $.ajax({
+                                    url: "marketingFeedBackDetailURL",
+                                    type: 'GET',
+                                    data: {service: service, status: (status === 0 ? 1 : 0), FeedBackID: FeedBackID, uid: uid},
+                                    success: function (data) {
+                                        // Update specific element in the JSP with the new data
+                                        $("#page-top").html(data);
+                                    },
+                                    error: function (xhr, status, error) {
+                                    }
+                                });
+                            }
+                        </script>
                     </div>      
                 </div>
                 <!---Container Fluid-->
             </div>
         </div>
-        <script>
-            window.onload = function () {
-                var statusString = "<%=fb.isFeedBackStatus()%>";
-                var status = parseInt(statusString, 10);
-                var switchInput = document.getElementById("customSwitch1");
-
-                // Cập nhật trạng thái của nút switch
-                switchInput.checked = (status === 1);
-            };
-</script>
-        <!-- Scroll to top -->
+       <!-- Scroll to top -->
         <a class="scroll-to-top rounded" href="#page-top">
             <i class="fas fa-angle-up"></i>
         </a>
@@ -293,18 +335,5 @@
         <script src="vendor/datatables/jquery.dataTables.min.js"></script>
         <script src="vendor/datatables/dataTables.bootstrap4.min.js"></script>
 
-        <!-- Page level custom scripts -->
-        <script type="text/javascript">
-            function updateStatus() {
-                var switchStatus = document.getElementById("customSwitch1").checked;
-                var hiddenInput = document.getElementById("statusInput");
-
-                // Cập nhật giá trị của trường ẩn trong form
-                hiddenInput.value = switchStatus;
-
-                // Gửi form
-                document.getElementById("myForm").submit();
-            }
-</script>
     </body>
 </html>

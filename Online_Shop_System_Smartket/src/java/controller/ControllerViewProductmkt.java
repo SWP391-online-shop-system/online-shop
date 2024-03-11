@@ -18,7 +18,8 @@ import model.DAOProduct;
  *
  * @author HP
  */
-@WebServlet(name = "ControllerViewProductmkt", urlPatterns = {"/mktViewProductURL"})
+//@WebServlet(name = "ControllerViewProductmkt", urlPatterns = {"/mktViewProductURL"})
+@WebServlet(name = "ControllerViewProductmkt", urlPatterns = {"/marketingViewProductURL"})
 public class ControllerViewProductmkt extends HttpServlet {
 
     /**

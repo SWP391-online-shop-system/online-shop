@@ -31,17 +31,17 @@
         <div id="wrapper">
             <!-- Sidebar -->
             <ul class="navbar-nav sidebar sidebar-light accordion" id="accordionSidebar">
-                <a class="sidebar-brand d-flex align-items-center justify-content-center" href="HomePageURL">
+                <a class="sidebar-brand d-flex align-items-center justify-content-center" href="marketingDashBoardURL">
                     <div class="sidebar-brand-icon">
                         <img style="height: 91px;
                              width: 133px;
-                             margin-bottom: -18px;" src="images/logo/logo.png">
+                             margin-bottom: -18px;z-index: 99;" src="images/logo/logo.png">
                     </div>
                 </a>
                 <div style="position: sticky; top: 30px;">
                     <hr class="sidebar-divider wee-0" style="margin: 0px;">
                     <li class="nav-item active">
-                        <a class="nav-link" href="MarketingDashBoardURL">
+                        <a class="nav-link" href="marketingDashBoardURL">
                             <i class="fas fa-fw fa-tachometer-alt"></i>
                             <span>Thống kê</span></a>
                     </li>
@@ -50,25 +50,25 @@
                         Quản lí
                     </div>
                     <li class="nav-item">
-                        <a class="nav-link" href="#">
+                        <a class="nav-link" href="marketingPost">
                             <i class="fas fa-calendar fa-2x text-primary"></i>
                             <span>Bài đăng</span>
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="mktProductListURL">
+                        <a class="nav-link" href="marketingProductListURL">
                             <i class="fas fa-shopping-cart fa-2x text-success"></i>
                             <span>Sản phẩm</span>
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="customerlist">
+                        <a class="nav-link" href="marketingCustomerlist">
                             <i class="fas fa-users fa-2x text-info"></i>
                             <span>Khách hàng</span>
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="ui-colors.html">
+                        <a class="nav-link" href="marketingFeedBackListURL">
                             <i class="fas fa-comments fa-2x text-info"></i>
                             <span>Phản hồi</span>
                         </a>
@@ -140,26 +140,22 @@
                         <div class="row">
                             <button style="margin-left: 13px;margin-bottom: 5px;" type="button" class="btn btn-secondary" data-toggle="modal" data-target="#exampleModalLong"
                                     id="#modalLong">Thêm Khách Hàng Mới</button>
-
                         </div>
                         <div class="row">
                             <!-- DataTable with Hover -->
                             <div class="col-lg-12">
                                 <div class="card mb-4">                                 
-                                    <!--                                    <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-                                                                            <h6 class="m-0 font-weight-bold text-primary">DataTables with Hover</h6>
-                                                                        </div>-->
                                     <div class="table-responsive p-3">
                                         <table class="table align-items-center table-flush table-hover" id="dataTableHover" style="font-size: 14px;">
                                             <div style="display: flex;
                                                  margin-left: 200px;
                                                  margin-bottom: -30px;">
                                                 <%String status = (String)request.getAttribute("status");%>
-                                                <form action="customerlist" method="get">
+                                                <form action="marketingCustomerlist" method="get">
                                                     <div class="filter-group" style="display:flex;">
                                                         <div style="padding-top: 16px;
                                                              width: 81%;">Trạng thái</div>
-                                                        <select class="form-control" name="status" onchange="this.form.submit()">                                                            
+                                                        <select class="form-control" name="status" onchange="this.form.submit()" style="height: 33px;margin-top: 12px;">                                                            
                                                             <option value="3" <%if(status.equals("3")){%>selected<%}%>>Tất cả</option>                                                     
                                                             <option value="1" <%if(status.equals("1")){%>selected<%}%>>Hoạt động</option>                                                          
                                                             <option value="2" <%if(status.equals("2")){%>selected<%}%>>Vô hiệu hóa</option>                                                            
@@ -207,7 +203,7 @@
                         <div class="modal fade" id="exampleModalLong" tabindex="-1" role="dialog"
                              aria-labelledby="exampleModalLongTitle" aria-hidden="true">
                             <div class="modal-dialog" role="document">
-                                <form action="customerlist" method="post">
+                                <form action="marketingCustomerlist" method="post">
                                     <input type="hidden" name="service" value="addnewuser"/>
                                     <div class="modal-content">
                                         <div class="modal-header">

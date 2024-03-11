@@ -34,7 +34,7 @@ import view.ProductImage;
  *
  * @author HP
  */
-@WebServlet(name = "ControllerEditProductmkt", urlPatterns = {"/EditProductmktURL"})
+@WebServlet(name = "ControllerEditProductmkt", urlPatterns = {"/marketingEditProduct"})
 @MultipartConfig(
         fileSizeThreshold = 1024 * 1024 * 1, // 1 MB
         maxFileSize = 1024 * 1024 * 10, // 10 MB
@@ -72,13 +72,12 @@ public class ControllerEditProductmkt extends HttpServlet {
                 int unitInStock = Integer.parseInt(request.getParameter("unitInStock"));
                 double unitPrice = Double.parseDouble(request.getParameter("unitPrice"));
                 int unitDiscount = Integer.parseInt(request.getParameter("unitDiscount"));
-                String createDate = request.getParameter("createDate");
                 int totalStock = Integer.parseInt(request.getParameter("totalStock"));
                 int productStatusValue = Integer.parseInt(request.getParameter("productStatus"));
                 boolean productStatus = (productStatusValue == 0);
                 int n = 0;
                 Product product = new Product(productId, productName, categoryId, productDescription,
-                        unitInStock, unitPrice, unitDiscount, createDate, totalStock, productStatus);
+                        unitInStock, unitPrice, unitDiscount, totalStock, productStatus);
                 n = dao.updateProduct(product);
 
                 int countImg = Integer.parseInt(request.getParameter("countImg"));
@@ -118,8 +117,8 @@ public class ControllerEditProductmkt extends HttpServlet {
                             ProductImage pi = new ProductImage(productId, productImageURL, productImageURL);
                             daoPI.updateImage(productImageURL, productId, oldImageUrl);
                             System.out.println("realImg" + i + "!=null => ProductImageURL = " + productImageURL);
-                            imgURL.write("D:\\fpt\\Semeter_5\\SWP391\\Project_GitHub\\Online_Shop_System_Smartket\\web\\" + productImageURL);
-                            imgURL.write("D:\\fpt\\Semeter_5\\SWP391\\Project_GitHub\\Online_Shop_System_Smartket\\build\\web\\" + productImageURL);
+                            imgURL.write("D:\\project_github\\Online_Shop_System_Smartket\\web\\" + productImageURL);
+                            imgURL.write("D:\\project_github\\Online_Shop_System_Smartket\\build\\web\\" + productImageURL);
                         } else {
                             System.out.println("realImg = " + realImgURL + " == oldImageURL = " + oldImageUrl);
                             System.out.println("and PRoductimageURL = "+productImageURL);
@@ -136,7 +135,7 @@ public class ControllerEditProductmkt extends HttpServlet {
                 }
                 request.setAttribute("radioChoice", radioChoice);
                 String st = (n > 0) ? "Cập nhật sản phẩm thành công" : "Cập nhật sản phẩm thất bại";
-                response.sendRedirect("mktProductListURL?message=" + URLEncoder.encode(st, "UTF-8"));
+                response.sendRedirect("marketingProductListURL?message=" + URLEncoder.encode(st, "UTF-8"));
             }
             if (service.isEmpty()) {
                 int productId = Integer.parseInt(request.getParameter("productId"));
@@ -285,17 +284,4 @@ public class ControllerEditProductmkt extends HttpServlet {
     public String getServletInfo() {
         return "Short description";
     }// </editor-fold>
-
-    private int countImg(int ProductID) {
-        int count = 0;
-        DAOProductImage dao = new DAOProductImage();
-        ResultSet rs = dao.getData("select count(*) from ProductImage where ProductID = " + ProductID);
-        try {
-            while (rs.next()) {
-                count = rs.getInt(1);
-            }
-        } catch (Exception e) {
-        }
-        return count;
-    }
 }

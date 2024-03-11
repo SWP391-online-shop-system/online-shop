@@ -48,7 +48,7 @@ public class ControllerResendOTP extends HttpServlet {
         String email = (String) mySession.getAttribute("email");
         String msg = null;
         Random rand = new Random();
-        otpvalue = rand.nextInt(1255650);
+        otpvalue = rand.nextInt(900000) + 100000;
         if (email != null) {
             String to = email;// change accordingly
             // Get the session object
@@ -134,7 +134,7 @@ public class ControllerResendOTP extends HttpServlet {
                         + "                <div style=\"text-align: center;\n"
                         + "    font-size: 18px;\n"
                         + "    font-weight: 500;\n"
-                        + "    letter-spacing: 1px;\"> Mã OTP xác nhận: <span style=\"font-weight: 700\">"  + otpvalue+ "</span></div>\n"
+                        + "    letter-spacing: 1px;\"> Mã OTP xác nhận: <span style=\"font-weight: 700\">" + otpvalue + "</span></div>\n"
                         + "            </div>\n"
                         + "        </div>\n"
                         + "    </body>\n"

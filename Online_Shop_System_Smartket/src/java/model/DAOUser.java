@@ -8,6 +8,8 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Vector;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -272,9 +274,30 @@ public class DAOUser extends DBConnect {
         return n;
     }
 
+    public int updateProfile(User user) {
+        int n = 0;
+        String sql = "update User set FirstName = ?, LastName= ?, Address= ?, PhoneNumber = ?, DateOfBirth = ?, Gender = ? WHERE UserID = ?;";
+        try {
+            // number ? = number fields
+            // index of ? start is 1
+            PreparedStatement pre = conn.prepareStatement(sql);
+            pre.setString(1, user.getFirstName());
+            pre.setString(2, user.getLastName());
+            pre.setString(3, user.getAddress());
+            pre.setString(4, user.getPhoneNumber());
+            pre.setString(5, user.getDateOfBirth());
+            pre.setBoolean(6, user.isGender());
+            pre.setInt(7, user.getUserID());
+            n = pre.executeUpdate();
+        } catch (SQLException ex) {
+            Logger.getLogger(DAOUser.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return n;
+    }
+
     public int updateUserImage(int userID, String userImage) {
         int n = 0;
-        String sql = "update User set UserImage = '?' where UserID = ?";
+        String sql = "update User set UserImage = ? where UserID = ?";
         try {
             PreparedStatement pre = conn.prepareStatement(sql);
             pre.setString(1, userImage);
@@ -319,6 +342,20 @@ public class DAOUser extends DBConnect {
             Logger.getLogger(DAOUser.class.getName()).log(Level.SEVERE, null, ex);
         }
         return vector;
+    }
+
+    public int updatepassword(int userID, String pw) {
+        int n = 0;
+        String sql = "update User set Password = ? where UserID = ?";
+        try {
+            PreparedStatement pre = conn.prepareStatement(sql);
+            pre.setString(1, pw);
+            pre.setInt(2, userID);
+            n = pre.executeUpdate();
+        } catch (SQLException ex) {
+            Logger.getLogger(DAOUser.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return n;
     }
 
     public User check(String email, String pass) {
@@ -440,9 +477,50 @@ public class DAOUser extends DBConnect {
                 result = "<span class=\"badge badge-success\">Hoạt động</span>";
                 break;
             case 2:
-                result = "<span class=\"badge badge-danger\">Khóa</span>";
+                result = "<span class=\"badge badge-danger\">Vô hiệu hóa</span>";
                 break;
         }
         return result;
+    }
+
+    public List<User> getUsersByRoleID(int roleID) {
+        List<User> users = new ArrayList<>();
+        PreparedStatement statement = null;
+        ResultSet resultSet = null;
+
+        try {
+            // Assuming the table name is "user" and the column name for RoleID is "RoleID"
+            String query = "SELECT * FROM user WHERE RoleID = ?";
+            statement = conn.prepareStatement(query);
+            statement.setInt(1, roleID);
+            resultSet = statement.executeQuery();
+
+            while (resultSet.next()) {
+                User user = new User();
+                user.setUserID(resultSet.getInt("UserID"));
+                user.setFirstName(resultSet.getString("FirstName"));
+                user.setLastName(resultSet.getString("LastName"));
+                user.setRoleID(resultSet.getInt("RoleID"));
+                // Add any other necessary fields
+
+                users.add(user);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace(); // Handle or log the exception as needed
+        } finally {
+            // Close the statement and result set in finally block
+            try {
+                if (resultSet != null) {
+                    resultSet.close();
+                }
+                if (statement != null) {
+                    statement.close();
+                }
+            } catch (SQLException e) {
+                e.printStackTrace(); // Handle or log the exception as needed
+            }
+        }
+
+        return users;
     }
 }

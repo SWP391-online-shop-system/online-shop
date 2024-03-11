@@ -41,20 +41,10 @@ public class ControllerSearchPage extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         try ( PrintWriter out = response.getWriter()) {
-            /* TODO output your page here. You may use following sample code. */
-            out.println("<!DOCTYPE html>");
-            out.println("<html>");
-            out.println("<head>");
-            out.println("<title>Servlet searchPageURL</title>");
-            out.println("</head>");
-            out.println("<body>");
-            out.println("<h1>Servlet searchPageURL at " + request.getContextPath() + "</h1>");
-            out.println("</body>");
-            out.println("</html>");
         }
     }
-
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
+
     /**
      * Handles the HTTP <code>GET</code> method.
      *
@@ -71,6 +61,7 @@ public class ControllerSearchPage extends HttpServlet {
             DAOCategories daoCate = new DAOCategories();
             String filterChoice = request.getParameter("filterChoice");
             String TotalRate_raw = request.getParameter("TotalRate");
+            String CategoryID = request.getParameter("CategoryID");
             int TotalRate = 0;
             String type = request.getParameter("type");
             String keyWord = request.getParameter("keyWord");
@@ -94,46 +85,89 @@ public class ControllerSearchPage extends HttpServlet {
             } else {
                 minValue = Double.parseDouble(minValue_raw);
             }
-            System.out.println("fil = " + filterChoice);
-            System.out.println("keyWord = " + keyWord);
             //Start get All product----------------------------------------------------------------
             request.setAttribute("filterChoice", filterChoice);
             if (filterChoice.equals("createDate desc") || filterChoice.equals("p.CreateDate desc")) {
                 filterChoice = "p.CreateDate desc";
                 if (TotalRate_raw == null || TotalRate_raw.equals("")) {
                     if (type == null || type.equals("")) {
-                        String index_raw = request.getParameter("index");
-                        int index = 1;
-                        if (index_raw != null) {
-                            index = Integer.parseInt(index_raw);
-                        }
-                        int count = dao.getTotalProductBySearch(keyWord, minValue, maxValue);
-                        int endPage = count / 12;
-                        if (count % 12 != 0) {
-                            endPage++;
-                        }
-                        request.setAttribute("endPage", endPage);
-                        ResultSet rsPaging = dao.getData("select * from product as p join ProductImage as pi on p.ProductID = pi.ProductID where pi.ProductURL like '%_1%' \n"
-                                + " and p.ProductName like N'%" + keyWord + "%' and p.UnitPrice between " + minValue + " and " + maxValue + " order by " + filterChoice + " limit 12 offset " + ((index - 1) * 12));
-                        request.setAttribute("rsPaging", rsPaging);
-                        request.setAttribute("index", index);
-                    } else {
-                        if (type.equals("showSale")) {
+                        if (CategoryID == null || CategoryID.equals("")) {
+                            System.out.println("1");
                             String index_raw = request.getParameter("index");
                             int index = 1;
                             if (index_raw != null) {
                                 index = Integer.parseInt(index_raw);
                             }
-                            int count = dao.getTotalProductByTypeSearch(keyWord, type, minValue, maxValue);
+                            int count = dao.getTotalProductBySearch(keyWord, minValue, maxValue);
                             int endPage = count / 12;
                             if (count % 12 != 0) {
                                 endPage++;
                             }
                             request.setAttribute("endPage", endPage);
-                            ResultSet rsPaging = dao.getData("select * from product as p join ProductImage as pi on p.ProductID = pi.ProductID where pi.ProductURL like '%_1%' \n"
-                                    + "and p.UnitDiscount != 0 and p.ProductName like N'%" + keyWord + "%' and p.UnitPrice between " + minValue + " and " + maxValue + " order by " + filterChoice + " limit 12 offset " + ((index - 1) * 12));
+                            ResultSet rsPaging = dao.getData("select * from product as p join ProductImage as pi on p.ProductID = pi.ProductID join Categories as c on p.CategoryID = c.CategoryID where p.ProductStatus = 0 and pi.ProductURL = pi.ProductURLShow and p.UnitPrice between " + minValue + " and " + maxValue + " \n"
+                                    + " and p.ProductName like N'%" + keyWord + "%' or c.CategoryName like N'%" + keyWord + "%' order by " + filterChoice + " limit 12 offset " + ((index - 1) * 12));
                             request.setAttribute("rsPaging", rsPaging);
                             request.setAttribute("index", index);
+                        } else {
+                            System.out.println("2");
+                            String index_raw = request.getParameter("index");
+                            int index = 1;
+                            if (index_raw != null) {
+                                index = Integer.parseInt(index_raw);
+                            }
+                            int count = dao.getTotalProductBySearchCategory(keyWord, Integer.parseInt(CategoryID), minValue, maxValue);
+                            int endPage = count / 12;
+                            if (count % 12 != 0) {
+                                endPage++;
+                            }
+                            request.setAttribute("endPage", endPage);
+                            ResultSet rsPaging = dao.getData("select * from product as p join ProductImage as pi on p.ProductID = pi.ProductID join Categories as c on p.CategoryID = c.CategoryID where p.ProductStatus = 0 and pi.ProductURL = pi.ProductURLShow and p.UnitPrice between " + minValue + " and " + maxValue + " \n"
+                                    + "and c.CategoryID = " + CategoryID + " and p.ProductName like N'%" + keyWord + "%' or c.CategoryName like N'%" + keyWord + "%' order by " + filterChoice + " limit 12 offset " + ((index - 1) * 12)
+                            );
+                            System.out.println("sql = select * from product as p join ProductImage as pi on p.ProductID = pi.ProductID join Categories as c on p.CategoryID = c.CategoryID where p.ProductStatus = 0 and pi.ProductURL = pi.ProductURLShow and p.UnitPrice between " + minValue + " and " + maxValue + " \n"
+                                    + " and p.ProductName like N'%" + keyWord + "%' or c.CategoryName like N'%" + keyWord + "%'and c.CategoryID = " + CategoryID + " order by " + filterChoice + " limit 12 offset " + ((index - 1) * 12)
+                            );
+                            request.setAttribute("rsPaging", rsPaging);
+                            request.setAttribute("index", index);
+                        }
+                    } else {
+                        if (type.equals("showSale")) {
+                            System.out.println("3");
+                            if (CategoryID == null || CategoryID.equals("")) {
+                                String index_raw = request.getParameter("index");
+                                int index = 1;
+                                if (index_raw != null) {
+                                    index = Integer.parseInt(index_raw);
+                                }
+                                int count = dao.getTotalProductByTypeSearch(keyWord, type, minValue, maxValue);
+                                int endPage = count / 12;
+                                if (count % 12 != 0) {
+                                    endPage++;
+                                }
+                                request.setAttribute("endPage", endPage);
+                                ResultSet rsPaging = dao.getData("select * from product as p join ProductImage as pi on p.ProductID = pi.ProductID join Categories as c on p.CategoryID = c.CategoryID where p.ProductStatus = 0 and pi.ProductURL = pi.ProductURLShow and p.UnitPrice between " + minValue + " and " + maxValue + " \n"
+                                        + "and p.UnitDiscount != 0 and p.ProductName like N'%" + keyWord + "%' or c.CategoryName like %'" + keyWord + "%' order by " + filterChoice + " limit 12 offset " + ((index - 1) * 12));
+                                request.setAttribute("rsPaging", rsPaging);
+                                request.setAttribute("index", index);
+                            } else {
+                                System.out.println("4");
+                                String index_raw = request.getParameter("index");
+                                int index = 1;
+                                if (index_raw != null) {
+                                    index = Integer.parseInt(index_raw);
+                                }
+                                int count = dao.getTotalProductByTypeSearchCategory(keyWord, Integer.parseInt(CategoryID), type, minValue, maxValue);
+                                int endPage = count / 12;
+                                if (count % 12 != 0) {
+                                    endPage++;
+                                }
+                                request.setAttribute("endPage", endPage);
+                                ResultSet rsPaging = dao.getData("select * from product as p join ProductImage as pi on p.ProductID = pi.ProductID join Categories as c on p.CategoryID = c.CategoryID where p.ProductStatus = 0 and pi.ProductURL = pi.ProductURLShow and p.UnitPrice between " + minValue + " and " + maxValue + " \n"
+                                        + "and c.CategoryID = " + CategoryID + "and p.UnitDiscount != 0 and p.ProductName like N'%" + keyWord + "%' or c.CategoryName like %'" + keyWord + "%' order by " + filterChoice + " limit 12 offset " + ((index - 1) * 12)
+                                );
+                                request.setAttribute("rsPaging", rsPaging);
+                                request.setAttribute("index", index);
+                            }
                         }
                     }
                 } else {
@@ -145,41 +179,80 @@ public class ControllerSearchPage extends HttpServlet {
                         resultRate = "and p.TotalRate =" + TotalRate + " ";
                     }
                     if (type == null || type.equals("")) {
-                        System.out.println("IN here at type = null");
-                        String index_raw = request.getParameter("index");
-                        int index = 1;
-                        if (index_raw != null) {
-                            index = Integer.parseInt(index_raw);
-                        }
-                        int count = dao.getTotalProductByRateSearch(keyWord, TotalRate, minValue, maxValue);
-                        int endPage = count / 12;
-                        if (count % 12 != 0) {
-                            endPage++;
-                        }
-                        request.setAttribute("endPage", endPage);
-                        ResultSet rsPaging = dao.getData("select * from product as p join ProductImage as pi on p.ProductID = pi.ProductID where pi.ProductURL like '%_1%' \n"
-                                + resultRate + "and p.ProductName like N'%" + keyWord + "%' and p.UnitPrice between " + minValue + " and " + maxValue + " order by " + filterChoice + " limit 12 offset " + ((index - 1) * 12));
-                        request.setAttribute("rsPaging", rsPaging);
-                        request.setAttribute("index", index);
-                        System.out.println("index here = " + index);
-                        System.out.println("endPage here = " + endPage);
-                    } else {
-                        if (type.equals("showSale")) {
+                        System.out.println("5");
+                        if (CategoryID == null || CategoryID.equals("")) {
                             String index_raw = request.getParameter("index");
                             int index = 1;
                             if (index_raw != null) {
                                 index = Integer.parseInt(index_raw);
                             }
-                            int count = dao.getTotalTypeAndRateProduct(type, TotalRate, minValue, maxValue);
+                            int count = dao.getTotalProductByRateSearch(keyWord, TotalRate, minValue, maxValue);
                             int endPage = count / 12;
                             if (count % 12 != 0) {
                                 endPage++;
                             }
                             request.setAttribute("endPage", endPage);
-                            ResultSet rsPaging = dao.getData("select * from product as p join ProductImage as pi on p.ProductID = pi.ProductID where pi.ProductURL like '%_1%' \n"
-                                    + resultRate + "and p.UnitDiscount != 0 and p.ProductName like N'%" + keyWord + "%' and p.UnitPrice between " + minValue + " and " + maxValue + " order by " + filterChoice + " limit 12 offset " + ((index - 1) * 12));
+                            ResultSet rsPaging = dao.getData("select * from product as p join ProductImage as pi on p.ProductID = pi.ProductID join Categories as c on p.CategoryID = c.CategoryID where p.ProductStatus = 0 and pi.ProductURL = pi.ProductURLShow and p.UnitPrice between " + minValue + " and " + maxValue + " \n"
+                                    + resultRate + " and p.ProductName like N'%" + keyWord + "%' or c.CategoryName like '%" + keyWord + "%' order by " + filterChoice + " limit 12 offset " + ((index - 1) * 12));
+                            request.setAttribute("rsPaging", rsPaging);
+                            System.out.println("sql 5 = select * from product as p join ProductImage as pi on p.ProductID = pi.ProductID join Categories as c on p.CategoryID = c.CategoryID where p.ProductStatus = 0 and pi.ProductURL = pi.ProductURLShow and p.UnitPrice between " + minValue + " and " + maxValue + " \n"
+                                    + resultRate + " and p.ProductName like N'%" + keyWord + "%' or c.CategoryName like '%" + keyWord + "%' order by " + filterChoice + " limit 12 offset " + ((index - 1) * 12));
+                            request.setAttribute("index", index);
+                        } else {
+                            String index_raw = request.getParameter("index");
+                            int index = 1;
+                            if (index_raw != null) {
+                                index = Integer.parseInt(index_raw);
+                            }
+                            int count = dao.getTotalProductByRateSearchCategory(keyWord, Integer.parseInt(CategoryID), TotalRate, minValue, maxValue);
+                            int endPage = count / 12;
+                            if (count % 12 != 0) {
+                                endPage++;
+                            }
+                            request.setAttribute("endPage", endPage);
+                            ResultSet rsPaging = dao.getData("select * from product as p join ProductImage as pi on p.ProductID = pi.ProductID join Categories as c on p.CategoryID = c.CategoryID where p.ProductStatus = 0 and pi.ProductURL = pi.ProductURLShow and c.CategoryID =" + CategoryID + " and p.UnitPrice between " + minValue + " and " + maxValue + " \n"
+                                    + resultRate + "and p.ProductName like N'%" + keyWord + "%' or c.CategoryName like '%" + keyWord + "%' order by " + filterChoice + " limit 12 offset " + ((index - 1) * 12));
+
                             request.setAttribute("rsPaging", rsPaging);
                             request.setAttribute("index", index);
+                        }
+                    } else {
+                        if (type.equals("showSale")) {
+                            if (CategoryID == null || CategoryID.equals("")) {
+                                System.out.println("7");
+                                String index_raw = request.getParameter("index");
+                                int index = 1;
+                                if (index_raw != null) {
+                                    index = Integer.parseInt(index_raw);
+                                }
+                                int count = dao.getTotalTypeAndRateProduct(type, TotalRate, minValue, maxValue);
+                                int endPage = count / 12;
+                                if (count % 12 != 0) {
+                                    endPage++;
+                                }
+                                request.setAttribute("endPage", endPage);
+                                ResultSet rsPaging = dao.getData("select * from product as p join ProductImage as pi on p.ProductID = pi.ProductID join Categories as c on p.CategoryID = c.CategoryID where p.UnitPrice between " + minValue + " and " + maxValue + " and pi.ProductURL like '%_1%'\n"
+                                        + resultRate + " and p.UnitDiscount != 0 and p.ProductName like N'%" + keyWord + "%' or c.CategoryName like '%" + keyWord + "%' order by " + filterChoice + " limit 12 offset " + ((index - 1) * 12));
+                                request.setAttribute("rsPaging", rsPaging);
+                                request.setAttribute("index", index);
+                            } else {
+                                System.out.println("8");
+                                String index_raw = request.getParameter("index");
+                                int index = 1;
+                                if (index_raw != null) {
+                                    index = Integer.parseInt(index_raw);
+                                }
+                                int count = dao.getTotalTypeAndRateProductCategory(type, Integer.parseInt(CategoryID), TotalRate, minValue, maxValue);
+                                int endPage = count / 12;
+                                if (count % 12 != 0) {
+                                    endPage++;
+                                }
+                                ResultSet rsPaging = dao.getData("select * from product as p join ProductImage as pi on p.ProductID = pi.ProductID join Categories as c on p.CategoryID = c.CategoryID where p.ProductStatus = 0 and pi.ProductURL = pi.ProductURLShow and c.CategoryID = " + CategoryID + " \n"
+                                        + resultRate + " and p.UnitPrice between " + minValue + " and " + maxValue + " and p.UnitDiscount != 0 and p.ProductName like N'%" + keyWord + "%' or c.CategoryName like '%" + keyWord + "%' order by " + filterChoice + " limit 12 offset " + ((index - 1) * 12));
+                                request.setAttribute("endPage", endPage);
+                                request.setAttribute("rsPaging", rsPaging);
+                                request.setAttribute("index", index);
+                            }
                         }
                     }
                 }
@@ -188,43 +261,79 @@ public class ControllerSearchPage extends HttpServlet {
                 filterChoice = "p.CreateDate asc";
                 if (TotalRate_raw == null || TotalRate_raw.equals("")) {
                     if (type == null || type.equals("")) {
-                        String index_raw = request.getParameter("index");
-                        int index = 1;
-                        if (index_raw != null) {
-                            index = Integer.parseInt(index_raw);
-                        }
-                        int count = dao.getTotalProductBySearch(keyWord, minValue, maxValue);
-                        int endPage = count / 12;
-                        if (count % 12 != 0) {
-                            endPage++;
-                        }
-                        request.setAttribute("endPage", endPage);
-                        ResultSet rsPaging = dao.getData("select * from product as p join ProductImage as pi on p.ProductID = pi.ProductID where pi.ProductURL like '%_1%' \n"
-                                + "and p.ProductName like N'%" + keyWord + "%' and p.UnitPrice between " + minValue + " and " + maxValue + " order by " + filterChoice + " limit 12 offset " + ((index - 1) * 12));
-                        request.setAttribute("rsPaging", rsPaging);
-                        request.setAttribute("index", index);
-                    } else {
-                        if (type.equals("showSale")) {
+                        if (CategoryID == null || CategoryID.equals("")) {
                             String index_raw = request.getParameter("index");
                             int index = 1;
                             if (index_raw != null) {
                                 index = Integer.parseInt(index_raw);
                             }
-                            int count = dao.getTotalProductByTypeSearch(keyWord, type, minValue, maxValue);
+                            int count = dao.getTotalProductBySearch(keyWord, minValue, maxValue);
                             int endPage = count / 12;
                             if (count % 12 != 0) {
                                 endPage++;
                             }
                             request.setAttribute("endPage", endPage);
-                            ResultSet rsPaging = dao.getData("select * from product as p join ProductImage as pi on p.ProductID = pi.ProductID where pi.ProductURL like '%_1%' \n"
-                                    + "and p.UnitDiscount != 0 and p.ProductName like N'%" + keyWord + "%' and p.UnitPrice between " + minValue + " and " + maxValue + " order by " + filterChoice + " limit 12 offset " + ((index - 1) * 12));
+                            ResultSet rsPaging = dao.getData("select * from product as p join ProductImage as pi on p.ProductID = pi.ProductID  join Categories as c on p.CategoryID = c.CategoryID where p.ProductStatus = 0 and pi.ProductURL = pi.ProductURLShow and p.UnitPrice between " + minValue + " and " + maxValue + " \n"
+                                    + "and p.ProductName like N'%" + keyWord + "%' or c.CategoryName like '%" + keyWord + "%' order by " + filterChoice + " limit 12 offset " + ((index - 1) * 12));
                             request.setAttribute("rsPaging", rsPaging);
                             request.setAttribute("index", index);
+                        } else {
+                            String index_raw = request.getParameter("index");
+                            int index = 1;
+                            if (index_raw != null) {
+                                index = Integer.parseInt(index_raw);
+                            }
+                            int count = dao.getTotalProductBySearchCategory(keyWord, Integer.parseInt(CategoryID), minValue, maxValue
+                            );
+                            int endPage = count / 12;
+                            if (count % 12 != 0) {
+                                endPage++;
+                            }
+                            request.setAttribute("endPage", endPage);
+                            ResultSet rsPaging = dao.getData("select * from product as p join ProductImage as pi on p.ProductID = pi.ProductID  join Categories as c on p.CategoryID = c.Category IDwhere p.ProductStatus = 0 and pi.ProductURL = pi.ProductURLShow and c.CategoryID = " + CategoryID + "\n"
+                                    + "and p.ProductName like N'%" + keyWord + "%' or c.CategoryName like '%" + keyWord + "%' order by " + filterChoice + " limit 12 offset " + ((index - 1) * 12));
+                            request.setAttribute("rsPaging", rsPaging);
+                            request.setAttribute("index", index);
+                        }
+                    } else {
+                        if (type.equals("showSale")) {
+                            if (CategoryID == null || CategoryID.equals("")) {
+                                String index_raw = request.getParameter("index");
+                                int index = 1;
+                                if (index_raw != null) {
+                                    index = Integer.parseInt(index_raw);
+                                }
+                                int count = dao.getTotalProductByTypeSearch(keyWord, type, minValue, maxValue);
+                                int endPage = count / 12;
+                                if (count % 12 != 0) {
+                                    endPage++;
+                                }
+                                request.setAttribute("endPage", endPage);
+                                ResultSet rsPaging = dao.getData("select * from product as p join ProductImage as pi on p.ProductID = pi.ProductID join Categories as c on p.CategoryID = c.CategoryID where p.ProductStatus = 0 and pi.ProductURL = pi.ProductURLShow and p.UnitPrice between " + minValue + " and " + maxValue + " \n"
+                                        + "and p.UnitDiscount != 0 and p.ProductName like N'%" + keyWord + "%' or c.CategoryName like '%" + keyWord + "%' order by " + filterChoice + " limit 12 offset " + ((index - 1) * 12));
+                                request.setAttribute("rsPaging", rsPaging);
+                                request.setAttribute("index", index);
+                            } else {
+                                String index_raw = request.getParameter("index");
+                                int index = 1;
+                                if (index_raw != null) {
+                                    index = Integer.parseInt(index_raw);
+                                }
+                                int count = dao.getTotalProductByTypeSearchCategory(keyWord, Integer.parseInt(CategoryID), type, minValue, maxValue);
+                                int endPage = count / 12;
+                                if (count % 12 != 0) {
+                                    endPage++;
+                                }
+                                request.setAttribute("endPage", endPage);
+                                ResultSet rsPaging = dao.getData("select * from product as p join ProductImage as pi on p.ProductID = pi.ProductID join Categories as c on p.CategoryID = c.CategoryID where p.ProductStatus = 0 and pi.ProductURL = pi.ProductURLShow and c.CategoryID = " + CategoryID + "\n"
+                                        + "and p.UnitDiscount != 0 and p.ProductName like N'%" + keyWord + "%' or c.CategoryName like '%" + keyWord + "%' order by " + filterChoice + " limit 12 offset " + ((index - 1) * 12));
+                                request.setAttribute("rsPaging", rsPaging);
+                                request.setAttribute("index", index);
+                            }
                         }
                     }
                 } else {
                     TotalRate = Integer.parseInt(TotalRate_raw);
-
                     String resultRate = "";
                     if (TotalRate == 0) {
                         resultRate = "and p.TotalRate between 0 and 5 ";
@@ -232,38 +341,74 @@ public class ControllerSearchPage extends HttpServlet {
                         resultRate = "and p.TotalRate =" + TotalRate + " ";
                     }
                     if (type == null || type.equals("")) {
-                        String index_raw = request.getParameter("index");
-                        int index = 1;
-                        if (index_raw != null) {
-                            index = Integer.parseInt(index_raw);
-                        }
-                        int count = dao.getTotalProductByRateSearch(keyWord, TotalRate, minValue, maxValue);
-                        int endPage = count / 12;
-                        if (count % 12 != 0) {
-                            endPage++;
-                        }
-                        request.setAttribute("endPage", endPage);
-                        ResultSet rsPaging = dao.getData("select * from product as p join ProductImage as pi on p.ProductID = pi.ProductID where pi.ProductURL like '%_1%' \n"
-                                + resultRate + "and p.ProductName like N'%" + keyWord + "%' and p.UnitPrice between " + minValue + " and " + maxValue + " order by " + filterChoice + " limit 12 offset " + ((index - 1) * 12));
-                        request.setAttribute("rsPaging", rsPaging);
-                        request.setAttribute("index", index);
-                    } else {
-                        if (type.equals("showSale")) {
+                        if (CategoryID == null || CategoryID.equals("")) {
                             String index_raw = request.getParameter("index");
                             int index = 1;
                             if (index_raw != null) {
                                 index = Integer.parseInt(index_raw);
                             }
-                            int count = dao.getTotalProductByRateAndTypeSearch(keyWord, TotalRate, type, minValue, maxValue);
+                            int count = dao.getTotalProductByRateSearch(keyWord, TotalRate, minValue, maxValue);
                             int endPage = count / 12;
                             if (count % 12 != 0) {
                                 endPage++;
                             }
                             request.setAttribute("endPage", endPage);
-                            ResultSet rsPaging = dao.getData("select * from product as p join ProductImage as pi on p.ProductID = pi.ProductID where pi.ProductURL like '%_1%' \n"
-                                    + resultRate + "and p.UnitDiscount != 0 and p.ProductName like N'%" + keyWord + "%' and p.UnitPrice between " + minValue + " and " + maxValue + " order by " + filterChoice + " limit 12 offset " + ((index - 1) * 12));
+                            ResultSet rsPaging = dao.getData("select * from product as p join ProductImage as pi on p.ProductID = pi.ProductID join Categories as c on p.CategoryID = c.CategoryID where p.ProductStatus = 0 and pi.ProductURL = pi.ProductURLShow and p.UnitPrice between " + minValue + " and " + maxValue + " \n"
+                                    + resultRate + "and p.ProductName like N'%" + keyWord + "%' or c.CategoryName like '%" + keyWord + "%' order by " + filterChoice + " limit 12 offset " + ((index - 1) * 12));
                             request.setAttribute("rsPaging", rsPaging);
                             request.setAttribute("index", index);
+                        } else {
+                            String index_raw = request.getParameter("index");
+                            int index = 1;
+                            if (index_raw != null) {
+                                index = Integer.parseInt(index_raw);
+                            }
+                            int count = dao.getTotalProductByRateSearchCategory(keyWord, Integer.parseInt(CategoryID), TotalRate, minValue, maxValue);
+                            int endPage = count / 12;
+                            if (count % 12 != 0) {
+                                endPage++;
+                            }
+                            request.setAttribute("endPage", endPage);
+                            ResultSet rsPaging = dao.getData("select * from product as p join ProductImage as pi on p.ProductID = pi.ProductID join Categories as c on p.CategoryID = c.CategoryID where p.ProductStatus = 0 and pi.ProductURL = pi.ProductURLShow and c.CategoryID = " + CategoryID + "\n"
+                                    + resultRate + "and p.ProductName like N'%" + keyWord + "%' or c.CategoryName like '%" + keyWord + "%' order by " + filterChoice + " limit 12 offset " + ((index - 1) * 12));
+                            request.setAttribute("rsPaging", rsPaging);
+                            request.setAttribute("index", index);
+                        }
+                    } else {
+                        if (type.equals("showSale")) {
+                            if (CategoryID == null || CategoryID.equals("")) {
+                                String index_raw = request.getParameter("index");
+                                int index = 1;
+                                if (index_raw != null) {
+                                    index = Integer.parseInt(index_raw);
+                                }
+                                int count = dao.getTotalProductByRateAndTypeSearch(keyWord, TotalRate, type, minValue, maxValue);
+                                int endPage = count / 12;
+                                if (count % 12 != 0) {
+                                    endPage++;
+                                }
+                                request.setAttribute("endPage", endPage);
+                                ResultSet rsPaging = dao.getData("select * from product as p join ProductImage as pi on p.ProductID = pi.ProductID join Categories as c on p.CategoryID = c.CategoryID where p.ProductStatus = 0 and pi.ProductURL = pi.ProductURLShow and p.UnitPrice between " + minValue + " and " + maxValue + " \n"
+                                        + resultRate + "and p.UnitDiscount != 0 and p.ProductName like N'%" + keyWord + "%' or c.CategoryName like '%" + keyWord + "%' order by " + filterChoice + " limit 12 offset " + ((index - 1) * 12));
+                                request.setAttribute("rsPaging", rsPaging);
+                                request.setAttribute("index", index);
+                            } else {
+                                String index_raw = request.getParameter("index");
+                                int index = 1;
+                                if (index_raw != null) {
+                                    index = Integer.parseInt(index_raw);
+                                }
+                                int count = dao.getTotalProductByRateAndTypeSearchCategory(keyWord, Integer.parseInt(CategoryID), TotalRate, type, minValue, maxValue);
+                                int endPage = count / 12;
+                                if (count % 12 != 0) {
+                                    endPage++;
+                                }
+                                request.setAttribute("endPage", endPage);
+                                ResultSet rsPaging = dao.getData("select * from product as p join ProductImage as pi on p.ProductID = pi.ProductID join Categories as c on p.CategoryID = c.CategoryID where p.ProductStatus = 0 and pi.ProductURL = pi.ProductURLShow and c.CategoryID = " + CategoryID + " \n"
+                                        + resultRate + "and p.UnitDiscount != 0 and p.ProductName like N'%" + keyWord + "%' or c.CategoryName like '%" + keyWord + "%' order by " + filterChoice + " limit 12 offset " + ((index - 1) * 12));
+                                request.setAttribute("rsPaging", rsPaging);
+                                request.setAttribute("index", index);
+                            }
                         }
                     }
                 }
@@ -272,38 +417,74 @@ public class ControllerSearchPage extends HttpServlet {
                 filterChoice = "(UnitPrice*(100-UnitDiscount)/100) asc";
                 if (TotalRate_raw == null || TotalRate_raw.equals("")) {
                     if (type == null || type.equals("")) {
-                        String index_raw = request.getParameter("index");
-                        int index = 1;
-                        if (index_raw != null) {
-                            index = Integer.parseInt(index_raw);
-                        }
-                        int count = dao.getTotalProductBySearch(keyWord, minValue, maxValue);
-                        int endPage = count / 12;
-                        if (count % 12 != 0) {
-                            endPage++;
-                        }
-                        request.setAttribute("endPage", endPage);
-                        ResultSet rsPaging = dao.getData("select * from product as p join ProductImage as pi on p.ProductID = pi.ProductID where pi.ProductURL like '%_1%' \n"
-                                + "and p.ProductName like N'%" + keyWord + "%' and p.UnitPrice between " + minValue + " and " + maxValue + " order by " + filterChoice + " limit 12 offset " + ((index - 1) * 12));
-                        request.setAttribute("rsPaging", rsPaging);
-                        request.setAttribute("index", index);
-                    } else {
-                        if (type.equals("showSale")) {
+                        if (CategoryID == null || CategoryID.equals("")) {
                             String index_raw = request.getParameter("index");
                             int index = 1;
                             if (index_raw != null) {
                                 index = Integer.parseInt(index_raw);
                             }
-                            int count = dao.getTotalProductByTypeSearch(keyWord, type, minValue, maxValue);
+                            int count = dao.getTotalProductBySearch(keyWord, minValue, maxValue);
                             int endPage = count / 12;
                             if (count % 12 != 0) {
                                 endPage++;
                             }
                             request.setAttribute("endPage", endPage);
-                            ResultSet rsPaging = dao.getData("select * from product as p join ProductImage as pi on p.ProductID = pi.ProductID where pi.ProductURL like '%_1%' \n"
-                                    + "and p.UnitDiscount != 0 and p.ProductName like N'%" + keyWord + "%' and p.UnitPrice between " + minValue + " and " + maxValue + " order by " + filterChoice + " limit 12 offset " + ((index - 1) * 12));
+                            ResultSet rsPaging = dao.getData("select * from product as p join ProductImage as pi on p.ProductID = pi.ProductID join Categories as c on p.CategoryID = c.CategoryID where p.ProductStatus = 0 and pi.ProductURL = pi.ProductURLShow and p.UnitPrice between " + minValue + " and " + maxValue + " \n"
+                                    + "and p.ProductName like N'%" + keyWord + "%' or c.CategoryName like '%" + keyWord + "%' order by " + filterChoice + " limit 12 offset " + ((index - 1) * 12));
                             request.setAttribute("rsPaging", rsPaging);
                             request.setAttribute("index", index);
+                        } else {
+                            String index_raw = request.getParameter("index");
+                            int index = 1;
+                            if (index_raw != null) {
+                                index = Integer.parseInt(index_raw);
+                            }
+                            int count = dao.getTotalProductBySearchCategory(keyWord, Integer.parseInt(CategoryID), minValue, maxValue);
+                            int endPage = count / 12;
+                            if (count % 12 != 0) {
+                                endPage++;
+                            }
+                            request.setAttribute("endPage", endPage);
+                            ResultSet rsPaging = dao.getData("select * from product as p join ProductImage as pi on p.ProductID = pi.ProductID join Categories as c on p.CategoryID = c.CategoryID where p.ProductStatus = 0 and pi.ProductURL = pi.ProductURLShow and c.CategoryID =" + CategoryID + "\n"
+                                    + "and p.ProductName like N'%" + keyWord + "%' or c.CategoryName like '%" + keyWord + "%' order by " + filterChoice + " limit 12 offset " + ((index - 1) * 12));
+                            request.setAttribute("rsPaging", rsPaging);
+                            request.setAttribute("index", index);
+                        }
+                    } else {
+                        if (type.equals("showSale")) {
+                            if (CategoryID == null || CategoryID.equals("")) {
+                                String index_raw = request.getParameter("index");
+                                int index = 1;
+                                if (index_raw != null) {
+                                    index = Integer.parseInt(index_raw);
+                                }
+                                int count = dao.getTotalProductByTypeSearch(keyWord, type, minValue, maxValue);
+                                int endPage = count / 12;
+                                if (count % 12 != 0) {
+                                    endPage++;
+                                }
+                                request.setAttribute("endPage", endPage);
+                                ResultSet rsPaging = dao.getData("select * from product as p join ProductImage as pi on p.ProductID = pi.ProductID join Categories as c on p.CategoryID = c.CategoryID where p.ProductStatus = 0 and pi.ProductURL = pi.ProductURLShow and p.UnitPrice between " + minValue + " and " + maxValue + " \n"
+                                        + "and p.UnitDiscount != 0 and p.ProductName like N'%" + keyWord + "%' or c.CategoryName like '%" + keyWord + "%' order by " + filterChoice + " limit 12 offset " + ((index - 1) * 12));
+                                request.setAttribute("rsPaging", rsPaging);
+                                request.setAttribute("index", index);
+                            } else {
+                                String index_raw = request.getParameter("index");
+                                int index = 1;
+                                if (index_raw != null) {
+                                    index = Integer.parseInt(index_raw);
+                                }
+                                int count = dao.getTotalProductByTypeSearchCategory(keyWord, Integer.parseInt(CategoryID), type, minValue, maxValue);
+                                int endPage = count / 12;
+                                if (count % 12 != 0) {
+                                    endPage++;
+                                }
+                                request.setAttribute("endPage", endPage);
+                                ResultSet rsPaging = dao.getData("select * from product as p join ProductImage as pi on p.ProductID = pi.ProductID join Categories as c on p.CategoryID = c.CategoryID where p.ProductStatus = 0 and pi.ProductURL = pi.ProductURLShow and c.CategoryID = " + CategoryID + " \n"
+                                        + "and p.UnitDiscount != 0 and p.ProductName like N'%" + keyWord + "%' or c.CategoryName like '%" + keyWord + "%' order by " + filterChoice + " limit 12 offset " + ((index - 1) * 12));
+                                request.setAttribute("rsPaging", rsPaging);
+                                request.setAttribute("index", index);
+                            }
                         }
                     }
                 } else {
@@ -315,39 +496,76 @@ public class ControllerSearchPage extends HttpServlet {
                         resultRate = "and p.TotalRate =" + TotalRate + " ";
                     }
                     if (type == null || type.equals("")) {
-                        String index_raw = request.getParameter("index");
-                        int index = 1;
-                        if (index_raw != null) {
-                            index = Integer.parseInt(index_raw);
-                        }
-                        int count = dao.getTotalProductByRateSearch(keyWord, TotalRate, minValue, maxValue);
-                        int endPage = count / 12;
-                        if (count % 12 != 0) {
-                            endPage++;
-                        }
-                        request.setAttribute("endPage", endPage);
-                        ResultSet rsPaging = dao.getData("select * from product as p join ProductImage as pi on p.ProductID = pi.ProductID where pi.ProductURL like '%_1%' \n"
-                                + resultRate + "and p.ProductName like N'%" + keyWord + "%' and p.UnitPrice between " + minValue + " and " + maxValue + " order by " + filterChoice + " limit 12 offset " + ((index - 1) * 12));
-                        request.setAttribute("rsPaging", rsPaging);
-                        request.setAttribute("index", index);
-                    } else {
-
-                        if (type.equals("showSale")) {
+                        if (CategoryID == null || CategoryID.equals("")) {
                             String index_raw = request.getParameter("index");
                             int index = 1;
                             if (index_raw != null) {
                                 index = Integer.parseInt(index_raw);
                             }
-                            int count = dao.getTotalProductByRateAndTypeSearch(keyWord, TotalRate, type, minValue, maxValue);
+                            int count = dao.getTotalProductByRateSearch(keyWord, TotalRate, minValue, maxValue);
                             int endPage = count / 12;
                             if (count % 12 != 0) {
                                 endPage++;
                             }
                             request.setAttribute("endPage", endPage);
-                            ResultSet rsPaging = dao.getData("select * from product as p join ProductImage as pi on p.ProductID = pi.ProductID where pi.ProductURL like '%_1%' \n"
-                                    + resultRate + "and p.UnitDiscount != 0 and p.ProductName like N'%" + keyWord + "%' and p.UnitPrice between " + minValue + " and " + maxValue + " order by " + filterChoice + " limit 12 offset " + ((index - 1) * 12));
+                            ResultSet rsPaging = dao.getData("select * from product as p join ProductImage as pi on p.ProductID = pi.ProductID join Categories as c on p.CategoryID = c.CategoryID where p.ProductStatus = 0 and pi.ProductURL = pi.ProductURLShow and p.UnitPrice between " + minValue + " and " + maxValue + " \n"
+                                    + resultRate + "and p.ProductName like N'%" + keyWord + "%' or c.CategoryName like '%" + keyWord + "%' order by " + filterChoice + " limit 12 offset " + ((index - 1) * 12));
                             request.setAttribute("rsPaging", rsPaging);
                             request.setAttribute("index", index);
+                        } else {
+                            String index_raw = request.getParameter("index");
+                            int index = 1;
+                            if (index_raw != null) {
+                                index = Integer.parseInt(index_raw);
+                            }
+                            int count = dao.getTotalProductByRateSearchCategory(keyWord, Integer.parseInt(CategoryID), TotalRate, minValue, maxValue);
+                            int endPage = count / 12;
+                            if (count % 12 != 0) {
+                                endPage++;
+                            }
+                            request.setAttribute("endPage", endPage);
+                            ResultSet rsPaging = dao.getData("select * from product as p join ProductImage as pi on p.ProductID = pi.ProductID join Categories as c on p.CategoryID = c.CategoryID where p.ProductStatus = 0 and pi.ProductURL = pi.ProductURLShow and c.CategoryID = " + CategoryID + " \n"
+                                    + ""
+                                    + resultRate + "and p.ProductName like N'%" + keyWord + "%' or c.CategoryName like '%" + keyWord + "%' order by " + filterChoice + " limit 12 offset " + ((index - 1) * 12));
+                            request.setAttribute("rsPaging", rsPaging);
+                            request.setAttribute("index", index);
+                        }
+
+                    } else {
+                        if (type.equals("showSale")) {
+                            if (CategoryID == null || CategoryID.equals("")) {
+                                String index_raw = request.getParameter("index");
+                                int index = 1;
+                                if (index_raw != null) {
+                                    index = Integer.parseInt(index_raw);
+                                }
+                                int count = dao.getTotalProductByRateAndTypeSearch(keyWord, TotalRate, type, minValue, maxValue);
+                                int endPage = count / 12;
+                                if (count % 12 != 0) {
+                                    endPage++;
+                                }
+                                request.setAttribute("endPage", endPage);
+                                ResultSet rsPaging = dao.getData("select * from product as p join ProductImage as pi on p.ProductID = pi.ProductID join Categories as c on p.CategoryID = c.CategoryID where p.ProductStatus = 0 and pi.ProductURL = pi.ProductURLShow and p.UnitPrice between " + minValue + " and " + maxValue + " \n"
+                                        + resultRate + "and p.UnitDiscount != 0 and p.ProductName like N'%" + keyWord + "%' or c.CategoryName like '%" + keyWord + "%' order by " + filterChoice + " limit 12 offset " + ((index - 1) * 12));
+                                request.setAttribute("rsPaging", rsPaging);
+                                request.setAttribute("index", index);
+                            } else {
+                                String index_raw = request.getParameter("index");
+                                int index = 1;
+                                if (index_raw != null) {
+                                    index = Integer.parseInt(index_raw);
+                                }
+                                int count = dao.getTotalProductByRateAndTypeSearchCategory(keyWord, Integer.parseInt(CategoryID), TotalRate, type, minValue, maxValue);
+                                int endPage = count / 12;
+                                if (count % 12 != 0) {
+                                    endPage++;
+                                }
+                                request.setAttribute("endPage", endPage);
+                                ResultSet rsPaging = dao.getData("select * from product as p join ProductImage as pi on p.ProductID = pi.ProductID join Categories as c on p.CategoryID = c.CategoryID where p.ProductStatus = 0 and pi.ProductURL = pi.ProductURLShow and c.CategoryID = " + CategoryID + " \n"
+                                        + resultRate + "and p.UnitDiscount != 0 and p.ProductName like N'%" + keyWord + "%' or c.CategoryName like '%" + keyWord + "%' order by " + filterChoice + " limit 12 offset " + ((index - 1) * 12));
+                                request.setAttribute("rsPaging", rsPaging);
+                                request.setAttribute("index", index);
+                            }
                         }
                     }
                 }
@@ -356,38 +574,75 @@ public class ControllerSearchPage extends HttpServlet {
                 filterChoice = "(UnitPrice*(100-UnitDiscount)/100) desc";
                 if (TotalRate_raw == null || TotalRate_raw.equals("")) {
                     if (type == null || type.equals("")) {
-                        String index_raw = request.getParameter("index");
-                        int index = 1;
-                        if (index_raw != null) {
-                            index = Integer.parseInt(index_raw);
-                        }
-                        int count = dao.getTotalProductBySearch(keyWord, minValue, maxValue);
-                        int endPage = count / 12;
-                        if (count % 12 != 0) {
-                            endPage++;
-                        }
-                        request.setAttribute("endPage", endPage);
-                        ResultSet rsPaging = dao.getData("select * from product as p join ProductImage as pi on p.ProductID = pi.ProductID where pi.ProductURL like '%_1%' \n"
-                                + " and p.ProductName like N'%" + keyWord + "%' and p.UnitPrice between " + minValue + " and " + maxValue + " order by " + filterChoice + " limit 12 offset " + ((index - 1) * 12));
-                        request.setAttribute("rsPaging", rsPaging);
-                        request.setAttribute("index", index);
-                    } else {
-                        if (type.equals("showSale")) {
+                        if (CategoryID == null || CategoryID.equals("")) {
                             String index_raw = request.getParameter("index");
                             int index = 1;
                             if (index_raw != null) {
                                 index = Integer.parseInt(index_raw);
                             }
-                            int count = dao.getTotalProductByTypeSearch(keyWord, type, minValue, maxValue);
+                            int count = dao.getTotalProductBySearch(keyWord, minValue, maxValue);
                             int endPage = count / 12;
                             if (count % 12 != 0) {
                                 endPage++;
                             }
                             request.setAttribute("endPage", endPage);
-                            ResultSet rsPaging = dao.getData("select * from product as p join ProductImage as pi on p.ProductID = pi.ProductID where pi.ProductURL like '%_1%' \n"
-                                    + "and p.UnitDiscount != 0 and p.ProductName like N'%" + keyWord + "%' and p.UnitPrice between " + minValue + " and " + maxValue + " order by " + filterChoice + " limit 12 offset " + ((index - 1) * 12));
+                            ResultSet rsPaging = dao.getData("select * from product as p join ProductImage as pi on p.ProductID = pi.ProductID join Categories as c on p.CategoryID = c.CategoryID where p.ProductStatus = 0 and pi.ProductURL = pi.ProductURLShow and p.UnitPrice between " + minValue + " and " + maxValue + " \n"
+                                    + " and p.ProductName like N'%" + keyWord + "%' or c.CategoryName like '%" + keyWord + "%' order by " + filterChoice + " limit 12 offset " + ((index - 1) * 12));
                             request.setAttribute("rsPaging", rsPaging);
                             request.setAttribute("index", index);
+                        } else {
+                            String index_raw = request.getParameter("index");
+                            int index = 1;
+                            if (index_raw != null) {
+                                index = Integer.parseInt(index_raw);
+                            }
+                            int count = dao.getTotalProductBySearchCategory(keyWord, Integer.parseInt(CategoryID), minValue, maxValue);
+                            int endPage = count / 12;
+                            if (count % 12 != 0) {
+                                endPage++;
+                            }
+                            request.setAttribute("endPage", endPage);
+                            ResultSet rsPaging = dao.getData("select * from product as p join ProductImage as pi on p.ProductID = pi.ProductID join Categories as c on p.CategoryID = c.CategoryID where p.ProductStatus = 0 and pi.ProductURL = pi.ProductURLShow and c.CategoryID = " + CategoryID + "  \n"
+                                    + " and p.ProductName like N'%" + keyWord + "%' or c.CategoryName like '%" + keyWord + "%' order by " + filterChoice + " limit 12 offset " + ((index - 1) * 12));
+                            request.setAttribute("rsPaging", rsPaging);
+                            request.setAttribute("index", index);
+                        }
+
+                    } else {
+                        if (type.equals("showSale")) {
+                            if (CategoryID == null || CategoryID.equals("")) {
+                                String index_raw = request.getParameter("index");
+                                int index = 1;
+                                if (index_raw != null) {
+                                    index = Integer.parseInt(index_raw);
+                                }
+                                int count = dao.getTotalProductByTypeSearch(keyWord, type, minValue, maxValue);
+                                int endPage = count / 12;
+                                if (count % 12 != 0) {
+                                    endPage++;
+                                }
+                                request.setAttribute("endPage", endPage);
+                                ResultSet rsPaging = dao.getData("select * from product as p join ProductImage as pi on p.ProductID = pi.ProductID join Categories as c on p.CategoryID = c.CategoryID where p.ProductStatus = 0 and pi.ProductURL = pi.ProductURLShow and p.UnitPrice between " + minValue + " and " + maxValue + " \n"
+                                        + "and p.UnitDiscount != 0 and p.ProductName like N'%" + keyWord + "%' or c.CategoryName like '%" + keyWord + "%' order by " + filterChoice + " limit 12 offset " + ((index - 1) * 12));
+                                request.setAttribute("rsPaging", rsPaging);
+                                request.setAttribute("index", index);
+                            } else {
+                                String index_raw = request.getParameter("index");
+                                int index = 1;
+                                if (index_raw != null) {
+                                    index = Integer.parseInt(index_raw);
+                                }
+                                int count = dao.getTotalProductByTypeSearchCategory(keyWord, Integer.parseInt(CategoryID), type, minValue, maxValue);
+                                int endPage = count / 12;
+                                if (count % 12 != 0) {
+                                    endPage++;
+                                }
+                                request.setAttribute("endPage", endPage);
+                                ResultSet rsPaging = dao.getData("select * from product as p join ProductImage as pi on p.ProductID = pi.ProductID join Categories as c on p.CategoryID = c.CategoryID where p.ProductStatus = 0 and pi.ProductURL = pi.ProductURLShow and c.CategoryID = " + CategoryID + " \n"
+                                        + "and p.UnitDiscount != 0 and p.ProductName like N'%" + keyWord + "%' or c.CategoryName like '%" + keyWord + "%' order by " + filterChoice + " limit 12 offset " + ((index - 1) * 12));
+                                request.setAttribute("rsPaging", rsPaging);
+                                request.setAttribute("index", index);
+                            }
                         }
                     }
                 } else {
@@ -399,39 +654,75 @@ public class ControllerSearchPage extends HttpServlet {
                         resultRate = "and p.TotalRate =" + TotalRate + " ";
                     }
                     if (type == null || type.equals("")) {
-                        String index_raw = request.getParameter("index");
-                        int index = 1;
-                        if (index_raw != null) {
-                            index = Integer.parseInt(index_raw);
-                        }
-                        int count = dao.getTotalProductByRateSearch(keyWord, TotalRate, minValue, maxValue);
-                        int endPage = count / 12;
-                        if (count % 12 != 0) {
-                            endPage++;
-                        }
-                        request.setAttribute("endPage", endPage);
-                        ResultSet rsPaging = dao.getData("select * from product as p join ProductImage as pi on p.ProductID = pi.ProductID where pi.ProductURL like '%_1%' \n"
-                                + resultRate + "and p.ProductName like N'%" + keyWord + "%' and p.UnitPrice between " + minValue + " and " + maxValue + " order by " + filterChoice + " limit 12 offset " + ((index - 1) * 12));
-                        request.setAttribute("rsPaging", rsPaging);
-                        request.setAttribute("index", index);
-
-                    } else {
-                        if (type.equals("showSale")) {
+                        if (CategoryID == null || CategoryID.equals("")) {
                             String index_raw = request.getParameter("index");
                             int index = 1;
                             if (index_raw != null) {
                                 index = Integer.parseInt(index_raw);
                             }
-                            int count = dao.getTotalProductByRateAndTypeSearch(keyWord, TotalRate, type, minValue, maxValue);
+                            int count = dao.getTotalProductByRateSearch(keyWord, TotalRate, minValue, maxValue);
                             int endPage = count / 12;
                             if (count % 12 != 0) {
                                 endPage++;
                             }
                             request.setAttribute("endPage", endPage);
-                            ResultSet rsPaging = dao.getData("select * from product as p join ProductImage as pi on p.ProductID = pi.ProductID where pi.ProductURL like '%_1%' \n"
-                                    + resultRate + "and p.ProductName like N'%" + keyWord + "%' and p.UnitPrice between " + minValue + " and " + maxValue + " order by " + filterChoice + " limit 12 offset " + ((index - 1) * 12));
+                            ResultSet rsPaging = dao.getData("select * from product as p join ProductImage as pi on p.ProductID = pi.ProductID join Categories as c on p.CategoryID = c.CategoryID where p.ProductStatus = 0 and pi.ProductURL = pi.ProductURLShow and p.UnitPrice between " + minValue + " and " + maxValue + " \n"
+                                    + resultRate + "and p.ProductName like N'%" + keyWord + "%' or c.CategoryName like '%" + keyWord + "%' order by " + filterChoice + " limit 12 offset " + ((index - 1) * 12));
                             request.setAttribute("rsPaging", rsPaging);
                             request.setAttribute("index", index);
+
+                        } else {
+                            String index_raw = request.getParameter("index");
+                            int index = 1;
+                            if (index_raw != null) {
+                                index = Integer.parseInt(index_raw);
+                            }
+                            int count = dao.getTotalProductByRateSearchCategory(keyWord, Integer.parseInt(CategoryID), TotalRate, minValue, maxValue);
+                            int endPage = count / 12;
+                            if (count % 12 != 0) {
+                                endPage++;
+                            }
+                            request.setAttribute("endPage", endPage);
+                            ResultSet rsPaging = dao.getData("select * from product as p join ProductImage as pi on p.ProductID = pi.ProductID join Categories as c on p.CategoryID = c.CategoryID where p.ProductStatus = 0 and pi.ProductURL = pi.ProductURLShow and c.CategoryID = " + CategoryID + " \n"
+                                    + resultRate + "and p.ProductName like N'%" + keyWord + "%' or c.CategoryName like '%" + keyWord + "%' order by " + filterChoice + " limit 12 offset " + ((index - 1) * 12));
+                            request.setAttribute("rsPaging", rsPaging);
+                            request.setAttribute("index", index);
+                        }
+                    } else {
+                        if (type.equals("showSale")) {
+                            if (CategoryID == null || CategoryID.equals("")) {
+                                String index_raw = request.getParameter("index");
+                                int index = 1;
+                                if (index_raw != null) {
+                                    index = Integer.parseInt(index_raw);
+                                }
+                                int count = dao.getTotalProductByRateAndTypeSearch(keyWord, TotalRate, type, minValue, maxValue);
+                                int endPage = count / 12;
+                                if (count % 12 != 0) {
+                                    endPage++;
+                                }
+                                request.setAttribute("endPage", endPage);
+                                ResultSet rsPaging = dao.getData("select * from product as p join ProductImage as pi on p.ProductID = pi.ProductID join Categories as c on p.CategoryID = c.CategoryID where p.ProductStatus = 0 and pi.ProductURL = pi.ProductURLShow and p.UnitPrice between " + minValue + " and " + maxValue + " \n"
+                                        + resultRate + "and p.ProductName like N'%" + keyWord + "%' order by " + filterChoice + " limit 12 offset " + ((index - 1) * 12));
+                                request.setAttribute("rsPaging", rsPaging);
+                                request.setAttribute("index", index);
+                            } else {
+                                String index_raw = request.getParameter("index");
+                                int index = 1;
+                                if (index_raw != null) {
+                                    index = Integer.parseInt(index_raw);
+                                }
+                                int count = dao.getTotalProductByRateAndTypeSearchCategory(keyWord, Integer.parseInt(CategoryID), TotalRate, type, minValue, maxValue);
+                                int endPage = count / 12;
+                                if (count % 12 != 0) {
+                                    endPage++;
+                                }
+                                request.setAttribute("endPage", endPage);
+                                ResultSet rsPaging = dao.getData("select * from product as p join ProductImage as pi on p.ProductID = pi.ProductID join Categories as c on p.CategoryID = c.CategoryID where p.ProductStatus = 0 and pi.ProductURL = pi.ProductURLShow and c.CategoryID = " + CategoryID + " \n"
+                                        + resultRate + "and p.ProductName like N'%" + keyWord + "%' order by " + filterChoice + " limit 12 offset " + ((index - 1) * 12));
+                                request.setAttribute("rsPaging", rsPaging);
+                                request.setAttribute("index", index);
+                            }
                         }
                     }
                 }
@@ -441,8 +732,8 @@ public class ControllerSearchPage extends HttpServlet {
             request.setAttribute("CategoryResult", rsCategory);
             Double maxPrice = 0.0;
             Double minPrice = 0.0;
-            ResultSet rsMax = dao.getData("select UnitPrice from Product where ProductName like N'%" + keyWord + "%' order by (UnitPrice*(100-UnitDiscount)/100) desc limit 1");
-            ResultSet rsMin = dao.getData("select UnitPrice from Product where ProductName like N'%" + keyWord + "%' order by (UnitPrice*(100-UnitDiscount)/100) asc limit 1");
+            ResultSet rsMax = dao.getData("select UnitPrice from Product as p join Categories as c on p.CategoryID = c.CategoryID where p.ProductName like N'%" + keyWord + "%' or c.CategoryName like '%" + keyWord + "%' order by (p.UnitPrice*(100-p.UnitDiscount)/100) desc limit 1");
+            ResultSet rsMin = dao.getData("select UnitPrice from Product as p join Categories as c on p.CategoryID = c.CategoryID where p.ProductName like N'%" + keyWord + "%' or c.CategoryName like '%" + keyWord + "%' order by (p.UnitPrice*(100-p.UnitDiscount)/100) asc limit 1");
             if (rsMax.next() && rsMin.next()) {
                 maxPrice = rsMax.getDouble("UnitPrice");
                 minPrice = rsMin.getDouble("UnitPrice");
@@ -451,13 +742,11 @@ public class ControllerSearchPage extends HttpServlet {
             request.setAttribute("maxPrice", maxPrice);
             request.setAttribute("oldMinPrice", minValue);
             request.setAttribute("oldMaxPrice", maxValue);
-            System.err.println("Search:minPrice = " + minPrice + " and maxPrice = " + maxPrice);
-            System.err.println("Search:oldMinPrice = " + minValue + " and oldMaxPrice = " + maxValue);
             //End get All Category----------------------------------------------------------------
             request.setAttribute("keyWord", keyWord);
             request.setAttribute("type", type);
             request.setAttribute("TotalRate", TotalRate_raw);
-            System.out.println("TotalRate = " + TotalRate_raw);
+            request.setAttribute("categoryID", CategoryID);
             request.getRequestDispatcher("searchPage.jsp").forward(request, response);
         } catch (SQLException ex) {
             Logger.getLogger(ControllerSearchPage.class.getName()).log(Level.SEVERE, null, ex);

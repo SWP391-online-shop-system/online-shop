@@ -19,6 +19,7 @@ import java.util.Vector;
 import model.DAOBlog;
 import model.DAOCategories;
 import model.DAOProduct;
+import view.Blog;
 import view.Categories;
 import view.Product;
 
@@ -26,7 +27,7 @@ import view.Product;
  *
  * @author HP
  */
-@WebServlet(name = "ControllerMarketingPostList", urlPatterns = {"/mtkPost"})
+@WebServlet(name = "ControllerMarketingPostList", urlPatterns = {"/marketingPost"})
 public class ControllerMarketingPostList extends HttpServlet {
 
     /**
@@ -56,9 +57,18 @@ public class ControllerMarketingPostList extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         DAOBlog dao = new DAOBlog();
         DAOCategories daoCate = new DAOCategories();
+        String SBlogID = request.getParameter("BlogID");
+        if (SBlogID != null) {
+            String SHidden = request.getParameter("hidden");
+            int Hidden = Integer.parseInt(SHidden);
+            int ID = Integer.parseInt(SBlogID);
+            dao.ChangeHidden(Hidden,ID);
+        }
+        
         String indexPage = request.getParameter("index");
         String categoryId = request.getParameter("categoryId");
         String status = request.getParameter("status"); // Get the status parameter
+        String author = request.getParameter("author");
         if (indexPage == null) {
             indexPage = "1";
         }
@@ -69,7 +79,12 @@ public class ControllerMarketingPostList extends HttpServlet {
                 + "FROM Blog\n"
                 + "JOIN Categories ON Blog.CategoryID = Categories.CategoryID\n";
         if (categoryId != null && !categoryId.isEmpty()) {
-            sql += "WHERE Blog.BlogID = " + categoryId + "\n";
+            if (sql.contains("WHERE")) {
+                sql += " AND ";
+            } else {
+                sql += " WHERE ";
+            }
+            sql += "Blog.CategoryID = " + categoryId + "\n";
         }
         if (status != null && !status.isEmpty()) {
             if (sql.contains("WHERE")) {
@@ -83,13 +98,23 @@ public class ControllerMarketingPostList extends HttpServlet {
                 sql += " Blog.HiddenStatus = 0\n"; // Filter out-of-stock products
             }
         }
+        if (author != null && !author.isEmpty()) {
+            if (sql.contains("WHERE")) {
+                sql += " AND ";
+            } else {
+                sql += " WHERE ";
+            }
+            sql += "Blog.BlogAuthor = "+ "'" + author + "'" + "\n";
+        }
         sql += " GROUP BY BlogID\n";
-
+        
         rs = dao.getData(sql);
-
         int count = dao.getTotalBlog();
         int endPage = (int) Math.ceil((double) count / itemsPerPage);
         Vector<Categories> categories = daoCate.getCategories("SELECT * FROM categories");
+        List<Blog> listAuthor= dao.getAuthor();
+        request.setAttribute("author", listAuthor);
+        request.setAttribute("check", author);
         request.setAttribute("categories", categories);
         request.setAttribute("data", rs);
         request.setAttribute("currentPage", index);

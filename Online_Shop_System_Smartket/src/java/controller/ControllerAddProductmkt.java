@@ -18,6 +18,9 @@ import view.ProductImage;
 import java.io.*;
 import java.net.URLEncoder;
 import java.nio.file.Paths;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
 import java.util.Vector;
 import model.DAOCategories;
 import view.Categories;
@@ -26,7 +29,7 @@ import view.Categories;
  *
  * @author HP
  */
-@WebServlet(name = "ControllerAddProductmkt", urlPatterns = {"/AddProductmktURL"})
+@WebServlet(name = "ControllerAddProductmkt", urlPatterns = {"/marketingAddProductmktURL"})
 @MultipartConfig(
         fileSizeThreshold = 1024 * 1024 * 1, // 1 MB
         maxFileSize = 1024 * 1024 * 10, // 10 MB
@@ -75,31 +78,40 @@ public class ControllerAddProductmkt extends HttpServlet {
         processRequest(request, response);
     }
 
-    protected void moveImage(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        int categoryId = Integer.parseInt(request.getParameter("categoryId"));
-        Part filePart = request.getPart("productImageUrl");
-
+    protected String moveAndRenameImage(Part filePart, int categoryId, int imageIndex) throws ServletException, IOException {
         String fileName = Paths.get(filePart.getSubmittedFileName()).getFileName().toString();
         String cateID = convertCate(categoryId);
 
-        // Extracting the name and tail from the file name
-        int index = fileName.lastIndexOf(".");
-        String name = fileName.substring(0, index);
-        String tail = fileName.substring(index);
+        // Constructing the new file name with the index
+        String newFileName = fileName.substring(0, fileName.lastIndexOf('.')) + "_" + imageIndex + fileName.substring(fileName.lastIndexOf('.'));
 
-        // Specify the destination directory
-        String destinationDirectory = "D:\\Workspace\\SPRING2024\\online_shop_system\\Online_Shop_System_Smartket\\web\\images\\product\\" + cateID + "\\" + name + "_1" + tail;
+        // Constructing the destination directory based on the category
+        String destinationDirectory = "D:/project_github/Online_Shop_System_Smartket/web/images/product/" + cateID;
 
-        // Write the uploaded file to the destination directory
-        try ( InputStream fileContent = filePart.getInputStream();  OutputStream outputStream = new FileOutputStream(destinationDirectory)) {
+        // Create the destination directory if it doesn't exist
+        File directory = new File(destinationDirectory);
+        if (!directory.exists()) {
+            directory.mkdirs();
+        }
+
+        // Constructing the destination file path
+        String destinationFilePath = destinationDirectory + "/" + newFileName;
+
+        // Write the uploaded file to the destination directory with the new name
+        try ( InputStream fileContent = filePart.getInputStream();  OutputStream outputStream = new FileOutputStream(destinationFilePath)) {
             byte[] buffer = new byte[1024];
             int bytesRead;
             while ((bytesRead = fileContent.read(buffer)) != -1) {
                 outputStream.write(buffer, 0, bytesRead);
             }
-            System.out.println("File moved successfully to: " + destinationDirectory);
+            System.out.println("File moved successfully to: " + destinationFilePath);
+
+            // Construct and return the relative URL of the moved image
+            String relativeUrl = "images/product/" + cateID + "/" + newFileName;
+            return relativeUrl;
         } catch (IOException e) {
             System.err.println("Error moving file: " + e.getMessage());
+            return null;
         }
     }
 
@@ -161,22 +173,49 @@ public class ControllerAddProductmkt extends HttpServlet {
         int totalStock = Integer.parseInt(request.getParameter("totalStock"));
         String convert = convertCate(categoryId);
         Part productImageUrl_raw = request.getPart("productImageUrl");
-        String fileName = productImageUrl_raw.getSubmittedFileName();
-        int index = fileName.lastIndexOf(".");
-        String name = fileName.substring(0, index);
-        String tail = fileName.substring(index);
-        String productImageURL = "images/product/" + convert + "/" + name + "_1" + tail;
-        String productImageUrlShow = productImageURL;
         Product newProduct = new Product(productName, categoryId, productDescription, unitInStock, unitPrice, unitDiscount, totalStock);
-        DAOProduct daoProduct = new DAOProduct();
-        int n = daoProduct.insertProduct(newProduct);
-        DAOProductImage dao = new DAOProductImage();
-        dao.insertImage(new ProductImage(productID, productImageURL, productImageUrlShow));
-        moveImage(request, response);
-        String st = (n > 0) ? "Thêm sản phẩm thành công" : "Thêm sản phẩm thất bại";
-        Vector<Categories> categories = daoCategories.getCategories("SELECT * FROM categories");
-        request.setAttribute("categories", categories);
-        response.sendRedirect("mktProductListURL?message=" + URLEncoder.encode(st, "UTF-8"));
+        Collection<Part> parts = request.getParts();
+        int imageIndex = 1; // Initialize the index for the first image
+        String firstImageUrl = null;
+        List<String> imageUrls = new ArrayList<>(); // List to store image URLs
+        boolean hasInvalidImage = false; // Flag to track if there is any invalid image
+        for (Part part : parts) {
+            if ("productImageUrl".equals(part.getName())) {
+                if (part.getContentType() != null && part.getContentType().startsWith("image/")) {
+                    String imageUrl = moveAndRenameImage(part, categoryId, imageIndex);
+                    imageUrls.add(imageUrl); // Add the new image URL to the list
+                    if (firstImageUrl == null) {
+                        firstImageUrl = imageUrl; // Store the URL of the first image added
+                    }
+                    imageIndex++; // Increment the index for the next image
+                } else {
+                    // Set flag indicating there is an invalid image
+                    hasInvalidImage = true;
+                    // Set error message for invalid image file
+                    request.setAttribute("errorMessage", "File ảnh không hợp lệ: " + part.getSubmittedFileName());
+                    // Redirect back to the form page with error message
+                    request.getRequestDispatcher("addProductmkt.jsp").forward(request, response);
+                    return; // Stop further processing
+                }
+            }
+        }
+
+        // Check if there is any invalid image before inserting into the database
+        if (!hasInvalidImage) {
+            // Perform database insertion after moving all images
+            DAOProduct daoProduct = new DAOProduct();
+            int n = daoProduct.insertProduct(newProduct);
+            DAOProductImage dao = new DAOProductImage();
+            for (String imageUrl : imageUrls) {
+                // Extract relative path
+                String relativeImageUrl = imageUrl.substring(imageUrl.indexOf("images"));
+                dao.insertImage(new ProductImage(productID, relativeImageUrl, firstImageUrl)); // Assuming imageUrlShow is the same as imageUrl
+            }
+            String st = (n > 0) ? "Thêm sản phẩm thành công" : "Thêm sản phẩm thất bại";
+            Vector<Categories> categories = daoCategories.getCategories("SELECT * FROM categories");
+            request.setAttribute("categories", categories);
+            response.sendRedirect("marketingProductListURL?message=" + URLEncoder.encode(st, "UTF-8"));
+        }
     }
 
     /**

@@ -19,7 +19,7 @@ import view.FeedBack;
  *
  * @author admin
  */
-@WebServlet(name = "ControllerFeedBackList", urlPatterns = {"/FeedBackListURL"})
+@WebServlet(name = "ControllerFeedBackList", urlPatterns = {"/marketingFeedBackListURL"})
 public class ControllerFeedBackList extends HttpServlet {
 
     /**
@@ -63,16 +63,48 @@ public class ControllerFeedBackList extends HttpServlet {
         DAOFeedBack daoF = new DAOFeedBack();
 //        String service = request.getParameter("service");
         String status_raw = (request.getParameter("status"));
-        int status;
-        if (status_raw == null || status_raw.equals("")) {
-            status = 2;
-        } else {
-            status = Integer.parseInt(request.getParameter("status"));
+        String ProductID_raw = (request.getParameter("ProductID"));
+        String ProductRate_raw = (request.getParameter("ProductRate"));
+        ResultSet rsFeedBack;
+        int status = 0;
+        int productID = 0;
+        int feedBackRate = 0;
+        String sql = "select * from FeedBack";
+        if (status_raw != null && !status_raw.equals("")) {
+            status = Integer.parseInt(status_raw);
+            if (!status_raw.equals("2")) {
+                sql += " where FeedBackStatus=" + status;
+            }
         }
-        ResultSet rsFeedBack = daoF.getData("select * from FeedBack");
+        if (ProductID_raw != null && !ProductID_raw.equals("")) {
+            productID = Integer.parseInt(ProductID_raw);
+            if (!ProductID_raw.equals("0")) {
+                if (sql.contains("where")) {
+                    sql += " and";
+                } else {
+                    sql += " where";
+                }
+                sql += " ProductID = " + ProductID_raw;
+            }
+        }
+        if (ProductRate_raw != null && !ProductRate_raw.equals("")) {
+            feedBackRate = Integer.parseInt(ProductRate_raw);
+            if (!ProductRate_raw.equals("0")) {
+                if (sql.contains("where")) {
+                    sql += " and";
+                } else {
+                    sql += " where";
+                }
+                sql += " FeedbackRate = " + ProductRate_raw;
+            }
+        }
+        System.out.println("after cal sql = "+sql);
+        rsFeedBack = daoF.getData(sql);
         request.setAttribute("rsFeedBack", rsFeedBack);
         request.setAttribute("status", status);
-            request.getRequestDispatcher("feedbackList.jsp").forward(request, response);
+        request.setAttribute("productID", productID);
+        request.setAttribute("feedBackRate", feedBackRate);
+        request.getRequestDispatcher("feedbackList.jsp").forward(request, response);
 
     }
 

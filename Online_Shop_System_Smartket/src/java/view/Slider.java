@@ -15,17 +15,29 @@ public class Slider {
     private String SliderImage;
     private String SliderLink;
     private boolean SliderStatus;
+    private String CreateDate;
 
     public Slider() {
     }
 
-    public Slider(int SliderID, int UserID, String SliderImage, String SliderLink, boolean SliderStatus) {
+    public Slider(int SliderID, int UserID, String SliderImage, String SliderLink, boolean SliderStatus, String CreateDate) {
         this.SliderID = SliderID;
         this.UserID = UserID;
         this.SliderImage = SliderImage;
         this.SliderLink = SliderLink;
         this.SliderStatus = SliderStatus;
+        this.CreateDate = CreateDate;
     }
+
+    public String getCreateDate() {
+        return CreateDate;
+    }
+
+    public void setCreateDate(String CreateDate) {
+        this.CreateDate = CreateDate;
+    }
+
+    
 
     public int getSliderID() {
         return SliderID;
@@ -67,9 +79,5 @@ public class Slider {
         this.SliderStatus = SliderStatus;
     }
 
-    @Override
-    public String toString() {
-        return "Slider{" + "SliderID=" + SliderID + ", UserID=" + UserID + ", SliderImage=" + SliderImage + ", SliderLink=" + SliderLink + ", SliderStatus=" + SliderStatus + '}';
-    }
-
+    
 }

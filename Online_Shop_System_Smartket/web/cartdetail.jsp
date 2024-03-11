@@ -261,7 +261,7 @@
                                         <c:if test="${sessionScope.account != null}">
                                         <li><a href="CartURL">Giỏ hàng của tôi</a></li>
                                         </c:if>
-                                    <li><a href="#">Đơn hàng của tôi</a></li>
+                                    <li><a href="MyOrderURL">Đơn hàng của tôi</a></li>
                                 </ul>
                             </li>
                             <li><a href="blog">Blog</a></li>
@@ -271,7 +271,7 @@
                     </div>
                     <div class="header-content-right-menu">
                         <ul>
-                            <li class="margin-unit"><a href="#" title="Đơn hàng của tôi"><i class="fa-solid fa-file-invoice-dollar"></i></i></a></li>
+                            <li class="margin-unit"><a href="MyOrderURL" title="Đơn hàng của tôi"><i class="fa-solid fa-file-invoice-dollar"></i></i></a></li>
                                 <c:if test="${sessionScope.account == null}">
                                 <li><a href="loginURL" onclick="alertOpenCart()"title="Giỏ hàng của tôi"><i class="fa-solid fa-cart-shopping"></i></a></li>
                                     </c:if>
@@ -443,12 +443,13 @@
                 <div class="card">
                     <div class="row">
                         <div class=" cart">
-                            <form action="contactURL" method="get">
+                            <form action="AddCookie" method="post">
                                 <table style="font-weight: normal; width: 100%;border-collapse: collapse;">
                                     <thead>
                                         <tr style="border-bottom: 1px solid #00000029;">
-                                            <td style="text-align: center;font-weight: bolder;font-size: 15px;padding-bottom: 30px;">Ảnh Sản Phẩm</td>
-                                            <td style="text-align: center;font-weight: bolder;font-size: 15px;padding-bottom: 30px;">Tên Sản Phẩm</td>
+                                            <td></td>
+                                            <td style="text-align: center;font-weight: bolder;font-size: 15px;padding-bottom: 30px;width: 0;">Ảnh Sản Phẩm</td>
+                                            <td style="text-align: center;font-weight: bolder;font-size: 15px;padding-bottom: 30px;width: 36%;">Tên Sản Phẩm</td>
                                             <td style="text-align: center;font-weight: bolder;font-size: 15px;padding-bottom: 30px;width: 100px;">Số Lượng</td>
                                             <td style="text-align: center;font-weight: bolder;font-size: 15px;padding-bottom: 30px;width: 105px;">Giá Tiền</td>
                                             <td style="text-align: center;font-weight: bolder;font-size: 15px;padding-bottom: 30px;">Thành Tiền</td>
@@ -469,7 +470,7 @@
                                         totalprice += rs.getInt("Quantity")*unitPrice;
                                         %>
                                         <tr style="border-bottom: 1px solid #00000029;">
-
+                                            <td><input type="checkbox" class="checkbox-item" name="productToBuy" value="<%=rs.getInt("ProductID")%>"/></td>
                                             <td class="col"><img class="img-fluid" style="width: 112px;
                                                                  height: 112px;padding: 11px;"src="<%=rs.getString("ProductURL")%>"></td>
 
@@ -478,11 +479,10 @@
                                                 <div style="    display: flex;
                                                      margin-left: 10px;
                                                      margin-bottom: -10px;">
-                                                    <div class="value-button" style="width: 25px;height: 14px;padding: 4px 0;" onclick="decreaseValue(this);updateTotalPrice();" value="Decrease Value"><i class="fa-solid fa-minus" style="font-size: 11px;"></i></div>
-                                                    <input name="quan<%=count%>" id="number" data-count="<%=count%>" style="width: 25px;height: 20px;" type="number" value="<%=rs.getInt("Quantity")%>" min="1" onchange="changeValue(this);updateTotalPrice();"/>
-                                                    <div class="value-button" style="width: 25px;height: 14px;padding: 4px 0;" onclick="increaseValue(this);updateTotalPrice();" value="Increase Value"><i class="fa-solid fa-plus" style="font-size: 11px;"></i></div><br/>
-                                                    <%int proid=rs.getInt("ProductID");%>
-                                                    <input type="hidden" name="proid<%=count%>" value="<%=proid%>"/>
+                                                    <div class="value-button" style="width: 25px;height: 14px;padding: 4px 0;" onclick="decreaseValue(this,<%=rs.getInt("ProductID")%>);updateTotalPrice();" value="Decrease Value"><i class="fa-solid fa-minus" style="font-size: 11px;"></i></div>
+                                                    <input id="number" data-count="<%=count%>" style="width: 25px;height: 20px;" type="number" value="<%=rs.getInt("Quantity")%>" min="1" onchange="changeValue(this);updateTotalPrice();"/>
+                                                    <div class="value-button" style="width: 25px;height: 14px;padding: 4px 0;" onclick="increaseValue(this,<%=rs.getInt("ProductID")%>);updateTotalPrice();" value="Increase Value"><i class="fa-solid fa-plus" style="font-size: 11px;"></i></div><br/>
+                                                        <%int proid=rs.getInt("ProductID");%>
                                                 </div>
                                             </td>
                                             <td class="col"><%=decimalFormat.format(unitPrice)%>đ</td>
@@ -505,7 +505,8 @@
                                             <%
                                                 if(message == ""){
                                             %>
-                                            <a href="CartURL?service=deleteAllCart"><i class="fa fa-trash"></i>&nbsp;Xóa tất cả</a>
+                                            <label><input type="checkbox" id="select-all" />Chọn tất cả</label>
+                                            <a href="CartURL?service=deleteAllCart" style="margin-left: 50px;"><i class="fa fa-trash"></i>&nbsp;Xóa tất cả</a>
                                             <%} else{%>
                                             <p style="background: #e7b559;
                                                width: 246px;
@@ -528,8 +529,8 @@
                                         <%}else{%>
                                         <div style="flex: 0 0 42%; display: flex;">
                                             <div style="font-size: 15px;padding-top: 6px;flex:  0 0 62%">Tổng đơn hàng:<span style="margin-left:10px" id="realTotal"></span></div>
-                                                <input type="hidden" name="service" value="showContact"/>
-                                                <button type="submit" class="btn">Thanh Toán</button>
+                                            <input type="hidden" name="service" value="showContact"/>
+                                            <button type="submit" class="btn">Thanh Toán</button>
                                         </div>
                                         <%}%>
                                     </div>
@@ -558,24 +559,41 @@
                         inputElement.value = value;
                         updatePriceDisplayPlus(inputElement);
                     }
-                    function increaseValue(element) {
+                    function increaseValue(element, proId) {
+                        console.log(element);
+                        console.log(proId);
                         var inputElement = element.parentElement.querySelector('input');
                         var value = parseInt(inputElement.value, 10);
                         value = isNaN(value) ? 0 : value;
                         value++;
+                        console.log(value);
                         inputElement.value = value;
                         updatePriceDisplayPlus(inputElement);
+                        updatePriceToDb(proId, value);
                     }
 
-                    function decreaseValue(element) {
+                    function decreaseValue(element, proId) {
                         var inputElement = element.parentElement.querySelector('input');
                         var value = parseInt(inputElement.value, 10);
                         value = isNaN(value) ? 1 : value;
                         value <= 1 ? value = 1 : value--;
                         inputElement.value = value;
                         updatePriceDisplayPlus(inputElement);
+                        updatePriceToDb(proId, value);
                     }
-
+                    function updatePriceToDb(proId, quantity) {
+                        $.ajax({
+                            type: "POST",
+                            url: "/Smartket/updateProduct",
+                            data: {service: "increase", proId: proId, quantity: quantity},
+                            success: function (response) {
+                            },
+                            error: function (xhr, status, error) {
+                                // Xử lý lỗi
+                                console.error(xhr.responseText);
+                            }
+                        });
+                    }
                     function updatePriceDisplayPlus(inputElement) {
                         var count = inputElement.getAttribute('data-count');
                         var priceDisplayElement = document.getElementById('priceDisplay' + count);
@@ -601,8 +619,15 @@
                         rs.innerText = formatPriceToVND(result);
                     }
                     updateTotalPrice();
+                    document.getElementById('select-all').addEventListener('change', function () {
+                        var checkboxes = document.querySelectorAll('.checkbox-item');
+                        for (var i = 0; i < checkboxes.length; i++) {
+                            checkboxes[i].checked = this.checked;
+                        }
+                    });
                 </script>
             </section>
         </div>
+        <script src="vendor/jquery/jquery.min.js"></script>
     </body>
 </html>

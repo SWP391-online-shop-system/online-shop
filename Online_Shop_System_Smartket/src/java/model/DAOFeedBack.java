@@ -1,12 +1,15 @@
+package model;
+
 /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package model;
-
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import model.DBConnect;
 import view.FeedBack;
 
 /**
@@ -27,6 +30,7 @@ public class DAOFeedBack extends DBConnect {
                         rs.getInt("FeedBackID"),
                         rs.getInt("ProductID"),
                         rs.getInt("UserID"),
+                        rs.getString("FeedBackImage"),
                         rs.getString("FeedBackContent"),
                         rs.getInt("FeedBackRate"),
                         rs.getString("FeedBackDate"),
@@ -38,6 +42,27 @@ public class DAOFeedBack extends DBConnect {
             System.out.println("line 38 in DAOFeedBack: " + e);
         }
         return null;
+    }
+
+    public int addFeedback(int ProductID,int UserID,String FeedBackImage,String FeedBackContent,int FeedBackRate) {
+        int n = 0;
+        String sql = "INSERT INTO Feedback (ProductID, UserID, FeedBackImage, FeedBackContent, FeedBackRate, FeedBackDate, FeedBackStatus)\n"
+                + "VALUES (?, ?, ?, ?, ?, curtime(), 0);";
+        try {
+            // number ? = number fields
+            // index of ? start is 1
+            PreparedStatement pre = conn.prepareStatement(sql);
+            pre.setInt(1, ProductID);
+            pre.setInt(2, UserID);
+            pre.setString(3, FeedBackImage);
+            pre.setString(4, FeedBackContent);
+            pre.setInt(5, FeedBackRate);
+            n = pre.executeUpdate();
+        } catch (SQLException ex) {
+            Logger.getLogger(DAOCart.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return n;
+
     }
 
     public int updateStatus(int FeedBackID, int FeedBackStatus) {
