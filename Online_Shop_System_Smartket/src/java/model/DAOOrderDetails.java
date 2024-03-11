@@ -5,7 +5,9 @@
 package model;
 
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.Vector;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import view.OrderDetails;
@@ -37,5 +39,29 @@ public class DAOOrderDetails extends DBConnect {
             Logger.getLogger(DAOOrderDetails.class.getName()).log(Level.SEVERE, null, ex);
         }
         return n;
+    }
+
+    public Vector<OrderDetails> getOrderDetailsById(int OrderID) {
+        Vector<OrderDetails> list = new Vector<>();
+        String sql = "select * from OrderDetail where OrderID = ?";
+        try {
+            PreparedStatement st = conn.prepareStatement(sql);
+            st.setInt(1, OrderID);
+            ResultSet rs = st.executeQuery();
+            while (rs.next()) {
+                OrderDetails pro = new OrderDetails(
+                        rs.getInt("ProductID"),
+                        rs.getInt("orderID"),
+                        rs.getInt("quantityPerUnit"),
+                        rs.getDouble("unitPrice"),
+                        rs.getInt("discount")
+                );
+                list.add(pro);
+            }
+            return list;
+        } catch (SQLException e) {
+            System.out.println(e);
+        }
+        return null;
     }
 }
