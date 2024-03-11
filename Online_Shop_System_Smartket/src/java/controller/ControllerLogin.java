@@ -92,7 +92,7 @@ public class ControllerLogin extends HttpServlet {
                         break;
                     case 3:
                         //sale member
-                        response.sendRedirect("SaleDashBoardURL");
+                        response.sendRedirect("saleDashBoardURL");
                         break;
                     case 4:
                         //sale manager

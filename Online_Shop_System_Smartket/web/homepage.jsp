@@ -356,7 +356,7 @@
                                           sessionScope.account.gender == null ||
                                           sessionScope.account.address == null}">
                             <li title="Cập nhật hồ sơ của bạn!"><div style="background: red;width: 10px;height: 10px;border-radius: 50%;position: absolute;left: 102px;
-                                     top: -2px;"></div><a href="ChangeuserinfoURL?UserID=${sessionScope.account.userID}">Tài khoản</a></li>
+                                                                     top: -2px;"></div><a href="ChangeuserinfoURL?UserID=${sessionScope.account.userID}">Tài khoản</a></li>
                                 </c:if>
                                 <c:if test="${sessionScope.account.phoneNumber != null &&
                                               sessionScope.account.dateOfBirth != null &&
@@ -542,7 +542,7 @@
                                             if(testus==null) {%>
                                         <a onclick="alertOpenCart();" class="add-cart"style="">+ Thêm vào giỏ</a><a style="margin-left: 166px;" href="#">Mua ngay</a>
                                         <%}else{%>
-                                        <a href="CartURL?service=addcart&pid=<%=rsNewProduct.getInt(1)%>&quan=1" class="add-cart"style="margin-left: 29px;">+ Thêm vào giỏ</a><a style="margin-left: 166px;" href="#">Mua ngay</a>
+                                        <a onclick="addToCart(<%=rsNewProduct.getInt(1)%>)" href="#" class="add-cart"style="margin-left: 29px;">+ Thêm vào giỏ</a><a style="margin-left: 166px;" href="#">Mua ngay</a>
                                         <%}%>
                                         <div style="display: flex;">
                                             <div class="rating">
@@ -602,7 +602,7 @@
                                                 <a onclick="alertOpenCart();" class="add-cart"style="">+ Thêm vào giỏ</a><a style="margin-left: 136px;" href="#">Mua ngay</a>
                                             </c:if>
                                             <c:if test="${sessionScope.account!=null}">
-                                                <a href="CartURL?service=addcart&pid=<%=rsFeatureProduct.getInt("ProductID")%>&quan=1" class="add-cart"style="">+ Thêm vào giỏ</a><a style="margin-left: 136px;" href="#">Mua ngay</a>
+                                                <a href="#" onclick="addToCart(<%=rsFeatureProduct.getInt("ProductID")%>)" class="add-cart"style="">+ Thêm vào giỏ</a><a style="margin-left: 136px;" href="#">Mua ngay</a>
                                             </c:if>
                                             <div style="display: flex;">
                                                 <div class="rating">
@@ -819,4 +819,6 @@
 <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 <script src="vendor/jquery-easing/jquery.easing.min.js"></script>
 <script src="js_marketing/ruang-admin.min.js"></script>
+<script src="js/price.js" type="text/javascript"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@10" ></script>
 </html>

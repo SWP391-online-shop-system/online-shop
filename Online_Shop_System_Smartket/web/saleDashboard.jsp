@@ -26,6 +26,8 @@
 
 <body id="page-top">
     <%
+        HttpSession session = request.getSession();
+            User user = (User) session.getAttribute("account");
             DecimalFormat df = new DecimalFormat("###,###");
             df.setMaximumFractionDigits(8);
     %>
@@ -47,12 +49,14 @@
                         <span>Thống kê</span></a>
                 </li>
                 <hr class="sidebar-divider">
+                <%if (user.getRoleID() == 4) {%>
                 <li class="nav-item">
-                    <a class="nav-link" href="mtkPost">
+                    <a class="nav-link" href="saleManagerOrderListURL">
                         <i class="fas fa-shopping-basket fa-2x text-primary"></i>
-                        <span>Bài đăng</span>
+                        <span>Danh sách đơn hàng</span>
                     </a>
                 </li>
+                <%}%>
             </div>
         </ul>
         <!-- Sidebar -->
@@ -138,7 +142,7 @@
                                                 var weekFrom = document.getElementById("dateInputFrom").value;
                                                 console.log(weekFrom);
                                                 $.ajax({
-                                                    url: "SaleDashBoardURL",
+                                                    url: "saleDashBoardURL",
                                                     type: 'GET',
                                                     data: {weekFrom: weekFrom, orderFrom: orderFrom},
                                                     success: function (data) {

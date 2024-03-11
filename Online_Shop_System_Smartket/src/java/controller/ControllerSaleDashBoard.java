@@ -25,7 +25,7 @@ import view.User;
  *
  * @author trant
  */
-@WebServlet(name = "ControllerSaleDashBoard", urlPatterns = {"/SaleDashBoardURL"})
+@WebServlet(name = "ControllerSaleDashBoard", urlPatterns = {"/saleDashBoardURL"})
 public class ControllerSaleDashBoard extends HttpServlet {
 
     /**
@@ -54,63 +54,124 @@ public class ControllerSaleDashBoard extends HttpServlet {
                 String weekFrom = request.getParameter("weekFrom");
                 String orderFrom = request.getParameter("orderFrom");
                 DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-                if (weekFrom == null || weekFrom.equals("")) {
-                    SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-                    Calendar calendar = Calendar.getInstance();
-                    calendar.add(Calendar.DAY_OF_YEAR, -6); // Subtract 6 days from the current date
-                    weekFrom = sdf.format(calendar.getTime());
-                    rsProductSold = daoPro.getData(" SELECT dates.date, COALESCE(earning, 0) AS earning \n"
-                            + "                        FROM (SELECT DATE_SUB(CURDATE(), INTERVAL 6 DAY) + INTERVAL (t4.i * 10000 + t3.i * 1000 + t2.i * 100 + t1.i * 10 + t0.i) DAY AS date \n"
-                            + "                        FROM (SELECT 0 AS i UNION SELECT 1 UNION SELECT 2 UNION SELECT 3 UNION SELECT 4 UNION SELECT 5 UNION SELECT 6 UNION SELECT 7 UNION SELECT 8 UNION SELECT 9) AS t0, \n"
-                            + "                        (SELECT 0 AS i UNION SELECT 1 UNION SELECT 2 UNION SELECT 3 UNION SELECT 4 UNION SELECT 5 UNION SELECT 6 UNION SELECT 7 UNION SELECT 8 UNION SELECT 9) AS t1, \n"
-                            + "                        (SELECT 0 AS i UNION SELECT 1 UNION SELECT 2 UNION SELECT 3 UNION SELECT 4 UNION SELECT 5 UNION SELECT 6 UNION SELECT 7 UNION SELECT 8 UNION SELECT 9) AS t2, \n"
-                            + "                        (SELECT 0 AS i UNION SELECT 1 UNION SELECT 2 UNION SELECT 3 UNION SELECT 4 UNION SELECT 5 UNION SELECT 6 UNION SELECT 7 UNION SELECT 8 UNION SELECT 9) AS t3, \n"
-                            + "                        (SELECT 0 AS i UNION SELECT 1 UNION SELECT 2 UNION SELECT 3 UNION SELECT 4 UNION SELECT 5 UNION SELECT 6 UNION SELECT 7 UNION SELECT 8 UNION SELECT 9) AS t4) AS dates\n"
-                            + "                        LEFT JOIN (\n"
-                            + "                        SELECT DATE_FORMAT(OrderDate, '%Y-%m-%d') AS date, SUM(TotalPrice) AS earning   \n"
-                            + "                        FROM `order` where SaleID = " + userId + " GROUP BY date) \n"
-                            + "                        AS earnings ON dates.date = earnings.date   \n"
-                            + "                        WHERE dates.date BETWEEN (CURDATE() - INTERVAL 6 DAY) AND NOW() \n"
-                            + "                        ORDER BY dates.date;");
-                    request.setAttribute("rsProductSold", rsProductSold);
-                    request.setAttribute("formatWeekFrom", weekFrom);
-                } else {
-                    LocalDate dateWeekFrom = LocalDate.parse(weekFrom, formatter);
-                    String formatWeekFrom = dateWeekFrom.format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
-                    rsProductSold = daoPro.getData("SELECT dates.date, COALESCE(earning, 0) AS earning\n"
-                            + "FROM (\n"
-                            + "  SELECT DATE_SUB('" + formatWeekFrom + "', INTERVAL 6 DAY) + INTERVAL (t4.i * 10000 + t3.i * 1000 + t2.i * 100 + t1.i * 10 + t0.i) DAY AS date\n"
-                            + "  FROM\n"
-                            + "    (SELECT 0 AS i UNION SELECT 1 UNION SELECT 2 UNION SELECT 3 UNION SELECT 4 UNION SELECT 5 UNION SELECT 6 UNION SELECT 7 UNION SELECT 8 UNION SELECT 9) AS t0,\n"
-                            + "    (SELECT 0 AS i UNION SELECT 1 UNION SELECT 2 UNION SELECT 3 UNION SELECT 4 UNION SELECT 5 UNION SELECT 6 UNION SELECT 7 UNION SELECT 8 UNION SELECT 9) AS t1,\n"
-                            + "    (SELECT 0 AS i UNION SELECT 1 UNION SELECT 2 UNION SELECT 3 UNION SELECT 4 UNION SELECT 5 UNION SELECT 6 UNION SELECT 7 UNION SELECT 8 UNION SELECT 9) AS t2,\n"
-                            + "    (SELECT 0 AS i UNION SELECT 1 UNION SELECT 2 UNION SELECT 3 UNION SELECT 4 UNION SELECT 5 UNION SELECT 6 UNION SELECT 7 UNION SELECT 8 UNION SELECT 9) AS t3,\n"
-                            + "    (SELECT 0 AS i UNION SELECT 1 UNION SELECT 2 UNION SELECT 3 UNION SELECT 4 UNION SELECT 5 UNION SELECT 6 UNION SELECT 7 UNION SELECT 8 UNION SELECT 9) AS t4\n"
-                            + ") AS dates\n"
-                            + "LEFT JOIN (\n"
-                            + "SELECT DATE_FORMAT(OrderDate, '%Y-%m-%d') AS date, SUM(TotalPrice) AS earning   \n"
-                            + "FROM `order` where SaleID = " + userId + " GROUP BY date) \n"
-                            + "AS earnings ON dates.date = earnings.date   \n"
-                            + "WHERE dates.date BETWEEN '" + formatWeekFrom + "' and ('" + formatWeekFrom + "' + INTERVAL 6 DAY)\n"
-                            + "ORDER BY dates.date;");
-                    request.setAttribute("rsProductSold", rsProductSold);
-                    request.setAttribute("formatWeekFrom", formatWeekFrom);
+                if (user.getRoleID() == 3) {
+                    if (weekFrom == null || weekFrom.equals("")) {
+                        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+                        Calendar calendar = Calendar.getInstance();
+                        calendar.add(Calendar.DAY_OF_YEAR, -6); // Subtract 6 days from the current date
+                        weekFrom = sdf.format(calendar.getTime());
+                        rsProductSold = daoPro.getData(" SELECT dates.date, COALESCE(earning, 0) AS earning \n"
+                                + "                        FROM (SELECT DATE_SUB(CURDATE(), INTERVAL 6 DAY) + INTERVAL (t4.i * 10000 + t3.i * 1000 + t2.i * 100 + t1.i * 10 + t0.i) DAY AS date \n"
+                                + "                        FROM (SELECT 0 AS i UNION SELECT 1 UNION SELECT 2 UNION SELECT 3 UNION SELECT 4 UNION SELECT 5 UNION SELECT 6 UNION SELECT 7 UNION SELECT 8 UNION SELECT 9) AS t0, \n"
+                                + "                        (SELECT 0 AS i UNION SELECT 1 UNION SELECT 2 UNION SELECT 3 UNION SELECT 4 UNION SELECT 5 UNION SELECT 6 UNION SELECT 7 UNION SELECT 8 UNION SELECT 9) AS t1, \n"
+                                + "                        (SELECT 0 AS i UNION SELECT 1 UNION SELECT 2 UNION SELECT 3 UNION SELECT 4 UNION SELECT 5 UNION SELECT 6 UNION SELECT 7 UNION SELECT 8 UNION SELECT 9) AS t2, \n"
+                                + "                        (SELECT 0 AS i UNION SELECT 1 UNION SELECT 2 UNION SELECT 3 UNION SELECT 4 UNION SELECT 5 UNION SELECT 6 UNION SELECT 7 UNION SELECT 8 UNION SELECT 9) AS t3, \n"
+                                + "                        (SELECT 0 AS i UNION SELECT 1 UNION SELECT 2 UNION SELECT 3 UNION SELECT 4 UNION SELECT 5 UNION SELECT 6 UNION SELECT 7 UNION SELECT 8 UNION SELECT 9) AS t4) AS dates\n"
+                                + "                        LEFT JOIN (\n"
+                                + "                        SELECT DATE_FORMAT(OrderDate, '%Y-%m-%d') AS date, SUM(TotalPrice) AS earning   \n"
+                                + "                        FROM `order` where SaleID = " + userId + " GROUP BY date) \n"
+                                + "                        AS earnings ON dates.date = earnings.date   \n"
+                                + "                        WHERE dates.date BETWEEN (CURDATE() - INTERVAL 6 DAY) AND NOW() \n"
+                                + "                        ORDER BY dates.date;");
+                        request.setAttribute("rsProductSold", rsProductSold);
+                        request.setAttribute("formatWeekFrom", weekFrom);
+                    } else {
+                        LocalDate dateWeekFrom = LocalDate.parse(weekFrom, formatter);
+                        String formatWeekFrom = dateWeekFrom.format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+                        rsProductSold = daoPro.getData("SELECT dates.date, COALESCE(earning, 0) AS earning\n"
+                                + "FROM (\n"
+                                + "  SELECT DATE_SUB('" + formatWeekFrom + "', INTERVAL 6 DAY) + INTERVAL (t4.i * 10000 + t3.i * 1000 + t2.i * 100 + t1.i * 10 + t0.i) DAY AS date\n"
+                                + "  FROM\n"
+                                + "    (SELECT 0 AS i UNION SELECT 1 UNION SELECT 2 UNION SELECT 3 UNION SELECT 4 UNION SELECT 5 UNION SELECT 6 UNION SELECT 7 UNION SELECT 8 UNION SELECT 9) AS t0,\n"
+                                + "    (SELECT 0 AS i UNION SELECT 1 UNION SELECT 2 UNION SELECT 3 UNION SELECT 4 UNION SELECT 5 UNION SELECT 6 UNION SELECT 7 UNION SELECT 8 UNION SELECT 9) AS t1,\n"
+                                + "    (SELECT 0 AS i UNION SELECT 1 UNION SELECT 2 UNION SELECT 3 UNION SELECT 4 UNION SELECT 5 UNION SELECT 6 UNION SELECT 7 UNION SELECT 8 UNION SELECT 9) AS t2,\n"
+                                + "    (SELECT 0 AS i UNION SELECT 1 UNION SELECT 2 UNION SELECT 3 UNION SELECT 4 UNION SELECT 5 UNION SELECT 6 UNION SELECT 7 UNION SELECT 8 UNION SELECT 9) AS t3,\n"
+                                + "    (SELECT 0 AS i UNION SELECT 1 UNION SELECT 2 UNION SELECT 3 UNION SELECT 4 UNION SELECT 5 UNION SELECT 6 UNION SELECT 7 UNION SELECT 8 UNION SELECT 9) AS t4\n"
+                                + ") AS dates\n"
+                                + "LEFT JOIN (\n"
+                                + "SELECT DATE_FORMAT(OrderDate, '%Y-%m-%d') AS date, SUM(TotalPrice) AS earning   \n"
+                                + "FROM `order` where SaleID = " + userId + " GROUP BY date) \n"
+                                + "AS earnings ON dates.date = earnings.date   \n"
+                                + "WHERE dates.date BETWEEN '" + formatWeekFrom + "' and ('" + formatWeekFrom + "' + INTERVAL 6 DAY)\n"
+                                + "ORDER BY dates.date;");
+                        request.setAttribute("rsProductSold", rsProductSold);
+                        request.setAttribute("formatWeekFrom", formatWeekFrom);
+                    }
+                    if (orderFrom == null || orderFrom.equals("")) {
+                        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+                        Calendar calendar = Calendar.getInstance();
+                        calendar.add(Calendar.DAY_OF_YEAR, -6);
+                        orderFrom = sdf.format(calendar.getTime());
+                        rsOrderList = daoOd.getData("select * from `order` as o join `user` as u on o.UserID = u.UserID join `status` as s on o.StatusID = s.StatusID where SaleID = "+userId+" and OrderDate between now() - interval 6 day and now() ORDER BY OrderDate");
+                        request.setAttribute("rsOrderList", rsOrderList);
+                        request.setAttribute("formatOrderWeekFrom", orderFrom);
+                    } else {
+                        LocalDate dateOrderWeekFrom = LocalDate.parse(orderFrom, formatter);
+                        String formatOrderWeekFrom = dateOrderWeekFrom.format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+                        rsOrderList = daoOd.getData("select * from `order` as o join `user` as u on o.UserID = u.UserID join `status` as s on o.StatusID = s.StatusID WHERE SaleID = "+userId+" and OrderDate between '" + formatOrderWeekFrom + "' AND '" + formatOrderWeekFrom + "' + interval 7 day ORDER BY OrderDate;");
+                        request.setAttribute("rsOrderList", rsOrderList);
+                        request.setAttribute("formatOrderWeekFrom", formatOrderWeekFrom);
+                    }
                 }
-                if (orderFrom == null || orderFrom.equals("")) {
-                    SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-                    Calendar calendar = Calendar.getInstance();
-                    calendar.add(Calendar.DAY_OF_YEAR, -6);
-                    orderFrom = sdf.format(calendar.getTime());
-                    rsOrderList = daoOd.getData("select * from `order` as o join `user` as u on o.UserID = u.UserID join `status` as s on o.StatusID = s.StatusID where SaleID = 10 and OrderDate between now() - interval 6 day and now() ORDER BY OrderDate");
-                    request.setAttribute("rsOrderList", rsOrderList);
-                    request.setAttribute("formatOrderWeekFrom", orderFrom);
-                } else {
-                    LocalDate dateOrderWeekFrom = LocalDate.parse(orderFrom, formatter);
-                    String formatOrderWeekFrom = dateOrderWeekFrom.format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
-                    rsOrderList = daoOd.getData("select * from `order` as o join `user` as u on o.UserID = u.UserID join `status` as s on o.StatusID = s.StatusID WHERE SaleID = 10 and OrderDate between '" + formatOrderWeekFrom + "' AND '" + formatOrderWeekFrom + "' + interval 7 day ORDER BY OrderDate;");
+                if (user.getRoleID() == 4) {
+                    if (weekFrom == null || weekFrom.equals("")) {
+                        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+                        Calendar calendar = Calendar.getInstance();
+                        calendar.add(Calendar.DAY_OF_YEAR, -6); // Subtract 6 days from the current date
+                        weekFrom = sdf.format(calendar.getTime());
+                        rsProductSold = daoPro.getData(" SELECT dates.date, COALESCE(earning, 0) AS earning \n"
+                                + "                        FROM (SELECT DATE_SUB(CURDATE(), INTERVAL 6 DAY) + INTERVAL (t4.i * 10000 + t3.i * 1000 + t2.i * 100 + t1.i * 10 + t0.i) DAY AS date \n"
+                                + "                        FROM (SELECT 0 AS i UNION SELECT 1 UNION SELECT 2 UNION SELECT 3 UNION SELECT 4 UNION SELECT 5 UNION SELECT 6 UNION SELECT 7 UNION SELECT 8 UNION SELECT 9) AS t0, \n"
+                                + "                        (SELECT 0 AS i UNION SELECT 1 UNION SELECT 2 UNION SELECT 3 UNION SELECT 4 UNION SELECT 5 UNION SELECT 6 UNION SELECT 7 UNION SELECT 8 UNION SELECT 9) AS t1, \n"
+                                + "                        (SELECT 0 AS i UNION SELECT 1 UNION SELECT 2 UNION SELECT 3 UNION SELECT 4 UNION SELECT 5 UNION SELECT 6 UNION SELECT 7 UNION SELECT 8 UNION SELECT 9) AS t2, \n"
+                                + "                        (SELECT 0 AS i UNION SELECT 1 UNION SELECT 2 UNION SELECT 3 UNION SELECT 4 UNION SELECT 5 UNION SELECT 6 UNION SELECT 7 UNION SELECT 8 UNION SELECT 9) AS t3, \n"
+                                + "                        (SELECT 0 AS i UNION SELECT 1 UNION SELECT 2 UNION SELECT 3 UNION SELECT 4 UNION SELECT 5 UNION SELECT 6 UNION SELECT 7 UNION SELECT 8 UNION SELECT 9) AS t4) AS dates\n"
+                                + "                        LEFT JOIN (\n"
+                                + "                        SELECT DATE_FORMAT(OrderDate, '%Y-%m-%d') AS date, SUM(TotalPrice) AS earning   \n"
+                                + "                        FROM `order` where GROUP BY date) \n"
+                                + "                        AS earnings ON dates.date = earnings.date   \n"
+                                + "                        WHERE dates.date BETWEEN (CURDATE() - INTERVAL 6 DAY) AND NOW() \n"
+                                + "                        ORDER BY dates.date;");
+                        request.setAttribute("rsProductSold", rsProductSold);
+                        request.setAttribute("formatWeekFrom", weekFrom);
+                    } else {
+                        LocalDate dateWeekFrom = LocalDate.parse(weekFrom, formatter);
+                        String formatWeekFrom = dateWeekFrom.format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+                        rsProductSold = daoPro.getData("SELECT dates.date, COALESCE(earning, 0) AS earning\n"
+                                + "FROM (\n"
+                                + "  SELECT DATE_SUB('" + formatWeekFrom + "', INTERVAL 6 DAY) + INTERVAL (t4.i * 10000 + t3.i * 1000 + t2.i * 100 + t1.i * 10 + t0.i) DAY AS date\n"
+                                + "  FROM\n"
+                                + "    (SELECT 0 AS i UNION SELECT 1 UNION SELECT 2 UNION SELECT 3 UNION SELECT 4 UNION SELECT 5 UNION SELECT 6 UNION SELECT 7 UNION SELECT 8 UNION SELECT 9) AS t0,\n"
+                                + "    (SELECT 0 AS i UNION SELECT 1 UNION SELECT 2 UNION SELECT 3 UNION SELECT 4 UNION SELECT 5 UNION SELECT 6 UNION SELECT 7 UNION SELECT 8 UNION SELECT 9) AS t1,\n"
+                                + "    (SELECT 0 AS i UNION SELECT 1 UNION SELECT 2 UNION SELECT 3 UNION SELECT 4 UNION SELECT 5 UNION SELECT 6 UNION SELECT 7 UNION SELECT 8 UNION SELECT 9) AS t2,\n"
+                                + "    (SELECT 0 AS i UNION SELECT 1 UNION SELECT 2 UNION SELECT 3 UNION SELECT 4 UNION SELECT 5 UNION SELECT 6 UNION SELECT 7 UNION SELECT 8 UNION SELECT 9) AS t3,\n"
+                                + "    (SELECT 0 AS i UNION SELECT 1 UNION SELECT 2 UNION SELECT 3 UNION SELECT 4 UNION SELECT 5 UNION SELECT 6 UNION SELECT 7 UNION SELECT 8 UNION SELECT 9) AS t4\n"
+                                + ") AS dates\n"
+                                + "LEFT JOIN (\n"
+                                + "SELECT DATE_FORMAT(OrderDate, '%Y-%m-%d') AS date, SUM(TotalPrice) AS earning   \n"
+                                + "FROM `order` where GROUP BY date) \n"
+                                + "AS earnings ON dates.date = earnings.date   \n"
+                                + "WHERE dates.date BETWEEN '" + formatWeekFrom + "' and ('" + formatWeekFrom + "' + INTERVAL 6 DAY)\n"
+                                + "ORDER BY dates.date;");
+                        request.setAttribute("rsProductSold", rsProductSold);
+                        request.setAttribute("formatWeekFrom", formatWeekFrom);
+                    }
+                    if (orderFrom == null || orderFrom.equals("")) {
+                        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+                        Calendar calendar = Calendar.getInstance();
+                        calendar.add(Calendar.DAY_OF_YEAR, -6);
+                        orderFrom = sdf.format(calendar.getTime());
+                        rsOrderList = daoOd.getData("select * from `order` as o join `user` as u on o.UserID = u.UserID join `status` as s on o.StatusID = s.StatusID where OrderDate between now() - interval 6 day and now() ORDER BY OrderDate");
+                        request.setAttribute("rsOrderList", rsOrderList);
+                        request.setAttribute("formatOrderWeekFrom", orderFrom);
+                    } else {
+                        LocalDate dateOrderWeekFrom = LocalDate.parse(orderFrom, formatter);
+                        String formatOrderWeekFrom = dateOrderWeekFrom.format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+                        rsOrderList = daoOd.getData("select * from `order` as o join `user` as u on o.UserID = u.UserID join `status` as s on o.StatusID = s.StatusID WHERE OrderDate between '" + formatOrderWeekFrom + "' AND '" + formatOrderWeekFrom + "' + interval 7 day ORDER BY OrderDate;");
 //              
-                    request.setAttribute("rsOrderList", rsOrderList);
-                    request.setAttribute("formatOrderWeekFrom", formatOrderWeekFrom);
+                        request.setAttribute("rsOrderList", rsOrderList);
+                        request.setAttribute("formatOrderWeekFrom", formatOrderWeekFrom);
+                    }
                 }
                 ResultSet rsOrderSuccessCount = daoOd.getData("select count(OrderID) from online_shop_system.order where StatusID = 4");
                 ResultSet rsTotalOrderCount = daoOd.getData("select count(OrderID) from online_shop_system.order");
