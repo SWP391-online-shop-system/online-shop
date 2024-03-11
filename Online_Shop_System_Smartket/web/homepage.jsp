@@ -372,32 +372,28 @@
                         <li><a href="loginURL" onclick="alertOpenCart()"title="Giỏ hàng của tôi"><i class="fa-solid fa-cart-shopping"></i></a></li>
                             </c:if>
                             <c:if test="${sessionScope.account != null}">
-                        <li>
-                            <%
+                        <li>      
+                                <%
                                 HttpSession session2 = request.getSession();
                                 User user = (User) session2.getAttribute("account");
                                 int userID = user.getUserID();
                                 DAOCart dao = new DAOCart();
                                 ResultSet rs = dao.getData("SELECT count(*) as count FROM Cart AS c JOIN Product AS p ON c.ProductID = p.ProductID where userID = "+userID+"");
                                 while(rs.next()){
-                            %>
-                            <span class="count-cart" style="position: absolute;
-                                  margin-left: 17px;
-                                  background-color: #ff0000;
-                                  color: #ffffff;
-                                  border-radius: 50%;
-                                  padding: 0px 4px;
-                                  font-size: 15px;
-                                  z-index: 9;
-                                  top: 11px;
-                                  left: 3px;
-                                  font-family: none;
-                                  line-height: normal;"><%=rs.getInt(1)%></span>
-                            <%
-                                }
-                            %>
-                            <a href="CartURL" title="Giỏ hàng của tôi"><i class="fa-solid fa-cart-shopping"></i></a>
-                        </li>
+                                %>
+                                <span class="count-cart" id="countCart" style="position: absolute;
+                                      margin-left: 17px;
+                                      background-color: #ff0000;
+                                      color: #ffffff;
+                                      border-radius: 50%;
+                                      padding: 0px 5px;
+                                      font-size: 13px;
+                                      z-index: 9;
+                                      top: 11px;
+                                      left: 3px;"><%=rs.getInt(1)%></span>
+                                <%}%>
+                                <a href="CartURL" title="Giỏ hàng của tôi"><i class="fa-solid fa-cart-shopping"></i></a>
+                            </li>
                     </c:if>
                 </ul>
             </div>
