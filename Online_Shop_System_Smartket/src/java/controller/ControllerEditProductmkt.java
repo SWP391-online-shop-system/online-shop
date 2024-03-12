@@ -12,6 +12,7 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 import jakarta.servlet.http.Part;
 import java.io.FileOutputStream;
 import java.io.InputStream;
@@ -24,11 +25,16 @@ import java.util.Vector;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import model.DAOCategories;
+import model.DAOFeedBack;
+import model.DAOLog;
 import model.DAOProduct;
 import model.DAOProductImage;
+import model.DAOUser;
 import view.Categories;
+import view.Log;
 import view.Product;
 import view.ProductImage;
+import view.User;
 
 /**
  *
@@ -57,10 +63,18 @@ public class ControllerEditProductmkt extends HttpServlet {
         try ( PrintWriter out = response.getWriter()) {
             // Create a DAOProduct instance
             DAOProduct dao = new DAOProduct();
+            DAOLog daoLog = new DAOLog();
             DAOProductImage daoPI = new DAOProductImage();
             DAOCategories daoCategories = new DAOCategories();
+            DAOUser daoU = new DAOUser();
             String service = request.getParameter("service");
             String message = request.getParameter("message");
+            HttpSession session = request.getSession();
+            User oldUser = (User) session.getAttribute("account");
+            if (oldUser == null) {
+                response.sendRedirect("HomePageURL");
+            }
+            int updateBy = oldUser.getUserID(); // nhan vien
             if (service == null || service.isEmpty()) {
                 service = "";
             }
@@ -72,14 +86,28 @@ public class ControllerEditProductmkt extends HttpServlet {
                 int unitInStock = Integer.parseInt(request.getParameter("unitInStock"));
                 double unitPrice = Double.parseDouble(request.getParameter("unitPrice"));
                 int unitDiscount = Integer.parseInt(request.getParameter("unitDiscount"));
+                String createDate = request.getParameter("createDate");
                 int totalStock = Integer.parseInt(request.getParameter("totalStock"));
                 int productStatusValue = Integer.parseInt(request.getParameter("productStatus"));
                 boolean productStatus = (productStatusValue == 0);
+                String purpose;
                 int n = 0;
-                Product product = new Product(productId, productName, categoryId, productDescription,
-                        unitInStock, unitPrice, unitDiscount, totalStock, productStatus);
+                Product product = new Product(productId, productName, categoryId, productDescription, 
+                        unitInStock, unitPrice, unitDiscount, createDate, totalStock, totalStock, productStatus);
                 n = dao.updateProduct(product);
-
+                if (productStatus == true) {
+                    productStatusValue = 0;
+                    dao.updateStatus(productId, 0);
+                    purpose = "đã kích hoạt sản phẩm";
+                    System.out.println("updateed status from off to on");
+                } else {
+                    dao.updateStatus(productId, 1);
+                    productStatusValue = 1;
+                    purpose = "đã vô hiệu hóa sản phẩm";
+                    System.out.println("updateed status from on to off");
+                }
+                Log log = new Log(updateBy, updateBy, purpose);
+                daoLog.insertLog(log);
                 int countImg = Integer.parseInt(request.getParameter("countImg"));
                 String convertCategory = convertCate(categoryId);
                 String fileName;
@@ -109,7 +137,7 @@ public class ControllerEditProductmkt extends HttpServlet {
                         System.out.println("realImg" + i + "=null => ProductImageURL = " + productImageURL);
                     } else {
                         realImgURL = imgURL.getSubmittedFileName();
-                        if (!("images/product/" + convertCategory + "/"+realImgURL).equals(oldImageUrl)) {
+                        if (!("images/product/" + convertCategory + "/" + realImgURL).equals(oldImageUrl)) {
                             System.out.println("realImg = " + realImgURL + " != olfImageURL = " + oldImageUrl);
                             int index = realImgURL.lastIndexOf(".");
                             String tailType = realImgURL.substring(index);
@@ -121,7 +149,7 @@ public class ControllerEditProductmkt extends HttpServlet {
                             imgURL.write("D:\\project_github\\Online_Shop_System_Smartket\\build\\web\\" + productImageURL);
                         } else {
                             System.out.println("realImg = " + realImgURL + " == oldImageURL = " + oldImageUrl);
-                            System.out.println("and PRoductimageURL = "+productImageURL);
+                            System.out.println("and PRoductimageURL = " + productImageURL);
                         }
                     }
 
@@ -157,6 +185,8 @@ public class ControllerEditProductmkt extends HttpServlet {
                 if (product != null) {
                     request.setAttribute("product", product);
                     request.setAttribute("productStatus", product.isProductStatus() ? 0 : 1);
+                    ResultSet logger = daoU.getData("SELECT * FROM loghistory as log join `user` as u on log.UserId = u.UserID where u.UserId = " + updateBy + " and purpose like '%sản phẩm%' order by updateAt desc");
+                    request.setAttribute("log", logger);
                 } else {
                     System.out.println("Product not found");
                 }

@@ -106,11 +106,6 @@ public class ControllerFeedBackDetail extends HttpServlet {
                 Log log = new Log(cusId, updateBy, purpose);
                 int n = daoLog.insertLog(log);
             }
-//            try {
-//                Thread.sleep(1000);
-//            } catch (InterruptedException e) {
-//                e.printStackTrace();
-//            }
             request.setAttribute("afterStatus", afterStatus);
             ResultSet logger = daoU.getData("SELECT * FROM loghistory as log join `user` as u on log.UserId = u.UserID where u.UserId = " + cusId + " and purpose like '%phản hồi%' order by updateAt desc");
             request.setAttribute("log", logger);

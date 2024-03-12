@@ -809,6 +809,22 @@ public class DAOProduct extends DBConnect {
         Date date = new Date();
         return dateFormat.format(date);
     }
+
+    public int updateStatus(int ProductID, int ProductStatus) {
+        int n = 0;
+        String sql = "UPDATE `online_shop_system`.`product`\n"
+                + "SET\n"
+                + "`ProductStatus` = ?\n"
+                + "WHERE `ProductID` = ?;";
+        try {
+            PreparedStatement pre = conn.prepareStatement(sql);
+            pre.setInt(1, ProductStatus);
+            pre.setInt(2, ProductID);
+            n = pre.executeUpdate();
+        } catch (SQLException ex) {
+        }
+        return n;
+    }
 //    public static void main(String[] args) {
 //        DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
 //        Calendar calendar = Calendar.getInstance();
