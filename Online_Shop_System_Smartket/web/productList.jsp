@@ -46,7 +46,15 @@
         <link rel="stylesheet" href="css/css_productList/style.css" type="text/css">
         <link rel="stylesheet" href="css/css_footer/footer.css" type="text/css">
         <script src="https://kit.fontawesome.com/ac74b86ade.js" crossorigin="anonymous"></script>
-
+        <style>
+            a{
+                color:black;
+                text-decoration: none !important;
+            }
+            a:hover{
+                color: black;
+            }
+        </style>
     </head>
 
     <body>
@@ -114,9 +122,9 @@
                                     <a href="profileUser.jsp"><img style="width: 30px;
                                                                    height: 30px;
                                                                    margin-right: -10px;
-                                                                   margin-bottom: -8px;
+                                                                   margin-bottom: 2px;
                                                                    margin-left: 7px;
-                                                                   border-radius: 50%;" class="styling1" src="images/user/default_avatar.jpg" alt="Admin Image"></a>
+                                                                   border-radius: 50%;" class="styling1" src="images/user/${sessionScope.account.userImage}" alt="Admin Image"></a>
                                     </c:if>
                                     <c:if test="${sessionScope.account == null}">
                                     <button href="#" style="border: none; font-size:16px; font-family: math;" id="show-login">Đăng nhập</button>
@@ -279,7 +287,7 @@
                 </div>
                 <div class="header-content-right-menu">
                     <ul>
-                        <li class="margin-unit"><a href="#" title="Đơn hàng của tôi"><i class="fa-solid fa-file-invoice-dollar"></i></i></a></li>
+                        <li class="margin-unit"><a href="MyOrderURL" title="Đơn hàng của tôi"><i class="fa-solid fa-file-invoice-dollar"></i></i></a></li>
                             <c:if test="${sessionScope.account == null}">
                             <li><a href="loginURL" onclick="alertOpenCart()"title="Giỏ hàng của tôi"><i class="fa-solid fa-cart-shopping"></i></a></li>
                                 </c:if>

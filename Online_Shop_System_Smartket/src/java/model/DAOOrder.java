@@ -64,6 +64,22 @@ public class DAOOrder extends DBConnect {
         return n;
     }
 
+    public int updateShippedDate(int orderID) {
+        int n = 0;
+        String sql = "UPDATE `online_shop_system`.`order`\n"
+                + "SET\n"
+                + "`ShippedDate` = current_timestamp()\n"
+                + "WHERE `OrderID` = ?;";
+        try {
+            PreparedStatement pre = conn.prepareStatement(sql);
+            pre.setInt(1, orderID);
+            n = pre.executeUpdate();
+        } catch (SQLException ex) {
+            Logger.getLogger(DAOCart.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return n;
+    }
+
     public int updateStatus(int orderId) {
         int n = 0;
         String sql = "UPDATE `online_shop_system`.`order`\n"
@@ -79,7 +95,6 @@ public class DAOOrder extends DBConnect {
         }
         return n;
     }
-
 
     public Vector<Status> getStatus(String sql) {
         Vector<Status> vector = new Vector<>();
@@ -133,6 +148,7 @@ public class DAOOrder extends DBConnect {
         }
         return n;
     }
+
     public int updateQrImage(String QrImage, int orderId) {
         int n = 0;
         String sql = "UPDATE `online_shop_system`.`order`\n"
@@ -187,4 +203,31 @@ public class DAOOrder extends DBConnect {
         return 0;
     }
 
+    public Order getOrderById(int OrderID) {
+
+        String sql = "select * from `Order` where OrderID =" + OrderID;
+        try {
+            PreparedStatement st = conn.prepareStatement(sql);
+            st.setInt(1, OrderID);
+            ResultSet rs = st.executeQuery();
+            while (rs.next()) {
+                Order pro = new Order(
+                        rs.getInt("OrderID"),
+                        rs.getInt("UserID"),
+                        rs.getInt("SaleID"),
+                        rs.getInt("Quantity"),
+                        rs.getDouble("TotalPrice"),
+                        rs.getString("OrderDate"),
+                        rs.getString("ShippedDate"),
+                        rs.getInt("StatusID"),
+                        rs.getBoolean("OrderStatus"),
+                        rs.getString("OrderImage")
+                );
+                return pro;
+            }
+        } catch (SQLException e) {
+            System.out.println(e);
+        }
+        return null;
+    }
 }

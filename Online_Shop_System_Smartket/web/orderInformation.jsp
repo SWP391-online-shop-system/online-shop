@@ -74,11 +74,17 @@
             footer{
                 font-family: ui-monospace;
             }
+            #blocka:hover{
+                cursor: not-allowed;
+                transform: none;
+            }
         </style>
     </head>
 
     <body>
-        <!--header start-->
+        <%DecimalFormat df = new DecimalFormat("###,###");
+            df.setMaximumFractionDigits(8);%>
+        <!-- comment start -->
         <div class="header" style="margin-top: 21px;">
             <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
             <div class="header-title" style="margin-top: -16px;">
@@ -102,10 +108,10 @@
                         <div><a href="#" title="Trang Facebook chúng tôi"><i class="fa-brands fa-facebook"></i></a></div>
                         <div><a href="#" title="Trang Twitter của chúng tôi"><i class="fa-brands fa-x-twitter"></i></a></div>
                     </div>
-                    <div class="header-title-right-about">
+                    <div class="header-title-right-about" style="font-size: 14px;">
                         <a href="#">Về chúng tôi</a>
                     </div>
-                    <div class="header-title-right-login">
+                    <div class="header-title-right-login" style="font-size: 14px;">
                         <!DOCTYPE html>
                         <html lang="en">
                             <head>
@@ -142,9 +148,9 @@
                                     <a href="profileUser.jsp"><img style="width: 30px;
                                                                    height: 30px;
                                                                    margin-right: -10px;
-                                                                   margin-bottom: -8px;
+                                                                   margin-bottom: -1px;
                                                                    margin-left: 7px;
-                                                                   border-radius: 50%;" class="styling1" src="images/user/default_avatar.jpg" alt="Admin Image"></a>
+                                                                   border-radius: 50%;" class="styling1" src="images/user/${sessionScope.account.userImage}" alt="Admin Image"></a>
                                     </c:if>
                                     <c:if test="${sessionScope.account == null}">
                                     <button href="#" style="border: none; font-size:16px; font-family: math;" id="show-login">Đăng nhập</button>
@@ -326,16 +332,12 @@
                                       background-color: #ff0000;
                                       color: #ffffff;
                                       border-radius: 50%;
-                                      padding: 0px 4px;
-                                      font-size: 15px;
+                                      padding: 0px 5px;
+                                      font-size: 13px;
                                       z-index: 9;
                                       top: 11px;
-                                      left: 3px;
-                                      font-family: none;
-                                      line-height: normal;"><%=rs.getInt(1)%></span>
-                                <%
-                                    }
-                                %>
+                                      left: 3px;"><%=rs.getInt(1)%></span>
+                                <%}%>
                                 <a href="CartURL" title="Giỏ hàng của tôi"><i class="fa-solid fa-cart-shopping"></i></a>
                             </li>
                         </c:if>
@@ -348,8 +350,7 @@
                 alert('Đăng nhập để xem giỏ hàng của bạn');
             }
         </script>
-        <%DecimalFormat df = new DecimalFormat("###,###");
-            df.setMaximumFractionDigits(8);%>
+        <!-- comment end-->
         <!--header end-->
         <div class="cart-box-main">
             <div class="container">
@@ -513,13 +514,13 @@
                                 </div>
                                 <div class="mb-3">
                                     <label for="address2">Địa chỉ:</label>
-                                    <input type="text" class="form-control" id="" placeholder="" readonly<%=rsReceiver.getString("ReceiverAddress")%>> 
+                                    <input type="text" class="form-control" id="" placeholder="" readonly value="<%=rsReceiver.getString("ReceiverAddress")%>"/> 
                                 </div>
                                 <hr class="mb-4">
                             </form>
                             <%}%>
                         </div>
-                        <button class="btn-rebuy" style="margin-top: 17px;width: 70px;float:left;"><a style="color: white;font-size: 14px;"href="MyOrderURL">Trở về</a></button>
+                        <button class="btn-rebuy" style="margin-top: 14px;width: 70px;float:left;background: #59c762;"><a style="color: white;font-size: 14px;"href="MyOrderURL">Trở về</a></button>
 
                         <button style="    width: 104px;
                                 height: 26px;
@@ -538,11 +539,26 @@
                                     <div class="title-left">
                                         <h3>Đơn hàng của bạn</h3>
                                     </div>
-                                    <%String qr = "";
+                                    <%
+                                    String qr = "";
                                     int orderId = 0;
+                                    Order getOrder = new Order();
                                     if(rsOrder.next()) {
                                     orderId = rsOrder.getInt("OrderID");
                                     qr = rsOrder.getString("OrderImage");
+                                    getOrder = new Order(
+                    //int, int, int, int, double, String, String, int, boolean, String
+                    rsOrder.getInt("OrderID"),
+                    rsOrder.getInt("UserID"),
+                    rsOrder.getInt("SaleID"),
+                    rsOrder.getInt("Quantity"),
+                    rsOrder.getDouble("TotalPrice"),
+                    rsOrder.getString("OrderDate"),
+                    rsOrder.getString("ShippedDate"),
+                    rsOrder.getInt("StatusID"),
+                    rsOrder.getBoolean("OrderStatus"),
+                    rsOrder.getString("OrderImage")
+            );
                                     String status = "";
                                     switch(rsOrder.getInt("StatusID")){case 1:status = "Chờ xác nhận";break;
                                      case 2:status = "Đang xử lý";break;
@@ -579,7 +595,8 @@
                                     <div class="title-left">
                                         <%  int OrderID = (int)request.getAttribute("OrderID");
                                         ResultSet rsCountProduct = daoP.getData("select count(ProductID) from `OrderDetail` where OrderID = "+OrderID);
-                                         if(rsCountProduct.next()) {%>
+                                         if(rsCountProduct.next()) {
+                                        %>
                                         <h3>Chi tiết sản phẩm (<%=rsCountProduct.getInt(1)%>)</h3>
                                         <%}%>
                                     </div>
@@ -590,7 +607,7 @@
                                             <th style="padding-left: 32px;">Loại</th>
                                         </tr>
                                     </table>
-                                    <div style="overflow-y: scroll;height: 250px;">
+                                    <div style="overflow-y: scroll;height: auto;max-height: 250px;">
                                         <%DAOCategories daoCate = new DAOCategories();
                                         DAOProductImage daoI = new DAOProductImage();
                                         while(rsOrderDetail.next()){
@@ -614,8 +631,18 @@
                                                         </tr>
                                                     </table>
                                                 </div>
-                                                <div class="small text-muted" style="color: black;">Giá tiền:&nbsp;<%=df.format(rsOrderDetail.getDouble("UnitPrice"))%>đ<span class="mx-2" style="margin-left: 4px !important;margin-right: 4px !important;">|</span> Số lượng:&nbsp;<%=rsOrderDetail.getInt("QuantityPerUnit")%> <span class="mx-2"style="margin-left: 4px !important;margin-right: 4px !important;">|
-                                                    </span> Tổng tiền:&nbsp;<%=df.format(rsOrderDetail.getDouble("UnitPrice")*rsOrderDetail.getInt("QuantityPerUnit"))%>đ<button class="btn-rebuy" style="width: 88px;margin-top: -6px;"><a href="feedback?service=gofeedback&ProductID=<%=product.getProductID()%>" style="color: white">Gửi phản hồi</a></button></div>
+                                                <div class="small text-muted" style="color: black;">Giá tiền:&nbsp;<%=df.format(rsOrderDetail.getDouble("UnitPrice"))%>đ<span class="mx-2" style="margin-left: 0px !important;margin-right: 0px !important;">|</span> Số lượng:&nbsp;<%=rsOrderDetail.getInt("QuantityPerUnit")%> <span class="mx-2"style="margin-left: -2px !important;margin-right: -2px !important;">|
+                                                    </span> Tổng tiền:&nbsp;<%=df.format(rsOrderDetail.getDouble("UnitPrice")*rsOrderDetail.getInt("QuantityPerUnit"))%>đ
+                                                    <%if(getOrder.getStatusID() == 4) {%>
+                                                    <button class="btn-rebuy" style="width: 88px;margin-top: -6px;">
+                                                        <a href="feedback?service=gofeedback&ProductID=<%=product.getProductID()%>" style="color: white">Gửi phản hồi</a>
+                                                    </button>
+                                                    <%}else{%>
+                                                    <button id="blocka" class="btn-rebuy" style="width: 88px;margin-top: -6px; background: grey">
+                                                        <a  style="color:whitesmoke" title="Phản hồi sẽ được mở khi bạn nhận được hàng">Gửi phản hồi</a>
+                                                    </button>
+                                                    <%}%>
+                                                </div>
                                             </div>
                                         </div>  
                                         <%}%>

@@ -4,6 +4,8 @@
  */
 package view;
 
+import model.DAOOrder;
+
 /**
  *
  * @author trant
@@ -13,37 +15,38 @@ public class Order {
     private int orderID;
     private int userID;
     private int saleID;
+    private int Quantity;
+    private double totalPrice;
     private String orderDate;
     private String shippedDate;
     private int statusID;
-    private double totalPrice;
+    private boolean OrderStatus;
     private String QrImage;
 
     public Order() {
     }
+//int, int, int, int, double, String, String, int, boolean, String
 
-    public Order(int userID, int saleID, String orderDate, String shippedDate, int statusID) {
+    public Order(int orderID, int userID, int saleID, int Quantity,
+            double totalPrice, String orderDate, String shippedDate,
+            int statusID, boolean OrderStatus, String QrImage) {
+        this.orderID = orderID;
         this.userID = userID;
         this.saleID = saleID;
+        this.Quantity = Quantity;
+        this.totalPrice = totalPrice;
         this.orderDate = orderDate;
         this.shippedDate = shippedDate;
         this.statusID = statusID;
+        this.OrderStatus = OrderStatus;
+        this.QrImage = QrImage;
     }
 
-    public Order(int userID, int saleID, int statusID, double totalPrice) {
+    public Order(int userID, int saleID, double totalPrice, int StatusID) {
         this.userID = userID;
         this.saleID = saleID;
-        this.statusID = statusID;
         this.totalPrice = totalPrice;
-    }
-
-
-    public double getTotalPrice() {
-        return totalPrice;
-    }
-
-    public void setTotalPrice(double totalPrice) {
-        this.totalPrice = totalPrice;
+        this.statusID = StatusID;
     }
 
     public int getOrderID() {
@@ -70,6 +73,22 @@ public class Order {
         this.saleID = saleID;
     }
 
+    public int getQuantity() {
+        return Quantity;
+    }
+
+    public void setQuantity(int Quantity) {
+        this.Quantity = Quantity;
+    }
+
+    public double getTotalPrice() {
+        return totalPrice;
+    }
+
+    public void setTotalPrice(double totalPrice) {
+        this.totalPrice = totalPrice;
+    }
+
     public String getOrderDate() {
         return orderDate;
     }
@@ -94,6 +113,14 @@ public class Order {
         this.statusID = statusID;
     }
 
+    public boolean isOrderStatus() {
+        return OrderStatus;
+    }
+
+    public void setOrderStatus(boolean OrderStatus) {
+        this.OrderStatus = OrderStatus;
+    }
+
     public String getQrImage() {
         return QrImage;
     }
@@ -104,7 +131,12 @@ public class Order {
 
     @Override
     public String toString() {
-        return "Order{" + "orderID=" + orderID + ", userID=" + userID + ", saleID=" + saleID + ", orderDate=" + orderDate + ", shippedDate=" + shippedDate + ", statusID=" + statusID + ", QrImage=" + QrImage + '}';
+        return "Order{" + "orderID=" + orderID + ", userID=" + userID + ", saleID=" + saleID + ", Quantity=" + Quantity + ", totalPrice=" + totalPrice + ", orderDate=" + orderDate + ", shippedDate=" + shippedDate + ", statusID=" + statusID + ", OrderStatus=" + OrderStatus + ", QrImage=" + QrImage + '}';
     }
 
+    public static void main(String[] args) {
+        DAOOrder dao = new DAOOrder();
+        Order order = new Order();
+        order = dao.getOrderById(1);
+    }
 }

@@ -11,19 +11,23 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import model.DAOBlog;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Vector;
 import model.DAOProduct;
+import static model.DAOProduct.getCurrentTimestamp;
+import model.DAOSlider;
+import view.Slider;
 
 /**
  *
- * @author admin
+ * @author 84395
  */
-@WebServlet(name = "ControllerHomePage", urlPatterns = {"/HomePageURL"})
-public class ControllerHomePage extends HttpServlet {
+@WebServlet(urlPatterns={"/settinglist"})
+
+public class settinglist extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -39,34 +43,19 @@ public class ControllerHomePage extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         try ( PrintWriter out = response.getWriter()) {
             /* TODO output your page here. You may use following sample code. */
-            DAOBlog daoBlog = new DAOBlog();
-            DAOProduct dao = new DAOProduct();
-            System.out.println("tesst");
-            ResultSet rsNewBlog = daoBlog.getData("select * from Blog where HiddenStatus = 0 order by CreateTime desc limit 1 ");
-            ResultSet rsFeatureBlog = daoBlog.getData("select * from Blog where HiddenStatus = 0 order by BlogRate desc limit 3");
-            ResultSet rsSlider = daoBlog.getData("select SliderImage, SliderLink from Slider where SliderStatus = 0");
-            int settingPage = 0;
-            ResultSet rsSettingPage = dao.getData("select * from Setting where SettingID = 1");
-            if (rsSettingPage.next()) {
-                settingPage = Integer.parseInt(rsSettingPage.getString("SettingValue"));
-            }
-            ResultSet rsNewProduct = dao.getData("select * from product as p join productImage as pi on p.ProductID = pi.ProductID "
-                    + "where pi.ProductURL = pi.ProductURLShow and p.ProductStatus = 0 order by p.CreateDate desc limit " + settingPage);
-            request.setAttribute("rsNewProduct", rsNewProduct);
-            request.setAttribute("rsSlider", rsSlider);
-            request.setAttribute("rsNewBlog", rsNewBlog);
-            request.setAttribute("rsFeatureBlog", rsFeatureBlog);
-            double maxValue = dao.getMaxUnitPrice();
-            double minValue = dao.getMinUnitPrice();
-            request.setAttribute("inputMinPrice", minValue);
-            request.setAttribute("inputMaxPrice", maxValue);
-            request.getRequestDispatcher("homepage.jsp").forward(request, response);
-        } catch (SQLException ex) {
-            request.getRequestDispatcher("400").forward(request, response);
+            out.println("<!DOCTYPE html>");
+            out.println("<html>");
+            out.println("<head>");
+            out.println("<title>Servlet sliderList</title>");
+            out.println("</head>");
+            out.println("<body>");
+            out.println("<h1>Servlet sliderList at " + request.getContextPath() + "</h1>");
+            out.println("</body>");
+            out.println("</html>");
         }
     }
 
-// <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
+    // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
      * Handles the HTTP <code>GET</code> method.
      *
@@ -78,7 +67,26 @@ public class ControllerHomePage extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        DAOSlider dao = new DAOSlider();
+        HttpSession session = request.getSession();
+        Vector<Slider> sliderlist = new Vector<>();
+        String statusfilter = request.getParameter("filter");
+            sliderlist = dao.getSlider("select * from slider");
+            session.setAttribute("sliderlist", sliderlist);
+        session.setAttribute("timetoday", getCurrentTimestamp());
+        if(statusfilter!=null){
+        if (statusfilter.equalsIgnoreCase("true")) {
+            sliderlist = dao.getSlider("select * from slider where SliderStatus=0");
+            session.setAttribute("sliderlist", sliderlist);
+        }
+        if (statusfilter.equalsIgnoreCase("false")) {
+            sliderlist = dao.getSlider("select * from slider where SliderStatus=1");
+            session.setAttribute("sliderlist", sliderlist);
+        }}
+
+        request.getRequestDispatcher("sliderList.jsp").forward(request, response);
+
+          
     }
 
     /**

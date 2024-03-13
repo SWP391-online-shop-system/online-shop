@@ -8,6 +8,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import view.Order;
 
 public class DBConnect {
 
@@ -25,7 +26,7 @@ public class DBConnect {
     }
 
     public DBConnect() {
-        this("jdbc:mysql://localhost:3306/Online_Shop_System", "root", "12345678");
+        this("jdbc:mysql://localhost:3306/Online_Shop_System", "duong", "123456");
     }
 
     public ResultSet getData(String sql) {
@@ -37,7 +38,7 @@ public class DBConnect {
                     ResultSet.CONCUR_UPDATABLE);
             rs = state.executeQuery(sql);
         } catch (SQLException ex) {
-            System.err.println("GetData wrong sql: "+ex);
+            System.err.println("GetData wrong sql: " + ex);
         }
         return rs;
     }
@@ -76,6 +77,23 @@ public class DBConnect {
 
     public static void main(String[] args) throws SQLException {
         DBConnect dao = new DBConnect();
-
+        ResultSet rsOrder = dao.getData("Select * from `Order` where OrderID = 2");
+        Order getOrder = new Order();
+        if (rsOrder.next()) {
+            getOrder = new Order(
+                    //int, int, int, int, double, String, String, int, boolean, String
+                    rsOrder.getInt("OrderID"),
+                    rsOrder.getInt("UserID"),
+                    rsOrder.getInt("SaleID"),
+                    rsOrder.getInt("Quantity"),
+                    rsOrder.getDouble("TotalPrice"),
+                    rsOrder.getString("OrderDate"),
+                    rsOrder.getString("ShippedDate"),
+                    rsOrder.getInt("StatusID"),
+                    rsOrder.getBoolean("OrderStatus"),
+                    rsOrder.getString("OrderImage")
+            );
+        }
+        System.out.println("ORDER = "+getOrder);
     }
 }

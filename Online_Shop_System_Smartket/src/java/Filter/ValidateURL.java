@@ -43,7 +43,7 @@ public class ValidateURL implements Filter {
     private void doBeforeProcessing(ServletRequest request, ServletResponse response)
             throws IOException, ServletException {
         if (debug) {
-//            log("ValidateURL:DoBeforeProcessing");
+            //   log("ValidateURL:DoBeforeProcessing");
         }
 
         // Write code here to process the request and/or response before
@@ -71,7 +71,7 @@ public class ValidateURL implements Filter {
     private void doAfterProcessing(ServletRequest request, ServletResponse response)
             throws IOException, ServletException {
         if (debug) {
-//            log("ValidateURL:DoAfterProcessing");
+            // log("ValidateURL:DoAfterProcessing");
         }
 
         // Write code here to process the request and/or response after
@@ -107,7 +107,7 @@ public class ValidateURL implements Filter {
             throws IOException, ServletException {
 
         if (debug) {
-//            log("ValidateURL:doFilter()");
+            //   log("ValidateURL:doFilter()");
         }
 
         doBeforeProcessing(request, response);
@@ -121,6 +121,9 @@ public class ValidateURL implements Filter {
         } else {
 
             User a = (User) session.getAttribute("account");
+            if (url.contains("loginURL") && a != null) {
+                res.sendRedirect("HomePageURL");
+            }
             if (url.startsWith("/marketing") || url.startsWith("/Marketing")) {
                 if (session.getAttribute("account") == null) {
                     res.sendRedirect("loginURL");
@@ -141,7 +144,7 @@ public class ValidateURL implements Filter {
                 }
             }
             if (url.startsWith("/sale")) {
-                if (url.contains("saleOrderDetailURL")||url.contains("saleDashBoardURL")) {
+                if (url.contains("saleOrderDetailURL") || url.contains("saleDashBoardURL")) {
                     if (session.getAttribute("account") == null) {
                         res.sendRedirect("loginURL");
                     } else if (a.getRoleID() != 3 && a.getRoleID() != 4) {
@@ -206,17 +209,21 @@ public class ValidateURL implements Filter {
     /**
      * Destroy method for this filter
      */
+    @Override
     public void destroy() {
     }
 
     /**
      * Init method for this filter
+     *
+     * @param filterConfig
      */
+    @Override
     public void init(FilterConfig filterConfig) {
         this.filterConfig = filterConfig;
         if (filterConfig != null) {
             if (debug) {
-                log("ValidateURL:Initializing filter");
+                //   log("ValidateURL:Initializing filter");
             }
         }
     }
