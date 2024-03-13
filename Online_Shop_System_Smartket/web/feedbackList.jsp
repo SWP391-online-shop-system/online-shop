@@ -16,7 +16,7 @@
     <head>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-        <title>Danh Sách Khách Hàng</title>
+        <title>Danh Sách phản hồi</title>
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
         <script src="https://kit.fontawesome.com/ac74b86ade.js" crossorigin="anonymous"></script>
         <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
@@ -112,7 +112,7 @@
                     <!-- Container Fluid-->
                     <div class="container-fluid" id="container-wrapper">
                         <div class="d-sm-flex align-items-center justify-content-between mb-4">
-                            <h1 class="h3 mb-0 text-gray-800">Danh Sách Ph</h1>
+                            <h1 class="h3 mb-0 text-gray-800">Danh Sách Phản hồi</h1>
                             <ol class="breadcrumb">
                                 <li class="breadcrumb-item"><a href="./">Trang Chủ</a></li>
                                 <li class="breadcrumb-item active">Danh Sách Khách Hàng</li>
