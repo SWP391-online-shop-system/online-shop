@@ -346,7 +346,7 @@
                                     <td><%=rs2.getString("CategoryName")%></td>
                                     <td><%=df.format(rs2.getDouble("UnitPrice"))%></td>
                                     <td><%=rs2.getInt("QuantityPerUnit")%></td>
-                                    <td><%=rs2.getInt("Discount")%></td>
+                                    <td><%=df.format(rs2.getInt("Discount"))%></td>
                                     <td><%=df.format(totalPricePerUnit)%></td>
                                 </tr>
                                 <% 
