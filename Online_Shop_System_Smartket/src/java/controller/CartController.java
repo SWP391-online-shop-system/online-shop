@@ -90,6 +90,7 @@ public class CartController extends HttpServlet {
                         } catch (SQLException e) {
                         }
                         response.getWriter().write(String.valueOf(count));
+//                        response.sendRedirect("CartURL");
                     } else {
                         int count = 0;
                         Cart cart = dao.getCartByUser(userID, pid);
@@ -170,8 +171,17 @@ public class CartController extends HttpServlet {
                     response.sendRedirect("CartURL");
                 }
                 if (service.equals("deleteAllCart")) {
-                    int n = dao.deleteAllCart(userID);
-                    response.sendRedirect("CartURL");
+                    String values = request.getParameter("proId");
+                    if (values != null) {
+                        String[] productIds = values.split(",");
+                        for (String productId : productIds) {
+                            int proId = Integer.parseInt(productId);
+                            dao.deleteCart(userID, proId);
+                        }
+                        response.getWriter().write("1");
+                    } else {
+                        response.getWriter().write("0");
+                    }
                 }
             }
         }

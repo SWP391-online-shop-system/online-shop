@@ -3,13 +3,11 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/D:/fpt/Semeter_5/SWP391/Project_GitHub/Online_Shop_System_Smartket/src/java/controller/ControllerProductDetail.java</file>
-            <file>file:/D:/fpt/Semeter_5/SWP391/Project_GitHub/Online_Shop_System_Smartket/src/java/controller/CartController.java</file>
+            <file>file:/D:/fpt/Semeter_5/SWP391/Project_GitHub/Online_Shop_System_Smartket/web/feedback.jsp</file>
+            <file>file:/D:/fpt/Semeter_5/SWP391/Project_GitHub/Online_Shop_System_Smartket/src/java/model/DAOOrder.java</file>
             <file>file:/D:/fpt/Semeter_5/SWP391/Project_GitHub/Online_Shop_System_Smartket/src/java/controller/ControllerOrderInformation.java</file>
-            <file>file:/D:/fpt/Semeter_5/SWP391/Project_GitHub/Online_Shop_System_Smartket/web/productDetail.jsp</file>
             <file>file:/D:/fpt/Semeter_5/SWP391/Project_GitHub/Online_Shop_System_Smartket/web/MyOrder.jsp</file>
             <file>file:/D:/fpt/Semeter_5/SWP391/Project_GitHub/Online_Shop_System_Smartket/web/orderInformation.jsp</file>
-            <file>file:/D:/fpt/Semeter_5/SWP391/Project_GitHub/Online_Shop_System_Smartket/web/customerlist.jsp</file>
         </group>
     </open-files>
 </project-private>

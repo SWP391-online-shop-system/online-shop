@@ -41,6 +41,7 @@ public class ControllerHomePage extends HttpServlet {
             /* TODO output your page here. You may use following sample code. */
             DAOBlog daoBlog = new DAOBlog();
             DAOProduct dao = new DAOProduct();
+            System.out.println("tesst");
             ResultSet rsNewBlog = daoBlog.getData("select * from Blog where HiddenStatus = 0 order by CreateTime desc limit 1 ");
             ResultSet rsFeatureBlog = daoBlog.getData("select * from Blog where HiddenStatus = 0 order by BlogRate desc limit 3");
             ResultSet rsSlider = daoBlog.getData("select SliderImage, SliderLink from Slider where SliderStatus = 0");

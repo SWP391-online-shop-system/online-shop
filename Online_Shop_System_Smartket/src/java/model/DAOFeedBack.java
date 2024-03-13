@@ -44,7 +44,7 @@ public class DAOFeedBack extends DBConnect {
         return null;
     }
 
-    public int addFeedback(int ProductID,int UserID,String FeedBackImage,String FeedBackContent,int FeedBackRate) {
+    public int addFeedback(int ProductID, int UserID, String FeedBackImage, String FeedBackContent, int FeedBackRate) {
         int n = 0;
         String sql = "INSERT INTO Feedback (ProductID, UserID, FeedBackImage, FeedBackContent, FeedBackRate, FeedBackDate, FeedBackStatus)\n"
                 + "VALUES (?, ?, ?, ?, ?, curtime(), 0);";
@@ -59,7 +59,7 @@ public class DAOFeedBack extends DBConnect {
             pre.setInt(5, FeedBackRate);
             n = pre.executeUpdate();
         } catch (SQLException ex) {
-            Logger.getLogger(DAOCart.class.getName()).log(Level.SEVERE, null, ex);
+            System.out.println("error at line 62 in DAOFeedBack: " + ex);
         }
         return n;
 

@@ -197,6 +197,20 @@
                 font-size: 15px;
                 margin-left: 39px;
             }
+            #exitbtn:hover{
+                transform: scale(0.95);
+                background: green;
+            }
+            #failedOrder{
+                font-size: 18px;
+                text-align: center;
+                color: black;
+                margin-top: 13px;
+                margin-bottom: -10px;
+                background: orange;
+                width: 90%;
+                margin-left: 38px;
+            }
         </style>
     </head>
     <body>
@@ -268,7 +282,7 @@
                                                                    margin-right: -10px;
                                                                    margin-bottom: -1px;
                                                                    margin-left: 7px;
-                                                                   border-radius: 50%;" class="styling1" src="images/user/default_avatar.jpg" alt="Admin Image"></a>
+                                                                   border-radius: 50%;" class="styling1" src="images/user/${sessionScope.account.userImage}" alt="Admin Image"></a>
                                     </c:if>
                                     <c:if test="${sessionScope.account == null}">
                                     <button href="#" style="border: none; font-size:16px; font-family: math;" id="show-login">Đăng nhập</button>
@@ -589,13 +603,8 @@
                     </div>
                 </div>
             </div>
-            <a style="margin-left: 38px;
-               margin-top: 17px;
-               height: 30px;
-               width: 66px;
-               position: absolute;
-               top: 47%;
-               left: 22%;z-index: 99" href="HomePageURL" class="btn btn-success btn-lg" data-abc="true">Trở về</a>
+
+
             <div class="container">
                 <header class="card-header"> Đơn hàng của tôi </header>
                     <%
@@ -613,7 +622,7 @@
                      background: orange;
                      width: 74%;
                      padding-left: 363px;
-                     font-weight: 700;
+                     font-weight: 100;
                      margin-left: 20px;">Bạn chưa có đơn hàng nào</div>
                 <%}else{
                     while(rsOrderGroup.next()){
@@ -635,10 +644,10 @@
                                     <div class="col"> <strong>Trạng thái:</strong> <br><%=statusName%></div>
                                 </div>
                             </article>
+                            <%if(statusName.equals("Giao hàng không thành công")){%>
+                            <div id="failedOrder">Đơn hàng đã hủy</div>
+                            <%}else{%>
                             <div class="track">
-                                <%if(statusName.equals("Giao hàng không thành công")){%>
-                                <div style="font-size: 18px;text-align: center;color: red;">Đơn hàng đã hủy</div>
-                                <%}else{%>
                                 <%if(statusName.equals("Chờ xác nhận")){%>
                                 <div class="step active"> <span class="icon"> <i class="fa-solid fa-spinner"></i> </span> <span class="text">Chờ xác nhận</span> </div>
                                 <div class="step"> <span class="icon"> <i class="fa fa-box"></i> </span> <span class="text">Đang xử lý</span> </div>
@@ -678,6 +687,16 @@
                         <c:forEach begin="1" end="${endP}" var="i">
                             <a href="MyOrderURL?index=${i}">${i}</a>
                         </c:forEach>
+                        <div>
+                            <a id="exitbtn" style="margin-right: -5px;
+                               margin-top: -26px;
+                               width: 66px;
+                               color: white;
+                               font-size: 13px;
+                               font-weight: 100;
+                               padding-top: 0;transition: all 0.5s;
+                               float: right;" href="HomePageURL" class="btn btn-success btn-lg" data-abc="true">Trở về</a>
+                        </div>
                     </div>
                 </div>
             </div>

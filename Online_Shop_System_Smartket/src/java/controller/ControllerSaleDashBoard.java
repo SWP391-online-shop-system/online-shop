@@ -69,7 +69,7 @@ public class ControllerSaleDashBoard extends HttpServlet {
                                 + "                        (SELECT 0 AS i UNION SELECT 1 UNION SELECT 2 UNION SELECT 3 UNION SELECT 4 UNION SELECT 5 UNION SELECT 6 UNION SELECT 7 UNION SELECT 8 UNION SELECT 9) AS t4) AS dates\n"
                                 + "                        LEFT JOIN (\n"
                                 + "                        SELECT DATE_FORMAT(OrderDate, '%Y-%m-%d') AS date, SUM(TotalPrice) AS earning   \n"
-                                + "                        FROM `order` where SaleID = " + userId + " GROUP BY date) \n"
+                                + "                        FROM `order` where SaleID = " + userId + " and `StatusID` = 4  GROUP BY date) \n"
                                 + "                        AS earnings ON dates.date = earnings.date   \n"
                                 + "                        WHERE dates.date BETWEEN (CURDATE() - INTERVAL 6 DAY) AND NOW() \n"
                                 + "                        ORDER BY dates.date;");
@@ -90,7 +90,7 @@ public class ControllerSaleDashBoard extends HttpServlet {
                                 + ") AS dates\n"
                                 + "LEFT JOIN (\n"
                                 + "SELECT DATE_FORMAT(OrderDate, '%Y-%m-%d') AS date, SUM(TotalPrice) AS earning   \n"
-                                + "FROM `order` where SaleID = " + userId + " GROUP BY date) \n"
+                                + "FROM `order` where SaleID = " + userId + " and `StatusID` = 4  GROUP BY date) \n"
                                 + "AS earnings ON dates.date = earnings.date   \n"
                                 + "WHERE dates.date BETWEEN '" + formatWeekFrom + "' and ('" + formatWeekFrom + "' + INTERVAL 6 DAY)\n"
                                 + "ORDER BY dates.date;");
@@ -128,7 +128,7 @@ public class ControllerSaleDashBoard extends HttpServlet {
                                 + "                        (SELECT 0 AS i UNION SELECT 1 UNION SELECT 2 UNION SELECT 3 UNION SELECT 4 UNION SELECT 5 UNION SELECT 6 UNION SELECT 7 UNION SELECT 8 UNION SELECT 9) AS t4) AS dates\n"
                                 + "                        LEFT JOIN (\n"
                                 + "                        SELECT DATE_FORMAT(OrderDate, '%Y-%m-%d') AS date, SUM(TotalPrice) AS earning   \n"
-                                + "                        FROM `order` where GROUP BY date) \n"
+                                + "                        FROM `order` where and `StatusID` = 4  GROUP BY date) \n"
                                 + "                        AS earnings ON dates.date = earnings.date   \n"
                                 + "                        WHERE dates.date BETWEEN (CURDATE() - INTERVAL 6 DAY) AND NOW() \n"
                                 + "                        ORDER BY dates.date;");
@@ -149,7 +149,7 @@ public class ControllerSaleDashBoard extends HttpServlet {
                                 + ") AS dates\n"
                                 + "LEFT JOIN (\n"
                                 + "SELECT DATE_FORMAT(OrderDate, '%Y-%m-%d') AS date, SUM(TotalPrice) AS earning   \n"
-                                + "FROM `order` where GROUP BY date) \n"
+                                + "FROM `order` where and `StatusID` = 4  GROUP BY date) \n"
                                 + "AS earnings ON dates.date = earnings.date   \n"
                                 + "WHERE dates.date BETWEEN '" + formatWeekFrom + "' and ('" + formatWeekFrom + "' + INTERVAL 6 DAY)\n"
                                 + "ORDER BY dates.date;");
