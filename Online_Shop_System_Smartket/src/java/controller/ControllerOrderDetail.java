@@ -60,7 +60,7 @@ public class ControllerOrderDetail extends HttpServlet {
             ResultSet rs = dao.getData(sql);
             String sql1 = "select * from receiver where OrderID = " + id;
             ResultSet rs1 = dao.getData(sql1);
-            String sql2 = "select distinct pi.ProductURLShow, p.ProductName, c.CategoryName, od.UnitPrice, od.QuantityPerUnit, od.UnitPrice * od.QuantityPerUnit as TotalPricePerUnit, o.TotalPrice,o.ShippedDate\n"
+            String sql2 = "select distinct pi.ProductURLShow, p.ProductName, c.CategoryName, od.UnitPrice, od.QuantityPerUnit, od.UnitPrice * od.QuantityPerUnit as TotalPricePerUnit,od.Discount, o.TotalPrice,o.ShippedDate\n"
                     + "from orderDetail as od\n"
                     + "Join productImage pi on pi.ProductID = od.ProductID\n"
                     + "Join product p on p.ProductID = od.ProductID\n"

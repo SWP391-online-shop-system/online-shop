@@ -205,7 +205,8 @@
                         <form action="saleOrderDetailURL" method="post">
                             <input type="hidden" name="orderID" value="<%=rs.getInt("OrderID")%>"/>
                             <input type="hidden" name="email" value="<%=rs.getString("ReceiverEmail")%>"/>
-                            <select name="status" onchange="this.form.submit()" <%= rs.getInt("StatusID") == 1 || rs.getInt("StatusID") == 4 ? "disabled" : "" %>>
+                            <select style="width: 206px;
+                                    height: 30px;" name="status" onchange="this.form.submit()" <%= rs.getInt("StatusID") == 1 || rs.getInt("StatusID") == 4 ? "disabled" : "" %>>
                                 <%
                                 while(rs3.next()) {
                                     int statusId = rs3.getInt(1);
@@ -231,7 +232,7 @@
                         <p class="mb-0">Ngày giao hàng</p>
                     </div>
                     <div>
-                        <input value="<%=rs.getString("ShippedDate")%>"/>
+                        <input style="margin-left: 11px" readonly value="<%=rs.getString("ShippedDate")==null?"Chưa cập nhật":rs.getString("ShippedDate")%>"/>
                     </div>
                 </div>
                 <hr>
@@ -293,7 +294,7 @@
                             <p class="mb-0">Địa chỉ</p>
                         </div>
                         <div class="col-sm-9">
-                            <input type="text" value="<%=rs1.getString("ReceiverAddress")%>" readonly/>
+                            <input  type="text" value="<%=rs1.getString("ReceiverAddress")%>" readonly/>
                         </div>
                     </div>
                     <hr>
@@ -309,7 +310,7 @@
             <!-- DataTable with Hover -->
             <div class="col-lg-12">
                 <div class="card mb-4">
-                    <div class="table-responsive p-3">
+                    <div class="table-responsive" style="margin-top: 5px;">
                         <table class="table align-items-center table-flush table-hover" id="dataTableHover" style="width: 80%;
                                margin: auto;
                                border: 1px solid #dce2e5;
@@ -328,19 +329,10 @@
                                     <th style="min-width: 109px;">Loại sản phẩm</th>
                                     <th style="min-width: 120px;">Giá tiền</th>
                                     <th style="min-width: 137px;">Số lượng</th>
+                                    <th style="min-width: 137px;">Giảm giá</th>
                                     <th style="min-width: 77px;">Tổng số tiền</th>
                                 </tr>
                             </thead>
-                            <tfoot>
-                                <tr>
-                                    <th style="min-width: 104px">Tên sản phẩm</th>
-                                    <th style="max-height: 100px;">Ảnh</th>
-                                    <th style="min-width: 109px;">Loại sản phẩm</th>
-                                    <th style="min-width: 120px;">Giá tiền</th>
-                                    <th style="min-width: 137px;">Số lượng</th>
-                                    <th style="min-width: 77px;">Tổng số tiền</th>
-                                </tr>
-                            </tfoot>
                             <tbody>
                                 <%
     if (rs2 != null) {
@@ -354,6 +346,7 @@
                                     <td><%=rs2.getString("CategoryName")%></td>
                                     <td><%=df.format(rs2.getDouble("UnitPrice"))%></td>
                                     <td><%=rs2.getInt("QuantityPerUnit")%></td>
+                                    <td><%=rs2.getInt("Discount")%></td>
                                     <td><%=df.format(totalPricePerUnit)%></td>
                                 </tr>
                                 <% 
