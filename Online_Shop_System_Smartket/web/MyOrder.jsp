@@ -595,7 +595,7 @@
                width: 66px;
                position: absolute;
                top: 47%;
-               left: 22%;" href="#" class="btn btn-success btn-lg" data-abc="true">Trở về</a>
+               left: 22%;z-index: 99" href="HomePageURL" class="btn btn-success btn-lg" data-abc="true">Trở về</a>
             <div class="container">
                 <header class="card-header"> Đơn hàng của tôi </header>
                     <%
@@ -606,12 +606,22 @@
                       ResultSet rsOrderGroup = (ResultSet)request.getAttribute("rsOrderGroup");
                       String productName="";
                       int countProduct = 0;
+                    if(!rsOrderGroup.isBeforeFirst()){%>
+                <div style="position: absolute;
+                     top: 63%;
+                     font-size: 19px;
+                     background: orange;
+                     width: 74%;
+                     padding-left: 363px;
+                     font-weight: 700;
+                     margin-left: 20px;">Bạn chưa có đơn hàng nào</div>
+                <%}else{
                     while(rsOrderGroup.next()){
                     pro = daoPro.getProductById(rsOrderGroup.getInt("ProductID"));
                     productName = pro.getProductName();
                     countProduct = rsOrderGroup.getInt("Quantity") - 1;
                     statusName = daoOrd.getStatusById(rsOrderGroup.getInt("StatusID")).getStatusName();
-                    %>
+                %>
                 <article class="card table1" style="border: 1px dashed #d4caca;">
                     <form action="myOrder" method="post">
                         <div class="card-body">
@@ -661,7 +671,7 @@
                         </div>
                     </form>
                 </article>
-                <%}%>
+                <%}}%>
                 <div class="col-lg-12">
                     <div class="product__pagination blog__pagination" style="padding-top: 10px;
                          padding-left: 23px;">

@@ -66,7 +66,10 @@
             }
             a{
                 color:black;
-                text-decoration: none;
+                text-decoration: none !important;
+            }
+            a:hover{
+                color: black;
             }
             footer{
                 font-family: ui-monospace;
@@ -517,9 +520,17 @@
                             <%}%>
                         </div>
                         <button class="btn-rebuy" style="margin-top: 17px;width: 70px;float:left;"><a style="color: white;font-size: 14px;"href="MyOrderURL">Trở về</a></button>
-                        <button class="btn-rebuy" style="width: 70px;height: 26px;margin-top: 17px;font-size: 14px;"><a style="color: white;" href="#">Mua lại</a></button>
 
+                        <button style="    width: 104px;
+                                height: 26px;
+                                margin-top: 14px;
+                                font-size: 14px;
+                                margin-right: -1px;
+                                color: white;" type="button" class="btn-rebuy" data-toggle="modal" data-target="#exampleModalLong"
+                                id="#modalLong">Mã thanh toán</button>
                     </div>
+
+
                     <div class="col-sm-6 col-lg-6 mb-3"style="flex: 0 0 40%">
                         <div class="row">
                             <div class="col-md-12 col-lg-12">
@@ -527,7 +538,11 @@
                                     <div class="title-left">
                                         <h3>Đơn hàng của bạn</h3>
                                     </div>
-                                    <%if(rsOrder.next()) {
+                                    <%String qr = "";
+                                    int orderId = 0;
+                                    if(rsOrder.next()) {
+                                    orderId = rsOrder.getInt("OrderID");
+                                    qr = rsOrder.getString("OrderImage");
                                     String status = "";
                                     switch(rsOrder.getInt("StatusID")){case 1:status = "Chờ xác nhận";break;
                                      case 2:status = "Đang xử lý";break;
@@ -600,15 +615,22 @@
                                                     </table>
                                                 </div>
                                                 <div class="small text-muted" style="color: black;">Giá tiền:&nbsp;<%=df.format(rsOrderDetail.getDouble("UnitPrice"))%>đ<span class="mx-2" style="margin-left: 4px !important;margin-right: 4px !important;">|</span> Số lượng:&nbsp;<%=rsOrderDetail.getInt("QuantityPerUnit")%> <span class="mx-2"style="margin-left: 4px !important;margin-right: 4px !important;">|
-                                                    </span> Tổng tiền:&nbsp;<%=df.format(rsOrderDetail.getDouble("UnitPrice")*rsOrderDetail.getInt("QuantityPerUnit"))%>đ<button class="btn-rebuy" style="width: 88px;margin-top: -6px;"><a style="color: white">Gửi phản hồi</a></button></div>
+                                                    </span> Tổng tiền:&nbsp;<%=df.format(rsOrderDetail.getDouble("UnitPrice")*rsOrderDetail.getInt("QuantityPerUnit"))%>đ<button class="btn-rebuy" style="width: 88px;margin-top: -6px;"><a href="feedback?service=gofeedback&ProductID=<%=product.getProductID()%>" style="color: white">Gửi phản hồi</a></button></div>
                                             </div>
-                                        </div>    
+                                        </div>  
                                         <%}%>
                                     </div>
+                                    <button class="btn-rebuy" style="width: 70px;height: 26px;margin-top: 17px;font-size: 14px;"><a style="color: white;" href="CartURL?service=rebuy&OrderID=<%=orderId%>">Mua lại</a></button>
                                 </div>
                             </div>
                         </div>
                     </div>
+                </div>
+            </div>
+            <div class="modal fade" id="exampleModalLong" tabindex="-1" role="dialog"
+                 aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                    <img style="width: 300px;height: 300px;margin-left: 142px;" src="<%=qr%>"/>
                 </div>
             </div>
         </div>

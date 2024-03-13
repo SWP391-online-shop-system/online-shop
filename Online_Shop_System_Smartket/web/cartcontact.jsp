@@ -9,7 +9,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <%@page import="jakarta.servlet.http.HttpSession" %>
 <%@page import="java.util.Vector,java.sql.SQLException,java.sql.ResultSet" %>
-<%@page import="java.text.DecimalFormat" %>
+<%@page import="java.text.DecimalFormat,java.util.Arrays" %>
 <%@page import="view.*" %>
 <%@page import="model.*" %>
 
@@ -17,13 +17,15 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity= "sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous"> 
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity= "sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous">
+        </script> 
         <link rel="stylesheet" href="css/cartstyle.css"/>
         <link rel="stylesheet" href="css/css_header/header.css"/>
         <link rel="stylesheet" href="css/css_productList/style.css"/>
         <link rel="shortcut icon" href="images/logo/logo.png" type="image/png">
         <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
         <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css">
-        <link href="css/ruang-admin.min.css" rel="stylesheet">
         <script src="https://kit.fontawesome.com/ac74b86ade.js" crossorigin="anonymous"></script>
         <title>Giỏ Hàng</title>
         <style>
@@ -57,10 +59,13 @@
         <%
             HttpSession session3 = request.getSession();
             User user1 = (User) session3.getAttribute("account");
+            String firstName = user1.getFirstName();
+            String lastName = user1.getLastName();
            ResultSet rs = (ResultSet)request.getAttribute("data");
            String message ="";
            DecimalFormat decimalFormat = new DecimalFormat("#,###.#");
            double totalprice = 0;
+           String[] productIdBuy = (String[])request.getAttribute("productToBuy");
         %>
         <div class="header" style="margin-top: 21px;">
             <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
@@ -280,7 +285,7 @@
                                     <c:if test="${sessionScope.account != null}">
                                     <li><a href="CartURL">Giỏ hàng của tôi</a></li>
                                     </c:if>
-                                <li><a href="#">Đơn hàng của tôi</a></li>
+                                <li><a href="MyOrderURL">Đơn hàng của tôi</a></li>
                             </ul>
                         </li>
                         <li><a href="blog">Blog</a></li>
@@ -291,7 +296,7 @@
                 </div>
                 <div class="header-content-right-menu">
                     <ul>
-                        <li class="margin-unit"><a href="#" title="Đơn hàng của tôi"><i class="fa-solid fa-file-invoice-dollar"></i></i></a></li>
+                        <li class="margin-unit"><a href="MyOrderURL" title="Đơn hàng của tôi"><i class="fa-solid fa-file-invoice-dollar"></i></i></a></li>
                             <c:if test="${sessionScope.account == null}">
                             <li><a href="loginURL" onclick="alertOpenCart()"title="Giỏ hàng của tôi"><i class="fa-solid fa-cart-shopping"></i></a></li>
                                 </c:if>
@@ -412,7 +417,7 @@
                     </div>
                 </div>
                 <div class="card" style="margin-top: 85px;
-                     margin-left: 23px;">
+                     margin-left: 23px;    width: 93%;">
                     <div class="card-heading">
                         <a data-toggle="collapse" data-target="#collapseOne" href="ProductListURL" style="    color: #111111;
                            font-size: 16px;
@@ -459,190 +464,331 @@
                     </div>
                 </div>
             </div>  
-            <div class="card">
-                <form action="CartCompletion" method="post">
-                    <div class="row">
-                        <div class="cart-contact" style="flex: 0 0 49%;border-radius: 3px;margin: 0px 14px 0px 16px;">
-                            <%
-                                int userID = user1.getUserID();
-                                String firstName = user1.getFirstName();
-                                String lastName = user1.getLastName();
-                                String address = user1.getAddress();
-                                String phone = user1.getPhoneNumber();
-                                String email = user1.getEmail();
-                            %>
-                            <div class="">
-                                <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between" style="margin-top: -67px;margin-bottom: -16px;">
-                                    <h6 class="m-0 font-weight-bold "style="font-size: 21px; color:black;">Thông tin người nhận</h6>
-                                </div>
-                                <div class="card-body" style="font-size: 17px;">
+            <div class="card" style="height: fit-content;">
+                <form action="contactURL" method="post">
+                    <div class="modal fade" id="DS"> 
+                        <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable" id="modal1" style="max-width: 59%;"> 
+                            <div class="modal-content"> 
+                                <div class="modal-header"> 
+                                    <h5 class="modal-title" id="DSLabel"> 
+                                        Địa chỉ giao hàng
+                                    </h5> 
+                                    <button type="button" class="btn-close"
+                                            data-bs-dismiss="modal"> 
+                                    </button>
+                                </div> 
+                                <div class="modal-body">
+                                    <input type="hidden" name="service" value="saveAdd"/>
+                                    <%
+                                                       ResultSet rsAddress = (ResultSet)request.getAttribute("rsAddress");
+                                                       if(!rsAddress.isBeforeFirst()){%>
+                                    <p>Chưa có địa chỉ nào</p>
+                                    <%}
+                                    else {
+                                        while(rsAddress.next()){      
+                                    %>
+                                    <div class="card" style="margin: 0;width: 100%;margin-bottom: 8px;">
+                                        <div class="p-3">
+                                            <div class="d-flex flex-row align-items-center new-content" >
+                                                <i><img src="images/logo/iconLocation.png" alt="" style="width: 30px;height: 26px;"/></i>
+                                                <div class="d-flex flex-column ms-3" style="flex:1">
+                                                    <h6 class="fw-bold">Người nhận: <%=rsAddress.getString("Name")%>&nbsp;|&nbsp;
+                                                        <%=rsAddress.getBoolean("Gender")?"Nam":"Nữ"%></h6>
+                                                    <span>
+                                                        Số điện thoại: <%=rsAddress.getString("Phone")%><br/>
+                                                        Email: <%=rsAddress.getString("Email")%><br/>
+                                                        Địa chỉ: <%=rsAddress.getString("CityDistrictWard")%><br/>
+                                                        <%=rsAddress.getString("AddDetail")%>
+                                                    </span>
+                                                </div>
+                                                <div class="">
+                                                    <a href="#" data-bs-target="#update" data-bs-toggle="modal" data-bs-dismiss="modal" onclick="showOneAdd(<%=rsAddress.getInt(1)%>)">Chỉnh sửa</a><br/>
+                                                    <label>Đặt mặc định <input type="radio" value="<%=rsAddress.getInt(1)%>" name="addId" <%if(rsAddress.getString("Status").equals("1")){%>checked<%}%>/></label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <%}}%>
+                                </div> 
+                                <div class="modal-footer" style="justify-content: flex-start;"> 
+                                    <div>
+                                        <a class="btn-success" href="#addnew"
+                                           data-bs-toggle="modal" data-bs-dismiss="modal" style="text-decoration: none;padding: 4px 11px 4px 11px;"> 
+                                            Thêm địa chỉ mới 
+                                        </a>
+                                    </div>
+                                    <button class="btn-success" type="submit">Lưu</button>
+                                </div> 
+                            </div> 
+                        </div> 
+                    </div>
+                </form>
+                <form action="contactURL" method="post">
+                    <div class="modal fade" id="update"
+                         aria-hidden="true" aria-labelledby="DSLabel2"
+                         tabindex="-1">
+                        <input type="hidden" name="service" value="updateAdd"/>
+                        <div class="modal-dialog modal-dialog-centered
+                             modal-dialog-scrollable"> 
+                            <div class="modal-content"> 
+                                <div class="modal-header"> 
+                                    <h5 class="modal-title" id="AlgoLabel"> 
+                                        Cập nhật địa chỉ
+                                    </h5> 
+                                    <button type="button" class="btn-close"
+                                            data-bs-dismiss="modal" aria-label="Close"> 
+                                    </button> 
+                                </div> 
+                                <div class="modal-body p-3"> 
+                                    <!--                                  <div class="form-group">
+                                                                          <label>Tên người nhận</label>
+                                                                          <input name="name" type="text" value="" required autofocus class="form-control" id="newName" aria-describedby="emailHelp"
+                                                                                 placeholder="Nhập tên...">
+                                                                      </div>
+                                                                      <div class="form-group">
+                                                                          <label>Số điện thoại người nhận</label>
+                                                                          <input name="phone" type="number" value="" required class="form-control" id="newPhone" placeholder="Nhập số điện thoại...">
+                                                                      </div>
+                                                                      <div class="form-group">
+                                                                          <label>Email</label>
+                                                                          <input name="email" value="" required class="form-control" id="newEmail" placeholder="Nhập email...">
+                                                                      </div>
+                                                                      <div class="form-element" style="display: flex;">
+                                                                          <label>Giới tính</label>
+                                                                          <div style="display:flex; flex: 40%; margin-left: 11px">
+                                                                              <div class="custom-control custom-radio" style="margin-right: 15px;">
+                                                                                  <input type="radio" id="customRadio3" name="gender" class="custom-control-input" value="male" required>
+                                                                                  <label class="custom-control-label" for="customRadio3">Nam</label>
+                                                                              </div>
+                                                                              <div class="custom-control custom-radio">
+                                                                                  <input type="radio" id="customRadio4" name="gender" class="custom-control-input" value="female" required>
+                                                                                  <label class="custom-control-label" for="customRadio4">Nữ</label>
+                                                                              </div>
+                                                                          </div>
+                                                                      </div>
+                                                                      <div class="form-group">
+                                                                          <label>Địa Chỉ Người Nhận
+                                                                          </label><br/>
+                                                                          <select name="city" id="city"  style="width: 31%;" required>
+                                                                              <option  selected>Tỉnh thành</option>           
+                                                                          </select>
+                                                                          <select name="district" id="district"  style="width: 31%;" required>
+                                                                              <option  selected>Quận huyện</option>
+                                                                          </select>
+                                                                          <select name="ward" id="ward"  style="width: 31%" required>
+                                                                              <option  selected>Phường xã</option>
+                                                                          </select>
+                                                                      </div>
+                                                                      <div class="form-group">
+                                                                          <label>Địa chỉ cụ thể (số nhà, tên đường)</label>
+                                                                          <textarea name="addressdetail" required class="form-control" id="newAddressDetail"></textarea>
+                                                                      </div>-->
+                                </div> 
+                                <div class="modal-footer"> 
+                                    <div>
+                                        <button class="btn btn-success" 
+                                                data-bs-target="#DS"
+                                                data-bs-toggle="modal" 
+                                                data-bs-dismiss="modal"> 
+                                            Hủy 
+                                        </button>
+                                        <button class="btn btn-success" 
+                                                data-bs-target="#DS"
+                                                data-bs-toggle="modal" 
+                                                data-bs-dismiss="modal" > 
+                                            Lưu 
+                                        </button>
+                                    </div>
+                                </div> 
+                            </div> 
+                        </div>
+                    </div> 
+                </form>
+                <form>
+                    <div class="modal fade" id="addnew"
+                         aria-hidden="true" aria-labelledby="DSLabel2"
+                         tabindex="-1">
+                        <div class="modal-dialog modal-dialog-centered
+                             modal-dialog-scrollable" id="modal2"> 
+                            <div class="modal-content"> 
+                                <div class="modal-header"> 
+                                    <h5 class="modal-title" id="AlgoLabel"> 
+                                        Tạo địa chỉ mới 
+                                    </h5> 
+                                    <button type="button" class="btn-close"
+                                            data-bs-dismiss="modal" aria-label="Close"> 
+                                    </button> 
+                                </div> 
+                                <div class="modal-body p-3"> 
                                     <div class="form-group">
-                                        <label for="exampleInputEmail1">Tên người nhận</label>
-                                        <input name="name" type="text" value="<%=firstName+" "+lastName%>" required autofocus class="form-control" id="" aria-describedby="emailHelp"
-                                               placeholder="Nhập tên...">
+                                        <label>Tên người nhận</label>
+                                        <input name="name" type="text" required autofocus class="form-control" id="newName" aria-describedby="emailHelp"
+                                               placeholder="Nhập tên..." pattern="[A-Za-zÀ-ỹ ]+" oninvalid="this.setCustomValidity('Vui lòng điền thông tin này, Không bao gồm số và kí tự đặc biệt')" 
+                                               oninput="setCustomValidity('')" >
                                     </div>
                                     <div class="form-group">
-                                        <label for="exampleInputPassword1">Số điện thoại người nhận</label>
-                                        <input name="phone" value="<%if(phone != null){%><%=phone%><%}%>"required class="form-control" id="" placeholder="Nhập số điện thoại...">
+                                        <label>Số điện thoại người nhận</label>
+                                        <input name="phone" type="number" required class="form-control" id="newPhone" placeholder="Nhập số điện thoại...">
                                     </div>
                                     <div class="form-group">
-                                        <label for="exampleInputPassword1">Email</label>
-                                        <input name="email" value="<%=email%>"required class="form-control" id="" placeholder="Nhập email...">
+                                        <label>Email</label>
+                                        <input name="email" required class="form-control" id="newEmail" placeholder="Nhập email...">
+                                    </div>
+                                    <div class="form-element" style="display: flex;">
+                                        <label>Giới tính</label>
+                                        <div style="display:flex; flex: 40%; margin-left: 11px">
+                                            <div class="custom-control custom-radio" style="margin-right: 15px;">
+                                                <input type="radio" id="customRadio3" name="newGender" class="custom-control-input" value="male" required>
+                                                <label class="custom-control-label" for="customRadio3">Nam</label>
+                                            </div>
+                                            <div class="custom-control custom-radio">
+                                                <input type="radio" id="customRadio4" name="newGender" class="custom-control-input" value="female" required>
+                                                <label class="custom-control-label" for="customRadio4">Nữ</label>
+                                            </div>
+                                        </div>
                                     </div>
                                     <div class="form-group">
                                         <label>Địa Chỉ Người Nhận
                                         </label><br/>
-                                        <select name="city" id="city" onchange="updateAddress();" required>
-                                            <option value="" selected>Tỉnh thành</option>           
+                                        <select name="city" id="city"  style="width: 31%;" required>
+                                            <option value="" id="newCity" selected>Tỉnh thành</option>           
                                         </select>
-                                        <select name="district" id="district" onchange="updateAddress();" required>
-                                            <option value="" selected>Quận huyện</option>
+                                        <select name="district" id="district"  style="width: 31%;" required>
+                                            <option value="" id="newDistrict" selected>Quận huyện</option>
                                         </select>
-                                        <select name="ward" id="ward" onchange="updateAddress();" required>
-                                            <option value="" selected>Phường xã</option>
+                                        <select name="ward" id="ward"  style="width: 31%" required>
+                                            <option value="" id="newWard" selected>Phường xã</option>
                                         </select>
                                     </div>
                                     <div class="form-group">
-                                        <label for="exampleInputPassword1">Địa chỉ cụ thể</label>
-                                        <textarea name="addressdetail" required class="form-control" id="exampleInputPassword1"></textarea>
+                                        <label>Địa chỉ cụ thể (số nhà, tên đường)</label>
+                                        <textarea name="addressdetail" required class="form-control" id="newAddressDetail"></textarea>
                                     </div>
-                                    <div class="form-group">
-                                        <label for="exampleInputPassword1">Ghi chú</label>
-                                        <textarea name="note" class="form-control"></textarea>
+                                </div> 
+                                <div class="modal-footer"> 
+                                    <div>
+                                        <button class="btn btn-success" data-bs-target="#DS"
+                                                data-bs-toggle="modal" data-bs-dismiss="modal"> 
+                                            Hủy 
+                                        </button>
+                                        <button type="submit" class="btn btn-success" data-bs-target="#DS"
+                                                data-bs-toggle="modal" data-bs-dismiss="modal" onclick="addNewAdd()"> 
+                                            Lưu
+                                        </button>
                                     </div>
-                                </div>
-                                <button id="goBackButton" class="btn-back">Trở về</button>
-                            </div>
-                        </div>
-                        <div class="summary-order" style="flex: 0 0 46%;border-radius: 3px;">
-                            <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between" style="    margin-top: -14px;
-                                 margin-bottom: 6px;
-                                 background-color: #f8f8f89c; color: black;">
-                                <%ResultSet rsGetQuan = daoP.getData("select count(productID) from Cart where UserID = "+userID);
-                                if(rsGetQuan.next()) {%>
-                                <h6 class="m-0 font-weight-bold"style="font-size: 21px;">Thông tin đơn hàng (<%=rsGetQuan.getInt(1)%> sản phẩm)</h6>
-                                <%}%>
-                            </div>
-                            <div class="big-summary-product">
-                                <div class="summary-product">
-                                    <table style="width: 100%;">
-                                        <tbody>
-                                            <tr class="row-edit">
-                                                <td style="padding: 0px 88px 0px 0px;"">Sản phẩm</td>
-                                                <td>Số lượng</td>
-                                                <td style="border-right: none;">Giá tiền</td>
-                                            </tr>
-                                            <%
-                                               try {
-                                                   while (rs.next()){
-                                                    double unitPrice = rs.getDouble("UnitPrice");
-                                                    double totalunitprice = unitPrice*rs.getInt("Quantity");
-                                                    totalprice += totalunitprice;
-                                            %>   
-                                            <tr class="row-edit">
-                                                <td>
-                                                    <div style="display: flex;
-                                                         width: 205px;text-align: left;align-items: center;
-                                                         flex-direction: row;">
-                                                        <img class="img-fluid" style="margin-right: 10px;padding: 0;"src="<%=rs.getString("ProductURL")%>">
-                                                        <div style=""><%=rs.getString("ProductName")%></div>
-                                                    </div>
-                                                </td>
-                                                <td>
-                                                    <%=rs.getInt("Quantity")%>
-                                                </td>
-                                                <td style="border-right: none;">
-                                                    <%=decimalFormat.format(rs.getInt("Quantity")*(rs.getDouble("UnitPrice") * (100 - rs.getInt("UnitDiscount")) / 100 ))%>đ
-                                                </td>
-                                            </tr>
-                                            <%}
-                                                rs.close(); 
-                                                } catch (SQLException e) {
-                                                 e.printStackTrace();
-                                                }
-                                            %>
-                                        </tbody>
-                                    </table>
-                                </div>
-                            </div>
-                            <div style="text-align: end;">Tổng đơn hàng: <%=decimalFormat.format(totalprice)%>đ</div>
-                            <input type="hidden" name="totalPrice" value="<%=totalprice%>"/>
-                            <button type="submit" class="btn-back">Đặt Hàng</button>
+                                </div> 
+                            </div> 
                         </div>
                     </div>
                 </form>
+                <div class="cart-contact">
+                    <form action="CartCompletion" method="post">
+                        <div><strong>Thông tin đơn hàng</strong></div>
+                        <div class="card-body">
+                            <div class="table-responsive-sm">
+                                <table class="table table-striped">
+                                    <thead>
+                                        <tr>
+                                            <td style="width: 6%;"></td>
+                                            <td style="">Sản phẩm</td>
+                                            <td style="text-align: center;">Số lượng</td>
+                                            <td>Giá tiền</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <%
+                                      try {
+                                          while (rs.next()){
+                                          if(Arrays.asList(productIdBuy).contains(String.valueOf(rs.getInt("ProductID")))){
+                                           double unitPrice = rs.getDouble("UnitPrice");
+                                           double totalunitprice = unitPrice*rs.getInt("Quantity");
+                                           totalprice += totalunitprice;
+                                        %>
+                                        <tr>
+                                            <td>
+
+                                                <img class="img-fluid" style="width: 66px;"src="<%=rs.getString("ProductURL")%>">
+                                            </td>
+                                            <td>                                        
+                                                <%=rs.getString("ProductName")%>
+                                            </td>
+                                            <td style="text-align: center;">
+                                                <%=rs.getInt("Quantity")%>
+                                            </td>
+                                            <td style="border-right: none;">
+                                                <%=decimalFormat.format(rs.getInt("Quantity")*(rs.getDouble("UnitPrice") * (100 - rs.getInt("UnitDiscount")) / 100 ))%>đ
+                                            </td>
+                                        </tr>
+                                        <%}}
+                                            rs.close(); 
+                                            } catch (SQLException e) {
+                                             e.printStackTrace();
+                                            }
+                                        %>                                      
+                                    </tbody>
+                                </table>
+                            </div>
+                            <div class="row">
+                                <div class="col-lg-5" style="    margin-left: 5%;">
+                                    <%ResultSet rsDefaultAdd = (ResultSet)request.getAttribute("rsDefaultAdd");
+                                        try {
+                                            if(!rsDefaultAdd.isBeforeFirst()){%>
+                                    <p>Chưa chọn địa chỉ nào</p>
+                                    <%} else {
+                                            while(rsDefaultAdd.next()){
+                                    %>
+                                    <h6 class="mb-3"><strong>Địa chỉ nhận hàng:</strong></h6>
+                                    <div><%=rsDefaultAdd.getString("CityDistrictWard")%></div>
+                                    <div><%=rsDefaultAdd.getString("AddDetail")%></div>
+                                    <div>Nguời Nhận: <%=rsDefaultAdd.getString("Name")%></div>
+                                    <div>Email: <%=rsDefaultAdd.getString("Email")%></div>
+                                    <div>Số điện thoại: <%=rsDefaultAdd.getString("Phone")%></div>
+                                    <input type="hidden" name="addId" value="<%=rsDefaultAdd.getInt(1)%>"/>
+                                    <div style="display: flex;margin-top: 11px;">Note:<input style="margin-left: 9px;" class="form-control" name="note" placeholder="Ghi chú cho người bán"/></div>
+                                    <%          }
+                                            }
+                                        } catch (SQLException ex) {
+                                        }%>
+                                    <a class="btn btn-success" href="#DS" 
+                                            data-bs-toggle="modal" data-bs-dismiss="modal" style="padding-bottom: 30px;margin-top: 11px"> 
+                                        Chỉnh sửa
+                                    </a>
+                                </div>
+                                <div class="col-lg-4 col-sm-5 ml-auto">
+                                    <table class="table table-clear">
+                                        <tbody>
+                                            <tr>
+                                                <td class="left"><strong>Tổng đơn hàng</strong></td>
+                                                <td class="right"><strong><%=decimalFormat.format(totalprice)%>đ</strong></td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                    <div class="pull-right">
+                                        <button onclick="back()" class="btn-back" style="height: fit-content;">Hủy đặt hàng</button>
+                                        <button type="submit" class="btn-back">Đặt Hàng</button>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                        <input type="hidden" name="totalPrice" value="<%=totalprice%>"/>
+                        <%            for (String string : productIdBuy) {%>
+                        <input type="hidden" name="proId" value="<%=string%>"/>
+                        <%}%>
+                    </form>
+                </div>
             </div>
+
         </section>
         <!-- Form Basic -->
 
         <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.21.1/axios.min.js"></script>
         <script>
-                                            var citis = document.getElementById("city");
-                                            var districts = document.getElementById("district");
-                                            var wards = document.getElementById("ward");
-                                            var Parameter = {
-                                                url: "https://raw.githubusercontent.com/kenzouno1/DiaGioiHanhChinhVN/master/data.json",
-                                                method: "GET",
-                                                responseType: "application/json",
-                                            };
-                                            var promise = axios(Parameter);
-                                            promise.then(function (result) {
-                                                renderCity(result.data);
-                                            });
-
-                                            function renderCity(data) {
-                                                for (const x of data) {
-                                                    var opt = document.createElement('option');
-                                                    opt.value = x.Name;
-                                                    opt.text = x.Name;
-                                                    opt.setAttribute('data-id', x.Id);
-                                                    citis.options.add(opt);
-                                                }
-                                                citis.onchange = function () {
-                                                    district.length = 1;
-                                                    ward.length = 1;
-                                                    if (this.options[this.selectedIndex].dataset.id != "") {
-                                                        const result = data.filter(n => n.Id === this.options[this.selectedIndex].dataset.id);
-
-                                                        for (const k of result[0].Districts) {
-                                                            var opt = document.createElement('option');
-                                                            opt.value = k.Name;
-                                                            opt.text = k.Name;
-                                                            opt.setAttribute('data-id', k.Id);
-                                                            district.options.add(opt);
-                                                        }
-                                                    }
-                                                };
-                                                district.onchange = function () {
-                                                    ward.length = 1;
-                                                    const dataCity = data.filter((n) => n.Id === citis.options[citis.selectedIndex].dataset.id);
-                                                    if (this.options[this.selectedIndex].dataset.id != "") {
-                                                        const dataWards = dataCity[0].Districts.filter(n => n.Id === this.options[this.selectedIndex].dataset.id)[0].Wards;
-
-                                                        for (const w of dataWards) {
-                                                            var opt = document.createElement('option');
-                                                            opt.value = w.Name;
-                                                            opt.text = w.Name;
-                                                            opt.setAttribute('data-id', w.Id);
-                                                            wards.options.add(opt);
-                                                        }
-                                                    }
-                                                };
-                                            }
-                                            document.getElementById("goBackButton").addEventListener("click", function () {
-                                                window.history.back();
-                                            });
-                                            function updateAddress() {
-                                                var city = document.getElementById("city").value;
-                                                var district = document.getElementById("district").value;
-                                                var ward = document.getElementById("ward").value;
-                                                var addressDetail = city + ', ' + district + ', ' + ward;
-                                                document.getElementById("exampleInputPassword1").value = addressDetail;
-                                            }
         </script>
         <script src="vendor/jquery/jquery.min.js"></script>
         <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
         <script src="vendor/jquery-easing/jquery.easing.min.js"></script>
-        <script src="js/ruang-admin.min.js"></script>
+        <script src="js/cartcontact.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
     </body>
 </html>

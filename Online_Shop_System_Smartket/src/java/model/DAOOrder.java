@@ -80,6 +80,7 @@ public class DAOOrder extends DBConnect {
         return n;
     }
 
+
     public Vector<Status> getStatus(String sql) {
         Vector<Status> vector = new Vector<>();
         try ( Statement state = conn.createStatement(
@@ -125,6 +126,22 @@ public class DAOOrder extends DBConnect {
         try {
             PreparedStatement pre = conn.prepareStatement(sql);
             pre.setInt(1, statusID);
+            pre.setInt(2, orderId);
+            n = pre.executeUpdate();
+        } catch (SQLException ex) {
+            Logger.getLogger(DAOCart.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return n;
+    }
+    public int updateQrImage(String QrImage, int orderId) {
+        int n = 0;
+        String sql = "UPDATE `online_shop_system`.`order`\n"
+                + "SET\n"
+                + "`OrderImage` = ?\n"
+                + "WHERE `OrderID` = ?;";
+        try {
+            PreparedStatement pre = conn.prepareStatement(sql);
+            pre.setString(1, QrImage);
             pre.setInt(2, orderId);
             n = pre.executeUpdate();
         } catch (SQLException ex) {

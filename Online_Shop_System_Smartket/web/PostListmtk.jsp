@@ -238,7 +238,7 @@
                                                     while(rs.next()) {
                                                         boolean HiddenStatus = rs.getBoolean("HiddenStatus");
                                                         String hidden = (HiddenStatus) ? "0" : "1";
-                                                        String status = (HiddenStatus) ? "Kích hoạt" : "Vô hiệu hóa";
+                                                        String status = (HiddenStatus) ? "Vô hiệu hóa" : "Kích hoạt";
                                                         int BlogID = rs.getInt("BlogID");
                                                 %>
                                                 <tr>

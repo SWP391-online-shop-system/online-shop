@@ -1,91 +1,166 @@
-<%-- 
-    Document   : cartdetail
-    Created on : Jan 10, 2024, 11:49:22 PM
-    Author     : trant
---%>
-
-<%@page contentType="text/html" pageEncoding="UTF-8"%>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>  
-<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
-<%@page import="jakarta.servlet.http.HttpSession" %>
-<%@page import="java.util.Vector,java.sql.SQLException,java.sql.ResultSet" %>
-<%@page import="java.text.DecimalFormat" %>
-<%@page import="view.*" %>
-<%@page import="model.*" %>
-
-<!DOCTYPE html>
-<html>
-    <head>
-        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <link rel="stylesheet" href="css/cartstyle.css"/>
+<!DOCTYPE html> 
+<html lang="en"> 
+    <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+    <%@ page language="java" contentType="text/html; charset=UTF-8"
+             pageEncoding="UTF-8"%>
+    <%@page import="java.sql.ResultSet"%>
+    <%@page import="java.text.DecimalFormat" %>
+    <%@page import="view.*" %>
+    <%@page import="model.*" %>
+    <head> 
+        <meta charset="UTF-8"> 
+        <meta name="viewport"
+              content="width=device-width,initial-scale=1.0"> 
+        <title>Responsive Form Card</title> 
+        <link rel="stylesheet" href= 
+              "https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"> 
+        <link rel="stylesheet" href="index.css"> 
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
+        <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+        <link rel="stylesheet" href="css/css_productList/font-awesome.min.css" type="text/css">
+        <link rel="stylesheet" href="css/css_productList/elegant-icons.css" type="text/css">
+        <link rel="stylesheet" href="css/css_productList/magnific-popup.css" type="text/css">
+        <link rel="stylesheet" href="css/css_productList/nice-select.css" type="text/css">
+        <link rel="stylesheet" href="css/css_productList/owl.carousel.min.css" type="text/css">
+        <link rel="stylesheet" href="css/css_productList/slicknav.min.css" type="text/css">
+        <link rel="stylesheet" href="css/css_productDetail/style.css"/>
         <link rel="stylesheet" href="css/css_header/header.css"/>
+        <link rel="stylesheet" href="css/css_footer/footer.css"/>
         <link rel="stylesheet" href="css/css_productList/style.css"/>
-        <link rel="shortcut icon" href="images/logo/logo.png" type="image/png">
+        <script src="https://kit.fontawesome.com/ac74b86ade.js" crossorigin="anonymous"></script>
         <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
         <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css">
-        <link href="css/ruang-admin.min.css" rel="stylesheet">
-        <script src="https://kit.fontawesome.com/ac74b86ade.js" crossorigin="anonymous"></script>
-        <title>Giỏ Hàng</title>
-        <style>
-            body{
-                margin: 5px -5px;
-            }
-            a{
-                color: black;
-            }
-            .btn-back{
-                margin-left: 1.25rem;
-                padding: 7px 15px;
-                background: #5bbc5b;
-                border: none;
-                border-radius: 3px;
-                color: white;
-                font-size: 14px;
-                transition: all 0.5s;
-            }
-            .btn-back:hover{
-                cursor: pointer;
-                transform: scale(0.95);
-            }
-            .otp-field {
-                flex-direction: row;
-                column-gap: 10px;
-                display: flex;
-                align-items: center;
-                justify-content: center;
-            }
+        <link href="css/css_marketing_dashboard/marketing_dashboard_style.css" rel="stylesheet">
+        <link href="vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">
+        <link rel="shortcut icon" href="images/logo/logo.png" type="image/png">
 
-            .otp-field input {
-                height: 45px;
-                width: 42px;
-                border-radius: 6px;
-                outline: none;
-                font-size: 1.125rem;
-                text-align: center;
-                border: 1px solid #ddd;
-            }
-            .otp-field input:focus {
-                box-shadow: 0 1px 0 rgba(0, 0, 0, 0.1);
-            }
-            .otp-field input::-webkit-inner-spin-button,
-            .otp-field input::-webkit-outer-spin-button {
-                display: none;
-            }
+    </head> 
+    <style>
+        /*style.css */
 
-            .resend {
-                font-size: 12px;
-            }
-        </style>
-    </head>
+        a{
+            color:black;
+            text-decoration: none !important;
+        }
+        a:hover{
+            color:black;
+        }
+        .rate {
+            float: left;
+            height: 46px;
+            padding: 0 10px;
+        }
+        .rate:not(:checked) > input {
+            position:absolute;
+            top:-9999px;
+        }
+        .rate:not(:checked) > label {
+            float:right;
+            width:1em;
+            overflow:hidden;
+            white-space:nowrap;
+            cursor:pointer;
+            font-size:30px;
+            color:#ccc;
+        }
+        .rate:not(:checked) > label:before {
+            content: '★ ';
+        }
+        .rate > input:checked ~ label {
+            color: #ffc700;
+        }
+        .rate:not(:checked) > label:hover,
+        .rate:not(:checked) > label:hover ~ label {
+            color: #deb217;
+        }
+        .rate > input:checked + label:hover,
+        .rate > input:checked + label:hover ~ label,
+        .rate > input:checked ~ label:hover,
+        .rate > input:checked ~ label:hover ~ label,
+        .rate > label:hover ~ input:checked ~ label {
+            color: #c59b08;
+        }
+
+        body {
+        }
+
+        .textup {
+            text-align: center;
+            color: black;
+            font-weight: 700;
+        }
+
+        i {
+            margin-right: 3px;
+        }
+
+        .form-box {
+            background-color: #fff;
+            box-shadow: 0 0 5px rgba(36, 67, 40, 0.8);
+            padding: 15px;
+            border-radius: 3px;
+            width: 487px;
+        }
+
+        form {
+            max-width: 400px;
+            margin: 0 auto;
+        }
+
+        .radio-group {
+            display: flex;
+            margin-bottom: 16px;
+        }
+
+        input[type="radio"] {
+            margin-right: 8px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-size: 17px;
+            color: #378237;
+            font-weight: 600;
+        }
+
+        input,
+        textarea {
+            width: 100%;
+            padding: 8px;
+            margin-bottom: 12px;
+            box-sizing: border-box;
+            border-radius: 10px;
+
+        }
+
+        button {
+            background-color: #368b44;
+            color: #fff;
+            padding: 10px;
+            border: none;
+            border-radius: 25px;
+            cursor: pointer;
+            width: 100%;
+            font-size: 15px;
+            transition: .2s linear;
+        }
+
+        button:hover {
+            background-color: #0a6808;
+            border: none;
+            transform: scale(1.1);
+        }
+
+        h1 {
+            color: green;
+        }
+    </style>
     <body>
-        <%
-            HttpSession session3 = request.getSession();
-            User user1 = (User) session3.getAttribute("account");
-//           ResultSet rs = (ResultSet)request.getAttribute("data");
-           String message ="";
-           DecimalFormat decimalFormat = new DecimalFormat("#,###.#");
-           double totalprice = 0;
-        %>
+        <%DecimalFormat df = new DecimalFormat("###,###");
+            df.setMaximumFractionDigits(8);%>
+        <!-- comment start -->
         <div class="header" style="margin-top: 21px;">
             <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
             <div class="header-title" style="margin-top: -16px;">
@@ -109,10 +184,10 @@
                         <div><a href="#" title="Trang Facebook chúng tôi"><i class="fa-brands fa-facebook"></i></a></div>
                         <div><a href="#" title="Trang Twitter của chúng tôi"><i class="fa-brands fa-x-twitter"></i></a></div>
                     </div>
-                    <div class="header-title-right-about">
+                    <div class="header-title-right-about" style="font-size: 14px;">
                         <a href="#">Về chúng tôi</a>
                     </div>
-                    <div class="header-title-right-login">
+                    <div class="header-title-right-login" style="font-size: 14px;">
                         <!DOCTYPE html>
                         <html lang="en">
                             <head>
@@ -149,7 +224,7 @@
                                     <a href="profileUser.jsp"><img style="width: 30px;
                                                                    height: 30px;
                                                                    margin-right: -10px;
-                                                                   margin-bottom: -8px;
+                                                                   margin-bottom: -1px;
                                                                    margin-left: 7px;
                                                                    border-radius: 50%;" class="styling1" src="images/user/default_avatar.jpg" alt="Admin Image"></a>
                                     </c:if>
@@ -304,47 +379,41 @@
                                     <c:if test="${sessionScope.account != null}">
                                     <li><a href="CartURL">Giỏ hàng của tôi</a></li>
                                     </c:if>
-                                <li><a href="MyOrderURL">Đơn hàng của tôi</a></li>
+                                <li><a href="#">Đơn hàng của tôi</a></li>
                             </ul>
                         </li>
                         <li><a href="blog">Blog</a></li>
                             <c:if test="${sessionScope.account != null}">
                             <li><a href="profileUser.jsp">Tài khoản</a></li>
-                            </c:if>            
-                    </ul>
+                        </c:if>            </ul>
                 </div>
                 <div class="header-content-right-menu">
                     <ul>
-                        <li class="margin-unit"><a href="MyOrderURL" title="Đơn hàng của tôi"><i class="fa-solid fa-file-invoice-dollar"></i></i></a></li>
+                        <li class="margin-unit"><a href="#" title="Đơn hàng của tôi"><i class="fa-solid fa-file-invoice-dollar"></i></i></a></li>
                             <c:if test="${sessionScope.account == null}">
                             <li><a href="loginURL" onclick="alertOpenCart()"title="Giỏ hàng của tôi"><i class="fa-solid fa-cart-shopping"></i></a></li>
                                 </c:if>
                                 <c:if test="${sessionScope.account != null}">
-                            <li>
+                            <li>      
                                 <%
-                                    HttpSession session2 = request.getSession();
-                                    User user = (User) session2.getAttribute("account");
-                                    int userID = user.getUserID();
-                                    DAOCart dao = new DAOCart();
-                                    
-                                    ResultSet rs1 = dao.getData("SELECT count(*) as count FROM Cart AS c JOIN Product AS p ON c.ProductID = p.ProductID where userID = "+userID+"");
-                                    while(rs1.next()){
+                                HttpSession session2 = request.getSession();
+                                User user = (User) session2.getAttribute("account");
+                                int userID = user.getUserID();
+                                DAOCart dao = new DAOCart();
+                                ResultSet rs = dao.getData("SELECT count(*) as count FROM Cart AS c JOIN Product AS p ON c.ProductID = p.ProductID where userID = "+userID+"");
+                                while(rs.next()){
                                 %>
-                                <span class="count-cart" style="position: absolute;
+                                <span class="count-cart" id="countCart" style="position: absolute;
                                       margin-left: 17px;
                                       background-color: #ff0000;
                                       color: #ffffff;
                                       border-radius: 50%;
-                                      padding: 0px 4px;
-                                      font-size: 15px;
+                                      padding: 0px 5px;
+                                      font-size: 13px;
                                       z-index: 9;
                                       top: 11px;
-                                      left: 3px;
-                                      font-family: none;
-                                      line-height: normal;"><%=rs1.getInt(1)%></span>
-                                <%
-                                    }
-                                %>
+                                      left: 3px;"><%=rs.getInt(1)%></span>
+                                <%}%>
                                 <a href="CartURL" title="Giỏ hàng của tôi"><i class="fa-solid fa-cart-shopping"></i></a>
                             </li>
                         </c:if>
@@ -357,28 +426,23 @@
                 alert('Đăng nhập để xem giỏ hàng của bạn');
             }
         </script>
-        <section style="display: flex">
-            <div style="width: 264px;
-                 height: 843px;">
+        <!-- comment end-->
+        <div class="mainPage">
+            <div>
                 <div class="shop__sidebar__search">
                     <form action="searchPageURL" method="GET">
-                        <input style="    width: 83%;
-                               font-size: 15px;
-                               color: #b7b7b7;
-                               padding-left: 20px;
-                               border: 2px solid #e5e5e5;
-                               height: 36px;
-                               margin-left: 20px;" name="keyWord" type="text" placeholder="Search...">
-                        <button type="submit"><i class="fa-solid fa-magnifying-glass"></i></button>
+                        <input name="keyWord" type="text" placeholder="Search...">
+                        <button type="submit"><i style="    float: right;
+                                                 margin-top: -10px;" class="fa-solid fa-magnifying-glass"></i></button>
                     </form>
                 </div>
                 <div class="hottest-pro"style="margin-left: 23px;">
                     <div class="hottest-pro-title">Bán chạy nhất</div>
                     <div class="row" style="display: contents">
                         <%
-                                DAOProduct daoP = new DAOProduct();
-                            ResultSet rsHotPro = daoP.getData("select * from Product as p join ProductImage as pi on p.ProductID = pi.ProductID where  pi.ProductURL like '%_1%'\n"
-                            +"group by p.ProductID having min(p.TotalStock - p.UnitInStock) > 0");
+                            DAOProduct dao = new DAOProduct();
+                            ResultSet rsHotPro = dao.getData("select * from Product as p join ProductImage as pi on p.ProductID = pi.ProductID where  pi.ProductURL = pi.ProductURLShow \n"
+                                               +  "group by p.ProductID having min(p.TotalStock - p.UnitInStock) >0 order by (p.TotalStock - p.UnitInStock) desc limit 1");
                         if(rsHotPro.next()) {
                         %>
                         <div class="product__item" style="border: 1px solid #c1e8c1ba;
@@ -396,7 +460,7 @@
                                 <%if(rsHotPro.getInt("UnitDiscount")!=0) {%>
                                 <div class="sale-cotification">Sale</div>
                                 <%}%>
-                                <%    ResultSet rsNew2Product = daoP.getData("select * from product as p join productImage as pi "
+                                <%    ResultSet rsNew2Product = dao.getData("select * from product as p join productImage as pi "
                                    + "on p.ProductID = pi.ProductID "
                                    + "where pi.ProductURL like '%_1%' "
                                    + "order by p.CreateDate desc limit 6 ");
@@ -407,7 +471,7 @@
                             </div>
                             <div class="product__item__text">
                                 <h6 style="text-align: center;"><%=rsHotPro.getString("ProductName")%></h6>
-                                <a href="#" class="add-cart" style="left: 12px;">+ Thêm vào giỏ</a><a style="margin-left: 136px;" href="#">Mua ngay</a>
+                                <a href="cartDetailURL?serivce=addcart" class="add-cart" style="left: 12px;">+ Thêm vào giỏ</a><a style="margin-left: 136px;" href="#">Mua ngay</a>
                                 <div style="display: flex;">
                                     <div class="rating" style="margin-left: 30px;">
                                         <%int star = (int)rsHotPro.getInt("totalRate");
@@ -419,14 +483,14 @@
                                 </div>
                                 <div style="display: flex;flex-direction: row;justify-content: space-between;">
                                     <%if(rsHotPro.getInt("UnitDiscount")!= 0){%>
-                                    <div style="color: red;font-weight: 700;font-size: 15px; flex: 0 0 50%; text-decoration: line-through;"><%=decimalFormat.format(rsHotPro.getDouble("UnitPrice"))%></div>
-                                    <div style="color: #0d0d0d;font-weight: 700;font-size: 15px; flex: 0 0 50%"><%=decimalFormat.format(rsHotPro.getDouble("UnitPrice")*(100-rsHotPro.getInt("UnitDiscount"))/100)%></div>
+                                    <div style="color: red;font-weight: 700;font-size: 15px; flex: 0 0 50%; text-decoration: line-through;"><%=df.format(rsHotPro.getDouble("UnitPrice"))%>đ</div>
+                                    <div style="color: #0d0d0d;font-weight: 700;font-size: 15px; flex: 0 0 50%"><%=df.format(rsHotPro.getDouble("UnitPrice")*(100-rsHotPro.getInt("UnitDiscount"))/100)%>đ</div>
                                     <%} else {%>
                                     <div style="font-weight: 700;
                                          font-size: 15px;
                                          flex: -2 0 43%;
                                          margin-left: 146px;
-                                         margin-top: -26px;"><%=decimalFormat.format(rsHotPro.getDouble("UnitPrice"))%></div>
+                                         margin-top: -26px;"><%=df.format(rsHotPro.getDouble("UnitPrice"))%>đ</div>
                                     <%}%>
                                 </div>
                             </div>
@@ -436,7 +500,10 @@
                     </div>
                 </div>
                 <div class="card" style="margin-top: 85px;
-                     margin-left: 23px;">
+                     margin-left: 23px;
+                     border: none;
+                     background: none;
+                     box-shadow: none !important;">
                     <div class="card-heading">
                         <a data-toggle="collapse" data-target="#collapseOne" href="ProductListURL" style="    color: #111111;
                            font-size: 16px;
@@ -462,7 +529,7 @@
                         ResultSet rsCategory = (ResultSet)request.getAttribute("CategoryResult");
                     %>
                     <div id="collapseOne" class="collapse show" data-parent="#accordionExample">
-                        <div class="card-body">
+                        <div class="card-body" style="padding:0">
                             <div class="shop__sidebar__categories">
                                 <ul class="nice-scroll">
                                     <li><a style="color: #f7a749;" href="ProductListURL">Tất cả sản phẩm</a></li>
@@ -470,8 +537,8 @@
                                         if(type==null || type.equals("")) {
                                         type = "";
                                             }
-                                            double maxP = daoP.getMaxUnitPrice();
-                                            double minP =daoP.getMinUnitPrice();
+                                            double maxP = dao.getMaxUnitPrice();
+                                            double minP =dao.getMinUnitPrice();
                                         %>
                                     <li class="unique-li" style="<%=type.equals("showSale")?"background: #0091ff2b; width:190px;":""%>"><a style=" color: #f7a749;" href="ProductListURL?service=filter&TotalRate=<%=TotalRate%>&type=showSale&CategoryID=${categoryID}&filterChoice=p.CreateDate%20desc&inputMinPrice=<%=minP%>&inputMaxPrice=<%=maxP%>&index=1">Đang giảm giá</a></li>
                                         <%while(rsCategory.next()) {%>
@@ -482,46 +549,124 @@
                         </div>
                     </div>
                 </div>
-            </div>  
-            <div class="card" style="align-items: center">
-                <div class="cart" style="flex: 0">
-                    <div class="row justify-content-center">
-                        <div class="card bg-white mb-5 mt-5 border-0" style="box-shadow: 0 12px 15px rgba(0, 0, 0, 0.02);">
-                            <div class="card-body p-5 text-center">
-                                <h4>Mã của bạn đã được gửi đến email đăng kí nhận hàng</h4>
-                                <p>Vui lòng điền mã OTP để xác nhận</p>
-
-                                <div class="otp-field mb-4">
-                                    <input type="number" />
-                                    <input type="number" disabled />
-                                    <input type="number" disabled />
-                                    <input type="number" disabled />
-                                    <input type="number" disabled />
-                                    <input type="number" disabled />
-                                </div>
-
-                                <button class="btn btn-primary" style="cursor: pointer">Xác nhận</button>
-                                <p class="resend text-muted mb-0">
-                                    Bạn không nhận được mã? <a href="">Gửi lại mã</a>
-                                </p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
             </div>
-        </section>
-        <!-- Form Basic -->
+            <%
+                          Product pro = new Product();
+                          DAOProduct daoPro = new DAOProduct();
+                          ResultSet rsProduct = (ResultSet)request.getAttribute("rsProduct");
+                          if(rsProduct.next()){
+            %>
+            <div style="display: flex;
+                 margin-left: 75px;
+                 margin-top: 17px;">
+                <div class="form-box" style="height: 337px !important; width: 332px;margin-right: 30px;"> 
+                    <div style="margin-bottom: 25px;
+                         font-size: 20px;" class="textup"> 
+                        <i  class="fa fa-solid "></i> 
+                        <%=rsProduct.getString("ProductName")%>
+                    </div> 
+                    <div class="form-group">
+                        <img style="width: 300px;height: 200px !important;" src="<%=rsProduct.getString("ProductURL")%>" alt="">
+                    </div>
+                    <div style="margin-bottom: 25px;
+                         font-size: 20px;" class="textup"> 
+                        <i  class="fa fa-solid "></i> 
+                        Giá bán: <%=df.format(rsProduct.getDouble("UnitPrice")*(100-rsProduct.getInt("UnitDiscount"))/100)%>đ
+                    </div>
+                    <form action="HomePageURL" method="get">
+                        <button style="margin-top: 22px;
+                            border-radius: 3px;
+                            width: 100px;
+                            height: 34px;
+                            padding: 0px;
+                            background: #50a950;
+                            float: right;
+                            margin-right: -15px;" type="submit">Quay lại</button>
+                    </form>
+                </div> 
+                <script>
+                </script>
+                <div class="form-box" style="height: 605px;"> 
+                    <div style="    margin-bottom: 25px;
+                         font-size: 20px;" class="textup"> 
+                        <i  class="fa fa-solid fa-clock"></i> 
+                        Chỉ mất 2 phút, hãy để lại phản hồi của bạn!
+                    </div> 
+                    <form id="myForm" action="feedback" method="post" enctype="multipart/form-data">
+                        <input type="hidden" name="service" value="upload"/>
+                        <input type="hidden" name="ProductID" value="<%=rsProduct.getInt("ProductID")%>"/>
+                        <div class="form-group">
+                            <label>Ảnh đính kèm</label>
+                            <img id="feedback-image" style="width: 282px;
+                                 height: 169px !important;" src="images/feedback/" alt="chọn ảnh đính kèm">
+                            <input value=""  type="file" 
+                                   class="form-control" name="feedbackImg" placeholder="Enter photo" id="feedback-img-input">
+                        </div>
+                        <div class="form-group">
+                            <div style="display: flex; align-items: center">
+                                <label for="rating">Đánh giá:</label>
+                                <div style="margin-bottom: 4px;" class="rate">
+                                    <input type="radio" id="star5" name="rate" value="5" />
+                                    <label style="font-size: 25px;" for="star5" title="text">5 stars</label>
+                                    <input type="radio" id="star4" name="rate" value="4" />
+                                    <label style="font-size: 25px;" for="star4" title="text">4 stars</label>
+                                    <input type="radio" id="star3" name="rate" value="3" />
+                                    <label style="font-size: 25px;" for="star3" title="text">3 stars</label>
+                                    <input type="radio" id="star2" name="rate" value="2" />
+                                    <label style="font-size: 25px;" for="star2" title="text">2 stars</label>
+                                    <input type="radio" id="star1" name="rate" value="1" />
+                                    <label style="font-size: 25px;" for="star1" title="text">1 star</label>
+                                </div>
+                            </div>                  
+                            <label for="msg"> 
+                                <i class="fa-solid fa-comments" 
+                                   style="margin-right: 3px;"></i> 
+                                Thêm nhận xét của bạn tại đây: 
+                            </label> 
+                            <textarea id="msg" name="msg" 
+                                      rows="4" cols="10" required> 
+                            </textarea> 
+                            <button type="submit" style="border-radius: 4px;width: 200px;text-align: center;background: #50a950;"> 
+                                Tạo đánh giá 
+                            </button> 
+                        </div>
+                        <%}%>
+                    </form> 
+                </div> 
+            </div> 
+    </body> 
+    <script>
+        document.getElementById('feedback-img-input').addEventListener('change', function (e) {
+            var reader = new FileReader();
+            reader.onload = function (event) {
+                document.getElementById('feedback-image').src = event.target.result;
+            };
+            reader.readAsDataURL(e.target.files[0]);
+        });
+        var form = document.getElementById("myForm");
+        form.addEventListener("submit", function (event) {
+            event.preventDefault(); // Ngăn chặn hành vi mặc định của biểu mẫu
 
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.21.1/axios.min.js"></script>
-        <script>
-            document.getElementById("goBackButton").addEventListener("click", function () {
-                window.history.back();
-            });
-        </script>
-        <script src="vendor/jquery/jquery.min.js"></script>
-        <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-        <script src="vendor/jquery-easing/jquery.easing.min.js"></script>
-        <script src="js/ruang-admin.min.js"></script>
-        <script src="js/verify.js"></script>
-    </body>
+            var textarea = form.querySelector('textarea[name="msg"]');
+            var content = textarea.value.trim(); // Lấy nội dung và xóa khoảng trắng đầu và cuối chuỗi
+
+            if (content === "") {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Lỗi',
+                    text: 'Hãy điền nội dung'
+                });
+            } else if (content.length > 250) {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Lỗi',
+                    text: 'Nội dung phải có ít hơn 250 ký tự.'
+                });
+            } else {
+                // Gửi biểu mẫu nếu điều kiện hợp lệ
+                form.submit();
+            }
+        });
+    </script>
+    <script src="js/manager.js" type="text/javascript"></script>
 </html>

@@ -45,7 +45,7 @@ public class ControllerMyOrder extends HttpServlet {
             String message = "";
 
             if (user == null) {
-                message = "can dang nhap";
+                message = "Bạn cần đăng nhập";
                 request.setAttribute("message", message);
                 request.getRequestDispatcher("loginURL").forward(request, response);
             } else {
