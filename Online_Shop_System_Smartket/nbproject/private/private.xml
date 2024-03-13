@@ -1,15 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project-private xmlns="http://www.netbeans.org/ns/project-private/1">
-    <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
+    <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="1">
+        <file>
+            <url>src/java/controller/ControllerCartCompletion.java</url>
+            <bookmark id="1">
+                <name/>
+                <line>71</line>
+                <key/>
+            </bookmark>
+        </file>
+    </editor-bookmarks>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/D:/fpt/Semeter_5/SWP391/Project_GitHub/Online_Shop_System_Smartket/src/java/controller/ControllerProductDetail.java</file>
-            <file>file:/D:/fpt/Semeter_5/SWP391/Project_GitHub/Online_Shop_System_Smartket/src/java/controller/CartController.java</file>
-            <file>file:/D:/fpt/Semeter_5/SWP391/Project_GitHub/Online_Shop_System_Smartket/src/java/controller/ControllerOrderInformation.java</file>
-            <file>file:/D:/fpt/Semeter_5/SWP391/Project_GitHub/Online_Shop_System_Smartket/web/productDetail.jsp</file>
-            <file>file:/D:/fpt/Semeter_5/SWP391/Project_GitHub/Online_Shop_System_Smartket/web/MyOrder.jsp</file>
-            <file>file:/D:/fpt/Semeter_5/SWP391/Project_GitHub/Online_Shop_System_Smartket/web/orderInformation.jsp</file>
-            <file>file:/D:/fpt/Semeter_5/SWP391/Project_GitHub/Online_Shop_System_Smartket/web/customerlist.jsp</file>
+            <file>file:/E:/FPT/Spring2024/SWP391/online_shop_system_github/Online_Shop_System_Smartket/src/java/controller/ControllerOrderDetail.java</file>
+            <file>file:/E:/FPT/Spring2024/SWP391/online_shop_system_github/Online_Shop_System_Smartket/src/java/controller/ControllerOrderList.java</file>
+            <file>file:/E:/FPT/Spring2024/SWP391/online_shop_system_github/Online_Shop_System_Smartket/web/OrderDetail.jsp</file>
         </group>
     </open-files>
 </project-private>

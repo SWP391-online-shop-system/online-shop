@@ -36,9 +36,8 @@ function addToCart(pId) {
                 title: 'Thành công!',
                 text: 'Sản phẩm đã được thêm vào giỏ hàng.',
                 showConfirmButton: false,
-                timer: 1500
+                timer: 1000
             });
-            console.log(countCart);
             $('#countCart').text(countCart);
         },
         error: function (xhr, status, error) {

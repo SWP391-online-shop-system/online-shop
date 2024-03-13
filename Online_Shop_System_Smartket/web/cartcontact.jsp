@@ -502,7 +502,10 @@
                                                     </span>
                                                 </div>
                                                 <div class="">
-                                                    <a href="#" data-bs-target="#update" data-bs-toggle="modal" data-bs-dismiss="modal" onclick="showOneAdd(<%=rsAddress.getInt(1)%>)">Chỉnh sửa</a><br/>
+                                                    <a onclick="showOneAdd(<%=rsAddress.getInt(1)%>)"
+                                                       data-bs-target="#update" 
+                                                       data-bs-toggle="modal" 
+                                                       data-bs-dismiss="modal" >Chỉnh sửa</a><br/>
                                                     <label>Đặt mặc định <input type="radio" value="<%=rsAddress.getInt(1)%>" name="addId" <%if(rsAddress.getString("Status").equals("1")){%>checked<%}%>/></label>
                                                 </div>
                                             </div>
@@ -522,87 +525,6 @@
                             </div> 
                         </div> 
                     </div>
-                </form>
-                <form action="contactURL" method="post">
-                    <div class="modal fade" id="update"
-                         aria-hidden="true" aria-labelledby="DSLabel2"
-                         tabindex="-1">
-                        <input type="hidden" name="service" value="updateAdd"/>
-                        <div class="modal-dialog modal-dialog-centered
-                             modal-dialog-scrollable"> 
-                            <div class="modal-content"> 
-                                <div class="modal-header"> 
-                                    <h5 class="modal-title" id="AlgoLabel"> 
-                                        Cập nhật địa chỉ
-                                    </h5> 
-                                    <button type="button" class="btn-close"
-                                            data-bs-dismiss="modal" aria-label="Close"> 
-                                    </button> 
-                                </div> 
-                                <div class="modal-body p-3"> 
-                                    <!--                                  <div class="form-group">
-                                                                          <label>Tên người nhận</label>
-                                                                          <input name="name" type="text" value="" required autofocus class="form-control" id="newName" aria-describedby="emailHelp"
-                                                                                 placeholder="Nhập tên...">
-                                                                      </div>
-                                                                      <div class="form-group">
-                                                                          <label>Số điện thoại người nhận</label>
-                                                                          <input name="phone" type="number" value="" required class="form-control" id="newPhone" placeholder="Nhập số điện thoại...">
-                                                                      </div>
-                                                                      <div class="form-group">
-                                                                          <label>Email</label>
-                                                                          <input name="email" value="" required class="form-control" id="newEmail" placeholder="Nhập email...">
-                                                                      </div>
-                                                                      <div class="form-element" style="display: flex;">
-                                                                          <label>Giới tính</label>
-                                                                          <div style="display:flex; flex: 40%; margin-left: 11px">
-                                                                              <div class="custom-control custom-radio" style="margin-right: 15px;">
-                                                                                  <input type="radio" id="customRadio3" name="gender" class="custom-control-input" value="male" required>
-                                                                                  <label class="custom-control-label" for="customRadio3">Nam</label>
-                                                                              </div>
-                                                                              <div class="custom-control custom-radio">
-                                                                                  <input type="radio" id="customRadio4" name="gender" class="custom-control-input" value="female" required>
-                                                                                  <label class="custom-control-label" for="customRadio4">Nữ</label>
-                                                                              </div>
-                                                                          </div>
-                                                                      </div>
-                                                                      <div class="form-group">
-                                                                          <label>Địa Chỉ Người Nhận
-                                                                          </label><br/>
-                                                                          <select name="city" id="city"  style="width: 31%;" required>
-                                                                              <option  selected>Tỉnh thành</option>           
-                                                                          </select>
-                                                                          <select name="district" id="district"  style="width: 31%;" required>
-                                                                              <option  selected>Quận huyện</option>
-                                                                          </select>
-                                                                          <select name="ward" id="ward"  style="width: 31%" required>
-                                                                              <option  selected>Phường xã</option>
-                                                                          </select>
-                                                                      </div>
-                                                                      <div class="form-group">
-                                                                          <label>Địa chỉ cụ thể (số nhà, tên đường)</label>
-                                                                          <textarea name="addressdetail" required class="form-control" id="newAddressDetail"></textarea>
-                                                                      </div>-->
-                                </div> 
-                                <div class="modal-footer"> 
-                                    <div>
-                                        <button class="btn btn-success" 
-                                                data-bs-target="#DS"
-                                                data-bs-toggle="modal" 
-                                                data-bs-dismiss="modal"> 
-                                            Hủy 
-                                        </button>
-                                        <button class="btn btn-success" 
-                                                data-bs-target="#DS"
-                                                data-bs-toggle="modal" 
-                                                data-bs-dismiss="modal" > 
-                                            Lưu 
-                                        </button>
-                                    </div>
-                                </div> 
-                            </div> 
-                        </div>
-                    </div> 
                 </form>
                 <form>
                     <div class="modal fade" id="addnew"
@@ -624,15 +546,21 @@
                                         <label>Tên người nhận</label>
                                         <input name="name" type="text" required autofocus class="form-control" id="newName" aria-describedby="emailHelp"
                                                placeholder="Nhập tên..." pattern="[A-Za-zÀ-ỹ ]+" oninvalid="this.setCustomValidity('Vui lòng điền thông tin này, Không bao gồm số và kí tự đặc biệt')" 
-                                               oninput="setCustomValidity('')" >
+                                               oninput="setCustomValidity(''); validateInput(this)" >
                                     </div>
                                     <div class="form-group">
                                         <label>Số điện thoại người nhận</label>
-                                        <input name="phone" type="number" required class="form-control" id="newPhone" placeholder="Nhập số điện thoại...">
+                                        <input name="phone" type="number" required class="form-control" 
+                                               minlength="6" maxlength="10"
+                                               pattern="[0-9 ]+" oninvalid="this.setCustomValidity('Vui lòng điền thông tin này, Không bao gồm chữ cái và kí tự đặc biệt')" 
+                                               oninput="setCustomValidity(''); validateInput(this)"
+                                               id="newPhone" placeholder="Nhập số điện thoại...">
                                     </div>
                                     <div class="form-group">
                                         <label>Email</label>
-                                        <input name="email" required class="form-control" id="newEmail" placeholder="Nhập email...">
+                                        <input name="email" type="email" required class="form-control" id="newEmail" placeholder="Nhập email..."
+                                               oninvalid="this.setCustomValidity('Vui lòng điền thông tin này và bao gồm @')" 
+                                               oninput="setCustomValidity(''); validateInput(this)">
                                     </div>
                                     <div class="form-element" style="display: flex;">
                                         <label>Giới tính</label>
@@ -651,28 +579,32 @@
                                         <label>Địa Chỉ Người Nhận
                                         </label><br/>
                                         <select name="city" id="city"  style="width: 31%;" required>
-                                            <option value="" id="newCity" selected>Tỉnh thành</option>           
+                                            <option value="" id="newCity"  selected>Tỉnh thành</option>           
                                         </select>
                                         <select name="district" id="district"  style="width: 31%;" required>
-                                            <option value="" id="newDistrict" selected>Quận huyện</option>
+                                            <option value="" id="newDistrict"  selected>Quận huyện</option>
                                         </select>
                                         <select name="ward" id="ward"  style="width: 31%" required>
-                                            <option value="" id="newWard" selected>Phường xã</option>
+                                            <option value="" id="newWard"  selected>Phường xã</option>
                                         </select>
                                     </div>
                                     <div class="form-group">
                                         <label>Địa chỉ cụ thể (số nhà, tên đường)</label>
-                                        <textarea name="addressdetail" required class="form-control" id="newAddressDetail"></textarea>
+                                        <textarea name="addressdetail"  class="form-control" id="newAddressDetail" required></textarea>
                                     </div>
                                 </div> 
                                 <div class="modal-footer"> 
                                     <div>
-                                        <button class="btn btn-success" data-bs-target="#DS"
-                                                data-bs-toggle="modal" data-bs-dismiss="modal"> 
+                                        <a class="btn btn-success" data-bs-target="#DS"
+                                           data-bs-toggle="modal" data-bs-dismiss="modal"> 
                                             Hủy 
-                                        </button>
-                                        <button type="submit" class="btn btn-success" data-bs-target="#DS"
-                                                data-bs-toggle="modal" data-bs-dismiss="modal" onclick="addNewAdd()"> 
+                                        </a>
+                                        <button class="btn btn-success" 
+                                                data-bs-toggle="modal" 
+                                                
+                                                
+                                                
+                                                onclick="addNewAdd()"> 
                                             Lưu
                                         </button>
                                     </div>
@@ -680,6 +612,96 @@
                             </div> 
                         </div>
                     </div>
+                </form>
+                <!-- update modal-------------------------------------------- -->
+                <form id="formUpdate" action="contactURL" method="post">
+                    <div class="modal fade" id="update"
+                         aria-hidden="true" aria-labelledby="DSLabel2"
+                         tabindex="-1">
+                        <input type="hidden" name="service" value="updateAdd"/>
+                        <div class="modal-dialog modal-dialog-centered
+                             modal-dialog-scrollable"> 
+                            <div class="modal-content"> 
+                                <div class="modal-header"> 
+                                    <h5 class="modal-title" id="AlgoLabel"> 
+                                        Cập nhật địa chỉ
+                                    </h5> 
+                                    <button type="button" class="btn-close"
+                                            data-bs-dismiss="modal" aria-label="Close"> 
+                                    </button> 
+                                </div> 
+                                <div class="modal-body p-3">
+                                    <%
+                                        ResultSet rsOneAdd = (ResultSet)request.getAttribute("rsOneAdd");
+                                        if(rsOneAdd != null){
+                                            while(rsOneAdd.next()){
+
+                                    %>
+                                    <div class="form-group">
+                                        <label>Tên người nhận</label>
+                                        <input name="name" type="text" value="<%=rsOneAdd.getString("Name")%>" required autofocus class="form-control" id="updateName" aria-describedby="emailHelp"
+                                               placeholder="Nhập tên...">
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Số điện thoại người nhận</label>
+                                        <input name="phone" type="number" value="<%=rsOneAdd.getString("Phone")%>" required class="form-control" id="updatePhone" placeholder="Nhập số điện thoại...">
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Email</label>
+                                        <input name="email" value="<%=rsOneAdd.getString("Email")%>" required class="form-control" id="updateEmail" placeholder="Nhập email...">
+                                    </div>
+                                    <div class="form-element" style="display: flex;">
+                                        <label>Giới tính</label>
+                                        <div style="display:flex; flex: 40%; margin-left: 11px">
+                                            <div class="custom-control custom-radio" style="margin-right: 15px;">
+                                                <input type="radio" id="updateMale" name="gender" class="custom-control-input" value="male" required>
+                                                <label class="custom-control-label" for="updateMale">Nam</label>
+                                            </div>
+                                            <div class="custom-control custom-radio">
+                                                <input type="radio" id="updateFeMale" name="gender" class="custom-control-input" value="female" required>
+                                                <label class="custom-control-label" for="updateFeMale">Nữ</label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Địa Chỉ Người Nhận
+                                        </label><br/>
+                                        <select name="city" id="city1"  style="width: 31%;" required>
+                                            <option  selected>Tỉnh thành</option>           
+                                        </select>
+                                        <select name="district" id="district1"  style="width: 31%;" required>
+                                            <option  selected>Quận huyện</option>
+                                        </select>
+                                        <select name="ward" id="ward1"  style="width: 31%" required>
+                                            <option  selected>Phường xã</option>
+                                        </select>
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Địa chỉ cụ thể (số nhà, tên đường)</label>
+                                        <textarea name="addressdetail"  required class="form-control" id="updateAddressDetail"><%=rsOneAdd.getString("AddDetail")%></textarea>
+                                    </div>
+                                    <%}} else{%>aaaaaaaaaaaaaaaaaaaaaaaaaaa<%}%>
+                                </div> 
+                                <div class="modal-footer"> 
+                                    <div>
+                                        <a class="btn btn-success" 
+                                           data-bs-target="#DS"
+                                           data-bs-toggle="modal" 
+                                           data-bs-dismiss="modal"> 
+                                            Hủy 
+                                        </a>
+                                        <button class="btn btn-success" 
+                                                data-bs-target="#DS"
+                                                data-bs-toggle="modal" 
+                                                data-bs-dismiss="modal" 
+                                                type="submit"> 
+                                            Lưu 
+                                        </button>
+                                    </div>
+                                </div> 
+                            </div> 
+                        </div>
+                    </div> 
                 </form>
                 <div class="cart-contact">
                     <form action="CartCompletion" method="post">
@@ -700,7 +722,7 @@
                                       try {
                                           while (rs.next()){
                                           if(Arrays.asList(productIdBuy).contains(String.valueOf(rs.getInt("ProductID")))){
-                                           double unitPrice = rs.getDouble("UnitPrice");
+                                           double unitPrice = rs.getDouble("UnitPrice")*(100- rs.getInt("UnitDiscount"))/100;
                                            double totalunitprice = unitPrice*rs.getInt("Quantity");
                                            totalprice += totalunitprice;
                                         %>
@@ -745,12 +767,12 @@
                                     <div>Số điện thoại: <%=rsDefaultAdd.getString("Phone")%></div>
                                     <input type="hidden" name="addId" value="<%=rsDefaultAdd.getInt(1)%>"/>
                                     <div style="display: flex;margin-top: 11px;">Note:<input style="margin-left: 9px;" class="form-control" name="note" placeholder="Ghi chú cho người bán"/></div>
-                                    <%          }
-                                            }
-                                        } catch (SQLException ex) {
-                                        }%>
+                                        <%          }
+                                                }
+                                            } catch (SQLException ex) {
+                                            }%>
                                     <a class="btn btn-success" href="#DS" 
-                                            data-bs-toggle="modal" data-bs-dismiss="modal" style="padding-bottom: 30px;margin-top: 11px"> 
+                                       data-bs-toggle="modal" data-bs-dismiss="modal" style="padding-bottom: 30px;margin-top: 11px"> 
                                         Chỉnh sửa
                                     </a>
                                 </div>
@@ -764,7 +786,7 @@
                                         </tbody>
                                     </table>
                                     <div class="pull-right">
-                                        <button onclick="back()" class="btn-back" style="height: fit-content;">Hủy đặt hàng</button>
+                                        <a onclick="back()" class="btn btn-success" style="height: fit-content;color: white;    width: 128px;">Hủy đặt hàng</a>
                                         <button type="submit" class="btn-back">Đặt Hàng</button>
                                     </div>
 
