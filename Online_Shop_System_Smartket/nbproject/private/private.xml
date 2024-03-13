@@ -1,7 +1,24 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project-private xmlns="http://www.netbeans.org/ns/project-private/1">
-    <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
+    <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="1">
+        <file>
+            <url>src/java/controller/ControllerCartCompletion.java</url>
+            <bookmark id="1">
+                <name/>
+                <line>71</line>
+                <key/>
+            </bookmark>
+        </file>
+    </editor-bookmarks>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
-        <group/>
+        <group>
+            <file>file:/E:/FPT/Spring2024/SWP391/online_shop_system_github/Online_Shop_System_Smartket/web/customerlist.jsp</file>
+            <file>file:/E:/FPT/Spring2024/SWP391/online_shop_system_github/Online_Shop_System_Smartket/web/js/cartdetail.js</file>
+            <file>file:/E:/FPT/Spring2024/SWP391/online_shop_system_github/Online_Shop_System_Smartket/web/cartcontact.jsp</file>
+            <file>file:/E:/FPT/Spring2024/SWP391/online_shop_system_github/Online_Shop_System_Smartket/src/java/controller/ControllerCartContact.java</file>
+            <file>file:/E:/FPT/Spring2024/SWP391/online_shop_system_github/Online_Shop_System_Smartket/web/js/cartcontact.js</file>
+            <file>file:/E:/FPT/Spring2024/SWP391/online_shop_system_github/Online_Shop_System_Smartket/web/js_marketing/customerlist.js</file>
+            <file>file:/E:/FPT/Spring2024/SWP391/online_shop_system_github/Online_Shop_System_Smartket/src/java/model/DBConnect.java</file>
+        </group>
     </open-files>
 </project-private>

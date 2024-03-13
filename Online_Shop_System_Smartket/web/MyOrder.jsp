@@ -11,7 +11,7 @@
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
         <meta http-equiv="x-ua-compatible" content="ie=edge" />
-        <title>Material Design for Bootstrap</title>
+        <title>Đơn hàng của tôi</title>
         <!-- Font Awesome -->
         <link rel="stylesheet" href="style.css"/>
         <link rel="stylesheet" href="css/css_productList/font-awesome.min.css" type="text/css">
@@ -680,7 +680,9 @@
                             </div>
                             <hr>
                             <%if(statusName.equals("Chờ xác nhận")){%>
-                            <a href="qr" class="btn btn-warning btn-lg" style="float: right;
+                            <%DAOReceiver daoRece = new DAOReceiver();
+                                String email = daoRece.getEmailById(rsOrderGroup.getInt("OrderID"));%>
+                            <a href="CartcontactOTPVerify?email=<%=email%>&oid=<%=rsOrderGroup.getInt("OrderID")%>" class="btn btn-warning btn-lg" style="float: right;
                                margin-right: 232px;
                                margin-bottom: -30px;
                                margin-top: 7px;

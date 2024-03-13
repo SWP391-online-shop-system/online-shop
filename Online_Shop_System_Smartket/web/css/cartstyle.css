@@ -68,7 +68,7 @@ input:focus::-webkit-input-placeholder
 {
     color:transparent;
 }
-.btn{
+/*.btn{
     background-color: #2bd282;
     color: white;
     width: 107px;
@@ -78,15 +78,17 @@ input:focus::-webkit-input-placeholder
     border: none;
     margin-top: -2px;
     margin-right: 50px;
-}
+    transition: all 0.5s;
+}*/
 .btnvoucher{
     margin-top: 0;
     width: 42%;
 
 }
 .btn:hover{
-    background-color: white;
-    color: black;
+    background-color: #2bd282;
+    color: white;
+    transition: all 0.5s;
 }
 a{
     color: black;
@@ -460,6 +462,20 @@ input[type=number]::-webkit-outer-spin-button {
     transition: all 0.5s;
 }
 .btn-back button:hover{
+    cursor: pointer;
+    transform: scale(0.95);
+}
+.btn{
+    margin-top: 15px;
+    padding: 7px 15px;
+    background: #5bbc5b;
+    border: none;
+    border-radius: 3px;
+    color: white;
+    font-size: 14px;
+    transition: all 0.5s;
+}
+.btn :hover{
     cursor: pointer;
     transform: scale(0.95);
 }

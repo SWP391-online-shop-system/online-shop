@@ -102,13 +102,13 @@ public class ControllerSaleDashBoard extends HttpServlet {
                         Calendar calendar = Calendar.getInstance();
                         calendar.add(Calendar.DAY_OF_YEAR, -6);
                         orderFrom = sdf.format(calendar.getTime());
-                        rsOrderList = daoOd.getData("select * from `order` as o join `user` as u on o.UserID = u.UserID join `status` as s on o.StatusID = s.StatusID where SaleID = "+userId+" and OrderDate between now() - interval 6 day and now() ORDER BY OrderDate");
+                        rsOrderList = daoOd.getData("select * from `order` as o join `user` as u on o.UserID = u.UserID join `status` as s on o.StatusID = s.StatusID where SaleID = "+userId+" and OrderDate between now() - interval 6 day and now() ORDER BY OrderDate desc limit 7");
                         request.setAttribute("rsOrderList", rsOrderList);
                         request.setAttribute("formatOrderWeekFrom", orderFrom);
                     } else {
                         LocalDate dateOrderWeekFrom = LocalDate.parse(orderFrom, formatter);
                         String formatOrderWeekFrom = dateOrderWeekFrom.format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
-                        rsOrderList = daoOd.getData("select * from `order` as o join `user` as u on o.UserID = u.UserID join `status` as s on o.StatusID = s.StatusID WHERE SaleID = "+userId+" and OrderDate between '" + formatOrderWeekFrom + "' AND '" + formatOrderWeekFrom + "' + interval 7 day ORDER BY OrderDate;");
+                        rsOrderList = daoOd.getData("select * from `order` as o join `user` as u on o.UserID = u.UserID join `status` as s on o.StatusID = s.StatusID WHERE SaleID = "+userId+" and OrderDate between '" + formatOrderWeekFrom + "' AND '" + formatOrderWeekFrom + "' + interval 7 day ORDER BY OrderDate desc limit 7");
                         request.setAttribute("rsOrderList", rsOrderList);
                         request.setAttribute("formatOrderWeekFrom", formatOrderWeekFrom);
                     }
@@ -161,13 +161,13 @@ public class ControllerSaleDashBoard extends HttpServlet {
                         Calendar calendar = Calendar.getInstance();
                         calendar.add(Calendar.DAY_OF_YEAR, -6);
                         orderFrom = sdf.format(calendar.getTime());
-                        rsOrderList = daoOd.getData("select * from `order` as o join `user` as u on o.UserID = u.UserID join `status` as s on o.StatusID = s.StatusID where OrderDate between now() - interval 6 day and now() ORDER BY OrderDate");
+                        rsOrderList = daoOd.getData("select * from `order` as o join `user` as u on o.UserID = u.UserID join `status` as s on o.StatusID = s.StatusID where OrderDate between now() - interval 6 day and now() ORDER BY OrderDate desc limit 7");
                         request.setAttribute("rsOrderList", rsOrderList);
                         request.setAttribute("formatOrderWeekFrom", orderFrom);
                     } else {
                         LocalDate dateOrderWeekFrom = LocalDate.parse(orderFrom, formatter);
                         String formatOrderWeekFrom = dateOrderWeekFrom.format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
-                        rsOrderList = daoOd.getData("select * from `order` as o join `user` as u on o.UserID = u.UserID join `status` as s on o.StatusID = s.StatusID WHERE OrderDate between '" + formatOrderWeekFrom + "' AND '" + formatOrderWeekFrom + "' + interval 7 day ORDER BY OrderDate;");
+                        rsOrderList = daoOd.getData("select * from `order` as o join `user` as u on o.UserID = u.UserID join `status` as s on o.StatusID = s.StatusID WHERE OrderDate between '" + formatOrderWeekFrom + "' AND '" + formatOrderWeekFrom + "' + interval 7 day ORDER BY OrderDate desc limit 7");
 //              
                         request.setAttribute("rsOrderList", rsOrderList);
                         request.setAttribute("formatOrderWeekFrom", formatOrderWeekFrom);
