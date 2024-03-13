@@ -517,7 +517,7 @@
                                 </div>
                                 <div class="mb-3">
                                     <label for="address2">Địa chỉ:</label>
-                                    <input type="text" class="form-control" id="" placeholder="" readonly<%=rsReceiver.getString("ReceiverAddress")%>> 
+                                    <input type="text" class="form-control" id="" placeholder="" readonly value="<%=rsReceiver.getString("ReceiverAddress")%>"/> 
                                 </div>
                                 <hr class="mb-4">
                             </form>
