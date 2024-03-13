@@ -141,6 +141,11 @@
                         </div>
                         <%sessionMessage.removeAttribute("message");%>
                         <div class="row">
+                            <button style="margin-left: 13px;margin-bottom: 5px;" type="button" class="btn btn-secondary" data-toggle="modal" data-target="#exampleModalLong"
+                                    id="#modalLong">Thêm Khách Hàng Mới</button>
+
+                        </div>
+                        <div class="row">
                             <!-- DataTable with Hover -->
                             <div class="col-lg-12">
                                 <div class="card mb-4">                                 
