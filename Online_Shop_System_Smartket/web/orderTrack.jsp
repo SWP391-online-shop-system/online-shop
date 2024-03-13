@@ -56,7 +56,7 @@
         <div id="wrapper">
             <!-- Sidebar -->
             <ul class="navbar-nav sidebar sidebar-light accordion" id="accordionSidebar">
-                <a class="sidebar-brand d-flex align-items-center justify-content-center" href="MarketingDashBoardURL">
+                <a class="sidebar-brand d-flex align-items-center justify-content-center" href="AdminDashBoardURL">
                     <div class="sidebar-brand-icon">
                         <img style="height: 91px;
                              width: 133px;
@@ -72,9 +72,16 @@
                     </li>
                     <hr class="sidebar-divider">
                     <li class="nav-item">
-                        <a class="nav-link" href="adminOrderTrackURL">
+                        <a class="nav-link" href="adminOrderTrackURL?status=all&orderFrom=&orderTo=">
                             <i class="fas fa-calendar fa-2x text-primary"></i>
                             <span>Đơn hàng</span>
+                        </a>
+                    </li>
+                    <hr class="sidebar-divider">
+                    <li class="nav-item">
+                        <a class="nav-link" href="userlist">
+                            <i class="fas fa-user fa-2x text-primary"></i>
+                            <span>Người dùng</span>
                         </a>
                     </li>
                 </div>
@@ -97,6 +104,14 @@
                                     <a class="dropdown-item" href="#">
                                         <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
                                         Hồ sơ
+                                    </a>
+                                    <a class="dropdown-item" href="#">
+                                        <i class="fas fa-cogs fa-sm fa-fw mr-2 text-gray-400"></i>
+                                        Cài đặt
+                                    </a>
+                                    <a class="dropdown-item" href="#">
+                                        <i class="fas fa-list fa-sm fa-fw mr-2 text-gray-400"></i>
+                                        Lịch sử thay đổi
                                     </a>
                                     <div class="dropdown-divider"></div>
                                     <a class="dropdown-item" href="logout">

@@ -94,6 +94,12 @@
                             <span>Đơn hàng</span>
                         </a>
                     </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="userlist">
+                            <i class="fas fa-user fa-2x text-primary"></i>
+                            <span>Người dùng</span>
+                        </a>
+                    </li>
                 </div>
             </ul>
             <!-- Sidebar -->

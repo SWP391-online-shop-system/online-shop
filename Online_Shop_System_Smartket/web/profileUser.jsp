@@ -30,7 +30,10 @@
         }
         a{
             color: black;
-            text-decoration: none;
+            text-decoration: none !important;
+        }
+        a:hover{
+            color: black;
         }
         .input-change{
             width: 223px;
@@ -103,6 +106,8 @@
 </head>
 
 <body>
+    <%DecimalFormat df = new DecimalFormat("###,###");
+            df.setMaximumFractionDigits(8);%>
     <!-- comment start -->
     <div class="header" style="margin-top: 21px;">
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
@@ -127,10 +132,10 @@
                     <div><a href="#" title="Trang Facebook chúng tôi"><i class="fa-brands fa-facebook"></i></a></div>
                     <div><a href="#" title="Trang Twitter của chúng tôi"><i class="fa-brands fa-x-twitter"></i></a></div>
                 </div>
-                <div class="header-title-right-about">
+                <div class="header-title-right-about" style="font-size: 14px;">
                     <a href="#">Về chúng tôi</a>
                 </div>
-                <div class="header-title-right-login">
+                <div class="header-title-right-login" style="font-size: 14px;">
                     <!DOCTYPE html>
                     <html lang="en">
                         <head>
@@ -167,11 +172,9 @@
                                 <a href="profileUser.jsp"><img style="width: 30px;
                                                                height: 30px;
                                                                margin-right: -10px;
-                                                               margin-bottom: -8px;
+                                                               margin-bottom: -1px;
                                                                margin-left: 7px;
-                                                               border-radius: 50%;" class="styling1" 
-                                                                        src="images/user/${sessionScope.account.userImage}" 
-                                                               alt="Admin Image"></a>
+                                                               border-radius: 50%;" class="styling1" src="images/user/${sessionScope.account.userImage}" alt="Admin Image"></a>
                                 </c:if>
                                 <c:if test="${sessionScope.account == null}">
                                 <button href="#" style="border: none; font-size:16px; font-family: math;" id="show-login">Đăng nhập</button>
@@ -477,7 +480,7 @@
             <div class="row">
                 <div class="col-lg-4">
                     <div class="card mb-4">
-                        
+
                         <div class="card-body text-center">
                             <img src="images/user/${sessionScope.account.userImage}"
                                  alt="avatar" class="rounded-circle img-fluid" style="width: 132px;

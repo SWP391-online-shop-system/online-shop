@@ -43,6 +43,9 @@
                 color:black;
                 text-decoration: none !important;
             }
+            a:hover{
+                color: black;
+            }
             .shop__sidebar__accordion .card-heading a::after, .shop__sidebar__accordion .card-heading > a.active[aria-expanded="false"]::after {
                 content: "";
                 font-family: FontAwesome;
@@ -676,6 +679,13 @@
                                 <%}}%>
                             </div>
                             <hr>
+                            <%if(statusName.equals("Chờ xác nhận")){%>
+                            <a href="qr" class="btn btn-warning btn-lg" style="float: right;
+                               margin-right: 232px;
+                               margin-bottom: -30px;
+                               margin-top: 7px;
+                               position: relative;background: #ff6535;">Xác nhận đơn</a>
+                            <%}%>
                             <a style="margin-left: 681px;" href="OrderInformationURL?OrderID=<%=rsOrderGroup.getInt("OrderID")%>" class="btn btn-success btn-lg" data-abc="true">Xem chi tiết đơn hàng <i class="fa fa-chevron-right"></i></a>
                         </div>
                     </form>

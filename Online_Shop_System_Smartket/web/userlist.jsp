@@ -21,6 +21,11 @@
         <link href="css/css_marketing_dashboard/marketing_dashboard_style.css" rel="stylesheet">
         <link href="vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">
         <link rel="shortcut icon" href="images/logo/logo.png" type="image/png">
+        <style>
+            .paddingnone tr{
+                padding: 0 !important;
+            }
+        </style>
     </head>
     <body id="page-top">
         <%
@@ -31,7 +36,7 @@
         <div id="wrapper">
             <!-- Sidebar -->
             <ul class="navbar-nav sidebar sidebar-light accordion" id="accordionSidebar">
-                <a class="sidebar-brand d-flex align-items-center justify-content-center" href="HomePageURL">
+                <a class="sidebar-brand d-flex align-items-center justify-content-center" href="AdminDashBoardURL">
                     <div class="sidebar-brand-icon">
                         <img style="height: 91px;
                              width: 133px;
@@ -41,39 +46,23 @@
                 <div style="position: sticky; top: 30px;">
                     <hr class="sidebar-divider wee-0" style="margin: 0px;">
                     <li class="nav-item active">
-                        <a class="nav-link" href="MarketingDashBoardURL">
+                        <a class="nav-link" href="AdminDashBoardURL">
                             <i class="fas fa-fw fa-tachometer-alt"></i>
                             <span>Thống kê</span></a>
                     </li>
                     <hr class="sidebar-divider">
-                    <div class="sidebar-heading">
-                        Quản lí
-                    </div>
                     <li class="nav-item">
-                        <a class="nav-link" href="#">
+                        <a class="nav-link" href="adminOrderTrackURL?status=all&orderFrom=&orderTo=">
                             <i class="fas fa-calendar fa-2x text-primary"></i>
-                            <span>Bài đăng</span>
+                            <span>Đơn hàng</span>
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="mktProductListURL">
-                            <i class="fas fa-shopping-cart fa-2x text-success"></i>
-                            <span>Sản phẩm</span>
+                        <a class="nav-link" href="userlist">
+                            <i class="fas fa-user fa-2x text-primary"></i>
+                            <span>Người dùng</span>
                         </a>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="customerlist">
-                            <i class="fas fa-users fa-2x text-info"></i>
-                            <span>Khách hàng</span>
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="FeedBackListURL">
-                            <i class="fas fa-comments fa-2x text-info"></i>
-                            <span>Phản hồi</span>
-                        </a>
-                    </li>
-                    <hr class="sidebar-divider">
                 </div>
             </ul>
             <!-- Sidebar -->
@@ -81,7 +70,7 @@
                 <div id="content">
                     <!-- TopBar -->
                     <nav class="navbar navbar-expand navbar-light bg-navbar topbar mb-4 static-top">
-                        <div style="font-weight: 700;color: white;font-size: 37px;letter-spacing: 2px;font-family: Nunito,-apple-system,BlinkMacSystemFont"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol","Noto Color Emoji";">Trang marketing</div>
+                        <div style="font-weight: 700;color: white;font-size: 37px;letter-spacing: 2px;font-family: Nunito,-apple-system,BlinkMacSystemFont"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol","Noto Color Emoji";">Trang Admin</div>
                         <ul class="navbar-nav ml-auto">
                             <div class="topbar-divider d-none d-sm-block"></div>
                             <li class="nav-item dropdown no-arrow">
@@ -94,6 +83,14 @@
                                     <a class="dropdown-item" href="#">
                                         <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
                                         Hồ sơ
+                                    </a>
+                                    <a class="dropdown-item" href="#">
+                                        <i class="fas fa-cogs fa-sm fa-fw mr-2 text-gray-400"></i>
+                                        Cài đặt
+                                    </a>
+                                    <a class="dropdown-item" href="#">
+                                        <i class="fas fa-list fa-sm fa-fw mr-2 text-gray-400"></i>
+                                        Lịch sử thay đổi
                                     </a>
                                     <div class="dropdown-divider"></div>
                                     <a class="dropdown-item" href="logout">
@@ -109,10 +106,10 @@
                     <!-- Container Fluid-->
                     <div class="container-fluid" id="container-wrapper">
                         <div class="d-sm-flex align-items-center justify-content-between mb-4">
-                            <h1 class="h3 mb-0 text-gray-800">Danh Sách Khách Hàng</h1>
+                            <h1 class="h3 mb-0 text-gray-800">Danh Sách Người Dùng</h1>
                             <ol class="breadcrumb">
                                 <li class="breadcrumb-item"><a href="./">Trang Chủ</a></li>
-                                <li class="breadcrumb-item active">Danh Sách Khách Hàng</li>
+                                <li class="breadcrumb-item active">Danh Sách Người Dùng</li>
                             </ol>
                         </div>
 
@@ -139,7 +136,7 @@
                         <%sessionMessage.removeAttribute("message");%>
                         <div class="row">
                             <button style="margin-left: 13px;margin-bottom: 5px;" type="button" class="btn btn-secondary" data-toggle="modal" data-target="#exampleModalLong"
-                                    id="#modalLong">Thêm Khách Hàng Mới</button>
+                                    id="#modalLong">Thêm Nguời dùng mới</button>
                         </div>
                         <div class="row">
                             <!-- DataTable with Hover -->
@@ -147,9 +144,7 @@
                                 <div class="card mb-4">                                 
                                     <div class="table-responsive p-3">
                                         <table class="table align-items-center table-flush table-hover" id="dataTableHover" style="font-size: 14px;">
-                                            <div style="display: flex;
-                                                 margin-left: 200px;
-                                                 margin-bottom: -30px;">
+                                            <div style="display: flex;justify-content: center;">
                                                 <%
                                                 String status = (String)request.getAttribute("status");
                                                 String role = (String)request.getAttribute("role");
@@ -157,42 +152,45 @@
                                                 %>
                                                 <form action="userlist" method="get">
                                                     <div class="filter-group" style="display:flex;">
-                                                        <div style="padding-top: -16px;
-                                                             width: 81%;">Role</div>
-                                                        <select class="form-control" name="role" onchange="this.form.submit()" style="height: 33px;margin-top: -12px;">   
-                                                            <option value="5" <%if(role.equals("5")){%>selected<%}%>>Admin</option>                                                     
-                                                            <option value="4" <%if(role.equals("4")){%>selected<%}%>>Quản lí sale</option>                                                     
-                                                            <option value="3" <%if(role.equals("3")){%>selected<%}%>>Sale</option>                                                     
-                                                            <option value="1" <%if(role.equals("1")){%>selected<%}%>>Khách Hàng</option>                                                          
-                                                            <option value="2" <%if(role.equals("2")){%>selected<%}%>>Marketing</option>                                                            
-                                                            <option value="0" <%if(role.equals("0")){%>selected<%}%>>Tất cả</option>							
-                                                        </select>
-                                                    </div>       
-                                                        <div class="filter-group" style="display:flex;">
-                                                        <div style="padding-top: -20px;
-                                                             width: 81%;">Trạng thái</div>
-                                                        <select class="form-control" name="status" onchange="this.form.submit()" style="height: 33px;margin-top: -12px;">                                                            
-                                                            <option value="3" <%if(status.equals("3")){%>selected<%}%>>Tất cả</option>                                                     
-                                                            <option value="1" <%if(status.equals("1")){%>selected<%}%>>Hoạt động</option>                                                          
-                                                            <option value="2" <%if(status.equals("2")){%>selected<%}%>>Vô hiệu hóa</option>                                                            
-                                                            <option value="0" <%if(status.equals("0")){%>selected<%}%>>Chưa xác nhận</option>							
-                                                        </select>
-                                                    </div>       
-                                                        <div class="filter-group" style="display:flex;">
-                                                        <div style="padding-top: -20px;
-                                                             width: 81%;">Giới tính</div>
-                                                        <select class="form-control" name="gender" onchange="this.form.submit()" style="height: 33px;margin-top: -12px;">                                                            
-                                                            <option value="0" <%if(gender.equals("0")){%>selected<%}%>>Tất cả</option>                                                     
-                                                            <option value="false" <%if(gender.equals("false")){%>selected<%}%>>Nữ</option>                                                          
-                                                            <option value="true" <%if(gender.equals("true")){%>selected<%}%>>Nam</option>                                                            
-                                                        </select>
-                                                    </div>       
-                                                    <input type="submit" style="display: none;">
-                                                    <input type="hidden" name="service" value="fillter"/>
+                                                        <div style="padding-top: -16px;margin-right: 70px;
+                                                             ">Role
+                                                            <select class="form-control" name="role" onchange="this.form.submit()" style="height: 33px;margin-top: -12px;">   
+                                                                <option value="5" <%if(role.equals("5")){%>selected<%}%>>Admin</option>                                                     
+                                                                <option value="4" <%if(role.equals("4")){%>selected<%}%>>Quản lí sale</option>                                                     
+                                                                <option value="3" <%if(role.equals("3")){%>selected<%}%>>Sale</option>                                                     
+                                                                <option value="1" <%if(role.equals("1")){%>selected<%}%>>Khách Hàng</option>                                                          
+                                                                <option value="2" <%if(role.equals("2")){%>selected<%}%>>Marketing</option>                                                            
+                                                                <option value="0" <%if(role.equals("0")){%>selected<%}%>>Tất cả</option>							
+                                                            </select>
+
+                                                        </div>       
+                                                        <div class="filter-group" style="margin-right: 111px;">
+                                                            <div style="padding-top: -20px;
+                                                                 ">Trạng thái
+                                                                <select class="form-control" name="status" onchange="this.form.submit()" style="height: 33px;margin-top: -12px;">                                                            
+                                                                    <option value="3" <%if(status.equals("3")){%>selected<%}%>>Tất cả</option>                                                     
+                                                                    <option value="1" <%if(status.equals("1")){%>selected<%}%>>Hoạt động</option>                                                          
+                                                                    <option value="2" <%if(status.equals("2")){%>selected<%}%>>Vô hiệu hóa</option>                                                            
+                                                                    <option value="0" <%if(status.equals("0")){%>selected<%}%>>Chưa xác nhận</option>							
+                                                                </select>
+                                                            </div>
+                                                        </div>       
+                                                        <div class="filter-group">
+                                                            <div style="padding-top: -20px;
+                                                                 ">Giới tính
+                                                                <select class="form-control" name="gender" onchange="this.form.submit()" style="height: 33px;margin-top: -12px;">                                                            
+                                                                    <option value="0" <%if(gender.equals("0")){%>selected<%}%>>Tất cả</option>                                                     
+                                                                    <option value="false" <%if(gender.equals("false")){%>selected<%}%>>Nữ</option>                                                          
+                                                                    <option value="true" <%if(gender.equals("true")){%>selected<%}%>>Nam</option>                                                            
+                                                                </select>
+                                                            </div>
+                                                        </div>       
+                                                        <input type="submit" style="display: none;">
+                                                        <input type="hidden" name="service" value="fillter"/>
                                                 </form>
                                             </div>
                                             <thead class="thead-light">
-                                                <tr>
+                                                <tr class="paddingnone">
                                                     <th style="text-align: center; width: 0">ID</th>
                                                     <th style="text-align: center;width: 105.898px;">Tên Khách Hàng</th>
                                                     <th style="text-align: center;width: 188.727px">Email</th>
@@ -215,7 +213,7 @@
                                                         <td><c:if test="${cus.userStatus == 0}"><span class="badge badge-info">Chưa xác nhận</span></c:if>
                                                             <c:if test="${cus.userStatus == 1}"><span class="badge badge-success">Hoạt động</span></c:if>
                                                             <c:if test="${cus.userStatus == 2}"><span class="badge badge-danger">Vô hiệu hóa</span></c:if></td>
-                                                         <td><c:if test="${cus.roleID == 1}"><span class="badge badge-info">Khách hàng</span></c:if>
+                                                        <td><c:if test="${cus.roleID == 1}"><span class="badge badge-info">Khách hàng</span></c:if>
                                                             <c:if test="${cus.roleID == 2}"><span class="badge badge-success">Marketing</span></c:if>
                                                             <c:if test="${cus.roleID == 3}"><span class="badge badge-success">Sale</span></c:if>
                                                             <c:if test="${cus.roleID == 4}"><span class="badge badge-success">Quản lí sale</span></c:if>
@@ -332,17 +330,9 @@
         <script src="vendor/jquery/jquery.min.js"></script>
         <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
         <script src="vendor/jquery-easing/jquery.easing.min.js"></script>
-        <!--        <script src="js_marketing/ruang-admin.min.js"></script>
-        --><script src="js_marketing/customerlist.js"></script>  
+        <script src="js_marketing/ruang-admin.min.js"></script>
         <script src="vendor/datatables/jquery.dataTables.min.js"></script>
         <script src="vendor/datatables/dataTables.bootstrap4.min.js"></script>
-
-        <!-- Page level custom scripts -->
-        <script>
-function userDetails(uid) {
-    var url = "userDetails?uid="+uid;
-    window.location.href = url;
-}
-        </script>
+        <script src="js_marketing/feedbacklist.js"></script>
     </body>
 </html>

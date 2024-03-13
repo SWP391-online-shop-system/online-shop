@@ -166,7 +166,7 @@
                                                                                                            margin-right: -10px;
                                                                                                            margin-bottom: 7px;
                                                                                                            margin-left: 7px;
-                                                                                                           border-radius: 50%;" class="styling1" src="images/user/default_avatar.jpg" alt="Admin Image"></a>
+                                                                                                           border-radius: 50%;" class="styling1" src="images/user/${sessionScope.account.userImage}" alt="Admin Image"></a>
                                     </c:if>
                                     <c:if test="${sessionScope.account == null}">
                                     <button href="#" style="border: none; font-size:16px; font-family: math;" id="show-login">Đăng nhập</button>
