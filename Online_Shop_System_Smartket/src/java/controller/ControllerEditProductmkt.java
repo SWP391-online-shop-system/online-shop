@@ -62,6 +62,12 @@ public class ControllerEditProductmkt extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         try ( PrintWriter out = response.getWriter()) {
             // Create a DAOProduct instance
+            HttpSession session = request.getSession();
+            User oldUser = (User) session.getAttribute("account");
+            if (oldUser == null) {
+                response.sendRedirect("HomePageURL");
+            }else {
+                
             DAOProduct dao = new DAOProduct();
             DAOLog daoLog = new DAOLog();
             DAOProductImage daoPI = new DAOProductImage();
@@ -69,11 +75,6 @@ public class ControllerEditProductmkt extends HttpServlet {
             DAOUser daoU = new DAOUser();
             String service = request.getParameter("service");
             String message = request.getParameter("message");
-            HttpSession session = request.getSession();
-            User oldUser = (User) session.getAttribute("account");
-            if (oldUser == null) {
-                response.sendRedirect("HomePageURL");
-            }
             int updateBy = oldUser.getUserID(); // nhan vien
             if (service == null || service.isEmpty()) {
                 service = "";
@@ -98,12 +99,12 @@ public class ControllerEditProductmkt extends HttpServlet {
                 if (productStatus == true) {
                     productStatusValue = 0;
                     dao.updateStatus(productId, 0);
-                    purpose = "đã kích hoạt sản phẩm";
+                    purpose = "đã kích hoạt sản phẩm "+ productName;
                     System.out.println("updateed status from off to on");
                 } else {
                     dao.updateStatus(productId, 1);
                     productStatusValue = 1;
-                    purpose = "đã vô hiệu hóa sản phẩm";
+                    purpose = "đã vô hiệu hóa sản phẩm "+ productName;
                     System.out.println("updateed status from on to off");
                 }
                 Log log = new Log(updateBy, updateBy, purpose);
@@ -194,6 +195,7 @@ public class ControllerEditProductmkt extends HttpServlet {
                 request.setAttribute("categories", categories);
                 request.setAttribute("radioChoice", radioChoice);
                 request.getRequestDispatcher("updateProductmkt.jsp").forward(request, response);
+            }
             }
 
         }
