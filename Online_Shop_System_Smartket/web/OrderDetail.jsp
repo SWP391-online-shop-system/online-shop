@@ -118,7 +118,7 @@
                         <div class="d-sm-flex align-items-center justify-content-between mb-4">
                             <h1 class="h3 mb-0 text-gray-800">Chi tiết sản phẩm</h1>
                             <ol class="breadcrumb">
-                                <li class="breadcrumb-item"><a href="OrderListURL">Home</a></li>
+                                <li class="breadcrumb-item"><a href="saleDashBoardURL">Home</a></li>
                                 <li class="breadcrumb-item active" aria-current="page">Chi tiết sản phẩm</li>
                             </ol>
                         </div>
@@ -139,7 +139,7 @@
                         <p class="mb-0">ID</p>
                     </div>
                     <div class="col-sm-9">
-                        <input type="text" value="<%=rs.getInt("OrderID")%>" readonly>
+                        <input type="text" value="<%=rs.getInt("OrderID")%>" readonly/>
                     </div>
                 </div>
                 <hr>
@@ -148,7 +148,7 @@
                         <p class="mb-0">Tên khách hàng</p>
                     </div>
                     <div class="col-sm-9">
-                        <input type="text" value="<%=rs.getString("FullName")%>" readonly>
+                        <input type="text" value="<%=rs.getString("FullName")%>" readonly/>
                     </div>
                 </div>
                 <hr>
@@ -157,7 +157,7 @@
                         <p class="mb-0">Email</p>
                     </div>
                     <div class="col-sm-9">
-                        <input type="text" value="<%=rs.getString("Email")%>" readonly>
+                        <input type="text" value="<%=rs.getString("Email")%>" readonly/>
                     </div>
                 </div>
                 <hr>
@@ -166,7 +166,7 @@
                         <p class="mb-0">Số điện thoại</p>
                     </div>
                     <div class="col-sm-9">
-                        <input type="text" value="<%=rs.getString("PhoneNumber")%>" readonly>
+                        <input type="text" value="<%=rs.getString("PhoneNumber")%>" readonly/>
                     </div>
                 </div>
                 <hr>
@@ -175,7 +175,7 @@
                         <p class="mb-0">Ngày đặt hàng</p>
                     </div>
                     <div class="col-sm-9">
-                        <input type="text" value="<%=rs.getString("OrderDate")%>" readonly>
+                        <input type="text" value="<%=rs.getString("OrderDate")%>" readonly/>
                     </div>
                 </div>
                 <hr>
@@ -184,7 +184,7 @@
                         <p class="mb-0">Tổng giá tiền</p>
                     </div>
                     <div class="col-sm-9">
-                        <input type="text" value="<%=df.format(rs.getDouble("TotalPrice"))%>" readonly>
+                        <input type="text" value="<%=df.format(rs.getDouble("TotalPrice"))%>" readonly/>
                     </div>
                 </div>
                 <hr>
@@ -193,7 +193,7 @@
                         <p class="mb-0">Tên nhân viên</p>
                     </div>
                     <div class="col-sm-9">
-                        <input type="text" value="<%=rs.getString("SaleName")%>" readonly>
+                        <input type="text" value="<%=rs.getString("SaleName")%>" readonly/>
                     </div>
                 </div>
                 <hr>
@@ -203,8 +203,8 @@
                     </div>
                     <div class="col-sm-9">
                         <form action="saleOrderDetailURL" method="post">
-                            <input type="hidden" name="orderID" value="<%=rs.getInt("OrderID")%>">
-                            <input type="hidden" name="email" value="<%=rs.getString("ReceiverEmail")%>">
+                            <input type="hidden" name="orderID" value="<%=rs.getInt("OrderID")%>"/>
+                            <input type="hidden" name="email" value="<%=rs.getString("ReceiverEmail")%>"/>
                             <select name="status" onchange="this.form.submit()" <%= rs.getInt("StatusID") == 1 || rs.getInt("StatusID") == 4 ? "disabled" : "" %>>
                                 <%
                                 while(rs3.next()) {
@@ -223,6 +223,15 @@
                                 %>
                             </select>
                         </form>
+                    </div>
+                </div>
+                <hr>
+                <div class="row">
+                    <div class="col-sm-3">
+                        <p class="mb-0">Ngày giao hàng</p>
+                    </div>
+                    <div>
+                        <input value="<%=rs.getString("ShippedDate")%>"/>
                     </div>
                 </div>
                 <hr>
@@ -248,7 +257,7 @@
                             <p class="mb-0">Họ và tên</p>
                         </div>
                         <div class="col-sm-9">
-                            <input type="text" value="<%=rs1.getString("ReceiverName")%>" readonly>
+                            <input type="text" value="<%=rs1.getString("ReceiverName")%>" readonly/>
                         </div>
                     </div>
                     <hr>
@@ -257,7 +266,7 @@
                             <p class="mb-0">Giới tính</p>
                         </div>
                         <div class="col-sm-9">
-                            <input type="text" value="<%= genderText %>" readonly>
+                            <input type="text" value="<%= genderText %>" readonly/>
                         </div>
                     </div>
                     <hr>
@@ -266,7 +275,7 @@
                             <p class="mb-0">Email</p>
                         </div>
                         <div class="col-sm-9">
-                            <input type="text" value="<%=rs1.getString("ReceiverEmail")%>" readonly>
+                            <input type="text" value="<%=rs1.getString("ReceiverEmail")%>" readonly/>
                         </div>
                     </div>
                     <hr>
@@ -275,7 +284,7 @@
                             <p class="mb-0">Số điện thoại</p>
                         </div>
                         <div class="col-sm-9">
-                            <input type="text" value="<%=rs1.getString("ReceiverPhoneNumber")%>" readonly>
+                            <input type="text" value="<%=rs1.getString("ReceiverPhoneNumber")%>" readonly/>
                         </div>
                     </div>
                     <hr>
@@ -284,7 +293,7 @@
                             <p class="mb-0">Địa chỉ</p>
                         </div>
                         <div class="col-sm-9">
-                            <input type="text" value="<%=rs1.getString("ReceiverAddress")%>" readonly>
+                            <input type="text" value="<%=rs1.getString("ReceiverAddress")%>" readonly/>
                         </div>
                     </div>
                     <hr>
