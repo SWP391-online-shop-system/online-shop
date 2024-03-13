@@ -110,7 +110,7 @@ public class ControllerOrderDetail extends HttpServlet {
         int n = dao.updateStatus1(statusID, orderID);
         String email = request.getParameter("email");
         if (statusID == 4) {
-            sendEmail(email);
+            sendEmail(email, orderID);
             dao.updateShippedDate(orderID);
         }
         String st = (n > 0) ? "Cập nhật trạng thái thành công" : "Cập nhật trạng thái thất bại";
@@ -127,7 +127,7 @@ public class ControllerOrderDetail extends HttpServlet {
         return "Short description";
     }// </editor-fold>
 
-    public void sendEmail(String emailTo) {
+    public void sendEmail(String emailTo, int orderId) {
         String emailFrom = "smartketfpt@gmail.com";
         String password = "hvdw qdeh rbvg ahox";
         //properties
@@ -218,9 +218,12 @@ public class ControllerOrderDetail extends HttpServlet {
                     + "    <body>\n"
                     + "        <div class=\"veryfication-content\">\n"
                     + "            <div >\n"
-                    + "                <div class=\"veryfication-remind\">Đơn hàng của bạn đã được giao</div>\n"
+                    + "                <div class=\"veryfication-remind\">Ấn link bên dưới để xem chi tiết đơn hàng</div>\n"
                     + "                <div><img class=\"veryfication-logo\"src=\"https://i.imgur.com/GVovat4.png\" alt=\"logo\" title=\"logo\"/></div>\n"
-                    + "                <a href=\"\" ><div class=\"veryfication-btn\">Cảm ơn và hẹn gặp lại</div></a>\n"
+                    + "                 <div style=\"text-align: center;\n"
+                    + "                      font-size: 18px;\n"
+                    + "                        font-weight: 500;\n"
+                    + "                       letter-spacing: 1px;\"><a href=\"http://localhost:9999/Smartket/OrderInformationURL?OrderID=" + orderId + "\">Xem chi tiết đơn hàng</a></div>"
                     + "            </div>\n"
                     + "        </div>\n"
                     + "    </body>\n"
