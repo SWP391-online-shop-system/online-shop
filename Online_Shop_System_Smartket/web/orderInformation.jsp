@@ -542,7 +542,7 @@
                                     int orderId = 0;
                                     if(rsOrder.next()) {
                                     orderId = rsOrder.getInt("OrderID");
-                                    qr = rsOrder.getString("QrImage");
+                                    qr = rsOrder.getString("OrderImage");
                                     String status = "";
                                     switch(rsOrder.getInt("StatusID")){case 1:status = "Chờ xác nhận";break;
                                      case 2:status = "Đang xử lý";break;

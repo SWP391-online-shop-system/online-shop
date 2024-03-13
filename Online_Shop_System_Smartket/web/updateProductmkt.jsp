@@ -209,6 +209,7 @@
                                         </div>
                                     </div>
                                     <hr>
+                                    <input type="hidden" name="createDate" value="${product.createDate}">
                                     <div class="row">
                                         <div class="col-sm-3">
                                             <p class="mb-0">Tổng số sản phẩm</p>
@@ -286,9 +287,34 @@
                             <button class="btnUpdate"type="submit" value="Lưu">Lưu</button>
                         </form>
                     </div>
-
                 </div>
-                </body>
+                <div class="row" style="    height: 300px;
+                     width: 97%;
+                     max-height: 300px;
+                     overflow-y: scroll;
+                     margin: 0 auto;margin-bottom: 30px;">
+                    <div class="col-md-12">
+                        <div class="card mb-4 mb-md-0">
+                            <div class="card-body">
+                                <p class="mb-4"style="
+                                   font-size: 20px;
+                                   color: black;">Lịch sử thay đổi trạng thái</p>
+                                <div id="">
+                                    <%ResultSet logger = (ResultSet)request.getAttribute("log");
+                                        int countLog = 0;
+                                    while(logger.next()){
+                                    countLog++;
+                                        DAOUser daoU = new DAOUser();
+                                        ResultSet mkt = daoU.getData("SELECT * FROM online_shop_system.user where userID = " + logger.getInt(2));
+                                    %>
+                                    <p id="logcheck" style="margin-bottom: 15px;"><%=countLog%> - <%while(mkt.next()){%>Nhân viên <%=mkt.getString("FirstName")+" "+mkt.getString("LastName")%> <%}%>
+                                        <%=logger.getString(4)%> vào <span style="color: black;"><%=logger.getString(3).substring(0,10)%>, lúc <%=logger.getString(3).substring(10)%></span></p>
+                                        <%}%>
+                                </div>                                         
+                            </div>
+                        </div>
+                    </div>
+                </div>
                 <script>
                     function validateForm() {
                         var unitInStock = parseInt(document.getElementById("unitInStock").value);
@@ -301,4 +327,5 @@
                         return true;
                     }
                 </script>
+                </body>
                 </html>
