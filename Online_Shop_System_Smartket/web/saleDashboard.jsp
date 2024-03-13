@@ -26,8 +26,8 @@
 
 <body id="page-top">
     <%
-        HttpSession session = request.getSession();
-            User user = (User) session.getAttribute("account");
+        HttpSession session1 = request.getSession();
+            User user = (User) session1.getAttribute("account");
             DecimalFormat df = new DecimalFormat("###,###");
             df.setMaximumFractionDigits(8);
     %>
@@ -44,7 +44,7 @@
             <div style="position: sticky; top: 30px;">
                 <hr class="sidebar-divider wee-0" style="margin: 0px;">
                 <li class="nav-item active">
-                    <a class="nav-link" href="MarketingDashBoardURL">
+                    <a class="nav-link" href="">
                         <i class="fas fa-fw fa-tachometer-alt"></i>
                         <span>Thống kê</span></a>
                 </li>
@@ -232,7 +232,7 @@
                                     <tbody>
                                         <%while(rsOrderList.next()){%>
                                         <tr>
-                                            <td class="id-style"><a href="#"><%=rsOrderList.getInt(1)%></a></td>
+                                            <td class="id-style"><a href="saleOrderDetailURL?oID=<%=rsOrderList.getInt(1)%>"><%=rsOrderList.getInt(1)%></a></td>
                                             <td><%=rsOrderList.getString("FirstName")+" "+rsOrderList.getString("LastName")%></td>
                                             <td><%=df.format(rsOrderList.getDouble("TotalPrice"))%> đ</td>
                                             <td><%=rsOrderList.getString("OrderDate")%></td>

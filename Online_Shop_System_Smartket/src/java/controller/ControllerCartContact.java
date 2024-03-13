@@ -14,14 +14,11 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.util.Arrays;
 import model.DAOAddressUser;
 import model.DAOCart;
 import model.DAOProduct;
 import view.AddressUser;
 import view.User;
-
 /**
  *
  * @author trant
@@ -66,7 +63,10 @@ public class ControllerCartContact extends HttpServlet {
             request.setAttribute("inputMaxPrice", maxValue);
             ResultSet rsCategory = daoPro.getData("Select * from Categories");
             request.setAttribute("CategoryResult", rsCategory);
-            String message = "";
+            String message = (String) request.getAttribute("message");
+            if (message == null) {
+                message = "";
+            }
             if (service == null) {
                 service = "showContact";
             }
@@ -80,6 +80,7 @@ public class ControllerCartContact extends HttpServlet {
                 request.setAttribute("rsAddress", rsAddress);
                 request.setAttribute("rsDefaultAdd", rsDefaultAdd);
                 request.setAttribute("productToBuy", productId);
+                request.setAttribute("message", message);
                 request.getRequestDispatcher("cartcontact.jsp").forward(request, response);
             }
             if (service.equals("addAddress")) {
@@ -126,68 +127,12 @@ public class ControllerCartContact extends HttpServlet {
                 daoAdd.updateStatus(id);
                 response.sendRedirect("contactURL");
             }
-            if(service.equals("showOneAdd")){
+            if (service.equals("showOneAdd")) {
                 String id_str = request.getParameter("addId");
                 int id = Integer.parseInt(id_str);
-                String name = "";
-                String phone = "";
-                String email = "";
-//                String city = request.getParameter("city");
-//                String district = request.getParameter("district");
-//                String ward = request.getParameter("ward");
-                int gender;
-                String addressDetail = "";
-                String cityDistrictWard = ""; 
-                ResultSet rs = dao.getData("SELECT * FROM online_shop_system.addressuser where AddressID = "+id+";");
-                try{
-                    while(rs.next()){
-                        name = rs.getString("Name");
-                        phone = rs.getString("Phone");
-                        email = rs.getString("Email");
-                        addressDetail = rs.getString("AddDetail");
-                        cityDistrictWard = rs.getString("CityDistrictWard");
-                        gender = rs.getInt("Gender");
-                    }
-                } catch(SQLException e){
-                    
-                }
-                out.print(" <div class=\"modal-body p-3\"> \n" +
-"                                    <div class=\"form-group\">\n" +
-"                                        <label>Tên người nhận</label>\n" +
-"                                        <input name=\"name\" type=\"text\" value="+name+" required class=\"form-control\" id=\"newName\" aria-describedby=\"emailHelp\"\n" +
-"                                               placeholder=\"Nhập tên...\">\n" +
-"                                    </div>\n" +
-"                                    <div class=\"form-group\">\n" +
-"                                        <label>Số điện thoại người nhận</label>\n" +
-"                                        <input name=\"phone\" type=\"number\" value="+phone+" required class=\"form-control\" id=\"newPhone\" placeholder=\"Nhập số điện thoại...\">\n" +
-"                                    </div>\n" +
-"                                    <div class=\"form-group\">\n" +
-"                                        <label>Email</label>\n" +
-"                                        <input name=\"email\" value="+email+" required class=\"form-control\" id=\"newEmail\" placeholder=\"Nhập email...\">\n" +
-"                                    </div>\n" +
-"                                    <div class=\"form-element\" style=\"display: flex;\">\n" +
-"                                        <label>Giới tính</label>\n" +
-"                                        <div style=\"display:flex; flex: 40%; margin-left: 11px\">\n" +
-"                                            <div class=\"custom-control custom-radio\" style=\"margin-right: 15px;\">\n" +
-"                                                <input type=\"radio\" id=\"customRadio3\" name=\"gender\" class=\"custom-control-input\" value=\"male\" checked required>\n" +
-"                                                <label class=\"custom-control-label\" for=\"customRadio3\">Nam</label>\n" +
-"                                            </div>\n" +
-"                                            <div class=\"custom-control custom-radio\">\n" +
-"                                                <input type=\"radio\" id=\"customRadio4\" name=\"gender\" class=\"custom-control-input\" value=\"female\" required>\n" +
-"                                                <label class=\"custom-control-label\" for=\"customRadio4\">Nữ</label>\n" +
-"                                            </div>\n" +
-"                                        </div>\n" +
-"                                    </div>\n" +
-"                                    <div class=\"form-group\">\n" +
-"                                        <label>Địa Chỉ Người Nhận\n" +
-"                                        </label><br/>\n" +
-"                                        <textarea name=\"cityDistrictWard\"  required class=\"form-control\" id=\"\">"+cityDistrictWard+"</textarea>\n" +
-"                                    </div>\n" +
-"                                    <div class=\"form-group\">\n" +
-"                                        <label>Địa chỉ cụ thể (số nhà, tên đường)</label>\n" +
-"                                        <textarea name=\"addressdetail\"  required class=\"form-control\" id=\"newAddressDetail\">"+addressDetail+"</textarea>\n" +
-"                                    </div>\n" +
-"                                </div> ");
+                ResultSet rsOneAdd = dao.getData("SELECT * FROM online_shop_system.addressuser where AddressID = " + id + ";");
+                request.setAttribute("rsOneAdd", rsOneAdd);
+                response.getWriter().write("ajax in");
             }
         }
     }

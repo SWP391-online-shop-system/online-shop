@@ -35,7 +35,7 @@
             }
         </style>
     </head>
-    <body>
+    <body id="page-top">
         <%
            ResultSet rs = (ResultSet)request.getAttribute("data");
            String message ="";
@@ -439,7 +439,6 @@
                         </div>
                     </div>
                 </div>
-
                 <div class="card">
                     <div class="row">
                         <div class=" cart">
@@ -470,7 +469,7 @@
                                         totalprice += rs.getInt("Quantity")*unitPrice;
                                         %>
                                         <tr style="border-bottom: 1px solid #00000029;">
-                                            <td><input type="checkbox" class="checkbox-item" name="productToBuy" value="<%=rs.getInt("ProductID")%>"/></td>
+                                            <td><input type="checkbox" class="checkbox-item" id="id<%=count%>" name="productToBuy" value="<%=rs.getInt("ProductID")%>"/></td>
                                             <td class="col"><img class="img-fluid" style="width: 112px;
                                                                  height: 112px;padding: 11px;"src="<%=rs.getString("ProductURL")%>"></td>
 
@@ -480,7 +479,7 @@
                                                      margin-left: 10px;
                                                      margin-bottom: -10px;">
                                                     <div class="value-button" style="width: 25px;height: 14px;padding: 4px 0;" onclick="decreaseValue(this,<%=rs.getInt("ProductID")%>);updateTotalPrice();" value="Decrease Value"><i class="fa-solid fa-minus" style="font-size: 11px;"></i></div>
-                                                    <input id="number" data-count="<%=count%>" style="width: 25px;height: 20px;" type="number" value="<%=rs.getInt("Quantity")%>" min="1" onchange="changeValue(this);updateTotalPrice();"/>
+                                                    <input data-count="<%=count%>" style="width: 25px;height: 20px;" type="number" value="<%=rs.getInt("Quantity")%>" min="1" onchange="changeValue(this);updateTotalPrice();"/>
                                                     <div class="value-button" style="width: 25px;height: 14px;padding: 4px 0;" onclick="increaseValue(this,<%=rs.getInt("ProductID")%>);updateTotalPrice();" value="Increase Value"><i class="fa-solid fa-plus" style="font-size: 11px;"></i></div><br/>
                                                         <%int proid=rs.getInt("ProductID");%>
                                                 </div>
@@ -506,7 +505,7 @@
                                                 if(message == ""){
                                             %>
                                             <label><input type="checkbox" id="select-all" />Chọn tất cả</label>
-                                            <a href="CartURL?service=deleteAllCart" style="margin-left: 50px;"><i class="fa fa-trash"></i>&nbsp;Xóa tất cả</a>
+                                            <a onclick="confirmDeleteAll()" style="margin-left: 50px;" id="deletelink"><i class="fa fa-trash"></i>&nbsp;Xóa tất cả</a>
                                             <%} else{%>
                                             <p style="background: #e7b559;
                                                width: 246px;
@@ -527,10 +526,10 @@
                                         ResultSet rsCheckCart = dao.getData("select * from Cart where UserID = "+userID);
                                         if(!rsCheckCart.isBeforeFirst()){%>
                                         <%}else{%>
-                                        <div style="flex: 0 0 42%; display: flex;">
-                                            <div style="font-size: 15px;padding-top: 6px;flex:  0 0 62%">Tổng đơn hàng:<span style="margin-left:10px" id="realTotal"></span></div>
+                                        <div style="flex: 0 0 42%; display: flex;">                                                    
+                                            <div style="font-size: 15px;padding-top: 6px;flex:  0 0 62%" id="totalPrice">Tổng đơn hàng:<span style="margin-left:10px" id="realTotal"></span></div>
                                             <input type="hidden" name="service" value="showContact"/>
-                                            <button type="submit" class="btn">Thanh Toán</button>
+                                            <button name="service" value="checkout" type="submit" class="btn">Thanh Toán</button>
                                         </div>
                                         <%}%>
                                     </div>
@@ -544,90 +543,13 @@
                 </div>
 
 
-                <script type="text/javascript">
-                    function formatPriceToVND(price) {
-                        let formattedPrice = price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-                        formattedPrice += "đ";
-                        return formattedPrice;
-                    }
+                <script src="js/cartdetail.js" type="text/javascript">
 
-                    function changeValue(element) {
-                        var inputElement = element.parentElement.querySelector('input');
-                        var value = parseInt(inputElement.value, 10);
-                        value = isNaN(value) ? 1 : value;
-                        value <= 1 ? value = 1 : value;
-                        inputElement.value = value;
-                        updatePriceDisplayPlus(inputElement);
-                    }
-                    function increaseValue(element, proId) {
-                        console.log(element);
-                        console.log(proId);
-                        var inputElement = element.parentElement.querySelector('input');
-                        var value = parseInt(inputElement.value, 10);
-                        value = isNaN(value) ? 0 : value;
-                        value++;
-                        console.log(value);
-                        inputElement.value = value;
-                        updatePriceDisplayPlus(inputElement);
-                        updatePriceToDb(proId, value);
-                    }
-
-                    function decreaseValue(element, proId) {
-                        var inputElement = element.parentElement.querySelector('input');
-                        var value = parseInt(inputElement.value, 10);
-                        value = isNaN(value) ? 1 : value;
-                        value <= 1 ? value = 1 : value--;
-                        inputElement.value = value;
-                        updatePriceDisplayPlus(inputElement);
-                        updatePriceToDb(proId, value);
-                    }
-                    function updatePriceToDb(proId, quantity) {
-                        $.ajax({
-                            type: "POST",
-                            url: "/Smartket/updateProduct",
-                            data: {service: "increase", proId: proId, quantity: quantity},
-                            success: function (response) {
-                            },
-                            error: function (xhr, status, error) {
-                                // Xử lý lỗi
-                                console.error(xhr.responseText);
-                            }
-                        });
-                    }
-                    function updatePriceDisplayPlus(inputElement) {
-                        var count = inputElement.getAttribute('data-count');
-                        var priceDisplayElement = document.getElementById('priceDisplay' + count);
-                        var unitPrice = parseFloat(priceDisplayElement.getAttribute('data-unit-price'));
-                        var newPrice = parseFloat(inputElement.value) * unitPrice;
-                        priceDisplayElement.innerText = formatPriceToVND(newPrice);
-                    }
-                    function updatePriceDisplayNeg(inputElement) {
-                        var count = inputElement.getAttribute('data-count');
-                        var priceDisplayElement = document.getElementById('priceDisplay' + count);
-                        var unitPrice = parseFloat(priceDisplayElement.getAttribute('data-unit-price'));
-                        var quantity = parseFloat(inputElement.value);
-                        var newPrice = unitPrice / quantity;
-                        priceDisplayElement.innerText = formatPriceToVND(newPrice);
-                    }
-                    function updateTotalPrice() {
-                        var count1 = document.getElementsByClassName("gett");
-                        var result = 0;
-                        for (let i = 0; i < count1.length; i++) {
-                            result += (parseInt(count1[i].innerHTML.slice(0, -1).replaceAll(",", "")));
-                        }
-                        var rs = document.getElementById("realTotal");
-                        rs.innerText = formatPriceToVND(result);
-                    }
-                    updateTotalPrice();
-                    document.getElementById('select-all').addEventListener('change', function () {
-                        var checkboxes = document.querySelectorAll('.checkbox-item');
-                        for (var i = 0; i < checkboxes.length; i++) {
-                            checkboxes[i].checked = this.checked;
-                        }
-                    });
                 </script>
             </section>
         </div>
         <script src="vendor/jquery/jquery.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10" ></script>
+
     </body>
 </html>
