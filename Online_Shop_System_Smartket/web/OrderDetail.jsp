@@ -204,12 +204,22 @@
                     <div class="col-sm-9">
                         <form action="saleOrderDetailURL" method="post">
                             <input type="hidden" name="orderID" value="<%=rs.getInt("OrderID")%>">
-                            <select name="status" onchange="this.form.submit()">
+                            <input type="hidden" name="email" value="<%=rs.getString("ReceiverEmail")%>">
+                            <select name="status" onchange="this.form.submit()" <%= rs.getInt("StatusID") == 1 || rs.getInt("StatusID") == 4 ? "disabled" : "" %>>
                                 <%
-                                                                while(rs3.next()){%>
-                                <option <%=rs.getInt("StatusID")==rs3.getInt(1)?"selected":""%> 
-                                    value="<%=rs3.getInt(1)%>"><%=rs3.getString(2)%></option>
-                                <%}
+                                while(rs3.next()) {
+                                    int statusId = rs3.getInt(1);
+                                    String statusName = rs3.getString(2);
+                                    int selectedStatusId = rs.getInt("StatusID");
+                                    boolean isSelected = selectedStatusId == statusId;
+
+                                    // Check if the option should be disabled
+                                    if (isSelected) {
+                                        out.println("<option value=\"" + statusId + "\" selected>" + statusName + "</option>");
+                                    } else {
+                                        out.println("<option value=\"" + statusId + "\">" + statusName + "</option>");
+                                    }
+                                }
                                 %>
                             </select>
                         </form>
