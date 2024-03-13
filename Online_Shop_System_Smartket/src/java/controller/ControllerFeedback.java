@@ -16,9 +16,11 @@ import jakarta.servlet.http.HttpSession;
 import jakarta.servlet.http.Part;
 import java.sql.ResultSet;
 import java.io.File;
+import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import model.DAOFeedBack;
+import model.DAOOrderDetails;
 import model.DAOProduct;
 import view.User;
 
@@ -47,6 +49,7 @@ public class ControllerFeedback extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         DAOFeedBack dao = new DAOFeedBack();
         DAOProduct daoP = new DAOProduct();
+        DAOOrderDetails DAODetail = new DAOOrderDetails();
         double maxValue = daoP.getMaxUnitPrice();
         double minValue = daoP.getMinUnitPrice();
         request.setAttribute("inputMinPrice", minValue);
@@ -55,12 +58,28 @@ public class ControllerFeedback extends HttpServlet {
         request.setAttribute("CategoryResult", rsCategory);
         HttpSession session = request.getSession();
         User user = (User) session.getAttribute("account");
+        int OrderID = 0;
+        int isFeedBack = 0;
         if (user == null) {
             response.sendRedirect("HomePageURL");
         } else {
             String service = request.getParameter("service");
             String pID = request.getParameter("ProductID");
             int ProductID = Integer.parseInt(pID);
+            try {
+                ResultSet rsDetail = dao.getData("select * from OrderDetail as detail "
+                        + "join `Order` as ord on detail.OrderID = ord.OrderID where UserID = " + user.getUserID() + " and ProductID =" + ProductID);
+                if (rsDetail.next()) {
+                    OrderID = rsDetail.getInt("OrderID");
+                    isFeedBack = rsDetail.getInt("isFeedBack");
+                    if (rsDetail.getInt("isFeedBack") == 1) {
+                        request.getRequestDispatcher("ProductDetailURL?ProductID=" + ProductID).forward(request, response);
+                    }
+                }
+            } catch (SQLException ex) {
+                Logger.getLogger(ControllerFeedback.class.getName()).log(Level.SEVERE, null, ex);
+            }
+
             if (service.equals("gofeedback")) {
                 ResultSet rsProduct = daoP.getData("select * from product as p\n"
                         + " JOIN productimage as i ON p.ProductID = i.ProductID where p.ProductID = " + pID + " and i.ProductURL=i.ProductURLShow;");
@@ -69,34 +88,40 @@ public class ControllerFeedback extends HttpServlet {
             }
 
             if (service.equals("upload")) {
-                Part photo1 = request.getPart("feedbackImg");
-                System.out.println("photo1" + photo1);
-                String feedbackImg = getSubmittedFileName(photo1);
-                System.out.println("215615415165165" + feedbackImg);
-                String imageDirectory = "/images/";
-                String path1 = imageDirectory + "feedback/" + feedbackImg;
-                String filename1 = request.getServletContext().getRealPath(path1);
-                String realFileName1 = filename1;
-                System.out.println("215615415165165" + realFileName1);
-                if (filename1.contains("\\build")) {
-                    realFileName1 = filename1.replace("\\build", "");
+                System.out.println("in upload");
+                System.out.println("isFeedBack  ="+isFeedBack);
+                System.out.println("orderID  ="+OrderID);
+                if (isFeedBack == 0) {
+                    Part photo1 = request.getPart("feedbackImg");
+                    String feedbackImg = getSubmittedFileName(photo1);
+                    System.out.println("215615415165165" + feedbackImg);
+                    String imageDirectory = "/images/";
+                    String path1 = imageDirectory + "feedback/" + feedbackImg;
+                    String filename1 = request.getServletContext().getRealPath(path1);
+                    String realFileName1 = filename1;
+                    System.out.println("215615415165165" + realFileName1);
+                    if (filename1.contains("\\build")) {
+                        realFileName1 = filename1.replace("\\build", "");
+                    }
+                    if (photo1.getSize() > 0) {
+                        photo1.write(realFileName1);
+                    }
+                    String msgFeedback = request.getParameter("msg");
+                    String SRate = request.getParameter("rate");
+                    if (SRate == null) {
+                        SRate = "1";
+                    }
+                    int rate = Integer.parseInt(SRate);
+                    int UserID = user.getUserID();
+                    dao.addFeedback(ProductID, UserID, feedbackImg, msgFeedback, rate);
+                    DAODetail.updateIsFeedBack(OrderID, ProductID, 1);
+                    System.out.println("update thanh conng");
                 }
-                if (photo1.getSize() > 0) {
-                    photo1.write(realFileName1);
-                }
-                String msgFeedback = request.getParameter("msg");
-                String SRate = request.getParameter("rate");
-                if (SRate == null) {
-                    SRate = "1";
-                }
-                int rate = Integer.parseInt(SRate);
-                int UserID = user.getUserID();
-                dao.addFeedback(ProductID, UserID, feedbackImg, msgFeedback, rate);
-                try {
-                    Thread.sleep(5000);
-                } catch (InterruptedException ex) {
-                    Logger.getLogger(ControllerAddPost.class.getName()).log(Level.SEVERE, null, ex);
-                }
+//                try {
+//                    Thread.sleep(4000);
+//                } catch (InterruptedException ex) {
+//                    Logger.getLogger(ControllerAddPost.class.getName()).log(Level.SEVERE, null, ex);
+//                }
                 response.sendRedirect("ProductDetailURL?ProductID=" + ProductID);
             }
         }

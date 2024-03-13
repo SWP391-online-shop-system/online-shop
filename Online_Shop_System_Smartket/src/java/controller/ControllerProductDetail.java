@@ -1,13 +1,9 @@
 package controller;
 
-
-
 /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
  */
-
-
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
@@ -39,28 +35,7 @@ public class ControllerProductDetail extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         try ( PrintWriter out = response.getWriter()) {
-            DAOProduct daoPro = new DAOProduct();
-            int ProductID = Integer.parseInt(request.getParameter("ProductID"));
-            Product p = daoPro.getProductById(ProductID);
-            ResultSet rsDetail = daoPro.getData("select * from Product as p join ProductImage as pi on p.ProductID = pi.ProductID "
-                    + "where p.ProductID = " + ProductID);
-            ResultSet rsRate = daoPro.getData("SELECT p.ProductID, COALESCE(avg(fb.FeedBackRate), 3) AS AverageFeedbackRate, count(fb.ProductID) as timeRateCount, count(fb.UserID) as userRateCount\n"
-                    + "FROM Product p\n"
-                    + "LEFT JOIN FeedBack fb ON p.ProductID = fb.ProductID where p.ProductID = " + ProductID + " \n"
-                    + "GROUP BY p.ProductID");
-            ResultSet rsFeedBack = daoPro.getData("select u.UserImage, (CONCAT(u.FirstName,\" \",u.LastName))as UserName,\n"
-                    + "fb.FeedBackRate, fb.FeedBackContent, fb.FeedBackDate \n"
-                    + "from User as u join FeedBack as fb on u.UserID = fb.UserID where fb.ProductID= " + ProductID + " order by fb.FeedBackDate;");
-            request.setAttribute("rsDetail", rsDetail);
-            request.setAttribute("rsRate", rsRate);
-            request.setAttribute("rsFeedBack", rsFeedBack);
-            double maxValue = daoPro.getMaxUnitPrice();
-            double minValue = daoPro.getMinUnitPrice();
-            request.setAttribute("inputMinPrice", minValue);
-            request.setAttribute("inputMaxPrice", maxValue);
-            ResultSet rsCategory = daoPro.getData("Select * from Categories");
-            request.setAttribute("CategoryResult", rsCategory);
-            request.getRequestDispatcher("productDetail.jsp").forward(request, response);
+
         }
     }
 
@@ -76,7 +51,39 @@ public class ControllerProductDetail extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        System.out.println("Ajax in");
+        DAOProduct daoPro = new DAOProduct();
+        int ProductID = Integer.parseInt(request.getParameter("ProductID"));
+        Product p = daoPro.getProductById(ProductID);
+        ResultSet rsFeedBack;
+        String filterValue = request.getParameter("filterValue");
+        System.out.println("filterValue = " + filterValue);
+        ResultSet rsDetail = daoPro.getData("select * from Product as p join ProductImage as pi on p.ProductID = pi.ProductID "
+                + "where p.ProductID = " + ProductID);
+        ResultSet rsRate = daoPro.getData("SELECT p.ProductID, COALESCE(avg(fb.FeedBackRate), 3) AS AverageFeedbackRate, count(fb.ProductID) as timeRateCount, count(fb.UserID) as userRateCount\n"
+                + "FROM Product p\n"
+                + "LEFT JOIN FeedBack fb ON p.ProductID = fb.ProductID where p.ProductID = " + ProductID + " \n"
+                + "GROUP BY p.ProductID");
+        if (filterValue == null) {
+            filterValue = "";
+            rsFeedBack = daoPro.getData("select u.UserImage, (CONCAT(u.FirstName,\" \",u.LastName))as UserName,\n"
+                    + "fb.FeedBackRate,fb.FeedBackImage, fb.FeedBackContent, fb.FeedBackDate \n"
+                    + "from User as u join FeedBack as fb on u.UserID = fb.UserID where fb.ProductID= " + ProductID + " order by fb.FeedBackDate;");
+        } else {
+            rsFeedBack = daoPro.getData("select u.UserImage, (CONCAT(u.FirstName,\" \",u.LastName))as UserName,\n"
+                    + "fb.FeedBackRate,fb.FeedBackImage, fb.FeedBackContent, fb.FeedBackDate \n"
+                    + "from User as u join FeedBack as fb on u.UserID = fb.UserID where fb.ProductID= " + ProductID + " and fb.FeedBackRate = " + filterValue + " order by fb.FeedBackDate;");
+        }
+        request.setAttribute("rsDetail", rsDetail);
+        request.setAttribute("rsRate", rsRate);
+        request.setAttribute("rsFeedBack", rsFeedBack);
+        double maxValue = daoPro.getMaxUnitPrice();
+        double minValue = daoPro.getMinUnitPrice();
+        request.setAttribute("inputMinPrice", minValue);
+        request.setAttribute("inputMaxPrice", maxValue);
+        ResultSet rsCategory = daoPro.getData("Select * from Categories");
+        request.setAttribute("CategoryResult", rsCategory);
+        request.getRequestDispatcher("productDetail.jsp").forward(request, response);
     }
 
     /**
@@ -90,7 +97,6 @@ public class ControllerProductDetail extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
     }
 
     /**
