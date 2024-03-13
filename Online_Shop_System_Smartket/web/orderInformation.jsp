@@ -7,6 +7,7 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@page import="view.*" %>
+<%@page import="model.DAOReceiver" %>
 <%@page import="model.*" %>
 <%@page import="java.sql.ResultSet"%>
 <%@page import="java.text.DecimalFormat" %>
@@ -320,9 +321,7 @@
                                 <c:if test="${sessionScope.account != null}">
                             <li>      
                                 <%
-                                HttpSession session2 = request.getSession();
-                                User user = (User) session2.getAttribute("account");
-                                int userID = user.getUserID();
+                                int userID = (int)request.getAttribute("UserID");
                                 DAOCart dao = new DAOCart();
                                 ResultSet rs = dao.getData("SELECT count(*) as count FROM Cart AS c JOIN Product AS p ON c.ProductID = p.ProductID where userID = "+userID+"");
                                 while(rs.next()){
