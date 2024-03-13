@@ -26,8 +26,9 @@ public class Order {
     public Order() {
     }
 //int, int, int, int, double, String, String, int, boolean, String
-    public Order(int orderID, int userID, int saleID, int Quantity, 
-            double totalPrice, String orderDate, String shippedDate, 
+
+    public Order(int orderID, int userID, int saleID, int Quantity,
+            double totalPrice, String orderDate, String shippedDate,
             int statusID, boolean OrderStatus, String QrImage) {
         this.orderID = orderID;
         this.userID = userID;
@@ -39,6 +40,13 @@ public class Order {
         this.statusID = statusID;
         this.OrderStatus = OrderStatus;
         this.QrImage = QrImage;
+    }
+
+    public Order(int userID, int saleID, double totalPrice, int StatusID) {
+        this.userID = userID;
+        this.saleID = saleID;
+        this.totalPrice = totalPrice;
+        this.statusID = StatusID;
     }
 
     public int getOrderID() {
@@ -125,6 +133,7 @@ public class Order {
     public String toString() {
         return "Order{" + "orderID=" + orderID + ", userID=" + userID + ", saleID=" + saleID + ", Quantity=" + Quantity + ", totalPrice=" + totalPrice + ", orderDate=" + orderDate + ", shippedDate=" + shippedDate + ", statusID=" + statusID + ", OrderStatus=" + OrderStatus + ", QrImage=" + QrImage + '}';
     }
+
     public static void main(String[] args) {
         DAOOrder dao = new DAOOrder();
         Order order = new Order();
