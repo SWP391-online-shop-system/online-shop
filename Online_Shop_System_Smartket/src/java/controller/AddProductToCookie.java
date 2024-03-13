@@ -38,21 +38,15 @@ public class AddProductToCookie extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         try ( PrintWriter out = response.getWriter()) {
-            String[] productId = request.getParameterValues("productToBuy");
-//            if (productId == null) {
-//                User user = (User) session.getAttribute("account");
-//                int userID = user.getUserID();
-//                DAOCart dao = new DAOCart();
-//                DAOProduct daoPro = new DAOProduct();
-//                request.setAttribute("message", "Hãy chọn sản phẩm để đặt hàng");
-//                request.getRequestDispatcher("CartURL").forward(request, response);                
-//            } else {
-
-            String arrayAsString = String.join(".", productId);
-            Cookie cookie = new Cookie("productCookie", arrayAsString);
-            response.addCookie(cookie);
-                response.sendRedirect("contactURL");
-//            }
+            String proId = request.getParameter("proId");
+            log(proId);
+            if (proId.isEmpty()) {
+                response.getWriter().write("0");
+            } else {
+                Cookie cookie = new Cookie("productCookie", proId);
+                response.addCookie(cookie);
+                response.getWriter().write("1");
+            }
         }
     }
 

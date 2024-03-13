@@ -11,7 +11,7 @@
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
         <meta http-equiv="x-ua-compatible" content="ie=edge" />
-        <title>Material Design for Bootstrap</title>
+        <title>Đơn hàng của tôi</title>
         <!-- Font Awesome -->
         <link rel="stylesheet" href="style.css"/>
         <link rel="stylesheet" href="css/css_productList/font-awesome.min.css" type="text/css">
@@ -667,7 +667,13 @@
                                 <%}}%>
                             </div>
                             <hr>
+                            <%if(!statusName.equals("Chờ xác nhận")){%>
                             <a style="margin-left: 681px;" href="OrderInformationURL?OrderID=<%=rsOrderGroup.getInt("OrderID")%>" class="btn btn-success btn-lg" data-abc="true">Xem chi tiết đơn hàng <i class="fa fa-chevron-right"></i></a>
+                                <%} else{%>
+                                <%DAOReceiver daoRece = new DAOReceiver();
+                                String email = daoRece.getEmailById(rsOrderGroup.getInt("OrderID"));%>
+                            <a style="margin-left: 681px;" href="CartcontactOTPVerify?email=<%=email%>&oid=<%=rsOrderGroup.getInt("OrderID")%>" class="btn btn-success btn-lg" data-abc="true">Gửi mã OTP để xác nhận đơn hàng<i class="fa fa-chevron-right"></i></a>
+                                <%}%>
                         </div>
                     </form>
                 </article>

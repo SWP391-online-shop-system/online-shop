@@ -5,6 +5,7 @@
 package model;
 
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -42,5 +43,21 @@ public class DAOReceiver extends DBConnect {
             Logger.getLogger(DAOReceiver.class.getName()).log(Level.SEVERE, null, ex);
         }
         return n;
+    }
+    public String getEmailById(int orderId){
+        String sql = "select * from receiver where orderId =?";
+        String email; 
+        try {
+            PreparedStatement st = conn.prepareStatement(sql);
+            st.setInt(1, orderId);
+            ResultSet rs = st.executeQuery();
+            while (rs.next()) {
+                email = rs.getString("ReceiverEmail");        
+                return email;
+            }
+        } catch (SQLException e) {
+            System.out.println(e);
+        }
+        return null;
     }
 }

@@ -43,7 +43,7 @@ public class ValidateURL implements Filter {
     private void doBeforeProcessing(ServletRequest request, ServletResponse response)
             throws IOException, ServletException {
         if (debug) {
-            log("ValidateURL:DoBeforeProcessing");
+//            log("ValidateURL:DoBeforeProcessing");
         }
 
         // Write code here to process the request and/or response before
@@ -71,7 +71,7 @@ public class ValidateURL implements Filter {
     private void doAfterProcessing(ServletRequest request, ServletResponse response)
             throws IOException, ServletException {
         if (debug) {
-            log("ValidateURL:DoAfterProcessing");
+//            log("ValidateURL:DoAfterProcessing");
         }
 
         // Write code here to process the request and/or response after
@@ -107,7 +107,7 @@ public class ValidateURL implements Filter {
             throws IOException, ServletException {
 
         if (debug) {
-            log("ValidateURL:doFilter()");
+//            log("ValidateURL:doFilter()");
         }
 
         doBeforeProcessing(request, response);
@@ -141,7 +141,7 @@ public class ValidateURL implements Filter {
                 }
             }
             if (url.startsWith("/sale")) {
-                if (url.contains("saleOrderDetailURL")) {
+                if (url.contains("saleOrderDetailURL")||url.contains("saleDashBoardURL")) {
                     if (session.getAttribute("account") == null) {
                         res.sendRedirect("loginURL");
                     } else if (a.getRoleID() != 3 && a.getRoleID() != 4) {

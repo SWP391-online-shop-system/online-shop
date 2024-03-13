@@ -363,7 +363,7 @@
                                 </div>
                                 <div class="product__item__text">
                                     <h6 style="text-align: center;"><%=rsHotPro.getString("ProductName")%></h6>
-                                    <a href="#" class="add-cart" style="left: 12px;">+ Thêm vào giỏ</a><a style="margin-left: 136px;" href="#">Mua ngay</a>
+                                    <a onclick="addToCart(<%=rsHotPro.getString("ProductID")%>)" class="add-cart" style="left: 12px;">+ Thêm vào giỏ</a><a style="margin-left: 136px;" href="#">Mua ngay</a>
                                     <div style="display: flex;">
                                         <div class="rating" style="margin-left: 30px;">
                                             <%int star = (int)rsHotPro.getInt("totalRate");
@@ -442,99 +442,101 @@
                 <div class="card">
                     <div class="row">
                         <div class=" cart">
-                            <form action="AddCookie" method="post">
-                                <table style="font-weight: normal; width: 100%;border-collapse: collapse;">
-                                    <thead>
-                                        <tr style="border-bottom: 1px solid #00000029;">
-                                            <td></td>
-                                            <td style="text-align: center;font-weight: bolder;font-size: 15px;padding-bottom: 30px;width: 0;">Ảnh Sản Phẩm</td>
-                                            <td style="text-align: center;font-weight: bolder;font-size: 15px;padding-bottom: 30px;width: 36%;">Tên Sản Phẩm</td>
-                                            <td style="text-align: center;font-weight: bolder;font-size: 15px;padding-bottom: 30px;width: 100px;">Số Lượng</td>
-                                            <td style="text-align: center;font-weight: bolder;font-size: 15px;padding-bottom: 30px;width: 105px;">Giá Tiền</td>
-                                            <td style="text-align: center;font-weight: bolder;font-size: 15px;padding-bottom: 30px;">Thành Tiền</td>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <%
-                                         try {
-                                         int count = 0;
-                                         if(!rs.next()){
-                                                message = "Không có sản phẩm nào được chọn";
-                                            }%>
+                            <!--<form> //-->
+                            <table style="font-weight: normal; width: 100%;border-collapse: collapse;">
+                                <thead>
+                                    <tr style="border-bottom: 1px solid #00000029;">
+                                        <td></td>
+                                        <td style="text-align: center;font-weight: bolder;font-size: 15px;padding-bottom: 30px;width: 0;">Ảnh Sản Phẩm</td>
+                                        <td style="text-align: center;font-weight: bolder;font-size: 15px;padding-bottom: 30px;width: 36%;">Tên Sản Phẩm</td>
+                                        <td style="text-align: center;font-weight: bolder;font-size: 15px;padding-bottom: 30px;width: 100px;">Số Lượng</td>
+                                        <td style="text-align: center;font-weight: bolder;font-size: 15px;padding-bottom: 30px;width: 105px;">Giá Tiền</td>
+                                        <td style="text-align: center;font-weight: bolder;font-size: 15px;padding-bottom: 30px;">Thành Tiền</td>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <%
+                                     try {
+                                     int count = 0;
+                                     if(!rs.next()){
+                                            message = "Không có sản phẩm nào được chọn";
+                                        }%>
 
-                                        <%do {
-                                            count++;
-                                        double unitPrice = rs.getDouble("UnitPrice")*(100- rs.getInt("UnitDiscount"))/100;
-                                        double totalunitprice = unitPrice*rs.getInt("Quantity");
-                                        totalprice += rs.getInt("Quantity")*unitPrice;
-                                        %>
-                                        <tr style="border-bottom: 1px solid #00000029;">
-                                            <td><input type="checkbox" class="checkbox-item" id="id<%=count%>" name="productToBuy" value="<%=rs.getInt("ProductID")%>"/></td>
-                                            <td class="col"><img class="img-fluid" style="width: 112px;
-                                                                 height: 112px;padding: 11px;"src="<%=rs.getString("ProductURL")%>"></td>
+                                    <%do {
+                                        count++;
+                                    double unitPrice = rs.getDouble("UnitPrice")*(100- rs.getInt("UnitDiscount"))/100;
+                                    double totalunitprice = unitPrice*rs.getInt("Quantity");
+                                    totalprice += rs.getInt("Quantity")*unitPrice;
+                                    %>
+                                    <tr style="border-bottom: 1px solid #00000029;">
+                                        <td><input type="checkbox" class="checkbox-item" id="id<%=count%>" name="productToBuy" value="<%=rs.getInt("ProductID")%>"/></td>
+                                        <td class="col"><img class="img-fluid" style="width: 112px;
+                                                             height: 112px;padding: 11px;"src="<%=rs.getString("ProductURL")%>"></td>
 
-                                            <td class="col"><%=rs.getString("ProductName")%></td>
-                                            <td class="col">
-                                                <div style="    display: flex;
-                                                     margin-left: 10px;
-                                                     margin-bottom: -10px;">
-                                                    <div class="value-button" style="width: 25px;height: 14px;padding: 4px 0;" onclick="decreaseValue(this,<%=rs.getInt("ProductID")%>);updateTotalPrice();" value="Decrease Value"><i class="fa-solid fa-minus" style="font-size: 11px;"></i></div>
-                                                    <input data-count="<%=count%>" style="width: 25px;height: 20px;" type="number" value="<%=rs.getInt("Quantity")%>" min="1" onchange="changeValue(this);updateTotalPrice();"/>
-                                                    <div class="value-button" style="width: 25px;height: 14px;padding: 4px 0;" onclick="increaseValue(this,<%=rs.getInt("ProductID")%>);updateTotalPrice();" value="Increase Value"><i class="fa-solid fa-plus" style="font-size: 11px;"></i></div><br/>
-                                                        <%int proid=rs.getInt("ProductID");%>
-                                                </div>
-                                            </td>
-                                            <td class="col"><%=decimalFormat.format(unitPrice)%>đ</td>
-                                            <td class="col gett" id="priceDisplay<%=count%>" data-unit-price="<%=unitPrice%>"><%=decimalFormat.format(totalunitprice)%>đ</td>
-                                            <td class="col">
-                                                <a href="CartURL?service=deleteCart&proid=<%=rs.getInt("ProductID")%>"><i class="fa fa-times" style="color: red"></i></a>
-                                            </td>
-                                        </tr>
-                                        <%} while (rs.next());         
-                                            rs.close(); 
-                                            } catch (SQLException e) {
-                                             e.printStackTrace();
-                                            }
-                                        %>
-                                    </tbody>
-                                </table>
-                                <div class="summary">
-                                    <div class="row" style="display: flex;margin-bottom: 10px;margin-top: 20px;">
-                                        <div style="flex: 0 0 59%;padding-left: 15px;font-size: 15px;padding-top: 6px;">
-                                            <%
-                                                if(message == ""){
-                                            %>
-                                            <label><input type="checkbox" id="select-all" />Chọn tất cả</label>
-                                            <a onclick="confirmDeleteAll()" style="margin-left: 50px;" id="deletelink"><i class="fa fa-trash"></i>&nbsp;Xóa tất cả</a>
-                                            <%} else{%>
-                                            <p style="background: #e7b559;
-                                               width: 246px;
-                                               height: 22px;
-                                               padding: 5px 42px;
-                                               border-radius: 5px;
-                                               color: #342e2e;
-                                               font-weight: 500;
-                                               margin-top: -6px;
-                                               margin-left: 276px;"><%=message%></p>
-                                            <%}%>
-                                        </div>
+                                        <td class="col"><%=rs.getString("ProductName")%></td>
+                                        <td class="col">
+                                            <div style="    display: flex;
+                                                 margin-left: 10px;
+                                                 margin-bottom: -10px;">
+                                                <div class="value-button" style="width: 25px;height: 14px;padding: 4px 0;" onclick="decreaseValue(this,<%=rs.getInt("ProductID")%>);updateTotalPrice();" value="Decrease Value"><i class="fa-solid fa-minus" style="font-size: 11px;"></i></div>
+                                                <input data-count="<%=count%>" style="width: 25px;height: 20px;" type="number" value="<%=rs.getInt("Quantity")%>" min="1" onchange="changeValue(this);updateTotalPrice();"/>
+                                                <div class="value-button" style="width: 25px;height: 14px;padding: 4px 0;" onclick="increaseValue(this,<%=rs.getInt("ProductID")%>);updateTotalPrice();" value="Increase Value"><i class="fa-solid fa-plus" style="font-size: 11px;"></i></div><br/>
+                                                    <%int proid=rs.getInt("ProductID");%>
+                                            </div>
+                                        </td>
+                                        <td class="col"><%=decimalFormat.format(unitPrice)%>đ</td>
+                                        <td class="col gett" id="priceDisplay<%=count%>" data-unit-price="<%=unitPrice%>"><%=decimalFormat.format(totalunitprice)%>đ</td>
+                                        <td class="col">
+                                            <a href="CartURL?service=deleteCart&proid=<%=rs.getInt("ProductID")%>"><i class="fa fa-times" style="color: red"></i></a>
+                                        </td>
+                                    </tr>
+                                    <%} while (rs.next());         
+                                        rs.close(); 
+                                        } catch (SQLException e) {
+                                         e.printStackTrace();
+                                        }
+                                    %>
+                                </tbody>
+                            </table>
+                            <div class="summary">
+                                <div class="row" style="display: flex;margin-bottom: 10px;margin-top: 20px;">
+                                    <div style="flex: 0 0 59%;padding-left: 15px;font-size: 15px;padding-top: 6px;">
                                         <%
-                                              HttpSession session2 = request.getSession();
-                                            User user = (User) session2.getAttribute("account");
-                                            int userID = user.getUserID();
-                                            DAOCart dao = new DAOCart();
-                                        ResultSet rsCheckCart = dao.getData("select * from Cart where UserID = "+userID);
-                                        if(!rsCheckCart.isBeforeFirst()){%>
-                                        <%}else{%>
-                                        <div style="flex: 0 0 42%; display: flex;">                                                    
-                                            <div style="font-size: 15px;padding-top: 6px;flex:  0 0 62%" id="totalPrice">Tổng đơn hàng:<span style="margin-left:10px" id="realTotal"></span></div>
-                                            <input type="hidden" name="service" value="showContact"/>
-                                            <button name="service" value="checkout" type="submit" class="btn">Thanh Toán</button>
-                                        </div>
+                                            if(message == ""){
+                                        %>
+                                        <label><input type="checkbox" id="select-all" />Chọn tất cả</label>
+                                        <a onclick="confirmDeleteAll()" style="margin-left: 50px;" id="deletelink"><i class="fa fa-trash"></i>&nbsp;Xóa tất cả</a>
+                                        <%} else{%>
+                                        <p style="background: #e7b559;
+                                           width: 246px;
+                                           height: 22px;
+                                           padding: 5px 42px;
+                                           border-radius: 5px;
+                                           color: #342e2e;
+                                           font-weight: 500;
+                                           margin-top: -6px;
+                                           margin-left: 276px;"><%=message%></p>
                                         <%}%>
                                     </div>
+                                    <%
+                                          HttpSession session2 = request.getSession();
+                                        User user = (User) session2.getAttribute("account");
+                                        int userID = user.getUserID();
+                                        DAOCart dao = new DAOCart();
+                                    ResultSet rsCheckCart = dao.getData("select * from Cart where UserID = "+userID);
+                                    if(!rsCheckCart.isBeforeFirst()){%>
+                                    <%}else{%>
+                                    <div style="flex: 0 0 42%; display: flex;">                                                    
+                                        <div style="font-size: 15px;padding-top: 6px;flex:  0 0 62%" id="totalPrice">Tổng đơn hàng:<span style="margin-left:10px" id="realTotal"></span></div>
+                                        <input type="hidden" name="service" value="showContact"/>
+                                        <a onclick="checkOut()" class="btn btn-back" style="
+                                           cursor: pointer;
+                                           ">Thanh Toán</a>
+                                    </div>
+                                    <%}%>
                                 </div>
-                            </form>
+                            </div>
+                            <!--</form>-->
                         </div>
                     </div>
                     <div class="btn-back">
@@ -550,6 +552,6 @@
         </div>
         <script src="vendor/jquery/jquery.min.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10" ></script>
-
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     </body>
 </html>
