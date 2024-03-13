@@ -338,16 +338,16 @@
     if (rs2 != null) {
     try {
         while (rs2.next()) {
-        double totalPricePerUnit = rs2.getDouble("TotalPricePerUnit");
+        double totalPricePerUnit = (rs2.getDouble("UnitPrice") * (100 - rs2.getDouble("Discount")) / 100) * rs2.getInt("QuantityPerUnit");
                                 %>
                                 <tr>
                                     <td><%=rs2.getString("ProductName")%></td>
                                     <td><img style="width: 100px" src="<%= rs2.getString("ProductURLShow") %>"/></td>
                                     <td><%=rs2.getString("CategoryName")%></td>
-                                    <td><%=df.format(rs2.getDouble("UnitPrice"))%></td>
+                                    <td><%=df.format(rs2.getDouble("UnitPrice"))%>đ</td>
                                     <td><%=rs2.getInt("QuantityPerUnit")%></td>
-                                    <td><%=df.format(rs2.getInt("Discount"))%></td>
-                                    <td><%=df.format(totalPricePerUnit)%></td>
+                                    <td><%=df.format(rs2.getInt("Discount"))%>%</td>
+                                    <td><%=df.format(totalPricePerUnit)%>đ</td>
                                 </tr>
                                 <% 
                                         }
