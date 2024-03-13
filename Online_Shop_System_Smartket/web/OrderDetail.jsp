@@ -139,7 +139,7 @@
                         <p class="mb-0">ID</p>
                     </div>
                     <div class="col-sm-9">
-                        <input type="text" value="<%=rs.getInt("OrderID")%>" readonly>
+                        <input type="text" value="<%=rs.getInt("OrderID")%>" name="id" readonly>
                     </div>
                 </div>
                 <hr>
@@ -157,7 +157,7 @@
                         <p class="mb-0">Email</p>
                     </div>
                     <div class="col-sm-9">
-                        <input type="text" value="<%=rs.getString("Email")%>" readonly>
+                        <input type="text" value="<%=rs.getString("Email")%>" name="email" readonly>
                     </div>
                 </div>
                 <hr>
@@ -202,8 +202,9 @@
                         <p class="mb-0">Trạng thái</p>
                     </div>
                     <div class="col-sm-9">
-                        <form action="saleOrderDetailURL" method="post">
+                        <form action="OrderDetailURL" method="post">
                             <input type="hidden" name="orderID" value="<%=rs.getInt("OrderID")%>">
+                            <input type="hidden" name="email" value="<%=rs.getString("ReceiverEmail")%>">
                             <select name="status" onchange="this.form.submit()">
                                 <%
                                                                 while(rs3.next()){%>
