@@ -68,43 +68,43 @@ public class ControllerCartCompletion extends HttpServlet {
             daoOrder.updateSale(saleId, quantityOfSale);
             String totalPrice_str = request.getParameter("totalPrice");
             Double totalPrice = Double.parseDouble(totalPrice_str);
-            Order orders = new Order(userID, saleId, 1, totalPrice);
+            Order orders = new Order(userID, saleId, totalPrice, 1);
             int orderID = daoOrder.insertOrderByPreparedReturnId(orders);
             String QrPath = "https://img.vietqr.io/image/BIDV-0398707242-compact2.png?amount=" + totalPrice + "&addInfo=Smartket " + orderID + "&accountName=Smartket";
             daoOrder.updateQrImage(QrPath, orderID);
             String addId = request.getParameter("addId");
             String note = request.getParameter("note");
-            String name = null ;
+            String name = null;
             String phone = null;
             String email = null;
             String addressDetail = null;
             String cityDistrictWard = null;
             int gender_int = 0;
             boolean gender = false;
-            ResultSet rsReceiver = daoRece.getData("SELECT * FROM online_shop_system.addressuser where AddressID = "+addId+";");
-            try{
-                    while(rsReceiver.next()){
-                        name = rsReceiver.getString("Name");
-                        phone = rsReceiver.getString("Phone");
-                        email = rsReceiver.getString("Email");
-                        addressDetail = rsReceiver.getString("AddDetail");
-                        cityDistrictWard = rsReceiver.getString("CityDistrictWard");
-                        gender_int = rsReceiver.getInt("Gender");
-                    }
-                } catch(SQLException e){
-                    
+            ResultSet rsReceiver = daoRece.getData("SELECT * FROM online_shop_system.addressuser where AddressID = " + addId + ";");
+            try {
+                while (rsReceiver.next()) {
+                    name = rsReceiver.getString("Name");
+                    phone = rsReceiver.getString("Phone");
+                    email = rsReceiver.getString("Email");
+                    addressDetail = rsReceiver.getString("AddDetail");
+                    cityDistrictWard = rsReceiver.getString("CityDistrictWard");
+                    gender_int = rsReceiver.getInt("Gender");
                 }
-            if(gender_int == 1){
+            } catch (SQLException e) {
+
+            }
+            if (gender_int == 1) {
                 gender = true;
-            } 
-            String address = cityDistrictWard+" "+addressDetail;
+            }
+            String address = cityDistrictWard + " " + addressDetail;
             Receiver rece = new Receiver(orderID, name, gender, phone, email, address, note);
             daoRece.insertReceiverByPrepared(rece);
             try {
                 ResultSet listCart = daoCart.getData("SELECT * FROM Cart as c join product as p on c.ProductID = p.ProductID where UserID = " + userID);
                 while (listCart.next()) {
                     if (Arrays.asList(proId).contains(String.valueOf(listCart.getInt("ProductID")))) {
-                        OrderDetails details = new OrderDetails(listCart.getInt("ProductID"), orderID, listCart.getInt("Quantity"), listCart.getInt("UnitPrice"), listCart.getInt("UnitDiscount"));
+                        OrderDetails details = new OrderDetails(listCart.getInt("ProductID"), orderID, listCart.getInt("Quantity"), listCart.getInt("UnitPrice"), listCart.getInt("UnitDiscount"), false);
                         daoDetail.insertOrderDetailsByPrepared(details);
                     }
                 }

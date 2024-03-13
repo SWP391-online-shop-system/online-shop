@@ -27,7 +27,7 @@ public class DAOOrderDetails extends DBConnect {
                 + "`UnitPrice`,\n"
                 + "`Discount`,\n"
                 + "`isFeedback`)\n"
-                + "VALUES(?,?,?,?,?,0);";
+                + "VALUES(?,?,?,?,?,?);";
         try {
             PreparedStatement pre = conn.prepareStatement(sql);
             pre.setInt(1, details.getOrderID());
