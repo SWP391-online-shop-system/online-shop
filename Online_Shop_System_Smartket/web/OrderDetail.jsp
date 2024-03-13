@@ -67,9 +67,25 @@
         ResultSet rs = (ResultSet)request.getAttribute("data");
         ResultSet rs1 = (ResultSet)request.getAttribute("data1");
         ResultSet rs2 = (ResultSet)request.getAttribute("data2");
+        ResultSet rs3 = (ResultSet)request.getAttribute("data3");
         %>
-        <%DecimalFormat df = new DecimalFormat("###,###");
+        <div class="container">
+            <% String message = (String)request.getParameter("message");
+            String errorMessage = (String) request.getAttribute("errorMessage");
+            %>
+            <% if (message != null && !message.isEmpty()) { %>
+            <div class="alert alert-info" role="alert">
+                <%= message %>
+            </div>
+            <% } %>
+            <%DecimalFormat df = new DecimalFormat("###,###");
             df.setMaximumFractionDigits(8);%>
+            <%if (errorMessage != null) {%>
+            <div class="alert alert-info" role="alert">
+                <%= errorMessage %>
+            </div>
+            <%}%>
+        </div>
         <div id="wrapper">
             <!-- Sidebar -->
             <div id="content-wrapper" class="d-flex flex-column">
@@ -186,7 +202,17 @@
                         <p class="mb-0">Trạng thái</p>
                     </div>
                     <div class="col-sm-9">
-                        <input type="text" value="<%=rs.getString("StatusName")%>" readonly>
+                        <form action="saleOrderDetailURL" method="post">
+                            <input type="hidden" name="orderID" value="<%=rs.getInt("OrderID")%>">
+                            <select name="status" onchange="this.form.submit()">
+                                <%
+                                                                while(rs3.next()){%>
+                                <option <%=rs.getInt("StatusID")==rs3.getInt(1)?"selected":""%> 
+                                    value="<%=rs3.getInt(1)%>"><%=rs3.getString(2)%></option>
+                                <%}
+                                %>
+                            </select>
+                        </form>
                     </div>
                 </div>
                 <hr>
