@@ -9,21 +9,24 @@ package view;
  * @author trant
  */
 public class OrderDetails {
+
     private int productID;
     private int orderID;
     private int quantity;
     private double unitPrice;
     private int discount;
+    private boolean isFeedback;
 
     public OrderDetails() {
     }
 
-    public OrderDetails(int productID, int orderID, int quantity, double unitPrice, int discount) {
+    public OrderDetails(int productID, int orderID, int quantity, double unitPrice, int discount, boolean isFeedback) {
         this.productID = productID;
         this.orderID = orderID;
         this.quantity = quantity;
         this.unitPrice = unitPrice;
         this.discount = discount;
+        this.isFeedback = isFeedback;
     }
 
     public int getProductID() {
@@ -65,5 +68,17 @@ public class OrderDetails {
     public void setDiscount(int discount) {
         this.discount = discount;
     }
-    
+
+    public boolean isIsFeedback() {
+        return isFeedback;
+    }
+
+    public void setIsFeedback(boolean isFeedback) {
+        this.isFeedback = isFeedback;
+    }
+
+    @Override
+    public String toString() {
+        return "OrderDetails{" + "productID=" + productID + ", orderID=" + orderID + ", quantity=" + quantity + ", unitPrice=" + unitPrice + ", discount=" + discount + ", isFeedback=" + isFeedback + '}';
+    }
 }

@@ -80,7 +80,6 @@ public class DAOOrder extends DBConnect {
         return n;
     }
 
-
     public Vector<Status> getStatus(String sql) {
         Vector<Status> vector = new Vector<>();
         try ( Statement state = conn.createStatement(
@@ -133,6 +132,7 @@ public class DAOOrder extends DBConnect {
         }
         return n;
     }
+
     public int updateQrImage(String QrImage, int orderId) {
         int n = 0;
         String sql = "UPDATE `online_shop_system`.`order`\n"
@@ -187,4 +187,31 @@ public class DAOOrder extends DBConnect {
         return 0;
     }
 
+    public Order getOrderById(int OrderID) {
+
+        String sql = "select * from `Order` where OrderID =" + OrderID;
+        try {
+            PreparedStatement st = conn.prepareStatement(sql);
+            st.setInt(1, OrderID);
+            ResultSet rs = st.executeQuery();
+            while (rs.next()) {
+                Order pro = new Order(
+                        rs.getInt("OrderID"),
+                        rs.getInt("UserID"),
+                        rs.getInt("SaleID"),
+                        rs.getInt("Quantity"),
+                        rs.getDouble("TotalPrice"),
+                        rs.getString("OrderDate"),
+                        rs.getString("ShippedDate"),
+                        rs.getInt("StatusID"),
+                        rs.getBoolean("OrderStatus"),
+                        rs.getString("OrderImage")
+                );
+                return pro;
+            }
+        } catch (SQLException e) {
+            System.out.println(e);
+        }
+        return null;
+    }
 }

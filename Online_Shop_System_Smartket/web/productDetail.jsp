@@ -53,11 +53,35 @@
             *, ::after, ::before {
                 box-sizing: border-box;
             }
+            a{
+                color: black;
+                text-decoration: none !important;
+            }
+            a:hover{
+                color:black;
+
+            }
+            .block:hover{
+                cursor: not-allowed;
+            }
+            .star-dropdown {
+                height: 21px;
+                width: 101px;
+                padding-left: 4px;
+                border: 2px solid;
+                border-radius: 2px;
+            }
+
+            .star-dropdown option {
+                color: orange; /* Change the color to orange for all options */
+            }
+
+            .star-dropdown option:first-child {
+                color: orange; /* Change the color to orange for the first option */
+            }
         </style>
     </head>
-    <body>
-        <%DecimalFormat df = new DecimalFormat("###,###");
-            df.setMaximumFractionDigits(8);%>
+    <body id="page-top">
         <!-- comment start -->
         <div class="header" style="margin-top: 21px;">
             <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
@@ -82,10 +106,10 @@
                         <div><a href="#" title="Trang Facebook chúng tôi"><i class="fa-brands fa-facebook"></i></a></div>
                         <div><a href="#" title="Trang Twitter của chúng tôi"><i class="fa-brands fa-x-twitter"></i></a></div>
                     </div>
-                    <div class="header-title-right-about" style="font-size: 14px;">
+                    <div class="header-title-right-about">
                         <a href="#">Về chúng tôi</a>
                     </div>
-                    <div class="header-title-right-login" style="font-size: 14px;">
+                    <div class="header-title-right-login">
                         <!DOCTYPE html>
                         <html lang="en">
                             <head>
@@ -122,9 +146,9 @@
                                     <a href="profileUser.jsp"><img style="width: 30px;
                                                                    height: 30px;
                                                                    margin-right: -10px;
-                                                                   margin-bottom: -1px;
+                                                                   margin-bottom: 2px;
                                                                    margin-left: 7px;
-                                                                   border-radius: 50%;" class="styling1" src="images/user/default_avatar.jpg" alt="Admin Image"></a>
+                                                                   border-radius: 50%;" class="styling1" src="images/user/${sessionScope.account.userImage}" alt="Admin Image"></a>
                                     </c:if>
                                     <c:if test="${sessionScope.account == null}">
                                     <button href="#" style="border: none; font-size:16px; font-family: math;" id="show-login">Đăng nhập</button>
@@ -287,7 +311,7 @@
                 </div>
                 <div class="header-content-right-menu">
                     <ul>
-                        <li class="margin-unit"><a href="#" title="Đơn hàng của tôi"><i class="fa-solid fa-file-invoice-dollar"></i></i></a></li>
+                        <li class="margin-unit"><a href="MyOrderURL" title="Đơn hàng của tôi"><i class="fa-solid fa-file-invoice-dollar"></i></i></a></li>
                             <c:if test="${sessionScope.account == null}">
                             <li><a href="loginURL" onclick="alertOpenCart()"title="Giỏ hàng của tôi"><i class="fa-solid fa-cart-shopping"></i></a></li>
                                 </c:if>
@@ -325,6 +349,8 @@
             }
         </script>
         <!-- comment end-->
+        <%DecimalFormat df = new DecimalFormat("###,###");
+            df.setMaximumFractionDigits(8);%>
         <div class="mainPage">
             <div>
                 <div class="shop__sidebar__search">
@@ -458,8 +484,9 @@
                             <div class="product-image">
                                 <div id="myCarousel-2" class="carousel slide">
                                     <ol class="carousel-indicators">
-                                        <%
+                                        <%int unitInStock = 0;
                                         while(rsDetail.next()){
+                                        unitInStock = rsDetail.getInt("UnitInStock");
                                         ProductID = rsDetail.getInt("ProductID");
                                         newPro = dao.getProductById(rsDetail.getInt("ProductID"));
                                         listUrls.add(rsDetail.getString(13));
@@ -470,6 +497,7 @@
                                         <li data-target="#myCarousel-2" data-slide-to="<%=countNode%>" class></li>
                                             <%}}%>
                                     </ol>
+                                    <div id="checkValue" style="display: none;"><%=unitInStock%></div>
                                     <div class="carousel-inner">
                                         <%for (int i = 0; i < listUrls.size(); i++) {
                                     if (i == 0) { %>
@@ -491,10 +519,13 @@
                                     <form action="CartURL" class="frm">
                                         <input type="hidden" name="service" value="buyNow"/>
                                         <input type="hidden" name="pid" value="<%=ProductID%>"/>
-                                        <div class="value-button" id="decrease" onclick="decreaseValue()" value="Decrease Value"><i class="fa-solid fa-minus" style="font-size: 14px;"></i></div>
-                                        <input name="quantity" type="number" id="number" value="1" />
-                                        <div class="value-button" id="increase" onclick="increaseValue()" value="Increase Value"><i class="fa-solid fa-plus" style="font-size: 14px;"></i></div><br/>
-                                        <button type="submit" class="btn btn-success btn-lg" style="padding: 4px 11px;">Mua ngay</button>
+                                        <div style="margin-left: 69px;
+                                             width: 100%;">
+                                            <div class="value-button" id="decrease" onclick="decreaseValue()" value="Decrease Value"><i class="fa-solid fa-minus" style="font-size: 12px;"></i></div>
+                                            <input class="checkInput" name="quantity" type="number" id="number" min="1" value="1" max="<%=unitInStock%>" oninvalid="this.setCustomValidity('Bạn không thể mua quá <%=unitInStock%> sản phẩm')"/>
+                                            <div style="margin-right: 10px;" class="value-button" id="increase" onclick="increaseValue()" value="Increase Value"><i class="fa-solid fa-plus" style="font-size: 12px;"></i></div><span>Hàng trong kho: <%=unitInStock%></span><br/>
+                                        </div>
+                                        <button id="check" type="submit" class="btn btn-success btn-lg" style="padding: 4px 11px;">Mua ngay</button>
                                     </form>
                                 </div>
                             </div>
@@ -508,7 +539,6 @@
                                     int rateCount = 0;
                                     int UserRateCount = 0;
                                     String description = newPro.getProductDescription().replace("@@LINEBREAK@@", "</br>");
-                                    System.out.println("des in jsp = "+description);
                                     double realPrice =(newPro.getUnitPrice() *(100 - newPro.getUnitDiscount()) / 100) ;
                                     ResultSet rsRate = (ResultSet)request.getAttribute("rsRate");
                                      if(rsRate.next()){
@@ -553,54 +583,62 @@
                             </h3>
                             <hr/>
                             <div class="description description-tabs">
-                                <ul id="myTab" class="nav nav-pills">
+                                <ul id="myTab" class="nav nav-pills" style="">
                                     <li class="active"><a href="#more-information" data-toggle="tab" class="no-margin">Mô tả sản phẩm</a></li>
                                     <li class><a href="#reviews" data-toggle="tab">Đánh giá</a></li>
                                 </ul>
-                                <div id="myTabContent" class="tab-content" style="height: 300px; overflow-y: scroll">
+
+                                <div id="myTabContent" class="tab-content" style="height: auto;">
+
                                     <div class="tab-pane fade active in" id="more-information">
                                         <br/>
                                         <strong><%=newPro.getProductName()%></strong>
                                         <div style="white-space: pre-line;">
                                             <%=description%>
                                         </div>
-
                                     </div>
                                     <div class="tab-pane fade" id="reviews">
                                         <br/>
                                         <div class="chat-body no-padding profile-message">
-                                            <ul>
-                                                <%
-                                                ResultSet rsFeedBack = (ResultSet)request.getAttribute("rsFeedBack");
-                                                if(!rsFeedBack.isBeforeFirst()){%>
-                                                <div style="font-size: 14px;color: white;margin-left: -27px;padding: 5px 10px; background: #e9ad78;width: 260px;border-radius: 7px;">Chưa có đánh giá cho sản phẩm này</div>
-                                                <%}else{
+                                            <div style="margin-top: 30px;">
+                                                <ul style="height: 350px;
+                                                    overflow-y: scroll;">
+                                                    <%
+                                                    ResultSet rsFeedBack = (ResultSet)request.getAttribute("rsFeedBack");
+                                                    if(!rsFeedBack.isBeforeFirst()){%>
+                                                    <div style="font-size: 14px;color: white;margin-left: -27px;padding: 5px 10px; background: #e9ad78;width: 260px;border-radius: 7px;">Chưa có đánh giá cho sản phẩm này</div>
+                                                    <%}else{
                                         while(rsFeedBack.next()){%>
-                                                <%
-                                                int rateFeedBack = rsFeedBack.getInt(3);
-                                                Product proo = new Product();
-                                                String rss =proo.convertStar(rateFeedBack);
-                                                %>
-                                                <li class="message">
-                                                    <div style="display: flex;margin-bottom: -10px;">
-                                                        <img src="images/user/<%=rsFeedBack.getString(1)%>" class="online" />
-                                                        <div class="message-text">
-                                                            <%=rsFeedBack.getString(2)%>
-                                                            <div style="color: #ffc000;
-                                                                 font-size: 11px;"><%=rss%></div>
+                                                    <%
+                                                    int rateFeedBack = rsFeedBack.getInt(3);
+                                                    Product proo = new Product();
+                                                    String rss =proo.convertStar(rateFeedBack);
+                                                    %>
+                                                    <li class="message">
+                                                        <div style="display: flex;margin-bottom: -10px;">
+                                                            <img src="images/user/<%=rsFeedBack.getString(1)%>" class="online" />
+                                                            <div class="message-text">
+                                                                <%=rsFeedBack.getString(2)%>
+                                                                <div style="color: #ffc000;
+                                                                     font-size: 11px;"><%=rss%></div>
+                                                            </div>
                                                         </div>
-                                                    </div>
-                                                    <br/>
-                                                    <span><%=rsFeedBack.getString(4)%></span>
-                                                    <ul class="list-inline font-xs" style="margin-bottom: 50px;">
-                                                        <li style="float:left">
-                                                            <small class="text-muted pull-right ultra-light"><%=rsFeedBack.getString(5)%> </small>
-                                                        </li>
-                                                    </ul>
-                                                </li>
-                                                <%}}%>
-                                            </ul>
-
+                                                        <br/>
+                                                        <div>
+                                                            <img style="width: 189px;
+                                                                 height: 162px;
+                                                                 border-radius: 8px;margin-bottom: 5px;<%=rsFeedBack.getString("FeedBackImage")==null?"display:none":""%>" src="images/feedback/<%=rsFeedBack.getString("FeedBackImage")%>"/>
+                                                        </div>
+                                                        <span><%=rsFeedBack.getString(5)%></span>
+                                                        <ul class="list-inline font-xs" style="margin-bottom: 50px;">
+                                                            <li style="float:left">
+                                                                <small class="text-muted pull-right ultra-light"><%=rsFeedBack.getString("FeedBackDate")%> </small>
+                                                            </li>
+                                                        </ul>
+                                                    </li>
+                                                    <%}}%>
+                                                </ul>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
@@ -674,21 +712,47 @@
         <script src="https://code.jquery.com/jquery-1.10.2.min.js"></script>
         <script src="https://netdna.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
         <script type="text/javascript">
-                                            function increaseValue() {
-                                                var value = parseInt(document.getElementById('number').value, 10);
-                                                value = isNaN(value) ? 0 : value;
-                                                value++;
-                                                document.getElementById('number').value = value;
-                                                document.getElementById("number")
-                                            }
 
-                                            function decreaseValue() {
-                                                var value = parseInt(document.getElementById('number').value, 10);
-                                                value = isNaN(value) ? 0 : value;
-                                                value < 1 ? value = 1 : '';
-                                                value--;
-                                                document.getElementById('number').value = value;
-                                            }
+
+
+                                                checkValues();
+                                                function increaseValue() {
+                                                    var value = parseInt(document.getElementById('number').value, 10);
+                                                    value = isNaN(value) ? 0 : value;
+                                                    value++;
+                                                    document.getElementById('number').value = value;
+                                                    checkValues();
+                                                }
+
+                                                function decreaseValue() {
+                                                    var value = parseInt(document.getElementById('number').value, 10);
+                                                    value = isNaN(value) ? 0 : value;
+                                                    value <= 1 ? value = 1 : '';
+                                                    value--;
+                                                    if (value === 0) {
+                                                        document.getElementById('number').value = 1;
+                                                    } else {
+                                                        document.getElementById('number').value = value;
+                                                    }
+                                                    checkValues();
+                                                }
+                                                function checkValues() {
+                                                    var checkValue = parseInt(document.getElementById('checkValue').innerText, 10);
+                                                    var inputValue = parseInt(document.getElementById('number').value, 10);
+                                                    var checkButton = document.getElementById('check');
+                                                    const inputField = document.getElementById('number');
+                                                    const maxAllowedValue = parseInt(inputField.getAttribute('max'), 10);
+                                                    const errorElement = document.getElementById('error');
+                                                    if (inputValue > checkValue) {
+                                                        console.log("Wrong");
+                                                        checkButton.classList.remove('btn', 'btn-success', 'btn-lg');
+                                                        checkButton.classList.add('btn', 'btn-success', 'btn-lg', 'block');
+                                                    } else {
+                                                        checkButton.style.cursor = "";
+                                                        checkButton.type = "submit";
+                                                    }
+                                                }
+
         </script>
 
     </body>

@@ -122,7 +122,6 @@
             margin-bottom: 8px;
             font-size: 17px;
             color: #378237;
-            font-weight: 600;
         }
 
         input,
@@ -226,7 +225,7 @@
                                                                    margin-right: -10px;
                                                                    margin-bottom: -1px;
                                                                    margin-left: 7px;
-                                                                   border-radius: 50%;" class="styling1" src="images/user/default_avatar.jpg" alt="Admin Image"></a>
+                                                                   border-radius: 50%;" class="styling1" src="images/user/${sessionScope.account.userImage}" alt="Admin Image"></a>
                                     </c:if>
                                     <c:if test="${sessionScope.account == null}">
                                     <button href="#" style="border: none; font-size:16px; font-family: math;" id="show-login">Đăng nhập</button>
@@ -427,214 +426,287 @@
             }
         </script>
         <!-- comment end-->
-        <div class="mainPage">
-            <div>
-                <div class="shop__sidebar__search">
-                    <form action="searchPageURL" method="GET">
-                        <input name="keyWord" type="text" placeholder="Search...">
-                        <button type="submit"><i style="    float: right;
-                                                 margin-top: -10px;" class="fa-solid fa-magnifying-glass"></i></button>
-                    </form>
-                </div>
-                <div class="hottest-pro"style="margin-left: 23px;">
-                    <div class="hottest-pro-title">Bán chạy nhất</div>
-                    <div class="row" style="display: contents">
-                        <%
-                            DAOProduct dao = new DAOProduct();
-                            ResultSet rsHotPro = dao.getData("select * from Product as p join ProductImage as pi on p.ProductID = pi.ProductID where  pi.ProductURL = pi.ProductURLShow \n"
-                                               +  "group by p.ProductID having min(p.TotalStock - p.UnitInStock) >0 order by (p.TotalStock - p.UnitInStock) desc limit 1");
-                        if(rsHotPro.next()) {
-                        %>
-                        <div class="product__item" style="border: 1px solid #c1e8c1ba;
-                             border-radius: 40px;
-                             padding: 1px;
-                             width: 241px;">
-                            <div class="product__item__pic set-bg" style="height: 201px;">
-                                <a href="ProductDetailURL?ProductID=<%=rsHotPro.getInt(1)%>">
-                                    <img style="width: 192px;
-                                         height: 174px;
-                                         margin-left: 25px;
-                                         margin-top: 10px;
-                                         padding: 0px;" src="<%=rsHotPro.getString("ProductURL")%>" alt="alt"/>
-                                </a>
-                                <%if(rsHotPro.getInt("UnitDiscount")!=0) {%>
-                                <div class="sale-cotification">Sale</div>
-                                <%}%>
-                                <%    ResultSet rsNew2Product = dao.getData("select * from product as p join productImage as pi "
-                                   + "on p.ProductID = pi.ProductID "
-                                   + "where pi.ProductURL like '%_1%' "
-                                   + "order by p.CreateDate desc limit 6 ");
-                                     while(rsNew2Product.next()) {
-                                        if(rsHotPro.getString("CreateDate").substring(0,10).equals(rsNew2Product.getString("CreateDate").substring(0,10))){%>
-                                <div class="sale-cotification">Mới</div>
-                                <%}}%>
-                            </div>
-                            <div class="product__item__text">
-                                <h6 style="text-align: center;"><%=rsHotPro.getString("ProductName")%></h6>
-                                <a href="cartDetailURL?serivce=addcart" class="add-cart" style="left: 12px;">+ Thêm vào giỏ</a><a style="margin-left: 136px;" href="#">Mua ngay</a>
-                                <div style="display: flex;">
-                                    <div class="rating" style="margin-left: 30px;">
-                                        <%int star = (int)rsHotPro.getInt("totalRate");
-                                          Product pro2 = new Product();
-                                          String totalRate = pro2.convertStar(star);
-                                        %>
-                                        <%=totalRate%>
+        <div>
+            <div class="mainPage">
+                <div>
+                    <div class="shop__sidebar__search">
+                        <form action="searchPageURL" method="GET">
+                            <input name="keyWord" type="text" placeholder="Search...">
+                            <button type="submit"><i style="    float: right;
+                                                     margin-top: -10px;" class="fa-solid fa-magnifying-glass"></i></button>
+                        </form>
+                    </div>
+                    <div class="hottest-pro"style="margin-left: 23px;">
+                        <div class="hottest-pro-title">Bán chạy nhất</div>
+                        <div class="row" style="display: contents">
+                            <%
+                                DAOProduct dao = new DAOProduct();
+                                ResultSet rsHotPro = dao.getData("select * from Product as p join ProductImage as pi on p.ProductID = pi.ProductID where  pi.ProductURL = pi.ProductURLShow \n"
+                                                   +  "group by p.ProductID having min(p.TotalStock - p.UnitInStock) >0 order by (p.TotalStock - p.UnitInStock) desc limit 1");
+                            if(rsHotPro.next()) {
+                            %>
+                            <div class="product__item" style="border: 1px solid #c1e8c1ba;
+                                 border-radius: 40px;
+                                 padding: 1px;
+                                 width: 241px;">
+                                <div class="product__item__pic set-bg" style="height: 201px;">
+                                    <a href="ProductDetailURL?ProductID=<%=rsHotPro.getInt(1)%>">
+                                        <img style="width: 192px;
+                                             height: 174px;
+                                             margin-left: 25px;
+                                             margin-top: 10px;
+                                             padding: 0px;" src="<%=rsHotPro.getString("ProductURL")%>" alt="alt"/>
+                                    </a>
+                                    <%if(rsHotPro.getInt("UnitDiscount")!=0) {%>
+                                    <div class="sale-cotification">Sale</div>
+                                    <%}%>
+                                    <%    ResultSet rsNew2Product = dao.getData("select * from product as p join productImage as pi "
+                                       + "on p.ProductID = pi.ProductID "
+                                       + "where pi.ProductURL like '%_1%' "
+                                       + "order by p.CreateDate desc limit 6 ");
+                                         while(rsNew2Product.next()) {
+                                            if(rsHotPro.getString("CreateDate").substring(0,10).equals(rsNew2Product.getString("CreateDate").substring(0,10))){%>
+                                    <div class="sale-cotification">Mới</div>
+                                    <%}}%>
+                                </div>
+                                <div class="product__item__text">
+                                    <h6 style="text-align: center;"><%=rsHotPro.getString("ProductName")%></h6>
+                                    <a href="cartDetailURL?serivce=addcart" class="add-cart" style="left: 12px;">+ Thêm vào giỏ</a><a style="margin-left: 136px;" href="#">Mua ngay</a>
+                                    <div style="display: flex;">
+                                        <div class="rating" style="margin-left: 30px;">
+                                            <%int star = (int)rsHotPro.getInt("totalRate");
+                                              Product pro2 = new Product();
+                                              String totalRate = pro2.convertStar(star);
+                                            %>
+                                            <%=totalRate%>
+                                        </div>
+                                    </div>
+                                    <div style="display: flex;flex-direction: row;justify-content: space-between;">
+                                        <%if(rsHotPro.getInt("UnitDiscount")!= 0){%>
+                                        <div style="color: red;font-weight: 700;font-size: 15px; flex: 0 0 50%; text-decoration: line-through;"><%=df.format(rsHotPro.getDouble("UnitPrice"))%>đ</div>
+                                        <div style="color: #0d0d0d;font-weight: 700;font-size: 15px; flex: 0 0 50%"><%=df.format(rsHotPro.getDouble("UnitPrice")*(100-rsHotPro.getInt("UnitDiscount"))/100)%>đ</div>
+                                        <%} else {%>
+                                        <div style="font-weight: 700;
+                                             font-size: 15px;
+                                             flex: -2 0 43%;
+                                             margin-left: 146px;
+                                             margin-top: -26px;"><%=df.format(rsHotPro.getDouble("UnitPrice"))%>đ</div>
+                                        <%}%>
                                     </div>
                                 </div>
-                                <div style="display: flex;flex-direction: row;justify-content: space-between;">
-                                    <%if(rsHotPro.getInt("UnitDiscount")!= 0){%>
-                                    <div style="color: red;font-weight: 700;font-size: 15px; flex: 0 0 50%; text-decoration: line-through;"><%=df.format(rsHotPro.getDouble("UnitPrice"))%>đ</div>
-                                    <div style="color: #0d0d0d;font-weight: 700;font-size: 15px; flex: 0 0 50%"><%=df.format(rsHotPro.getDouble("UnitPrice")*(100-rsHotPro.getInt("UnitDiscount"))/100)%>đ</div>
-                                    <%} else {%>
-                                    <div style="font-weight: 700;
-                                         font-size: 15px;
-                                         flex: -2 0 43%;
-                                         margin-left: 146px;
-                                         margin-top: -26px;"><%=df.format(rsHotPro.getDouble("UnitPrice"))%>đ</div>
-                                    <%}%>
+                            </div>
+
+                            <%}%>
+                        </div>
+                    </div>
+                    <div class="card" style="margin-top: 85px;
+                         margin-left: 23px;
+                         border: none;
+                         background: none;
+                         box-shadow: none !important;">
+                        <div class="card-heading">
+                            <a data-toggle="collapse" data-target="#collapseOne" href="ProductListURL" style="    color: #111111;
+                               font-size: 16px;
+                               font-weight: 700;
+                               text-transform: uppercase;
+                               display: block;
+                               margin-bottom:20px;">Danh mục</a>
+                        </div>
+                        <%String TotalRate_raw = (String)request.getAttribute("TotalRate");
+                        int TotalRate=0;
+                        if(TotalRate_raw==null || TotalRate_raw.equals("")) {
+                            TotalRate = 0;
+                           } else {
+                           TotalRate = Integer.parseInt(TotalRate_raw);
+                            }
+                        int CategoryID = 0;
+                            String CategoryID_raw = (String)request.getAttribute("categoryID");
+                            if(CategoryID_raw == null || CategoryID_raw.equals("")) {
+                            CategoryID = 0;
+                            } else {
+                            CategoryID = Integer.parseInt(CategoryID_raw);
+                            }
+                            ResultSet rsCategory = (ResultSet)request.getAttribute("CategoryResult");
+                        %>
+                        <div id="collapseOne" class="collapse show" data-parent="#accordionExample">
+                            <div class="card-body" style="padding:0">
+                                <div class="shop__sidebar__categories">
+                                    <ul class="nice-scroll">
+                                        <li><a style="color: #f7a749;" href="ProductListURL">Tất cả sản phẩm</a></li>
+                                            <%String type = (String)request.getAttribute("type");
+                                            if(type==null || type.equals("")) {
+                                            type = "";
+                                                }
+                                                double maxP = dao.getMaxUnitPrice();
+                                                double minP =dao.getMinUnitPrice();
+                                            %>
+                                        <li class="unique-li" style="<%=type.equals("showSale")?"background: #0091ff2b; width:190px;":""%>"><a style=" color: #f7a749;" href="ProductListURL?service=filter&TotalRate=<%=TotalRate%>&type=showSale&CategoryID=${categoryID}&filterChoice=p.CreateDate%20desc&inputMinPrice=<%=minP%>&inputMaxPrice=<%=maxP%>&index=1">Đang giảm giá</a></li>
+                                            <%while(rsCategory.next()) {%>
+                                        <li><a href="ProductListURL?service=filter&type=<%=type%>&CategoryID=<%=rsCategory.getInt(1)%>&TotalRate=<%=TotalRate%>&filterChoice=p.CreateDate%20desc&inputMinPrice=<%=minP%>&inputMaxPrice=<%=maxP%>&index=1"><%=rsCategory.getString(2)%></a></li>
+                                            <%}%>
+                                    </ul>
                                 </div>
                             </div>
                         </div>
-
-                        <%}%>
                     </div>
                 </div>
-                <div class="card" style="margin-top: 85px;
-                     margin-left: 23px;
-                     border: none;
-                     background: none;
-                     box-shadow: none !important;">
-                    <div class="card-heading">
-                        <a data-toggle="collapse" data-target="#collapseOne" href="ProductListURL" style="    color: #111111;
-                           font-size: 16px;
-                           font-weight: 700;
-                           text-transform: uppercase;
-                           display: block;
-                           margin-bottom:20px;">Danh mục</a>
-                    </div>
-                    <%String TotalRate_raw = (String)request.getAttribute("TotalRate");
-                    int TotalRate=0;
-                    if(TotalRate_raw==null || TotalRate_raw.equals("")) {
-                        TotalRate = 0;
-                       } else {
-                       TotalRate = Integer.parseInt(TotalRate_raw);
-                        }
-                    int CategoryID = 0;
-                        String CategoryID_raw = (String)request.getAttribute("categoryID");
-                        if(CategoryID_raw == null || CategoryID_raw.equals("")) {
-                        CategoryID = 0;
-                        } else {
-                        CategoryID = Integer.parseInt(CategoryID_raw);
-                        }
-                        ResultSet rsCategory = (ResultSet)request.getAttribute("CategoryResult");
-                    %>
-                    <div id="collapseOne" class="collapse show" data-parent="#accordionExample">
-                        <div class="card-body" style="padding:0">
-                            <div class="shop__sidebar__categories">
-                                <ul class="nice-scroll">
-                                    <li><a style="color: #f7a749;" href="ProductListURL">Tất cả sản phẩm</a></li>
-                                        <%String type = (String)request.getAttribute("type");
-                                        if(type==null || type.equals("")) {
-                                        type = "";
-                                            }
-                                            double maxP = dao.getMaxUnitPrice();
-                                            double minP =dao.getMinUnitPrice();
-                                        %>
-                                    <li class="unique-li" style="<%=type.equals("showSale")?"background: #0091ff2b; width:190px;":""%>"><a style=" color: #f7a749;" href="ProductListURL?service=filter&TotalRate=<%=TotalRate%>&type=showSale&CategoryID=${categoryID}&filterChoice=p.CreateDate%20desc&inputMinPrice=<%=minP%>&inputMaxPrice=<%=maxP%>&index=1">Đang giảm giá</a></li>
-                                        <%while(rsCategory.next()) {%>
-                                    <li><a href="ProductListURL?service=filter&type=<%=type%>&CategoryID=<%=rsCategory.getInt(1)%>&TotalRate=<%=TotalRate%>&filterChoice=p.CreateDate%20desc&inputMinPrice=<%=minP%>&inputMaxPrice=<%=maxP%>&index=1"><%=rsCategory.getString(2)%></a></li>
-                                        <%}%>
-                                </ul>
-                            </div>
+                <%
+                              Product pro = new Product();
+                              DAOProduct daoPro = new DAOProduct();
+                              ResultSet rsProduct = (ResultSet)request.getAttribute("rsProduct");
+                              if(rsProduct.next()){
+                %>
+                <div style="display: flex;
+                     margin-left: 75px;
+                     margin-top: 17px;">
+                    <div class="form-box" style="height: 307px !important; width: 332px;margin-right: 30px;"> 
+                        <div style="margin-bottom: 0px;
+                             font-size: 20px;" class="textup"> 
+                            <i  class="fa fa-solid "></i> 
+                            <%=rsProduct.getString("ProductName")%>
+                        </div> 
+                        <div class="form-group">
+                            <img style="width: 217px;
+                                 height: 212px !important;
+                                 margin-left: 35px;
+                                 margin-top: -3px;" src="<%=rsProduct.getString("ProductURL")%>" alt="">
                         </div>
+                        <div style="margin-bottom: 25px;
+                             font-size: 17px;" class="textup"> 
+                            <i  class="fa fa-solid "></i> 
+                            Giá bán: <%=df.format(rsProduct.getDouble("UnitPrice")*(100-rsProduct.getInt("UnitDiscount"))/100)%>đ
+                        </div>
+                        <form action="HomePageURL" method="get">
+                            <button style="margin-top: 22px;
+                                    border-radius: 3px;
+                                    width: 100px;
+                                    height: 34px;
+                                    padding: 0px;
+                                    background: #50a950;
+                                    float: right;
+                                    margin-right: -15px;" type="submit">Quay lại</button>
+                        </form>
+                    </div> 
+                    <script>
+                    </script>
+                    <div class="form-box" style="height: 605px;"> 
+                        <div style="    margin-bottom: 25px;
+                             font-size: 20px;" class="textup"> 
+                            <i  class="fa fa-solid fa-clock"></i> 
+                            Chỉ mất 2 phút, hãy để lại phản hồi của bạn!
+                        </div> 
+                        <form id="myForm" action="feedback" method="post" enctype="multipart/form-data">
+                            <input type="hidden" name="service" value="upload"/>
+                            <input type="hidden" name="ProductID" value="<%=rsProduct.getInt("ProductID")%>"/>
+                            <div class="form-group">
+                                <label>Ảnh đính kèm</label>
+                                <div style="height: 169px;
+                                     width: 282px;
+                                     border: 1px solid;
+                                     margin-bottom: 10px;">
+                                    <img id="feedback-image" style="width: 282px;
+                                         height: 169px !important;" src="images/feedback/">
+                                </div>
+                                <input value=""  type="file" 
+                                       class="form-control" name="feedbackImg" placeholder="Enter photo" id="feedback-img-input">
+                            </div>
+                            <div class="form-group">
+                                <div style="display: flex; align-items: center">
+                                    <label for="rating">Đánh giá:</label>
+                                    <div style="margin-bottom: 4px;" class="rate">
+                                        <input type="radio" id="star5" name="rate" value="5" />
+                                        <label style="font-size: 25px;" for="star5" title="text">5 stars</label>
+                                        <input type="radio" id="star4" name="rate" value="4" />
+                                        <label style="font-size: 25px;" for="star4" title="text">4 stars</label>
+                                        <input type="radio" id="star3" name="rate" value="3" />
+                                        <label style="font-size: 25px;" for="star3" title="text">3 stars</label>
+                                        <input type="radio" id="star2" name="rate" value="2" />
+                                        <label style="font-size: 25px;" for="star2" title="text">2 stars</label>
+                                        <input type="radio" id="star1" name="rate" value="1" />
+                                        <label style="font-size: 25px;" for="star1" title="text">1 star</label>
+                                    </div>
+                                </div>                  
+                                <label for="msg"> 
+                                    <i class="fa-solid fa-comments" 
+                                       style="margin-right: 3px;"></i> 
+                                    Thêm nhận xét của bạn tại đây: 
+                                </label> 
+                                <textarea id="msg" name="msg" style="height: 100px;"
+                                          required> 
+                                </textarea> 
+                                <button type="submit" style="border-radius: 4px;width: 200px;text-align: center;background: #50a950;"> 
+                                    Tạo đánh giá 
+                                </button> 
+                            </div>
+                            <%}%>
+                        </form> 
+                    </div> 
+                </div>
+            </div>
+        </div>
+        <!-- Footer Section Begin -->
+        <footer class="footer_1">
+            <div class="container_1" style="height: 270px;padding-top: 28px;">
+                <div class="row_1">
+                    <div class="col_1" id="company">
+                        <img style="width: 176px;
+                             margin-bottom: -19px;
+                             margin-top: 10px;height: 136px;" src="images/logo/logo.png" alt="" class="logo_1">
+                        <p style="font-family: poppins;font-size: 15px;color: white;">
+                            công ty Smartket Việt Nam, 54 Liễu Giai, quận Ba Đình, Hà Nội 
+                        </p>
+                        <div class="social_1">
+                            <a href="#"><i class="fab fa-facebook"></i></a>
+                            <a href="#"><i class="fa-brands fa-x-twitter"></i></a>
+                        </div>
+                    </div>
+
+
+                    <div class="col_1" id="services">
+                        <h3 class="footer_title_1">Dịch vụ</h3>
+                        <div class="links_1">
+                            <a href="#">Tuyển dụng</a>
+                            <a href="#">Quảng cáo</a>
+                            <a href="#">Chính sách</a>
+                        </div>
+                    </div>
+
+                    <div class="col_1" id="useful-links" style="margin-left: 50px;margin-right: 50px;">
+                        <h3 class="footer_title_1">Đường dẫn</h3>
+                        <div class="links_1">
+                            <a href="#">Về chúng tôi</a>
+                            <a href="#">Danh mục</a>
+                            <a href="#">Tin tức</a>
+                            <a href="#">Hỗ trợ</a>
+                        </div>
+                    </div>
+
+                    <div class="col_1" id="contact">
+                        <h3 class="footer_title_1">Liên hệ</h3>
+                        <div class="contact-details_1">
+                            <i class="fa-regular fa-envelope"></i>
+                            <p style="color: white;">Smartket@gmail.com</p>
+                        </div>
+                        <div class="contact-details_1">
+                            <i class="fa fa-phone"></i>
+                            <p style="color: white;">+84 99.999.999</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row_1">
+                    <div class="form_1" style="margin-top: -56px;">
+                        <form action="">
+                            <input class="email-input_1" style="height: 40px;" type="text" placeholder="Email here...">
+                            <button class="email-button_1" style="height: 43px;padding-top: 10px;"><i class="fa fa-paper-plane"></i></button>
+                        </form>
                     </div>
                 </div>
             </div>
-            <%
-                          Product pro = new Product();
-                          DAOProduct daoPro = new DAOProduct();
-                          ResultSet rsProduct = (ResultSet)request.getAttribute("rsProduct");
-                          if(rsProduct.next()){
-            %>
-            <div style="display: flex;
-                 margin-left: 75px;
-                 margin-top: 17px;">
-                <div class="form-box" style="height: 337px !important; width: 332px;margin-right: 30px;"> 
-                    <div style="margin-bottom: 25px;
-                         font-size: 20px;" class="textup"> 
-                        <i  class="fa fa-solid "></i> 
-                        <%=rsProduct.getString("ProductName")%>
-                    </div> 
-                    <div class="form-group">
-                        <img style="width: 300px;height: 200px !important;" src="<%=rsProduct.getString("ProductURL")%>" alt="">
-                    </div>
-                    <div style="margin-bottom: 25px;
-                         font-size: 20px;" class="textup"> 
-                        <i  class="fa fa-solid "></i> 
-                        Giá bán: <%=df.format(rsProduct.getDouble("UnitPrice")*(100-rsProduct.getInt("UnitDiscount"))/100)%>đ
-                    </div>
-                    <form action="HomePageURL" method="get">
-                        <button style="margin-top: 22px;
-                            border-radius: 3px;
-                            width: 100px;
-                            height: 34px;
-                            padding: 0px;
-                            background: #50a950;
-                            float: right;
-                            margin-right: -15px;" type="submit">Quay lại</button>
-                    </form>
-                </div> 
-                <script>
-                </script>
-                <div class="form-box" style="height: 605px;"> 
-                    <div style="    margin-bottom: 25px;
-                         font-size: 20px;" class="textup"> 
-                        <i  class="fa fa-solid fa-clock"></i> 
-                        Chỉ mất 2 phút, hãy để lại phản hồi của bạn!
-                    </div> 
-                    <form id="myForm" action="feedback" method="post" enctype="multipart/form-data">
-                        <input type="hidden" name="service" value="upload"/>
-                        <input type="hidden" name="ProductID" value="<%=rsProduct.getInt("ProductID")%>"/>
-                        <div class="form-group">
-                            <label>Ảnh đính kèm</label>
-                            <img id="feedback-image" style="width: 282px;
-                                 height: 169px !important;" src="images/feedback/" alt="chọn ảnh đính kèm">
-                            <input value=""  type="file" 
-                                   class="form-control" name="feedbackImg" placeholder="Enter photo" id="feedback-img-input">
-                        </div>
-                        <div class="form-group">
-                            <div style="display: flex; align-items: center">
-                                <label for="rating">Đánh giá:</label>
-                                <div style="margin-bottom: 4px;" class="rate">
-                                    <input type="radio" id="star5" name="rate" value="5" />
-                                    <label style="font-size: 25px;" for="star5" title="text">5 stars</label>
-                                    <input type="radio" id="star4" name="rate" value="4" />
-                                    <label style="font-size: 25px;" for="star4" title="text">4 stars</label>
-                                    <input type="radio" id="star3" name="rate" value="3" />
-                                    <label style="font-size: 25px;" for="star3" title="text">3 stars</label>
-                                    <input type="radio" id="star2" name="rate" value="2" />
-                                    <label style="font-size: 25px;" for="star2" title="text">2 stars</label>
-                                    <input type="radio" id="star1" name="rate" value="1" />
-                                    <label style="font-size: 25px;" for="star1" title="text">1 star</label>
-                                </div>
-                            </div>                  
-                            <label for="msg"> 
-                                <i class="fa-solid fa-comments" 
-                                   style="margin-right: 3px;"></i> 
-                                Thêm nhận xét của bạn tại đây: 
-                            </label> 
-                            <textarea id="msg" name="msg" 
-                                      rows="4" cols="10" required> 
-                            </textarea> 
-                            <button type="submit" style="border-radius: 4px;width: 200px;text-align: center;background: #50a950;"> 
-                                Tạo đánh giá 
-                            </button> 
-                        </div>
-                        <%}%>
-                    </form> 
-                </div> 
-            </div> 
+        </footer>
+        <!-- Footer Section End -->
     </body> 
+
     <script>
         document.getElementById('feedback-img-input').addEventListener('change', function (e) {
             var reader = new FileReader();

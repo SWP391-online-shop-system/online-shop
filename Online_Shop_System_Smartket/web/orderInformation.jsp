@@ -74,6 +74,10 @@
             footer{
                 font-family: ui-monospace;
             }
+            #blocka:hover{
+                cursor: not-allowed;
+                transform: none;
+            }
         </style>
     </head>
 
@@ -538,11 +542,26 @@
                                     <div class="title-left">
                                         <h3>Đơn hàng của bạn</h3>
                                     </div>
-                                    <%String qr = "";
+                                    <%
+                                    String qr = "";
                                     int orderId = 0;
+                                    Order getOrder = new Order();
                                     if(rsOrder.next()) {
                                     orderId = rsOrder.getInt("OrderID");
                                     qr = rsOrder.getString("OrderImage");
+                                    getOrder = new Order(
+                    //int, int, int, int, double, String, String, int, boolean, String
+                    rsOrder.getInt("OrderID"),
+                    rsOrder.getInt("UserID"),
+                    rsOrder.getInt("SaleID"),
+                    rsOrder.getInt("Quantity"),
+                    rsOrder.getDouble("TotalPrice"),
+                    rsOrder.getString("OrderDate"),
+                    rsOrder.getString("ShippedDate"),
+                    rsOrder.getInt("StatusID"),
+                    rsOrder.getBoolean("OrderStatus"),
+                    rsOrder.getString("OrderImage")
+            );
                                     String status = "";
                                     switch(rsOrder.getInt("StatusID")){case 1:status = "Chờ xác nhận";break;
                                      case 2:status = "Đang xử lý";break;
@@ -579,7 +598,8 @@
                                     <div class="title-left">
                                         <%  int OrderID = (int)request.getAttribute("OrderID");
                                         ResultSet rsCountProduct = daoP.getData("select count(ProductID) from `OrderDetail` where OrderID = "+OrderID);
-                                         if(rsCountProduct.next()) {%>
+                                         if(rsCountProduct.next()) {
+                                        %>
                                         <h3>Chi tiết sản phẩm (<%=rsCountProduct.getInt(1)%>)</h3>
                                         <%}%>
                                     </div>
@@ -590,7 +610,7 @@
                                             <th style="padding-left: 32px;">Loại</th>
                                         </tr>
                                     </table>
-                                    <div style="overflow-y: scroll;height: 250px;">
+                                    <div style="overflow-y: scroll;height: auto;max-height: 250px;">
                                         <%DAOCategories daoCate = new DAOCategories();
                                         DAOProductImage daoI = new DAOProductImage();
                                         while(rsOrderDetail.next()){
@@ -614,8 +634,18 @@
                                                         </tr>
                                                     </table>
                                                 </div>
-                                                <div class="small text-muted" style="color: black;">Giá tiền:&nbsp;<%=df.format(rsOrderDetail.getDouble("UnitPrice"))%>đ<span class="mx-2" style="margin-left: 4px !important;margin-right: 4px !important;">|</span> Số lượng:&nbsp;<%=rsOrderDetail.getInt("QuantityPerUnit")%> <span class="mx-2"style="margin-left: 4px !important;margin-right: 4px !important;">|
-                                                    </span> Tổng tiền:&nbsp;<%=df.format(rsOrderDetail.getDouble("UnitPrice")*rsOrderDetail.getInt("QuantityPerUnit"))%>đ<button class="btn-rebuy" style="width: 88px;margin-top: -6px;"><a href="feedback?service=gofeedback&ProductID=<%=product.getProductID()%>" style="color: white">Gửi phản hồi</a></button></div>
+                                                <div class="small text-muted" style="color: black;">Giá tiền:&nbsp;<%=df.format(rsOrderDetail.getDouble("UnitPrice"))%>đ<span class="mx-2" style="margin-left: 0px !important;margin-right: 0px !important;">|</span> Số lượng:&nbsp;<%=rsOrderDetail.getInt("QuantityPerUnit")%> <span class="mx-2"style="margin-left: -2px !important;margin-right: -2px !important;">|
+                                                    </span> Tổng tiền:&nbsp;<%=df.format(rsOrderDetail.getDouble("UnitPrice")*rsOrderDetail.getInt("QuantityPerUnit"))%>đ
+                                                    <%if(getOrder.getStatusID() == 4) {%>
+                                                    <button class="btn-rebuy" style="width: 88px;margin-top: -6px;">
+                                                        <a href="feedback?service=gofeedback&ProductID=<%=product.getProductID()%>" style="color: white">Gửi phản hồi</a>
+                                                    </button>
+                                                    <%}else{%>
+                                                    <button id="blocka" class="btn-rebuy" style="width: 88px;margin-top: -6px; background: grey">
+                                                        <a  style="color:whitesmoke" title="Phản hồi sẽ được mở khi bạn nhận được hàng">Gửi phản hồi</a>
+                                                    </button>
+                                                    <%}%>
+                                                </div>
                                             </div>
                                         </div>  
                                         <%}%>
