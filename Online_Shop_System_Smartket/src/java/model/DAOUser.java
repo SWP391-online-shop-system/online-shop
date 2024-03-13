@@ -128,6 +128,19 @@ public class DAOUser extends DBConnect {
         }
         return n;
     }
+       public int updateRole(int uid, int role) {
+        int n = 0;
+        String sql = "UPDATE `online_shop_system`.`user`\n"
+                + "SET`roleID` = ? WHERE `UserID` = ?;";
+        try {
+            PreparedStatement pre = conn.prepareStatement(sql);
+            pre.setInt(1, role);
+            pre.setInt(2, uid);
+            n = pre.executeUpdate();
+        } catch (SQLException ex) {
+        }
+        return n;
+    }
 
     public int checkEmail(String email) {
         DAOUser dao = new DAOUser();
