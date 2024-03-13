@@ -546,7 +546,7 @@
                                         <label>Tên người nhận</label>
                                         <input name="name" type="text" required autofocus class="form-control" id="newName" aria-describedby="emailHelp"
                                                placeholder="Nhập tên..." pattern="[A-Za-zÀ-ỹ ]+" oninvalid="this.setCustomValidity('Vui lòng điền thông tin này, Không bao gồm số và kí tự đặc biệt')" 
-                                               oninput="setCustomValidity(''); validateInput(this)" >
+                                               oninput="setCustomValidity('')" >
                                     </div>
                                     <div class="form-group">
                                         <label>Số điện thoại người nhận</label>
@@ -595,16 +595,19 @@
                                 </div> 
                                 <div class="modal-footer"> 
                                     <div>
-                                        <a class="btn btn-success" data-bs-target="#DS"
+                                        <a style="color: white" class="btn btn-success" data-bs-target="#DS"
                                            data-bs-toggle="modal" data-bs-dismiss="modal"> 
                                             Hủy 
                                         </a>
-                                        <button class="btn btn-success" 
-                                                data-bs-toggle="modal" 
-                                                
-                                                
-                                                
-                                                onclick="addNewAdd()"> 
+                                        <!--                                        <button class="btn btn-success" 
+                                                                                        data-bs-toggle="modal" 
+                                                                                        data-bs-target="#DS"
+                                                                                   data-bs-toggle="modal" data-bs-dismiss="modal"                                               
+                                                                                        onclick="addNewAdd()"> 
+                                                                                    Lưu
+                                                                                </button>-->
+                                        <button type="submit" class="btn btn-success" data-bs-target="#DS"
+                                                data-bs-toggle="modal" data-bs-dismiss="modal" onclick="addNewAdd()"> 
                                             Lưu
                                         </button>
                                     </div>
@@ -772,7 +775,7 @@
                                             } catch (SQLException ex) {
                                             }%>
                                     <a class="btn btn-success" href="#DS" 
-                                       data-bs-toggle="modal" data-bs-dismiss="modal" style="padding-bottom: 30px;margin-top: 11px"> 
+                                       data-bs-toggle="modal" data-bs-dismiss="modal" > 
                                         Chỉnh sửa
                                     </a>
                                 </div>
@@ -786,7 +789,7 @@
                                         </tbody>
                                     </table>
                                     <div class="pull-right">
-                                        <a onclick="back()" class="btn btn-success" style="height: fit-content;color: white;    width: 128px;">Hủy đặt hàng</a>
+                                        <a href="CartURL" class="btn btn-success" style="height: fit-content;color: white;width: 128px; margin: 0">Hủy đặt hàng</a>
                                         <button type="submit" class="btn-back">Đặt Hàng</button>
                                     </div>
 

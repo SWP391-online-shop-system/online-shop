@@ -208,20 +208,30 @@
                             <select style="width: 206px;
                                     height: 30px;" name="status" onchange="this.form.submit()" <%= rs.getInt("StatusID") == 1 || rs.getInt("StatusID") == 4 ? "disabled" : "" %>>
                                 <%
-                                while(rs3.next()) {
-                                    int statusId = rs3.getInt(1);
-                                    String statusName = rs3.getString(2);
-                                    int selectedStatusId = rs.getInt("StatusID");
-                                    boolean isSelected = selectedStatusId == statusId;
+    // Iterate through each status in rs3
+    while (rs3.next()) {
+        int statusId = rs3.getInt(1);
+        String statusName = rs3.getString(2);
+        int selectedStatusId = rs.getInt("StatusID");
+        boolean isSelected = selectedStatusId == statusId;
+        boolean isDisabled = (selectedStatusId == 2 && (statusId == 1 || statusId == 4 || statusId == 5)) ||
+                             (selectedStatusId == 3 && (statusId == 1 || statusId == 2)) ||
+                             (selectedStatusId == 5 && (statusId == 1 || statusId == 2));
 
-                                    // Check if the option should be disabled
-                                    if (isSelected) {
-                                        out.println("<option value=\"" + statusId + "\" selected>" + statusName + "</option>");
-                                    } else {
-                                        out.println("<option value=\"" + statusId + "\">" + statusName + "</option>");
-                                    }
-                                }
+        // Generate <option> element
+        if (isSelected) {
+            out.println("<option value=\"" + statusId + "\" selected>" + statusName + "</option>");
+        } else {
+            out.print("<option value=\"" + statusId + "\"");
+            if (isDisabled) {
+                out.print(" disabled");
+            }
+            out.println(">" + statusName + "</option>");
+        }
+    }
                                 %>
+
+
                             </select>
                         </form>
                     </div>

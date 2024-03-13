@@ -107,19 +107,32 @@ checkboxes.forEach(function (checkbox) {
 });
 countChecked();
 updateTotalPrice();
+function confirmDeleteAll() {
+    swal.fire({
+        title: 'Bạn có chắc chắn?',
+        text: "Bạn có muốn tiếp tục không?",
+        icon: 'question',
+        showCancelButton: true,
+        confirmButtonText: 'Có',
+        cancelButtonText: 'Không'
+    }).then((result) => {
+        if (result.isConfirmed) {
+            deleteCart();
+        } else if (result.dismiss === swal.DismissReason.cancel) {
+        }
+    });
+}
 function deleteCart() {
     var proId = document.querySelectorAll('.checkbox-item:checked');
     var values = [];
     proId.forEach(function (node) {
         values.push(node.value);
     });
-    console.log(values.join(","));
     $.ajax({
         type: "post",
         url: "/Smartket/CartURL",
         data: {service: "deleteAllCart", proId: values.join(",")},
         success: function (response) {
-            console.log(response);
             if (response === "1") {
                 swal.fire({
                     icon: 'success',
@@ -147,18 +160,56 @@ function deleteCart() {
         }
     });
 }
-function confirmDeleteAll() {
-    swal.fire({
-        title: 'Bạn có chắc chắn?',
-        text: "Bạn có muốn tiếp tục không?",
-        icon: 'question',
-        showCancelButton: true,
-        confirmButtonText: 'Có',
-        cancelButtonText: 'Không'
-    }).then((result) => {
-        if (result.isConfirmed) {
-            deleteCart();
-        } else if (result.dismiss === swal.DismissReason.cancel) {
+function checkOut() {
+    var proId = document.querySelectorAll('.checkbox-item:checked');
+    var values = [];
+    proId.forEach(function (node) {
+        values.push(node.value);
+    });
+    console.log(values.join("."));
+    $.ajax({
+        type: "post",
+        url: "/Smartket/AddCookie",
+        data: {proId: values.join(".")},
+        success: function (response) {
+            if (response === "1") {
+                window.location.href = "contactURL";
+            } else {
+                swal.fire({
+                    icon: 'error',
+                    title: 'Không thành công!',
+                    text: 'Chọn sản phẩm để thực hiện đặt hàng',
+                    showConfirmButton: false,
+                    timer: 1000
+                });
+            }
+        },
+        error: function (xhr, status, error) {
+            // Xử lý lỗi
+            console.error(xhr.responseText);
+        }
+    });
+}
+function addToCart(pId) {
+    $.ajax({
+        type: "POST",
+        url: "CartURL",
+        data: {service: "addcart", pid: pId},
+        success: function (response) {
+            // Hiển thị thông báo cho người dùng
+            var countCart = response;
+            swal.fire({
+                icon: 'success',
+                title: 'Thành công!',
+                text: 'Sản phẩm đã được thêm vào giỏ hàng.',
+                showConfirmButton: false,
+                timer: 1000
+            });
+            $('#countCart').text(countCart);
+        },
+        error: function (xhr, status, error) {
+            // Xử lý lỗi
+            console.error(xhr.responseText);
         }
     });
 }
