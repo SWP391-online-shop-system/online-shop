@@ -11,9 +11,11 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import model.DAOProduct;
+import view.User;
 
 /**
  *
@@ -62,6 +64,16 @@ public class ControllerOrderInformation extends HttpServlet {
             throws ServletException, IOException {
         DAOProduct daoPro = new DAOProduct();
         //sidebar part start
+        HttpSession session = request.getSession();
+        User user = (User) session.getAttribute("account");
+        String UserID_raw = request.getParameter("UserID");
+        int UserID = 0;
+        if (UserID_raw == null) {
+            UserID = user.getUserID();
+        } else {
+            UserID = Integer.parseInt(UserID_raw);
+        }
+        System.out.println("USERID = " + UserID);
         double maxValue = daoPro.getMaxUnitPrice();
         double minValue = daoPro.getMinUnitPrice();
         request.setAttribute("inputMinPrice", minValue);
@@ -74,11 +86,12 @@ public class ControllerOrderInformation extends HttpServlet {
         ResultSet rsReceiver = daoPro.getData("select * from Receiver where OrderID = " + OrderID);
         request.setAttribute("rsReceiver", rsReceiver);
         //get data from order
-        ResultSet rsOrder = daoPro.getData("select * from `Order` where OrderID =" + OrderID);
+        ResultSet rsOrder = daoPro.getData("select * from `Order` where OrderID =" + OrderID + " and UserID = " + UserID);
         request.setAttribute("rsOrder", rsOrder);
         //get data from OrderDetail
         ResultSet rsOrderDetail = daoPro.getData("select * from OrderDetail where OrderID =" + OrderID);
         request.setAttribute("rsOrderDetail", rsOrderDetail);
+        request.setAttribute("UserID", UserID);
         request.setAttribute("OrderID", OrderID);
         request.getRequestDispatcher("orderInformation.jsp").forward(request, response);
     }

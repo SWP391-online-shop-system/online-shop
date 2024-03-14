@@ -208,20 +208,30 @@
                             <select style="width: 206px;
                                     height: 30px;" name="status" onchange="this.form.submit()" <%= rs.getInt("StatusID") == 1 || rs.getInt("StatusID") == 4 ? "disabled" : "" %>>
                                 <%
-                                while(rs3.next()) {
-                                    int statusId = rs3.getInt(1);
-                                    String statusName = rs3.getString(2);
-                                    int selectedStatusId = rs.getInt("StatusID");
-                                    boolean isSelected = selectedStatusId == statusId;
+    // Iterate through each status in rs3
+    while (rs3.next()) {
+        int statusId = rs3.getInt(1);
+        String statusName = rs3.getString(2);
+        int selectedStatusId = rs.getInt("StatusID");
+        boolean isSelected = selectedStatusId == statusId;
+        boolean isDisabled = (selectedStatusId == 2 && (statusId == 1 || statusId == 4 || statusId == 5)) ||
+                             (selectedStatusId == 3 && (statusId == 1 || statusId == 2)) ||
+                             (selectedStatusId == 5 && (statusId == 1 || statusId == 2));
 
-                                    // Check if the option should be disabled
-                                    if (isSelected) {
-                                        out.println("<option value=\"" + statusId + "\" selected>" + statusName + "</option>");
-                                    } else {
-                                        out.println("<option value=\"" + statusId + "\">" + statusName + "</option>");
-                                    }
-                                }
+        // Generate <option> element
+        if (isSelected) {
+            out.println("<option value=\"" + statusId + "\" selected>" + statusName + "</option>");
+        } else {
+            out.print("<option value=\"" + statusId + "\"");
+            if (isDisabled) {
+                out.print(" disabled");
+            }
+            out.println(">" + statusName + "</option>");
+        }
+    }
                                 %>
+
+
                             </select>
                         </form>
                     </div>
@@ -338,16 +348,16 @@
     if (rs2 != null) {
     try {
         while (rs2.next()) {
-        double totalPricePerUnit = rs2.getDouble("TotalPricePerUnit");
+        double totalPricePerUnit = (rs2.getDouble("UnitPrice") * (100 - rs2.getDouble("Discount")) / 100) * rs2.getInt("QuantityPerUnit");
                                 %>
                                 <tr>
                                     <td><%=rs2.getString("ProductName")%></td>
                                     <td><img style="width: 100px" src="<%= rs2.getString("ProductURLShow") %>"/></td>
                                     <td><%=rs2.getString("CategoryName")%></td>
-                                    <td><%=df.format(rs2.getDouble("UnitPrice"))%></td>
+                                    <td><%=df.format(rs2.getDouble("UnitPrice"))%>đ</td>
                                     <td><%=rs2.getInt("QuantityPerUnit")%></td>
-                                    <td><%=df.format(rs2.getInt("Discount"))%></td>
-                                    <td><%=df.format(totalPricePerUnit)%></td>
+                                    <td><%=df.format(rs2.getInt("Discount"))%>%</td>
+                                    <td><%=df.format(totalPricePerUnit)%>đ</td>
                                 </tr>
                                 <% 
                                         }
