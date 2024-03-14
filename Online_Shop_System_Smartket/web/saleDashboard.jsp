@@ -34,7 +34,7 @@
     <div id="wrapper">
         <!-- Sidebar -->
         <ul class="navbar-nav sidebar sidebar-light accordion" id="accordionSidebar">
-            <a class="sidebar-brand d-flex align-items-center justify-content-center" href="MarketingDashBoardURL">
+            <a class="sidebar-brand d-flex align-items-center justify-content-center" href="">
                 <div class="sidebar-brand-icon">
                     <img style="height: 91px;
                          width: 133px;
@@ -64,7 +64,7 @@
             <div id="content">
                 <!-- TopBar -->
                 <nav class="navbar navbar-expand navbar-light bg-navbar topbar mb-4 static-top">
-                    <div style="font-weight: 700;color: white;font-size: 37px;letter-spacing: 2px;font-family: Nunito,-apple-system,BlinkMacSystemFont"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol","Noto Color Emoji";">Trang Admin</div>
+                    <div style="font-weight: 700;color: white;font-size: 37px;letter-spacing: 2px;font-family: Nunito,-apple-system,BlinkMacSystemFont"Segoe UI">Trang Sale</div>
                     <ul class="navbar-nav ml-auto">
                         <div class="topbar-divider d-none d-sm-block"></div>
                         <li class="nav-item dropdown no-arrow">
@@ -165,7 +165,7 @@
                                     <h6 class="m-0 font-weight-bold text-primary">Đơn hàng đã hoàn thành</h6>
                                     <div class="dropdown no-arrow"></div>
                                 </div>
-
+                                <%if (user.getRoleID() == 3) {%>
                                 <%
                                     int percent = 0;
                                     int totalOrder = 0;
@@ -190,9 +190,35 @@
                                             <div class="progress-bar bg-success" role="progressbar" style="width: <%=percent%>%" aria-valuenow="10"
                                                  aria-valuemin="0" aria-valuemax="100"></div>
                                         </div>
-                                        <%}}%>
                                     </div>
                                 </div>
+                                <%}}%>
+                                <%} else {
+                                DAOOrder daoO = new DAOOrder();
+                                int percent = 0;
+                            int totalOrder = 0;
+                         ResultSet rsManagerTotalOrder = (ResultSet)request.getAttribute("rsManagerTotalOrder");
+                         while(rsManagerTotalOrder.next()){
+                                totalOrder =  rsManagerTotalOrder.getInt("OrderQuantity");                                    
+                                ResultSet rsManagerTotalSucessOrder = daoO.getData("select s.SaleID, count(o.OrderID) from sale as s \n"
+                                                +"join `order` as o on s.SaleID = o.SaleID where o.StatusID = 4 and s.SaleId = "+rsManagerTotalOrder.getInt("SaleID")+" group by s.SaleID");
+                                while(rsManagerTotalSucessOrder.next()){
+                                   percent = (int)((double)rsManagerTotalSucessOrder.getInt(2) / totalOrder * 100);
+                                           
+                                %>
+                                <div class="card-body" style="padding:8px;">
+                                    <div class="mb-3">
+                                        <div class="small text-gray-500" style="font-weight: 500;margin-left: 10px;">Nhân viên: <%=rsManagerTotalOrder.getString("FirstName")+" "+rsManagerTotalOrder.getString("LastName")%>&nbsp; -  <%=rsManagerTotalSucessOrder.getInt(2)%>&nbsp;Đơn hàng / <%=totalOrder%>&nbsp;Đơn hàng
+                                            <div class="small float-right"><b></b></div>
+                                        </div>
+                                        <div class="progress" style="height: 12px;">
+                                            <div class="progress-bar bg-success" role="progressbar" style="width: <%=percent%>%" aria-valuenow="10"
+                                                 aria-valuemin="0" aria-valuemax="100"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <%}%>
+                                <%}}%>
                             </div>
                         </div>
                     </div>
@@ -201,7 +227,10 @@
                         <div class="card" style="padding-bottom: 24px;">
 
                             <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-                                <h6 class="m-0 font-weight-bold text-primary">Đơn hàng được giao</h6>         
+                                <%if (user.getRoleID() == 4) {%>
+                                <h6 class="m-0 font-weight-bold text-primary">Đơn hàng</h6>         
+                                <%} else {%>
+                                <h6 class="m-0 font-weight-bold text-primary">Đơn hàng được giao</h6><%}%>       
                                 <!--<form action="MarketingDashBoardURL" method="GET">-->
                                 <div>
                                     <span  class="m-0 text-primary">từ</span>
@@ -212,7 +241,7 @@
                                 </div>
                                 <!--</form>-->
                             </div>
-                            <div class="table-responsive">
+                            <div class="table-responsive" style="max-height: 500px;">
                                 <%
                                 ResultSet rsOrderList = (ResultSet)request.getAttribute("rsOrderList");
                                 if(!rsOrderList.isBeforeFirst()) {%>

@@ -482,7 +482,6 @@
                                     <%
                                                        ResultSet rsAddress = (ResultSet)request.getAttribute("rsAddress");
                                                        if(!rsAddress.isBeforeFirst()){%>
-                                    <p>Chưa có địa chỉ nào</p>
                                     <%}
                                     else {
                                         while(rsAddress.next()){      
@@ -526,7 +525,7 @@
                         </div> 
                     </div>
                 </form>
-                <form>
+                                <!--<form id="formAddnew">-->
                     <div class="modal fade" id="addnew"
                          aria-hidden="true" aria-labelledby="DSLabel2"
                          tabindex="-1">
@@ -615,7 +614,7 @@
                             </div> 
                         </div>
                     </div>
-                </form>
+                <!--</form>-->
                 <!-- update modal-------------------------------------------- -->
                 <form id="formUpdate" action="contactURL" method="post">
                     <div class="modal fade" id="update"
