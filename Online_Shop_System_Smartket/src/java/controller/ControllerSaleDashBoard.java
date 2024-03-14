@@ -102,13 +102,13 @@ public class ControllerSaleDashBoard extends HttpServlet {
                         Calendar calendar = Calendar.getInstance();
                         calendar.add(Calendar.DAY_OF_YEAR, -6);
                         orderFrom = sdf.format(calendar.getTime());
-                        rsOrderList = daoOd.getData("select * from `order` as o join `user` as u on o.UserID = u.UserID join `status` as s on o.StatusID = s.StatusID where SaleID = "+userId+" and OrderDate between now() - interval 6 day and now() ORDER BY OrderDate");
+                        rsOrderList = daoOd.getData("select * from `order` as o join `user` as u on o.UserID = u.UserID join `status` as s on o.StatusID = s.StatusID where SaleID = " + userId + " and OrderDate between now() - interval 6 day and now() ORDER BY OrderDate desc ");
                         request.setAttribute("rsOrderList", rsOrderList);
                         request.setAttribute("formatOrderWeekFrom", orderFrom);
                     } else {
                         LocalDate dateOrderWeekFrom = LocalDate.parse(orderFrom, formatter);
                         String formatOrderWeekFrom = dateOrderWeekFrom.format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
-                        rsOrderList = daoOd.getData("select * from `order` as o join `user` as u on o.UserID = u.UserID join `status` as s on o.StatusID = s.StatusID WHERE SaleID = "+userId+" and OrderDate between '" + formatOrderWeekFrom + "' AND '" + formatOrderWeekFrom + "' + interval 7 day ORDER BY OrderDate;");
+                        rsOrderList = daoOd.getData("select * from `order` as o join `user` as u on o.UserID = u.UserID join `status` as s on o.StatusID = s.StatusID WHERE SaleID = " + userId + " and OrderDate between '" + formatOrderWeekFrom + "' AND '" + formatOrderWeekFrom + "' + interval 7 day ORDER BY OrderDate desc ");
                         request.setAttribute("rsOrderList", rsOrderList);
                         request.setAttribute("formatOrderWeekFrom", formatOrderWeekFrom);
                     }
@@ -128,7 +128,7 @@ public class ControllerSaleDashBoard extends HttpServlet {
                                 + "                        (SELECT 0 AS i UNION SELECT 1 UNION SELECT 2 UNION SELECT 3 UNION SELECT 4 UNION SELECT 5 UNION SELECT 6 UNION SELECT 7 UNION SELECT 8 UNION SELECT 9) AS t4) AS dates\n"
                                 + "                        LEFT JOIN (\n"
                                 + "                        SELECT DATE_FORMAT(OrderDate, '%Y-%m-%d') AS date, SUM(TotalPrice) AS earning   \n"
-                                + "                        FROM `order` where and `StatusID` = 4  GROUP BY date) \n"
+                                + "                        FROM `order` where `StatusID` = 4  GROUP BY date) \n"
                                 + "                        AS earnings ON dates.date = earnings.date   \n"
                                 + "                        WHERE dates.date BETWEEN (CURDATE() - INTERVAL 6 DAY) AND NOW() \n"
                                 + "                        ORDER BY dates.date;");
@@ -149,7 +149,7 @@ public class ControllerSaleDashBoard extends HttpServlet {
                                 + ") AS dates\n"
                                 + "LEFT JOIN (\n"
                                 + "SELECT DATE_FORMAT(OrderDate, '%Y-%m-%d') AS date, SUM(TotalPrice) AS earning   \n"
-                                + "FROM `order` where and `StatusID` = 4  GROUP BY date) \n"
+                                + "FROM `order` where `StatusID` = 4  GROUP BY date) \n"
                                 + "AS earnings ON dates.date = earnings.date   \n"
                                 + "WHERE dates.date BETWEEN '" + formatWeekFrom + "' and ('" + formatWeekFrom + "' + INTERVAL 6 DAY)\n"
                                 + "ORDER BY dates.date;");
@@ -161,20 +161,25 @@ public class ControllerSaleDashBoard extends HttpServlet {
                         Calendar calendar = Calendar.getInstance();
                         calendar.add(Calendar.DAY_OF_YEAR, -6);
                         orderFrom = sdf.format(calendar.getTime());
-                        rsOrderList = daoOd.getData("select * from `order` as o join `user` as u on o.UserID = u.UserID join `status` as s on o.StatusID = s.StatusID where OrderDate between now() - interval 6 day and now() ORDER BY OrderDate");
+                        rsOrderList = daoOd.getData("select * from `order` as o join `user` as u on o.UserID = u.UserID join `status` as s on o.StatusID = s.StatusID where OrderDate between now() - interval 6 day and now() ORDER BY OrderDate desc ");
                         request.setAttribute("rsOrderList", rsOrderList);
                         request.setAttribute("formatOrderWeekFrom", orderFrom);
                     } else {
                         LocalDate dateOrderWeekFrom = LocalDate.parse(orderFrom, formatter);
                         String formatOrderWeekFrom = dateOrderWeekFrom.format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
-                        rsOrderList = daoOd.getData("select * from `order` as o join `user` as u on o.UserID = u.UserID join `status` as s on o.StatusID = s.StatusID WHERE OrderDate between '" + formatOrderWeekFrom + "' AND '" + formatOrderWeekFrom + "' + interval 7 day ORDER BY OrderDate;");
+                        rsOrderList = daoOd.getData("select * from `order` as o join `user` as u on o.UserID = u.UserID join `status` as s on o.StatusID = s.StatusID WHERE OrderDate between '" + formatOrderWeekFrom + "' AND '" + formatOrderWeekFrom + "' + interval 7 day ORDER BY OrderDate desc ");
 //              
                         request.setAttribute("rsOrderList", rsOrderList);
                         request.setAttribute("formatOrderWeekFrom", formatOrderWeekFrom);
                     }
                 }
-                ResultSet rsOrderSuccessCount = daoOd.getData("select count(OrderID) from online_shop_system.order where StatusID = 4");
-                ResultSet rsTotalOrderCount = daoOd.getData("select count(OrderID) from online_shop_system.order");
+                ResultSet rsOrderSuccessCount = daoOd.getData("select count(OrderID) from online_shop_system.order where StatusID = 4 and SaleID = "+ userId);
+                ResultSet rsTotalOrderCount = daoOd.getData("select count(OrderID) from online_shop_system.order where SaleID = "+ userId);
+                ResultSet rsManagerTotalOrder = daoOd.getData(" select s.SaleID,s.OrderQuantity, u.FirstName,u.LastName from sale as s join `user` as u on s.SaleID = u.UserID;");
+                ResultSet rsManagerTotalSucessOrder = daoOd.getData("select s.SaleID, count(o.OrderID) from sale as s \n"
+                        + "                join `order` as o on s.SaleID = o.SaleID where o.StatusID = 4 group by s.SaleID;");
+                request.setAttribute("rsManagerTotalOrder", rsManagerTotalOrder);
+                request.setAttribute("rsManagerTotalSucessOrder", rsManagerTotalSucessOrder);
                 request.setAttribute("rsOrderSuccessCount", rsOrderSuccessCount);
                 request.setAttribute("rsTotalOrderCount", rsTotalOrderCount);
                 request.getRequestDispatcher("saleDashboard.jsp").forward(request, response);

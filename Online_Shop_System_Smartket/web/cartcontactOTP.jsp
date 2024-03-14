@@ -369,7 +369,7 @@
                                border: 2px solid #e5e5e5;
                                height: 36px;
                                margin-left: 20px;" name="keyWord" type="text" placeholder="Search...">
-                        <button type="submit"><i class="fa-solid fa-magnifying-glass"></i></button>
+                        <button style="margin-bottom: 15px;font-size: 17px;" type="submit"><i class="fa-solid fa-magnifying-glass"></i></button>
                     </form>
                 </div>
                 <div class="hottest-pro"style="margin-left: 23px;">

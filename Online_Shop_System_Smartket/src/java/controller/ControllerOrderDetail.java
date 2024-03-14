@@ -50,7 +50,7 @@ public class ControllerOrderDetail extends HttpServlet {
             String oID = request.getParameter("oID");
             int id = Integer.parseInt(oID);
             String OrderID = request.getParameter("OrderID");
-            String sql = "select o.OrderID,CONCAT(u.FirstName, ' ', u.LastName) AS FullName,u.Email,u.PhoneNumber, s.StatusID, r.ReceiverEmail,\n"
+            String sql = "select o.OrderID,CONCAT(u.FirstName, ' ', u.LastName) AS FullName,u.Email,u.PhoneNumber, s.StatusID, r.ReceiverEmail,o.ShippedDate,\n"
                     + "                                       o.OrderDate,o.TotalPrice,CONCAT(u_sale.FirstName, ' ', u_sale.LastName) AS SaleName, s.StatusName\n"
                     + "                                        from `order` as o\n"
                     + "                                        Join User as u on u.UserID = o.UserID\n"
@@ -60,7 +60,7 @@ public class ControllerOrderDetail extends HttpServlet {
             ResultSet rs = dao.getData(sql);
             String sql1 = "select * from receiver where OrderID = " + id;
             ResultSet rs1 = dao.getData(sql1);
-            String sql2 = "select distinct pi.ProductURLShow, p.ProductName, c.CategoryName, od.UnitPrice, od.QuantityPerUnit, od.UnitPrice * od.QuantityPerUnit as TotalPricePerUnit, o.TotalPrice\n"
+            String sql2 = "select distinct pi.ProductURLShow, p.ProductName,od.Discount, c.CategoryName, od.UnitPrice, od.QuantityPerUnit, od.UnitPrice * od.QuantityPerUnit as TotalPricePerUnit, o.TotalPrice,o.ShippedDate\n"
                     + "from orderDetail as od\n"
                     + "Join productImage pi on pi.ProductID = od.ProductID\n"
                     + "Join product p on p.ProductID = od.ProductID\n"
@@ -110,7 +110,8 @@ public class ControllerOrderDetail extends HttpServlet {
         int n = dao.updateStatus1(statusID, orderID);
         String email = request.getParameter("email");
         if (statusID == 4) {
-            sendEmail(email);
+            sendEmail(email, orderID);
+            dao.updateShippedDate(orderID);
         }
         String st = (n > 0) ? "Cập nhật trạng thái thành công" : "Cập nhật trạng thái thất bại";
         response.sendRedirect("saleManagerOrderListURL?message=" + URLEncoder.encode(st, "UTF-8"));
@@ -126,7 +127,7 @@ public class ControllerOrderDetail extends HttpServlet {
         return "Short description";
     }// </editor-fold>
 
-    public void sendEmail(String emailTo) {
+    public void sendEmail(String emailTo, int orderId) {
         String emailFrom = "smartketfpt@gmail.com";
         String password = "hvdw qdeh rbvg ahox";
         //properties
@@ -153,7 +154,7 @@ public class ControllerOrderDetail extends HttpServlet {
                     InternetAddress.parse(emailTo, false));   //nguoi nhan
 
             //tieu de
-            msg.setSubject("Đơn hàng đã được giao thành ông" + System.currentTimeMillis(), "UTF-8");
+            msg.setSubject("Đơn hàng đã được giao thành công " + System.currentTimeMillis(), "UTF-8");
             //quy dinh ngay gui
             msg.setSentDate(new Date());
             //quy dinh email nhan phan hoi
@@ -180,7 +181,7 @@ public class ControllerOrderDetail extends HttpServlet {
                     + "            margin-top: 13px;\n"
                     + "        }\n"
                     + "        .veryfication-btn{\n"
-                    + "   width: 141px;\n"
+                    + "   width: 165px;\n"
                     + "     height: 25px;\n"
                     + "    color: white;\n"
                     + "   background: #26a352;\n"
@@ -217,9 +218,12 @@ public class ControllerOrderDetail extends HttpServlet {
                     + "    <body>\n"
                     + "        <div class=\"veryfication-content\">\n"
                     + "            <div >\n"
-                    + "                <div class=\"veryfication-remind\">Đơn hàng của bạn đã được giao</div>\n"
+                    + "                <div class=\"veryfication-remind\">Ấn link bên dưới để xem chi tiết đơn hàng</div>\n"
                     + "                <div><img class=\"veryfication-logo\"src=\"https://i.imgur.com/GVovat4.png\" alt=\"logo\" title=\"logo\"/></div>\n"
-                    + "                <a href=\"\" ><div class=\"\">Cảm ơn và hẹn gặp lại</div></a>\n"
+                    + "                 <div style=\"text-align: center;\n"
+                    + "                      font-size: 18px;\n"
+                    + "                        font-weight: 500;\n"
+                    + "                       letter-spacing: 1px;\"><a href=\"http://localhost:9999/Smartket/OrderInformationURL?OrderID=" + orderId + "\">Xem chi tiết đơn hàng</a></div>"
                     + "            </div>\n"
                     + "        </div>\n"
                     + "    </body>\n"

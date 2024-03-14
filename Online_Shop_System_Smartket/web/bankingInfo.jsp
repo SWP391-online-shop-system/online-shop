@@ -484,8 +484,9 @@
                     </div>
                 </div>
             </div>  
-            <div class="card" style="align-items: center">
-                    <h4>Vui lòng quét mã QR bên dưới để thực hiện chuyển khoản thanh toán đơn hàng</h4>
+            <div class="card" style="align-items: center;margin-bottom: 15px;
+                 font-size: 19px;">
+                <h4>Vui lòng quét mã QR bên dưới để thực hiện chuyển khoản thanh toán đơn hàng</h4>
                 <div class="cart" style="flex: 0; width:43%;">
                     <%String QrPath = (String)request.getAttribute("QrPath");%>
                     <img style="width:100%;height:100%" src="<%=QrPath%>" alt="alt"/>

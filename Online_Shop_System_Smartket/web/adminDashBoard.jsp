@@ -434,8 +434,8 @@
                                 </div>
                                 <div>
                                     <div class="card-footer text-center" style="font-size: 18px;height: 37px;">
-                                        <a class="m-0 small text-primary card-link" href="FeedBackListURL">Quản lí ngay
-                                            <i class="fas fa-chevron-right"></i></a>
+                                        <!--<a class="m-0 small text-primary card-link" href="FeedBackListURL">Quản lí ngay-->
+<!--                                            <i class="fas fa-chevron-right"></i></a>-->
                                     </div>
                                     <%}%>
                                 </div>

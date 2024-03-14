@@ -7,6 +7,7 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@page import="view.*" %>
+<%@page import="model.DAOReceiver" %>
 <%@page import="model.*" %>
 <%@page import="java.sql.ResultSet"%>
 <%@page import="java.text.DecimalFormat" %>
@@ -82,7 +83,9 @@
     </head>
 
     <body>
-        <!--header start-->
+        <%DecimalFormat df = new DecimalFormat("###,###");
+            df.setMaximumFractionDigits(8);%>
+        <!-- comment start -->
         <div class="header" style="margin-top: 21px;">
             <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
             <div class="header-title" style="margin-top: -16px;">
@@ -106,10 +109,10 @@
                         <div><a href="#" title="Trang Facebook chúng tôi"><i class="fa-brands fa-facebook"></i></a></div>
                         <div><a href="#" title="Trang Twitter của chúng tôi"><i class="fa-brands fa-x-twitter"></i></a></div>
                     </div>
-                    <div class="header-title-right-about">
+                    <div class="header-title-right-about" style="font-size: 14px;">
                         <a href="#">Về chúng tôi</a>
                     </div>
-                    <div class="header-title-right-login">
+                    <div class="header-title-right-login" style="font-size: 14px;">
                         <!DOCTYPE html>
                         <html lang="en">
                             <head>
@@ -146,9 +149,9 @@
                                     <a href="profileUser.jsp"><img style="width: 30px;
                                                                    height: 30px;
                                                                    margin-right: -10px;
-                                                                   margin-bottom: -8px;
+                                                                   margin-bottom: -1px;
                                                                    margin-left: 7px;
-                                                                   border-radius: 50%;" class="styling1" src="images/user/default_avatar.jpg" alt="Admin Image"></a>
+                                                                   border-radius: 50%;" class="styling1" src="images/user/${sessionScope.account.userImage}" alt="Admin Image"></a>
                                     </c:if>
                                     <c:if test="${sessionScope.account == null}">
                                     <button href="#" style="border: none; font-size:16px; font-family: math;" id="show-login">Đăng nhập</button>
@@ -318,9 +321,7 @@
                                 <c:if test="${sessionScope.account != null}">
                             <li>      
                                 <%
-                                HttpSession session2 = request.getSession();
-                                User user = (User) session2.getAttribute("account");
-                                int userID = user.getUserID();
+                                int userID = (int)request.getAttribute("UserID");
                                 DAOCart dao = new DAOCart();
                                 ResultSet rs = dao.getData("SELECT count(*) as count FROM Cart AS c JOIN Product AS p ON c.ProductID = p.ProductID where userID = "+userID+"");
                                 while(rs.next()){
@@ -330,16 +331,12 @@
                                       background-color: #ff0000;
                                       color: #ffffff;
                                       border-radius: 50%;
-                                      padding: 0px 4px;
-                                      font-size: 15px;
+                                      padding: 0px 5px;
+                                      font-size: 13px;
                                       z-index: 9;
                                       top: 11px;
-                                      left: 3px;
-                                      font-family: none;
-                                      line-height: normal;"><%=rs.getInt(1)%></span>
-                                <%
-                                    }
-                                %>
+                                      left: 3px;"><%=rs.getInt(1)%></span>
+                                <%}%>
                                 <a href="CartURL" title="Giỏ hàng của tôi"><i class="fa-solid fa-cart-shopping"></i></a>
                             </li>
                         </c:if>
@@ -352,8 +349,7 @@
                 alert('Đăng nhập để xem giỏ hàng của bạn');
             }
         </script>
-        <%DecimalFormat df = new DecimalFormat("###,###");
-            df.setMaximumFractionDigits(8);%>
+        <!-- comment end-->
         <!--header end-->
         <div class="cart-box-main">
             <div class="container">
@@ -523,7 +519,7 @@
                             </form>
                             <%}%>
                         </div>
-                        <button class="btn-rebuy" style="margin-top: 17px;width: 70px;float:left;"><a style="color: white;font-size: 14px;"href="MyOrderURL">Trở về</a></button>
+                        <button class="btn-rebuy" style="margin-top: 14px;width: 70px;float:left;background: #59c762;"><a style="color: white;font-size: 14px;"href="MyOrderURL">Trở về</a></button>
 
                         <button style="    width: 104px;
                                 height: 26px;
