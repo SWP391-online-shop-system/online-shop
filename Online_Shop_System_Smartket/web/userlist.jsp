@@ -30,8 +30,8 @@
         %>
         <div id="wrapper">
             <!-- Sidebar -->
-            <ul class="navbar-nav sidebar sidebar-light accordion" id="accordionSidebar">
-                <a class="sidebar-brand d-flex align-items-center justify-content-center" href="HomePageURL">
+           <ul class="navbar-nav sidebar sidebar-light accordion" id="accordionSidebar">
+                <a class="sidebar-brand d-flex align-items-center justify-content-center" href="MarketingDashBoardURL">
                     <div class="sidebar-brand-icon">
                         <img style="height: 91px;
                              width: 133px;
@@ -46,73 +46,69 @@
                             <span>Thống kê</span></a>
                     </li>
                     <hr class="sidebar-divider">
-                    <div class="sidebar-heading">
-                        Quản lí
-                    </div>
                     <li class="nav-item">
-                        <a class="nav-link" href="#">
+                        <a class="nav-link" href="adminOrderTrackURL?status=all&orderFrom=&orderTo=">
                             <i class="fas fa-calendar fa-2x text-primary"></i>
-                            <span>Bài đăng</span>
+                            <span>Đơn hàng</span>
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="mktProductListURL">
-                            <i class="fas fa-shopping-cart fa-2x text-success"></i>
-                            <span>Sản phẩm</span>
+                        <a class="nav-link" href="userlist">
+                            <span>Người dùng</span>
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="customerlist">
-                            <i class="fas fa-users fa-2x text-info"></i>
-                            <span>Khách hàng</span>
+                        <a class="nav-link" href="adminOrderTrackURL?status=all&orderFrom=&orderTo=">
+                            <span>Cài đặt</span>
                         </a>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="FeedBackListURL">
-                            <i class="fas fa-comments fa-2x text-info"></i>
-                            <span>Phản hồi</span>
-                        </a>
-                    </li>
-                    <hr class="sidebar-divider">
                 </div>
             </ul>
             <!-- Sidebar -->
             <div id="content-wrapper" class="d-flex flex-column">
                 <div id="content">
                     <!-- TopBar -->
-                    <nav class="navbar navbar-expand navbar-light bg-navbar topbar mb-4 static-top">
-                        <div style="font-weight: 700;color: white;font-size: 37px;letter-spacing: 2px;font-family: Nunito,-apple-system,BlinkMacSystemFont"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol","Noto Color Emoji";">Trang marketing</div>
-                        <ul class="navbar-nav ml-auto">
-                            <div class="topbar-divider d-none d-sm-block"></div>
-                            <li class="nav-item dropdown no-arrow">
-                                <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown"
-                                   aria-haspopup="true" aria-expanded="false">
-                                    <img class="img-profile rounded-circle" src="images/user/${sessionScope.account.userImage}" style="max-width: 60px">
-                                    <span class="ml-2 d-none d-lg-inline text-white small">${sessionScope.account.firstName}&nbsp;${sessionScope.account.lastName}</span>
-                                </a>
-                                <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="userDropdown">
-                                    <a class="dropdown-item" href="#">
-                                        <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
-                                        Hồ sơ
+                  <nav class="navbar navbar-expand navbar-light bg-navbar topbar mb-4 static-top">
+                            <div style="font-weight: 700;color: white;font-size: 37px;letter-spacing: 2px;font-family: Nunito,-apple-system,BlinkMacSystemFont"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol","Noto Color Emoji";">Trang Admin</div>
+                            <ul class="navbar-nav ml-auto">
+                                <div class="topbar-divider d-none d-sm-block"></div>
+                                <li class="nav-item dropdown no-arrow">
+                                    <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown"
+                                       aria-haspopup="true" aria-expanded="false">
+                                        <img class="img-profile rounded-circle" src="images/user/${sessionScope.account.userImage}" style="max-width: 60px">
+                                        <span class="ml-2 d-none d-lg-inline text-white small">${sessionScope.account.firstName}&nbsp;${sessionScope.account.lastName}</span>
                                     </a>
-                                    <div class="dropdown-divider"></div>
-                                    <a class="dropdown-item" href="logout">
-                                        <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
-                                        Đăng xuất
-                                    </a>
-                                </div>
-                            </li>
-                        </ul>
-                    </nav>
+                                    <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="userDropdown">
+                                        <a class="dropdown-item" href="#">
+                                            <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
+                                            Hồ sơ
+                                        </a>
+                                        <a class="dropdown-item" href="#">
+                                            <i class="fas fa-cogs fa-sm fa-fw mr-2 text-gray-400"></i>
+                                            Cài đặt
+                                        </a>
+                                        <a class="dropdown-item" href="#">
+                                            <i class="fas fa-list fa-sm fa-fw mr-2 text-gray-400"></i>
+                                            Lịch sử thay đổi
+                                        </a>
+                                        <div class="dropdown-divider"></div>
+                                        <a class="dropdown-item" href="logout">
+                                            <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
+                                            Đăng xuất
+                                        </a>
+                                    </div>
+                                </li>
+                            </ul>
+                        </nav>
                     <!-- Topbar -->
 
                     <!-- Container Fluid-->
                     <div class="container-fluid" id="container-wrapper">
                         <div class="d-sm-flex align-items-center justify-content-between mb-4">
-                            <h1 class="h3 mb-0 text-gray-800">Danh Sách Khách Hàng</h1>
+                            <h1 class="h3 mb-0 text-gray-800">Danh Sách Người Dùng</h1>
                             <ol class="breadcrumb">
                                 <li class="breadcrumb-item"><a href="./">Trang Chủ</a></li>
-                                <li class="breadcrumb-item active">Danh Sách Khách Hàng</li>
+                                <li class="breadcrumb-item active">Danh Sách Người Dùng</li>
                             </ol>
                         </div>
 
@@ -148,17 +144,17 @@
                                     <div class="table-responsive p-3">
                                         <table class="table align-items-center table-flush table-hover" id="dataTableHover" style="font-size: 14px;">
                                             <div style="display: flex;
-                                                 margin-left: 200px;
-                                                 margin-bottom: -30px;">
+                                                 margin-left: 100px;
+                                                 margin-bottom: 30px;">
                                                 <%
                                                 String status = (String)request.getAttribute("status");
                                                 String role = (String)request.getAttribute("role");
                                                 String gender = (String)request.getAttribute("gender");
                                                 %>
+                                                    
                                                 <form action="userlist" method="get">
                                                     <div class="filter-group" style="display:flex;">
-                                                        <div style="padding-top: -16px;
-                                                             width: 81%;">Role</div>
+                                                        <div>Role</div>
                                                         <select class="form-control" name="role" onchange="this.form.submit()" style="height: 33px;margin-top: -12px;">   
                                                             <option value="5" <%if(role.equals("5")){%>selected<%}%>>Admin</option>                                                     
                                                             <option value="4" <%if(role.equals("4")){%>selected<%}%>>Quản lí sale</option>                                                     
@@ -167,20 +163,14 @@
                                                             <option value="2" <%if(role.equals("2")){%>selected<%}%>>Marketing</option>                                                            
                                                             <option value="0" <%if(role.equals("0")){%>selected<%}%>>Tất cả</option>							
                                                         </select>
-                                                    </div>       
-                                                        <div class="filter-group" style="display:flex;">
-                                                        <div style="padding-top: -20px;
-                                                             width: 81%;">Trạng thái</div>
+                                                        <div>Trạng thái</div>
                                                         <select class="form-control" name="status" onchange="this.form.submit()" style="height: 33px;margin-top: -12px;">                                                            
                                                             <option value="3" <%if(status.equals("3")){%>selected<%}%>>Tất cả</option>                                                     
                                                             <option value="1" <%if(status.equals("1")){%>selected<%}%>>Hoạt động</option>                                                          
                                                             <option value="2" <%if(status.equals("2")){%>selected<%}%>>Vô hiệu hóa</option>                                                            
                                                             <option value="0" <%if(status.equals("0")){%>selected<%}%>>Chưa xác nhận</option>							
                                                         </select>
-                                                    </div>       
-                                                        <div class="filter-group" style="display:flex;">
-                                                        <div style="padding-top: -20px;
-                                                             width: 81%;">Giới tính</div>
+                                                        <div>Giới tính</div>
                                                         <select class="form-control" name="gender" onchange="this.form.submit()" style="height: 33px;margin-top: -12px;">                                                            
                                                             <option value="0" <%if(gender.equals("0")){%>selected<%}%>>Tất cả</option>                                                     
                                                             <option value="false" <%if(gender.equals("false")){%>selected<%}%>>Nữ</option>                                                          
@@ -193,34 +183,32 @@
                                             </div>
                                             <thead class="thead-light">
                                                 <tr>
-                                                    <th style="text-align: center; width: 0">ID</th>
-                                                    <th style="text-align: center;width: 105.898px;">Tên Khách Hàng</th>
-                                                    <th style="text-align: center;width: 188.727px">Email</th>
-                                                    <th style="text-align: center; width: 59.1023px">Giới Tính</th>
-                                                    <th style="text-align: center;width: 98px">Số Điện Thoại</th>						
-                                                    <th style="text-align: center; width:67.5114px">Trạng Thái</th>	
-                                                    <th style="text-align: center;width: 90px">Role</th>
-                                                    <th style="text-align: center;width: 98px">Đăng Nhập Cuối</th>
+                                                    <th>ID</th>
+                                                    <th>Tên Khách Hàng</th>
+                                                 <th>Email</th>
+                                                   <th>Giới Tính</th>
+                                                   <th>Trạng Thái</th>	
+                                                    <th>Role</th>
+                                                    <th style="color: white"></th>
                                                 </tr>
                                             </thead>
 
                                             <tbody>
-                                                <c:forEach items="${requestScope.data}" var="cus">
-                                                    <tr style="text-align: center; cursor: pointer" onclick="userDetails(${cus.userID})">
-                                                        <td>${cus.userID}</td>
-                                                        <td>${cus.firstName} ${cus.lastName}</td>
-                                                        <td>${cus.email}</td>
-                                                        <td>${cus.gender ? 'Nam':'Nữ'}</td>
-                                                        <td>${cus.phoneNumber ? '':'Không'}</td>                        
-                                                        <td><c:if test="${cus.userStatus == 0}"><span class="badge badge-info">Chưa xác nhận</span></c:if>
-                                                            <c:if test="${cus.userStatus == 1}"><span class="badge badge-success">Hoạt động</span></c:if>
-                                                            <c:if test="${cus.userStatus == 2}"><span class="badge badge-danger">Vô hiệu hóa</span></c:if></td>
-                                                         <td><c:if test="${cus.roleID == 1}"><span class="badge badge-info">Khách hàng</span></c:if>
-                                                            <c:if test="${cus.roleID == 2}"><span class="badge badge-success">Marketing</span></c:if>
-                                                            <c:if test="${cus.roleID == 3}"><span class="badge badge-success">Sale</span></c:if>
-                                                            <c:if test="${cus.roleID == 4}"><span class="badge badge-success">Quản lí sale</span></c:if>
-                                                            <c:if test="${cus.roleID == 5}"><span class="badge badge-danger">Admin</span></c:if></td>
-                                                        <td title="${cus.lastLogin}">${cus.lastLogin}</td>
+                                                <c:forEach items="${requestScope.listuser}" var="user">
+                                                    <tr style="text-align: center; cursor: pointer" onclick="userDetails(${user.userID})">
+                                                        <td>${user.userID}</td>
+                                                        <td>${user.firstName} ${user.lastName}</td>
+                                                        <td>${user.email}</td>
+                                                        <td>${user.gender ? 'Nam':'Nữ'}</td>
+                                                        <td><c:if test="${user.userStatus == 0}"><span class="badge badge-info">Chưa xác nhận</span></c:if>
+                                                            <c:if test="${user.userStatus == 1}"><span class="badge badge-success">Hoạt động</span></c:if>
+                                                            <c:if test="${user.userStatus == 2}"><span class="badge badge-danger">Vô hiệu hóa</span></c:if></td>
+                                                         <td><c:if test="${user.roleID == 1}"><span class="badge badge-info">Khách hàng</span></c:if>
+                                                            <c:if test="${user.roleID == 2}"><span class="badge badge-success">Marketing</span></c:if>
+                                                            <c:if test="${user.roleID == 3}"><span class="badge badge-success">Sale</span></c:if>
+                                                            <c:if test="${user.roleID == 4}"><span class="badge badge-success">Quản lí sale</span></c:if>
+                                                            <c:if test="${user.roleID == 5}"><span class="badge badge-danger">Admin</span></c:if></td>
+                                                         <td style="color: white"></td>
                                                     </tr>
                                                 </c:forEach>    
                                             </tbody>
@@ -326,7 +314,7 @@
             </div>
         </div>
         <!-- Scroll to top -->
-        <a class="scroll-to-top rounded" href="#page-top">
+       <a class="scroll-to-top rounded" href="#page-top">
             <i class="fas fa-angle-up"></i>
         </a>
         <script src="vendor/jquery/jquery.min.js"></script>
@@ -339,10 +327,23 @@
 
         <!-- Page level custom scripts -->
         <script>
-function userDetails(uid) {
-    var url = "userDetails?uid="+uid;
-    window.location.href = url;
-}
+$(document).ready(function () {
+    $('#dataTable').DataTable(); // ID From dataTable 
+    $('#dataTableHover').DataTable({
+        columns: [
+            {searchable: false},
+            {searchable: true},
+            {searchable: true},
+            {searchable: false},
+            {searchable: true},
+            {searchable: false},
+            {searchable: false}],
+        search: {
+            placeholder: 'Type search here'
+        }
+    }); // ID From dataTable with Hover
+});
+
         </script>
     </body>
 </html>
