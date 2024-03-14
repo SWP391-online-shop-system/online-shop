@@ -55,7 +55,7 @@
             }
         </style>
     </head>
-    <body id="page-top">
+    <body>
         <%
             HttpSession session3 = request.getSession();
             User user1 = (User) session3.getAttribute("account");
@@ -482,7 +482,6 @@
                                     <%
                                                        ResultSet rsAddress = (ResultSet)request.getAttribute("rsAddress");
                                                        if(!rsAddress.isBeforeFirst()){%>
-                                    <p>Chưa có địa chỉ nào</p>
                                     <%}
                                     else {
                                         while(rsAddress.next()){      
@@ -526,95 +525,95 @@
                         </div> 
                     </div>
                 </form>
-                <!--<form>-->
-                <div class="modal fade" id="addnew"
-                     aria-hidden="true" aria-labelledby="DSLabel2"
-                     tabindex="-1">
-                    <div class="modal-dialog modal-dialog-centered
-                         modal-dialog-scrollable" id="modal2"> 
-                        <div class="modal-content"> 
-                            <div class="modal-header"> 
-                                <h5 class="modal-title" id="AlgoLabel"> 
-                                    Tạo địa chỉ mới 
-                                </h5> 
-                                <button type="button" class="btn-close"
-                                        data-bs-dismiss="modal" aria-label="Close"> 
-                                </button> 
-                            </div> 
-                            <div class="modal-body p-3"> 
-                                <div class="form-group">
-                                    <label>Tên người nhận</label>
-                                    <input name="name" type="text" required autofocus class="form-control" id="newName" aria-describedby="emailHelp"
-                                           placeholder="Nhập tên..." pattern="[A-Za-zÀ-ỹ ]+" oninvalid="this.setCustomValidity('Vui lòng điền thông tin này, Không bao gồm số và kí tự đặc biệt')" 
-                                           oninput="setCustomValidity('')" >
-                                </div>
-                                <div class="form-group">
-                                    <label>Số điện thoại người nhận</label>
-                                    <input name="phone" type="number" required class="form-control" 
-                                           minlength="6" maxlength="10"
-                                           pattern="[0-9 ]+" oninvalid="this.setCustomValidity('Vui lòng điền thông tin này, Không bao gồm chữ cái và kí tự đặc biệt')" 
-                                           oninput="setCustomValidity(''); validateInput(this)"
-                                           id="newPhone" placeholder="Nhập số điện thoại...">
-                                </div>
-                                <div class="form-group">
-                                    <label>Email</label>
-                                    <input name="email" type="email" required class="form-control" id="newEmail" placeholder="Nhập email..."
-                                           oninvalid="this.setCustomValidity('Vui lòng điền thông tin này và bao gồm @')" 
-                                           oninput="setCustomValidity(''); validateInput(this)">
-                                </div>
-                                <div class="form-element" style="display: flex;">
-                                    <label>Giới tính</label>
-                                    <div style="display:flex; flex: 40%; margin-left: 11px">
-                                        <div class="custom-control custom-radio" style="margin-right: 15px;">
-                                            <input type="radio" id="customRadio3" name="newGender" class="custom-control-input" value="male" required>
-                                            <label class="custom-control-label" for="customRadio3">Nam</label>
-                                        </div>
-                                        <div class="custom-control custom-radio">
-                                            <input type="radio" id="customRadio4" name="newGender" class="custom-control-input" value="female" required>
-                                            <label class="custom-control-label" for="customRadio4">Nữ</label>
+                                <!--<form id="formAddnew">-->
+                    <div class="modal fade" id="addnew"
+                         aria-hidden="true" aria-labelledby="DSLabel2"
+                         tabindex="-1">
+                        <div class="modal-dialog modal-dialog-centered
+                             modal-dialog-scrollable" id="modal2"> 
+                            <div class="modal-content"> 
+                                <div class="modal-header"> 
+                                    <h5 class="modal-title" id="AlgoLabel"> 
+                                        Tạo địa chỉ mới 
+                                    </h5> 
+                                    <button type="button" class="btn-close"
+                                            data-bs-dismiss="modal" aria-label="Close"> 
+                                    </button> 
+                                </div> 
+                                <div class="modal-body p-3"> 
+                                    <div class="form-group">
+                                        <label>Tên người nhận</label>
+                                        <input name="name" type="text" required autofocus class="form-control" id="newName" aria-describedby="emailHelp"
+                                               placeholder="Nhập tên..." pattern="[A-Za-zÀ-ỹ ]+" oninvalid="this.setCustomValidity('Vui lòng điền thông tin này, Không bao gồm số và kí tự đặc biệt')" 
+                                               oninput="setCustomValidity('')" >
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Số điện thoại người nhận</label>
+                                        <input name="phone" type="number" required class="form-control" 
+                                               minlength="6" maxlength="10"
+                                               pattern="[0-9 ]+" oninvalid="this.setCustomValidity('Vui lòng điền thông tin này, Không bao gồm chữ cái và kí tự đặc biệt')" 
+                                               oninput="setCustomValidity(''); validateInput(this)"
+                                               id="newPhone" placeholder="Nhập số điện thoại...">
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Email</label>
+                                        <input name="email" type="email" required class="form-control" id="newEmail" placeholder="Nhập email..."
+                                               oninvalid="this.setCustomValidity('Vui lòng điền thông tin này và bao gồm @')" 
+                                               oninput="setCustomValidity(''); validateInput(this)">
+                                    </div>
+                                    <div class="form-element" style="display: flex;">
+                                        <label>Giới tính</label>
+                                        <div style="display:flex; flex: 40%; margin-left: 11px">
+                                            <div class="custom-control custom-radio" style="margin-right: 15px;">
+                                                <input type="radio" id="customRadio3" name="newGender" class="custom-control-input" value="male" required>
+                                                <label class="custom-control-label" for="customRadio3">Nam</label>
+                                            </div>
+                                            <div class="custom-control custom-radio">
+                                                <input type="radio" id="customRadio4" name="newGender" class="custom-control-input" value="female" required>
+                                                <label class="custom-control-label" for="customRadio4">Nữ</label>
+                                            </div>
                                         </div>
                                     </div>
-                                </div>
-                                <div class="form-group">
-                                    <label>Địa Chỉ Người Nhận
-                                    </label><br/>
-                                    <select name="city" id="city"  style="width: 31%;" required>
-                                        <option value="" id="newCity"  selected>Tỉnh thành</option>           
-                                    </select>
-                                    <select name="district" id="district"  style="width: 31%;" required>
-                                        <option value="" id="newDistrict"  selected>Quận huyện</option>
-                                    </select>
-                                    <select name="ward" id="ward"  style="width: 31%" required>
-                                        <option value="" id="newWard"  selected>Phường xã</option>
-                                    </select>
-                                </div>
-                                <div class="form-group">
-                                    <label>Địa chỉ cụ thể (số nhà, tên đường)</label>
-                                    <textarea name="addressdetail"  class="form-control" id="newAddressDetail" required></textarea>
-                                </div>
+                                    <div class="form-group">
+                                        <label>Địa Chỉ Người Nhận
+                                        </label><br/>
+                                        <select name="city" id="city"  style="width: 31%;" required>
+                                            <option value="" id="newCity"  selected>Tỉnh thành</option>           
+                                        </select>
+                                        <select name="district" id="district"  style="width: 31%;" required>
+                                            <option value="" id="newDistrict"  selected>Quận huyện</option>
+                                        </select>
+                                        <select name="ward" id="ward"  style="width: 31%" required>
+                                            <option value="" id="newWard"  selected>Phường xã</option>
+                                        </select>
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Địa chỉ cụ thể (số nhà, tên đường)</label>
+                                        <textarea name="addressdetail"  class="form-control" id="newAddressDetail" required></textarea>
+                                    </div>
+                                </div> 
+                                <div class="modal-footer"> 
+                                    <div>
+                                        <a style="color: white" class="btn btn-success" data-bs-target="#DS"
+                                           data-bs-toggle="modal" data-bs-dismiss="modal"> 
+                                            Hủy 
+                                        </a>
+                                        <!--                                        <button class="btn btn-success" 
+                                                                                        data-bs-toggle="modal" 
+                                                                                        data-bs-target="#DS"
+                                                                                   data-bs-toggle="modal" data-bs-dismiss="modal"                                               
+                                                                                        onclick="addNewAdd()"> 
+                                                                                    Lưu
+                                                                                </button>-->
+                                        <button type="submit" class="btn btn-success" data-bs-target="#DS"
+                                                data-bs-toggle="modal" data-bs-dismiss="modal" onclick="addNewAdd()"> 
+                                            Lưu
+                                        </button>
+                                    </div>
+                                </div> 
                             </div> 
-                            <div class="modal-footer"> 
-                                <div>
-                                    <a style="color: white" class="btn btn-success" data-bs-target="#DS"
-                                       data-bs-toggle="modal" data-bs-dismiss="modal"> 
-                                        Hủy 
-                                    </a>
-                                    <!--                                        <button class="btn btn-success" 
-                                                                                    data-bs-toggle="modal" 
-                                                                                    data-bs-target="#DS"
-                                                                               data-bs-toggle="modal" data-bs-dismiss="modal"                                               
-                                                                                    onclick="addNewAdd()"> 
-                                                                                Lưu
-                                                                            </button>-->
-                                    <button type="submit" class="btn btn-success" data-bs-target="#DS"
-                                            data-bs-toggle="modal" data-bs-dismiss="modal" onclick="addNewAdd()"> 
-                                        Lưu
-                                    </button>
-                                </div>
-                            </div> 
-                        </div> 
+                        </div>
                     </div>
-                </div>
                 <!--</form>-->
                 <!-- update modal-------------------------------------------- -->
                 <form id="formUpdate" action="contactURL" method="post">
