@@ -165,8 +165,8 @@
                                                         <div style="padding-top: 3px;">Trạng thái</div>
                                                         <select class="form-control" name="statusfilter" onchange="this.form.submit()">
                                                             <option value="">Trạng thái</option>
-                                                            <option value="true" <c:if test="${fn:contains(requestScope.statusfilter,'true')}">selected</c:if>>Hiện</option>
-                                                            <option value="false" <c:if test="${fn:contains(requestScope.statusfilter,'false')}">selected</c:if>>Ẩn</option>
+                                                            <option value="true" <c:if test="${fn:contains(requestScope.statusfilter,'true')}">selected</c:if>>Hoạt động</option>
+                                                            <option value="false" <c:if test="${fn:contains(requestScope.statusfilter,'false')}">selected</c:if>>Vô hiệu hóa</option>
                                                             </select>
                                                         </div>
                                                         <input type="submit" style="display: none;">
@@ -184,8 +184,8 @@
                                                 </thead>
                                                 <tbody>
                                                 <c:forEach items="${sessionScope.sliderlist}" var="s">
-                                                    <tr>
-                                                        <td id="tronclick" onclick="sliderDetail(${s.sliderID},${s.sliderStatus})">${s.sliderID}</td>
+                                                    <tr id="tronclick" onclick="sliderDetail(${s.sliderID},${s.sliderStatus})">
+                                                        <td>${s.sliderID}</td>
                                                         <td>${s.userID}</td>
                                                         <td id="imageonclick"><img  style="height: 91px;width: 133px;" src="images/slider/${s.sliderImage}" alt="alt"/></td>
                                                         <td><a href="${s.sliderLink}">${s.sliderLink}</a></td>
@@ -302,11 +302,11 @@
                                             <div style="display:flex; flex: 40%">
                                                 <div class="custom-control custom-radio" style="margin-right: 15px;">
                                                     <input type="radio" id="customRadio3" name="sliderStatus1" class="custom-control-input" value="false" required>
-                                                    <label class="custom-control-label" for="customRadio3">Hiện</label>
+                                                    <label class="custom-control-label" for="customRadio3">Hoạt động</label>
                                                 </div>
                                                 <div class="custom-control custom-radio">
                                                     <input type="radio" id="customRadio4" name="sliderStatus1" class="custom-control-input" value="true" required>
-                                                    <label class="custom-control-label" for="customRadio4">Ẩn</label>
+                                                    <label class="custom-control-label" for="customRadio4">Vô hiệu hóa</label>
                                                 </div>
                                             </div>
                                         </div>
