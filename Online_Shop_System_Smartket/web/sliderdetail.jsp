@@ -63,7 +63,7 @@
                         Quản lí
                     </div>
                     <li class="nav-item">
-                        <a class="nav-link" href="http://localhost:8080/Smartket/sliderList">
+                        <a class="nav-link" href="http://localhost:8080/Smartket/marketingSliderList">
                             <i class="fas fa-calendar fa-2x text-primary"></i>
                             <span>Slider</span>
                         </a>
@@ -128,6 +128,7 @@
                                 <!--<li class="breadcrumb-item">Tables</li>-->
                                 <li class="breadcrumb-item active" aria-current="page">Slider Detail</li>
                             </ol>
+                                                                    <div style="margin-left: 25px; margin-top: -10px;"><a href="marketingSliderList" style="color: white"><button class="btn btn-primary mb-1">Quay lại</button></a></div>
                         </div>
                         <div class="row">
                             <!-- DataTable with Hover -->
@@ -135,7 +136,7 @@
                                 <div class="card mb-4">
                                     <div class="table-responsive p-3">
                                         <form action="updateslider" method="post" enctype='multipart/form-data'>
-                                            <table class="table align-items-center table-flush table-hover" id="dataTableHover">
+                                            <table class="table align-items-center table-flush table-hover">
                                                 <thead class="thead-light">
                                                     <tr>
                                                         <th>ID</th>
@@ -158,14 +159,13 @@
                                                         <td><textarea  name="updateLink" >${sessionScope.getaSlider.sliderLink} </textarea></td>
                                                         <td>${sessionScope.getaSlider.createDate}</td>
 
-                                                        <td><input type="radio" name="updateStatus" value="false"<c:if test="${!sessionScope.getaSlider.sliderStatus}">checked</c:if>> hiện <br>
-                                                            <input type="radio" name="updateStatus" value="true" <c:if test="${sessionScope.getaSlider.sliderStatus}">checked</c:if>> ẩn
+                                                        <td><input type="radio" name="updateStatus" value="false"<c:if test="${!sessionScope.getaSlider.sliderStatus}">checked</c:if>> Hoạt động <br>
+                                                            <input type="radio" name="updateStatus" value="true" <c:if test="${sessionScope.getaSlider.sliderStatus}">checked</c:if>> Vô hiệu hóa
                                                         </td>
                                                     </tr>
                                                 </tbody>
                                             </table>
                                             <input type="submit" name="submit" value="Update Slider">
-                                            <input type="reset" value="Clear">
                                         </form>
                                     </div>
                                 </div>
