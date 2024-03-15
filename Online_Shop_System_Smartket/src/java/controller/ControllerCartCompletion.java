@@ -19,9 +19,11 @@ import java.util.Arrays;
 import model.DAOCart;
 import model.DAOOrder;
 import model.DAOOrderDetails;
+import model.DAOProduct;
 import model.DAOReceiver;
 import view.Order;
 import view.OrderDetails;
+import view.Product;
 import view.Receiver;
 import view.User;
 
@@ -46,6 +48,7 @@ public class ControllerCartCompletion extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         try ( PrintWriter out = response.getWriter()) {
             HttpSession session = request.getSession();
+            DAOProduct daoProduct = new DAOProduct();
             DAOOrder daoOrder = new DAOOrder();
             DAOCart daoCart = new DAOCart();
             DAOReceiver daoRece = new DAOReceiver();
@@ -104,6 +107,9 @@ public class ControllerCartCompletion extends HttpServlet {
                 ResultSet listCart = daoCart.getData("SELECT * FROM Cart as c join product as p on c.ProductID = p.ProductID where UserID = " + userID);
                 while (listCart.next()) {
                     if (Arrays.asList(proId).contains(String.valueOf(listCart.getInt("ProductID")))) {
+                        Product product = daoProduct.getProductById(listCart.getInt("ProductID"));
+                        int unitInstock = product.getUnitInStock() - listCart.getInt("Quantity");
+                        daoProduct.updateUnitInStock(listCart.getInt("ProductID"), unitInstock);
                         OrderDetails details = new OrderDetails(listCart.getInt("ProductID"), orderID, listCart.getInt("Quantity"), listCart.getInt("UnitPrice"), listCart.getInt("UnitDiscount"), false);
                         daoDetail.insertOrderDetailsByPrepared(details);
                     }
@@ -124,6 +130,9 @@ public class ControllerCartCompletion extends HttpServlet {
             }
             for (String o : productId) {
                 int proIdDelete = Integer.parseInt(o);
+                Product product = daoProduct.getProductById(proIdDelete);
+                int unitInstock = product.getUnitInStock();
+                
                 daoCart.deleteCart(userID, proIdDelete);
             }
             response.sendRedirect("CartcontactOTPVerify?email=" + email + "&oid=" + orderID);

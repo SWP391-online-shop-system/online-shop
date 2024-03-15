@@ -1,24 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project-private xmlns="http://www.netbeans.org/ns/project-private/1">
-    <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="1">
-        <file>
-            <url>src/java/controller/ControllerCartCompletion.java</url>
-            <bookmark id="1">
-                <name/>
-                <line>71</line>
-                <key/>
-            </bookmark>
-        </file>
-    </editor-bookmarks>
+    <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/E:/FPT/Spring2024/SWP391/online_shop_system_github/Online_Shop_System_Smartket/web/adminDashBoard.jsp</file>
-            <file>file:/E:/FPT/Spring2024/SWP391/online_shop_system_github/Online_Shop_System_Smartket/web/js/cartcontact.js</file>
-            <file>file:/E:/FPT/Spring2024/SWP391/online_shop_system_github/Online_Shop_System_Smartket/src/java/controller/ControllerMyOrder.java</file>
-            <file>file:/E:/FPT/Spring2024/SWP391/online_shop_system_github/Online_Shop_System_Smartket/web/cartcontact.jsp</file>
-            <file>file:/E:/FPT/Spring2024/SWP391/online_shop_system_github/Online_Shop_System_Smartket/src/java/controller/ControllerSaleDashBoard.java</file>
-            <file>file:/E:/FPT/Spring2024/SWP391/online_shop_system_github/Online_Shop_System_Smartket/web/saleDashboard.jsp</file>
-            <file>file:/E:/FPT/Spring2024/SWP391/online_shop_system_github/Online_Shop_System_Smartket/src/java/controller/ControllerAdminDashBoard.java</file>
+            <file>file:/D:/fpt/Semeter_5/SWP391/Project_GitHub/Online_Shop_System_Smartket/web/feedbackList.jsp</file>
+            <file>file:/D:/fpt/Semeter_5/SWP391/Project_GitHub/Online_Shop_System_Smartket/web/cartcontact.jsp</file>
+            <file>file:/D:/fpt/Semeter_5/SWP391/Project_GitHub/Online_Shop_System_Smartket/web/userlist.jsp</file>
+            <file>file:/D:/fpt/Semeter_5/SWP391/Project_GitHub/Online_Shop_System_Smartket/src/java/controller/ControllerCartCompletion.java</file>
+            <file>file:/D:/fpt/Semeter_5/SWP391/Project_GitHub/Online_Shop_System_Smartket/web/productDetail.jsp</file>
+            <file>file:/D:/fpt/Semeter_5/SWP391/Project_GitHub/Online_Shop_System_Smartket/web/cartcontactOTP.jsp</file>
+            <file>file:/D:/fpt/Semeter_5/SWP391/Project_GitHub/Online_Shop_System_Smartket/web/MyOrder.jsp</file>
+            <file>file:/D:/fpt/Semeter_5/SWP391/Project_GitHub/Online_Shop_System_Smartket/web/js_marketing/customerlist.js</file>
+            <file>file:/D:/fpt/Semeter_5/SWP391/Project_GitHub/Online_Shop_System_Smartket/src/java/controller/ControllerMyOrder.java</file>
         </group>
     </open-files>
 </project-private>

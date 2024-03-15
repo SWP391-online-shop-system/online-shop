@@ -377,8 +377,8 @@
                     <div class="row" style="display: contents">
                         <%
                                 DAOProduct daoP = new DAOProduct();
-                            ResultSet rsHotPro = daoP.getData("select * from Product as p join ProductImage as pi on p.ProductID = pi.ProductID where  pi.ProductURL like '%_1%'\n"
-                            +"group by p.ProductID having min(p.TotalStock - p.UnitInStock) > 0");
+                           ResultSet rsHotPro = daoP.getData("select * from Product as p join ProductImage as pi on p.ProductID = pi.ProductID where  pi.ProductURL = pi.ProductURLShow \n"
+                                               +  "group by p.ProductID having min(p.TotalStock - p.UnitInStock) >0 order by (p.TotalStock - p.UnitInStock) desc limit 1");
                         if(rsHotPro.next()) {
                         %>
                         <div class="product__item" style="border: 1px solid #c1e8c1ba;
