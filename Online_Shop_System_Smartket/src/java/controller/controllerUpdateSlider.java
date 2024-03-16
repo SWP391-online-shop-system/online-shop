@@ -103,11 +103,26 @@ public class controllerUpdateSlider extends HttpServlet {
            // part.write(realFileName);
             sliderpart.write(realFileName1);
         //}
-        }
-        String name =  newImageName + slidername.substring(dotIndex);
         DAOSlider DAOSlider = new DAOSlider();
         Slider slider = DAOSlider.getaSlider("select * from slider where sliderId = " + sliderID1);
-        slider.setSliderImage(name);
+        slider.setSliderImage(result);
+        slider.setSliderLink(sliderLink1);
+        slider.setSliderStatus(sliderStatus1);
+        System.out.println(slider.isSliderStatus());
+        int n = DAOSlider.updateProduct(slider);
+          try {
+                //Introduce a 1-second delay
+                   Thread.sleep(5000); // 1000 milliseconds = 1 second
+
+                           response.sendRedirect("marketingSliderList");
+              } catch (InterruptedException e) {
+                // Handle any potential interruption exception
+                   e.printStackTrace();
+               }
+        }
+        
+        DAOSlider DAOSlider = new DAOSlider();
+        Slider slider = DAOSlider.getaSlider("select * from slider where sliderId = " + sliderID1);
         slider.setSliderLink(sliderLink1);
         slider.setSliderStatus(sliderStatus1);
         System.out.println(slider.isSliderStatus());

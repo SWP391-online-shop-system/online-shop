@@ -30,7 +30,7 @@
         %>
         <div id="wrapper">
             <!-- Sidebar -->
-           <ul class="navbar-nav sidebar sidebar-light accordion" id="accordionSidebar">
+            <ul class="navbar-nav sidebar sidebar-light accordion" id="accordionSidebar">
                 <a class="sidebar-brand d-flex align-items-center justify-content-center" href="MarketingDashBoardURL">
                     <div class="sidebar-brand-icon">
                         <img style="height: 91px;
@@ -58,7 +58,7 @@
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="adminOrderTrackURL?status=all&orderFrom=&orderTo=">
+                        <a class="nav-link" href="settinglist">
                             <span>Cài đặt</span>
                         </a>
                     </li>
@@ -68,38 +68,38 @@
             <div id="content-wrapper" class="d-flex flex-column">
                 <div id="content">
                     <!-- TopBar -->
-                  <nav class="navbar navbar-expand navbar-light bg-navbar topbar mb-4 static-top">
-                            <div style="font-weight: 700;color: white;font-size: 37px;letter-spacing: 2px;font-family: Nunito,-apple-system,BlinkMacSystemFont"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol","Noto Color Emoji";">Trang Admin</div>
-                            <ul class="navbar-nav ml-auto">
-                                <div class="topbar-divider d-none d-sm-block"></div>
-                                <li class="nav-item dropdown no-arrow">
-                                    <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown"
-                                       aria-haspopup="true" aria-expanded="false">
-                                        <img class="img-profile rounded-circle" src="images/user/${sessionScope.account.userImage}" style="max-width: 60px">
-                                        <span class="ml-2 d-none d-lg-inline text-white small">${sessionScope.account.firstName}&nbsp;${sessionScope.account.lastName}</span>
+                    <nav class="navbar navbar-expand navbar-light bg-navbar topbar mb-4 static-top">
+                        <div style="font-weight: 700;color: white;font-size: 37px;letter-spacing: 2px;font-family: Nunito,-apple-system,BlinkMacSystemFont"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol","Noto Color Emoji";">Trang Admin</div>
+                        <ul class="navbar-nav ml-auto">
+                            <div class="topbar-divider d-none d-sm-block"></div>
+                            <li class="nav-item dropdown no-arrow">
+                                <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown"
+                                   aria-haspopup="true" aria-expanded="false">
+                                    <img class="img-profile rounded-circle" src="images/user/${sessionScope.account.userImage}" style="max-width: 60px">
+                                    <span class="ml-2 d-none d-lg-inline text-white small">${sessionScope.account.firstName}&nbsp;${sessionScope.account.lastName}</span>
+                                </a>
+                                <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="userDropdown">
+                                    <a class="dropdown-item" href="#">
+                                        <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
+                                        Hồ sơ
                                     </a>
-                                    <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="userDropdown">
-                                        <a class="dropdown-item" href="#">
-                                            <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
-                                            Hồ sơ
-                                        </a>
-                                        <a class="dropdown-item" href="#">
-                                            <i class="fas fa-cogs fa-sm fa-fw mr-2 text-gray-400"></i>
-                                            Cài đặt
-                                        </a>
-                                        <a class="dropdown-item" href="#">
-                                            <i class="fas fa-list fa-sm fa-fw mr-2 text-gray-400"></i>
-                                            Lịch sử thay đổi
-                                        </a>
-                                        <div class="dropdown-divider"></div>
-                                        <a class="dropdown-item" href="logout">
-                                            <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
-                                            Đăng xuất
-                                        </a>
-                                    </div>
-                                </li>
-                            </ul>
-                        </nav>
+                                    <a class="dropdown-item" href="#">
+                                        <i class="fas fa-cogs fa-sm fa-fw mr-2 text-gray-400"></i>
+                                        Cài đặt
+                                    </a>
+                                    <a class="dropdown-item" href="#">
+                                        <i class="fas fa-list fa-sm fa-fw mr-2 text-gray-400"></i>
+                                        Lịch sử thay đổi
+                                    </a>
+                                    <div class="dropdown-divider"></div>
+                                    <a class="dropdown-item" href="logout">
+                                        <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
+                                        Đăng xuất
+                                    </a>
+                                </div>
+                            </li>
+                        </ul>
+                    </nav>
                     <!-- Topbar -->
 
                     <!-- Container Fluid-->
@@ -135,26 +135,27 @@
                         <%sessionMessage.removeAttribute("message");%>
                         <div class="row">
                             <button style="margin-left: 13px;margin-bottom: 5px;" type="button" class="btn btn-secondary" data-toggle="modal" data-target="#exampleModalLong"
-                                    id="#modalLong">Thêm Khách Hàng Mới</button>
+                                    id="#modalLong">Thêm Người Dùng Mới</button>
                         </div>
                         <div class="row">
                             <!-- DataTable with Hover -->
                             <div class="col-lg-12">
                                 <div class="card mb-4">                                 
                                     <div class="table-responsive p-3">
-                                        <table class="table align-items-center table-flush table-hover" id="dataTableHover" style="font-size: 14px;">
+                                        <table class="table align-items-center table-flush table-hover" id="dataTableHover123" style="font-size: 14px;">
                                             <div style="display: flex;
-                                                 margin-left: 100px;
-                                                 margin-bottom: 30px;">
+                                                 margin-left: 200px;
+                                                 margin-bottom: -29px;">
                                                 <%
                                                 String status = (String)request.getAttribute("status");
                                                 String role = (String)request.getAttribute("role");
                                                 String gender = (String)request.getAttribute("gender");
                                                 %>
-                                                    
+
                                                 <form action="userlist" method="get">
-                                                    <div class="filter-group" style="display:flex;">
-                                                        <div>Role</div>
+                                                    <div class="filter-group" style="display:flex;align-items: center;">
+                                                        <div style=" padding-top: -36px;
+                                                             width: 81%;">Role</div>
                                                         <select class="form-control" name="role" onchange="this.form.submit()" style="height: 33px;margin-top: -12px;">   
                                                             <option value="5" <%if(role.equals("5")){%>selected<%}%>>Admin</option>                                                     
                                                             <option value="4" <%if(role.equals("4")){%>selected<%}%>>Quản lí sale</option>                                                     
@@ -163,14 +164,17 @@
                                                             <option value="2" <%if(role.equals("2")){%>selected<%}%>>Marketing</option>                                                            
                                                             <option value="0" <%if(role.equals("0")){%>selected<%}%>>Tất cả</option>							
                                                         </select>
-                                                        <div>Trạng thái</div>
+                                                        <div style="
+                                                             padding-top: -36px;
+                                                             width: 81%;">Trạng thái</div>
                                                         <select class="form-control" name="status" onchange="this.form.submit()" style="height: 33px;margin-top: -12px;">                                                            
                                                             <option value="3" <%if(status.equals("3")){%>selected<%}%>>Tất cả</option>                                                     
                                                             <option value="1" <%if(status.equals("1")){%>selected<%}%>>Hoạt động</option>                                                          
                                                             <option value="2" <%if(status.equals("2")){%>selected<%}%>>Vô hiệu hóa</option>                                                            
                                                             <option value="0" <%if(status.equals("0")){%>selected<%}%>>Chưa xác nhận</option>							
                                                         </select>
-                                                        <div>Giới tính</div>
+                                                        <div style="padding-top: -36px;
+                                                             width: 81%;">Giới tính</div>
                                                         <select class="form-control" name="gender" onchange="this.form.submit()" style="height: 33px;margin-top: -12px;">                                                            
                                                             <option value="0" <%if(gender.equals("0")){%>selected<%}%>>Tất cả</option>                                                     
                                                             <option value="false" <%if(gender.equals("false")){%>selected<%}%>>Nữ</option>                                                          
@@ -185,11 +189,11 @@
                                                 <tr>
                                                     <th>ID</th>
                                                     <th>Tên Khách Hàng</th>
-                                                 <th>Email</th>
-                                                   <th>Giới Tính</th>
-                                                   <th>Trạng Thái</th>	
+                                                    <th> Số điện thoại</th>
+                                                    <th>Email</th>
+                                                    <th>Giới Tính</th>
+                                                    <th>Trạng Thái</th>	
                                                     <th>Role</th>
-                                                    <th style="color: white"></th>
                                                 </tr>
                                             </thead>
 
@@ -198,18 +202,24 @@
                                                     <tr style="text-align: center; cursor: pointer" onclick="userDetails(${user.userID})">
                                                         <td>${user.userID}</td>
                                                         <td>${user.firstName} ${user.lastName}</td>
+                                                        <td ><c:choose>
+                                                                <c:when test="${user.phoneNumber==null}">
+                                                                    chưa cập nhật
+                                                                </c:when>
+                                                                <c:otherwise>  ${user.phoneNumber}</c:otherwise>
+                                                            </c:choose>
+                                                        </td>
                                                         <td>${user.email}</td>
                                                         <td>${user.gender ? 'Nam':'Nữ'}</td>
                                                         <td><c:if test="${user.userStatus == 0}"><span class="badge badge-info">Chưa xác nhận</span></c:if>
                                                             <c:if test="${user.userStatus == 1}"><span class="badge badge-success">Hoạt động</span></c:if>
                                                             <c:if test="${user.userStatus == 2}"><span class="badge badge-danger">Vô hiệu hóa</span></c:if></td>
-                                                         <td><c:if test="${user.roleID == 1}"><span class="badge badge-info">Khách hàng</span></c:if>
+                                                        <td><c:if test="${user.roleID == 1}"><span class="badge badge-info">Khách hàng</span></c:if>
                                                             <c:if test="${user.roleID == 2}"><span class="badge badge-success">Marketing</span></c:if>
                                                             <c:if test="${user.roleID == 3}"><span class="badge badge-success">Sale</span></c:if>
                                                             <c:if test="${user.roleID == 4}"><span class="badge badge-success">Quản lí sale</span></c:if>
                                                             <c:if test="${user.roleID == 5}"><span class="badge badge-danger">Admin</span></c:if></td>
-                                                         <td style="color: white"></td>
-                                                    </tr>
+                                                        </tr>
                                                 </c:forEach>    
                                             </tbody>
                                         </table>
@@ -222,7 +232,7 @@
                         <div class="modal fade" id="exampleModalLong" tabindex="-1" role="dialog"
                              aria-labelledby="exampleModalLongTitle" aria-hidden="true">
                             <div class="modal-dialog" role="document">
-                                <form action="customerlist" method="post">
+                                <form action="userlist" method="post">
                                     <input type="hidden" name="service" value="addnewuser"/>
                                     <div class="modal-content">
                                         <div class="modal-header">
@@ -277,6 +287,16 @@
                                                        oninput="setCustomValidity(''); validateInput(this)" >
                                             </div>
                                             <div class="form-element">
+                                                <label for="registerPassword">Role&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label>
+                                                <select class="form-control" name="roleadd" style="">   
+                                                    <option value="5" <%if(role.equals("5")){%>selected<%}%>>Admin</option>                                                     
+                                                    <option value="4" <%if(role.equals("4")){%>selected<%}%>>Quản lí sale</option>                                                     
+                                                    <option value="3" <%if(role.equals("3")){%>selected<%}%>>Sale</option>                                                     
+                                                    <option value="1" <%if(role.equals("1")){%>selected<%}%>>Khách Hàng</option>                                                          
+                                                    <option value="2" <%if(role.equals("2")){%>selected<%}%>>Marketing</option>                                                            
+                                                </select>
+                                            </div>
+                                            <div class="form-element">
                                                 <label for="registerPassword">Mật khẩu</label>
 
                                                 <input type="password" id="registerPassword" name="pass" placeholder="Nhập mật khẩu" required class="form-control"
@@ -314,7 +334,7 @@
             </div>
         </div>
         <!-- Scroll to top -->
-       <a class="scroll-to-top rounded" href="#page-top">
+        <a class="scroll-to-top rounded" href="#page-top">
             <i class="fas fa-angle-up"></i>
         </a>
         <script src="vendor/jquery/jquery.min.js"></script>
@@ -327,26 +347,23 @@
 
         <!-- Page level custom scripts -->
         <script>
-$(document).ready(function () {
-    $('#dataTable').DataTable(); // ID From dataTable 
-    $('#dataTableHover').DataTable({
-        columns: [
-            {searchable: false},
-            {searchable: true},
-            {searchable: true},
-            {searchable: false},
-            {searchable: true},
-            {searchable: false},
-            {searchable: false}],
-        search: {
-            placeholder: 'Type search here'
-        }
-    }); // ID From dataTable with Hover
-});
-function userDetails(uid) {
-    var url = "userDetails?uid="+uid;
-    window.location.href = url;
-}
+                                                    $('#dataTableHover123').DataTable({
+                                                        columns: [
+                                                            {searchable: false},
+                                                            {searchable: true},
+                                                            {searchable: true},
+                                                            {searchable: true},
+                                                            {searchable: false},
+                                                            {searchable: false},
+                                                            {searchable: false}],
+                                                        search: {
+                                                            placeholder: 'Type search here'
+                                                        }
+                                                    });
+                                                    function userDetails(uid) {
+                                                        var url = "userDetails?uid=" + uid;
+                                                        window.location.href = url;
+                                                    }
 
         </script>
     </body>

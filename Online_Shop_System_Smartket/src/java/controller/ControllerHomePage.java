@@ -45,6 +45,10 @@ public class ControllerHomePage extends HttpServlet {
             ResultSet rsNewBlog = daoBlog.getData("select * from Blog where HiddenStatus = 0 order by CreateTime desc limit 1 ");
             ResultSet rsFeatureBlog = daoBlog.getData("select * from Blog where HiddenStatus = 0 order by BlogRate desc limit 3");
             ResultSet rsSlider = daoBlog.getData("select SliderImage, SliderLink from Slider where SliderStatus = 0");
+            ResultSet rsSlider1 = daoBlog.getData("select SliderImage, SliderLink from Slider where SliderStatus = 0");
+            int countslider = 0;
+                                while(rsSlider1.next()) {
+                                countslider++;}
             int settingPage = 0;
             ResultSet rsSettingPage = dao.getData("select * from Setting where SettingID = 1");
             if (rsSettingPage.next()) {
@@ -53,6 +57,7 @@ public class ControllerHomePage extends HttpServlet {
             ResultSet rsNewProduct = dao.getData("select * from product as p join productImage as pi on p.ProductID = pi.ProductID "
                     + "where pi.ProductURL = pi.ProductURLShow and p.ProductStatus = 0 order by p.CreateDate desc limit " + settingPage);
             request.setAttribute("rsNewProduct", rsNewProduct);
+            request.setAttribute("countslider", countslider);
             request.setAttribute("rsSlider", rsSlider);
             request.setAttribute("rsNewBlog", rsNewBlog);
             request.setAttribute("rsFeatureBlog", rsFeatureBlog);

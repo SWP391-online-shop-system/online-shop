@@ -74,6 +74,7 @@ public class ControllerUserList extends HttpServlet {
                 String Adress = request.getParameter("adress");
                 String Email = request.getParameter("email");
                 String Phone = request.getParameter("phone");
+                String roleadd = request.getParameter("roleadd");
                 String Pass = request.getParameter("pass");
                 String gender_str = request.getParameter("gender");
                 int checkEmail = dao.checkEmail(Email);
@@ -87,7 +88,7 @@ public class ControllerUserList extends HttpServlet {
                         gender = false;
                     }
                     User newUser = new User(Fname, Lname, Adress, Phone, gender, Pass, Email);
-                    int n = dao.addNewUserByMKT(newUser);
+                    int n = dao.addNewUserByadmin(newUser,roleadd);
                     if (n > 0) {
                         message = "Thêm thành công";
                     }

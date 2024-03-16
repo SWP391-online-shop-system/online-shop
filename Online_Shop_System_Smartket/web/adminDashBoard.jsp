@@ -101,7 +101,7 @@
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="adminOrderTrackURL?status=all&orderFrom=&orderTo=">
+                        <a class="nav-link" href="settinglist">
                             <span>Cài đặt</span>
                         </a>
                     </li>
