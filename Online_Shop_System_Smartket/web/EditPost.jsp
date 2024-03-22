@@ -166,7 +166,7 @@
                                             </div>
                                             <div class="form-group">
                                                 <label>Ngày đăng</label>
-                                                <input value="${blog.createTime.substring(0,10)}" name="date" type="date" class="form-control" required>
+                                                <input value="${blog.createTime.substring(0,10)}" name="date" type="date" class="form-control"readonly required>
                                             </div>
                                         </div>
                                         <div class="modal-footer">
