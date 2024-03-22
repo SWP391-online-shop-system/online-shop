@@ -3,9 +3,13 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/D:/fpt/Semeter_5/SWP391/Project_GitHub/Online_Shop_System_Smartket/src/java/controller/ControllerMarketingDashBoard.java</file>
+            <file>file:/D:/fpt/Semeter_5/SWP391/Project_GitHub/Online_Shop_System_Smartket/src/java/view/Log.java</file>
+            <file>file:/D:/fpt/Semeter_5/SWP391/Project_GitHub/Online_Shop_System_Smartket/src/java/model/DAOLog.java</file>
+            <file>file:/D:/fpt/Semeter_5/SWP391/Project_GitHub/Online_Shop_System_Smartket/web/feedbackList.jsp</file>
             <file>file:/D:/fpt/Semeter_5/SWP391/Project_GitHub/Online_Shop_System_Smartket/src/java/model/DBConnect.java</file>
-            <file>file:/D:/fpt/Semeter_5/SWP391/Project_GitHub/Online_Shop_System_Smartket/web/js_marketing/demo/chart-area-demo.js</file>
+            <file>file:/D:/fpt/Semeter_5/SWP391/Project_GitHub/Online_Shop_System_Smartket/src/java/model/DAOProduct.java</file>
+            <file>file:/D:/fpt/Semeter_5/SWP391/Project_GitHub/Online_Shop_System_Smartket/src/java/controller/ControllerHomePage.java</file>
+            <file>file:/D:/fpt/Semeter_5/SWP391/Project_GitHub/Online_Shop_System_Smartket/src/java/controller/ControllerFeedBackList.java</file>
         </group>
     </open-files>
 </project-private>

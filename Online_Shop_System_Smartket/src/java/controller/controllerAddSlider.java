@@ -14,7 +14,10 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import jakarta.servlet.http.Part;
+import model.DAOLog;
 import model.DAOSlider;
+import model.DAOUser;
+import view.Log;
 import view.Slider;
 import view.User;
 
@@ -82,10 +85,16 @@ public class controllerAddSlider extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        int sliderID1 = Integer.parseInt(request.getParameter("sliderID1").trim());
+        DAOUser daoU = new DAOUser();
         HttpSession session = request.getSession();
         User u = (User) session.getAttribute("account");
-        int userID= u.getUserID();
+        if (u == null) {
+            String message = "Bạn cần đăng nhập";
+            request.setAttribute("message", message);
+            request.getRequestDispatcher("loginURL").forward(request, response);
+        }
+        int sliderID1 = Integer.parseInt(request.getParameter("sliderID1").trim());
+        int userID = u.getUserID();
         String sliderLink1 = request.getParameter("sliderLink1");
         String createDate1 = request.getParameter("createDate1");
         boolean sliderStatus1 = Boolean.parseBoolean(request.getParameter("sliderStatus1"));
@@ -97,22 +106,23 @@ public class controllerAddSlider extends HttpServlet {
         String path = "images/slider/" + result;
         String realFileName = request.getServletContext().getRealPath(path);
         String realFileName1 = realFileName.replace("\\build", "");
-       // for (Part part : request.getParts()) {
-          //  part.write(realFileName);
-            sliderpart.write(realFileName1);
+        // for (Part part : request.getParts()) {
+        //  part.write(realFileName);
+        sliderpart.write(realFileName1);
         //}
         Slider newSlider = new Slider(sliderID1, userID, result, sliderLink1, sliderStatus1, createDate1);
         DAOSlider DAOSlider = new DAOSlider();
         int n = DAOSlider.insertSlider(newSlider);
+        DAOLog log = new DAOLog();
+        Log log1 = new Log(sliderID1,3,"Thêm", u.getUserID(), "Đã thêm mới 1 slide");
+        log.insertLog(log1);
+        request.setAttribute("log", log1);
         try {
-                //Introduce a 1-second delay
-                   Thread.sleep(5000); // 1000 milliseconds = 1 second
-
-                           response.sendRedirect("marketingSliderList");
-              } catch (InterruptedException e) {
-                // Handle any potential interruption exception
-                   e.printStackTrace();
-               }
+            Thread.sleep(3000);
+            response.sendRedirect("marketingSliderList");
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
     }
 
     /**

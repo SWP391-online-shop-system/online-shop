@@ -94,18 +94,16 @@ public class ControllerFeedBackDetail extends HttpServlet {
                     afterStatus = 0;
                     daoF.updateStatus(FeedBackID, 0);
                     purpose = "đã kích hoạt phản hồi";
-                    System.out.println("updateed status from off to on");
                 } else {
                     daoF.updateStatus(FeedBackID, 1);
                     afterStatus = 1;
                     purpose = "đã vô hiệu hóa phản hồi ";
-                    System.out.println("updateed status from on to off");
                 }
-                Log log = new Log(cusId, updateBy, purpose);
+                Log log = new Log(FeedBackID,5,"Cập nhật", updateBy, purpose);
                 int n = daoLog.insertLog(log);
             }
             request.setAttribute("afterStatus", afterStatus);
-            ResultSet logger = daoU.getData("SELECT * FROM loghistory as log join `user` as u on log.UserId = u.UserID where u.UserId = " + cusId + " and purpose like '%phản hồi%' order by updateAt desc");
+            ResultSet logger = daoU.getData("SELECT * FROM loghistory where ID = " + FeedBackID + " and logTopic = 5 and logType like '%Cập nhật%' order by updateAt desc");
             request.setAttribute("log", logger);
             request.getRequestDispatcher("FeedBackDetail.jsp").forward(request, response);
         }

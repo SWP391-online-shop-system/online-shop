@@ -117,7 +117,6 @@ public class ControllerChangeuserinfo extends HttpServlet {
             String realFileName1 = realFileName.replace("\\build", "");
             File file = new File(realFileName1);
             file.delete();
-           // filePart.write(realFileName);
             filePart.write(realFileName1);
             int n =0;
             n= daoU.updateUserImage(UserID, result);
@@ -130,11 +129,9 @@ public class ControllerChangeuserinfo extends HttpServlet {
             }
             request.setAttribute("mess", mess);
               try {
-                //Introduce a 1-second delay
-                   Thread.sleep(3000); // 1000 milliseconds = 1 second
+                   Thread.sleep(3000); 
                 request.getRequestDispatcher("profileUser.jsp").forward(request, response);
               } catch (InterruptedException e) {
-                // Handle any potential interruption exception
                    e.printStackTrace();
                }
         }

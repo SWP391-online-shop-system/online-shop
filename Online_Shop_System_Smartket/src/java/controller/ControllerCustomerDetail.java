@@ -55,7 +55,6 @@ public class ControllerCustomerDetail extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         /* TODO output your page here. You may use following sample code. */
-        System.out.println("ajax in");
         DAOUser dao = new DAOUser();
         DAOLog daoLog = new DAOLog();
         HttpSession session = request.getSession();
@@ -73,7 +72,7 @@ public class ControllerCustomerDetail extends HttpServlet {
             status = Integer.parseInt(status_raw);
         }
         ResultSet rs = dao.getData("SELECT * FROM `user` where userID = " + cusID);
-        ResultSet log = dao.getData("SELECT * FROM loghistory as log join `user` as u on log.UserId = u.UserID where u.UserId = " + cusID + " order by updateAt desc ");
+        ResultSet log = dao.getData("SELECT * FROM loghistory where ID = " + cusID + " and logTopic = 2 and logType like '%Cập nhật%' order by updateAt desc ");
         int updateBy = user.getUserID();
         String purpose = "";
         int cusId = Integer.parseInt(cusID);
@@ -81,13 +80,13 @@ public class ControllerCustomerDetail extends HttpServlet {
         if (status == 1) {
             dao.updateStatus(cusId, 2);
             afterStatus = 2;
-            purpose = "đã vô hiệu hóa";
+            purpose = "đã vô hiệu hóa khách hàng";
         } else {
             afterStatus = 1;
             dao.updateStatus(cusId, 1);
-            purpose = "đã kích hoạt";
+            purpose = "đã kích hoạt khách hàng";
         }
-        Log logger = new Log(cusId, updateBy, purpose);
+        Log logger = new Log(cusId,2,"Cập nhật", updateBy, purpose);
         int n = daoLog.insertLog(logger);
         request.setAttribute("data", rs);
         request.setAttribute("log", log);

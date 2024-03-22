@@ -26,7 +26,7 @@ public class DBConnect {
     }
 
     public DBConnect() {
-        this("jdbc:mysql://localhost:3306/Online_Shop_System", "duong","123456");
+        this("jdbc:mysql://localhost:3306/Online_Shop_System", "duong", "123456");
     }
 
     public ResultSet getData(String sql) {
@@ -77,23 +77,9 @@ public class DBConnect {
 
     public static void main(String[] args) throws SQLException {
         DBConnect dao = new DBConnect();
-        ResultSet rsOrder = dao.getData("Select * from `Order` where OrderID = 2");
-        Order getOrder = new Order();
-        if (rsOrder.next()) {
-            getOrder = new Order(
-                    //int, int, int, int, double, String, String, int, boolean, String
-                    rsOrder.getInt("OrderID"),
-                    rsOrder.getInt("UserID"),
-                    rsOrder.getInt("SaleID"),
-                    rsOrder.getInt("Quantity"),
-                    rsOrder.getDouble("TotalPrice"),
-                    rsOrder.getString("OrderDate"),
-                    rsOrder.getString("ShippedDate"),
-                    rsOrder.getInt("StatusID"),
-                    rsOrder.getBoolean("OrderStatus"),
-                    rsOrder.getString("OrderImage")
-            );
+        ResultSet rsOrder = dao.getData("select ProductID from FeedBack group by ProductID;");
+        while (rsOrder.next()) {
+            System.out.println(rsOrder.getInt(1));
         }
-        System.out.println("ORDER = "+getOrder);
     }
 }

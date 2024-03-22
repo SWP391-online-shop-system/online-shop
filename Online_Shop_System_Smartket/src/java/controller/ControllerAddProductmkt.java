@@ -10,6 +10,7 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 import jakarta.servlet.http.Part;
 import model.DAOProduct;
 import model.DAOProductImage;
@@ -23,7 +24,10 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Vector;
 import model.DAOCategories;
+import model.DAOLog;
 import view.Categories;
+import view.Log;
+import view.User;
 
 /**
  *
@@ -50,16 +54,7 @@ public class ControllerAddProductmkt extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         try ( PrintWriter out = response.getWriter()) {
-            /* TODO output your page here. You may use following sample code. */
-            out.println("<!DOCTYPE html>");
-            out.println("<html>");
-            out.println("<head>");
-            out.println("<title>Servlet ControllerAddProductmkt</title>");
-            out.println("</head>");
-            out.println("<body>");
-            out.println("<h1>Servlet ControllerAddProductmkt at " + request.getContextPath() + "</h1>");
-            out.println("</body>");
-            out.println("</html>");
+            request.getRequestDispatcher("addProductmkt.jsp").forward(request, response);
         }
     }
 
@@ -81,36 +76,22 @@ public class ControllerAddProductmkt extends HttpServlet {
     protected String moveAndRenameImage(Part filePart, int categoryId, int imageIndex) throws ServletException, IOException {
         String fileName = Paths.get(filePart.getSubmittedFileName()).getFileName().toString();
         String cateID = convertCate(categoryId);
-
-        // Constructing the new file name with the index
         String newFileName = fileName.substring(0, fileName.lastIndexOf('.')) + "_" + imageIndex + fileName.substring(fileName.lastIndexOf('.'));
-
-        // Constructing the destination directory based on the category
         String destinationDirectory = "D:/project_github/Online_Shop_System_Smartket/web/images/product/" + cateID;
-
-        // Create the destination directory if it doesn't exist
         File directory = new File(destinationDirectory);
         if (!directory.exists()) {
             directory.mkdirs();
         }
-
-        // Constructing the destination file path
         String destinationFilePath = destinationDirectory + "/" + newFileName;
-
-        // Write the uploaded file to the destination directory with the new name
         try ( InputStream fileContent = filePart.getInputStream();  OutputStream outputStream = new FileOutputStream(destinationFilePath)) {
             byte[] buffer = new byte[1024];
             int bytesRead;
             while ((bytesRead = fileContent.read(buffer)) != -1) {
                 outputStream.write(buffer, 0, bytesRead);
             }
-            System.out.println("File moved successfully to: " + destinationFilePath);
-
-            // Construct and return the relative URL of the moved image
             String relativeUrl = "images/product/" + cateID + "/" + newFileName;
             return relativeUrl;
         } catch (IOException e) {
-            System.err.println("Error moving file: " + e.getMessage());
             return null;
         }
     }
@@ -163,6 +144,12 @@ public class ControllerAddProductmkt extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         DAOCategories daoCategories = new DAOCategories();
+        HttpSession session = request.getSession();
+        User u = (User) session.getAttribute("account");
+        if (u == null) {
+            String message = "Bạn cần đăng nhập";
+            request.getRequestDispatcher("LoginURL").forward(request, response);
+        }
         int productID = Integer.parseInt(request.getParameter("productID"));
         String productName = request.getParameter("productName");
         int categoryId = Integer.parseInt(request.getParameter("categoryId"));
@@ -205,6 +192,10 @@ public class ControllerAddProductmkt extends HttpServlet {
             // Perform database insertion after moving all images
             DAOProduct daoProduct = new DAOProduct();
             int n = daoProduct.insertProduct(newProduct);
+
+            DAOLog daoLog = new DAOLog();
+            Log log = new Log(productID, 1, "Thêm", u.getUserID(), "Đã thêm 1 sản phẩm");
+            daoLog.insertLog(log);
             DAOProductImage dao = new DAOProductImage();
             for (String imageUrl : imageUrls) {
                 // Extract relative path

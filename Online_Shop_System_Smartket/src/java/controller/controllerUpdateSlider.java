@@ -14,7 +14,9 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import jakarta.servlet.http.Part;
+import model.DAOLog;
 import model.DAOSlider;
+import view.Log;
 import view.Slider;
 import view.User;
 
@@ -82,60 +84,62 @@ public class controllerUpdateSlider extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        HttpSession session = request.getSession();
+        DAOLog log = new DAOLog();
+        User user = (User) session.getAttribute("account");
+        if (user == null) {
+            String message = "Bạn cần đăng nhập";
+            request.setAttribute("message", message);
+            request.getRequestDispatcher("loginURL").forward(request, response);
+        }
         int sliderID1 = Integer.parseInt(request.getParameter("updatesliderid").trim());
         String sliderLink1 = request.getParameter("updateLink");
         boolean sliderStatus1 = Boolean.parseBoolean(request.getParameter("updateStatus"));
-        System.out.println("dcm status "+request.getParameter("updateStatus"));
         String newImageName = "slide" + sliderID1;
         Part sliderpart = request.getPart("updateImg");
-                System.out.println("0000000+"+sliderpart);
         String slidername = sliderpart.getSubmittedFileName();
-        System.out.println("0000000+"+sliderpart.getSubmittedFileName());
         int dotIndex = slidername.lastIndexOf(".");
-        System.out.println("0000000+"+slidername);
-        if(!slidername.equals("")){
-        String result = newImageName + slidername.substring(dotIndex);
-        String path = "images/slider/" + result;
-            System.out.println("resultresultresultresult"+result);
-        String realFileName = request.getServletContext().getRealPath(path);
-        String realFileName1 = realFileName.replace("\\build", "");
-       // for (Part part : request.getParts()) {
-           // part.write(realFileName);
+        if (!slidername.equals("")) {
+            String result = newImageName + slidername.substring(dotIndex);
+            String path = "images/slider/" + result;
+            String realFileName = request.getServletContext().getRealPath(path);
+            String realFileName1 = realFileName.replace("\\build", "");
             sliderpart.write(realFileName1);
-        //}
-        DAOSlider DAOSlider = new DAOSlider();
-        Slider slider = DAOSlider.getaSlider("select * from slider where sliderId = " + sliderID1);
-        slider.setSliderImage(result);
-        slider.setSliderLink(sliderLink1);
-        slider.setSliderStatus(sliderStatus1);
-        System.out.println(slider.isSliderStatus());
-        int n = DAOSlider.updateProduct(slider);
-          try {
-                //Introduce a 1-second delay
-                   Thread.sleep(5000); // 1000 milliseconds = 1 second
-
-                           response.sendRedirect("marketingSliderList");
-              } catch (InterruptedException e) {
-                // Handle any potential interruption exception
-                   e.printStackTrace();
-               }
+            DAOSlider DAOSlider = new DAOSlider();
+            Slider slider = DAOSlider.getaSlider("select * from slider where sliderId = " + sliderID1);
+            slider.setSliderImage(result);
+            slider.setSliderLink(sliderLink1);
+            slider.setSliderStatus(sliderStatus1);
+            int n = DAOSlider.updateProduct(slider);
+            if (n > 0) {
+                Log log1 = new Log(sliderID1, 3, "Cập nhật", user.getUserID(), "Đã cập nhật slide");
+                log.insertLog(log1);
+                request.setAttribute("log", log1);
+            }
+            try {
+                Thread.sleep(3000);
+                response.sendRedirect("marketingSliderList");
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        } else {
+            DAOSlider DAOSlider = new DAOSlider();
+            Slider slider = DAOSlider.getaSlider("select * from slider where sliderId = " + sliderID1);
+            slider.setSliderLink(sliderLink1);
+            slider.setSliderStatus(sliderStatus1);
+            int n = DAOSlider.updateProduct(slider);
+            if (n > 0) {
+                Log log1 = new Log(sliderID1, 3, "Cập nhật", user.getUserID(), "Đã cập nhật slide");
+                log.insertLog(log1);
+                request.setAttribute("log", log1);
+            }
+            try {
+                Thread.sleep(3000);
+                response.sendRedirect("marketingSliderList");
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
         }
-        
-        DAOSlider DAOSlider = new DAOSlider();
-        Slider slider = DAOSlider.getaSlider("select * from slider where sliderId = " + sliderID1);
-        slider.setSliderLink(sliderLink1);
-        slider.setSliderStatus(sliderStatus1);
-        System.out.println(slider.isSliderStatus());
-        int n = DAOSlider.updateProduct(slider);
-          try {
-                //Introduce a 1-second delay
-                   Thread.sleep(5000); // 1000 milliseconds = 1 second
-
-                           response.sendRedirect("marketingSliderList");
-              } catch (InterruptedException e) {
-                // Handle any potential interruption exception
-                   e.printStackTrace();
-               }
     }
 
     /**
