@@ -641,7 +641,7 @@
                             <article class="card">
                                 <div class="card-body row">
 
-                                    <div class="col"> <strong>Bao gồm:</strong> <br><strong><%=productName%></strong><br/> và <%=countProduct%> sản phẩm khác </div>
+                                    <div class="col"> <strong>Bao gồm:</strong> <br><strong><%=productName%></strong><br/><%=countProduct==-1?"":" và "+countProduct+" sản phẩm khác "%></div>
                                     <div class="col"> <strong>Thời gian đặt hàng:</strong>  <br><%=rsOrderGroup.getString("OrderDate")%></div>
                                     <div class="col"> <strong>Tổng giá trị đơn</strong> <br> <%=df.format(rsOrderGroup.getDouble("TotalPrice"))%>đ </div>
                                     <div class="col"> <strong>Trạng thái:</strong> <br><%=statusName%></div>

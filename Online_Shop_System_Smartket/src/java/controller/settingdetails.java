@@ -11,16 +11,18 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import java.sql.ResultSet;
+import jakarta.servlet.http.HttpSession;
 import model.DAOSetting;
+import model.DAOSlider;
 import view.Setting;
+import view.Slider;
 
 /**
  *
- * @author admin
+ * @author 84395
  */
-@WebServlet(name = "ControllerSettingList", urlPatterns = {"/SettingListURL"})
-public class ControllerSettingList extends HttpServlet {
+@WebServlet(name = "settingdetails", urlPatterns = {"/settingdetails"})
+public class settingdetails extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -33,13 +35,13 @@ public class ControllerSettingList extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        response.setContentType("text/html;charset=UTF-8");
-        try ( PrintWriter out = response.getWriter()) {
-            DAOSetting daoS = new DAOSetting();
-            ResultSet rsSetting = daoS.getData("select * from Setting");
-            request.setAttribute("rsSetting", rsSetting);
-            request.getRequestDispatcher("settingList.jsp").forward(request, response);
-        }
+        String id = request.getParameter("uid");
+        DAOSetting dao = new DAOSetting();
+        Setting set = dao.getaSlider("select * from setting where settingID = " + id);
+        HttpSession session = request.getSession();
+        session.setAttribute("getaset", set);
+        request.getRequestDispatcher("settingdetails.jsp").forward(request, response);
+
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
@@ -68,18 +70,7 @@ public class ControllerSettingList extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-
-        String valueSettingHomePage = (request.getParameter("valueSettingHomePage"));
-        int SettingID = Integer.parseInt(request.getParameter("SettingID"));
-        Setting editSetting = new Setting();
-        DAOSetting daoS = new DAOSetting();
-        editSetting = daoS.getSettingById(SettingID);
-        editSetting.setSettingValue(valueSettingHomePage);
-//        daoS.updateSetting(editSetting);
-        System.out.println("updateComplete");
-        ResultSet rsSetting = daoS.getData("select * from Setting");
-        request.setAttribute("rsSetting", rsSetting);
-        request.getRequestDispatcher("settingList.jsp").forward(request, response);
+        processRequest(request, response);
     }
 
     /**

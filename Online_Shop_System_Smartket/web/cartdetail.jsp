@@ -333,8 +333,8 @@
                         <div class="row" style="display: contents">
                             <%
                                     DAOProduct daoP = new DAOProduct();
-                                ResultSet rsHotPro = daoP.getData("select * from Product as p join ProductImage as pi on p.ProductID = pi.ProductID where  pi.ProductURL like '%_1%'\n"
-                                +"group by p.ProductID having min(p.TotalStock - p.UnitInStock) > 0");
+                                ResultSet rsHotPro = daoP.getData("select * from Product as p join ProductImage as pi on p.ProductID = pi.ProductID where  pi.ProductURL = pi.ProductURLShow \n"
+                                               +  "group by p.ProductID having min(p.TotalStock - p.UnitInStock) >0 order by (p.TotalStock - p.UnitInStock) desc limit 1");
                             if(rsHotPro.next()) {
                             %>
                             <div class="product__item" style="border: 1px solid #c1e8c1ba;
@@ -479,7 +479,12 @@
                                                  margin-left: 10px;
                                                  margin-bottom: -10px;">
                                                 <div class="value-button" style="width: 25px;height: 14px;padding: 4px 0;" onclick="decreaseValue(this,<%=rs.getInt("ProductID")%>);updateTotalPrice();" value="Decrease Value"><i class="fa-solid fa-minus" style="font-size: 11px;"></i></div>
-                                                <input data-count="<%=count%>" style="width: 25px;height: 20px;" type="number" value="<%=rs.getInt("Quantity")%>" min="1" onchange="changeValue(this);updateTotalPrice();"/>
+                                                <input data-count="<%=count%>" style="    width: 22px;
+                                                       height: 20px;
+                                                       border: 1px solid;
+                                                       font-size: 13px;
+                                                       padding-left: 15px;
+                                                       " type="number" value="<%=rs.getInt("Quantity")%>" min="1" owidth: 25px;height: 20px;" tynchange="changeValue(this);updateTotalPrice();"/>
                                                 <div class="value-button" style="width: 25px;height: 14px;padding: 4px 0;" onclick="increaseValue(this,<%=rs.getInt("ProductID")%>);updateTotalPrice();" value="Increase Value"><i class="fa-solid fa-plus" style="font-size: 11px;"></i></div><br/>
                                                     <%int proid=rs.getInt("ProductID");%>
                                             </div>

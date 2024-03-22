@@ -54,7 +54,18 @@ public class ControllerUserList extends HttpServlet {
                 request.setAttribute("status", status);
                 request.setAttribute("role", role);
                 request.setAttribute("gender", gender);
-                request.setAttribute("data", list);
+//                Vector<User> list1 = new Vector<>();
+//                for (int i = 0; i <list.size();i++){
+//                User u = list.get(i);
+//                u.setFirstName(u.getFirstName()+" "+u.getLastName());
+//                if(u.getRoleID()==1) u.setLastName("Admin");
+//                if(u.getRoleID()==2) u.setLastName("Marketing");
+//                if(u.getRoleID()==3) u.setLastName("Sale");
+//                if(u.getRoleID()==4) u.setLastName("Quản lí sale");
+//                if(u.getRoleID()==5) u.setLastName("Khách hàng");
+//                list1.add(u);
+//                }
+                request.setAttribute("listuser", list);
                 request.getRequestDispatcher("userlist.jsp").forward(request, response);
             }
             if (service.equals("addnewuser")) {
@@ -63,6 +74,7 @@ public class ControllerUserList extends HttpServlet {
                 String Adress = request.getParameter("adress");
                 String Email = request.getParameter("email");
                 String Phone = request.getParameter("phone");
+                String roleadd = request.getParameter("roleadd");
                 String Pass = request.getParameter("pass");
                 String gender_str = request.getParameter("gender");
                 int checkEmail = dao.checkEmail(Email);
@@ -76,7 +88,7 @@ public class ControllerUserList extends HttpServlet {
                         gender = false;
                     }
                     User newUser = new User(Fname, Lname, Adress, Phone, gender, Pass, Email);
-                    int n = dao.addNewUserByMKT(newUser);
+                    int n = dao.addNewUserByadmin(newUser,roleadd);
                     if (n > 0) {
                         message = "Thêm thành công";
                     }
@@ -88,7 +100,7 @@ public class ControllerUserList extends HttpServlet {
                 String cusID = request.getParameter("uid");
                 ResultSet rs = dao.getData("SELECT * FROM `user` where userID = " + cusID);
                 ResultSet log = dao.getData("SELECT * FROM loghistory as log join `user` as u on log.UserId = u.UserID where u.UserId = " + cusID + " order by updateAt desc ");
-                request.setAttribute("data", rs);
+                request.setAttribute("listuser", rs);
                 request.setAttribute("log", log);
                 request.getRequestDispatcher("userdetails.jsp").forward(request, response);
             }
@@ -168,7 +180,7 @@ public class ControllerUserList extends HttpServlet {
 //                request.getRequestDispatcher("userlist.jsp").forward(request, response);  
 //                }
                 request.setAttribute("sql", sql);
-                request.setAttribute("data", list);
+                request.setAttribute("listuser", list);
                 request.setAttribute("status", status);
                 request.setAttribute("role", role);
                 request.setAttribute("gender", gender);

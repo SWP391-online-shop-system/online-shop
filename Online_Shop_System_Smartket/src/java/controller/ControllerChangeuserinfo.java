@@ -131,7 +131,7 @@ public class ControllerChangeuserinfo extends HttpServlet {
             request.setAttribute("mess", mess);
               try {
                 //Introduce a 1-second delay
-                   Thread.sleep(5000); // 1000 milliseconds = 1 second
+                   Thread.sleep(3000); // 1000 milliseconds = 1 second
                 request.getRequestDispatcher("profileUser.jsp").forward(request, response);
               } catch (InterruptedException e) {
                 // Handle any potential interruption exception

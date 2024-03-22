@@ -96,19 +96,46 @@ public class controllerUpdateSlider extends HttpServlet {
         if(!slidername.equals("")){
         String result = newImageName + slidername.substring(dotIndex);
         String path = "images/slider/" + result;
+            System.out.println("resultresultresultresult"+result);
         String realFileName = request.getServletContext().getRealPath(path);
         String realFileName1 = realFileName.replace("\\build", "");
-        for (Part part : request.getParts()) {
-            part.write(realFileName);
-            part.write(realFileName1);
-        }}
+       // for (Part part : request.getParts()) {
+           // part.write(realFileName);
+            sliderpart.write(realFileName1);
+        //}
+        DAOSlider DAOSlider = new DAOSlider();
+        Slider slider = DAOSlider.getaSlider("select * from slider where sliderId = " + sliderID1);
+        slider.setSliderImage(result);
+        slider.setSliderLink(sliderLink1);
+        slider.setSliderStatus(sliderStatus1);
+        System.out.println(slider.isSliderStatus());
+        int n = DAOSlider.updateProduct(slider);
+          try {
+                //Introduce a 1-second delay
+                   Thread.sleep(5000); // 1000 milliseconds = 1 second
+
+                           response.sendRedirect("marketingSliderList");
+              } catch (InterruptedException e) {
+                // Handle any potential interruption exception
+                   e.printStackTrace();
+               }
+        }
+        
         DAOSlider DAOSlider = new DAOSlider();
         Slider slider = DAOSlider.getaSlider("select * from slider where sliderId = " + sliderID1);
         slider.setSliderLink(sliderLink1);
         slider.setSliderStatus(sliderStatus1);
         System.out.println(slider.isSliderStatus());
         int n = DAOSlider.updateProduct(slider);
-        response.sendRedirect("sliderList");
+          try {
+                //Introduce a 1-second delay
+                   Thread.sleep(5000); // 1000 milliseconds = 1 second
+
+                           response.sendRedirect("marketingSliderList");
+              } catch (InterruptedException e) {
+                // Handle any potential interruption exception
+                   e.printStackTrace();
+               }
     }
 
     /**

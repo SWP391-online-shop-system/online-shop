@@ -198,7 +198,7 @@ public class ControllerBankingInfo extends HttpServlet {
                     + "                 <div style=\"text-align: center;\n"
                     + "                      font-size: 18px;\n"
                     + "                        font-weight: 500;\n"
-                    + "                       letter-spacing: 1px;\"><a href=\"http://localhost:8080/Smartket/OrderInformationURL?OrderID=" + orderId + "\">Xem chi tiết đơn hàng</a></div>"
+                    + "                       letter-spacing: 1px;\"><a href=\"http://localhost:9999/Smartket/OrderInformationURL?OrderID=" + orderId + "\">Xem chi tiết đơn hàng</a></div>"
                     + "            </div>\n"
                     + "        </div>\n"
                     + "    </body>\n"

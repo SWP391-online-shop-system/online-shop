@@ -100,6 +100,11 @@
                             <span>Người dùng</span>
                         </a>
                     </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="settinglist">
+                            <span>Cài đặt</span>
+                        </a>
+                    </li>
                 </div>
             </ul>
             <!-- Sidebar -->
@@ -430,11 +435,11 @@
                                 </div>
                                 <div>
                                     <div class="card-footer text-center" style="font-size: 18px;height: 37px;">
-                                        <a class="m-0 small text-primary card-link" href="FeedBackListURL">Quản lí ngay
-                                            <i class="fas fa-chevron-right"></i></a>
+                                        <!--<a class="m-0 small text-primary card-link" href="FeedBackListURL">Quản lí ngay-->
+                                        <!--                                            <i class="fas fa-chevron-right"></i></a>-->
                                     </div>
-                                    <%}%>
                                 </div>
+                                <%}%>
                                 <div class="card-footer"></div>
                             </div>
                         </div>
@@ -476,9 +481,9 @@
                                 </div>
                                 <%}}%>
                                 <div>
-                                    <div class="card-footer text-center">
-                                        <a class="m-0 small text-primary card-link" href="FeedBackListURL">Quản lí ngay
-                                            <i class="fas fa-chevron-right"></i></a>
+                                    <div class="card-footer text-center" style="font-size: 18px;height: 37px;">
+                                        <!--<a class="m-0 small text-primary card-link" href="FeedBackListURL">Quản lí ngay-->
+                                        <!--                                            <i class="fas fa-chevron-right"></i></a>-->
                                     </div>
                                 </div>
                             </div>
