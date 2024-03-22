@@ -93,9 +93,9 @@ public class ControllerMarketingPostList extends HttpServlet {
                 sql += " WHERE ";
             }
             if (status.equals("Hiện")) {
-                sql += " Blog.HiddenStatus = 1\n"; // Filter products in stock
+                sql += " Blog.HiddenStatus = 0\n"; // Filter products in stock
             } else if (status.equals("Ẩn")) {
-                sql += " Blog.HiddenStatus = 0\n"; // Filter out-of-stock products
+                sql += " Blog.HiddenStatus = 1\n"; // Filter out-of-stock products
             }
         }
         if (author != null && !author.isEmpty()) {
