@@ -144,7 +144,7 @@ public class DAOOrder extends DBConnect {
             pre.setInt(2, orderId);
             n = pre.executeUpdate();
         } catch (SQLException ex) {
-            Logger.getLogger(DAOCart.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(DAOOrder.class.getName()).log(Level.SEVERE, null, ex);
         }
         return n;
     }
