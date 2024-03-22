@@ -26,7 +26,11 @@ public class DBConnect {
     }
 
     public DBConnect() {
+<<<<<<< Updated upstream
         this("jdbc:mysql://localhost:3306/Online_Shop_System", "duong","123456");
+=======
+        this("jdbc:mysql://localhost:3306/Online_Shop_System", "root", "27062003");
+>>>>>>> Stashed changes
     }
 
     public ResultSet getData(String sql) {
