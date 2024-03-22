@@ -1,50 +1,37 @@
+<%-- 
+    Document   : customerlist
+    Created on : Jan 31, 2024, 3:38:58 PM
+    Author     : trant
+--%>
+
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
-<%@page import="java.sql.ResultSet"%>
-<%@page import="java.text.SimpleDateFormat"%>
-<%@page import="java.util.Date"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@page import="view.*" %>
-<%@page import="model.*" %>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
-<%@page import="java.sql.ResultSet, java.sql.SQLException"%>
-<link rel="stylesheet" href="css/css_saleProductList/saleProductList.css"/>
-<link rel="stylesheet" href="css/css_mkt/style.css"/>
+<%@page import="jakarta.servlet.http.HttpSession"%>
+
 <!DOCTYPE html>
 <html lang="en">
     <head>
         <meta charset="utf-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-        <meta name="description" content="">
-        <meta name="author" content="">
-        <link href="images/logo/logo.png" rel="icon">
-        <title>Thông tin Slider</title>
+        <title>Danh Sách Cài Đặt</title>
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
+        <script src="https://kit.fontawesome.com/ac74b86ade.js" crossorigin="anonymous"></script>
         <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
         <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css">
         <link href="css/css_marketing_dashboard/marketing_dashboard_style.css" rel="stylesheet">
         <link href="vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">
-
+        <link rel="shortcut icon" href="images/logo/logo.png" type="image/png">
     </head>
-    <%
-        Product product = (Product)request.getAttribute("product");
-    %>
-    <script>
-        function validateForm() {
-            var unitInStock = parseInt(document.getElementById("unitInStock").value);
-            var totalStock = parseInt(document.getElementById("totalStock").value);
-
-            if (unitInStock > totalStock) {
-                alert("Hàng trong kho không thể lớn hơn Tổng số sản phẩm.");
-                return false;
-            }
-            return true;
-        }
-    </script>
     <body id="page-top">
+        <%
+            HttpSession sessionMessage = request.getSession();
+            String message =(String)sessionMessage.getAttribute("message");
+            
+        %>
         <div id="wrapper">
             <!-- Sidebar -->
             <ul class="navbar-nav sidebar sidebar-light accordion" id="accordionSidebar">
-                <a class="sidebar-brand d-flex align-items-center justify-content-center" href="http://localhost:8080/Smartket/HomePageURL">
+                <a class="sidebar-brand d-flex align-items-center justify-content-center" href="MarketingDashBoardURL">
                     <div class="sidebar-brand-icon">
                         <img style="height: 91px;
                              width: 133px;
@@ -54,39 +41,27 @@
                 <div style="position: sticky; top: 30px;">
                     <hr class="sidebar-divider wee-0" style="margin: 0px;">
                     <li class="nav-item active">
-                        <a class="nav-link" href="index.html">
+                        <a class="nav-link" href="MarketingDashBoardURL">
                             <i class="fas fa-fw fa-tachometer-alt"></i>
                             <span>Thống kê</span></a>
                     </li>
                     <hr class="sidebar-divider">
-                    <div class="sidebar-heading">
-                        Quản lí
-                    </div>
                     <li class="nav-item">
-                        <a class="nav-link" href="http://localhost:8080/Smartket/marketingSliderList">
+                        <a class="nav-link" href="adminOrderTrackURL?status=all&orderFrom=&orderTo=">
                             <i class="fas fa-calendar fa-2x text-primary"></i>
-                            <span>Slider</span>
+                            <span>Đơn hàng</span>
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="ui-colors.html">
-                            <i class="fas fa-shopping-cart fa-2x text-success"></i>
-                            <span>Sản phẩm</span>
+                        <a class="nav-link" href="userlist">
+                            <span>Người dùng</span>
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="ui-colors.html">
-                            <i class="fas fa-users fa-2x text-info"></i>
-                            <span>Khách hàng</span>
+                        <a class="nav-link" href="settinglist">
+                            <span>Cài đặt</span>
                         </a>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="ui-colors.html">
-                            <i class="fas fa-comments fa-2x text-info"></i>
-                            <span>Phản hồi</span>
-                        </a>
-                    </li>
-                    <hr class="sidebar-divider">
                 </div>
             </ul>
             <!-- Sidebar -->
@@ -94,22 +69,30 @@
                 <div id="content">
                     <!-- TopBar -->
                     <nav class="navbar navbar-expand navbar-light bg-navbar topbar mb-4 static-top">
-                        <div style="font-weight: 700;color: white;font-size: 37px;letter-spacing: 2px;font-family: Nunito,-apple-system,BlinkMacSystemFont"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol","Noto Color Emoji";">Slider</div>
+                        <div style="font-weight: 700;color: white;font-size: 37px;letter-spacing: 2px;font-family: Nunito,-apple-system,BlinkMacSystemFont"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol","Noto Color Emoji";">Trang Admin</div>
                         <ul class="navbar-nav ml-auto">
                             <div class="topbar-divider d-none d-sm-block"></div>
                             <li class="nav-item dropdown no-arrow">
                                 <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown"
                                    aria-haspopup="true" aria-expanded="false">
-                                    <img class="img-profile rounded-circle" src="images/user/default_avatar.jpg" style="max-width: 60px">
-                                    <span class="ml-2 d-none d-lg-inline text-white small">Maman Ketoprak</span>
+                                    <img class="img-profile rounded-circle" src="images/user/${sessionScope.account.userImage}" style="max-width: 60px">
+                                    <span class="ml-2 d-none d-lg-inline text-white small">${sessionScope.account.firstName}&nbsp;${sessionScope.account.lastName}</span>
                                 </a>
                                 <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="userDropdown">
                                     <a class="dropdown-item" href="#">
                                         <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
                                         Hồ sơ
                                     </a>
+                                    <a class="dropdown-item" href="#">
+                                        <i class="fas fa-cogs fa-sm fa-fw mr-2 text-gray-400"></i>
+                                        Cài đặt
+                                    </a>
+                                    <a class="dropdown-item" href="#">
+                                        <i class="fas fa-list fa-sm fa-fw mr-2 text-gray-400"></i>
+                                        Lịch sử thay đổi
+                                    </a>
                                     <div class="dropdown-divider"></div>
-                                    <a class="dropdown-item" href="javascript:void(0);" data-toggle="modal" data-target="#logoutModal">
+                                    <a class="dropdown-item" href="logout">
                                         <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
                                         Đăng xuất
                                     </a>
@@ -122,50 +105,71 @@
                     <!-- Container Fluid-->
                     <div class="container-fluid" id="container-wrapper">
                         <div class="d-sm-flex align-items-center justify-content-between mb-4">
-                            <h1 class="h3 mb-0 text-gray-800">Slider Detail</h1>
+                            <h1 class="h3 mb-0 text-gray-800">Danh Sách Cài Đặt</h1>
                             <ol class="breadcrumb">
-                                <li class="breadcrumb-item"><a href="http://localhost:8080/Smartket/HomePageURL">Home</a></li>
-                                <!--<li class="breadcrumb-item">Tables</li>-->
-                                <li class="breadcrumb-item active" aria-current="page">Slider Detail</li>
+                                <li class="breadcrumb-item"><a href="./">Trang Chủ</a></li>
+                                <li class="breadcrumb-item active">Danh Sách Cài Đặt</li>
                             </ol>
-                                                                    <div style="margin-left: 25px; margin-top: -10px;"><a href="marketingSliderList" style="color: white"><button class="btn btn-primary mb-1">Quay lại</button></a></div>
+                        </div>
+
+                        <!-- Row -->
+                        <div<%if(message == null){%> style="display: none"<%}%>>
+                            <%if(message != null){%>
+                            <%if(message.equals("Thêm thành công")){%>
+                            <div class="alert alert-success alert-dismissible" role="alert" style="width: 40%" >
+                                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                                <h6><i class="fas fa-check"></i><b>  <%=message%></b></h6>
+                            </div>
+                            <%}%>
+                            <%if(message.equals("Email đã tồn tại")){%>
+                            <div class="alert alert-warning alert-dismissible" role="alert" style="width: 40%">
+                                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                                <h6><i class="fas fa-check"></i><b>  <%=message%></b></h6>
+                            </div>
+                            <%}}%>
+                        </div>
+                        <%sessionMessage.removeAttribute("message");%>
+                        <div class="row">
+                            <div style="margin-left: 25px; margin-top: -10px;"><a href="settinglist" style="color: white"><button class="btn btn-primary mb-1">Quay lại</button></a></div>
                         </div>
                         <div class="row">
                             <!-- DataTable with Hover -->
                             <div class="col-lg-12">
-                                <div class="card mb-4">
+                                <div class="card mb-4">                                 
                                     <div class="table-responsive p-3">
-                                        <form action="updateslider" method="post" enctype='multipart/form-data'>
-                                            <table class="table align-items-center table-flush table-hover">
+                                        <form action="updatesetting" method="post">
+                                            <table class="table align-items-center table-flush table-hover"  style="font-size: 14px;">
                                                 <thead class="thead-light">
                                                     <tr>
                                                         <th>ID</th>
-                                                        <th>Mã nhân viên</th>
-                                                        <th>Slider</th>
-                                                        <th>SliderLink</th>
-                                                        <th>Ngày tạo</th>
-                                                        <th>Trạng thái</th>	
+                                                        <th>Loại</th>
+                                                        <th>Giá trị</th>
+                                                        <th>Trạng Thái</th>	
+                                                        <th>Yêu cầu</th>
+                                                        <th>Mô tả</th>
                                                     </tr>
                                                 </thead>
                                                 <tbody>
                                                     <tr> 
-                                                        <td>${sessionScope.getaSlider.sliderID}</td>
-                                                        <td>${sessionScope.getaSlider.userID}</td>
-                                                        <td><img  style="height: 91px;
-                                                                  width: 133px;
-                                                                  " src="images/slider/${sessionScope.getaSlider.sliderImage}" alt="alt"/>
-                                                            <input name="updateImg" type= "file" value=""> <br>
-                                                            <input name="updatesliderid" type= "hidden" value="${sessionScope.getaSlider.sliderID}"> <br>
-                                                        <td><textarea  name="updateLink" >${sessionScope.getaSlider.sliderLink} </textarea></td>
-                                                        <td>${sessionScope.getaSlider.createDate}</td>
-
-                                                        <td><input type="radio" name="updateStatus" value="false"<c:if test="${!sessionScope.getaSlider.sliderStatus}">checked</c:if>> Hoạt động <br>
-                                                            <input type="radio" name="updateStatus" value="true" <c:if test="${sessionScope.getaSlider.sliderStatus}">checked</c:if>> Vô hiệu hóa
+                                                        <td>${sessionScope.getaset.settingID}</td>
+                                                        <td><input type="text" name="namecate" value="${sessionScope.getaset.settingName}" readonly></td>
+                                                        <td><input type="text" name="2"value="${sessionScope.getaset.settingValue}"readonly></td>
+                                                            <input name="updatesettingid" type= "hidden" value="${sessionScope.getaset.settingID}"> <br>
+                                                        <td>
+                                                            <input type="radio" name="updateset" value="1"<c:if test="${sessionScope.getaset.settingStatus==1}">checked</c:if>>Kích Hoạt <br>
+                                                            <input type="radio" name="updateset" value="0" <c:if test="${sessionScope.getaset.settingStatus==0}">checked</c:if>> Vô hiệu hóa
                                                         </td>
+                                                        <td><input type="text" name="idcate" value="${sessionScope.getaset.settingOrder}"readonly></td>     
+                                                        <td><textarea  name="4"readonly>${sessionScope.getaset.settingDescription}</textarea></td>                                       
+
                                                     </tr>
                                                 </tbody>
                                             </table>
-                                            <input type="submit" name="submit" value="Update Slider">
+                                            <input type="submit" name="submit" value="Lưu cài đặt">
                                         </form>
                                     </div>
                                 </div>
@@ -233,10 +237,10 @@
         <script src="vendor/datatables/jquery.dataTables.min.js"></script>
         <script src="vendor/datatables/dataTables.bootstrap4.min.js"></script>
         <script>
-        $(document).ready(function () {
-            $('#dataTable').DataTable(); // ID From dataTable 
-            $('#dataTableHover').DataTable(); // ID From dataTable with Hover
-        });
+            $(document).ready(function () {
+                $('#dataTable').DataTable(); // ID From dataTable 
+                $('#dataTableHover').DataTable(); // ID From dataTable with Hover
+            });
         </script>
     </body>
 </html>

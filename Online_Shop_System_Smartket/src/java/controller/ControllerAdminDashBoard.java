@@ -58,7 +58,7 @@ public class ControllerAdminDashBoard extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        
+
         DAOOrder daoOrd = new DAOOrder();
         //start first section
         ResultSet rsOrderProcessCount = daoOrd.getData("select count(OrderID) from `Order` where StatusID = 1");
@@ -183,7 +183,7 @@ public class ControllerAdminDashBoard extends HttpServlet {
                 + "join User as u on f.UserID = u.UserID order by f.FeedBackDate limit 5");
         request.setAttribute("rsNewFeedBack", rsNewFeedBack);
         //revenue
-        ResultSet rsTotalPrice = daoPro.getData("select sum((p.UnitPrice * (100-p.UnitDiscount)/100) * (p.TotalStock - p.UnitInStock)) as revenue from Product as p;");
+        ResultSet rsTotalPrice = daoPro.getData("select sum(TotalPrice) as revenue from `Order` as p where p.StatusID = 4;");
         request.setAttribute("rsTotalPrice", rsTotalPrice);
         //filter order
         ResultSet rsFilterOrder = daoPro.getData("select * from `Status`");

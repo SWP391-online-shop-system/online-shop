@@ -8,22 +8,21 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
-import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
-import java.sql.ResultSet;
-import model.DAOCart;
-import model.DAOProduct;
-import view.User;
+import model.DAOSetting;
+import model.DAOSlider;
+import view.Setting;
+import view.Slider;
 
 /**
  *
- * @author trant
+ * @author 84395
  */
-@WebServlet(name = "AddProductToCookie", urlPatterns = {"/AddCookie"})
-public class AddProductToCookie extends HttpServlet {
+@WebServlet(name = "settingdetails", urlPatterns = {"/settingdetails"})
+public class settingdetails extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -36,18 +35,13 @@ public class AddProductToCookie extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        response.setContentType("text/html;charset=UTF-8");
-        try ( PrintWriter out = response.getWriter()) {
-            String proId = request.getParameter("proId");
-            log(proId);
-            if (proId.isEmpty()) {
-                response.getWriter().write("0");
-            } else {
-                Cookie cookie = new Cookie("productCookie", proId);
-                response.addCookie(cookie);
-                response.getWriter().write("1");
-            }
-        }
+        String id = request.getParameter("uid");
+        DAOSetting dao = new DAOSetting();
+        Setting set = dao.getaSlider("select * from setting where settingID = " + id);
+        HttpSession session = request.getSession();
+        session.setAttribute("getaset", set);
+        request.getRequestDispatcher("settingdetails.jsp").forward(request, response);
+
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

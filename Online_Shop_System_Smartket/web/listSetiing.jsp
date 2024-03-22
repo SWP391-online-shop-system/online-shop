@@ -29,20 +29,7 @@
         <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css">
         <link href="css/css_marketing_dashboard/marketing_dashboard_style.css" rel="stylesheet">
         <link href="vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">
-        <style>
-            table{
-                text-align: center;
-            }
-            #tronclick:hover{
-                cursor: pointer;
-            }
-            #imageonclick img {
-                transition: all 0.5s;
-            }
-            #imageonclick img:hover{
-                transform: scale(1.6);
-            }
-        </style>
+
     </head>
     <%
     ResultSet rs = (ResultSet)request.getAttribute("data");
@@ -79,7 +66,7 @@
                         Quản lí
                     </div>
                     <li class="nav-item">
-                        <a class="nav-link" href="http://localhost:8080/Smartket/marketingSliderList">
+                        <a class="nav-link" href="http://localhost:8080/Smartket/sliderList">
                             <i class="fas fa-calendar fa-2x text-primary"></i>
                             <span>Slider</span>
                         </a>
@@ -138,18 +125,17 @@
                     <!-- Container Fluid-->
                     <div class="container-fluid" id="container-wrapper">
                         <div class="d-sm-flex align-items-center justify-content-between mb-4">
-                            <h1 class="h3 mb-0 text-gray-800">Danh sách Slider </h1>
+                            <h1 class="h3 mb-0 text-gray-800">Danh sách dài đặt </h1>
                             <ol class="breadcrumb">
-                                <li class="breadcrumb-item"><a href="http://localhost:8080/Smartket/HomePageURL">Trang chủ</a></li>
+                                <li class="breadcrumb-item"><a href="http://localhost:8080/Smartket/HomePageURL">Home</a></li>
                                 <!--<li class="breadcrumb-item">Tables</li>-->
-                                <li class="breadcrumb-item active" aria-current="page">Slider</li>
+                                <li class="breadcrumb-item active" aria-current="page">Danh sách dài đặt</li>
                             </ol>
                         </div>
                         <!-- Row -->
                         <div class="row">
-                            <button style="margin-left: 13px;margin-bottom: 8px;" type="button" class="btn btn-secondary" data-toggle="modal" data-target="#exampleModalLong"
-                                    id="#modalLong">Thêm slider mới</button>
-
+                            <button style="margin-left: 13px;margin-bottom: 5px;" type="button" class="btn btn-outline-primary" data-toggle="modal" data-target="#exampleModalLong"
+                                    id="#modalLong">Thêm cài đặt mới</button>
                         </div>
                         <div class="row">
                             <!-- DataTable with Hover -->
@@ -160,51 +146,52 @@
                                             <div style="display: flex;
                                                  margin-left: 200px;
                                                  margin-bottom: -30px;">
-                                                <form action="marketingSliderList" method="get" id="categoryForm">
+                                                <form action="sliderList" method="get" id="categoryForm">
                                                     <div class="filter-group" style="display:flex;">
                                                         <div style="padding-top: 3px;">Trạng thái</div>
                                                         <select class="form-control" name="statusfilter" onchange="this.form.submit()">
                                                             <option value="">Trạng thái</option>
-                                                            <option value="true" <c:if test="${fn:contains(requestScope.statusfilter,'true')}">selected</c:if>>Hoạt động</option>
-                                                            <option value="false" <c:if test="${fn:contains(requestScope.statusfilter,'false')}">selected</c:if>>Vô hiệu hóa</option>
+                                                            <option value="true" <c:if test="${fn:contains(requestScope.statusfilter,'true')}">selected</c:if>>Hiện</option>
+                                                            <option value="false" <c:if test="${fn:contains(requestScope.statusfilter,'false')}">selected</c:if>>Ẩn</option>
                                                             </select>
                                                         </div>
                                                         <input type="submit" style="display: none;">
                                                     </form>
                                                 </div>
                                                 <thead class="thead-light">
+<!-- name=type -->  <!-- name=type -->  <!-- name=type --> 
+<!-- name=type -->  <!-- name=type -->  <!-- name=type -->  <!-- name=type -->  <!-- name=type -->  <!-- name=type -->  <!-- name=type -->  <!-- name=type -->  <!-- name=type -->  <!-- name=type -->  <!-- name=type -->  <!-- name=type -->  <!-- name=type -->  <!-- name=type -->  <!-- name=type -->  <!-- name=type -->  <!-- name=type -->  <!-- name=type -->  <!-- name=type -->  <!-- name=type -->  <!-- name=type -->  <!-- name=type -->
                                                     <tr>
                                                         <th>ID</th>
-                                                        <th style="width: 123.9479px">Mã Nhân viên</th>
-                                                        <th>Slider</th>
-                                                        <th>Đường dẫn</th>
-                                                        <th>Ngày tạo</th>
+                                                        <th>Loại</th>
+                                                        <th>Giá trị</th>
+                                                        <th>Yêu cầu</th>
+                                                        <th>Mô tả chi tiết</th>
                                                         <th>Trạng thái</th>						
                                                     </tr> 
                                                 </thead>
+                                                <tfoot>
+                                                    <tr>
+                                                        <th>ID</th>
+                                                        <th>Loại</th>
+                                                        <th>Giá trị</th>
+                                                        <th>Yêu cầu</th>
+                                                        <th>Mô tả chi tiết</th>
+                                                        <th>Trạng thái</th>							
+                                                    </tr>
+                                                </tfoot>
                                                 <tbody>
-                                                <c:forEach items="${sessionScope.sliderlist}" var="s">
-                                                    <tr id="tronclick" onclick="sliderDetail(${s.sliderID},${s.sliderStatus})">
-                                                        <td>${s.sliderID}</td>
-                                                        <td>${s.userID}</td>
-                                                        <td id="imageonclick"><img  style="height: 91px;width: 133px;" src="images/slider/${s.sliderImage}" alt="alt"/></td>
-                                                        <td><a href="${s.sliderLink}">${s.sliderLink}</a></td>
-                                                        <td>${s.createDate}</td> 
+                                                <c:forEach items="${sessionScope.settinglist}" var="s">
+                                                    <tr onclick="settingdetail(${s.settingID})">
+                                                        <td>${s.settingID}</td>
+                                                        <td>${s.settingName}</td>
+                                                        <td>${s.settingValue}</td>
+                                                        <td>${s.settingOrder}</td>
+                                                        <td>${s.settingDescription}</td>
                                                         <td><c:choose>
-                                                                <c:when test="${!s.sliderStatus}"> 
-                                                                    <span class="badge badge-success" style="height: 20px;
-                                                                          font-size: 10px;
-                                                                          padding: 5px;
-                                                                          ">Hoạt động</span>
-                                                                </c:when>
-                                                                <c:otherwise>
-                                                                    <span class="badge badge-danger"style="height: 20px;
-                                                                          font-size: 10px;
-                                                                          padding: 5px;
-                                                                          ">Vô hiệu hóa</span>
-                                                                </c:otherwise>
-                                                            </c:choose>
-                                                        </td> 
+                                                                <c:when test="${!s.settingStatus}">hiện</c:when>
+                                                                <c:otherwise>ẩn</c:otherwise>
+                                                            </c:choose></td> 
                                                     </tr>
                                                 </c:forEach>    
                                             </tbody>
@@ -272,27 +259,32 @@
                                         <div class="form-element form-group"> 
                                             <%
                                                         DAOProduct dao = new DAOProduct();
-                                                        ResultSet rsPro = dao.getData("select * from slider order by sliderID desc limit 1");
+                                                        ResultSet rsPro = dao.getData("select * from setting order by sliderID desc limit 1");
                                                         if(rsPro.next()) {%>
-                                            <input type="hidden" name ="sliderID1"  value="<%=rsPro.getInt(1) + 1%> ">
+                                            <input type="hidden" name ="settingID1"  value="<%=rsPro.getInt(1) + 1%> ">
                                             <%}%>
                                             <label for="registerEmail">ID: <%=rsPro.getInt(1) + 1%></label>                                               
                                         </div>
                                         <div class="form-element">
-                                            <label for="registerEmail">Mã nhân viên tạo slider: ${sessionScope.account.userID}</label>
-                                            <input type="hidden" name ="userID1" value="${sessionScope.account.userID}">
-                                        </div>
-
-                                        <div class="form-element">
-                                            <label>Slider: </label>
-                                            <input name="sliderImage1" type= "file"
-                                                   required><br>
+                                            <label for="registerEmail">Loại: 
+                                            <input type="text" name ="userID1" value="${sessionScope.account.userID}">
+                                            </label>
                                         </div>
                                         <div class="form-element">
-                                            <label for="registerEmail">Đường dẫn slider: </label><br>
-                                            <textarea name="sliderLink1"required
-                                                      >${sliderLink1}</textarea>
+                                            <label for="registerEmail">Giá trị: 
+                                            <input type="text" name ="userID1" value="${sessionScope.account.userID}">
+                                            </label>
                                         </div>
+                                        <div class="form-element">
+                                            <label for="registerEmail">Mô tả: 
+                                            <input type="text" name ="userID1" value="${sessionScope.account.userID}">
+                                            </label>
+                                        </div>  
+                                        <div class="form-element">
+                                            <label for="registerEmail">Yêu cầu setting: 
+                                            <input type="text" name ="userID1" value="${sessionScope.account.userID}">
+                                            </label>
+                                        </div>  
                                         <div class="form-element">
                                             <label for="registerEmail">Ngày tạo: ${sessionScope.timetoday}</label>
                                             <input type="hidden" name ="createDate1" value="${sessionScope.timetoday}">
@@ -301,12 +293,12 @@
                                             <label>Trạng thái: </label>
                                             <div style="display:flex; flex: 40%">
                                                 <div class="custom-control custom-radio" style="margin-right: 15px;">
-                                                    <input type="radio" id="customRadio3" name="sliderStatus1" class="custom-control-input" value="false" required>
-                                                    <label class="custom-control-label" for="customRadio3">Hoạt động</label>
+                                                    <input type="radio" id="customRadio3" name="settingStatus1" class="custom-control-input" value="false" required>
+                                                    <label class="custom-control-label" for="customRadio3">Hiện</label>
                                                 </div>
                                                 <div class="custom-control custom-radio">
-                                                    <input type="radio" id="customRadio4" name="sliderStatus1" class="custom-control-input" value="true" required>
-                                                    <label class="custom-control-label" for="customRadio4">Vô hiệu hóa</label>
+                                                    <input type="radio" id="customRadio4" name="settingStatus1" class="custom-control-input" value="true" required>
+                                                    <label class="custom-control-label" for="customRadio4">Ẩn</label>
                                                 </div>
                                             </div>
                                         </div>
@@ -314,7 +306,7 @@
                                     </div>
                                     <div class="modal-footer">
                                         <button type="button" class="btn btn-outline-primary" data-dismiss="modal">Close</button>
-                                        <button type="submit" class="btn btn-primary">Thêm slider</button>
+                                        <button type="submit" class="btn btn-primary">Thêm setting</button>
                                     </div>
                                 </div>
                             </form>
@@ -339,17 +331,18 @@
 
             <!-- Page level custom scripts -->
             <script>
-                                                            $(document).ready(function () {
-                                                                $('#dataTable').DataTable(); // ID From dataTable 
-                                                                $('#dataTableHover').DataTable(); // ID From dataTable with Hover
-                                                            });
+                                                        $(document).ready(function () {
+                                                            $('#dataTable').DataTable(); // ID From dataTable 
+                                                            $('#dataTableHover').DataTable(); // ID From dataTable with Hover
+                                                        });
             </script>
             <script>
                 function submitForm() {
                     document.getElementById('filterForm').submit();
                 }
-                function sliderDetail(id,status) {
-                    var url = "marketingSliderdetail?id=" + id+"&status="+(status==="false"?0:"1");
+
+                function settingdetail(id) {
+                    var url = "settingdetail?id=" + id;
                     window.location.href = url;
                 }
             </script>

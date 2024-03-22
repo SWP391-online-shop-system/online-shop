@@ -62,36 +62,44 @@ function addNewAdd() {
     var name = document.getElementById("newName").value;
     var phone = document.getElementById("newPhone").value;
     var email = document.getElementById("newEmail").value;
-    var gender = document.querySelector('input[name="newGender"]:checked').value;
+    var gender_check = document.querySelector('input[name="newGender"]:checked');
     var city = document.getElementById("city").value;
     var district = document.getElementById("district").value;
     var ward = document.getElementById("ward").value;
     var addressDetail = document.getElementById("newAddressDetail").value;
-    $.ajax({
-        type: "POST",
-        url: "contactURL",
-        data: {service: "addAddress", name: name, phone: phone, email: email, gender: gender, city: city, district: district, ward: ward, addressDetail: addressDetail},
-        success: function (response) {
-            console.log(response);
-            var modalBody = document.querySelector('#DS .modal-body');
-            modalBody.innerHTML += response;
-            swal.fire({
-                icon: 'success',
-                title: 'Thành công!',
-                text: 'Thêm địa chỉ thành công',
-                showConfirmButton: false,
-                timer: 1500
-            });
-//            setTimeout(function () {
-//            }, 15000);
-        },
-        error: function (xhr, status, error) {
-            // Xử lý lỗi
-            console.error(xhr.responseText);
-        }
-    });
-
-}
+//    if (name === "" || phone === "" || email === "" || city === "" || district === "" || ward === "" || addressDetail === "" || gender_check === null) {
+//        swal.fire({
+//            icon: 'error',
+//            title: 'Không thành công!',
+//            text: 'Vui lòng điền đầy đủ thông tin',
+//            showConfirmButton: false,
+//            timer: 1500
+//        });
+//    } else {
+        var gender = document.querySelector('input[name="newGender"]:checked').value;
+        $.ajax({
+            type: "POST",
+            url: "contactURL",
+            data: {service: "addAddress", name: name, phone: phone, email: email, gender: gender, city: city, district: district, ward: ward, addressDetail: addressDetail},
+                success: function (response) {
+                swal.fire({
+                    icon: 'success',
+                    title: 'Thành công!',
+                    text: 'Thêm địa chỉ thành công',
+                    showConfirmButton: false,
+                    timer: 1500
+                });
+                var modalBody = document.querySelector('#DS .modal-body');
+                modalBody.innerHTML += response;
+//                $("#page-top").html(response);
+            },
+            error: function (xhr, status, error) {
+                // Xử lý lỗi
+                console.error(xhr.responseText);
+            }
+        });
+    }
+//}
 function validateInput(input) {
     if (input.validity.valid) {
         input.classList.remove('is-invalid');

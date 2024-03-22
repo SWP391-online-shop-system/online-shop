@@ -241,7 +241,7 @@
                                                         <p class="mb-0">Nội dung đánh giá</p>
                                                     </div>
                                                     <div class="col-sm-9">
-                                                        <p class="text-muted mb-0"><textarea><%=fb.getFeedBackContent()%></textarea></p>
+                                                        <p class="text-muted mb-0"><textarea readonly><%=fb.getFeedBackContent()%></textarea></p>
                                                     </div>
                                                 </div>
                                                 <hr>

@@ -18,7 +18,10 @@ $(document).ready(function () {
         }
     }); // ID From dataTable with Hover
 });
-
+function userDetails(uid) {
+    var url = "userDetails?uid="+uid;
+    window.location.href = url;
+}
 function Customerdetail(uid) {
     var url = "marketingCustomerDetail?uid="+uid;
     window.location.href = url;

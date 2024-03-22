@@ -121,6 +121,9 @@ public class ValidateURL implements Filter {
         } else {
 
             User a = (User) session.getAttribute("account");
+            if (url.contains("loginURL") && a != null) {
+                res.sendRedirect("HomePageURL");
+            }
             if (url.startsWith("/marketing") || url.startsWith("/Marketing")) {
                 if (session.getAttribute("account") == null) {
                     res.sendRedirect("loginURL");

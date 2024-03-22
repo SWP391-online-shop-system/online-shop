@@ -117,11 +117,11 @@ public class ControllerFeedback extends HttpServlet {
                     DAODetail.updateIsFeedBack(OrderID, ProductID, 1);
                     System.out.println("update thanh conng");
                 }
-//                try {
-//                    Thread.sleep(4000);
-//                } catch (InterruptedException ex) {
-//                    Logger.getLogger(ControllerAddPost.class.getName()).log(Level.SEVERE, null, ex);
-//                }
+                try {
+                    Thread.sleep(5000);
+                } catch (InterruptedException ex) {
+                    Logger.getLogger(ControllerAddPost.class.getName()).log(Level.SEVERE, null, ex);
+                }
                 response.sendRedirect("ProductDetailURL?ProductID=" + ProductID);
             }
         }

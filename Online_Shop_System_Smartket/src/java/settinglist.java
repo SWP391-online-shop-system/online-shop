@@ -13,16 +13,21 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import java.sql.ResultSet;
-import model.DAOOrder;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Vector;
 import model.DAOProduct;
-import view.User;
+import static model.DAOProduct.getCurrentTimestamp;
+import model.DAOSlider;
+import view.Slider;
 
 /**
  *
- * @author admin
+ * @author 84395
  */
-@WebServlet(name = "ControllerMyOrder", urlPatterns = {"/MyOrderURL"})
-public class ControllerMyOrder extends HttpServlet {
+@WebServlet(urlPatterns={"/settinglist"})
+
+public class settinglist extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -37,47 +42,16 @@ public class ControllerMyOrder extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         try ( PrintWriter out = response.getWriter()) {
-            DAOOrder daoOrd = new DAOOrder();
-            DAOProduct daoPro = new DAOProduct();
-            HttpSession session = request.getSession();
-            User user = (User) session.getAttribute("account");
-
-            String message = "";
-
-            if (user == null) {
-                message = "Bạn cần đăng nhập";
-                request.setAttribute("message", message);
-                request.getRequestDispatcher("loginURL").forward(request, response);
-            } else {
-                double maxValue = daoPro.getMaxUnitPrice();
-                double minValue = daoPro.getMinUnitPrice();
-                request.setAttribute("inputMinPrice", minValue);
-                request.setAttribute("inputMaxPrice", maxValue);
-                ResultSet rsCategory = daoPro.getData("Select * from Categories");
-                request.setAttribute("CategoryResult", rsCategory);
-                int UserID = user.getUserID();
-                String indexPage = request.getParameter("index");
-                if (indexPage == null) {
-                    indexPage = "1";
-                }
-                int index = Integer.parseInt(indexPage);
-                int pagingindex = (index - 1) * 2;
-                ResultSet rsOrderGroup = daoOrd.getData("SELECT * FROM `order` as o\n"
-                        + "JOIN `OrderDetail` as od ON o.orderID = od.orderID\n"
-                        + "where o.UserID = " + UserID + " group BY o.orderID limit " + pagingindex + ", 2");
-                System.out.println("sql = SELECT * FROM `order` as o\n"
-                        + "JOIN `OrderDetail` as od ON o.orderID = od.orderID\n"
-                        + "where o.UserID = " + UserID + " group BY o.orderID limit " + pagingindex + ", 2");
-                int count = daoOrd.getTotalOrderOfUser(UserID);
-                int endPage = count / 2;
-                if (count % 2 != 0) {
-                    endPage++;
-                }
-                request.setAttribute("rsOrderGroup", rsOrderGroup);
-                request.setAttribute("endP", endPage);
-                request.setAttribute("tag", index);
-                request.getRequestDispatcher("MyOrder.jsp").forward(request, response);
-            }
+            /* TODO output your page here. You may use following sample code. */
+            out.println("<!DOCTYPE html>");
+            out.println("<html>");
+            out.println("<head>");
+            out.println("<title>Servlet sliderList</title>");
+            out.println("</head>");
+            out.println("<body>");
+            out.println("<h1>Servlet sliderList at " + request.getContextPath() + "</h1>");
+            out.println("</body>");
+            out.println("</html>");
         }
     }
 
@@ -93,7 +67,26 @@ public class ControllerMyOrder extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        DAOSlider dao = new DAOSlider();
+        HttpSession session = request.getSession();
+        Vector<Slider> sliderlist = new Vector<>();
+        String statusfilter = request.getParameter("filter");
+            sliderlist = dao.getSlider("select * from slider");
+            session.setAttribute("sliderlist", sliderlist);
+        session.setAttribute("timetoday", getCurrentTimestamp());
+        if(statusfilter!=null){
+        if (statusfilter.equalsIgnoreCase("true")) {
+            sliderlist = dao.getSlider("select * from slider where SliderStatus=0");
+            session.setAttribute("sliderlist", sliderlist);
+        }
+        if (statusfilter.equalsIgnoreCase("false")) {
+            sliderlist = dao.getSlider("select * from slider where SliderStatus=1");
+            session.setAttribute("sliderlist", sliderlist);
+        }}
+
+        request.getRequestDispatcher("sliderList.jsp").forward(request, response);
+
+          
     }
 
     /**

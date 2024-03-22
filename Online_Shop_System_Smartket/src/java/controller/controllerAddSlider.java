@@ -97,14 +97,22 @@ public class controllerAddSlider extends HttpServlet {
         String path = "images/slider/" + result;
         String realFileName = request.getServletContext().getRealPath(path);
         String realFileName1 = realFileName.replace("\\build", "");
-        for (Part part : request.getParts()) {
-            part.write(realFileName);
-            part.write(realFileName1);
-        }
-        Slider newSlider = new Slider(sliderID1, userID, newImageName, sliderLink1, sliderStatus1, createDate1);
+       // for (Part part : request.getParts()) {
+          //  part.write(realFileName);
+            sliderpart.write(realFileName1);
+        //}
+        Slider newSlider = new Slider(sliderID1, userID, result, sliderLink1, sliderStatus1, createDate1);
         DAOSlider DAOSlider = new DAOSlider();
         int n = DAOSlider.insertSlider(newSlider);
-        response.sendRedirect("sliderList");
+        try {
+                //Introduce a 1-second delay
+                   Thread.sleep(5000); // 1000 milliseconds = 1 second
+
+                           response.sendRedirect("marketingSliderList");
+              } catch (InterruptedException e) {
+                // Handle any potential interruption exception
+                   e.printStackTrace();
+               }
     }
 
     /**

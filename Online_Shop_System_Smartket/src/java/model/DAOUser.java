@@ -114,6 +114,26 @@ public class DAOUser extends DBConnect {
         }
         return n;
     }
+    public int addNewUserByadmin(User user,String a) {
+        int n = 0;
+        String sql = "INSERT INTO `online_shop_system`.`user`(`FirstName`,`LastName`,`Address`,`PhoneNumber`,`Gender`,`Password`,`Email`,`UserStatus`,`ReportTo`,`RoleID`,`CreateDate`)\n"
+                + "VALUES(?,?,?,?,?,?,?,1,1,"+a+",CURRENT_TIMESTAMP);";
+        try {
+            PreparedStatement pre = conn.prepareStatement(sql);
+            pre.setString(1, user.getFirstName());
+            pre.setString(2, user.getLastName());
+            pre.setString(3, user.getAddress());
+            pre.setString(4, user.getPhoneNumber());
+            pre.setInt(5, user.getGender() ? 1 : 0);
+            pre.setString(6, user.getPassword());
+            pre.setString(7, user.getEmail());
+            n = pre.executeUpdate();
+            conn.close();
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+        return n;
+    }
 
     public int updateStatus(int uid, int status) {
         int n = 0;
@@ -122,6 +142,19 @@ public class DAOUser extends DBConnect {
         try {
             PreparedStatement pre = conn.prepareStatement(sql);
             pre.setInt(1, status);
+            pre.setInt(2, uid);
+            n = pre.executeUpdate();
+        } catch (SQLException ex) {
+        }
+        return n;
+    }
+       public int updateRole(int uid, int role) {
+        int n = 0;
+        String sql = "UPDATE `online_shop_system`.`user`\n"
+                + "SET`roleID` = ? WHERE `UserID` = ?;";
+        try {
+            PreparedStatement pre = conn.prepareStatement(sql);
+            pre.setInt(1, role);
             pre.setInt(2, uid);
             n = pre.executeUpdate();
         } catch (SQLException ex) {
