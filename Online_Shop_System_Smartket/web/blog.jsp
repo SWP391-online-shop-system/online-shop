@@ -83,12 +83,12 @@
                                 <div class="col-lg-6 col-md-6 col-sm-6">
                                     <div class="blog__item">
                                         <div class="blog__item__pic">
-                                            <img src="images/blog/${pb.blogImage}" alt="">
+                                            <img src="images/blog/${pb.blogImage}" alt="">  
                                         </div>
                                         <div class="blog__item__text">
                                             <ul>
                                                 <li><i class="fa fa-calendar-o"></i> ${pb.createTime}</li>
-                                                <!--                                            <li><i class="fa fa-comment-o"></i> 5</li>-->
+                                                <li>${pb.blogRate}<i class="fas fa-star" style="color: orange;;"></i></li>
                                             </ul>
                                             <h5><a href="blogdetail?bid=${pb.blogID}">${pb.blogTitle}</a></h5>
                                             <p>${pb.blogContent.substring(0,130)}...</p>

@@ -23,6 +23,7 @@
                 height: 120px;
             }
         </style>
+    <a href="EditPost.jsp"></a>
     <body>
         <div id="wrapper">
             <!-- Sidebar -->
@@ -160,13 +161,13 @@
                                             <div class="form-group">
                                                 <label>Trạng thái</label>
                                                 <select name="hidden" class="form-select" aria-label="Default select example">
-                                                    <option value="1" ${blog.hiddenStatus eq 0 ? 'selected' : ''}>Hiện</option>
-                                                    <option value="0" ${blog.hiddenStatus eq 1 ? 'selected' : ''}>Ẩn</option>
+                                                    <option value="0" ${blog.hiddenStatus eq 0 ? 'selected' : ''}>Kích hoạt</option>
+                                                    <option value="1" ${blog.hiddenStatus eq 1 ? 'selected' : ''}>Vô hiệu hóa</option>
                                                 </select>
                                             </div>
                                             <div class="form-group">
                                                 <label>Ngày đăng</label>
-                                                <input value="${blog.createTime.substring(0,10)}" name="date" type="date" class="form-control" required>
+                                                <input value="${blog.createTime.substring(0,10)}" name="date" type="date" class="form-control"readonly required>
                                             </div>
                                         </div>
                                         <div class="modal-footer">

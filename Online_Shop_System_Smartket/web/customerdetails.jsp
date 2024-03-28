@@ -122,7 +122,9 @@
                             <div class=" ">                                
                                 <div class="row">
                                     <%int afterStatus = (int)request.getAttribute("afterStatus");
+                                    int userId = 0;
                                     if(rs.next()){
+                                    userId = rs.getInt(1);
                                     %>
                                     <div class="col-lg-2">
                                         <div class="card mb-4">
@@ -249,9 +251,10 @@
                                             <div>
                                                 <%int countLog = 0;while(log.next()){countLog++;%>
                                                 <%DAOUser dao = new DAOUser();
-                                                ResultSet mkt = dao.getData("SELECT * FROM online_shop_system.user where userID = " + log.getInt(2));%>
+                                                ResultSet mkt = dao.getData("SELECT * FROM online_shop_system.user where userID = " + log.getInt("UpdateBy"));%>
                                                 <p><%=countLog%>. <%while(mkt.next()){%>Nhân viên <%=mkt.getString("FirstName")+" "+mkt.getString("LastName")%> <%}%>
-                                                    đã <%=log.getString(4)%> <%=log.getString("FirstName")+" "+log.getString("LastName")%> vào <%=log.getString(3)%></p>
+                                                    <%=log.getString("purpose")%> có mã <%=userId%> vào <span style="color: black;">
+                                                        <%=log.getString("UpdateAt").substring(0,10)%>, lúc <%=log.getString("UpdateAt").substring(10)%></span></p>
                                                     <%}%>
                                             </div>                                         
                                         </div>

@@ -12,18 +12,15 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
-import java.sql.ResultSet;
-import model.DAOLog;
-import model.DAOSlider;
-import view.Slider;
+import model.DAOBlog;
 import view.User;
 
 /**
  *
- * @author 84395
+ * @author admin
  */
-@WebServlet(name = "sliderdetail", urlPatterns = {"/marketingSliderdetail"})
-public class sliderdetail extends HttpServlet {
+@WebServlet(name = "ControllerAddComment", urlPatterns = {"/addComment"})
+public class ControllerAddComment extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -36,23 +33,28 @@ public class sliderdetail extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        DAOLog daoU = new DAOLog();
         HttpSession session = request.getSession();
-        User u = (User) session.getAttribute("account");
-        if (u == null) {
-            String message = "Bạn cần đăng nhập";
+        User user = (User) session.getAttribute("account");
+        String message = "";
+        if (user == null) {
+            message = "Bạn cần đăng nhập";
             request.setAttribute("message", message);
             request.getRequestDispatcher("loginURL").forward(request, response);
+        } else {
+            String BlogAuthor = request.getParameter("comment");
+            String SRate = request.getParameter("rating3");
+            if (SRate == null) {
+                SRate = "1";
+            }
+            int rate = Integer.parseInt(SRate);
+            String Comment = request.getParameter("comment");
+            int uID = user.getUserID();
+            String bid_st = request.getParameter("bid");
+            int bid = Integer.parseInt(bid_st);
+             DAOBlog dao = new DAOBlog();
+             dao.addComment(bid, uID, Comment, rate);
+             response.sendRedirect("blogdetail?bid="+bid_st);
         }
-        String id = request.getParameter("id");
-        DAOSlider DAOSlider = new DAOSlider();
-        Slider slider = DAOSlider.getaSlider("select * from slider where sliderId = " + id);
-        session.setAttribute("getaSlider", slider);
-        ResultSet logger = daoU.getData("SELECT * FROM loghistory where ID=" + id+ " and updateBy = " + u.getUserID()
-                + " and logTopic = 3 and logType like '%Cập nhật%' order by updateAt desc");
-        request.setAttribute("log", logger);
-        request.getRequestDispatcher("sliderdetail.jsp").forward(request, response);
-
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

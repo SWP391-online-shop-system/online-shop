@@ -76,6 +76,12 @@
                             <span>Phản hồi</span>
                         </a>
                     </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="marketingSliderList">
+                            <i class="fas fa-comments fa-2x text-info"></i>
+                            <span>Slider</span>
+                        </a>
+                    </li>
                     <hr class="sidebar-divider">
                 </div>
             </ul>
@@ -186,12 +192,12 @@
                                                                 ">
                                                             <option value="0"<%=productID==0?"selected":""%>>Tất cả</option>
                                                             <%
-                                                            ResultSet rsProductSelect= daoP.getData("select ProductID from FeedBack group by ProductID");
+                                                            ResultSet rsProductSelect= (ResultSet)request.getAttribute("rsProductSelect");
                                                             while(rsProductSelect.next()){
-                                                            product = daoP.getProductById(rsProductSelect.getInt("ProductID"));
-                                                            %>
-                                                            <option value="<%=product.getProductID()%>" <%=(product.getProductID()==productID)?"selected":""%>><%=product.getProductName()%></option>                                                     
-                                                            <%}%>
+                                                            ResultSet rsproduct = daoP.getData("select * from Product where ProductID = "+rsProductSelect.getInt("ProductID"));
+                                                            if(rsproduct.next()){%>
+                                                            <option value="<%=rsproduct.getInt("ProductID")%>" <%=(rsproduct.getInt("ProductID")==productID)?"selected":""%>><%=rsproduct.getString("ProductName")%></option>                                                     
+                                                            <%}}%>
                                                         </select>
 
                                                         <div style="padding-top: 16px;
@@ -201,6 +207,7 @@
 
                                                         <select class="form-control" name="ProductRate" onchange="this.form.submit()" style="    height: 34px;
                                                                 padding-top: 6px;
+                                                                padding-right: 1px;
                                                                 margin-top: 10px;
                                                                 width: 153px;
                                                                 z-index: 99;
@@ -228,13 +235,17 @@
                                             </thead>
 
                                             <tbody>
-                                                <%while(rsFeedBack.next()) {
+                                                <%String productName = "";
+                                                    while(rsFeedBack.next()) {
                                                     user = daoU.getUserByUserID(rsFeedBack.getInt("UserID"));
-                                                    product = daoP.getProductById(rsFeedBack.getInt("ProductID"));
+                                                   ResultSet rsproduct2 = daoP.getData("Select * from Product where ProductID = "+rsFeedBack.getInt("ProductID"));
+                                                   if(rsproduct2.next()){
+                                                   productName = rsproduct2.getString("ProductName");
+                                                    }
                                                 %>
                                                 <tr style="text-align: center; cursor: pointer" onclick="FeedBackdetail(<%=rsFeedBack.getInt("FeedBackID")%>,<%=rsFeedBack.getInt("UserID")%>,<%=rsFeedBack.getInt("FeedBackStatus")%>)">
                                                     <td><%=rsFeedBack.getInt("FeedBackID")%></td>
-                                                    <td><%=product.getProductName()%></td>
+                                                    <td><%=productName%></td>
                                                     <td><%=user.getFirstName()+" "+user.getLastName()%></td>
                                                     <td>
                                                         <textarea style="width: 177px;

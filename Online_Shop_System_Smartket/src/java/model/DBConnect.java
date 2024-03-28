@@ -26,11 +26,7 @@ public class DBConnect {
     }
 
     public DBConnect() {
-<<<<<<< Updated upstream
-        this("jdbc:mysql://localhost:3306/Online_Shop_System", "duong","123456");
-=======
-        this("jdbc:mysql://localhost:3306/Online_Shop_System", "root", "27062003");
->>>>>>> Stashed changes
+        this("jdbc:mysql://localhost:3306/Online_Shop_System", "duong", "123456");
     }
 
     public ResultSet getData(String sql) {
@@ -81,23 +77,20 @@ public class DBConnect {
 
     public static void main(String[] args) throws SQLException {
         DBConnect dao = new DBConnect();
-        ResultSet rsOrder = dao.getData("Select * from `Order` where OrderID = 2");
-        Order getOrder = new Order();
-        if (rsOrder.next()) {
-            getOrder = new Order(
-                    //int, int, int, int, double, String, String, int, boolean, String
-                    rsOrder.getInt("OrderID"),
-                    rsOrder.getInt("UserID"),
-                    rsOrder.getInt("SaleID"),
-                    rsOrder.getInt("Quantity"),
-                    rsOrder.getDouble("TotalPrice"),
-                    rsOrder.getString("OrderDate"),
-                    rsOrder.getString("ShippedDate"),
-                    rsOrder.getInt("StatusID"),
-                    rsOrder.getBoolean("OrderStatus"),
-                    rsOrder.getString("OrderImage")
-            );
+<<<<<<< HEAD
+        String bid_st = "4";
+        ResultSet rs = dao.getData("select * from user as u join comments as c on u.UserID = c.UserID where BlogID= " + bid_st + "\n");
+         while(rs.next()) { 
+        System.out.println(rs.getString("FirstName"));
+        System.out.println(rs.getString("UserImage"));
+        System.out.println(rs.getString("CommentDate"));
+        System.out.println(rs.getString("CommentContent"));
+    }
+=======
+        ResultSet rsOrder = dao.getData("select ProductID from FeedBack group by ProductID;");
+        while (rsOrder.next()) {
+            System.out.println(rsOrder.getInt(1));
         }
-        System.out.println("ORDER = "+getOrder);
+>>>>>>> origin/dev
     }
 }

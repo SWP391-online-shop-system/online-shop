@@ -88,9 +88,6 @@ public class ControllerFeedback extends HttpServlet {
             }
 
             if (service.equals("upload")) {
-                System.out.println("in upload");
-                System.out.println("isFeedBack  ="+isFeedBack);
-                System.out.println("orderID  ="+OrderID);
                 if (isFeedBack == 0) {
                     Part photo1 = request.getPart("feedbackImg");
                     String feedbackImg = getSubmittedFileName(photo1);
@@ -115,7 +112,6 @@ public class ControllerFeedback extends HttpServlet {
                     int UserID = user.getUserID();
                     dao.addFeedback(ProductID, UserID, feedbackImg, msgFeedback, rate);
                     DAODetail.updateIsFeedBack(OrderID, ProductID, 1);
-                    System.out.println("update thanh conng");
                 }
                 try {
                     Thread.sleep(5000);

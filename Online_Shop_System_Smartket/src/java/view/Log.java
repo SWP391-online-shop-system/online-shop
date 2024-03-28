@@ -9,47 +9,76 @@ package view;
  * @author trant
  */
 public class Log {
-    private int userId;
-    private int updateBy;
-    private String updateAt;
-    private String purpose;
 
-    public Log(int userId, int updateBy, String purpose) {
-        this.userId = userId;
-        this.updateBy = updateBy;
-        this.purpose = purpose;
+    private int ID;
+    private int LogTopic;
+    private String LogType;
+    private int UpdateBy;
+    private String UpdateAt;
+    private String Purpose;
+
+    public Log() {
     }
 
-    public int getUserId() {
-        return userId;
+    public Log(int ID, int LogTopic, String LogType, int UpdateBy, String Purpose) {
+        this.ID = ID;
+        this.LogTopic = LogTopic;
+        this.LogType = LogType;
+        this.UpdateBy = UpdateBy;
+        this.Purpose = Purpose;
     }
 
-    public void setUserId(int userId) {
-        this.userId = userId;
+    public int getID() {
+        return ID;
+    }
+
+    public void setID(int ID) {
+        this.ID = ID;
+    }
+
+    public int getLogTopic() {
+        return LogTopic;
+    }
+
+    public void setLogTopic(int LogTopic) {
+        this.LogTopic = LogTopic;
+    }
+
+    public String getLogType() {
+        return LogType;
+    }
+
+    public void setLogType(String LogType) {
+        this.LogType = LogType;
     }
 
     public int getUpdateBy() {
-        return updateBy;
+        return UpdateBy;
     }
 
-    public void setUpdateBy(int updateBy) {
-        this.updateBy = updateBy;
+    public void setUpdateBy(int UpdateBy) {
+        this.UpdateBy = UpdateBy;
     }
 
     public String getUpdateAt() {
-        return updateAt;
+        return UpdateAt;
     }
 
-    public void setUpdateAt(String updateAt) {
-        this.updateAt = updateAt;
+    public void setUpdateAt(String UpdateAt) {
+        this.UpdateAt = UpdateAt;
     }
 
     public String getPurpose() {
-        return purpose;
+        return Purpose;
     }
 
-    public void setPurpose(String purpose) {
-        this.purpose = purpose;
+    public void setPurpose(String Purpose) {
+        this.Purpose = Purpose;
     }
-    
+
+    @Override
+    public String toString() {
+        return "Log{" + "ID=" + ID + ", LogTopic=" + LogTopic + ", LogType=" + LogType + ", UpdateBy=" + UpdateBy + ", UpdateAt=" + UpdateAt + ", Purpose=" + Purpose + '}';
+    }
+
 }

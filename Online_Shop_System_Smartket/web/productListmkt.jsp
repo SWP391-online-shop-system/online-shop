@@ -100,6 +100,12 @@
                             <span>Phản hồi</span>
                         </a>
                     </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="marketingSliderList">
+                            <i class="fas fa-comments fa-2x text-info"></i>
+                            <span>Slider</span>
+                        </a>
+                    </li>
                     <hr class="sidebar-divider">
                 </div>
             </ul>
