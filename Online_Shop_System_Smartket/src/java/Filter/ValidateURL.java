@@ -65,19 +65,12 @@ public class ValidateURL implements Filter {
         } else {
 
             User a = (User) session.getAttribute("account");
-            if (session.getAttribute("account") != null) {
-                if ((a.getRoleID() == 2) || a.getRoleID() == 3 || a.getRoleID() == 4 || a.getRoleID() == 5) {
-                    if (url.startsWith("/blog") || url.startsWith("/cblog") || url.startsWith("/searchblog") || url.startsWith("/ProductDetail") || url.startsWith("/HomePageURL") || url.startsWith("/CartURL") || url.startsWith("/ProductListURL") || url.startsWith("/contactURL")) {
-                        res.sendRedirect("404");
-                    }
-                }
-            }
             if (url.contains("loginURL") && a != null) {
                 res.sendRedirect("HomePageURL");
             }
             if (session.getAttribute("account") != null) {
             if ((a.getRoleID() == 2 )|| a.getRoleID() == 3 || a.getRoleID() == 4 || a.getRoleID() == 5) {
-                if (url.startsWith("/blog") || url.startsWith("/cblog") || url.startsWith("/searchblog") || url.startsWith("/ProductDetail") || url.startsWith("/HomePageURL") || url.startsWith("/CartURL") || url.startsWith("/ProductListURL") || url.startsWith("/contactURL")) {
+                if (url.startsWith("/blog") || url.startsWith("/cblog") || url.startsWith("/searchblog") || url.startsWith("/ProductDetail") | url.startsWith("/CartURL") || url.startsWith("/ProductListURL") || url.startsWith("/contactURL")) {
                     res.sendRedirect("404");
                 }
             }
