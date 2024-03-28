@@ -79,7 +79,7 @@
         <div id="wrapper">
             <!-- Sidebar -->
             <ul class="navbar-nav sidebar sidebar-light accordion" id="accordionSidebar">
-                <a class="sidebar-brand d-flex align-items-center justify-content-center" href="HomePageURL">
+                <a class="sidebar-brand d-flex align-items-center justify-content-center" href="http://localhost:8080/Smartket/HomePageURL">
                     <div class="sidebar-brand-icon">
                         <img style="height: 91px;
                              width: 133px;

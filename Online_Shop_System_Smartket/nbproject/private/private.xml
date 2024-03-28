@@ -3,10 +3,10 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/D:/fpt/Semeter_5/SWP391/Project_GitHub/Online_Shop_System_Smartket/web/sliderList.jsp</file>
-            <file>file:/D:/fpt/Semeter_5/SWP391/Project_GitHub/Online_Shop_System_Smartket/web/homepage.jsp</file>
-            <file>file:/D:/fpt/Semeter_5/SWP391/Project_GitHub/Online_Shop_System_Smartket/src/java/Filter/ValidateURL.java</file>
-            <file>file:/D:/fpt/Semeter_5/SWP391/Project_GitHub/Online_Shop_System_Smartket/src/java/controller/ControllerHomePage.java</file>
+            <file>file:/D:/fpt/Semeter_5/SWP391/Project_GitHub/Online_Shop_System_Smartket/src/java/controller/ControllerChangeuserinfo.java</file>
+            <file>file:/D:/fpt/Semeter_5/SWP391/Project_GitHub/Online_Shop_System_Smartket/src/java/controller/ControllerEditProductmkt.java</file>
+            <file>file:/D:/fpt/Semeter_5/SWP391/Project_GitHub/Online_Shop_System_Smartket/web/productListmkt.jsp</file>
+            <file>file:/D:/fpt/Semeter_5/SWP391/Project_GitHub/Online_Shop_System_Smartket/web/updateProductmkt.jsp</file>
         </group>
     </open-files>
 </project-private>
