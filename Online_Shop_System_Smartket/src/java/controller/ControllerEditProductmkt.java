@@ -94,7 +94,7 @@ public class ControllerEditProductmkt extends HttpServlet {
                     String purpose;
                     int n = 0;
                     Product product = new Product(productId, productName, categoryId, productDescription,
-                            unitInStock, unitPrice, unitDiscount, createDate, totalStock, totalStock, productStatus);
+                            unitInStock, unitPrice, unitDiscount, totalStock, productStatus);
                     n = dao.updateProduct(product);
                     if (productStatus == true) {
                         productStatusValue = 0;
@@ -135,13 +135,14 @@ public class ControllerEditProductmkt extends HttpServlet {
                         } else {
                             realImgURL = imgURL.getSubmittedFileName();
                             if (!("images/product/" + convertCategory + "/" + realImgURL).equals(oldImageUrl)) {
+                                System.out.println("realImg = " + realImgURL + " != olfImageURL = " + oldImageUrl);
                                 int index = realImgURL.lastIndexOf(".");
                                 String tailType = realImgURL.substring(index);
                                 productImageURL += realImgURL.substring(0, index) + "_" + i + tailType;
                                 ProductImage pi = new ProductImage(productId, productImageURL, productImageURL);
                                 daoPI.updateImage(productImageURL, productId, oldImageUrl);
-                                imgURL.write("D:\\project_github\\Online_Shop_System_Smartket\\web\\" + productImageURL);
-                                imgURL.write("D:\\project_github\\Online_Shop_System_Smartket\\build\\web\\" + productImageURL);
+                                imgURL.write("D:\\fpt\\Semeter_5\\SWP391\\Project_GitHub\\Online_Shop_System_Smartket\\web\\" + productImageURL);
+                                imgURL.write("D:\\fpt\\Semeter_5\\SWP391\\Project_GitHub\\Online_Shop_System_Smartket\\build\\web\\" + productImageURL);
                             }
                         }
                         if (radioChoice == i) {
@@ -174,11 +175,21 @@ public class ControllerEditProductmkt extends HttpServlet {
                     Product product = new Product();
                     ResultSet rspro = dao.getData("Select * from Product where ProductID = " + productId);
                     int cateid = 0;
-                   
+
                     boolean status = true;
                     try {
                         if (rspro.next()) {
-//                            product = new Product(productId, radio, cateid, radio, radioChoice, cateid, radioChoice, cateid, status)
+                            product = new Product(productId,
+                                    rspro.getString("ProductName"),
+                                    rspro.getInt("CategoryID"),
+                                    rspro.getString("productDescription"),
+                                    rspro.getInt("unitInStock"),
+                                    rspro.getDouble("unitPrice"),
+                                    rspro.getInt("unitDiscount"),
+                                    rspro.getString("createDate"),
+                                    rspro.getInt("totalRate"),
+                                    rspro.getInt("totalStock"),
+                                    rspro.getBoolean("productStatus"));
                             cateid = rspro.getInt("CategoryID");
                             status = rspro.getBoolean("ProductStatus");
                         }
@@ -187,7 +198,8 @@ public class ControllerEditProductmkt extends HttpServlet {
                     }
                     request.setAttribute("cateid", cateid);
                     request.setAttribute("proId", productId);
-                    request.setAttribute("productStatus", status? 0 : 1);
+                    request.setAttribute("product", product);
+                    request.setAttribute("productStatus", status ? 0 : 1);
                     ResultSet logger = daoU.getData("SELECT * FROM loghistory as log where ID = " + productId + " and logTopic = 1 and logType like '%Cập nhật%' order by updateAt desc");
                     request.setAttribute("log", logger);
                     Vector<Categories> categories = daoCategories.getCategories("SELECT * FROM categories");

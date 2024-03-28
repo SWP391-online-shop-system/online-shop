@@ -3,6 +3,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
  */
 package controller;
+
 import java.util.*;
 import java.lang.*;
 import java.io.IOException;
@@ -56,35 +57,35 @@ public class updatesetting extends HttpServlet {
         }
     }
 
-    
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         processRequest(request, response);
     }
 
-    
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        System.out.println("111111111111111111+alo = "+request.getParameter("updateset"));
+        System.out.println("111111111111111111+alo = " + request.getParameter("updateset"));
         DAOSetting dao = new DAOSetting();
         Setting Setting1 = dao.getaSlider("select * from Setting where SettingID = " + request.getParameter("updatesettingid"));
-        int n = dao.updateSetting(Setting1,request.getParameter("updateset"));
+        int n = dao.updateSetting(Setting1, request.getParameter("updateset"));
         String statuscate = "false";
-        if(request.getParameter("updateset").equals("0"))
-            statuscate="true";
-        int m = dao.updateCate(Setting1, statuscate);
+        if (request.getParameter("updateset").equals("0")) {
+            statuscate = "true";
+        }
+        if (Setting1.getSettingValue().equals("1")) {
+            int m = dao.updateCate(Setting1, statuscate);
+        }
+        if (Setting1.getSettingValue().equals("2")) {
+            int m = dao.updateSetting(Setting1, statuscate);
+        }
         response.sendRedirect("settinglist");
 
     }
 
-   
-
-
-
-@Override
-public String getServletInfo() {
+    @Override
+    public String getServletInfo() {
         return "Short description";
     }// </editor-fold>
 

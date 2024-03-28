@@ -90,8 +90,14 @@ public class settinglist extends HttpServlet {
 //                    if(role.equals("0"))
                 if (type.equals("0")) {
                     sql = sql;
-                } else 
-                    sql = sql + " where SettingName = " + type;
+                } else {
+                    if (sql.contains("where")) {
+                        sql = sql + " where SettingValue = " + type;
+                    } else {
+                        sql = sql + " where SettingValue = " + type;
+                    }
+                }
+
                 if (status.equals("3")) {
                     sql = sql;
                 } else {
@@ -101,7 +107,7 @@ public class settinglist extends HttpServlet {
                         sql = sql + " where SettingStatus = " + status;
                     }
                 }
-               
+
                 Vector<Setting> list = dao.getSetting(sql);
 //                request.setAttribute("data", list);
 //                request.setAttribute("status", status);

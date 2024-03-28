@@ -26,7 +26,7 @@ public class DBConnect {
     }
 
     public DBConnect() {
-        this("jdbc:mysql://localhost:3306/Online_Shop_System", "root", "Matkhau22");
+        this("jdbc:mysql://localhost:3306/Online_Shop_System", "duong", "123456");
     }
 
     public ResultSet getData(String sql) {
@@ -75,5 +75,7 @@ public class DBConnect {
         }
     }
 
+    public static void main(String[] args) throws SQLException {
 
+    }
 }

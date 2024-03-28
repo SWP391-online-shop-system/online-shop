@@ -3,16 +3,10 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Users/admin/Desktop/online_shop_systemGitHub/Online_Shop_System_Smartket/web/blogdetail.jsp</file>
-            <file>file:/C:/Users/admin/Desktop/online_shop_systemGitHub/Online_Shop_System_Smartket/src/java/controller/ControllerAddPost.java</file>
-            <file>file:/C:/Users/admin/Desktop/online_shop_systemGitHub/Online_Shop_System_Smartket/src/java/controller/ControllerAddComment.java</file>
-            <file>file:/C:/Users/admin/Desktop/online_shop_systemGitHub/Online_Shop_System_Smartket/src/java/view/Comment.java</file>
-            <file>file:/C:/Users/admin/Desktop/online_shop_systemGitHub/Online_Shop_System_Smartket/src/java/controller/ControllerBlogDetail.java</file>
-            <file>file:/C:/Users/admin/Desktop/online_shop_systemGitHub/Online_Shop_System_Smartket/web/feedback.jsp</file>
-            <file>file:/C:/Users/admin/Desktop/online_shop_systemGitHub/Online_Shop_System_Smartket/src/java/model/DBConnect.java</file>
-            <file>file:/C:/Users/admin/Desktop/online_shop_systemGitHub/Online_Shop_System_Smartket/web/blog.jsp</file>
-            <file>file:/C:/Users/admin/Desktop/online_shop_systemGitHub/Online_Shop_System_Smartket/src/java/model/DAOBlog.java</file>
-            <file>file:/C:/Users/admin/Desktop/online_shop_systemGitHub/Online_Shop_System_Smartket/src/java/model/DAOFeedBack.java</file>
+            <file>file:/D:/fpt/Semeter_5/SWP391/Project_GitHub/Online_Shop_System_Smartket/src/java/controller/ControllerChangeuserinfo.java</file>
+            <file>file:/D:/fpt/Semeter_5/SWP391/Project_GitHub/Online_Shop_System_Smartket/src/java/controller/ControllerEditProductmkt.java</file>
+            <file>file:/D:/fpt/Semeter_5/SWP391/Project_GitHub/Online_Shop_System_Smartket/web/productListmkt.jsp</file>
+            <file>file:/D:/fpt/Semeter_5/SWP391/Project_GitHub/Online_Shop_System_Smartket/web/updateProductmkt.jsp</file>
         </group>
     </open-files>
 </project-private>
