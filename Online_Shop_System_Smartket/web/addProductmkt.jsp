@@ -240,7 +240,7 @@
                                                 </div>
                                             </div>
                                             <hr>
-                                                    <input type="hidden" name="totalStock" id="totalStock" value="${totalStock}">
+                                            <input type="hidden" name="totalStock" id="totalStock" value="${totalStock}">
                                             <div class="row">
                                                 <div class="col-sm-3">
                                                     <p class="mb-0">Ảnh sản phẩm</p>
@@ -262,17 +262,28 @@
                                 </div>
                             </div>
                         </div>
+                        <a class="scroll-to-top rounded" href="#page-top">
+                            <i class="fas fa-angle-up"></i>
+                        </a>
+                        <script src="vendor/jquery/jquery.min.js"></script>
+                        <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+                        <script src="vendor/jquery-easing/jquery.easing.min.js"></script>
+                        <script src="js_marketing/ruang-admin.min.js"></script>
+                        <script src="vendor/chart.js/Chart.min.js"></script>
+                        <script src="js_marketing/demo/chart-area-demo.js"></script>  
+                        <script src="vendor/datatables/jquery.dataTables.min.js"></script>
+                        <script src="vendor/datatables/dataTables.bootstrap4.min.js"></script>
                         </body>
                         <script>
-                            function validateForm() {
-                                var unitInStock = parseInt(document.getElementById("unitInStock").value);
-                                var totalStock = parseInt(document.getElementById("totalStock").value);
+                                            function validateForm() {
+                                                var unitInStock = parseInt(document.getElementById("unitInStock").value);
+                                                var totalStock = parseInt(document.getElementById("totalStock").value);
 
-                                if (unitInStock > totalStock) {
-                                    alert("Hàng trong kho không thể lớn hơn Tổng số sản phẩm.");
-                                    return false;
-                                }
-                                return true;
-                            }
+                                                if (unitInStock > totalStock) {
+                                                    alert("Hàng trong kho không thể lớn hơn Tổng số sản phẩm.");
+                                                    return false;
+                                                }
+                                                return true;
+                                            }
                         </script>
                         </html>
