@@ -100,12 +100,10 @@ public class ControllerEditProductmkt extends HttpServlet {
                     productStatusValue = 0;
                     dao.updateStatus(productId, 0);
                     purpose = "đã kích hoạt sản phẩm "+ productName;
-                    System.out.println("updateed status from off to on");
                 } else {
                     dao.updateStatus(productId, 1);
                     productStatusValue = 1;
                     purpose = "đã vô hiệu hóa sản phẩm "+ productName;
-                    System.out.println("updateed status from on to off");
                 }
                 Log log = new Log(updateBy, updateBy, purpose);
                 daoLog.insertLog(log);
@@ -118,7 +116,6 @@ public class ControllerEditProductmkt extends HttpServlet {
                     ResultSet rsRadio = daoPI.getData("select * from ProductImage where ProductID =" + productId);
                     try {
                         if (rsRadio.next()) {
-                            System.out.println("àter fix: " + rsRadio.getString("ProductURLShow").replaceAll("[a-zA-Z]+", ""));
                             radioChoice = Integer.parseInt(rsRadio.getString("ProductURLShow").replaceAll("[a-zA-Z]+", ""));
                         }
                     } catch (SQLException ex) {
@@ -127,7 +124,6 @@ public class ControllerEditProductmkt extends HttpServlet {
                 } else {
                     radioChoice = Integer.parseInt(radio);
                 }
-                System.out.println("radio = " + radioChoice);
                 for (int i = 1; i <= countImg; i++) {
                     String productImageURL = "images/product/" + convertCategory + "/";
                     String oldImageUrl = request.getParameter("oldImageUrl" + i);
@@ -135,17 +131,14 @@ public class ControllerEditProductmkt extends HttpServlet {
                     String realImgURL = imgURL.getSubmittedFileName();
                     if (realImgURL.equals("") || realImgURL == null) {
                         productImageURL = oldImageUrl;
-                        System.out.println("realImg" + i + "=null => ProductImageURL = " + productImageURL);
                     } else {
                         realImgURL = imgURL.getSubmittedFileName();
                         if (!("images/product/" + convertCategory + "/" + realImgURL).equals(oldImageUrl)) {
-                            System.out.println("realImg = " + realImgURL + " != olfImageURL = " + oldImageUrl);
                             int index = realImgURL.lastIndexOf(".");
                             String tailType = realImgURL.substring(index);
                             productImageURL += realImgURL.substring(0, index) + "_" + i + tailType;
                             ProductImage pi = new ProductImage(productId, productImageURL, productImageURL);
                             daoPI.updateImage(productImageURL, productId, oldImageUrl);
-                            System.out.println("realImg" + i + "!=null => ProductImageURL = " + productImageURL);
                             imgURL.write("D:\\project_github\\Online_Shop_System_Smartket\\web\\" + productImageURL);
                             imgURL.write("D:\\project_github\\Online_Shop_System_Smartket\\build\\web\\" + productImageURL);
                         } else {

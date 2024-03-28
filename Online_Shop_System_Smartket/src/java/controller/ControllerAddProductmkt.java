@@ -162,7 +162,7 @@ public class ControllerAddProductmkt extends HttpServlet {
         int unitInStock = Integer.parseInt(request.getParameter("unitInStock"));
         double unitPrice = Double.parseDouble(request.getParameter("unitPrice"));
         int unitDiscount = Integer.parseInt(request.getParameter("unitDiscount"));
-        int totalStock = Integer.parseInt(request.getParameter("totalStock"));
+        int totalStock = unitInStock;
         String convert = convertCate(categoryId);
         Part productImageUrl_raw = request.getPart("productImageUrl");
         Product newProduct = new Product(productName, categoryId, productDescription, unitInStock, unitPrice, unitDiscount, totalStock);
