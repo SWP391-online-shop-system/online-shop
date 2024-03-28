@@ -11,19 +11,15 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import jakarta.servlet.http.HttpSession;
 import java.sql.ResultSet;
 import model.DAOLog;
-import model.DAOSlider;
-import view.Slider;
-import view.User;
 
 /**
  *
- * @author 84395
+ * @author admin
  */
-@WebServlet(name = "sliderdetail", urlPatterns = {"/marketingSliderdetail"})
-public class sliderdetail extends HttpServlet {
+@WebServlet(name = "ControllerLogHistory", urlPatterns = {"/adminLogHistoryURL"})
+public class ControllerLogHistory extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -36,23 +32,19 @@ public class sliderdetail extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        DAOLog daoU = new DAOLog();
-        HttpSession session = request.getSession();
-        User u = (User) session.getAttribute("account");
-        if (u == null) {
-            String message = "Bạn cần đăng nhập";
-            request.setAttribute("message", message);
-            request.getRequestDispatcher("loginURL").forward(request, response);
+        response.setContentType("text/html;charset=UTF-8");
+        try ( PrintWriter out = response.getWriter()) {
+            /* TODO output your page here. You may use following sample code. */
+            out.println("<!DOCTYPE html>");
+            out.println("<html>");
+            out.println("<head>");
+            out.println("<title>Servlet ControllerLogHistory</title>");
+            out.println("</head>");
+            out.println("<body>");
+            out.println("<h1>Servlet ControllerLogHistory at " + request.getContextPath() + "</h1>");
+            out.println("</body>");
+            out.println("</html>");
         }
-        String id = request.getParameter("id");
-        DAOSlider DAOSlider = new DAOSlider();
-        Slider slider = DAOSlider.getaSlider("select * from slider where sliderId = " + id);
-        session.setAttribute("getaSlider", slider);
-        ResultSet logger = daoU.getData("SELECT * FROM loghistory where ID=" + id+ " and updateBy = " + u.getUserID()
-                + " and logTopic = 3 and logType like '%Cập nhật%' order by updateAt desc");
-        request.setAttribute("log", logger);
-        request.getRequestDispatcher("sliderdetail.jsp").forward(request, response);
-
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
@@ -67,7 +59,10 @@ public class sliderdetail extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        DAOLog daoLog = new DAOLog();
+        ResultSet rsLog = daoLog.getData("Select * from logHistory order by updateAt desc");
+        request.setAttribute("log", rsLog);
+        request.getRequestDispatcher("logHistory.jsp").forward(request, response);
     }
 
     /**

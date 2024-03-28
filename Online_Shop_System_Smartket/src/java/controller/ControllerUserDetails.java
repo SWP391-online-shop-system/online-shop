@@ -88,7 +88,7 @@ public class ControllerUserDetails extends HttpServlet {
             dao.updateStatus(cusId, 1);
             purpose = "đã kích hoạt";
         }
-        Log logger = new Log(cusId, updateBy, purpose);
+        Log logger = new Log(cusId,2,"Cập nhật", updateBy, purpose);
         int n = daoLog.insertLog(logger);
         request.setAttribute("data", rs);
         request.setAttribute("log", log);
