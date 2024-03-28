@@ -12,22 +12,15 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
-import java.sql.ResultSet;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Vector;
-import model.DAOProduct;
-import static model.DAOProduct.getCurrentTimestamp;
-import model.DAOSlider;
-import view.Slider;
+import model.DAOBlog;
+import view.User;
 
 /**
  *
- * @author 84395
+ * @author admin
  */
-@WebServlet(urlPatterns={"/settinglist"})
-
-public class settinglist extends HttpServlet {
+@WebServlet(name = "ControllerAddComment", urlPatterns = {"/addComment"})
+public class ControllerAddComment extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -40,18 +33,27 @@ public class settinglist extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        response.setContentType("text/html;charset=UTF-8");
-        try ( PrintWriter out = response.getWriter()) {
-            /* TODO output your page here. You may use following sample code. */
-            out.println("<!DOCTYPE html>");
-            out.println("<html>");
-            out.println("<head>");
-            out.println("<title>Servlet sliderList</title>");
-            out.println("</head>");
-            out.println("<body>");
-            out.println("<h1>Servlet sliderList at " + request.getContextPath() + "</h1>");
-            out.println("</body>");
-            out.println("</html>");
+        HttpSession session = request.getSession();
+        User user = (User) session.getAttribute("account");
+        String message = "";
+        if (user == null) {
+            message = "Bạn cần đăng nhập";
+            request.setAttribute("message", message);
+            request.getRequestDispatcher("loginURL").forward(request, response);
+        } else {
+            String BlogAuthor = request.getParameter("comment");
+            String SRate = request.getParameter("rating3");
+            if (SRate == null) {
+                SRate = "1";
+            }
+            int rate = Integer.parseInt(SRate);
+            String Comment = request.getParameter("comment");
+            int uID = user.getUserID();
+            String bid_st = request.getParameter("bid");
+            int bid = Integer.parseInt(bid_st);
+             DAOBlog dao = new DAOBlog();
+             dao.addComment(bid, uID, Comment, rate);
+             response.sendRedirect("blogdetail?bid="+bid_st);
         }
     }
 
@@ -67,26 +69,7 @@ public class settinglist extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        DAOSlider dao = new DAOSlider();
-        HttpSession session = request.getSession();
-        Vector<Slider> sliderlist = new Vector<>();
-        String statusfilter = request.getParameter("filter");
-            sliderlist = dao.getSlider("select * from slider");
-            session.setAttribute("sliderlist", sliderlist);
-        session.setAttribute("timetoday", getCurrentTimestamp());
-        if(statusfilter!=null){
-        if (statusfilter.equalsIgnoreCase("true")) {
-            sliderlist = dao.getSlider("select * from slider where SliderStatus=0");
-            session.setAttribute("sliderlist", sliderlist);
-        }
-        if (statusfilter.equalsIgnoreCase("false")) {
-            sliderlist = dao.getSlider("select * from slider where SliderStatus=1");
-            session.setAttribute("sliderlist", sliderlist);
-        }}
-
-        request.getRequestDispatcher("sliderList.jsp").forward(request, response);
-
-          
+        processRequest(request, response);
     }
 
     /**

@@ -686,7 +686,7 @@
                                margin-right: 232px;
                                margin-bottom: -30px;
                                margin-top: 7px;
-                               position: relative;background: #ff6535;">Xác nhận đơn</a>
+                               position: relative;background: #ff6535;">Xác nhận đơn</a><br><br>
                             <%}%>
                             <a style="margin-left: 681px;" href="OrderInformationURL?OrderID=<%=rsOrderGroup.getInt("OrderID")%>" class="btn btn-success btn-lg" data-abc="true">Xem chi tiết đơn hàng <i class="fa fa-chevron-right"></i></a>
                         </div>

@@ -88,7 +88,7 @@
                                         <div class="blog__item__text">
                                             <ul>
                                                 <li><i class="fa fa-calendar-o"></i> ${pb.createTime}</li>
-                                                <!--                                            <li><i class="fa fa-comment-o"></i> 5</li>-->
+                                                <li>${pb.blogRate}<i class="fas fa-star" style="color: orange;;"></i></li>
                                             </ul>
                                             <h5><a href="blogdetail?bid=${pb.blogID}">${pb.blogTitle}</a></h5>
                                             <p>${pb.blogContent.substring(0,130)}...</p>

@@ -77,23 +77,13 @@ public class DBConnect {
 
     public static void main(String[] args) throws SQLException {
         DBConnect dao = new DBConnect();
-        ResultSet rsOrder = dao.getData("Select * from `Order` where OrderID = 2");
-        Order getOrder = new Order();
-        if (rsOrder.next()) {
-            getOrder = new Order(
-                    //int, int, int, int, double, String, String, int, boolean, String
-                    rsOrder.getInt("OrderID"),
-                    rsOrder.getInt("UserID"),
-                    rsOrder.getInt("SaleID"),
-                    rsOrder.getInt("Quantity"),
-                    rsOrder.getDouble("TotalPrice"),
-                    rsOrder.getString("OrderDate"),
-                    rsOrder.getString("ShippedDate"),
-                    rsOrder.getInt("StatusID"),
-                    rsOrder.getBoolean("OrderStatus"),
-                    rsOrder.getString("OrderImage")
-            );
-        }
-        System.out.println("ORDER = "+getOrder);
+        String bid_st = "4";
+        ResultSet rs = dao.getData("select * from user as u join comments as c on u.UserID = c.UserID where BlogID= " + bid_st + "\n");
+         while(rs.next()) { 
+        System.out.println(rs.getString("FirstName"));
+        System.out.println(rs.getString("UserImage"));
+        System.out.println(rs.getString("CommentDate"));
+        System.out.println(rs.getString("CommentContent"));
+    }
     }
 }
