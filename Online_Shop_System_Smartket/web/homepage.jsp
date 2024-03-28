@@ -681,9 +681,9 @@
                                         <div class="sale-cotification">Sale</div>
                                         <%}%>
                                         <%ResultSet rsNewestProduct = dao.getData("select * from product as p join productImage as pi "
-                                           + "on p.ProductID = pi.ProductID "
-                                           + "where pi.ProductURL = pi.ProductURLShow and p.ProductStatus = 0 "
-                                           + "order by p.CreateDate desc limit 6");
+                                           + " on p.ProductID = pi.ProductID "
+                                           + " where pi.ProductURL = pi.ProductURLShow and p.ProductStatus = 0 "
+                                           + " order by p.CreateDate desc limit 6");
                                              while(rsNewestProduct.next()) {
                                                 if(rsNewProduct.getString("CreateDate").substring(0,10).equals(rsNewProduct.getString("CreateDate").substring(0,10))){%>
                                         <div class="sale-cotification">Mới</div>

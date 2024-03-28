@@ -77,17 +77,28 @@ public class ControllerAddProductmkt extends HttpServlet {
         String fileName = Paths.get(filePart.getSubmittedFileName()).getFileName().toString();
         String cateID = convertCate(categoryId);
         String newFileName = fileName.substring(0, fileName.lastIndexOf('.')) + "_" + imageIndex + fileName.substring(fileName.lastIndexOf('.'));
-        String destinationDirectory = "D:/fpt/Semeter_5/SWP391/Project_GitHub/Online_Shop_System_Smartket/web/images/product" + cateID;
+        String destinationDirectory = "D:/fpt/Semeter_5/SWP391/Project_GitHub/Online_Shop_System_Smartket/web/images/product/" + cateID;
+        String destinationDirectory2 = "D:/fpt/Semeter_5/SWP391/Project_GitHub/Online_Shop_System_Smartket/build/web/images/product/" + cateID;
         File directory = new File(destinationDirectory);
         if (!directory.exists()) {
             directory.mkdirs();
         }
+        File directory2 = new File(destinationDirectory2);
+        if (!directory2.exists()) {
+            directory2.mkdirs();
+        }
         String destinationFilePath = destinationDirectory + "/" + newFileName;
+        String destinationFilePath2 = destinationDirectory2 + "/" + newFileName;
         try ( InputStream fileContent = filePart.getInputStream();  OutputStream outputStream = new FileOutputStream(destinationFilePath)) {
+            InputStream fileContent2 = filePart.getInputStream();
+            OutputStream outputStream2 = new FileOutputStream(destinationFilePath2);
             byte[] buffer = new byte[1024];
             int bytesRead;
             while ((bytesRead = fileContent.read(buffer)) != -1) {
                 outputStream.write(buffer, 0, bytesRead);
+            }
+            while ((bytesRead = fileContent2.read(buffer)) != -1) {
+                outputStream2.write(buffer, 0, bytesRead);
             }
             String relativeUrl = "images/product/" + cateID + "/" + newFileName;
             return relativeUrl;
@@ -205,7 +216,12 @@ public class ControllerAddProductmkt extends HttpServlet {
             String st = (n > 0) ? "Thêm sản phẩm thành công" : "Thêm sản phẩm thất bại";
             Vector<Categories> categories = daoCategories.getCategories("SELECT * FROM categories");
             request.setAttribute("categories", categories);
-            response.sendRedirect("marketingProductListURL?message=" + URLEncoder.encode(st, "UTF-8"));
+            try {
+                Thread.sleep(2000);
+                response.sendRedirect("marketingProductListURL?message=" + URLEncoder.encode(st, "UTF-8"));
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
         }
     }
 

@@ -50,7 +50,7 @@ public class ControllerHomePage extends HttpServlet {
                                 while(rsSlider1.next()) {
                                 countslider++;}
             int settingPage = 0;
-            ResultSet rsSettingPage = dao.getData("select * from Setting where SettingID = 1");
+            ResultSet rsSettingPage = dao.getData("select * from Setting where SettingID = 8");
             if (rsSettingPage.next()) {
                 settingPage = Integer.parseInt(rsSettingPage.getString("SettingValue"));
             }
