@@ -46,7 +46,7 @@
                         <div class="blog__sidebar">
                             <div class="blog__sidebar__search">
                                 <form action="searchblog">
-                                    <input name="txtSearch" type="text" placeholder="Search...">
+                                    <input name="txtSearch" type="text" placeholder="Search..." value="${txtSearch==null?"":txtSearch}">
                                     <button type="submit"><i class="fa-solid fa-magnifying-glass"></i></button>
                                 </form>
                             </div>
