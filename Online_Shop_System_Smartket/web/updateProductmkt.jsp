@@ -215,7 +215,7 @@
                                             <p class="mb-0">Tổng số sản phẩm</p>
                                         </div>
                                         <div class="col-sm-9">
-                                            <input type="number" name="totalStock" id="totalStock" value="${product.totalStock}">
+                                            <input type="number" name="totalStock" id="totalStock" value="${product.totalStock}" readonly>
                                         </div>
                                     </div>
                                     <hr>

@@ -240,15 +240,7 @@
                                                 </div>
                                             </div>
                                             <hr>
-                                            <div class="row">
-                                                <div class="col-sm-3">
-                                                    <p class="mb-0">Tổng số sản phẩm</p>
-                                                </div>
-                                                <div class="col-sm-9">
-                                                    <input type="number" required name="totalStock" id="totalStock" value="${totalStock}">
-                                                </div>
-                                            </div>
-                                            <hr>
+                                                    <input type="hidden" name="totalStock" id="totalStock" value="${totalStock}">
                                             <div class="row">
                                                 <div class="col-sm-3">
                                                     <p class="mb-0">Ảnh sản phẩm</p>
