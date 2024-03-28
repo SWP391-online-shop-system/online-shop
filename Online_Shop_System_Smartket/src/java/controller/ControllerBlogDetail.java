@@ -43,7 +43,6 @@ public class ControllerBlogDetail extends HttpServlet {
         if (user != null){
         String userImage = user.getUserImage();
         request.setAttribute("userImage", userImage);
-        request.getRequestDispatcher("blogdetail.jsp").forward(request, response);
         }
         String bid_st = request.getParameter("bid");
         int bid = Integer.parseInt(bid_st);

@@ -3,13 +3,16 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/D:/fpt/Semeter_5/SWP391/Project_GitHub/Online_Shop_System_Smartket/src/java/view/Log.java</file>
-            <file>file:/D:/fpt/Semeter_5/SWP391/Project_GitHub/Online_Shop_System_Smartket/src/java/model/DAOLog.java</file>
-            <file>file:/D:/fpt/Semeter_5/SWP391/Project_GitHub/Online_Shop_System_Smartket/web/feedbackList.jsp</file>
-            <file>file:/D:/fpt/Semeter_5/SWP391/Project_GitHub/Online_Shop_System_Smartket/src/java/model/DBConnect.java</file>
-            <file>file:/D:/fpt/Semeter_5/SWP391/Project_GitHub/Online_Shop_System_Smartket/src/java/model/DAOProduct.java</file>
-            <file>file:/D:/fpt/Semeter_5/SWP391/Project_GitHub/Online_Shop_System_Smartket/src/java/controller/ControllerHomePage.java</file>
-            <file>file:/D:/fpt/Semeter_5/SWP391/Project_GitHub/Online_Shop_System_Smartket/src/java/controller/ControllerFeedBackList.java</file>
+            <file>file:/C:/Users/admin/Desktop/online_shop_systemGitHub/Online_Shop_System_Smartket/web/blogdetail.jsp</file>
+            <file>file:/C:/Users/admin/Desktop/online_shop_systemGitHub/Online_Shop_System_Smartket/src/java/controller/ControllerAddPost.java</file>
+            <file>file:/C:/Users/admin/Desktop/online_shop_systemGitHub/Online_Shop_System_Smartket/src/java/controller/ControllerAddComment.java</file>
+            <file>file:/C:/Users/admin/Desktop/online_shop_systemGitHub/Online_Shop_System_Smartket/src/java/view/Comment.java</file>
+            <file>file:/C:/Users/admin/Desktop/online_shop_systemGitHub/Online_Shop_System_Smartket/src/java/controller/ControllerBlogDetail.java</file>
+            <file>file:/C:/Users/admin/Desktop/online_shop_systemGitHub/Online_Shop_System_Smartket/web/feedback.jsp</file>
+            <file>file:/C:/Users/admin/Desktop/online_shop_systemGitHub/Online_Shop_System_Smartket/src/java/model/DBConnect.java</file>
+            <file>file:/C:/Users/admin/Desktop/online_shop_systemGitHub/Online_Shop_System_Smartket/web/blog.jsp</file>
+            <file>file:/C:/Users/admin/Desktop/online_shop_systemGitHub/Online_Shop_System_Smartket/src/java/model/DAOBlog.java</file>
+            <file>file:/C:/Users/admin/Desktop/online_shop_systemGitHub/Online_Shop_System_Smartket/src/java/model/DAOFeedBack.java</file>
         </group>
     </open-files>
 </project-private>

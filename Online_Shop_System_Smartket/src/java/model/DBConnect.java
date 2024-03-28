@@ -26,7 +26,7 @@ public class DBConnect {
     }
 
     public DBConnect() {
-        this("jdbc:mysql://localhost:3306/Online_Shop_System", "duong", "123456");
+        this("jdbc:mysql://localhost:3306/Online_Shop_System", "root", "Matkhau22");
     }
 
     public ResultSet getData(String sql) {
@@ -75,22 +75,5 @@ public class DBConnect {
         }
     }
 
-    public static void main(String[] args) throws SQLException {
-        DBConnect dao = new DBConnect();
-<<<<<<< HEAD
-        String bid_st = "4";
-        ResultSet rs = dao.getData("select * from user as u join comments as c on u.UserID = c.UserID where BlogID= " + bid_st + "\n");
-         while(rs.next()) { 
-        System.out.println(rs.getString("FirstName"));
-        System.out.println(rs.getString("UserImage"));
-        System.out.println(rs.getString("CommentDate"));
-        System.out.println(rs.getString("CommentContent"));
-    }
-=======
-        ResultSet rsOrder = dao.getData("select ProductID from FeedBack group by ProductID;");
-        while (rsOrder.next()) {
-            System.out.println(rsOrder.getInt(1));
-        }
->>>>>>> origin/dev
-    }
+
 }

@@ -205,34 +205,14 @@
 
                                         </div>
                                         <div class="form-element">
-                                            <a style="color: blue;" class="forgot-pass" data-toggle="modal" data-target="#exampleModal"
-                                               id="#myBtn">Quên mật khẩu?</a>
+                                            <a style="color: blue;" class="forgot-pass" href="forgotpass">Quên mật khẩu?</a>
                                         </div>
                                     </div>
 
                     </div>
                     </form>
                     <!-- start modals -->
-                    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-                         aria-hidden="true">
-                        <div class="modal-dialog" role="document">
-                            <div class="modal-content">
-                                <div class="modal-header">
-                                    <h5 class="modal-title" id="exampleModalLabel">Quên mật khẩu</h5>
-                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                        <span aria-hidden="true">&times;</span>
-                                    </button>
-                                </div>
-                                <div class="modal-body">
-                                    <p>You Content</p>
-                                </div>
-                                <div class="modal-footer">
-                                    <button type="button" class="btnhi btn-outline-primary" data-dismiss="modal" style="border: 1px solid #007bff;">Close</button>
-                                    <button type="button" class="btnhi btn-primary"style="border: 1px solid #007bff;">Save changes</button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                    
                     <!-- end modals -->
                     <!-- Registration Pop-up Form -->
                     <form action="signupURL" method="post">
