@@ -19,7 +19,7 @@ import view.Setting;
  * SettingDescription, SettingStatus, CreateDate
  */
 public class DAOSetting extends DBConnect {
-    
+
     public Setting getaSlider(String sql) {
         Setting s = new Setting();
         try {
@@ -27,7 +27,7 @@ public class DAOSetting extends DBConnect {
                     ResultSet.TYPE_SCROLL_SENSITIVE,
                     ResultSet.CONCUR_UPDATABLE);
             ResultSet rs = state.executeQuery(sql);
-            
+
             while (rs.next()) {
                 int SettingID = rs.getInt("SettingID");
                 String SettingName = rs.getString("SettingName");
@@ -38,13 +38,13 @@ public class DAOSetting extends DBConnect {
                 String CreateDate = rs.getString("CreateDate");
                 s = new Setting(SettingID, SettingName, SettingOrder, SettingValue, SettingDescription, SettingStatus, CreateDate);
             }
-            
+
         } catch (SQLException ex) {
             System.out.println("sql errot at 141 in DAOSlider: " + ex);
         }
         return s;
     }
-    
+
     public int addNewUserByMKT(Setting Setting) {
         int n = 0;
         String sql = "INSERT INTO `online_shop_system`.`setting`(`SettingName`,`SettingOrder`,`SettingValue`,`SettingDescription`,`SettingStatus`,`CreateDate`)\n"
@@ -63,14 +63,14 @@ public class DAOSetting extends DBConnect {
         }
         return n;
     }
-    
-    public int updateSetting(Setting setting,String a) {
+
+    public int updateSetting(Setting setting, String a) {
         int n = 0;
         String sql = "UPDATE `online_shop_system`.`Setting`\n"
                 + "SET\n"
-                + "`SettingStatus` ="+a+"\n"
+                + "`SettingStatus` =" + a + "\n"
                 + "WHERE `SettingID` = ?";
-        System.out.println("sql = "+sql);
+        System.out.println("sql = " + sql);
         try {
             PreparedStatement pre = conn.prepareStatement(sql);
             pre.setInt(1, setting.getSettingID());
@@ -80,14 +80,14 @@ public class DAOSetting extends DBConnect {
         }
         return n;
     }
-    
-    public int updateCate(Setting setting,String a) {
+
+    public int updateCate(Setting setting, String a) {
         int n = 0;
         String sql = "UPDATE `online_shop_system`.`Categories`\n"
                 + "SET\n"
-                + "`CategoryStatus` ="+a+"\n"
+                + "`CategoryStatus` =" + a + "\n"
                 + "WHERE `CategoryID` = ?";
-        System.out.println("sql = "+sql);
+        System.out.println("sql = " + sql);
         try {
             PreparedStatement pre = conn.prepareStatement(sql);
             pre.setInt(1, setting.getSettingOrder());
@@ -97,7 +97,7 @@ public class DAOSetting extends DBConnect {
         }
         return n;
     }
-    
+
     public Vector<Setting> getSetting(String sql) {
         Vector<Setting> vector = new Vector<Setting>();
         try {
@@ -113,7 +113,7 @@ public class DAOSetting extends DBConnect {
                 String SettingDescription = rs.getString(5);
                 int SettingStatus = rs.getInt(6);
                 String CreateDate = rs.getString(7);
-                
+
                 Setting Setting = new Setting(SettingID, SettingName, SettingOrder, SettingValue, SettingDescription, SettingStatus, CreateDate);
                 vector.add(Setting);
             }
@@ -122,9 +122,26 @@ public class DAOSetting extends DBConnect {
         }
         return vector;
     }
-    
+
+    public int updatePro(Setting setting, String a) {
+        int n = 0;
+        String sql = "UPDATE `online_shop_system`.`pro`\n"
+                + "SET\n"
+                + "`ProductStatus` =" + a + "\n"
+                + "WHERE `ProductID` = ?";
+        System.out.println("sql = " + sql);
+        try {
+            PreparedStatement pre = conn.prepareStatement(sql);
+            pre.setInt(1, setting.getSettingOrder());
+            n = pre.executeUpdate();
+        } catch (SQLException e) {
+            System.out.println(e);
+        }
+        return n;
+    }
+
     public Setting getSettingById(int SettingID) {
-        
+
         String sql = "select * from Setting where SettingID =?";
         /*
           private int SettingID;

@@ -151,17 +151,17 @@
                                                 String type = (String)request.getAttribute("type");
                                                 %>
                                                 <form action="settinglist" method="get">
-                                                    <div class="filter-group" style="display:flex;align-items: center;">
-                                                        <div style=" padding-top: -36px;
-                                                             width: 81%;">Loại</div>
+                                                    <div class="filter-group" style="display:flex;align-items: baseline;">
+                                                        <div style="margin-right: 14px;">Loại</div>
                                                         <select class="form-control" name="type" onchange="this.form.submit()" style="height: 33px;margin-top: -12px;">   
-                                                            <option value="0" <%if(type.equals("0")){%>selected<%}%>>Tất cả</option>							
+                                                            <option value="0" <%if(type.equals("0")){%>selected<%}%>>Tất cả</option>
+                                                            <option value="1" <%if(type.equals("1")){%>selected<%}%>>Danh mục</option>							
+                                                            <option value="2" <%if(type.equals("2")){%>selected<%}%>>Sản phẩm</option>							
                                                         </select>
 
-                                                        <div style="
-                                                             padding-top: -36px;
-                                                             width: 81%;">Trạng thái</div>
-                                                        <select class="form-control" name="status" onchange="this.form.submit()" style="height: 33px;margin-top: -12px;">                                                            
+                                                        <div style="width: 104%;
+                                                             margin-left: 15px;margin-right: 15px;">Trạng thái</div>
+                                                        <select class="form-control" name="status" onchange="this.form.submit()" style="height: 33px;margin-top: -12px;width: 130px;">                                                            
                                                             <option value="3" <%if(status.equals("3")){%>selected<%}%>>Tất cả</option>                                                     
                                                             <option value="1" <%if(status.equals("1")){%>selected<%}%>>Kích hoạt</option>                                                          
                                                             <option value="0" <%if(status.equals("0")){%>selected<%}%>>Vô hiệu hóa</option>                                                            
@@ -175,8 +175,8 @@
                                             <thead class="thead-light">
                                                 <tr>
                                                     <th>ID</th>
+                                                    <th>Tên</th>
                                                     <th>Loại</th>
-                                                    <th>Giá trị</th>
                                                     <th>Trạng Thái</th>	
                                                     <th>Yêu cầu</th>
                                                 </tr>
@@ -186,7 +186,10 @@
                                                     <tr style="text-align: center; cursor: pointer" onclick="settingDetails(${setting.settingID})">
                                                         <td>${setting.settingID}</td>
                                                         <td>${setting.settingName}</td>
-                                                        <td>${setting.settingValue}</td>
+                                                        <td>
+                                                            <c:if test="${setting.settingValue == 1}"><span class="badge badge-success">Danh mục</span></c:if>
+                                                            <c:if test="${setting.settingValue == 2}"><span class="badge badge-danger">Sản phẩm</span></c:if>
+                                                            </td>
                                                         <td>
                                                             <c:if test="${setting.settingStatus == 1}"><span class="badge badge-success">Kích hoạt</span></c:if>
                                                             <c:if test="${setting.settingStatus == 0}"><span class="badge badge-danger">Vô hiệu hóa</span></c:if>

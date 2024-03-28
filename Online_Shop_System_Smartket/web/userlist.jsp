@@ -164,9 +164,9 @@
                                                             <option value="2" <%if(role.equals("2")){%>selected<%}%>>Marketing</option>                                                            
                                                             <option value="0" <%if(role.equals("0")){%>selected<%}%>>Tất cả</option>							
                                                         </select>
-                                                        <div style="
+                                                        &nbsp;&nbsp;&nbsp;<div style="
                                                              padding-top: -36px;
-                                                             width: 81%;">Trạng thái</div>
+                                                             width: 81%;">Trạng thái</div>&nbsp;&nbsp;&nbsp;
                                                         <select class="form-control" name="status" onchange="this.form.submit()" style="height: 33px;margin-top: -12px;">                                                            
                                                             <option value="3" <%if(status.equals("3")){%>selected<%}%>>Tất cả</option>                                                     
                                                             <option value="1" <%if(status.equals("1")){%>selected<%}%>>Hoạt động</option>                                                          

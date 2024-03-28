@@ -40,10 +40,9 @@ public class ControllerBlogDetail extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         HttpSession session = request.getSession();
         User user = (User) session.getAttribute("account");
-        if (user != null){
-        String userImage = user.getUserImage();
-        request.setAttribute("userImage", userImage);
-        request.getRequestDispatcher("blogdetail.jsp").forward(request, response);
+        if (user != null) {
+            String userImage = user.getUserImage();
+            request.setAttribute("userImage", userImage);
         }
         String bid_st = request.getParameter("bid");
         int bid = Integer.parseInt(bid_st);
@@ -55,7 +54,7 @@ public class ControllerBlogDetail extends HttpServlet {
         ResultSet rs;
         String sql = "select * from user as u join comments as c on u.UserID = c.UserID where BlogID= " + bid_st + "\n";
         rs = dao.getData(sql);
-        
+
         request.setAttribute("bid", bid_st);
         request.setAttribute("listC", listC);
         request.setAttribute("listNB", listNB);

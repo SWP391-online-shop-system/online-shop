@@ -116,7 +116,7 @@ public class ControllerChangeuserinfo extends HttpServlet {
             String realFileName = getServletContext().getRealPath(path);
             String realFileName1 = realFileName.replace("\\build", "");
             File file = new File(realFileName1);
-            file.delete();
+//            file.delete();
             filePart.write(realFileName1);
             int n =0;
             n= daoU.updateUserImage(UserID, result);
