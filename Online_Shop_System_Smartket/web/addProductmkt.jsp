@@ -240,7 +240,7 @@
                                                 </div>
                                             </div>
                                             <hr>
-                                                    <input type="hidden" name="totalStock" id="totalStock" value="${totalStock}">
+                                            <input type="hidden" name="totalStock" id="totalStock" value="${totalStock}">
                                             <div class="row">
                                                 <div class="col-sm-3">
                                                     <p class="mb-0">Ảnh sản phẩm</p>
