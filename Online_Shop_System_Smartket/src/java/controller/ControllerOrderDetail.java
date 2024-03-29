@@ -49,7 +49,6 @@ public class ControllerOrderDetail extends HttpServlet {
             DAOOrder dao = new DAOOrder();
             String oID = request.getParameter("oID");
             int id = Integer.parseInt(oID);
-            String OrderID = request.getParameter("OrderID");
             String sql = "select o.OrderID,CONCAT(u.FirstName, ' ', u.LastName) AS FullName,u.Email,u.PhoneNumber, s.StatusID, r.ReceiverEmail,o.ShippedDate,\n"
                     + "                                       o.OrderDate,o.TotalPrice,CONCAT(u_sale.FirstName, ' ', u_sale.LastName) AS SaleName, s.StatusName\n"
                     + "                                        from `order` as o\n"
@@ -114,7 +113,7 @@ public class ControllerOrderDetail extends HttpServlet {
             dao.updateShippedDate(orderID);
         }
         String st = (n > 0) ? "Cập nhật trạng thái thành công" : "Cập nhật trạng thái thất bại";
-        response.sendRedirect("saleManagerOrderListURL?message=" + URLEncoder.encode(st, "UTF-8"));
+        response.sendRedirect("saleOrderDetailURL?oID="+ orderID + "&message=" + URLEncoder.encode(st, "UTF-8"));
     }
 
     /**

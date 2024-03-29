@@ -46,43 +46,58 @@
         a:hover{
             color:black;
         }
-        .rate {
-            float: left;
-            height: 46px;
-            padding: 0 10px;
-        }
-        .rate:not(:checked) > input {
-            position:absolute;
-            top:-9999px;
-        }
-        .rate:not(:checked) > label {
-            float:right;
-            width:1em;
-            overflow:hidden;
-            white-space:nowrap;
-            cursor:pointer;
-            font-size:30px;
-            color:#ccc;
-        }
-        .rate:not(:checked) > label:before {
-            content: '★ ';
-        }
-        .rate > input:checked ~ label {
-            color: #ffc700;
-        }
-        .rate:not(:checked) > label:hover,
-        .rate:not(:checked) > label:hover ~ label {
-            color: #deb217;
-        }
-        .rate > input:checked + label:hover,
-        .rate > input:checked + label:hover ~ label,
-        .rate > input:checked ~ label:hover,
-        .rate > input:checked ~ label:hover ~ label,
-        .rate > label:hover ~ input:checked ~ label {
-            color: #c59b08;
+        .rating-group {
+            display: inline-flex;
         }
 
+        /* make hover effect work properly in IE */
+        .rating__icon {
+            pointer-events: none;
+        }
+
+        /* hide radio inputs */
+        .rating__input {
+            position: absolute !important;
+            left: -9999px !important;
+        }
+
+        /* hide 'none' input from screenreaders */
+        .rating__input--none {
+            display: none
+        }
+
+        /* set icon padding and size */
+        .rating__label {
+            cursor: pointer;
+            padding: 0 0.1em;
+            font-size: 2rem;
+        }
+
+        /* set default star color */
+        .rating__icon--star {
+            color: orange;
+        }
+
+        /* if any input is checked, make its following siblings grey */
+        .rating__input:checked ~ .rating__label .rating__icon--star {
+            color: #ddd;
+        }
+
+        /* make all stars orange on rating group hover */
+        .rating-group:hover .rating__label .rating__icon--star {
+            color: orange;
+        }
+
+        /* make hovered input's following siblings grey on hover */
+        .rating__input:hover ~ .rating__label .rating__icon--star {
+            color: #ddd;
+        }
+
+
+
         body {
+            padding: 1rem;
+            text-align: center;
         }
 
         .textup {
@@ -589,7 +604,7 @@
                     </div> 
                     <script>
                     </script>
-                    <div class="form-box" style="height: 605px;"> 
+                    <div class="form-box" style="height: 635px;"> 
                         <div style="    margin-bottom: 25px;
                              font-size: 20px;" class="textup"> 
                             <i  class="fa fa-solid fa-clock"></i> 
@@ -603,42 +618,47 @@
                                 <div style="height: 169px;
                                      width: 282px;
                                      border: 1px solid;
-                                     margin-bottom: 10px;">
-                                    <img id="feedback-image" style="width: 282px;
-                                         height: 169px !important;" src="images/feedback/">
+                                     margin-bottom: 10px;
+                                     margin-left: 62px;"
+                                     >
+                                    <img id="feedback-image" style="    width: 266px;
+                                         height: 162px !important;
+                                         margin-left: 14px;" src="images/feedback/">
                                 </div>
                                 <input value=""  type="file" 
                                        class="form-control" name="feedbackImg" placeholder="Enter photo" id="feedback-img-input">
                             </div>
                             <div class="form-group">
-                                <div style="display: flex; align-items: center">
+                                <div style="display: inline-table; align-items: center">
                                     <label for="rating">Đánh giá:</label>
-                                    <div style="margin-bottom: 4px;" class="rate">
-                                        <input type="radio" id="star5" name="rate" value="5" />
-                                        <label style="font-size: 25px;" for="star5" title="text">5 stars</label>
-                                        <input type="radio" id="star4" name="rate" value="4" />
-                                        <label style="font-size: 25px;" for="star4" title="text">4 stars</label>
-                                        <input type="radio" id="star3" name="rate" value="3" />
-                                        <label style="font-size: 25px;" for="star3" title="text">3 stars</label>
-                                        <input type="radio" id="star2" name="rate" value="2" />
-                                        <label style="font-size: 25px;" for="star2" title="text">2 stars</label>
-                                        <input type="radio" id="star1" name="rate" value="1" />
-                                        <label style="font-size: 25px;" for="star1" title="text">1 star</label>
-                                    </div>
-                                </div>                  
-                                <label for="msg"> 
-                                    <i class="fa-solid fa-comments" 
-                                       style="margin-right: 3px;"></i> 
-                                    Thêm nhận xét của bạn tại đây: 
-                                </label> 
-                                <textarea id="msg" name="msg" style="height: 100px;"
-                                          required> 
-                                </textarea> 
-                                <button type="submit" style="border-radius: 4px;width: 200px;text-align: center;background: #50a950;"> 
-                                    Tạo đánh giá 
-                                </button> 
-                            </div>
-                            <%}%>
+                                    <div>
+                                        <div class="rating-group" style="margin-left: 10px;" >
+                                            <input disabled checked class="rating__input rating__input--none" name="rating3" id="rating3-none" value="0" type="radio">
+                                            <label aria-label="1 star" class="rating__label" for="rating3-1"><i class="rating__icon rating__icon--star fa fa-star"></i></label>
+                                            <input class="rating__input" name="rating3" id="rating3-1" value="1" type="radio">
+                                            <label aria-label="2 stars" class="rating__label" for="rating3-2"><i class="rating__icon rating__icon--star fa fa-star"></i></label>
+                                            <input class="rating__input" name="rating3" id="rating3-2" value="2" type="radio">
+                                            <label aria-label="3 stars" class="rating__label" for="rating3-3"><i class="rating__icon rating__icon--star fa fa-star"></i></label>
+                                            <input class="rating__input" name="rating3" id="rating3-3" value="3" type="radio">
+                                            <label aria-label="4 stars" class="rating__label" for="rating3-4"><i class="rating__icon rating__icon--star fa fa-star"></i></label>
+                                            <input class="rating__input" name="rating3" id="rating3-4" value="4" type="radio">
+                                            <label aria-label="5 stars" class="rating__label" for="rating3-5"><i class="rating__icon rating__icon--star fa fa-star"></i></label>
+                                            <input class="rating__input" name="rating3" id="rating3-5" value="5" type="radio">
+                                        </div>
+                                    </div>                 
+                                    <label for="msg"> 
+                                        <i class="fa-solid fa-comments" 
+                                           style="margin-right: 3px;"></i> 
+                                        Thêm nhận xét của bạn tại đây: 
+                                    </label> 
+                                    <textarea id="msg" name="msg" style="height: 100px;"
+                                              required> 
+                                    </textarea> 
+                                    <button type="submit" style="border-radius: 4px;width: 200px;text-align: center;background: #50a950;"> 
+                                        Tạo đánh giá 
+                                    </button> 
+                                </div>
+                                <%}%>
                         </form> 
                     </div> 
                 </div>

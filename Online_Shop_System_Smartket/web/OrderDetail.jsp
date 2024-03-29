@@ -32,6 +32,7 @@
                 font-family: Arial, sans-serif;
                 margin: 0;
                 padding: 0;
+                overflow-x:hidden;
             }
             .order-container {
                 display: flex; /* Display as flex container */
@@ -166,7 +167,7 @@
                         <p class="mb-0">Số điện thoại</p>
                     </div>
                     <div class="col-sm-9">
-                        <input type="text" value="<%=rs.getString("PhoneNumber")%>" readonly/>
+                        <input type="text" value="<%=rs.getString("PhoneNumber")==null?"Chưa cập nhật":rs.getString("PhoneNumber")%>" readonly/>
                     </div>
                 </div>
                 <hr>
