@@ -3,17 +3,12 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Users/admin/Desktop/online_shop_systemGitHub/Online_Shop_System_Smartket/src/java/model/DBConnect.java</file>
-            <file>file:/C:/Users/admin/Desktop/online_shop_systemGitHub/Online_Shop_System_Smartket/src/java/Filter/ValidateURL.java</file>
-            <file>file:/C:/Users/admin/Desktop/online_shop_systemGitHub/Online_Shop_System_Smartket/src/java/controller/ControllerBlogDetail.java</file>
-            <file>file:/C:/Users/admin/Desktop/online_shop_systemGitHub/Online_Shop_System_Smartket/web/include/footer.jsp</file>
-            <file>file:/C:/Users/admin/Desktop/online_shop_systemGitHub/Online_Shop_System_Smartket/web/EditPost.jsp</file>
-            <file>file:/C:/Users/admin/Desktop/online_shop_systemGitHub/Online_Shop_System_Smartket/src/java/controller/ControllerBlog.java</file>
-            <file>file:/C:/Users/admin/Desktop/online_shop_systemGitHub/Online_Shop_System_Smartket/web/homepage.jsp</file>
-            <file>file:/C:/Users/admin/Desktop/online_shop_systemGitHub/Online_Shop_System_Smartket/src/java/controller/ControllerNewPass.java</file>
-            <file>file:/C:/Users/admin/Desktop/online_shop_systemGitHub/Online_Shop_System_Smartket/src/java/controller/ControlllerEditPost.java</file>
-            <file>file:/C:/Users/admin/Desktop/online_shop_systemGitHub/Online_Shop_System_Smartket/src/java/controller/ControllerAddPost.java</file>
-            <file>file:/C:/Users/admin/Desktop/online_shop_systemGitHub/Online_Shop_System_Smartket/web/blogdetail.jsp</file>
+            <file>file:/D:/fpt/Semeter_5/SWP391/Project_GitHub/Online_Shop_System_Smartket/web/viewPost.jsp</file>
+            <file>file:/D:/fpt/Semeter_5/SWP391/Project_GitHub/Online_Shop_System_Smartket/src/java/Filter/ValidateURL.java</file>
+            <file>file:/D:/fpt/Semeter_5/SWP391/Project_GitHub/Online_Shop_System_Smartket/web/EditPost.jsp</file>
+            <file>file:/D:/fpt/Semeter_5/SWP391/Project_GitHub/Online_Shop_System_Smartket/web/MyOrder.jsp</file>
+            <file>file:/D:/fpt/Semeter_5/SWP391/Project_GitHub/Online_Shop_System_Smartket/src/java/model/DBConnect.java</file>
+            <file>file:/D:/fpt/Semeter_5/SWP391/Project_GitHub/Online_Shop_System_Smartket/web/viewProductmkt.jsp</file>
         </group>
     </open-files>
 </project-private>
