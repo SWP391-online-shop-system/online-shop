@@ -5,6 +5,10 @@
 --%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@page import="view.User" %>
+<%@page import="java.sql.ResultSet"%>
+<%@page import="model.DAOCart, view.Cart,view.User" %>
+<%@page import="jakarta.servlet.http.HttpSession" %>
 <%@page import="java.text.DecimalFormat" %>
 <%@page import="java.sql.ResultSet"%>
 <%@page import="view.Product"%>
@@ -42,18 +46,293 @@
         <link rel="stylesheet" href="css/css_productList/style.css" type="text/css">
         <link rel="stylesheet" href="css/css_footer/footer.css" type="text/css">
         <script src="https://kit.fontawesome.com/ac74b86ade.js" crossorigin="anonymous"></script>
-
+        <style>
+            a{
+                color:black;
+                text-decoration: none !important;
+            }
+            a:hover{
+                color: black;
+            }
+        </style>
     </head>
 
     <body>
-        <jsp:include page="include/header.jsp"/>
+        <!-- comment start -->
+        <div class="header" style="margin-top: 21px;">
+            <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+            <div class="header-title" style="margin-top: -16px;">
+                <div class="header-title-left">
+                    <ul>
+                        <li>
+                            <div class="header-email">
+                                <i class="fa-regular fa-envelope"></i>
+                                <span class="header-email-title">SmartketFPT@gmail.com</span>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="header-support">
+                                <div><a href="#">Hỗ trợ</a></div>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+                <div class="header-title-right">
+                    <div class="header-title-right-social">
+                        <div><a href="#" title="Trang Facebook chúng tôi"><i class="fa-brands fa-facebook"></i></a></div>
+                        <div><a href="#" title="Trang Twitter của chúng tôi"><i class="fa-brands fa-x-twitter"></i></a></div>
+                    </div>
+                    <div class="header-title-right-about">
+                        <a href="#">Về chúng tôi</a>
+                    </div>
+                    <div class="header-title-right-login">
+                        <!DOCTYPE html>
+                        <html lang="en">
+                            <head>
+                                <meta charset="UTF-8">
+                                <meta name="viewport" content="width=device-width, initial-scale=1.0">
+                                <title>Smarket</title>
+                                <link rel="stylesheet" href="css/login.css"/>
+                            </head>
+                            <body> 
+                                <%
+                                    String message1 = (String)request.getAttribute("message");
+                                    String messagesu1 = (String)request.getAttribute("messageSignUp");
+                                    String msg1 = (String)request.getAttribute("msg1");
+                                %>
+                                <c:if test="${sessionScope.account.roleID == 5}">
+                                    <a href="#"style="margin-right: 50px;">ADMIN</a>
+
+                                </c:if>
+                                <c:if test="${sessionScope.account.roleID == 4}">
+                                    <a href="#">SALE MANAGER</a>
+
+
+                                </c:if>
+                                <c:if test="${sessionScope.account.roleID == 3}">
+                                    <a href="#">SALE</a>
+
+
+                                </c:if>
+                                <c:if test="${sessionScope.account.roleID == 2}">
+                                    <a href="#">Marketing</a>
+                                </c:if>
+                                <c:if test="${sessionScope.account != null}">
+                                    <a href="logout">Đăng xuất</a>
+                                    <a href="profileUser.jsp"><img style="width: 30px;
+                                                                   height: 30px;
+                                                                   margin-right: -10px;
+                                                                   margin-bottom: 2px;
+                                                                   margin-left: 7px;
+                                                                   border-radius: 50%;" class="styling1" src="images/user/${sessionScope.account.userImage}" alt="Admin Image"></a>
+                                    </c:if>
+                                    <c:if test="${sessionScope.account == null}">
+                                    <button href="#" style="border: none; font-size:16px; font-family: math;" id="show-login">Đăng nhập</button>
+                                </c:if>
+                                <!-- Login Pop-up Form -->
+                                <form action="loginURL" method="post">
+                                    <div class="popup ${requestScope.activeLogin}" id="loginPopup">
+                                        <div class="close-btn" onclick="togglePopup('loginPopup')">x</div>
+                                        <div class="form">
+                                            <h2>Đăng nhập</h2>
+                                            <p class="text-danger" style="
+                                               color: red;
+                                               font-size: 20px;
+                                               font-weight: 700;
+                                               text-align: left;"><%=(message1 == null) ? "" : message1%></p>
+                                            <div class="form-element">
+                                                <label for="email">Email</label>
+                                                <input type="email" id="email" name="email" placeholder="Nhập email" required 
+                                                       oninvalid="this.setCustomValidity('Vui lòng điền thông tin này và bao gồm @')" 
+                                                       oninput="setCustomValidity('')">
+                                            </div>
+                                            <div class="form-element">
+                                                <label for="password">Mật khẩu</label>
+                                                <input type="password" id="pass" name="pass" placeholder="Nhập mật khẩu" required 
+                                                       oninvalid="this.setCustomValidity('Vui lòng điền thông tin này')" 
+                                                       oninput="setCustomValidity('')">
+                                            </div>
+                                            <div class="form-element">
+                                                <button type="submit" value="login" >Đăng nhập</button>
+                                            </div>
+                                            <div class="form-element">
+                                                <button id="showSignup" onclick="togglePopup('signupPopup')">Đăng kí</button>
+                                            </div>
+                                            <div class="form-element">
+                                                <a href="#">Quên mật khẩu?</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </form>
+
+                                <!-- Registration Pop-up Form -->
+                                <form action="signupURL" method="post">
+                                    <input type="hidden" name="service" value="signupRegister">
+                                    <div class="popup ${requestScope.activeSignUp}" id="signupPopup">
+                                        <div class="close-btn" onclick="togglePopup('signupPopup')">x</div>
+                                        <div class="form">
+                                            <h2>Đăng kí</h2>
+                                            <%User u = (User)request.getAttribute("lastUser");
+                                    if(u == null) {%>
+                                            <div class="form-element">
+                                                <label for="registerEmail">Họ</label>
+                                                <input type="text" name="rFName" placeholder="Nhập họ" required 
+                                                       pattern="[A-Za-zÀ-ỹ ]+" oninvalid="this.setCustomValidity('Vui lòng điền thông tin này, Không bao gồm số và kí tự đặc biệt')" 
+                                                       oninput="setCustomValidity('')" >
+                                            </div>
+                                            <div class="form-element">
+                                                <label for="registerEmail">Tên</label>
+                                                <input type="text" name="rLName" placeholder="Nhập Tên" required
+                                                       pattern="[A-Za-zÀ-ỹ ]+" oninvalid="this.setCustomValidity('Vui lòng điền thông tin này, Không bao gồm số và kí tự đặc biệt')" 
+                                                       oninput="setCustomValidity('')" >
+                                            </div>
+                                            <div class="form-element" style="margin-top: 28px;">
+                                                <label for="registerEmail">Email</label>
+                                                <input type="email" name="remail" placeholder="Nhập email"required
+                                                       oninvalid="this.setCustomValidity('Vui lòng điền thông tin này và bao gồm @')" 
+                                                       oninput="setCustomValidity('')" >
+                                            </div>
+                                            <div class="form-element">
+                                                <label for="registerPassword">Mật khẩu</label>
+                                                <input type="password" name="rpass" placeholder="Nhập mật khẩu" required
+                                                       minlength="6" title="Mật khẩu phải chứa từ 6 đến 8 ký tự" 
+                                                       oninvalid="this.setCustomValidity('Vui lòng điền thông tin này')" 
+                                                       oninput="setCustomValidity('')">
+                                            </div>
+                                            <div class="form-element">
+                                                <label for="registerPassword">Nhập lại mật khẩu</label>
+                                                <input type="password" name="rrepass" placeholder="Nhập lại mật khẩu" required
+                                                       title="Mật khẩu phải chứa từ 6 đến 8 ký tự" 
+                                                       oninvalid="this.setCustomValidity('Vui lòng điền thông tin này')" 
+                                                       oninput="setCustomValidity('')">
+                                            </div>
+                                            <%} else {%>
+                                            <div class="form-element">
+                                                <label for="registerEmail">Họ</label>
+                                                <input type="text" name="rFName" placeholder="Nhập họ" required 
+                                                       pattern="[A-Za-zÀ-ỹ ]+" oninvalid="this.setCustomValidity('Vui lòng điền thông tin này, Không bao gồm số và kí tự đặc biệt')" 
+                                                       oninput="setCustomValidity('')" value="<%=u.getLastName()%>">
+                                            </div>
+                                            <div class="form-element">
+                                                <label for="registerEmail">Tên</label>
+                                                <input type="text" name="rLName" placeholder="Nhập Tên" required
+                                                       pattern="[A-Za-zÀ-ỹ ]+" oninvalid="this.setCustomValidity('Vui lòng điền thông tin này, Không bao gồm số và kí tự đặc biệt')" 
+                                                       oninput="setCustomValidity('')" value="<%=u.getFirstName()%>">
+                                            </div>
+                                            <div class="form-element" style="margin-top: 28px;">
+                                                <label for="registerEmail">Email</label>
+                                                <input type="email" name="remail" placeholder="Nhập email"required
+                                                       oninvalid="this.setCustomValidity('Vui lòng điền thông tin này và bao gồm @')" 
+                                                       oninput="setCustomValidity('')" value="<%=u.getEmail()%>">
+                                            </div>
+                                            <div class="form-element">
+                                                <label for="registerPassword">Mật khẩu</label>
+                                                <input type="password" name="rpass" placeholder="Nhập mật khẩu" required
+                                                       minlength="6" title="Mật khẩu phải chứa từ 6 đến 8 ký tự" 
+                                                       oninvalid="this.setCustomValidity('Vui lòng điền thông tin này')" 
+                                                       oninput="setCustomValidity('')"value="<%=u.getPassword()%>">
+                                            </div>
+                                            <div class="form-element">
+                                                <label for="registerPassword">Nhập lại mật khẩu</label>
+                                                <input type="password" name="rrepass" placeholder="Nhập lại mật khẩu" required
+                                                       title="Mật khẩu phải chứa từ 6 đến 8 ký tự" 
+                                                       oninvalid="this.setCustomValidity('Vui lòng điền thông tin này')" 
+                                                       oninput="setCustomValidity('')"value="<%=u.getRePassword()%>">
+                                            </div>
+                                            <%}%>
+                                            <p class="text-danger" style="
+                                               color: red;
+                                               font-size: 20px;
+                                               font-weight: 700;
+                                               text-align: left;"><%=(messagesu1 == null) ? "" : messagesu1%></p>
+                                            <div class="form-element">
+                                                <button type="submit" >Đăng kí</button>
+                                            </div>
+                                            Ðã có tài khoản?<a id="loginAfterRegister" href="#">Đăng nhập ngay</a>
+                                        </div>
+                                    </div>
+                                </form>
+                            </body>
+                            <script src="js/login.js">
+
+                            </script>
+                        </html>
+                    </div>
+                </div>
+            </div>  
+            <div class="header-content" style="margin-bottom: 20px;">
+                <div class="header-content-logo">
+                    <a href="HomePageURL"><img src="images/logo/logo.png"alt="404"/></a>
+                </div>
+                <div class="header-content-menu">
+                    <ul>
+                        <li class="active"><a href="HomePageURL">Trang chủ</a></li>
+                        <li><a href="ProductListURL?service=ShowAllProduct">Mua hàng</a></li>
+                        <li>
+                            <a href="#">Trang</a>
+                            <ul class="header-content-menu-drop-down">
+                                <c:if test="${sessionScope.account == null}">
+                                    <li><a href="loginURL" onclick="alertOpenCart()">Giỏ hàng của tôi</a></li>
+                                    </c:if>
+                                    <c:if test="${sessionScope.account != null}">
+                                    <li><a href="CartURL">Giỏ hàng của tôi</a></li>
+                                    </c:if>
+                                <li><a href="#">Đơn hàng của tôi</a></li>
+                            </ul>
+                        </li>
+                        <li><a href="blog">Blog</a></li>
+                            <c:if test="${sessionScope.account != null}">
+                            <li><a href="profileUser.jsp">Tài khoản</a></li>
+                        </c:if>            </ul>
+                </div>
+                <div class="header-content-right-menu">
+                    <ul>
+                        <li class="margin-unit"><a href="MyOrderURL" title="Đơn hàng của tôi"><i class="fa-solid fa-file-invoice-dollar"></i></i></a></li>
+                            <c:if test="${sessionScope.account == null}">
+                            <li><a href="loginURL" onclick="alertOpenCart()"title="Giỏ hàng của tôi"><i class="fa-solid fa-cart-shopping"></i></a></li>
+                                </c:if>
+                                <c:if test="${sessionScope.account != null}">
+                            <li>      
+                                <%
+                                HttpSession session2 = request.getSession();
+                                User user = (User) session2.getAttribute("account");
+                                int userID = user.getUserID();
+                                DAOCart dao = new DAOCart();
+                                ResultSet rs = dao.getData("SELECT count(*) as count FROM Cart AS c JOIN Product AS p ON c.ProductID = p.ProductID where userID = "+userID+"");
+                                while(rs.next()){
+                                %>
+                                <span class="count-cart" id="countCart" style="position: absolute;
+                                      margin-left: 17px;
+                                      background-color: #ff0000;
+                                      color: #ffffff;
+                                      border-radius: 50%;
+                                      padding: 0px 5px;
+                                      font-size: 13px;
+                                      z-index: 9;
+                                      top: 11px;
+                                      left: 3px;"><%=rs.getInt(1)%></span>
+                                <%}%>
+                                <a href="CartURL" title="Giỏ hàng của tôi"><i class="fa-solid fa-cart-shopping"></i></a>
+                            </li>
+                        </c:if>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <script>
+            function alertOpenCart() {
+                alert('Đăng nhập để xem giỏ hàng của bạn');
+            }
+        </script>
+        <!-- comment end-->
         <%DecimalFormat df = new DecimalFormat("###,###");
             df.setMaximumFractionDigits(8);%>
         <!-- Shop Section Begin -->
         <section class="shop spad">
             <div class="container">
                 <div class="row">
-                    <div class="col-lg-3">
+                    <div class="col-lg-3" style="margin-left: -40px;
+                         margin-right: 40px;">
                         <div class="shop__sidebar">
                             <div class="shop__sidebar__search">
                                 <form action="searchPageURL" method="GET">
@@ -68,22 +347,24 @@
                                         <div class="row" style="display: contents">
                                             <%
                                                 DAOProduct dao = new DAOProduct();
-                                                ResultSet rsHotPro = dao.getData("select * from Product as p join ProductImage as pi on p.ProductID = pi.ProductID where  pi.ProductURL like '%_1%'\n"
-                                                +"group by p.ProductID having min(p.TotalStock - p.UnitInStock) > 0");
-                                            while(rsHotPro.next()) {
+                                                ResultSet rsHotPro = dao.getData("select * from Product as p join ProductImage as pi on p.ProductID = pi.ProductID where p.ProductStatus = 0 and  pi.ProductURL = pi.ProductURLShow \n"
+                                               +  "group by p.ProductID having min(p.TotalStock - p.UnitInStock) >0 order by (p.TotalStock - p.UnitInStock) desc limit 1");
+                                            if(rsHotPro.next()) {
                                             %>
                                             <div class="product__item" style="border: 1px solid #c1e8c1ba;border-radius: 40px;">
                                                 <div class="product__item__pic set-bg" style="height: 201px;">
-                                                    <img style="width: 192px;
-                                                         height: 174px;
-                                                         margin-left: 25px;
-                                                         margin-top: 10px;" src="<%=rsHotPro.getString("ProductURL")%>" alt="alt"/>
+                                                    <a href="ProductDetailURL?ProductID=<%=rsHotPro.getInt(1)%>">
+                                                        <img style="width: 192px;
+                                                             height: 174px;
+                                                             margin-left: 25px;
+                                                             margin-top: 10px;" src="<%=rsHotPro.getString("ProductURL")%>" alt="alt"/>
+                                                    </a>
                                                     <%if(rsHotPro.getInt("UnitDiscount")!=0) {%>
-                                                    <div class="sale-cotification">Sale</div>
+                                                    <div class="sale-cotification" style="margin-left: 77px;">Sale</div>
                                                     <%}%>
                                                     <%    ResultSet rsNew2Product = dao.getData("select * from product as p join productImage as pi "
                                                        + "on p.ProductID = pi.ProductID "
-                                                       + "where pi.ProductURL like '%_1%' "
+                                                       + "where p.ProductStatus = 0 and pi.ProductURL = pi.ProductURLShow "
                                                        + "order by p.CreateDate desc limit 6 ");
                                                          while(rsNew2Product.next()) {
                                                             if(rsHotPro.getString("CreateDate").substring(0,10).equals(rsNew2Product.getString("CreateDate").substring(0,10))){%>
@@ -91,8 +372,14 @@
                                                     <%}}%>
                                                 </div>
                                                 <div class="product__item__text">
-                                                    <h6 style="margin-left: 34px;"><%=rsHotPro.getString("ProductName")%></h6>
-                                                    <a href="#" class="add-cart" style="left: 12px;">+ Thêm vào giỏ</a><a style="margin-left: 136px;" href="#">Mua ngay</a>
+                                                    <h6 style="text-align: center;"><%=rsHotPro.getString("ProductName")%></h6>
+                                                    <%
+                                                    User testUser = (User)session.getAttribute("account");
+                                                    if(testUser == null) {%>
+                                                    <a onclick="alertOpenCart();" style="left: 12px;">+ Thêm vào giỏ</a><a style="margin-left: 136px;" href="#">Mua ngay</a>
+                                                    <%} else{%>
+                                                    <a href="" onclick="addToCart(<%=rsHotPro.getInt("ProductID")%>)" class="add-cart" style="left: 12px;">+ Thêm vào giỏ</a><a style="margin-left: 136px;" href="#">Mua ngay</a>
+                                                    <%}%>
                                                     <div style="display: flex;">
                                                         <div class="rating" style="margin-left: 30px;">
                                                             <%int star = (int)rsHotPro.getInt("totalRate");
@@ -104,19 +391,18 @@
                                                     </div>
                                                     <div style="display: flex;flex-direction: row;justify-content: space-between;">
                                                         <%if(rsHotPro.getInt("UnitDiscount")!= 0){%>
-                                                        <div style="color: red;font-weight: 700;font-size: 15px; flex: 0 0 50%; text-decoration: line-through;"><%=df.format(rsHotPro.getDouble("UnitPrice"))%></div>
-                                                        <div style="color: #0d0d0d;font-weight: 700;font-size: 15px; flex: 0 0 50%"><%=df.format(rsHotPro.getDouble("UnitPrice")*(100-rsHotPro.getInt("UnitDiscount"))/100)%></div>
+                                                        <div style="color: red;font-weight: 700;font-size: 15px; flex: 0 0 50%; text-decoration: line-through;"><%=df.format(rsHotPro.getDouble("UnitPrice"))%>đ</div>
+                                                        <div style="color: #0d0d0d;font-weight: 700;font-size: 15px; flex: 0 0 50%"><%=df.format(rsHotPro.getDouble("UnitPrice")*(100-rsHotPro.getInt("UnitDiscount"))/100)%>đ</div>
                                                         <%} else {%>
                                                         <div style="font-weight: 700;
                                                              font-size: 15px;
                                                              flex: -2 0 43%;
                                                              margin-left: 146px;
-                                                             margin-top: -26px;"><%=df.format(rsHotPro.getDouble("UnitPrice"))%></div>
+                                                             margin-top: -26px;"><%=df.format(rsHotPro.getDouble("UnitPrice"))%>đ</div>
                                                         <%}%>
                                                     </div>
                                                 </div>
                                             </div>
-
                                             <%}%>
                                         </div>
                                     </div>
@@ -239,8 +525,8 @@
                                                             <input name="inputMaxPrice" class="range-max" max="<%=maxPrice%>" type="range" value="<%=(oldMaxPrice==null ? maxPrice : oldMaxPrice)%>">
                                                         </div>
                                                         <div class="range-text">
-                                                            <div class="text-min"><%=df.format(oldMinPrice==null ? minPrice : oldMinPrice)%></div>
-                                                            <div class="text-max"><%=df.format(oldMaxPrice==null ? maxPrice : oldMaxPrice)%></div>
+                                                            <div class="text-min"><%=df.format(oldMinPrice==null ? minPrice : oldMinPrice)%>đ</div>
+                                                            <div class="text-max"><%=df.format(oldMaxPrice==null ? maxPrice : oldMaxPrice)%>đ</div>
                                                         </div>
                                                         <button class="submit-price-form" type="submit">Lọc</button>
                                                     </form>
@@ -311,13 +597,15 @@
                             <div class="col-lg-4 col-md-6 col-sm-6">
                                 <div class="product__item">
                                     <div class="product__item__pic set-bg">
-                                        <img src="<%=rsPaging.getString("ProductURL")%>" alt="alt"/>
+                                        <a href="ProductDetailURL?ProductID=<%=rsPaging.getInt(1)%>">
+                                            <img src="<%=rsPaging.getString("ProductURL")%>" alt="alt"/>
+                                        </a>
                                         <%if(rsPaging.getInt("UnitDiscount")!=0) {%>
-                                        <div class="sale-cotification">Sale</div>
+                                        <div class="sale-cotification"style="    margin-left: 77px;">Sale</div>
                                         <%}%>
                                         <%    ResultSet rsNewProduct = dao.getData("select * from product as p join productImage as pi "
                                            + "on p.ProductID = pi.ProductID "
-                                           + "where pi.ProductURL like '%_1%' "
+                                           + "where pi.ProductURL = pi.ProductURLShow "
                                            + "order by p.CreateDate desc limit 6 ");
                                              while(rsNewProduct.next()) {
                                                 if(rsPaging.getString("CreateDate").substring(0,10).equals(rsNewProduct.getString("CreateDate").substring(0,10))){%>
@@ -326,7 +614,13 @@
                                     </div>
                                     <div class="product__item__text">
                                         <h6><%=rsPaging.getString("ProductName")%></h6>
-                                        <a href="#" class="add-cart">+ Thêm vào giỏ</a><a style="margin-left: 136px;" href="#">Mua ngay</a>
+                                        <%User testUser2 = (User)session.getAttribute("account");
+                                           if(testUser2==null) {%>
+                                        <a onclick="alertOpenCart()" class="add-cart">+ Thêm vào giỏ</a><a style="margin-left: 136px;" href="#">Mua ngay</a>
+                                        <%}else{%>
+                                        <a href="#" onclick="addToCart(<%=rsPaging.getInt(1)%>)" class="add-cart">+ Thêm vào giỏ</a><a style="margin-left: 136px;" href="#">Mua ngay</a>
+
+                                        <%}%>
                                         <div style="display: flex;">
                                             <div class="rating">
                                                 <%int star = (int)rsPaging.getInt("totalRate");
@@ -338,14 +632,14 @@
                                         </div>
                                         <div style="display: flex;">
                                             <%if(rsPaging.getInt("UnitDiscount")!= 0){%>
-                                            <div style="color: red;font-weight: 700;font-size: 15px; flex: 0 0 50%; text-decoration: line-through;"><%=df.format(rsPaging.getDouble("UnitPrice"))%></div>
-                                            <div style="color: #0d0d0d;font-weight: 700;font-size: 15px; flex: 0 0 50%"><%=df.format(rsPaging.getDouble("UnitPrice")*(100-rsPaging.getInt("UnitDiscount"))/100)%></div>
+                                            <div style="color: red;font-weight: 700;font-size: 15px; flex: 0 0 50%; text-decoration: line-through;"><%=df.format(rsPaging.getDouble("UnitPrice"))%>đ</div>
+                                            <div style="color: #0d0d0d;font-weight: 700;font-size: 15px; flex: 0 0 50%"><%=df.format(rsPaging.getDouble("UnitPrice")*(100-rsPaging.getInt("UnitDiscount"))/100)%>đ</div>
                                             <%} else {%>
                                             <div style="font-weight: 700;
                                                  font-size: 15px;
                                                  flex: -2 0 43%;
                                                  margin-left: 116px;
-                                                 margin-top: -26px;"><%=df.format(rsPaging.getDouble("UnitPrice"))%></div>
+                                                 margin-top: -26px;"><%=df.format(rsPaging.getDouble("UnitPrice"))%>đ</div>
                                             <%}%>
                                         </div>
                                     </div>
@@ -438,7 +732,11 @@
             </div>
         </footer>
         <!-- Footer Section End -->
-
+        <script>
+            function alertOpenCart() {
+                alert('Đăng nhập để xem giỏ hàng của bạn');
+            }
+        </script>
         <!-- Search Begin -->
         <div class="search-model">
             <div class="h-100 d-flex align-items-center justify-content-center">
@@ -449,6 +747,7 @@
             </div>
         </div>
         <script src="js/price.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10" type="text/javascript"></script>
     </body>
 
 </html>

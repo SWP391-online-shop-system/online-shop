@@ -1049,12 +1049,14 @@ ol {
 
 .breadcrumb__text h2 {
     font-size: 46px;
+    color: white;
     font-weight: 700;
 }
 
 .breadcrumb__option a {
     display: inline-block;
     font-size: 16px;
+    color: white;
     font-weight: 700;
     margin-right: 20px;
     position: relative;
@@ -1066,12 +1068,14 @@ ol {
     top: 13px;
     height: 1px;
     width: 10px;
+    background: white;
     content: "";
 }
 
 .breadcrumb__option span {
     display: inline-block;
     font-size: 16px;
+    color: white;
 }
 
 /*---------------------
@@ -2480,12 +2484,14 @@ ol {
 .blog__details__hero__text h2 {
     font-size: 46px;
     font-weight: 700;
+    color: white;
     margin-bottom: 10px;
 }
 
 .blog__details__hero__text ul li {
     font-size: 16px;
     list-style: none;
+    color: white;
     display: inline-block;
     margin-right: 45px;
     position: relative;
@@ -3462,5 +3468,11 @@ ol {
     }
     .blog__details__hero__text h2 {
         font-size: 24px;
+    }
+    .form-gap {
+        padding-top: 70px;
+    }
+    .fgp {
+        margin-top: 120px;
     }
 }

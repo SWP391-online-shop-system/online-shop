@@ -20,8 +20,11 @@ import java.nio.file.Files;
  *
  * @author 84395
  */
-@MultipartConfig
 @WebServlet(name = "Upload", urlPatterns = {"/UploadURL"})
+@MultipartConfig(fileSizeThreshold = 1024 * 1024 * 1, // 1 MB
+        maxFileSize = 1024 * 1024 * 10, // 10 MB
+        maxRequestSize = 1024 * 1024 * 100 // 100 MB
+)
 public class ControllerUpload extends HttpServlet {
 
     /**
@@ -44,7 +47,16 @@ public class ControllerUpload extends HttpServlet {
             out.println("<title>Servlet ControllerUpload</title>");
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet ControllerUpload at " + request.getContextPath() + "</h1>");
+            Part photo = request.getPart("test");
+            String path = "images/user/" + photo.getSubmittedFileName();
+            String filename = request.getServletContext().getRealPath(path);
+            String realFileName = filename;
+            if (filename.contains("\\build")) {
+                realFileName = filename.replace("\\build", "");
+            }
+            photo.write(realFileName);
+//            request.getRequestDispatcher("profileUser.jsp").forward(request, response);
+            out.println("<h1>" + realFileName + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
@@ -76,12 +88,7 @@ public class ControllerUpload extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        Part photo = request.getPart("photo");
-        String path = "/images/user/" + photo.getSubmittedFileName();
-        String filename = request.getServletContext().getRealPath(path);
-        photo.write(filename);
-            request.getRequestDispatcher("profileUser.jsp").forward(request, response);
-
+        processRequest(request, response);
     }
 
     /**

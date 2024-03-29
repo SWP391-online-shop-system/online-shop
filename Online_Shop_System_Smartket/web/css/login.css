@@ -44,7 +44,7 @@ body {
     box-shadow: 2px 2px 5px 5px rgba(0,0,0,0.15);
     border-radius: 10px;
     transition: all 0.5s;
-
+    box-sizing: unset;
 }
 #show-login:hover{
     cursor: pointer;
@@ -58,6 +58,8 @@ body {
     transform: translate(-50%,-50%) scale(0.9);
     transition: top 0ms ease-in-out 0ms, opacity 200ms ease-in-out 0ms, transform 200ms ease-in-out 0ms;
     z-index: 10;
+    box-sizing: unset;
+    line-height: normal;
 }
 .popup .close-btn {
     position: absolute;
@@ -75,15 +77,16 @@ body {
 .popup .form h2 {
     text-align: center;
     color: #222;
-    margin: 10px 0px 20px 13px;
+    margin: 10px 0 20px 13px;
     font-size: 25px;
+    box-sizing: unset;
 }
 .form{
     margin-left: 4px;
     margin-right: 24px;
 }
 .popup .form .form-element {
-    margin: 15px 0px;
+    margin: 15px 0;
 }
 .popup .form .form-element label {
     font-size: 14px;
@@ -98,6 +101,8 @@ body {
     outline: none;
     border: 1px solid #aaa;
     border-radius: 5px;
+    box-sizing: unset;
+    font-size: 15px;
 }
 .popup .form .form-element input[type="text"]{
     margin-top: 5px;
@@ -107,6 +112,9 @@ body {
     outline: none;
     border: 1px solid #aaa;
     border-radius: 5px;
+    box-sizing: unset;
+    font-size: unset;
+    font-size: 15px;
 }
 .popup .form .form-element input[type="password"] {
     margin-top: 5px;
@@ -116,9 +124,13 @@ body {
     outline: none;
     border: 1px solid #aaa;
     border-radius: 5px;
+    box-sizing: unset;
+    font-size: 15px;
 }
 .popup .form .form-element input[type="checkbox"] {
     margin-right: 5px;
+    box-sizing: unset;
+    font-size: 15px;
 }
 .popup .form .form-element button {
     width: 100%;

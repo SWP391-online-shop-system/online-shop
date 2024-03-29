@@ -15,6 +15,7 @@ import jakarta.servlet.http.HttpServletResponse;
 import java.util.List;
 import model.DAOBlog;
 import view.Blog;
+import view.Categories;
 
 /**
  *
@@ -40,20 +41,26 @@ public class ControllerBlog extends HttpServlet {
         int index = Integer.parseInt(indexPage);
         DAOBlog dao = new DAOBlog();
         int count = dao.getTotalBlog();
-        int endPage = count/4;
-        if(count % 4 !=0){
+        int endPage = count/6;
+        if(count % 6 !=0){
             endPage++;
         }
         
+        List<Categories> listC = dao.getAllCategories();
         List<Blog> listPB = dao.pagingBlog(index);
         List<Blog> listNB = dao.getNewBlog();
+        for (Blog o : listPB) {
+            System.out.println(o.getBlogContent().length());
+        }
         
         request.setAttribute("listNB", listNB);
         request.setAttribute("listPB", listPB);
-        
+        request.setAttribute("listC", listC);
         request.setAttribute("endP", endPage);
         request.setAttribute("tag", index);
         request.getRequestDispatcher("blog.jsp").forward(request, response);
+        
+        
     } 
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

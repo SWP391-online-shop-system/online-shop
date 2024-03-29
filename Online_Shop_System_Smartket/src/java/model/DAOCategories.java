@@ -29,8 +29,10 @@ public class DAOCategories extends DBConnect {
             while (rs.next()) {
                 int CategoryID = rs.getInt("CategoryID");
                 String CategoryName = rs.getString("CategoryName");
+                String CreateDate = rs.getString("CreateDate");
+                boolean CategoryStatus = rs.getBoolean("CategoryStatus");
                 Categories cat = new Categories(CategoryID,
-                        CategoryName);
+                        CategoryName, CreateDate, CategoryStatus);
                 vector.add(cat);
             }
         } catch (SQLException ex) {
@@ -47,8 +49,11 @@ public class DAOCategories extends DBConnect {
             st.setInt(1, cateID);
             ResultSet rs = st.executeQuery();
             while (rs.next()) {
-                Categories cate = new Categories(rs.getInt("CategoryID"),
-                        rs.getString("CategoryName")
+                Categories cate = new Categories(
+                        rs.getInt("CategoryID"),
+                        rs.getString("CategoryName"),
+                        rs.getString("CreateDate"),
+                        rs.getBoolean("CategoryStatus")
                 );
                 System.out.println("get success");
                 return cate;
@@ -59,4 +64,41 @@ public class DAOCategories extends DBConnect {
         System.out.println("null");
         return null;
     }
+
+    public Categories getCategoriesById(String name) {
+
+        String sql = "select * from Categories where CategoryID =" + name;
+        try {
+            PreparedStatement st = conn.prepareStatement(sql);
+            ResultSet rs = st.executeQuery();
+            while (rs.next()) {
+                Categories cate = new Categories(
+                        rs.getInt("CategoryID"),
+                        rs.getString("CategoryName"),
+                        rs.getString("CreateDate"),
+                        rs.getBoolean("CategoryStatus")
+                );
+                System.out.println("get success");
+                return cate;
+            }
+        } catch (SQLException e) {
+            System.out.println(e);
+        }
+        System.out.println("null");
+        return null;
+    }
+
+    public int sesstatus(String status, String id) {
+        int n = 0;
+        String sql = " UPDATE `online_shop_system`.`Categories` SET `CategoryStatus` = " + status
+                + " WHERE `CategoryID` =  " + id;
+        try {
+            PreparedStatement pre = conn.prepareStatement(sql);
+            n = pre.executeUpdate();
+        } catch (SQLException e) {
+            System.out.println(e);
+        }
+        return n;
+    }
+
 }

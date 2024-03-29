@@ -8,6 +8,8 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Vector;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -34,7 +36,8 @@ public class DAOUser extends DBConnect {
                 + "`LastLogin`,\n"
                 + "`UserStatus`,\n"
                 + "`ReportTo`,\n"
-                + "`RoleID`)\n"
+                + "`RoleID`),\n"
+                + "`CreateDate`)\n"
                 + "VALUES\n"
                 + "(?,?,?,?,?,?,?,?,?,?,?,?,?);";
         try {
@@ -52,6 +55,7 @@ public class DAOUser extends DBConnect {
             pre.setBoolean(11, true);
             pre.setInt(12, user.getReportTo());
             pre.setInt(13, user.getRoleID());
+            pre.setString(14, user.getCreateDate());
             n = pre.executeUpdate();
         } catch (SQLException ex) {
             Logger.getLogger(DAOUser.class.getName()).log(Level.SEVERE, null, ex);
@@ -67,7 +71,8 @@ public class DAOUser extends DBConnect {
                 + "`Email`,\n"
                 + "`UserStatus`,\n"
                 + "`ReportTo`,\n"
-                + "`RoleID`)\n"
+                + "`RoleID`,\n"
+                + "`CreateDate`)\n" // Include CreateDate column in the query
                 + "VALUES\n"
                 + "(?,\n"
                 + "?,\n"
@@ -75,7 +80,8 @@ public class DAOUser extends DBConnect {
                 + "?,\n"
                 + "0,\n"
                 + "1,\n"
-                + "1);";
+                + "1,\n"
+                + "now())"; // Use CURRENT_TIMESTAMP to set the current timestamp
         try {
             PreparedStatement pre = conn.prepareStatement(sql);
             pre.setString(1, fname);
@@ -86,6 +92,91 @@ public class DAOUser extends DBConnect {
         } catch (SQLException ex) {
             Logger.getLogger(DAOUser.class.getName()).log(Level.SEVERE, null, ex);
         }
+    }
+
+    public int addNewUserByMKT(User user) {
+        int n = 0;
+        String sql = "INSERT INTO `online_shop_system`.`user`(`FirstName`,`LastName`,`Address`,`PhoneNumber`,`Gender`,`Password`,`Email`,`UserStatus`,`ReportTo`,`RoleID`,`CreateDate`)\n"
+                + "VALUES(?,?,?,?,?,?,?,1,1,1,CURRENT_TIMESTAMP);";
+        try {
+            PreparedStatement pre = conn.prepareStatement(sql);
+            pre.setString(1, user.getFirstName());
+            pre.setString(2, user.getLastName());
+            pre.setString(3, user.getAddress());
+            pre.setString(4, user.getPhoneNumber());
+            pre.setInt(5, user.getGender() ? 1 : 0);
+            pre.setString(6, user.getPassword());
+            pre.setString(7, user.getEmail());
+            n = pre.executeUpdate();
+            conn.close();
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+        return n;
+    }
+    public int addNewUserByadmin(User user,String a) {
+        int n = 0;
+        String sql = "INSERT INTO `online_shop_system`.`user`(`FirstName`,`LastName`,`Address`,`PhoneNumber`,`Gender`,`Password`,`Email`,`UserStatus`,`ReportTo`,`RoleID`,`CreateDate`)\n"
+                + "VALUES(?,?,?,?,?,?,?,1,1,"+a+",CURRENT_TIMESTAMP);";
+        try {
+            PreparedStatement pre = conn.prepareStatement(sql);
+            pre.setString(1, user.getFirstName());
+            pre.setString(2, user.getLastName());
+            pre.setString(3, user.getAddress());
+            pre.setString(4, user.getPhoneNumber());
+            pre.setInt(5, user.getGender() ? 1 : 0);
+            pre.setString(6, user.getPassword());
+            pre.setString(7, user.getEmail());
+            n = pre.executeUpdate();
+            conn.close();
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+        return n;
+    }
+
+    public int updateStatus(int uid, int status) {
+        int n = 0;
+        String sql = "UPDATE `online_shop_system`.`user`\n"
+                + "SET`UserStatus` = ? WHERE `UserID` = ?;";
+        try {
+            PreparedStatement pre = conn.prepareStatement(sql);
+            pre.setInt(1, status);
+            pre.setInt(2, uid);
+            n = pre.executeUpdate();
+            pre.close();
+        } catch (SQLException ex) {
+        }
+        return n;
+    }
+
+    public int updateRole(int uid, int role) {
+        int n = 0;
+        String sql = "UPDATE `online_shop_system`.`user`\n"
+                + "SET`roleID` = ? WHERE `UserID` = ?;";
+        try {
+            PreparedStatement pre = conn.prepareStatement(sql);
+            pre.setInt(1, role);
+            pre.setInt(2, uid);
+            n = pre.executeUpdate();
+        } catch (SQLException ex) {
+        }
+        return n;
+    }
+
+    public int checkEmail(String email) {
+        DAOUser dao = new DAOUser();
+        int n = 0;
+        ResultSet rs = dao.getData("select * from `user` where Email ='" + email + "'");
+        try {
+            while (rs.next()) {
+                if (rs != null) {
+                    n = 1;
+                }
+            }
+        } catch (SQLException e) {
+        }
+        return n;
     }
 
     public User getUserByEmail(String Email) {
@@ -107,13 +198,48 @@ public class DAOUser extends DBConnect {
                         rs.getString(9),
                         rs.getString(10),
                         rs.getString(11),
-                        rs.getBoolean(12),
+                        rs.getInt(12),
                         rs.getInt(13),
-                        rs.getInt(14)
+                        rs.getInt(14),
+                        rs.getString(15)
                 );
                 System.out.println("Not Null");
                 return pro;
-                
+
+            }
+        } catch (SQLException e) {
+            System.out.println(e);
+        }
+        System.out.println("null user");
+        return null;
+    }
+
+    public User getUserByUserID(int id) {
+        String sql = "select * from user where UserID =" + id;
+        try {
+            PreparedStatement st = conn.prepareStatement(sql);
+            ResultSet rs = st.executeQuery();
+            while (rs.next()) {
+                User pro = new User(
+                        rs.getInt(1),
+                        rs.getString(2),
+                        rs.getString(3),
+                        rs.getString(4),
+                        rs.getString(5),
+                        rs.getString(6),
+                        rs.getBoolean(7),
+                        rs.getString(8),
+                        rs.getString(9),
+                        rs.getString(10),
+                        rs.getString(11),
+                        rs.getInt(12),
+                        rs.getInt(13),
+                        rs.getInt(14),
+                        rs.getString(15)
+                );
+                System.out.println("Not Null");
+                return pro;
+
             }
         } catch (SQLException e) {
             System.out.println(e);
@@ -153,7 +279,8 @@ public class DAOUser extends DBConnect {
                 + "`LastLogin` = ?,\n"
                 + "`UserStatus` = ?,\n"
                 + "`ReportTo` = ?,\n"
-                + "`RoleID` = ?\n"
+                + "`RoleID` = ?,\n"
+                + "`CreateDate` = ?\n"
                 + "WHERE `UserID` = ?;";
         try {
             // number ? = number fields
@@ -172,7 +299,43 @@ public class DAOUser extends DBConnect {
             pre.setBoolean(11, true);
             pre.setInt(12, user.getReportTo());
             pre.setInt(13, user.getRoleID());
-            pre.setInt(14, user.getUserID());
+            pre.setString(14, user.getCreateDate());
+            pre.setInt(15, user.getUserID());
+            n = pre.executeUpdate();
+        } catch (SQLException ex) {
+            Logger.getLogger(DAOUser.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return n;
+    }
+
+    public int updateProfile(User user) {
+        int n = 0;
+        String sql = "update User set FirstName = ?, LastName= ?, Address= ?, PhoneNumber = ?, DateOfBirth = ?, Gender = ? WHERE UserID = ?;";
+        try {
+            // number ? = number fields
+            // index of ? start is 1
+            PreparedStatement pre = conn.prepareStatement(sql);
+            pre.setString(1, user.getFirstName());
+            pre.setString(2, user.getLastName());
+            pre.setString(3, user.getAddress());
+            pre.setString(4, user.getPhoneNumber());
+            pre.setString(5, user.getDateOfBirth());
+            pre.setBoolean(6, user.isGender());
+            pre.setInt(7, user.getUserID());
+            n = pre.executeUpdate();
+        } catch (SQLException ex) {
+            Logger.getLogger(DAOUser.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return n;
+    }
+
+    public int updateUserImage(int userID, String userImage) {
+        int n = 0;
+        String sql = "update User set UserImage = ? where UserID = ?";
+        try {
+            PreparedStatement pre = conn.prepareStatement(sql);
+            pre.setString(1, userImage);
+            pre.setInt(2, userID);
             n = pre.executeUpdate();
         } catch (SQLException ex) {
             Logger.getLogger(DAOUser.class.getName()).log(Level.SEVERE, null, ex);
@@ -199,19 +362,34 @@ public class DAOUser extends DBConnect {
                 String password = rs.getString(9);
                 String email = rs.getString(10);
                 String lastLogin = rs.getString(11);
-                Boolean userStatus = rs.getBoolean(12);
+                int userStatus = rs.getInt(12);
                 int reportTo = rs.getInt(13);
                 int roleID = rs.getInt(14);
+                String CreateDate = rs.getString(15);
                 User user = new User(id, fName, lName, address,
-                        phoneNumber, lastLogin, gender, image,
+                        phoneNumber, dob, gender, image,
                         password, email, lastLogin, userStatus,
-                        reportTo, roleID);
+                        reportTo, roleID, CreateDate);
                 vector.add(user);
             }
         } catch (SQLException ex) {
             Logger.getLogger(DAOUser.class.getName()).log(Level.SEVERE, null, ex);
         }
         return vector;
+    }
+
+    public int updatepassword(int userID, String pw) {
+        int n = 0;
+        String sql = "update User set Password = ? where UserID = ?";
+        try {
+            PreparedStatement pre = conn.prepareStatement(sql);
+            pre.setString(1, pw);
+            pre.setInt(2, userID);
+            n = pre.executeUpdate();
+        } catch (SQLException ex) {
+            Logger.getLogger(DAOUser.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return n;
     }
 
     public User check(String email, String pass) {
@@ -228,7 +406,8 @@ public class DAOUser extends DBConnect {
                 + "    `user`.`LastLogin`,\n"
                 + "    `user`.`UserStatus`,\n"
                 + "    `user`.`ReportTo`,\n"
-                + "    `user`.`RoleID`\n"
+                + "    `user`.`RoleID`,\n"
+                + "    `user`.`CreateDate`\n"
                 + "FROM `online_shop_system`.`user`\n"
                 + "where Email = ? and password = ?";
         try {
@@ -248,9 +427,10 @@ public class DAOUser extends DBConnect {
                         rs.getString(9),
                         rs.getString(10),
                         rs.getString(11),
-                        rs.getBoolean(12),
+                        rs.getInt(12),
                         rs.getInt(13),
-                        rs.getInt(14));
+                        rs.getInt(14),
+                        rs.getString(15));
                 return user;
             }
         } catch (SQLException e) {
@@ -259,12 +439,12 @@ public class DAOUser extends DBConnect {
     }
 
     public User checkAccountExist(String email) {
-        String sql = "select * from user where email = '?'";
+        String sql = "SELECT * FROM user WHERE email = ?";
         try {
             PreparedStatement pre = conn.prepareStatement(sql);
             pre.setString(1, email);
             ResultSet rs = pre.executeQuery();
-            while (rs.next()) {
+            if (rs.next()) {
                 return new User(rs.getInt(1),
                         rs.getString(2),
                         rs.getString(3),
@@ -276,11 +456,14 @@ public class DAOUser extends DBConnect {
                         rs.getString(9),
                         rs.getString(10),
                         rs.getString(11),
-                        rs.getBoolean(12),
+                        rs.getInt(12),
                         rs.getInt(13),
-                        rs.getInt(14));
+                        rs.getInt(14),
+                        rs.getString(15)
+                );
             }
         } catch (SQLException e) {
+            // Handle exception appropriately (e.g., logging)
         }
         return null;
     }
@@ -288,8 +471,22 @@ public class DAOUser extends DBConnect {
     public void updateLastLogin(int userId) {
         try {
             String sql = "UPDATE user SET LastLogin = CURRENT_TIMESTAMP WHERE UserID = ?";
-            try ( 
-                PreparedStatement pre = conn.prepareStatement(sql)) {
+            try (
+                     PreparedStatement pre = conn.prepareStatement(sql)) {
+                pre.setInt(1, userId);
+                pre.executeUpdate();
+            }
+            // Close the connection
+        } catch (SQLException e) {
+            e.printStackTrace(); // Handle the exception according to your needs
+        }
+    }
+
+    public void updateCreateDate(int userId) {
+        try {
+            String sql = "UPDATE user SET CreateDate = CURRENT_TIMESTAMP WHERE UserID = ?";
+            try (
+                     PreparedStatement pre = conn.prepareStatement(sql)) {
                 pre.setInt(1, userId);
                 pre.executeUpdate();
             }
@@ -301,7 +498,63 @@ public class DAOUser extends DBConnect {
 
     public static void main(String[] args) {
         DAOUser dao = new DAOUser();
-        dao.signup("ngo ngoc", "hung2", "123456", "ngongochung@gmail.com");
+
     }
 
+    public String convertStatus(int UserStatus) {
+        String result = "";
+        switch (UserStatus) {
+            case 0:
+                result = "<span class=\"badge badge-warning\">Chưa xác nhận email</span>";
+                break;
+            case 1:
+                result = "<span class=\"badge badge-success\">Hoạt động</span>";
+                break;
+            case 2:
+                result = "<span class=\"badge badge-danger\">Vô hiệu hóa</span>";
+                break;
+        }
+        return result;
+    }
+
+    public List<User> getUsersByRoleID(int roleID) {
+        List<User> users = new ArrayList<>();
+        PreparedStatement statement = null;
+        ResultSet resultSet = null;
+
+        try {
+            // Assuming the table name is "user" and the column name for RoleID is "RoleID"
+            String query = "SELECT * FROM user WHERE RoleID = ?";
+            statement = conn.prepareStatement(query);
+            statement.setInt(1, roleID);
+            resultSet = statement.executeQuery();
+
+            while (resultSet.next()) {
+                User user = new User();
+                user.setUserID(resultSet.getInt("UserID"));
+                user.setFirstName(resultSet.getString("FirstName"));
+                user.setLastName(resultSet.getString("LastName"));
+                user.setRoleID(resultSet.getInt("RoleID"));
+                // Add any other necessary fields
+
+                users.add(user);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace(); // Handle or log the exception as needed
+        } finally {
+            // Close the statement and result set in finally block
+            try {
+                if (resultSet != null) {
+                    resultSet.close();
+                }
+                if (statement != null) {
+                    statement.close();
+                }
+            } catch (SQLException e) {
+                e.printStackTrace(); // Handle or log the exception as needed
+            }
+        }
+
+        return users;
+    }
 }

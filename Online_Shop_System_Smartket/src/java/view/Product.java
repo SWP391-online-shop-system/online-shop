@@ -12,8 +12,22 @@ public class Product {
     private String CreateDate;
     private int TotalRate;
     private int TotalStock;
+    private boolean productStatus;
 
     public Product() {
+    }
+
+    public Product(String ProductName, int CategoryID, String ProductDescription, int UnitInStock, double UnitPrice, int UnitDiscount, String CreateDate, int TotalRate, int TotalStock) {
+        this.ProductName = ProductName;
+        this.CategoryID = CategoryID;
+        this.ProductDescription = ProductDescription;
+        this.UnitInStock = UnitInStock;
+        this.UnitPrice = UnitPrice;
+        this.UnitDiscount = UnitDiscount;
+        this.CreateDate = CreateDate;
+        this.TotalRate = TotalRate;
+        this.TotalStock = TotalStock;
+        this.productStatus = false;
     }
 
     public Product(int ProductID, String ProductName, int CategoryID, String ProductDescription, int UnitInStock, double UnitPrice, int UnitDiscount, String CreateDate, int TotalRate, int TotalStock) {
@@ -27,6 +41,42 @@ public class Product {
         this.CreateDate = CreateDate;
         this.TotalRate = TotalRate;
         this.TotalStock = TotalStock;
+    }
+
+    public Product(String ProductName, int CategoryID, String ProductDescription, int UnitInStock, double UnitPrice, int UnitDiscount, int TotalStock) {
+        this.ProductName = ProductName;
+        this.CategoryID = CategoryID;
+        this.ProductDescription = ProductDescription;
+        this.UnitInStock = UnitInStock;
+        this.UnitPrice = UnitPrice;
+        this.UnitDiscount = UnitDiscount;
+        this.TotalStock = TotalStock;
+    }
+
+    public Product(int ProductID, String ProductName, int CategoryID, String ProductDescription, int UnitInStock, double UnitPrice, int UnitDiscount, int TotalStock, boolean productStatus) {
+        this.ProductID = ProductID;
+        this.ProductName = ProductName;
+        this.CategoryID = CategoryID;
+        this.ProductDescription = ProductDescription;
+        this.UnitInStock = UnitInStock;
+        this.UnitPrice = UnitPrice;
+        this.UnitDiscount = UnitDiscount;
+        this.TotalStock = TotalStock;
+        this.productStatus = productStatus;
+    }
+
+    public Product(int ProductID, String ProductName, int CategoryID, String ProductDescription, int UnitInStock, double UnitPrice, int UnitDiscount, String CreateDate, int TotalRate, int TotalStock, boolean productStatus) {
+        this.ProductID = ProductID;
+        this.ProductName = ProductName;
+        this.CategoryID = CategoryID;
+        this.ProductDescription = ProductDescription;
+        this.UnitInStock = UnitInStock;
+        this.UnitPrice = UnitPrice;
+        this.UnitDiscount = UnitDiscount;
+        this.CreateDate = CreateDate;
+        this.TotalRate = TotalRate;
+        this.TotalStock = TotalStock;
+        this.productStatus = productStatus;
     }
 
     public int getProductID() {
@@ -151,8 +201,17 @@ public class Product {
         return result;
     }
 
+    public boolean isProductStatus() {
+        return productStatus;
+    }
+
+    public void setProductStatus(boolean productStatus) {
+        this.productStatus = productStatus;
+    }
+
     @Override
     public String toString() {
         return "Product{" + "ProductID=" + ProductID + ", ProductName=" + ProductName + ", CategoryID=" + CategoryID + ", ProductDescription=" + ProductDescription + ", UnitInStock=" + UnitInStock + ", UnitPrice=" + UnitPrice + ", UnitDiscount=" + UnitDiscount + ", CreateDate=" + CreateDate + ", TotalRate=" + TotalRate + ", TotalStock=" + TotalStock + '}';
     }
+
 }

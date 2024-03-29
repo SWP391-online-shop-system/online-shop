@@ -1,0 +1,19 @@
+
+p
+java:S2293¸"YReplace the type specification in this constructor call with the diamond operator ("<>").(Íëã
+f	java:S117["QRename this local variable to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(ß§µ
+x
+java:S1488ğ"\Immediately return this expression instead of assigning it to the temporary variable "user".(ÑÁé²şÿÿÿÿ
+
+java:S1149·"eReplace the synchronized class "Vector" by an unsynchronized one such as "ArrayList" or "LinkedList".(÷¸÷½üÿÿÿÿ
+|
+java:S1149¸"eReplace the synchronized class "Vector" by an unsynchronized one such as "ArrayList" or "LinkedList".(Íëã
+E	java:S106r"+Replace this use of System.out by a logger.(Ÿ¹¾Ÿùÿÿÿÿ
+E	java:S106w"+Replace this use of System.out by a logger.(¨¶ÑÍşÿÿÿÿ
+E	java:S106y"+Replace this use of System.out by a logger.(İÃìıÿÿÿÿ
+N
+java:S1854Ä"7Remove this useless assignment to local variable "dob".(Éí¡³
+?
+java:S1481Ä"(Remove this unused "dob" local variable.(Éí¡³
+?	java:S108€")Either remove or fill this block of code.(É®£
+?	java:S108›")Either remove or fill this block of code.(É®£

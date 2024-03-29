@@ -13,6 +13,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import model.DAOUser;
+import model.EncodeSHA;
 import view.User;
 
 /**
@@ -50,30 +51,62 @@ public class ControllerLogin extends HttpServlet {
                     message = "Sai email.";
                     request.setAttribute("message", message);
                     request.getRequestDispatcher("HomePageURL").forward(request, response);
-                    return; // Stop further execution
                 } else {
                     session.setAttribute("account", user);
                     response.sendRedirect("HomePageURL");
-                    return; // Stop further execution
                 }
             }
             String email = request.getParameter("email");
             String pass = request.getParameter("pass");
-            User user = dao.check(email, pass);
+            String passwordEncode = EncodeSHA.transFer(pass);
+            User user = dao.check(email, passwordEncode);
+            if (user == null) {
+                User userWithoutPasswordCheck = dao.checkAccountExist(email);
+                if (userWithoutPasswordCheck != null) {
+                    if (pass.equals(userWithoutPasswordCheck.getPassword())) {
+                        user = userWithoutPasswordCheck;
+                    }
+                }
+            }
             if (user == null) {
                 request.setAttribute("activeLogin", "active");
                 message = "Sai tài khoản hoặc mật khẩu.";
                 request.setAttribute("message", message);
                 request.getRequestDispatcher("HomePageURL").forward(request, response);
+            } else if (user.isUserStatus() == 0) {
+                request.setAttribute("activeLogin", "active");
+                message = "Tài khoản của bạn chưa xác thực";
+                request.setAttribute("message", message);
+                request.getRequestDispatcher("HomePageURL").forward(request, response);
             } else {
                 dao.updateLastLogin(user.getUserID());
                 session.setAttribute("account", user);
-                response.sendRedirect("HomePageURL");
+                switch (user.getRoleID()) {
+                    case 2:
+                        //marketing
+                        response.sendRedirect("marketingDashBoardURL");
+                        break;
+                    case 5:
+                        //admin
+                        response.sendRedirect("AdminDashBoardURL");
+                        break;
+                    case 3:
+                        //sale member
+                        response.sendRedirect("saleDashBoardURL");
+                        break;
+                    case 4:
+                        //sale manager
+                        response.sendRedirect("saleManagerOrderListURL");
+                        break;
+                    default:
+                        response.sendRedirect("HomePageURL");
+                        break;
+                }
             }
         }
     }
-
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
+
     /**
      * Handles the HTTP <code>GET</code> method.
      *

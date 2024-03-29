@@ -51,6 +51,7 @@ public class DAOCart extends DBConnect {
             pre.setInt(1, userID);
             pre.setInt(2, proID);
             n = pre.executeUpdate();
+            pre.close();
         } catch (SQLException ex) {
             Logger.getLogger(DAOCart.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -119,6 +120,24 @@ public class DAOCart extends DBConnect {
         return n;
 
     }
+    public int updateCartQuantity(int userId, int proid, int quantity) {
+        int n = 0;
+        String sql = "UPDATE `online_shop_system`.`cart`\n"
+                + "SET\n"
+                + "`Quantity` = ?\n"
+                + "WHERE `UserID` = ? and `ProductID` = ? ;";
+        try {
+            PreparedStatement pre = conn.prepareStatement(sql);
+            pre.setInt(1, quantity);
+            pre.setInt(2, userId);
+            pre.setInt(3, proid);
+            n = pre.executeUpdate();
+        } catch (SQLException ex) {
+            Logger.getLogger(DAOCart.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return n;
+
+    }
 
     public Vector<Cart> getCart(String sql) {
         Vector<Cart> vector = new Vector<>();
@@ -158,11 +177,27 @@ public class DAOCart extends DBConnect {
         Vector<Cart> vector = dao.getCart(sql);
         return vector.firstElement();
     }
+    public Cart getCartById(int userID, int productID) {
+        String sql = "select * from `online_shop_system`.`cart` where `ProductID` =" + productID;
+        DAOCart dao = new DAOCart();
+        Vector<Cart> vector = dao.getCart(sql);
+        return vector.firstElement();
+    }
 
-    private void updateQuantity(int userID, int productID, int quantity) {
-        // Cập nhật lượng của sản phẩm trong giỏ hàng
-        // Viết truy vấn SQL tương ứng để cập nhật
-
+    public void updateQuantity(int userID, int productID, int quantity) {
+        String sql = "UPDATE `online_shop_system`.`cart`\n"
+                + "SET\n"
+                + "`Quantity` = ?\n"
+                + "WHERE `UserID` = ? and `ProductID` = ? ;";
+        try {
+            PreparedStatement pre = conn.prepareStatement(sql);
+            pre.setInt(1, quantity);
+            pre.setInt(2, userID);
+            pre.setInt(3, productID);
+            pre.executeUpdate();
+        } catch (SQLException ex) {
+            Logger.getLogger(DAOCart.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 //    public static void main(String[] args) {
 //        DAOCart dao = new DAOCart();

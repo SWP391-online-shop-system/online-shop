@@ -21,6 +21,29 @@ rangeInput.forEach(input => {
         let positionMax = 100 - ((maxVal / priceMax) * 1000);
         rangeText[0].innerText = minVal.toLocaleString();
         rangeText[1].innerText = maxVal.toLocaleString();
-    })
-})
+    });
+});
+function addToCart(pId) {
+    $.ajax({
+        type: "POST",
+        url: "CartURL",
+        data: {service: "addcart", pid: pId},
+        success: function (response) {
+            // Hiển thị thông báo cho người dùng
+            var countCart = response;
+            swal.fire({
+                icon: 'success',
+                title: 'Thành công!',
+                text: 'Sản phẩm đã được thêm vào giỏ hàng.',
+                showConfirmButton: false,
+                timer: 1000
+            });
+            $('#countCart').text(countCart);
+        },
+        error: function (xhr, status, error) {
+            // Xử lý lỗi
+            console.error(xhr.responseText);
+        }
+    });
+}
     

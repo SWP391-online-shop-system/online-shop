@@ -1,0 +1,54 @@
+
+f
+java:S1192w"KDefine a constant instead of duplicating this literal "FROM Blog
+" 4 times.(—ËÂÿşÿÿÿÿ
+e	java:S117 "QRename this local variable to match the regular expression '^[a-z][a-zA-Z0-9]*$'.( ú¢'
+f	java:S117!"QRename this local variable to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(„¹“–
+k	java:S117""QRename this local variable to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(íõçûÿÿÿÿ
+f	java:S117#"QRename this local variable to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(¸Ì Ç
+f	java:S117$"QRename this local variable to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(Ó‡Å
+k	java:S117%"QRename this local variable to match the regular expression '^[a-z][a-zA-Z0-9]*$'.( «¶µøÿÿÿÿ
+f	java:S117&"QRename this local variable to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(ßß‘Á
+k	java:S117'"QRename this local variable to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(¨¬§œüÿÿÿÿ
+f	java:S117("QRename this local variable to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(–­Üğ
+k	java:S117)"QRename this local variable to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(½ÕÛ»ÿÿÿÿÿ
+k	java:S117*"QRename this local variable to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(—¥‚†ûÿÿÿÿ
+k	java:S117t"QRename this local variable to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(Àèæ¬ûÿÿÿÿ
+€
+java:S1149"eReplace the synchronized class "Vector" by an unsynchronized one such as "ArrayList" or "LinkedList".(Ã·‚¦ûÿÿÿÿ
+€
+java:S1149"eReplace the synchronized class "Vector" by an unsynchronized one such as "ArrayList" or "LinkedList".(Šüƒæûÿÿÿÿ
+T
+java:S1854?"9Remove this useless assignment to local variable "state".(àİŸ×şÿÿÿÿ
+E
+java:S1481?"*Remove this unused "state" local variable.(àİŸ×şÿÿÿÿ
+>	java:S108T")Either remove or fill this block of code.(”ı¾
+>	java:S108o")Either remove or fill this block of code.(”ı¾
+N
+java:S1854u"8Remove this useless assignment to local variable "list".(ëÍé
+T
+java:S1854z"9Remove this useless assignment to local variable "state".(àİŸ×şÿÿÿÿ
+?
+java:S1481u")Remove this unused "list" local variable.(ëÍé
+E
+java:S1481z"*Remove this unused "state" local variable.(àİŸ×şÿÿÿÿ
+?	java:S108")Either remove or fill this block of code.(”ı¾
+?	java:S108¬")Either remove or fill this block of code.(”ı¾
+?	java:S108Ê")Either remove or fill this block of code.(”ı¾
+U
+java:S1854Ó"9Remove this useless assignment to local variable "state".(àİŸ×şÿÿÿÿ
+F
+java:S1481Ó"*Remove this unused "state" local variable.(àİŸ×şÿÿÿÿ
+?	java:S108Ü")Either remove or fill this block of code.(”ı¾
+?	java:S108ì")Either remove or fill this block of code.(”ı¾
+U
+java:S1854ø"9Remove this useless assignment to local variable "state".(àİŸ×şÿÿÿÿ
+F
+java:S1481ø"*Remove this unused "state" local variable.(àİŸ×şÿÿÿÿ
+?	java:S108Œ")Either remove or fill this block of code.(”ı¾
+L
+java:S1854”"5Remove this useless assignment to local variable "b".(ÀœĞû
+=
+java:S1481”"&Remove this unused "b" local variable.(ÀœĞû
+A	java:S106—"+Replace this use of System.out by a logger.(Ú“Üİ
+F	java:S106™"+Replace this use of System.out by a logger.(³ğ¸ûÿÿÿÿ
