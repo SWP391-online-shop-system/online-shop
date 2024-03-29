@@ -641,7 +641,7 @@
                             <article class="card">
                                 <div class="card-body row">
 
-                                    <div class="col"> <strong>Bao gồm:</strong> <br><strong><%=productName%></strong><br/> và <%=countProduct%> sản phẩm khác </div>
+                                    <div class="col"> <strong>Bao gồm:</strong> <br><strong><%=productName%></strong><br/><%=countProduct==-1?"":" và "+countProduct+" sản phẩm khác "%></div>
                                     <div class="col"> <strong>Thời gian đặt hàng:</strong>  <br><%=rsOrderGroup.getString("OrderDate")%></div>
                                     <div class="col"> <strong>Tổng giá trị đơn</strong> <br> <%=df.format(rsOrderGroup.getDouble("TotalPrice"))%>đ </div>
                                     <div class="col"> <strong>Trạng thái:</strong> <br><%=statusName%></div>
@@ -686,7 +686,7 @@
                                margin-right: 232px;
                                margin-bottom: -30px;
                                margin-top: 7px;
-                               position: relative;background: #ff6535;">Xác nhận đơn</a>
+                               position: relative;background: #ff6535;">Xác nhận đơn</a><br><br>
                             <%}%>
                             <a style="margin-left: 681px;" href="OrderInformationURL?OrderID=<%=rsOrderGroup.getInt("OrderID")%>" class="btn btn-success btn-lg" data-abc="true">Xem chi tiết đơn hàng <i class="fa fa-chevron-right"></i></a>
                         </div>

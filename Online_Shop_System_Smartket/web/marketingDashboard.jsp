@@ -325,7 +325,7 @@
                                                     var weekFrom = document.getElementById("dateInputFrom").value;
                                                     var userWeekFrom = document.getElementById("dateUserInputFrom").value;
                                                     $.ajax({
-                                                        url: "Marketingm",
+                                                        url: "marketingDashBoardURL",
                                                         type: 'GET',
                                                         data: {weekFrom: weekFrom, userWeekFrom: userWeekFrom},
                                                         success: function (data) {

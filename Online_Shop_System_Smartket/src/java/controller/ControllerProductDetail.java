@@ -68,11 +68,11 @@ public class ControllerProductDetail extends HttpServlet {
             filterValue = "";
             rsFeedBack = daoPro.getData("select u.UserImage, (CONCAT(u.FirstName,\" \",u.LastName))as UserName,\n"
                     + "fb.FeedBackRate,fb.FeedBackImage, fb.FeedBackContent, fb.FeedBackDate \n"
-                    + "from User as u join FeedBack as fb on u.UserID = fb.UserID where fb.ProductID= " + ProductID + " order by fb.FeedBackDate;");
+                    + "from User as u join FeedBack as fb on u.UserID = fb.UserID where fb.FeedBackStatus = 0 and fb.ProductID= " + ProductID + " order by fb.FeedBackDate;");
         } else {
             rsFeedBack = daoPro.getData("select u.UserImage, (CONCAT(u.FirstName,\" \",u.LastName))as UserName,\n"
                     + "fb.FeedBackRate,fb.FeedBackImage, fb.FeedBackContent, fb.FeedBackDate \n"
-                    + "from User as u join FeedBack as fb on u.UserID = fb.UserID where fb.ProductID= " + ProductID + " and fb.FeedBackRate = " + filterValue + " order by fb.FeedBackDate;");
+                    + "from User as u join FeedBack as fb on u.UserID = fb.UserID where fb.FeedBackStatus = 0 and fb.ProductID= " + ProductID + " and fb.FeedBackRate = " + filterValue + " order by fb.FeedBackDate;");
         }
         request.setAttribute("rsDetail", rsDetail);
         request.setAttribute("rsRate", rsRate);

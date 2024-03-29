@@ -48,6 +48,7 @@ public class ControllerCartCompletion extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         try ( PrintWriter out = response.getWriter()) {
             HttpSession session = request.getSession();
+            DAOProduct daoProduct = new DAOProduct();
             DAOOrder daoOrder = new DAOOrder();
             DAOProduct daoProduct = new DAOProduct();
             DAOCart daoCart = new DAOCart();

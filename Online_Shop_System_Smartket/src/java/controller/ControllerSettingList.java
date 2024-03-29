@@ -75,7 +75,7 @@ public class ControllerSettingList extends HttpServlet {
         DAOSetting daoS = new DAOSetting();
         editSetting = daoS.getSettingById(SettingID);
         editSetting.setSettingValue(valueSettingHomePage);
-        daoS.updateSetting(editSetting);
+//        daoS.updateSetting(editSetting);
         System.out.println("updateComplete");
         ResultSet rsSetting = daoS.getData("select * from Setting");
         request.setAttribute("rsSetting", rsSetting);

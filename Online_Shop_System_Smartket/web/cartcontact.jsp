@@ -358,7 +358,7 @@
                                border: 2px solid #e5e5e5;
                                height: 36px;
                                margin-left: 20px;" name="keyWord" type="text" placeholder="Search...">
-                        <button type="submit"><i class="fa-solid fa-magnifying-glass"></i></button>
+                        <button style="margin-right: 25px;" type="submit"><i class="fa-solid fa-magnifying-glass"></i></button>
                     </form>
                 </div>
                 <div class="hottest-pro"style="margin-left: 23px;">
@@ -366,8 +366,8 @@
                     <div class="row" style="display: contents">
                         <%
                                 DAOProduct daoP = new DAOProduct();
-                            ResultSet rsHotPro = daoP.getData("select * from Product as p join ProductImage as pi on p.ProductID = pi.ProductID where  pi.ProductURL like '%_1%'\n"
-                            +"group by p.ProductID having min(p.TotalStock - p.UnitInStock) > 0");
+                            ResultSet rsHotPro = daoP.getData("select * from Product as p join ProductImage as pi on p.ProductID = pi.ProductID where  pi.ProductURL = pi.ProductURLShow \n"
+                                               +  "group by p.ProductID having min(p.TotalStock - p.UnitInStock) >0 order by (p.TotalStock - p.UnitInStock) desc limit 1");
                         if(rsHotPro.next()) {
                         %>
                         <div class="product__item" style="border: 1px solid #c1e8c1ba;

@@ -12,8 +12,11 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
+import java.sql.ResultSet;
+import model.DAOLog;
 import model.DAOSlider;
 import view.Slider;
+import view.User;
 
 /**
  *
@@ -33,11 +36,21 @@ public class sliderdetail extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        DAOLog daoU = new DAOLog();
+        HttpSession session = request.getSession();
+        User u = (User) session.getAttribute("account");
+        if (u == null) {
+            String message = "Bạn cần đăng nhập";
+            request.setAttribute("message", message);
+            request.getRequestDispatcher("loginURL").forward(request, response);
+        }
         String id = request.getParameter("id");
         DAOSlider DAOSlider = new DAOSlider();
-   Slider slider = DAOSlider.getaSlider("select * from slider where sliderId = " + id);
-        HttpSession session = request.getSession();
-      session.setAttribute("getaSlider", slider);
+        Slider slider = DAOSlider.getaSlider("select * from slider where sliderId = " + id);
+        session.setAttribute("getaSlider", slider);
+        ResultSet logger = daoU.getData("SELECT * FROM loghistory where ID=" + id+ " and updateBy = " + u.getUserID()
+                + " and logTopic = 3 and logType like '%Cập nhật%' order by updateAt desc");
+        request.setAttribute("log", logger);
         request.getRequestDispatcher("sliderdetail.jsp").forward(request, response);
 
     }

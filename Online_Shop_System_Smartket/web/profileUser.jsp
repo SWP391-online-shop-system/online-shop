@@ -677,13 +677,18 @@
                             <input type="hidden" name="UserID" value="${sessionScope.account.userID}"/>
                             <tr>   
                                 <td style="">Họ</td>
-                                <td><input class="input-update"  type="text" name="firstName1" required value="${sessionScope.account.firstName}"  /></td>
+                                <td><input class="input-update"  type="text" name="firstName1" 
+                                           pattern="^[ \p{L}]+(?: [ \p{L}]+)*$" 
+                                           required value="${sessionScope.account.firstName}"  /></td>
                             </tr>
 
                             <tr>
                                 <td style="">Tên</td>
-                                <td><input class="input-update"  type="text" name="lastName1" required value="${sessionScope.account.lastName}"  /></td>                                </tr>
+                                <td><input class="input-update"  
+                                           pattern="^[ \p{L}]+(?: [ \p{L}]+)*$" 
+                                           type="text" name="lastName1" required value="${sessionScope.account.lastName}"  /></td>                                </tr>
                             <tr>
+
                                 <td style="">Email</td>
                                 <td><input class="input-update" style="border: 1px dashed;" type="email" readonly value="${sessionScope.account.email}"/></td>
                             </tr>

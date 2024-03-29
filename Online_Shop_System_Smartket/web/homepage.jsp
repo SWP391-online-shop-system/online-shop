@@ -11,6 +11,8 @@
 <%@page import="view.*" %>
 <%@page import="java.sql.ResultSet"%>
 <%@page import="java.text.DecimalFormat" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
+
 <!DOCTYPE html> 
 <html>
     <head>
@@ -203,34 +205,14 @@
 
                                         </div>
                                         <div class="form-element">
-                                            <a style="color: blue;" class="forgot-pass" data-toggle="modal" data-target="#exampleModal"
-                                               id="#myBtn">Quên mật khẩu?</a>
+                                            <a style="color: blue;" class="forgot-pass" href="forgotpass">Quên mật khẩu?</a>
                                         </div>
                                     </div>
 
                     </div>
                     </form>
                     <!-- start modals -->
-                    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-                         aria-hidden="true">
-                        <div class="modal-dialog" role="document">
-                            <div class="modal-content">
-                                <div class="modal-header">
-                                    <h5 class="modal-title" id="exampleModalLabel">Quên mật khẩu</h5>
-                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                        <span aria-hidden="true">&times;</span>
-                                    </button>
-                                </div>
-                                <div class="modal-body">
-                                    <p>You Content</p>
-                                </div>
-                                <div class="modal-footer">
-                                    <button type="button" class="btnhi btn-outline-primary" data-dismiss="modal" style="border: 1px solid #007bff;">Close</button>
-                                    <button type="button" class="btnhi btn-primary"style="border: 1px solid #007bff;">Save changes</button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                    
                     <!-- end modals -->
                     <!-- Registration Pop-up Form -->
                     <form action="signupURL" method="post">
@@ -373,27 +355,27 @@
                             </c:if>
                             <c:if test="${sessionScope.account != null}">
                         <li>      
-                                <%
-                                HttpSession session2 = request.getSession();
-                                User user = (User) session2.getAttribute("account");
-                                int userID = user.getUserID();
-                                DAOCart dao = new DAOCart();
-                                ResultSet rs = dao.getData("SELECT count(*) as count FROM Cart AS c JOIN Product AS p ON c.ProductID = p.ProductID where userID = "+userID+"");
-                                while(rs.next()){
-                                %>
-                                <span class="count-cart" id="countCart" style="position: absolute;
-                                      margin-left: 17px;
-                                      background-color: #ff0000;
-                                      color: #ffffff;
-                                      border-radius: 50%;
-                                      padding: 0px 5px;
-                                      font-size: 13px;
-                                      z-index: 9;
-                                      top: 11px;
-                                      left: 3px;"><%=rs.getInt(1)%></span>
-                                <%}%>
-                                <a href="CartURL" title="Giỏ hàng của tôi"><i class="fa-solid fa-cart-shopping"></i></a>
-                            </li>
+                            <%
+                            HttpSession session2 = request.getSession();
+                            User user = (User) session2.getAttribute("account");
+                            int userID = user.getUserID();
+                            DAOCart dao = new DAOCart();
+                            ResultSet rs = dao.getData("SELECT count(*) as count FROM Cart AS c JOIN Product AS p ON c.ProductID = p.ProductID where userID = "+userID+"");
+                            while(rs.next()){
+                            %>
+                            <span class="count-cart" id="countCart" style="position: absolute;
+                                  margin-left: 17px;
+                                  background-color: #ff0000;
+                                  color: #ffffff;
+                                  border-radius: 50%;
+                                  padding: 0px 5px;
+                                  font-size: 13px;
+                                  z-index: 9;
+                                  top: 11px;
+                                  left: 3px;"><%=rs.getInt(1)%></span>
+                            <%}%>
+                            <a href="CartURL" title="Giỏ hàng của tôi"><i class="fa-solid fa-cart-shopping"></i></a>
+                        </li>
                     </c:if>
                 </ul>
             </div>
@@ -446,10 +428,69 @@
                     <div class="menu-section-slider">
                         <div class="slider">
                             <div class="slides">
-                                <input type="radio" name="radio-btn" id="radio1">
-                                <input type="radio" name="radio-btn" id="radio2">
-                                <input type="radio" name="radio-btn" id="radio3">
-                                <input type="radio" name="radio-btn" id="radio4">
+                                <c:if test="${fn:contains(requestScope.countslider,'9')}">
+                                    <input type="radio" name="radio-btn" id="radio1">
+                                    <input type="radio" name="radio-btn" id="radio2">
+                                    <input type="radio" name="radio-btn" id="radio3">
+                                    <input type="radio" name="radio-btn" id="radio4">
+                                    <input type="radio" name="radio-btn" id="radio5">
+                                    <input type="radio" name="radio-btn" id="radio6">
+                                    <input type="radio" name="radio-btn" id="radio7">
+                                    <input type="radio" name="radio-btn" id="radio8">
+                                    <input type="radio" name="radio-btn" id="radio8">
+                                </c:if>
+                                <c:if test="${fn:contains(requestScope.countslider,'8')}">
+                                    <input type="radio" name="radio-btn" id="radio1">
+                                    <input type="radio" name="radio-btn" id="radio2">
+                                    <input type="radio" name="radio-btn" id="radio3">
+                                    <input type="radio" name="radio-btn" id="radio4">
+                                    <input type="radio" name="radio-btn" id="radio5">
+                                    <input type="radio" name="radio-btn" id="radio6">
+                                    <input type="radio" name="radio-btn" id="radio7">
+                                    <input type="radio" name="radio-btn" id="radio8">
+                                </c:if>
+                                <c:if test="${fn:contains(requestScope.countslider,'7')}">
+                                    <input type="radio" name="radio-btn" id="radio1">
+                                    <input type="radio" name="radio-btn" id="radio2">
+                                    <input type="radio" name="radio-btn" id="radio3">
+                                    <input type="radio" name="radio-btn" id="radio4">
+                                    <input type="radio" name="radio-btn" id="radio5">
+                                    <input type="radio" name="radio-btn" id="radio6">
+                                    <input type="radio" name="radio-btn" id="radio7">
+                                </c:if>
+                                <c:if test="${fn:contains(requestScope.countslider,'6')}">
+                                    <input type="radio" name="radio-btn" id="radio1">
+                                    <input type="radio" name="radio-btn" id="radio2">
+                                    <input type="radio" name="radio-btn" id="radio3">
+                                    <input type="radio" name="radio-btn" id="radio4">
+                                    <input type="radio" name="radio-btn" id="radio5">
+                                    <input type="radio" name="radio-btn" id="radio6">
+                                </c:if>
+                                <c:if test="${fn:contains(requestScope.countslider,'5')}">
+                                    <input type="radio" name="radio-btn" id="radio1">
+                                    <input type="radio" name="radio-btn" id="radio2">
+                                    <input type="radio" name="radio-btn" id="radio3">
+                                    <input type="radio" name="radio-btn" id="radio4">
+                                    <input type="radio" name="radio-btn" id="radio5">
+                                </c:if>
+                                <c:if test="${fn:contains(requestScope.countslider,'4')}">
+                                    <input type="radio" name="radio-btn" id="radio1">
+                                    <input type="radio" name="radio-btn" id="radio2">
+                                    <input type="radio" name="radio-btn" id="radio3">
+                                    <input type="radio" name="radio-btn" id="radio4">
+                                </c:if>
+                                <c:if test="${fn:contains(requestScope.countslider,'3')}">
+                                    <input type="radio" name="radio-btn" id="radio1">
+                                    <input type="radio" name="radio-btn" id="radio2">
+                                    <input type="radio" name="radio-btn" id="radio3">
+                                </c:if>
+                                <c:if test="${fn:contains(requestScope.countslider,'2')}">
+                                    <input type="radio" name="radio-btn" id="radio1">
+                                    <input type="radio" name="radio-btn" id="radio2">
+                                </c:if>
+                                <c:if test="${fn:contains(requestScope.countslider,'1')}">
+                                    <input type="radio" name="radio-btn" id="radio1">
+                                </c:if>
                                 <%ResultSet rsSlider = (ResultSet)request.getAttribute("rsSlider");
                                 int count = 0;
                                 while(rsSlider.next()) {
@@ -467,17 +508,135 @@
                                 <!-- slide end -->
                                 <!--auto-->
                                 <div class="navigation-auto">
-                                    <div class="auto-btn1"></div>
-                                    <div class="auto-btn2"></div>
-                                    <div class="auto-btn3"></div>
-                                    <div class="auto-btn4"></div>
+                                    <c:if test="${fn:contains(requestScope.countslider,'9')}">
+                                        <div class="auto-btn1"></div>
+                                        <div class="auto-btn2"></div>
+                                        <div class="auto-btn3"></div>
+                                        <div class="auto-btn4"></div>
+                                        <div class="auto-btn5"></div>
+                                        <div class="auto-btn6"></div>
+                                        <div class="auto-btn7"></div>
+                                        <div class="auto-btn8"></div>
+                                        <div class="auto-btn9"></div>
+                                    </c:if>
+                                    <c:if test="${fn:contains(requestScope.countslider,'8')}">
+                                        <div class="auto-btn1"></div>
+                                        <div class="auto-btn2"></div>
+                                        <div class="auto-btn3"></div>
+                                        <div class="auto-btn4"></div>
+                                        <div class="auto-btn5"></div>
+                                        <div class="auto-btn6"></div>
+                                        <div class="auto-btn7"></div>
+                                        <div class="auto-btn8"></div>
+                                    </c:if>
+                                    <c:if test="${fn:contains(requestScope.countslider,'7')}">
+                                        <div class="auto-btn1"></div>
+                                        <div class="auto-btn2"></div>
+                                        <div class="auto-btn3"></div>
+                                        <div class="auto-btn4"></div>
+                                        <div class="auto-btn5"></div>
+                                        <div class="auto-btn6"></div>
+                                        <div class="auto-btn7"></div>
+                                    </c:if>
+                                    <c:if test="${fn:contains(requestScope.countslider,'6')}">
+                                        <div class="auto-btn1"></div>
+                                        <div class="auto-btn2"></div>
+                                        <div class="auto-btn3"></div>
+                                        <div class="auto-btn4"></div>
+                                        <div class="auto-btn5"></div>
+                                        <div class="auto-btn6"></div>
+                                    </c:if>
+                                    <c:if test="${fn:contains(requestScope.countslider,'5')}">
+                                        <div class="auto-btn1"></div>
+                                        <div class="auto-btn2"></div>
+                                        <div class="auto-btn3"></div>
+                                        <div class="auto-btn4"></div>
+                                        <div class="auto-btn5"></div>
+                                    </c:if>
+                                    <c:if test="${fn:contains(requestScope.countslider,'4')}">
+                                        <div class="auto-btn1"></div>
+                                        <div class="auto-btn2"></div>
+                                        <div class="auto-btn3"></div>
+                                        <div class="auto-btn4"></div>
+                                    </c:if>
+                                    <c:if test="${fn:contains(requestScope.countslider,'3')}">
+                                        <div class="auto-btn1"></div>
+                                        <div class="auto-btn2"></div>
+                                        <div class="auto-btn3"></div>
+                                    </c:if>
+                                    <c:if test="${fn:contains(requestScope.countslider,'2')}">
+                                        <div class="auto-btn1"></div>
+                                        <div class="auto-btn2"></div>
+                                    </c:if>
+                                    <c:if test="${fn:contains(requestScope.countslider,'1')}">
+                                        <div class="auto-btn1"></div>
+                                    </c:if>
                                 </div>
                             </div>
                             <div class="navigation-manual">
-                                <label for="radio1" class="manual-btn manual1"></label>
-                                <label for="radio2" class="manual-btn manual2"></label>
-                                <label for="radio3" class="manual-btn manual3"></label>
-                                <label for="radio4" class="manual-btn manual4"></label>
+                                <c:if test="${fn:contains(requestScope.countslider,'9')}">
+                                    <label for="radio1" class="manual-btn manual1"></label>
+                                    <label for="radio2" class="manual-btn manual2"></label>
+                                    <label for="radio3" class="manual-btn manual3"></label>
+                                    <label for="radio4" class="manual-btn manual4"></label>
+                                    <label for="radio5" class="manual-btn manual4"></label>
+                                    <label for="radio6" class="manual-btn manual2"></label>
+                                    <label for="radio7" class="manual-btn manual3"></label>
+                                    <label for="radio8" class="manual-btn manual4"></label>
+                                    <label for="radio9" class="manual-btn manual4"></label>
+                                </c:if>
+                                <c:if test="${fn:contains(requestScope.countslider,'8')}">
+                                    <label for="radio1" class="manual-btn manual1"></label>
+                                    <label for="radio2" class="manual-btn manual2"></label>
+                                    <label for="radio3" class="manual-btn manual3"></label>
+                                    <label for="radio4" class="manual-btn manual4"></label>
+                                    <label for="radio5" class="manual-btn manual4"></label>
+                                    <label for="radio6" class="manual-btn manual2"></label>
+                                    <label for="radio7" class="manual-btn manual3"></label>
+                                    <label for="radio8" class="manual-btn manual4"></label>
+                                </c:if>
+                                <c:if test="${fn:contains(requestScope.countslider,'7')}">
+                                    <label for="radio1" class="manual-btn manual1"></label>
+                                    <label for="radio2" class="manual-btn manual2"></label>
+                                    <label for="radio3" class="manual-btn manual3"></label>
+                                    <label for="radio4" class="manual-btn manual4"></label>
+                                    <label for="radio5" class="manual-btn manual4"></label>
+                                    <label for="radio6" class="manual-btn manual2"></label>
+                                    <label for="radio7" class="manual-btn manual3"></label>
+                                </c:if>
+                                <c:if test="${fn:contains(requestScope.countslider,'6')}">
+                                    <label for="radio1" class="manual-btn manual1"></label>
+                                    <label for="radio2" class="manual-btn manual2"></label>
+                                    <label for="radio3" class="manual-btn manual3"></label>
+                                    <label for="radio4" class="manual-btn manual4"></label>
+                                    <label for="radio5" class="manual-btn manual4"></label>
+                                    <label for="radio6" class="manual-btn manual2"></label>
+                                </c:if>
+                                <c:if test="${fn:contains(requestScope.countslider,'5')}">
+                                    <label for="radio1" class="manual-btn manual1"></label>
+                                    <label for="radio2" class="manual-btn manual2"></label>
+                                    <label for="radio3" class="manual-btn manual3"></label>
+                                    <label for="radio4" class="manual-btn manual4"></label>
+                                    <label for="radio5" class="manual-btn manual4"></label>
+                                </c:if>
+                                <c:if test="${fn:contains(requestScope.countslider,'4')}">
+                                    <label for="radio1" class="manual-btn manual1"></label>
+                                    <label for="radio2" class="manual-btn manual2"></label>
+                                    <label for="radio3" class="manual-btn manual3"></label>
+                                    <label for="radio4" class="manual-btn manual4"></label>
+                                </c:if>
+                                <c:if test="${fn:contains(requestScope.countslider,'3')}">
+                                    <label for="radio1" class="manual-btn manual1"></label>
+                                    <label for="radio2" class="manual-btn manual2"></label>
+                                    <label for="radio3" class="manual-btn manual3"></label>
+                                </c:if>
+                                <c:if test="${fn:contains(requestScope.countslider,'2')}">
+                                    <label for="radio1" class="manual-btn manual1"></label>
+                                    <label for="radio2" class="manual-btn manual2"></label>
+                                </c:if>
+                                <c:if test="${fn:contains(requestScope.countslider,'1')}">
+                                    <label for="radio1" class="manual-btn manual1"></label>
+                                </c:if>
                             </div>
                         </div>
                     </div>

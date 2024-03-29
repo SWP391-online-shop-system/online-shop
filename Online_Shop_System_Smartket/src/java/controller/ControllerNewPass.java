@@ -19,6 +19,8 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import model.DAOforgotPass;
 import model.EncodeSHA;
 
@@ -47,14 +49,19 @@ public class ControllerNewPass extends HttpServlet {
         boolean check = dao.validatePassword(newPassword);
         RequestDispatcher dispatcher = null;
         String msg = null;
+        String message = "";
         if (check == true) {
             if (newPassword != null && confPassword != null && newPassword.equals(confPassword)) {
                 newPassword = EncodeSHA.transFer(newPassword);
                 int row = dao.rePass(newPassword, (String) session.getAttribute("email"));
                 if (row > 0) {
-                    msg = "đổi thành công";
+                    msg = "Đổi mật khẩu thành công, hãy đăng nhập lại!";
                     request.setAttribute("message", msg);
-                    dispatcher = request.getRequestDispatcher("newPassword.jsp");
+                    String script = "<script>"
+                            + "alert('" + msg + "');"
+                            + "window.location.href='loginURL';"
+                            + "</script>";
+                    response.getWriter().println(script);
                 } else {
                     msg = "xảy ra lỗi";
                     request.setAttribute("message", msg);

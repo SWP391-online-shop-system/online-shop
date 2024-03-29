@@ -522,7 +522,7 @@
                                         <div style="margin-left: 69px;
                                              width: 100%;">
                                             <div class="value-button" id="decrease" onclick="decreaseValue()" value="Decrease Value"><i class="fa-solid fa-minus" style="font-size: 12px;"></i></div>
-                                            <input class="checkInput" name="quantity" type="number" id="number" min="1" value="1" max="<%=unitInStock%>" oninvalid="this.setCustomValidity('Bạn không thể mua quá <%=unitInStock%> sản phẩm')"/>
+                                            <input class="checkInput" name="quantity" type="number" id="number" min="1" value="1" max="<%=unitInStock%>"/>
                                             <div style="margin-right: 10px;" class="value-button" id="increase" onclick="increaseValue()" value="Increase Value"><i class="fa-solid fa-plus" style="font-size: 12px;"></i></div><span>Hàng trong kho: <%=unitInStock%></span><br/>
                                         </div>
                                         <button id="check" type="submit" class="btn btn-success btn-lg" style="padding: 4px 11px;">Mua ngay</button>
@@ -569,7 +569,7 @@
                                 <span style="color: red; text-decoration: line-through"><%=df.format(newPro.getUnitPrice())%>đ
                                 </span>
                                 &nbsp;&nbsp;&nbsp;
-                                <span style="position: absolute;
+                                <span style="
                                       font-size: 14px;
                                       font-family: monospace;
                                       text-align: center;
@@ -600,15 +600,15 @@
                                     <div class="tab-pane fade" id="reviews">
                                         <br/>
                                         <div class="chat-body no-padding profile-message">
+                                            <%
+                                            ResultSet rsFeedBack = (ResultSet)request.getAttribute("rsFeedBack");
+                                            if(!rsFeedBack.isBeforeFirst()){%>
+                                            <div style="font-size: 14px;color: white;margin-left: 57px;padding: 5px 10px; background: #e9ad78;width: 260px;border-radius: 7px;">Chưa có đánh giá cho sản phẩm này</div>
+                                            <%}else{%>
                                             <div style="margin-top: 30px;">
                                                 <ul style="height: 350px;
                                                     overflow-y: scroll;">
-                                                    <%
-                                                    ResultSet rsFeedBack = (ResultSet)request.getAttribute("rsFeedBack");
-                                                    if(!rsFeedBack.isBeforeFirst()){%>
-                                                    <div style="font-size: 14px;color: white;margin-left: -27px;padding: 5px 10px; background: #e9ad78;width: 260px;border-radius: 7px;">Chưa có đánh giá cho sản phẩm này</div>
-                                                    <%}else{
-                                        while(rsFeedBack.next()){%>
+                                                    <%while(rsFeedBack.next()){%>
                                                     <%
                                                     int rateFeedBack = rsFeedBack.getInt(3);
                                                     Product proo = new Product();

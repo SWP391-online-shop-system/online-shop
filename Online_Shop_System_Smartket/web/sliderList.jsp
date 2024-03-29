@@ -42,6 +42,25 @@
             #imageonclick img:hover{
                 transform: scale(1.6);
             }
+            .btnSubmit{
+                background: #66bb6a;
+                border: none;
+                border-radius: 4px;
+                font-size: 15px;
+                padding: 5px;
+                color: white;
+                margin-top: 15px;
+                float: right;
+            }
+            table {
+                border-collapse:separate;
+                border-spacing: 0 1em;
+            }
+            .row-space tr{
+            }
+            .padd{
+                padding-right: 70px;
+            }
         </style>
     </head>
     <%
@@ -70,7 +89,7 @@
                 <div style="position: sticky; top: 30px;">
                     <hr class="sidebar-divider wee-0" style="margin: 0px;">
                     <li class="nav-item active">
-                        <a class="nav-link" href="http://localhost:8080/Smartket/HomePageURL">
+                        <a class="nav-link" href="marketingDashBoardURL">
                             <i class="fas fa-fw fa-tachometer-alt"></i>
                             <span>Thống kê</span></a>
                     </li>
@@ -79,27 +98,33 @@
                         Quản lí
                     </div>
                     <li class="nav-item">
-                        <a class="nav-link" href="http://localhost:8080/Smartket/marketingSliderList">
+                        <a class="nav-link" href="marketingPost">
                             <i class="fas fa-calendar fa-2x text-primary"></i>
-                            <span>Slider</span>
+                            <span>Bài đăng</span>
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="ui-colors.html">
+                        <a class="nav-link" href="marketingProductListURL">
                             <i class="fas fa-shopping-cart fa-2x text-success"></i>
                             <span>Sản phẩm</span>
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="ui-colors.html">
+                        <a class="nav-link" href="marketingCustomerlist">
                             <i class="fas fa-users fa-2x text-info"></i>
                             <span>Khách hàng</span>
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="ui-colors.html">
+                        <a class="nav-link" href="marketingFeedBackListURL">
                             <i class="fas fa-comments fa-2x text-info"></i>
                             <span>Phản hồi</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="marketingSliderList">
+                            <i class="fas fa-comments fa-2x text-info"></i>
+                            <span>Slider</span>
                         </a>
                     </li>
                     <hr class="sidebar-divider">
@@ -110,14 +135,14 @@
                 <div id="content">
                     <!-- TopBar -->
                     <nav class="navbar navbar-expand navbar-light bg-navbar topbar mb-4 static-top">
-                        <div style="font-weight: 700;color: white;font-size: 37px;letter-spacing: 2px;font-family: Nunito,-apple-system,BlinkMacSystemFont"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol","Noto Color Emoji";">Slider</div>
+                        <div style="font-weight: 700;color: white;font-size: 37px;letter-spacing: 2px;font-family: Nunito,-apple-system,BlinkMacSystemFont"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol","Noto Color Emoji";">Trang marketing</div>
                         <ul class="navbar-nav ml-auto">
                             <div class="topbar-divider d-none d-sm-block"></div>
                             <li class="nav-item dropdown no-arrow">
                                 <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown"
                                    aria-haspopup="true" aria-expanded="false">
-                                    <img class="img-profile rounded-circle" src="images/user/default_avatar.jpg" style="max-width: 60px">
-                                    <span class="ml-2 d-none d-lg-inline text-white small">Maman Ketoprak</span>
+                                    <img class="img-profile rounded-circle" src="images/user/${sessionScope.account.userImage}" style="max-width: 60px">
+                                    <span class="ml-2 d-none d-lg-inline text-white small">${sessionScope.account.firstName}&nbsp;${sessionScope.account.lastName}</span>
                                 </a>
                                 <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="userDropdown">
                                     <a class="dropdown-item" href="#">
@@ -125,7 +150,7 @@
                                         Hồ sơ
                                     </a>
                                     <div class="dropdown-divider"></div>
-                                    <a class="dropdown-item" href="javascript:void(0);" data-toggle="modal" data-target="#logoutModal">
+                                    <a class="dropdown-item" href="logout">
                                         <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
                                         Đăng xuất
                                     </a>
@@ -147,7 +172,9 @@
                         </div>
                         <!-- Row -->
                         <div class="row">
-                            <button style="margin-left: 13px;margin-bottom: 8px;" type="button" class="btn btn-secondary" data-toggle="modal" data-target="#exampleModalLong"
+                            <button type="button" class="btnSubmit" style="margin-bottom: 10px;
+                                    margin-top: -9px;
+                                    margin-left: 13px;" data-toggle="modal" data-target="#exampleModalLong"
                                     id="#modalLong">Thêm slider mới</button>
 
                         </div>
@@ -165,8 +192,8 @@
                                                         <div style="padding-top: 3px;">Trạng thái</div>
                                                         <select class="form-control" name="statusfilter" onchange="this.form.submit()">
                                                             <option value="">Trạng thái</option>
-                                                            <option value="true" <c:if test="${fn:contains(requestScope.statusfilter,'true')}">selected</c:if>>Hiện</option>
-                                                            <option value="false" <c:if test="${fn:contains(requestScope.statusfilter,'false')}">selected</c:if>>Ẩn</option>
+                                                            <option value="true" <c:if test="${fn:contains(requestScope.statusfilter,'true')}">selected</c:if>>Hoạt động</option>
+                                                            <option value="false" <c:if test="${fn:contains(requestScope.statusfilter,'false')}">selected</c:if>>Vô hiệu hóa</option>
                                                             </select>
                                                         </div>
                                                         <input type="submit" style="display: none;">
@@ -178,18 +205,18 @@
                                                         <th style="width: 123.9479px">Mã Nhân viên</th>
                                                         <th>Slider</th>
                                                         <th>Đường dẫn</th>
-                                                        <th>Ngày tạo</th>
+                                                        <th style="width: 90px;">Ngày tạo</th>
                                                         <th>Trạng thái</th>						
                                                     </tr> 
                                                 </thead>
                                                 <tbody>
                                                 <c:forEach items="${sessionScope.sliderlist}" var="s">
-                                                    <tr>
-                                                        <td id="tronclick" onclick="sliderDetail(${s.sliderID},${s.sliderStatus})">${s.sliderID}</td>
+                                                    <tr id="tronclick" onclick="sliderDetail(${s.sliderID},${s.sliderStatus})">
+                                                        <td>${s.sliderID}</td>
                                                         <td>${s.userID}</td>
                                                         <td id="imageonclick"><img  style="height: 91px;width: 133px;" src="images/slider/${s.sliderImage}" alt="alt"/></td>
                                                         <td><a href="${s.sliderLink}">${s.sliderLink}</a></td>
-                                                        <td>${s.createDate}</td> 
+                                                        <td>${s.createDate.substring(0,10)}</td> 
                                                         <td><c:choose>
                                                                 <c:when test="${!s.sliderStatus}"> 
                                                                     <span class="badge badge-success" style="height: 20px;
@@ -213,49 +240,6 @@
                                 </div>
                             </div>
                         </div>
-
-                        <!-- Modal Logout -->
-                        <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabelLogout"
-                             aria-hidden="true">
-                            <div class="modal-dialog" role="document">
-                                <div class="modal-content">
-                                    <div class="modal-header">
-                                        <h5 class="modal-title" id="exampleModalLabelLogout">Ohh No!</h5>
-                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                            <span aria-hidden="true">&times;</span>
-                                        </button>
-                                    </div>
-                                    <div class="modal-body">
-                                        <p>Are you sure you want to logout?</p>
-                                    </div>
-                                    <div class="modal-footer">
-                                        <button type="button" class="btn btn-outline-primary" data-dismiss="modal">Cancel</button>
-                                        <a href="login.html" class="btn btn-primary">Logout</a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                    </div>
-                    <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabelLogout"
-                         aria-hidden="true">
-                        <div class="modal-dialog" role="document">
-                            <div class="modal-content">
-                                <div class="modal-header">
-                                    <h5 class="modal-title" id="exampleModalLabelLogout">Ohh No!</h5>
-                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                        <span aria-hidden="true">&times;</span>
-                                    </button>
-                                </div>
-                                <div class="modal-body">
-                                    <p>Are you sure you want to logout?</p>
-                                </div>
-                                <div class="modal-footer">
-                                    <button type="button" class="btn btn-outline-primary" data-dismiss="modal">Cancel</button>
-                                    <a href="login.html" class="btn btn-primary">Logout</a>
-                                </div>
-                            </div>
-                        </div>
                     </div>
                     <div class="modal fade" id="exampleModalLong" tabindex="-1" role="dialog"
                          aria-labelledby="exampleModalLongTitle" aria-hidden="true">
@@ -276,41 +260,40 @@
                                                         if(rsPro.next()) {%>
                                             <input type="hidden" name ="sliderID1"  value="<%=rsPro.getInt(1) + 1%> ">
                                             <%}%>
-                                            <label for="registerEmail">ID: <%=rsPro.getInt(1) + 1%></label>                                               
+                                            <table class="row-space">
+                                                <tr>
+                                                    <td class="padd">SLide ID:</td>
+                                                    <td><input style="margin-left: -33px;" readonly value="<%=rsPro.getInt(1) + 1%>"/></td>
+                                                </tr>
+                                                <tr>
+                                                    <td class="padd">Mã nhân viên:</td>
+                                                    <td><input style="margin-left: -33px;" readonly value="${sessionScope.account.userID}"/></td>
+                                                </tr>
+                                                <tr>
+                                                    <td class="padd">Ảnh slide:</td>
+                                                    <td><input style="width: 204px;margin-left: -16px;" name="sliderImage1" type= "file"required></td>
+                                                </tr>
+                                                <tr>
+                                                    <td class="padd">Đường dẫn:</td>
+                                                    <td><textarea style="margin-left: -53px;" name="sliderLink1"required>${sliderLink1}</textarea></td>
+                                                </tr>
+                                                <tr>
+                                                    <td class="padd">Trạng thái:</td>
+                                                    <td>
+                                                        <div style="display:flex; flex: 40%">
+                                                            <div class="custom-control custom-radio" style="margin-right: 15px;">
+                                                                <input type="radio" id="customRadio3" name="sliderStatus1" class="custom-control-input" value="false" required>
+                                                                <label class="custom-control-label" for="customRadio3">Hoạt động</label>
+                                                            </div>
+                                                            <div class="custom-control custom-radio">
+                                                                <input type="radio" id="customRadio4" name="sliderStatus1" class="custom-control-input" value="true" required>
+                                                                <label class="custom-control-label" for="customRadio4">Vô hiệu hóa</label>
+                                                            </div>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                            </table>
                                         </div>
-                                        <div class="form-element">
-                                            <label for="registerEmail">Mã nhân viên tạo slider: ${sessionScope.account.userID}</label>
-                                            <input type="hidden" name ="userID1" value="${sessionScope.account.userID}">
-                                        </div>
-
-                                        <div class="form-element">
-                                            <label>Slider: </label>
-                                            <input name="sliderImage1" type= "file"
-                                                   required><br>
-                                        </div>
-                                        <div class="form-element">
-                                            <label for="registerEmail">Đường dẫn slider: </label><br>
-                                            <textarea name="sliderLink1"required
-                                                      >${sliderLink1}</textarea>
-                                        </div>
-                                        <div class="form-element">
-                                            <label for="registerEmail">Ngày tạo: ${sessionScope.timetoday}</label>
-                                            <input type="hidden" name ="createDate1" value="${sessionScope.timetoday}">
-                                        </div>
-                                        <div class="form-element">
-                                            <label>Trạng thái: </label>
-                                            <div style="display:flex; flex: 40%">
-                                                <div class="custom-control custom-radio" style="margin-right: 15px;">
-                                                    <input type="radio" id="customRadio3" name="sliderStatus1" class="custom-control-input" value="false" required>
-                                                    <label class="custom-control-label" for="customRadio3">Hiện</label>
-                                                </div>
-                                                <div class="custom-control custom-radio">
-                                                    <input type="radio" id="customRadio4" name="sliderStatus1" class="custom-control-input" value="true" required>
-                                                    <label class="custom-control-label" for="customRadio4">Ẩn</label>
-                                                </div>
-                                            </div>
-                                        </div>
-
                                     </div>
                                     <div class="modal-footer">
                                         <button type="button" class="btn btn-outline-primary" data-dismiss="modal">Close</button>
@@ -339,17 +322,17 @@
 
             <!-- Page level custom scripts -->
             <script>
-                                                            $(document).ready(function () {
-                                                                $('#dataTable').DataTable(); // ID From dataTable 
-                                                                $('#dataTableHover').DataTable(); // ID From dataTable with Hover
-                                                            });
+                                                        $(document).ready(function () {
+                                                            $('#dataTable').DataTable(); // ID From dataTable 
+                                                            $('#dataTableHover').DataTable(); // ID From dataTable with Hover
+                                                        });
             </script>
             <script>
                 function submitForm() {
                     document.getElementById('filterForm').submit();
                 }
-                function sliderDetail(id,status) {
-                    var url = "marketingSliderdetail?id=" + id+"&status="+(status==="false"?0:"1");
+                function sliderDetail(id, status) {
+                    var url = "marketingSliderdetail?id=" + id + "&status=" + (status === "false" ? 0 : "1");
                     window.location.href = url;
                 }
             </script>

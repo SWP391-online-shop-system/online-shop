@@ -100,6 +100,12 @@
                             <span>Phản hồi</span>
                         </a>
                     </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="marketingSliderList">
+                            <i class="fas fa-comments fa-2x text-info"></i>
+                            <span>Slider</span>
+                        </a>
+                    </li>
                     <hr class="sidebar-divider">
                 </div>
             </ul>
@@ -144,7 +150,7 @@
                             </ol>
                         </div>
                         <!-- Row -->
-                        <a href="addProductmkt.jsp" style="margin-bottom: 10px" class="btn btn-secondary">Thêm sản phẩm mới</a>
+                        <a href="marketingAddProductmktURL" style="margin-bottom: 10px" class="btn btn-secondary">Thêm sản phẩm mới</a>
                         <div class="row">
                             <!-- DataTable with Hover -->
                             <div class="col-lg-12">

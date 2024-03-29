@@ -1,4 +1,6 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@page import="java.sql.ResultSet"%>
+<%@page import="java.sql.ResultSet, java.sql.SQLException"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html> 
 <html>
@@ -18,7 +20,56 @@
         <link rel="stylesheet" href="css/css_blog/style.css" type="text/css">
 
     </head>
+
     <body>
+        <style>
+            .rating-group {
+                display: inline-flex;
+            }
+
+            /* make hover effect work properly in IE */
+            .rating__icon {
+                pointer-events: none;
+            }
+
+            /* hide radio inputs */
+            .rating__input {
+                position: absolute !important;
+                left: -9999px !important;
+            }
+
+            /* hide 'none' input from screenreaders */
+            .rating__input--none {
+                display: none
+            }
+
+            /* set icon padding and size */
+            .rating__label {
+                cursor: pointer;
+                padding: 0 0.1em;
+                font-size: 2rem;
+            }
+
+            /* set default star color */
+            .rating__icon--star {
+                color: orange;
+            }
+
+            /* if any input is checked, make its following siblings grey */
+            .rating__input:checked ~ .rating__label .rating__icon--star {
+                color: #ddd;
+            }
+
+            /* make all stars orange on rating group hover */
+            .rating-group:hover .rating__label .rating__icon--star {
+                color: orange;
+            }
+
+            /* make hovered input's following siblings grey on hover */
+            .rating__input:hover ~ .rating__label .rating__icon--star {
+                color: #ddd;
+            }
+        </style>
         <jsp:include page="include/header.jsp"/>
         <!-- Blog Details Hero Begin -->
         <section class="blog-details-hero set-bg" data-setbg="images/blog/breadcrumb2.jpg">
@@ -120,19 +171,47 @@
                 <div class="d-flex justify-content-end row">
                     <div class="d-flex flex-column col-md-8">
                         <div class="coment-bottom bg-white p-2 px-4">
-                            <div  class="d-flex flex-row add-comment-section mt-4 mb-4"><img style="width: 110px;" class="img-fluid img-responsive rounded-circle mr-2" src="https://i.imgur.com/qdiP4DB.jpg" >
-                                <textarea id="id" name="name" rows="4" cols="10" class="form-control mr-3" placeholder="Add comment"></textarea></div>
-                            <input style="    margin-top: -20px;
-                                   margin-left: 390px;" type="submit" class="btn btn-success" value="Tải bình luận">
-                            <div
-                                class="commented-section mt-2">
-                                <div class="d-flex flex-row align-items-center commented-user">
-                                    <div><img style="width: 50px;" class="img-fluid img-responsive rounded-circle mr-2" src="https://i.imgur.com/qdiP4DB.jpg"> </div>
-                                <h5 class="mr-2">Corey oates</h5><span class="dot mb-1"></span><span class="mb-1 ml-2">4 hours ago</span>
+                            <form action="addComment" >
+                                <input type="hidden" name="bid" value=${bid}>
+                                <div>
+                                    <div>
+                                        <div class="rating-group" style="margin-left: 67%;" >
+                                            <input disabled checked class="rating__input rating__input--none" name="rating3" id="rating3-none" value="0" type="radio">
+                                            <label aria-label="1 star" class="rating__label" for="rating3-1"><i class="rating__icon rating__icon--star fa fa-star"></i></label>
+                                            <input class="rating__input" name="rating3" id="rating3-1" value="1" type="radio">
+                                            <label aria-label="2 stars" class="rating__label" for="rating3-2"><i class="rating__icon rating__icon--star fa fa-star"></i></label>
+                                            <input class="rating__input" name="rating3" id="rating3-2" value="2" type="radio">
+                                            <label aria-label="3 stars" class="rating__label" for="rating3-3"><i class="rating__icon rating__icon--star fa fa-star"></i></label>
+                                            <input class="rating__input" name="rating3" id="rating3-3" value="3" type="radio">
+                                            <label aria-label="4 stars" class="rating__label" for="rating3-4"><i class="rating__icon rating__icon--star fa fa-star"></i></label>
+                                            <input class="rating__input" name="rating3" id="rating3-4" value="4" type="radio">
+                                            <label aria-label="5 stars" class="rating__label" for="rating3-5"><i class="rating__icon rating__icon--star fa fa-star"></i></label>
+                                            <input class="rating__input" name="rating3" id="rating3-5" value="5" type="radio">
+                                        </div>
+                                    </div>      
+                                    <div  class="d-flex flex-row add-comment-section mt-4 mb-4"><img style="width: 110px;" class="img-fluid img-responsive rounded-circle mr-2" src="images/user/${userImage}" >
+                                        <textarea id="id" name="comment" rows="4" cols="10" class="form-control mr-3" placeholder="Tạo bình luận"></textarea></div>
+                                    <input style="    margin-top: -20px;
+                                           margin-left: 390px;" type="submit" class="btn btn-success" value="Gửi">
+                            </form>
+                                    <div
+                                        class="commented-section mt-2">
+                                        <%
+           ResultSet rs = (ResultSet)request.getAttribute("rs");
+                                   while(rs.next()) {
+                                        %>
+                                        <div class="d-flex flex-row align-items-center commented-user" style="margin-top: 7%;">
+                                            <div><img style="width: 50px;" class="img-fluid img-responsive rounded-circle mr-2" src="images/user/<%=rs.getString("UserImage")%>"> </div>
+                                            <h5 class="mr-2"><%=rs.getString("LastName")%> <%=rs.getString("FirstName")%></h5>
+                                            <span class="dot mb-1"></span>
+                                            <span class="mb-1 ml-2" style="margin-top: 4px;"><i class="fas fa-calendar-alt"></i> <%=rs.getString("CommentDate")%></span>
+                                            <span class="mb-1 ml-2" style="margin-top: 4px;"><i class="fas fa-star" style="color: orange;;"></i> <%=rs.getString("CommentRate")%></span>
+                                        </div>
+                                        <div class="comment-text-sm"><span><%=rs.getString("CommentContent")%></span></div>
+                                                <% }
+                                                %>
+                                    </div>
                                 </div>
-                                <div class="comment-text-sm"><span>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</span></div>
-
-                            </div>
                         </div>
                     </div>
                 </div>

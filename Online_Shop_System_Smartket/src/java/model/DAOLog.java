@@ -16,41 +16,53 @@ import view.Log;
  */
 public class DAOLog extends DBConnect {
 
+    /*
+       int ID;
+     int LogTopic;
+     String LogType;
+     int UpdateBy;
+     String UpdateAt;
+     String Purpose;
+     */
     public int insertLog(Log log) {
         int n = 0;
-        String sql = "INSERT INTO `online_shop_system`.`loghistory`(`UserId`,`updateBy`,`updateAt`,`purpose`)\n"
-                + "VALUES(?,?,CURRENT_TIMESTAMP,?);";
+        String sql = "INSERT INTO `online_shop_system`.`loghistory`(`ID`,`LogTopic`,`LogType`,`UpdateBy`,`UpdateAt`,`Purpose`)\n"
+                + "VALUES(?,?,?,?,CURRENT_TIMESTAMP,?);";
         try {
             PreparedStatement pre = conn.prepareStatement(sql);
-            pre.setInt(1, log.getUserId());
-            pre.setInt(2, log.getUpdateBy());
-            pre.setString(3, log.getPurpose());
+            pre.setInt(1, log.getID());
+            pre.setInt(2, log.getLogTopic());
+            pre.setString(3, log.getLogType());
+            pre.setInt(4, log.getUpdateBy());
+            pre.setString(5, log.getPurpose());
             n = pre.executeUpdate();
         } catch (SQLException ex) {
         }
         return n;
     }
 
-//    public int updateLog(Log cart, int oldid) {
-//        int n = 0;
-//        String sql = "UPDATE `online_shop_system`.`cart`\n"
-//                + "SET\n"
-//                + "`UserID` = ?,\n"
-//                + "`ProductID` = ?,\n"
-//                + "`Quantity` = ?\n"
-//                + "WHERE `UserID` = ?;";
-//        try {
-//            // number ? = number fields
-//            // index of ? start is 1
-//            PreparedStatement pre = conn.prepareStatement(sql);
-//            pre.setInt(1, cart.getUserId());
-//            pre.setInt(2, cart.getProductId());
-//            pre.setInt(3, cart.getQuantity());
-//            pre.setInt(4, oldid);
-//            n = pre.executeUpdate();
-//        } catch (SQLException ex) {
-//            Logger.getLogger(DAOCart.class.getName()).log(Level.SEVERE, null, ex);
-//        }
-//        return n;
-//    }
+    public String convertTopic(int LogTopic) {
+        String result = "";
+        switch (LogTopic) {
+            case 1:
+                result = "Sản phẩm";
+                break;
+            case 2:
+                result = "Khách hàng";
+                break;
+            case 3:
+                result = "Slide";
+                break;
+            case 4:
+                result = "Bài đăng";
+                break;
+            case 5:
+                result = "Phản hồi";
+                break;
+            case 6:
+                result = "Đơn hàng";
+                break;
+        }
+        return result;
+    }
 }

@@ -98,10 +98,11 @@ public class ControllerFeedBackList extends HttpServlet {
                 sql += " FeedbackRate = " + ProductRate_raw;
             }
         }
-        System.out.println("after cal sql = "+sql);
         rsFeedBack = daoF.getData(sql);
+        ResultSet rsProductSelect= daoF.getData("select ProductID from FeedBack group by ProductID;");
         request.setAttribute("rsFeedBack", rsFeedBack);
         request.setAttribute("status", status);
+        request.setAttribute("rsProductSelect", rsProductSelect);
         request.setAttribute("productID", productID);
         request.setAttribute("feedBackRate", feedBackRate);
         request.getRequestDispatcher("feedbackList.jsp").forward(request, response);

@@ -30,6 +30,13 @@ public class Setting {
         this.SettingStatus = SettingStatus;
         this.CreateDate = CreateDate;
     }
+     public Setting( String SettingName, int SettingOrder, String SettingValue, String SettingDescription, int SettingStatus) {
+        this.SettingName = SettingName;
+        this.SettingOrder = SettingOrder;
+        this.SettingValue = SettingValue;
+        this.SettingDescription = SettingDescription;
+        this.SettingStatus = SettingStatus;
+    }
 
     public int getSettingID() {
         return SettingID;

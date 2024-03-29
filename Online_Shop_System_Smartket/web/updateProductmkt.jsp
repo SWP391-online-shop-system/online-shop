@@ -164,10 +164,10 @@
                                             <select name="categoryId">
                                                 <%
                                                     DAOCategories dao = new DAOCategories();
-                                                    Product p1 = (Product)request.getAttribute("product");
-                                                    Vector<Categories> categories = dao.getCategories("Select * from categories");
-                                                    for(Categories categ: categories){%>
-                                                <option value="<%=categ.getCategoryID()%>"<%=categ.getCategoryID()== p1.getCategoryID() ? "selected": ""%> ><%=categ.getCategoryName()%></option>
+                                                    int p1 = (int)request.getAttribute("cateid");
+                                                    ResultSet rscate = dao.getData("Select * from categories");
+                                                    while(rscate.next()){%>
+                                                <option value="<%=rscate.getInt("CategoryID")%>"<%=rscate.getInt("CategoryID")== p1 ? "selected": ""%> ><%=rscate.getString("CategoryName")%></option>
                                                 <%}%>
                                             </select>
                                         </div>
@@ -215,7 +215,7 @@
                                             <p class="mb-0">Tổng số sản phẩm</p>
                                         </div>
                                         <div class="col-sm-9">
-                                            <input type="number" name="totalStock" id="totalStock" value="${product.totalStock}">
+                                            <input type="number" name="totalStock" id="totalStock" value="${product.totalStock}" readonly>
                                         </div>
                                     </div>
                                     <hr>
@@ -254,14 +254,14 @@
 
                                         <% int count = 0;
                                         int cateId = 0;
-                                        Product p = (Product) request.getAttribute("product");
+                                        int proId = (int)request.getAttribute("proId");
                                         DAOProductImage daoPi = new DAOProductImage();
-                                        ProductImage pi = daoPi.getProductImageByProductID(p.getProductID());
-                                        ResultSet cate = daoPi.getData("select * from product where productID = " + p.getProductID());
+                                        //ProductImage pi = daoPi.getProductImageByProductID(p.getProductID());
+                                        ResultSet cate = daoPi.getData("select * from product where productID = " + proId);
                                         while (cate.next()) {
                                             cateId = cate.getInt("CategoryID");
                                         }
-                                        ResultSet rss = daoPi.getData("select * from ProductImage where ProductId = " + p.getProductID());
+                                        ResultSet rss = daoPi.getData("select * from ProductImage where ProductId = " + proId);
                                         int radioChoice = (int)request.getAttribute("radioChoice");
                                         while (rss.next()) {
                                             count++;
@@ -305,10 +305,10 @@
                                     while(logger.next()){
                                     countLog++;
                                         DAOUser daoU = new DAOUser();
-                                        ResultSet mkt = daoU.getData("SELECT * FROM online_shop_system.user where userID = " + logger.getInt(2));
+                                        ResultSet mkt = daoU.getData("SELECT * FROM online_shop_system.user where userID = " + logger.getInt("UpdateBy"));
                                     %>
                                     <p id="logcheck" style="margin-bottom: 15px;"><%=countLog%> - <%while(mkt.next()){%>Nhân viên <%=mkt.getString("FirstName")+" "+mkt.getString("LastName")%> <%}%>
-                                        <%=logger.getString(4)%> vào <span style="color: black;"><%=logger.getString(3).substring(0,10)%>, lúc <%=logger.getString(3).substring(10)%></span></p>
+                                        <%=logger.getString(4)%> mã ${product.productID} vào <span style="color: black;"><%=logger.getString("UpdateAt").substring(0,10)%>, lúc <%=logger.getString("UpdateAt").substring(10)%></span></p>
                                         <%}%>
                                 </div>                                         
                             </div>
@@ -327,5 +327,16 @@
                         return true;
                     }
                 </script>
+                <a class="scroll-to-top rounded" href="#page-top">
+                    <i class="fas fa-angle-up"></i>
+                </a>
+                <script src="vendor/jquery/jquery.min.js"></script>
+                <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+                <script src="vendor/jquery-easing/jquery.easing.min.js"></script>
+                <script src="js_marketing/ruang-admin.min.js"></script>
+                <script src="vendor/chart.js/Chart.min.js"></script>
+                <script src="js_marketing/demo/chart-area-demo.js"></script>  
+                <script src="vendor/datatables/jquery.dataTables.min.js"></script>
+                <script src="vendor/datatables/dataTables.bootstrap4.min.js"></script>
                 </body>
                 </html>

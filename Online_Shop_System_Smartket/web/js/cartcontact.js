@@ -67,22 +67,21 @@ function addNewAdd() {
     var district = document.getElementById("district").value;
     var ward = document.getElementById("ward").value;
     var addressDetail = document.getElementById("newAddressDetail").value;
-    if (name === "" || phone === "" || email === "" || city === "" || district === "" || ward === "" || addressDetail === "" || gender_check === null) {
-        swal.fire({
-            icon: 'error',
-            title: 'Không thành công!',
-            text: 'Vui lòng điền đầy đủ thông tin',
-            showConfirmButton: false,
-            timer: 1500
-        });
-    } else {
+//    if (name === "" || phone === "" || email === "" || city === "" || district === "" || ward === "" || addressDetail === "" || gender_check === null) {
+//        swal.fire({
+//            icon: 'error',
+//            title: 'Không thành công!',
+//            text: 'Vui lòng điền đầy đủ thông tin',
+//            showConfirmButton: false,
+//            timer: 1500
+//        });
+//    } else {
         var gender = document.querySelector('input[name="newGender"]:checked').value;
         $.ajax({
             type: "POST",
             url: "contactURL",
             data: {service: "addAddress", name: name, phone: phone, email: email, gender: gender, city: city, district: district, ward: ward, addressDetail: addressDetail},
-            success: function (response) {
-                console.log(response);
+                success: function (response) {
                 swal.fire({
                     icon: 'success',
                     title: 'Thành công!',
@@ -95,6 +94,7 @@ function addNewAdd() {
                     }, 600);
                 var modalBody = document.querySelector('#DS .modal-body');
                 modalBody.innerHTML += response;
+//                $("#page-top").html(response);
             },
             error: function (xhr, status, error) {
                 // Xử lý lỗi
@@ -102,7 +102,7 @@ function addNewAdd() {
             }
         });
     }
-}
+//}
 function validateInput(input) {
     if (input.validity.valid) {
         input.classList.remove('is-invalid');

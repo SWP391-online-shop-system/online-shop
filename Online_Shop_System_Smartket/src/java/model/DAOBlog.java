@@ -21,7 +21,27 @@ import view.Categories;
  * @author admin
  */
 public class DAOBlog extends DBConnect {
+    
+    public int addComment(int BlogID, int UserID, String CommentContent, int CommentRate) {
+        int n = 0;
+        String sql = "INSERT INTO Comments (BlogID, UserID, CommentContent, CommentRate, CommentDate)\n"
+                + "VALUES (?, ?, ?, ?, curtime());";
+        try {
+            // number ? = number fields
+            // index of ? start is 1
+            PreparedStatement pre = conn.prepareStatement(sql);
+            pre.setInt(1, BlogID);
+            pre.setInt(2, UserID);
+            pre.setString(3, CommentContent);
+            pre.setInt(4, CommentRate);
+            n = pre.executeUpdate();
+        } catch (SQLException ex) {
+            System.out.println("error at line 62 in DAOFeedBack: " + ex);
+        }
+        return n;
 
+    }
+    
     public int editBlog(int CategoryID, String BlogAuthor, String AuthorImage, String BlogImage, String BlogTitle, String BlogContent, int HiddenStatus, String CreateTime, int BlogID) {
         int n = 0;
         String sql = "UPDATE Blog\n"
@@ -448,12 +468,12 @@ public class DAOBlog extends DBConnect {
 
     public static void main(String[] args) {
         DAOBlog dao = new DAOBlog();
-        List<Blog> list = dao.getAuthor();
+        dao.addComment(4, 1, "djsfkljdsaklfjsdakljflkasdjfklsadj", 3);
         Blog b = dao.getBlogByID(1);
         int count = dao.ChangeHidden(0, 7);
-        for (Blog o : list) {
-            System.out.println(o);
-        }
+//        for (Blog o : list) {
+//            System.out.println(o);
+//        }
         System.out.println(count);
     }
 }

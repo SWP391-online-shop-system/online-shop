@@ -100,6 +100,12 @@
                             <span>Phản hồi</span>
                         </a>
                     </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="marketingSliderList">
+                            <i class="fas fa-comments fa-2x text-info"></i>
+                            <span>Slider</span>
+                        </a>
+                    </li>
                     <hr class="sidebar-divider">
                 </div>
             </ul>
@@ -154,8 +160,10 @@
                             <div class=" ">                                
                                 <div class="row">
                                     <%
-                                         user = daoU.getUserByUserID(fb.getUserID());
-                                         product = daoP.getProductById(fb.getProductID());
+                                        ResultSet rsuser = daoU.getData("select * from User where UserID = "+fb.getUserID());
+                                        ResultSet rsproduct = daoU.getData("select * from Product where ProductID = "+fb.getProductID());
+                                        if(rsuser.next() && rsproduct.next()){
+                                        
                                     %>
                                     <div class="col-lg-2">
                                         <div class="card mb-4"style="height: 46px;
@@ -175,7 +183,7 @@
                                                         <p class="mb-0">Tên đầy đủ</p>
                                                     </div>
                                                     <div class="col-sm-9">
-                                                        <p class="text-muted mb-0"><%=user.getFirstName()+" "+user.getLastName()%></p>
+                                                        <p class="text-muted mb-0"><%=rsuser.getString("FirstName")+" "+rsuser.getString("LastName")%></p>
                                                     </div>
                                                 </div>
                                                 <hr>
@@ -184,7 +192,7 @@
                                                         <p class="mb-0">Email</p>
                                                     </div>
                                                     <div class="col-sm-9">
-                                                        <p class="text-muted mb-0"><%=user.getEmail()%></p>
+                                                        <p class="text-muted mb-0"><%=rsuser.getString("Email")%></p>
                                                     </div>
                                                 </div>
                                                 <hr>
@@ -193,7 +201,7 @@
                                                         <p class="mb-0">Số điện thoại</p>
                                                     </div>
                                                     <div class="col-sm-9">
-                                                        <p class="text-muted mb-0"><%=user.getPhoneNumber()%></p>
+                                                        <p class="text-muted mb-0"><%=rsuser.getString("PhoneNumber")%></p>
                                                     </div>
                                                 </div>
 
@@ -214,7 +222,7 @@
                                                         <p class="mb-0">Tên sản phẩm</p>
                                                     </div>
                                                     <div class="col-sm-9">
-                                                        <p><%=product.getProductName()%></p>
+                                                        <p><%=rsproduct.getString("ProductName")%></p>
                                                     </div>
                                                 </div>
                                                 <hr>
@@ -241,29 +249,30 @@
                                                         <p class="mb-0">Nội dung đánh giá</p>
                                                     </div>
                                                     <div class="col-sm-9">
-                                                        <p class="text-muted mb-0"><textarea><%=fb.getFeedBackContent()%></textarea></p>
+                                                        <p class="text-muted mb-0"><textarea readonly><%=fb.getFeedBackContent()%></textarea></p>
                                                     </div>
                                                 </div>
                                                 <hr>
+                                                <%}%>
                                                 <%int afterStatus = (int)request.getAttribute("afterStatus");%>
                                                 <div class="col-sm-3" style="min-width: 250px;margin-bottom: 5px;">
                                                     <p class="mb-0">Trạng thái: <span id="statusMess"><%=afterStatus==1?"Đã vô hiệu hóa":"Đang kích hoạt"%></span></p>
                                                 </div>
-                                                    <form class="col-sm-9" id="myForm" method="get" action="marketingFeedBackDetailURL">
-                                                        <input type="hidden" id="statusInput" name="status" value="<%=fb.isFeedBackStatus()?"1":"0"%>">
-                                                        <input type="hidden" name="FeedBackID" value="<%=fb.getFeedBackID()%>">
-                                                        <input type="hidden" name="uid" value="<%=fb.getUserID()%>">
-                                                        <div class="custom-control custom-switch">
-                                                            <input type="checkbox" class="custom-control-input" id="customSwitch1" onchange="updateStatus();"value="<%=fb.isFeedBackStatus()%>"
-                                                        <%=afterStatus==1?"":"checked"%>/>
-                                                            <label class="custom-control-label" for="customSwitch1"></label>
-                                                        </div>
-                                                    </form>
-                                                  </div>
-                                               </div>
+                                                <form class="col-sm-9" id="myForm" method="get" action="marketingFeedBackDetailURL">
+                                                    <input type="hidden" id="statusInput" name="status" value="<%=fb.isFeedBackStatus()?"1":"0"%>">
+                                                    <input type="hidden" name="FeedBackID" value="<%=fb.getFeedBackID()%>">
+                                                    <input type="hidden" name="uid" value="<%=fb.getUserID()%>">
+                                                    <div class="custom-control custom-switch">
+                                                        <input type="checkbox" class="custom-control-input" id="customSwitch1" onchange="updateStatus();"value="<%=fb.isFeedBackStatus()%>"
+                                                               <%=afterStatus==1?"":"checked"%>/>
+                                                        <label class="custom-control-label" for="customSwitch1"></label>
+                                                    </div>
+                                                </form>
                                             </div>
                                         </div>
-                                                               <div class="row" style="    height: 300px;
+                                    </div>
+                                </div>
+                                <div class="row" style="    height: 300px;
                                      width: 97%;
                                      max-height: 300px;
                                      overflow-y: scroll;
@@ -276,14 +285,16 @@
                                                    color: black;">Lịch sử thay đổi trạng thái</p>
                                                 <div id="">
                                                     <%int countLog = 0;
+                                                    DAOUser dao = new DAOUser();
                                                     while(logger.next()){
+                                                    ResultSet rsuser2 = dao.getData("select * from User where UserID = "+fb.getUserID());
+                                                    if(rsuser2.next()){
                                                     countLog++;
-                                                        DAOUser dao = new DAOUser();
-                                                        ResultSet mkt = dao.getData("SELECT * FROM online_shop_system.user where userID = " + logger.getInt(2));
+                                                        ResultSet mkt = dao.getData("SELECT * FROM online_shop_system.user where userID = " + logger.getInt("UpdateBy"));
                                                     %>
                                                     <p id="logcheck" style="margin-bottom: 15px;"><%=countLog%> - <%while(mkt.next()){%>Nhân viên <%=mkt.getString("FirstName")+" "+mkt.getString("LastName")%> <%}%>
-                                                         <%=logger.getString(4)%> của <%=logger.getString("FirstName")+" "+logger.getString("LastName")%> vào <span style="color: black;"><%=logger.getString(3).substring(0,10)%>, lúc <%=logger.getString(3).substring(10)%></span></p>
-                                                        <%}%>
+                                                        <%=logger.getString("purpose")%> mã <%=fb.getFeedBackID()%> của người dùng <%=rsuser2.getString("FirstName")+" "+rsuser2.getString("LastName")%> vào <span style="color: black;"><%=logger.getString("UpdateAt").substring(0,10)%>, lúc <%=logger.getString("UpdateAt").substring(10)%></span></p>
+                                                        <%}}%>
                                                 </div>                                         
                                             </div>
                                         </div>
@@ -323,7 +334,7 @@
                 <!---Container Fluid-->
             </div>
         </div>
-       <!-- Scroll to top -->
+        <!-- Scroll to top -->
         <a class="scroll-to-top rounded" href="#page-top">
             <i class="fas fa-angle-up"></i>
         </a>
