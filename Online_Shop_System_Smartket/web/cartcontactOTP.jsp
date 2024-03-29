@@ -32,6 +32,7 @@
             }
             a{
                 color: black;
+                text-decoration: none !important;
             }
             .btn-back{
                 margin-left: 1.25rem;

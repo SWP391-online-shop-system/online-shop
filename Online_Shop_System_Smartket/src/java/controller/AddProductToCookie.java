@@ -12,11 +12,7 @@ import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import jakarta.servlet.http.HttpSession;
-import java.sql.ResultSet;
-import model.DAOCart;
 import model.DAOProduct;
-import view.User;
 
 /**
  *
@@ -39,13 +35,22 @@ public class AddProductToCookie extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         try ( PrintWriter out = response.getWriter()) {
             String proId = request.getParameter("proId");
-            log(proId);
+            String[] checkProId = proId.split("\\.");
+            DAOProduct dao = new DAOProduct();
+            boolean check = false;
             if (proId.isEmpty()) {
                 response.getWriter().write("0");
             } else {
-                Cookie cookie = new Cookie("productCookie", proId);
-                response.addCookie(cookie);
-                response.getWriter().write("1");
+                for (String proIdCheck : checkProId) {
+                    check = dao.checkQuantity(proIdCheck);
+                }
+                if (check) {
+                    Cookie cookie = new Cookie("productCookie", proId);
+                    response.addCookie(cookie);
+                    response.getWriter().write("1");
+                } else{
+                    response.getWriter().write("2");
+                }
             }
         }
     }

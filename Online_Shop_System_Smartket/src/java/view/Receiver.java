@@ -30,14 +30,13 @@ public class Receiver {
         this.note = note;
     }
 
-    public Receiver(int OrderID, String ReceiverName, Boolean ReceiverGender, String ReceiverPhoneNumber, String ReceiverEmail, String RceiverAddress, String note) {
+    public Receiver(int OrderID, String ReceiverName, Boolean ReceiverGender, String ReceiverPhoneNumber, String ReceiverEmail, String RceiverAddress ) {
         this.OrderID = OrderID;
         this.ReceiverName = ReceiverName;
         this.ReceiverGender = ReceiverGender;
         this.ReceiverPhoneNumber = ReceiverPhoneNumber;
         this.ReceiverEmail = ReceiverEmail;
         this.RceiverAddress = RceiverAddress;
-        this.note = note;
     }
     
     @Override

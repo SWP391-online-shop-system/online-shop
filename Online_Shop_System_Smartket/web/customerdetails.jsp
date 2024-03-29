@@ -121,8 +121,8 @@
                         <section>
                             <div class=" ">                                
                                 <div class="row">
-                                    <%int afterStatus = (int)request.getAttribute("afterStatus");
-                                    if(rs.next()){
+                                    <%int status = (int)request.getAttribute("status");
+                                    while(rs.next()){
                                     %>
                                     <div class="col-lg-2">
                                         <div class="card mb-4">
@@ -210,11 +210,11 @@
                                                         <div class="custom-control custom-switch" style="float: left;padding: 0;">
                                                             <div style="display: flex;margin-left: 35px;">
                                                                 <div style="">
-                                                                    <input type="checkbox" class="custom-control-input" id="customSwitch1" onchange="updateStatus();"
-                                                                           <%if(rs.getInt("UserStatus")==0){%>disabled<%}%> <%=(afterStatus==2?"checked":"")%>> 
+                                                                    <input type="checkbox" class="custom-control-input" id="customSwitch1" onchange="updateStatus()"
+                                                                           <%if(rs.getInt("UserStatus")==0){%>disabled<%}%> <%=(status==1?"checked":"")%>> 
                                                                     <label class="custom-control-label" for="customSwitch1"></label>
                                                                 </div>
-                                                                <div id="statusMess"><%=afterStatus==2?"Đang kích hoạt":"Đã vô hiệu hóa"%></div>
+                                                                <div id="statusMess"><%=status==1?"Đang kích hoạt":"Đã vô hiệu hóa"%></div>
                                                             </div>
                                                         </div>
                                                     </form>
@@ -234,8 +234,7 @@
                                     </div>
 
                                 </div>
-                                <%}%>
-
+                                <%  } rs.close();%>
                             </div>
                             <div class="row" style="height: 300px;
                                  width: 97%;
@@ -249,10 +248,10 @@
                                             <div>
                                                 <%int countLog = 0;while(log.next()){countLog++;%>
                                                 <%DAOUser dao = new DAOUser();
-                                                ResultSet mkt = dao.getData("SELECT * FROM online_shop_system.user where userID = " + log.getInt(2));%>
-                                                <p><%=countLog%>. <%while(mkt.next()){%>Nhân viên <%=mkt.getString("FirstName")+" "+mkt.getString("LastName")%> <%}%>
+                                                User mkt = dao.getUserByUserID(log.getInt("UpdateBy"));%>
+                                                <p><%=countLog%>. Nhân viên <%=mkt.getFirstName()+" "+mkt.getLastName()%> 
                                                     đã <%=log.getString(4)%> <%=log.getString("FirstName")+" "+log.getString("LastName")%> vào <%=log.getString(3)%></p>
-                                                    <%}%>
+                                                    <%}log.close();%>
                                             </div>                                         
                                         </div>
                                     </div>
@@ -266,24 +265,16 @@
         </div>
         <script>
             function updateStatus() {
-                console.log("updateStatus start");
-                var status = $('#customSwitch1').prop('checked') ? 1 : 2;
+                var status = $('#customSwitch1').prop('checked') ? 2 : 1;
                 var uid = document.getElementById("uidStatus").value;
                 var mess = document.getElementById("statusMess");
-                if (status === 1) {
-                    mess.innerHTML = 'Đã vô hiệu hóa';
-                }
-                if (status === 2) {
-                    mess.innerHTML = 'Đang kích hoạt';
-                }
-
                 $.ajax({
                     url: "marketingCustomerDetail",
                     type: 'GET',
-                    data: {status: status, uid: uid},
+                    data: {status: status, uid: uid, service: "changeStatus"},
                     success: function (data) {
-
                         $("#page-top").html(data);
+
                     },
                     error: function (xhr, status, error) {
                         // Handle error if needed

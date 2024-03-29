@@ -42,9 +42,10 @@ public class Order {
         this.QrImage = QrImage;
     }
 
-    public Order(int userID, int saleID, double totalPrice, int StatusID) {
+    public Order(int userID, int saleID, int Quantity, double totalPrice, int StatusID) {
         this.userID = userID;
         this.saleID = saleID;
+        this.Quantity = Quantity;
         this.totalPrice = totalPrice;
         this.statusID = StatusID;
     }

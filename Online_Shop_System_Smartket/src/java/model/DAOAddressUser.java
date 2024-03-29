@@ -57,6 +57,51 @@ public class DAOAddressUser extends DBConnect {
         return n;
     }
 
+    public int updateAdd(AddressUser add) {
+        int n = 0;
+        String sql = "UPDATE `online_shop_system`.`addressuser`\n"
+                + "SET\n"
+                + "`UserID` = ?,\n"
+                + "`Name` = ?,\n"
+                + "`CityDistrictWard` = ?,\n"
+                + "`AddDetail` = ?,\n"
+                + "`Phone` = ?,\n"
+                + "`Email` = ?,\n"
+                + "`Gender` = ?\n"
+                + "WHERE `AddressID` = ?";
+        try {
+            PreparedStatement pre = conn.prepareStatement(sql);
+            pre.setInt(1, add.getUserId());
+            pre.setString(2, add.getName());
+            pre.setString(3, add.getCityDistrictWard());
+            pre.setString(4, add.getAddressDetail());
+            pre.setString(5, add.getPhone());
+            pre.setString(6, add.getEmail());
+            pre.setBoolean(7, add.isGender());
+            pre.setInt(8, add.getAddId());
+            n = pre.executeUpdate();
+            pre.close();
+        } catch (SQLException ex) {
+        }
+        return n;
+    }
+
+    public int deleteAdd(int addId) {
+        int n = 0;
+        String sql = "DELETE FROM `online_shop_system`.`addressuser`\n"
+                + "WHERE `AddressID` = ?;";
+
+        try {
+            PreparedStatement pre = conn.prepareStatement(sql);
+            pre.setInt(1, addId);
+            n = pre.executeUpdate();
+            pre.close();
+        } catch (SQLException ex) {
+        }
+
+        return n;
+    }
+
     public int clearStatus(int userId) {
         int n = 0;
         String sql = "UPDATE `online_shop_system`.`addressuser`\n"

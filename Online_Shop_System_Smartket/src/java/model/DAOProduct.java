@@ -674,6 +674,30 @@ public class DAOProduct extends DBConnect {
         }
         return n;
     }
+
+    public boolean checkQuantity(String proId) {
+        int quantityInCart = 0, quantityProduct = 0;
+        String cart = "SELECT * FROM online_shop_system.cart where ProductID = " + proId + ";";
+        String product = "SELECT * FROM online_shop_system.product where ProductID = " + proId + ";";
+        try {
+            PreparedStatement stCart = conn.prepareStatement(cart);
+            ResultSet rsCart = stCart.executeQuery();
+            while (rsCart.next()) {
+                quantityInCart = rsCart.getInt("Quantity");
+            }
+            PreparedStatement stProduct = conn.prepareStatement(product);
+            ResultSet rsProduct = stProduct.executeQuery();
+            while (rsProduct.next()) {
+                quantityProduct = rsProduct.getInt("UnitInStock");
+            }
+            if (quantityInCart > quantityProduct) {
+                return false;
+            }
+        } catch (SQLException e) {
+            System.out.println(e);
+        }
+        return true;
+    }
 //    public static void main(String[] args) {
 //        DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
 //        Calendar calendar = Calendar.getInstance();

@@ -682,7 +682,7 @@
                             <%if(statusName.equals("Chờ xác nhận")){%>
                             <%DAOReceiver daoRece = new DAOReceiver();
                                 String email = daoRece.getEmailById(rsOrderGroup.getInt("OrderID"));%>
-                            <a href="CartcontactOTPVerify?email=<%=email%>&oid=<%=rsOrderGroup.getInt("OrderID")%>" class="btn btn-warning btn-lg" style="float: right;
+                            <a href="CartcontactOTPVerify?service=sendOTP&email=<%=email%>&oid=<%=rsOrderGroup.getInt("OrderID")%>" class="btn btn-warning btn-lg" style="float: right;
                                margin-right: 232px;
                                margin-bottom: -30px;
                                margin-top: 7px;

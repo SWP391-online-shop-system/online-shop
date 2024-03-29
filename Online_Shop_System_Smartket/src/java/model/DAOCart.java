@@ -177,6 +177,12 @@ public class DAOCart extends DBConnect {
         Vector<Cart> vector = dao.getCart(sql);
         return vector.firstElement();
     }
+    public Cart getCartById(int userID, int productID) {
+        String sql = "select * from `online_shop_system`.`cart` where `ProductID` =" + productID;
+        DAOCart dao = new DAOCart();
+        Vector<Cart> vector = dao.getCart(sql);
+        return vector.firstElement();
+    }
 
     public void updateQuantity(int userID, int productID, int quantity) {
         String sql = "UPDATE `online_shop_system`.`cart`\n"

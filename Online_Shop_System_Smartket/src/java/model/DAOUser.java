@@ -124,11 +124,13 @@ public class DAOUser extends DBConnect {
             pre.setInt(1, status);
             pre.setInt(2, uid);
             n = pre.executeUpdate();
+            pre.close();
         } catch (SQLException ex) {
         }
         return n;
     }
-       public int updateRole(int uid, int role) {
+
+    public int updateRole(int uid, int role) {
         int n = 0;
         String sql = "UPDATE `online_shop_system`.`user`\n"
                 + "SET`roleID` = ? WHERE `UserID` = ?;";
@@ -193,7 +195,6 @@ public class DAOUser extends DBConnect {
     }
 
     public User getUserByUserID(int id) {
-
         String sql = "select * from user where UserID =" + id;
         try {
             PreparedStatement st = conn.prepareStatement(sql);

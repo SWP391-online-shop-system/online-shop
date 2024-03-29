@@ -26,15 +26,16 @@ public class DAOOrder extends DBConnect {
     public int insertOrderByPreparedReturnId(Order order) {
         int n = 0;
         String sql = "INSERT INTO `online_shop_system`.`order`\n"
-                + "(`UserID`,`SaleID`,`TotalPrice`,`OrderDate`,`StatusID`,`OrderStatus`)\n"
+                + "(`UserID`,`SaleID`,`Quantity`,`TotalPrice`,`OrderDate`,`StatusID`,`OrderStatus`)\n"
                 + "VALUES\n"
-                + "(?,?,?,current_timestamp(),?,1);";
+                + "(?,?,?,?,current_timestamp(),?,1);";
         try {
             PreparedStatement pre = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
             pre.setInt(1, order.getUserID());
             pre.setInt(2, order.getSaleID());
-            pre.setDouble(3, order.getTotalPrice());
-            pre.setInt(4, order.getStatusID());
+            pre.setInt(3, order.getQuantity());
+            pre.setDouble(4, order.getTotalPrice());
+            pre.setInt(5, order.getStatusID());
             n = pre.executeUpdate();
             ResultSet key = pre.getGeneratedKeys();
             if (key.next()) {
@@ -201,6 +202,21 @@ public class DAOOrder extends DBConnect {
         } catch (Exception e) {
         }
         return 0;
+    }
+        public int getQuantityOfOrder(int orderId, int productId) {
+        String sql = "SELECT * FROM online_shop_system.orderdetail where OrderID =? and ProductID = ?;";
+        int quantity = 0;
+        try {
+            PreparedStatement st = conn.prepareStatement(sql);
+            st.setInt(1, orderId);
+            st.setInt(2, productId);
+            ResultSet rs = st.executeQuery();
+            while (rs.next()) {
+                quantity= rs.getInt("QuantityPerUnit");
+            }
+        } catch (SQLException e) {
+        }
+        return quantity;
     }
 
     public Order getOrderById(int OrderID) {

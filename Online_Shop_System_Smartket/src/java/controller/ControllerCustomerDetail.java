@@ -13,6 +13,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import model.DAOLog;
 import model.DAOUser;
 import view.Log;
@@ -55,45 +56,60 @@ public class ControllerCustomerDetail extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         /* TODO output your page here. You may use following sample code. */
-        System.out.println("ajax in");
         DAOUser dao = new DAOUser();
         DAOLog daoLog = new DAOLog();
         HttpSession session = request.getSession();
         User user = (User) session.getAttribute("account"); //nhan vien
         if (user == null) {
             response.sendRedirect("HomePageURL");
-        }
-        String cusID = request.getParameter("uid"); // khach hang
-        User u1 = dao.getUserByUserID(Integer.parseInt(cusID));
-        String status_raw = request.getParameter("status");
-        int status = 0;
-        if (status_raw == null || status_raw.equals("")) {
-            status = u1.getUserStatus();
         } else {
-            status = Integer.parseInt(status_raw);
+            String service = request.getParameter("service");
+            String status_raw = request.getParameter("status");
+            String cusID = request.getParameter("uid"); // khach hang
+            if (service == null) {
+                service = "showDetail";
+            }
+            if (service.equals("showDetail")) {
+                User u1 = dao.getUserByUserID(Integer.parseInt(cusID));
+                int status = 0;
+                if (status_raw == null || status_raw.equals("")) {
+                    status = u1.getUserStatus();
+                } else {
+                    status = Integer.parseInt(status_raw);
+                }
+                ResultSet rs = dao.getData("SELECT * FROM `user` where userID = " + cusID);
+                ResultSet log = dao.getData("SELECT * FROM loghistory as log join `user` as u on log.UserId = u.UserID where u.UserId = " + cusID + " order by updateAt desc ");
+                request.setAttribute("data", rs);
+                request.setAttribute("log", log);
+                request.setAttribute("status", status);
+                request.getRequestDispatcher("customerdetails.jsp").forward(request, response);
+            }
+
+            if (service.equals("changeStatus")) {
+                int updateBy = user.getUserID();
+                int status = Integer.parseInt(status_raw);
+                String purpose = "";
+                int cusId = Integer.parseInt(cusID);
+                if (status == 1) {
+                    int n = dao.updateStatus(cusId, 2);
+                    status = 2;
+                    purpose = "đã vô hiệu hóa";
+                }
+                else {
+                    int a = dao.updateStatus(cusId, 1);
+                    status = 1;
+                    purpose = "đã kích hoạt";
+                }
+                Log logger = new Log(cusId, updateBy, purpose);
+                daoLog.insertLog(logger);
+                ResultSet rs = dao.getData("SELECT * FROM `user` where userID = " + cusID);
+                ResultSet log = dao.getData("SELECT * FROM loghistory as log join `user` as u on log.UserId = u.UserID where u.UserId = " + cusID + " order by updateAt desc ");
+                request.setAttribute("data", rs);
+                request.setAttribute("log", log);
+                request.setAttribute("status", status);
+                request.getRequestDispatcher("customerdetails.jsp").forward(request, response);
+            }
         }
-        ResultSet rs = dao.getData("SELECT * FROM `user` where userID = " + cusID);
-        ResultSet log = dao.getData("SELECT * FROM loghistory as log join `user` as u on log.UserId = u.UserID where u.UserId = " + cusID + " order by updateAt desc ");
-        int updateBy = user.getUserID();
-        String purpose = "";
-        int cusId = Integer.parseInt(cusID);
-        int afterStatus = 0;
-        if (status == 1) {
-            dao.updateStatus(cusId, 2);
-            afterStatus = 2;
-            purpose = "đã vô hiệu hóa";
-        } else {
-            afterStatus = 1;
-            dao.updateStatus(cusId, 1);
-            purpose = "đã kích hoạt";
-        }
-        Log logger = new Log(cusId, updateBy, purpose);
-        int n = daoLog.insertLog(logger);
-        request.setAttribute("data", rs);
-        request.setAttribute("log", log);
-        request.setAttribute("afterStatus", afterStatus);
-        //response.sendRedirect("customerlist?service=showDetail&uid=" + cusId);
-        request.getRequestDispatcher("customerdetails.jsp").forward(request, response);
     }
 
     /**

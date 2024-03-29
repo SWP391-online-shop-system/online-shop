@@ -393,6 +393,7 @@
                     </div>
                     <div class="card" style="margin-top: 85px;
                          margin-left: 23px;">
+
                         <div class="card-heading">
                             <a data-toggle="collapse" data-target="#collapseOne" href="ProductListURL" style="    color: #111111;
                                font-size: 16px;
@@ -440,6 +441,18 @@
                     </div>
                 </div>
                 <div class="card">
+                    <div style="    background: linear-gradient(90deg, #addd0000 10.66%, #16af0073 50.03%, #00932e00 92.34%, rgb(0 255 148 / 35%) 191.41%, rgb(255 59 212 / 0%) 191.43%);
+                         margin: 0 0px 15px 0;
+                         text-align: center;
+                         border-radius: 6px;
+                         padding: 10px;">
+                        <p style="    font-size: 20px;
+                           text-transform: uppercase;
+                           color: #000000;
+                           letter-spacing: 4px;
+                           /* font-weight: 600; */
+                           margin: 0;">Giỏ&nbsp; Hàng</p>
+                    </div>
                     <div class="row">
                         <div class=" cart">
                             <!--<form> //-->
@@ -447,7 +460,7 @@
                                 <thead>
                                     <tr style="border-bottom: 1px solid #00000029;">
                                         <td></td>
-                                        <td style="text-align: center;font-weight: bolder;font-size: 15px;padding-bottom: 30px;width: 0;">Ảnh Sản Phẩm</td>
+                                        <td style="text-align: center;font-weight: bolder;font-size: 15px;padding-bottom: 30px;width: 11%;">Ảnh Sản Phẩm</td>
                                         <td style="text-align: center;font-weight: bolder;font-size: 15px;padding-bottom: 30px;width: 36%;">Tên Sản Phẩm</td>
                                         <td style="text-align: center;font-weight: bolder;font-size: 15px;padding-bottom: 30px;width: 100px;">Số Lượng</td>
                                         <td style="text-align: center;font-weight: bolder;font-size: 15px;padding-bottom: 30px;width: 105px;">Giá Tiền</td>
@@ -475,13 +488,18 @@
 
                                         <td class="col"><%=rs.getString("ProductName")%></td>
                                         <td class="col">
-                                            <div style="    display: flex;
-                                                 margin-left: 10px;
-                                                 margin-bottom: -10px;">
-                                                <div class="value-button" style="width: 25px;height: 14px;padding: 4px 0;" onclick="decreaseValue(this,<%=rs.getInt("ProductID")%>);updateTotalPrice();" value="Decrease Value"><i class="fa-solid fa-minus" style="font-size: 11px;"></i></div>
-                                                <input data-count="<%=count%>" style="width: 25px;height: 20px;" type="number" value="<%=rs.getInt("Quantity")%>" min="1" onchange="changeValue(this);updateTotalPrice();"/>
-                                                <div class="value-button" style="width: 25px;height: 14px;padding: 4px 0;" onclick="increaseValue(this,<%=rs.getInt("ProductID")%>);updateTotalPrice();" value="Increase Value"><i class="fa-solid fa-plus" style="font-size: 11px;"></i></div><br/>
-                                                    <%int proid=rs.getInt("ProductID");%>
+                                            <div style="    margin-top: 26px;">
+                                                <div style="    display: flex;
+                                                     margin-left: 10px;
+                                                     margin-bottom: -10px;">
+                                                    <div class="value-button" style="width: 25px;height: 14px;padding: 4px 0;" onclick="decreaseValue(this,<%=rs.getInt("ProductID")%>);updateTotalPrice();" value="Decrease Value"><i class="fa-solid fa-minus" style="font-size: 11px;"></i></div>
+                                                    <input data-count="<%=count%>" style="width: 23px;height: 18px;text-align: center;" type="number" value="<%=rs.getInt("Quantity")%>" min="1" onchange="changeValue(this);updateTotalPrice();" readonly/>
+                                                    <div class="value-button" style="width: 25px;height: 14px;padding: 4px 0;" onclick="increaseValue(this,<%=rs.getInt("ProductID")%>);updateTotalPrice();" value="Increase Value"><i class="fa-solid fa-plus" style="font-size: 11px;"></i></div><br/>
+                                                        <%int proid=rs.getInt("ProductID");%>
+                                                </div>
+                                                <div style="    margin-top: 20px;padding-left: 12px;">
+                                                    Có sẵn: <%=rs.getInt("UnitInStock")%>
+                                                </div>
                                             </div>
                                         </td>
                                         <td class="col"><%=decimalFormat.format(unitPrice)%>đ</td>
