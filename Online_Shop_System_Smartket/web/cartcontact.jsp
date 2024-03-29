@@ -20,6 +20,7 @@
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity= "sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous"> 
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity= "sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous">
         </script> 
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
         <link rel="stylesheet" href="css/cartstyle.css"/>
         <link rel="stylesheet" href="css/css_header/header.css"/>
         <link rel="stylesheet" href="css/css_productList/style.css"/>
@@ -27,13 +28,14 @@
         <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
         <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css">
         <script src="https://kit.fontawesome.com/ac74b86ade.js" crossorigin="anonymous"></script>
-        <title>Giỏ Hàng</title>
+        <title>Đơn Hàng</title>
         <style>
             body{
                 margin: 5px -5px;
             }
             a{
                 color: black;
+                text-decoration: none !important;
             }
             .btn-back{
                 margin-left: 1.25rem;
@@ -52,6 +54,12 @@
 
             .resend {
                 font-size: 12px;
+            }
+            #notCheckout:hover{
+                background: gray;
+            }
+            #notCheckout{
+                background: gray;
             }
         </style>
     </head>
@@ -463,9 +471,24 @@
                         </div>
                     </div>
                 </div>
-            </div>  
-            <div class="card" style="height: fit-content;">
-                <form action="contactURL" method="post">
+            </div>
+            <div style="    flex: 73%;">
+                <div style="    background: linear-gradient(90deg, #addd0000 10.66%, #16af0073 50.03%, #00932e00 92.34%, rgb(0 255 148 / 35%) 191.41%, rgb(255 59 212 / 0%) 191.43%);
+                     margin: 0 0px 15px 0;
+                     text-align: center;
+                     border-radius: 6px;
+                     padding: 10px;    margin-top: -58px;">
+                    <p style="    font-size: 20px;
+                       text-transform: uppercase;
+                       color: #000000;
+                       letter-spacing: 4px;
+                       /* font-weight: 600; */
+                       margin: 0;">Đơn&nbsp; Hàng</p>
+                </div>
+                <div class="card" style="    height: fit-content;
+                     width: 94%;
+                     margin: 0 0 0 28px;">
+                    <!--<form action="contactURL" method="post">-->
                     <div class="modal fade" id="DS"> 
                         <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable" id="modal1" style="max-width: 59%;"> 
                             <div class="modal-content"> 
@@ -478,10 +501,17 @@
                                     </button>
                                 </div> 
                                 <div class="modal-body">
-                                    <input type="hidden" name="service" value="saveAdd"/>
+                                    <!--<input type="hidden" name="service" value="saveAdd"/>-->
                                     <%
                                                        ResultSet rsAddress = (ResultSet)request.getAttribute("rsAddress");
                                                        if(!rsAddress.isBeforeFirst()){%>
+                                    <div style="    text-align: center;
+                                         background-color: orange;
+                                         width: 29%;
+                                         border-radius: 4px;
+                                         /* letter-spacing: 1px; */
+                                         margin: auto;
+                                         color: black;">Bạn chưa có địa chỉ nào</div>
                                     <%}
                                     else {
                                         while(rsAddress.next()){      
@@ -500,12 +530,13 @@
                                                         <%=rsAddress.getString("AddDetail")%>
                                                     </span>
                                                 </div>
+                                                <!--                                                       data-bs-target="#update" -->
                                                 <div class="">
-                                                    <a onclick="showOneAdd(<%=rsAddress.getInt(1)%>)"
-                                                       data-bs-target="#update" 
+                                                    <a onclick="showOneAdd(this)"
                                                        data-bs-toggle="modal" 
-                                                       data-bs-dismiss="modal" >Chỉnh sửa</a><br/>
-                                                    <label>Đặt mặc định <input type="radio" value="<%=rsAddress.getInt(1)%>" name="addId" <%if(rsAddress.getString("Status").equals("1")){%>checked<%}%>/></label>
+                                                       data-bs-dismiss="modal" style="cursor: pointer;padding: 0">Chỉnh sửa</a><br/>
+                                                    <label>Đặt mặc định <input type="radio" value="<%=rsAddress.getInt(1)%>" class="defaultAdd" name="addId" <%if(rsAddress.getString("Status").equals("1")){%>checked<%}%>/></label>
+                                                    <br/><a style="cursor: pointer;padding: 0" onclick="deleteAdd(this)"><i class="fa fa-trash"></i> Xóa</a>
                                                 </div>
                                             </div>
                                         </div>
@@ -519,19 +550,19 @@
                                             Thêm địa chỉ mới 
                                         </a>
                                     </div>
-                                    <button class="btn-success" type="submit">Lưu</button>
+                                    <button class="btn-success" onclick="saveAdd()">Lưu</button>
                                 </div> 
                             </div> 
                         </div> 
                     </div>
-                </form>
-                                <!--<form id="formAddnew">-->
+                    <!--</form>-->
+                    <!--<form id="formAddnew">-->
                     <div class="modal fade" id="addnew"
                          aria-hidden="true" aria-labelledby="DSLabel2"
                          tabindex="-1">
                         <div class="modal-dialog modal-dialog-centered
                              modal-dialog-scrollable" id="modal2"> 
-                            <div class="modal-content"> 
+                            <div class="modal-content" style="    width: 147%;"> 
                                 <div class="modal-header"> 
                                     <h5 class="modal-title" id="AlgoLabel"> 
                                         Tạo địa chỉ mới 
@@ -614,16 +645,16 @@
                             </div> 
                         </div>
                     </div>
-                <!--</form>-->
-                <!-- update modal-------------------------------------------- -->
-                <form id="formUpdate" action="contactURL" method="post">
+                    <!--</form>-->
+                    <!-- update modal-------------------------------------------- -->
+                    <!--<form id="formUpdate" action="contactURL" method="post">-->
                     <div class="modal fade" id="update"
                          aria-hidden="true" aria-labelledby="DSLabel2"
                          tabindex="-1">
                         <input type="hidden" name="service" value="updateAdd"/>
                         <div class="modal-dialog modal-dialog-centered
                              modal-dialog-scrollable"> 
-                            <div class="modal-content"> 
+                            <div class="modal-content" style="    width: 147%;"> 
                                 <div class="modal-header"> 
                                     <h5 class="modal-title" id="AlgoLabel"> 
                                         Cập nhật địa chỉ
@@ -632,58 +663,52 @@
                                             data-bs-dismiss="modal" aria-label="Close"> 
                                     </button> 
                                 </div> 
-                                <div class="modal-body p-3">
-                                    <%
-                                        ResultSet rsOneAdd = (ResultSet)request.getAttribute("rsOneAdd");
-                                        if(rsOneAdd != null){
-                                            while(rsOneAdd.next()){
+                                <div class="modal-body p-3" id="updateContent">           
 
-                                    %>
-                                    <div class="form-group">
-                                        <label>Tên người nhận</label>
-                                        <input name="name" type="text" value="<%=rsOneAdd.getString("Name")%>" required autofocus class="form-control" id="updateName" aria-describedby="emailHelp"
-                                               placeholder="Nhập tên...">
-                                    </div>
-                                    <div class="form-group">
-                                        <label>Số điện thoại người nhận</label>
-                                        <input name="phone" type="number" value="<%=rsOneAdd.getString("Phone")%>" required class="form-control" id="updatePhone" placeholder="Nhập số điện thoại...">
-                                    </div>
-                                    <div class="form-group">
-                                        <label>Email</label>
-                                        <input name="email" value="<%=rsOneAdd.getString("Email")%>" required class="form-control" id="updateEmail" placeholder="Nhập email...">
-                                    </div>
-                                    <div class="form-element" style="display: flex;">
-                                        <label>Giới tính</label>
-                                        <div style="display:flex; flex: 40%; margin-left: 11px">
-                                            <div class="custom-control custom-radio" style="margin-right: 15px;">
-                                                <input type="radio" id="updateMale" name="gender" class="custom-control-input" value="male" required>
-                                                <label class="custom-control-label" for="updateMale">Nam</label>
-                                            </div>
-                                            <div class="custom-control custom-radio">
-                                                <input type="radio" id="updateFeMale" name="gender" class="custom-control-input" value="female" required>
-                                                <label class="custom-control-label" for="updateFeMale">Nữ</label>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="form-group">
-                                        <label>Địa Chỉ Người Nhận
-                                        </label><br/>
-                                        <select name="city" id="city1"  style="width: 31%;" required>
-                                            <option  selected>Tỉnh thành</option>           
-                                        </select>
-                                        <select name="district" id="district1"  style="width: 31%;" required>
-                                            <option  selected>Quận huyện</option>
-                                        </select>
-                                        <select name="ward" id="ward1"  style="width: 31%" required>
-                                            <option  selected>Phường xã</option>
-                                        </select>
-                                    </div>
-                                    <div class="form-group">
-                                        <label>Địa chỉ cụ thể (số nhà, tên đường)</label>
-                                        <textarea name="addressdetail"  required class="form-control" id="updateAddressDetail"><%=rsOneAdd.getString("AddDetail")%></textarea>
-                                    </div>
-                                    <%}} else{%>aaaaaaaaaaaaaaaaaaaaaaaaaaa<%}%>
-                                </div> 
+                                    <!--                                    <div class="form-group">
+                                                                            <label>Tên người nhận</label>
+                                                                            <input name="name" type="text" value="" required autofocus class="form-control" id="updateName" aria-describedby="emailHelp"
+                                                                                   placeholder="Nhập tên...">
+                                                                        </div>
+                                                                        <div class="form-group">
+                                                                            <label>Số điện thoại người nhận</label>
+                                                                            <input name="phone" type="number" value="" required class="form-control" id="updatePhone" placeholder="Nhập số điện thoại...">
+                                                                        </div>
+                                                                        <div class="form-group">
+                                                                            <label>Email</label>
+                                                                            <input name="email" value="" required class="form-control" id="updateEmail" placeholder="Nhập email...">
+                                                                        </div>
+                                                                        <div class="form-element" style="display: flex;">
+                                                                            <label>Giới tính</label>
+                                                                            <div style="display:flex; flex: 40%; margin-left: 11px">
+                                                                                <div class="custom-control custom-radio" style="margin-right: 15px;">
+                                                                                    <input type="radio" id="updateMale" name="updategender" class="custom-control-input" value="male" required>
+                                                                                    <label class="custom-control-label" for="updateMale">Nam</label>
+                                                                                </div>
+                                                                                <div class="custom-control custom-radio">
+                                                                                    <input type="radio" id="updateFeMale" name="updategender" class="custom-control-input" value="female" required>
+                                                                                    <label class="custom-control-label" for="updateFeMale">Nữ</label>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="form-group">
+                                                                            <label>Địa Chỉ Người Nhận
+                                                                            </label><br/>
+                                                                            <select name="city" id="city1"  style="width: 31%;" required>
+                                                                                <option  selected>Tỉnh thành</option>           
+                                                                            </select>
+                                                                            <select name="district" id="district1"  style="width: 31%;" required>
+                                                                                <option  selected>Quận huyện</option>
+                                                                            </select>
+                                                                            <select name="ward" id="ward1"  style="width: 31%" required>
+                                                                                <option  selected>Phường xã</option>
+                                                                            </select>
+                                                                        </div>
+                                                                        <div class="form-group">
+                                                                            <label>Địa chỉ cụ thể (số nhà, tên đường)</label>
+                                                                            <textarea name="addressdetail"  required class="form-control" id="updateAddressDetail"></textarea>
+                                                                        </div>-->
+                                </div>
                                 <div class="modal-footer"> 
                                     <div>
                                         <a class="btn btn-success" 
@@ -692,7 +717,8 @@
                                            data-bs-dismiss="modal"> 
                                             Hủy 
                                         </a>
-                                        <button class="btn btn-success" 
+                                        <button onclick="updateAddress()"
+                                                class="btn btn-success"
                                                 data-bs-target="#DS"
                                                 data-bs-toggle="modal" 
                                                 data-bs-dismiss="modal" 
@@ -704,111 +730,119 @@
                             </div> 
                         </div>
                     </div> 
-                </form>
-                <div class="cart-contact">
-                    <form action="CartCompletion" method="post">
-                        <div><strong>Thông tin đơn hàng</strong></div>
-                        <div class="card-body">
-                            <div class="table-responsive-sm">
-                                <table class="table table-striped">
-                                    <thead>
-                                        <tr>
-                                            <td style="width: 6%;"></td>
-                                            <td style="">Sản phẩm</td>
-                                            <td style="text-align: center;">Số lượng</td>
-                                            <td>Giá tiền</td>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <%
-                                      try {
-                                          while (rs.next()){
-                                          if(Arrays.asList(productIdBuy).contains(String.valueOf(rs.getInt("ProductID")))){
-                                           double unitPrice = rs.getDouble("UnitPrice")*(100- rs.getInt("UnitDiscount"))/100;
-                                           double totalunitprice = unitPrice*rs.getInt("Quantity");
-                                           totalprice += totalunitprice;
-                                        %>
-                                        <tr>
-                                            <td>
+                    <!--</form>-->
+                    <div class="cart-contact" >
+                        <form action="CartCompletion" method="post">
+                            <div><strong>Thông tin đơn hàng</strong></div>
+                            <div class="card-body">
+                                <div class="table-responsive-sm">
+                                    <table class="table table-striped">
+                                        <thead>
+                                            <tr>
+                                                <td style="width: 6%;"></td>
+                                                <td style="">Sản phẩm</td>
+                                                <td style="text-align: center;">Số lượng</td>
+                                                <td>Giá tiền</td>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <%
+                                          int quantityProduct = 0;
+                                          try {
+                                              while (rs.next()){
+                                              if(Arrays.asList(productIdBuy).contains(String.valueOf(rs.getInt("ProductID")))){
+                                               double unitPrice = rs.getDouble("UnitPrice")*(100- rs.getInt("UnitDiscount"))/100;
+                                               double totalunitprice = unitPrice*rs.getInt("Quantity");
+                                               totalprice += totalunitprice;
+                                               quantityProduct++;
+                                            %>
+                                            <tr>
+                                                <td>
 
-                                                <img class="img-fluid" style="width: 66px;"src="<%=rs.getString("ProductURL")%>">
-                                            </td>
-                                            <td>                                        
-                                                <%=rs.getString("ProductName")%>
-                                            </td>
-                                            <td style="text-align: center;">
-                                                <%=rs.getInt("Quantity")%>
-                                            </td>
-                                            <td style="border-right: none;">
-                                                <%=decimalFormat.format(rs.getInt("Quantity")*(rs.getDouble("UnitPrice") * (100 - rs.getInt("UnitDiscount")) / 100 ))%>đ
-                                            </td>
-                                        </tr>
-                                        <%}}
-                                            rs.close(); 
-                                            } catch (SQLException e) {
-                                             e.printStackTrace();
-                                            }
-                                        %>                                      
-                                    </tbody>
-                                </table>
-                            </div>
-                            <div class="row">
-                                <div class="col-lg-5" style="    margin-left: 5%;">
-                                    <%ResultSet rsDefaultAdd = (ResultSet)request.getAttribute("rsDefaultAdd");
-                                        try {
-                                            if(!rsDefaultAdd.isBeforeFirst()){%>
-                                    <p>Chưa chọn địa chỉ nào</p>
-                                    <%} else {
-                                            while(rsDefaultAdd.next()){
-                                    %>
-                                    <h6 class="mb-3"><strong>Địa chỉ nhận hàng:</strong></h6>
-                                    <div><%=rsDefaultAdd.getString("CityDistrictWard")%></div>
-                                    <div><%=rsDefaultAdd.getString("AddDetail")%></div>
-                                    <div>Nguời Nhận: <%=rsDefaultAdd.getString("Name")%></div>
-                                    <div>Email: <%=rsDefaultAdd.getString("Email")%></div>
-                                    <div>Số điện thoại: <%=rsDefaultAdd.getString("Phone")%></div>
-                                    <input type="hidden" name="addId" value="<%=rsDefaultAdd.getInt(1)%>"/>
-                                    <div style="display: flex;margin-top: 11px;">Note:<input style="margin-left: 9px;" class="form-control" name="note" placeholder="Ghi chú cho người bán"/></div>
+                                                    <img class="img-fluid" style="width: 66px;"src="<%=rs.getString("ProductURL")%>">
+                                                </td>
+                                                <td>                                        
+                                                    <%=rs.getString("ProductName")%>
+                                                </td>
+                                                <td style="text-align: center;">
+                                                    <%=rs.getInt("Quantity")%>
+                                                </td>
+                                                <td style="border-right: none;">
+                                                    <%=decimalFormat.format(rs.getInt("Quantity")*(rs.getDouble("UnitPrice") * (100 - rs.getInt("UnitDiscount")) / 100 ))%>đ
+                                                </td>
+                                            </tr>
+                                            <%}}
+                                                rs.close(); 
+                                                } catch (SQLException e) {
+                                                 e.printStackTrace();
+                                                }
+                                            %>                                      
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <div class="row">
+                                    <div class="col-lg-7" style="    margin-left: 5%;">
+                                        <%ResultSet rsDefaultAdd = (ResultSet)request.getAttribute("rsDefaultAdd");
+                                            int checkAdd = 0;
+                                            try {
+                                                if(!rsDefaultAdd.isBeforeFirst()){%>
+                                        <p>Chưa chọn địa chỉ nào</p>
+                                        <%} else {
+    checkAdd = 1;
+                                                while(rsDefaultAdd.next()){
+                                        %>
+                                        <h6 class="mb-3"><strong>Địa chỉ nhận hàng:</strong></h6>
+                                        <div><%=rsDefaultAdd.getString("CityDistrictWard")%></div>
+                                        <div><%=rsDefaultAdd.getString("AddDetail")%></div>
+                                        <div>Nguời Nhận: <%=rsDefaultAdd.getString("Name")%></div>
+                                        <div>Email: <%=rsDefaultAdd.getString("Email")%></div>
+                                        <div>Số điện thoại: <%=rsDefaultAdd.getString("Phone")%></div>
+                                        <input type="hidden" name="addId" value="<%=rsDefaultAdd.getInt(1)%>"/>
                                         <%          }
                                                 }
                                             } catch (SQLException ex) {
                                             }%>
-                                    <a class="btn btn-success" href="#DS" 
-                                       data-bs-toggle="modal" data-bs-dismiss="modal" > 
-                                        Chỉnh sửa
-                                    </a>
-                                </div>
-                                <div class="col-lg-4 col-sm-5 ml-auto">
-                                    <table class="table table-clear">
-                                        <tbody>
-                                            <tr>
-                                                <td class="left"><strong>Tổng đơn hàng</strong></td>
-                                                <td class="right"><strong><%=decimalFormat.format(totalprice)%>đ</strong></td>
-                                            </tr>
-                                        </tbody>
-                                    </table>
-                                    <div class="pull-right">
-                                        <a href="CartURL" class="btn btn-success" style="height: fit-content;color: white;width: 128px; margin: 0">Hủy đặt hàng</a>
-                                        <button type="submit" class="btn-back">Đặt Hàng</button>
+                                        <a class="btn btn-success" href="#DS" 
+                                           data-bs-toggle="modal" data-bs-dismiss="modal" > 
+                                            Chỉnh sửa địa chỉ
+                                        </a>
                                     </div>
-
+                                    <div class="col-lg-4 col-sm-5 ml-auto">
+                                        <table class="table table-clear">
+                                            <tbody>
+                                                <tr>
+                                                    <td class="left"><strong>Tổng đơn hàng</strong></td>
+                                                    <td class="right"><strong><%=decimalFormat.format(totalprice)%>đ</strong></td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                        <div class="pull-right">
+                                            <a href="CartURL" class="btn btn-success" style="height: fit-content;color: white;width: 128px; margin: 0">Hủy đặt hàng</a>
+                                            <button type="submit" class="btn-back" <%if(checkAdd == 0){%>id="notCheckout"  disabled style="cursor: not-allowed;" title="Bạn cần chọn địa chỉ"<%}%>>Đặt Hàng</button>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                        <input type="hidden" name="totalPrice" value="<%=totalprice%>"/>
-                        <%            for (String string : productIdBuy) {%>
-                        <input type="hidden" name="proId" value="<%=string%>"/>
-                        <%}%>
-                    </form>
+                            <input type="hidden" name="totalPrice" value="<%=totalprice%>"/>
+                            <input type="hidden" name="quantityProduct" value="<%=quantityProduct%>"/>
+                        </form>
+                    </div>
                 </div>
             </div>
-
         </section>
         <!-- Form Basic -->
 
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.21.1/axios.min.js"></script>
         <script>
+            $(document).ready(function () {
+                // Kiểm tra nếu URL có chứa tham số modal=show
+                var urlParams = new URLSearchParams(window.location.search);
+                if (urlParams.has('update') && urlParams.get('update') === 'show') {
+                    // Hiển thị modal
+                    $('#DS').modal('show');
+                }
+            });
         </script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.21.1/axios.min.js"></script>
         <script src="vendor/jquery/jquery.min.js"></script>
         <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
         <script src="vendor/jquery-easing/jquery.easing.min.js"></script>

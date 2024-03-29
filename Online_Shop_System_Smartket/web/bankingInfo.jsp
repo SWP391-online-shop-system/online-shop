@@ -32,6 +32,7 @@
             }
             a{
                 color: black;
+                text-decoration: none !important;
             }
             .btn-back{
                 margin-left: 1.25rem;
@@ -304,7 +305,7 @@
                                     <c:if test="${sessionScope.account != null}">
                                     <li><a href="CartURL">Giỏ hàng của tôi</a></li>
                                     </c:if>
-                                <li><a href="#">Đơn hàng của tôi</a></li>
+                                <li><a href="MyOrderURL">Đơn hàng của tôi</a></li>
                             </ul>
                         </li>
                         <li><a href="blog">Blog</a></li>
@@ -315,7 +316,7 @@
                 </div>
                 <div class="header-content-right-menu">
                     <ul>
-                        <li class="margin-unit"><a href="#" title="Đơn hàng của tôi"><i class="fa-solid fa-file-invoice-dollar"></i></i></a></li>
+                        <li class="margin-unit"><a href="MyOrderURL" title="Đơn hàng của tôi"><i class="fa-solid fa-file-invoice-dollar"></i></i></a></li>
                             <c:if test="${sessionScope.account == null}">
                             <li><a href="loginURL" onclick="alertOpenCart()"title="Giỏ hàng của tôi"><i class="fa-solid fa-cart-shopping"></i></a></li>
                                 </c:if>
@@ -377,8 +378,8 @@
                     <div class="row" style="display: contents">
                         <%
                                 DAOProduct daoP = new DAOProduct();
-                           ResultSet rsHotPro = daoP.getData("select * from Product as p join ProductImage as pi on p.ProductID = pi.ProductID where  pi.ProductURL = pi.ProductURLShow \n"
-                                               +  "group by p.ProductID having min(p.TotalStock - p.UnitInStock) >0 order by (p.TotalStock - p.UnitInStock) desc limit 1");
+                            ResultSet rsHotPro = daoP.getData("select * from Product as p join ProductImage as pi on p.ProductID = pi.ProductID where  pi.ProductURL like '%_1%'\n"
+                            +"group by p.ProductID having min(p.TotalStock - p.UnitInStock) > 0");
                         if(rsHotPro.next()) {
                         %>
                         <div class="product__item" style="border: 1px solid #c1e8c1ba;
@@ -484,12 +485,11 @@
                     </div>
                 </div>
             </div>  
-            <div class="card" style="align-items: center;margin-bottom: 15px;
-                 font-size: 19px;">
-                <h4>Vui lòng quét mã QR bên dưới để thực hiện chuyển khoản thanh toán đơn hàng</h4>
-                <div class="cart" style="flex: 0; width:43%;">
+            <div class="card" style="align-items: center;margin-top: 0;">
+                    <h4>Vui lòng quét mã QR bên dưới để thực hiện chuyển khoản thanh toán đơn hàng</h4>
+                <div class="cart" style="flex: 0; width:30%;">
                     <%String QrPath = (String)request.getAttribute("QrPath");%>
-                    <img style="width:100%;height:100%" src="<%=QrPath%>" alt="alt"/>
+                    <img style="width:100%;height:100%;    margin-top: 5%;" src="<%=QrPath%>" alt="alt"/>
                 </div>
             </div>
         </section>

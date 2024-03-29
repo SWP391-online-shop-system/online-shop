@@ -14,11 +14,13 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import model.DAOAddressUser;
 import model.DAOCart;
 import model.DAOProduct;
 import view.AddressUser;
 import view.User;
+
 /**
  *
  * @author trant
@@ -39,6 +41,7 @@ public class ControllerCartContact extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         try ( PrintWriter out = response.getWriter()) {
+            System.out.println("ajax in controller");
             /* TODO output your page here. You may use following sample code. */
             String[] productId = null;
             Cookie[] cookies = request.getCookies();
@@ -64,6 +67,7 @@ public class ControllerCartContact extends HttpServlet {
             ResultSet rsCategory = daoPro.getData("Select * from Categories");
             request.setAttribute("CategoryResult", rsCategory);
             String message = (String) request.getAttribute("message");
+            System.out.println("service " + service);
             if (message == null) {
                 message = "";
             }
@@ -112,8 +116,11 @@ public class ControllerCartContact extends HttpServlet {
                         + "                </span>\n"
                         + "            </div>\n"
                         + "            <div class=\"\">\n"
-                        + "                <a href=\"#\" data-bs-target=\"#update\" data-bs-toggle=\"modal\" data-bs-dismiss=\"modal\">Chỉnh sửa</a><br/>\n"
-                        + "                <span>Đặt mặc định<input type=\"radio\" value=" + lastAddID++ + " name=\"addId\"/></span>\n"
+                        + "                <a onclick=\"showOneAdd(this)\"\n" +
+"                                                       data-bs-toggle=\"modal\" \n" +
+"                                                       data-bs-dismiss=\"modal\" style=\"cursor: pointer;padding: 0\">Chỉnh sửa</a><br/>\n"
+                        + "                <span>Đặt mặc định<input type=\"radio\" class=\"defaultAdd\" value=" + lastAddID++ + " name=\"addId\"/></span>\n"
+                                +"<br/><a style=\"cursor: pointer;padding: 0\" onclick=\"deleteAdd(this)\"><i class=\"fa fa-trash\"></i> Xóa</a>\n"
                         + "            </div>\n"
                         + "        </div>\n"
                         + "    </div>\n"
@@ -122,6 +129,7 @@ public class ControllerCartContact extends HttpServlet {
             if (service.equals("saveAdd")) {
                 String id_raw = request.getParameter("addId");
                 int id = Integer.parseInt(id_raw);
+                System.out.println("id: " + id);
                 DAOAddressUser daoAdd = new DAOAddressUser();
                 daoAdd.clearStatus(userID);
                 daoAdd.updateStatus(id);
@@ -130,9 +138,99 @@ public class ControllerCartContact extends HttpServlet {
             if (service.equals("showOneAdd")) {
                 String id_str = request.getParameter("addId");
                 int id = Integer.parseInt(id_str);
+                String result = "";
+                String result1 = "";
+                String result2 = "";
+                String result3 = "";
                 ResultSet rsOneAdd = dao.getData("SELECT * FROM online_shop_system.addressuser where AddressID = " + id + ";");
-                request.setAttribute("rsOneAdd", rsOneAdd);
-                response.getWriter().write("ajax in");
+                try {
+                    while (rsOneAdd.next()) {
+                        String CityDistrictWard = rsOneAdd.getString("CityDistrictWard");
+                        String[] parts = CityDistrictWard.split(", ");
+                        String city = parts[0];
+                        String district = parts[1];
+                        String ward = parts[2];
+                        String name = rsOneAdd.getString("Name");
+                        result1 = "<input type=\"hidden\" id=\"addIdUpdate\" value=" + rsOneAdd.getInt("AddressID") + " />"
+                                + "                                    <div class=\"form-group\">\n"
+                                + "                                        <label>Tên người nhận</label>\n"
+                                + "                                        <input name=\"name\" type=\"text\" value=\""+name+"\" required class=\"form-control\" id=\"updateName\"\n"
+                                + "                                               >\n"
+                                + "                                    </div>\n"
+                                + "                                    <div class=\"form-group\">\n"
+                                + "                                        <label>Số điện thoại người nhận</label>\n"
+                                + "                                        <input name=\"phone\" type=\"number\" value=" + rsOneAdd.getString("Phone") + " required class=\"form-control\" id=\"updatePhone\" placeholder=\"Nhập số điện thoại...\">\n"
+                                + "                                    </div>\n"
+                                + "                                    <div class=\"form-group\">\n"
+                                + "                                        <label>Email</label>\n"
+                                + "                                        <input name=\"email\" value=" + rsOneAdd.getString("Email") + " required class=\"form-control\" id=\"updateEmail\" placeholder=\"Nhập email...\">\n"
+                                + "                                    </div>\n"
+                                + "                                    <div class=\"form-element\" style=\"display: flex;\">\n"
+                                + "                                        <label>Giới tính</label>\n"
+                                + "                                        <div style=\"display:flex; flex: 40%; margin-left: 11px\">\n"
+                                + "                                            <div class=\"custom-control custom-radio\" style=\"margin-right: 15px;\">\n"
+                                + "                                                <input type=\"radio\" id=\"updateMale\" name=\"updategender\" class=\"custom-control-input\" value=\"male\" required";
+                        result2 = "                                        <label class=\"custom-control-label\" for=\"updateMale\">Nam</label>\n"
+                                + "                                            </div>\n"
+                                + "                                            <div class=\"custom-control custom-radio\">\n"
+                                + "                                                <input type=\"radio\" id=\"updateFeMale\" name=\"updategender\" class=\"custom-control-input\" value=\"female\" required";
+                        result3 = "                                                <label class=\"custom-control-label\" for=\"updateFeMale\">Nữ</label>\n"
+                                + "                                            </div>\n"
+                                + "                                        </div>\n"
+                                + "                                    </div>\n"
+                                + "                                    <div class=\"form-group\">\n"
+                                + "                                        <label>Địa Chỉ Người Nhận\n"
+                                + "                                        </label><br/>\n"
+                                + "                                        <select name=\"city\" id=\"city1\"  style=\"width: 31%;\" required>\n"
+                                + "                                            <option  selected>" + city + "</option>           \n"
+                                + "                                        </select>\n"
+                                + "                                        <select name=\"district\" id=\"district1\"  style=\"width: 31%;\" required>\n"
+                                + "                                            <option  selected>" + district + "</option>\n"
+                                + "                                        </select>\n"
+                                + "                                        <select name=\"ward\" id=\"ward1\"  style=\"width: 31%\" required>\n"
+                                + "                                            <option  selected>" + ward + "</option>\n"
+                                + "                                        </select>\n"
+                                + "                                    </div>\n"
+                                + "                                    <div class=\"form-group\">\n"
+                                + "                                        <label>Địa chỉ cụ thể (số nhà, tên đường)</label>\n"
+                                + "                                        <textarea name=\"addressdetail\"  required class=\"form-control\" id=\"updateAddressDetail\">" + rsOneAdd.getString("AddDetail") + "</textarea>\n"
+                                + "                                    </div>\n"
+                                + "                                </div> ";
+                        if (rsOneAdd.getInt("Gender") == 1) {
+                            result1 += " checked >";
+                        } else {
+                            result2 += " checked >";
+                        }
+                        result = result1 + result2 + result3;
+                    }
+                    rsOneAdd.close();
+                } catch (SQLException e) {
+                }
+                out.print(result);
+            }
+            if (service.equals("updateAdd")) {
+                String id_str = request.getParameter("addId");
+                String name = request.getParameter("name");
+                String phone = request.getParameter("phone");
+                String email = request.getParameter("email");
+                String city = request.getParameter("city");
+                String district = request.getParameter("district");
+                String ward = request.getParameter("ward");
+                String gender_str = request.getParameter("gender");
+                String addressDetail = request.getParameter("addressDetail");
+                String cityDistrictWard = city + " , " + district + " , " + ward;
+                boolean gender = gender_str.equals("male");
+                int id = Integer.parseInt(id_str);
+                AddressUser add = new AddressUser(id, userID, name, cityDistrictWard, addressDetail, phone, email, gender);
+                DAOAddressUser daoAdd = new DAOAddressUser();
+                int n =daoAdd.updateAdd(add);
+                System.out.println("n:" + n);
+            }
+            if(service.equals("deleteAdd")){
+                String id_str = request.getParameter("addId");
+                int id = Integer.parseInt(id_str);
+                DAOAddressUser daoAdd = new DAOAddressUser();
+                daoAdd.deleteAdd(id);
             }
         }
     }

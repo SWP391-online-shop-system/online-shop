@@ -89,7 +89,6 @@ public class ControllerFeedBackDetail extends HttpServlet {
             String purpose;
             int afterStatus = Integer.parseInt(status);
             if (service.equals("updateStatus")) {
-                System.out.println("in updateStatus");
                 if (status.equals("1")) {
                     afterStatus = 0;
                     daoF.updateStatus(FeedBackID, 0);

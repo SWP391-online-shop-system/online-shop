@@ -25,10 +25,9 @@ public class DAOReceiver extends DBConnect {
                 + "`ReceiverPhoneNumber`,\n"
                 + "`ReceiverAddress`,\n"
                 + "`ReceiverEmail`,\n"
-                + "`ReceiverGender`,\n"
-                + "`Note`)\n"
+                + "`ReceiverGender`)\n"
                 + "VALUES\n"
-                + "(?,?,?,?,?,?,?);";
+                + "(?,?,?,?,?,?);";
         try {
             PreparedStatement pre = conn.prepareStatement(sql);
             pre.setInt(1, receiver.getOrderID());
@@ -37,7 +36,6 @@ public class DAOReceiver extends DBConnect {
             pre.setString(4, receiver.getRceiverAddress());
             pre.setString(5, receiver.getReceiverEmail());
             pre.setBoolean(6, receiver.getReceiverGender());
-            pre.setString(7, receiver.getNote());
             n = pre.executeUpdate();
         } catch (SQLException ex) {
             Logger.getLogger(DAOReceiver.class.getName()).log(Level.SEVERE, null, ex);

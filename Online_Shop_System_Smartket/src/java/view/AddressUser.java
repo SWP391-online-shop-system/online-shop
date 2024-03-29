@@ -9,6 +9,7 @@ package view;
  * @author trant
  */
 public class AddressUser {
+    private int addId;
     private int userId;
     private String name;
     private String cityDistrictWard;
@@ -26,6 +27,27 @@ public class AddressUser {
         this.phone = phone;
         this.email = email;
         this.gender = gender;
+    }
+
+    public AddressUser(int addId, int userId, String name, String cityDistrictWard, String addressDetail, String phone, String email, boolean gender) {
+        this.addId = addId;
+        this.userId = userId;
+        this.name = name;
+        this.cityDistrictWard = cityDistrictWard;
+        this.addressDetail = addressDetail;
+        this.phone = phone;
+        this.email = email;
+        this.gender = gender;
+    }
+
+
+
+    public int getAddId() {
+        return addId;
+    }
+
+    public void setAddId(int addId) {
+        this.addId = addId;
     }
 
     public int getUserId() {

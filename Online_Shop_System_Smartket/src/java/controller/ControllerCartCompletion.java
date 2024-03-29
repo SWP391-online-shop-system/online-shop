@@ -50,11 +50,22 @@ public class ControllerCartCompletion extends HttpServlet {
             HttpSession session = request.getSession();
             DAOProduct daoProduct = new DAOProduct();
             DAOOrder daoOrder = new DAOOrder();
+            DAOProduct daoProduct = new DAOProduct();
             DAOCart daoCart = new DAOCart();
             DAOReceiver daoRece = new DAOReceiver();
             DAOOrderDetails daoDetail = new DAOOrderDetails();
             User user = (User) session.getAttribute("account");
-            String[] proId = request.getParameterValues("proId");
+            String[] productId = null;
+            Cookie[] cookies = request.getCookies();
+            if (cookies != null) {
+                for (Cookie cookie : cookies) {
+                    if (cookie.getName().equals("productCookie")) {
+                        String arrayAsString = cookie.getValue();
+                        productId = arrayAsString.split("\\.");
+                        break;
+                    }
+                }
+            }
             int userID = user.getUserID();
             int saleId = 0;
             int quantityOfSale = 0;
@@ -70,13 +81,15 @@ public class ControllerCartCompletion extends HttpServlet {
             quantityOfSale++;
             daoOrder.updateSale(saleId, quantityOfSale);
             String totalPrice_str = request.getParameter("totalPrice");
+            String quantityProduct_str = request.getParameter("quantityProduct");
+            int quantity = Integer.parseInt(quantityProduct_str);
             Double totalPrice = Double.parseDouble(totalPrice_str);
-            Order orders = new Order(userID, saleId, totalPrice, 1);
+            Order orders = new Order(userID, saleId, quantity, totalPrice, 1);
             int orderID = daoOrder.insertOrderByPreparedReturnId(orders);
+            System.out.println("orderId"+orderID);
             String QrPath = "https://img.vietqr.io/image/BIDV-0398707242-compact2.png?amount=" + totalPrice + "&addInfo=Smartket " + orderID + "&accountName=Smartket";
             daoOrder.updateQrImage(QrPath, orderID);
             String addId = request.getParameter("addId");
-            String note = request.getParameter("note");
             String name = null;
             String phone = null;
             String email = null;
@@ -101,41 +114,30 @@ public class ControllerCartCompletion extends HttpServlet {
                 gender = true;
             }
             String address = cityDistrictWard + " " + addressDetail;
-            Receiver rece = new Receiver(orderID, name, gender, phone, email, address, note);
+            Receiver rece = new Receiver(orderID, name, gender, phone, email, address);
             daoRece.insertReceiverByPrepared(rece);
             try {
                 ResultSet listCart = daoCart.getData("SELECT * FROM Cart as c join product as p on c.ProductID = p.ProductID where UserID = " + userID);
                 while (listCart.next()) {
-                    if (Arrays.asList(proId).contains(String.valueOf(listCart.getInt("ProductID")))) {
-                        Product product = daoProduct.getProductById(listCart.getInt("ProductID"));
-                        int unitInstock = product.getUnitInStock() - listCart.getInt("Quantity");
-                        daoProduct.updateUnitInStock(listCart.getInt("ProductID"), unitInstock);
+                    if (Arrays.asList(productId).contains(String.valueOf(listCart.getInt("ProductID")))) {
                         OrderDetails details = new OrderDetails(listCart.getInt("ProductID"), orderID, listCart.getInt("Quantity"), listCart.getInt("UnitPrice"), listCart.getInt("UnitDiscount"), false);
                         daoDetail.insertOrderDetailsByPrepared(details);
+                        
                     }
                 }
                 listCart.close();
             } catch (SQLException e) {
             }
-            String[] productId = null;
-            Cookie[] cookies = request.getCookies();
-            if (cookies != null) {
-                for (Cookie cookie : cookies) {
-                    if (cookie.getName().equals("productCookie")) {
-                        String arrayAsString = cookie.getValue();
-                        productId = arrayAsString.split("\\.");
-                        break;
-                    }
-                }
-            }
+            
             for (String o : productId) {
                 int proIdDelete = Integer.parseInt(o);
                 Product product = daoProduct.getProductById(proIdDelete);
                 int unitInstock = product.getUnitInStock();
-                
+                int quantityOfOrder = daoOrder.getQuantityOfOrder(orderID, proIdDelete);
+                daoProduct.updateUnitInStock(proIdDelete, unitInstock-quantityOfOrder);
                 daoCart.deleteCart(userID, proIdDelete);
             }
-            response.sendRedirect("CartcontactOTPVerify?email=" + email + "&oid=" + orderID);
+            response.sendRedirect("CartcontactOTPVerify?service=sendOTP&email=" + email + "&oid=" + orderID);
         }
     }
 

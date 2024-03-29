@@ -168,7 +168,6 @@ public class ControllerSaleDashBoard extends HttpServlet {
                         LocalDate dateOrderWeekFrom = LocalDate.parse(orderFrom, formatter);
                         String formatOrderWeekFrom = dateOrderWeekFrom.format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
                         rsOrderList = daoOd.getData("select * from `order` as o join `user` as u on o.UserID = u.UserID join `status` as s on o.StatusID = s.StatusID WHERE OrderDate between '" + formatOrderWeekFrom + "' AND '" + formatOrderWeekFrom + "' + interval 7 day ORDER BY OrderDate desc ");
-//              
                         request.setAttribute("rsOrderList", rsOrderList);
                         request.setAttribute("formatOrderWeekFrom", formatOrderWeekFrom);
                     }
