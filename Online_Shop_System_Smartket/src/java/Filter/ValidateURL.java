@@ -70,7 +70,7 @@ public class ValidateURL implements Filter {
             }
             if (session.getAttribute("account") != null) {
             if ((a.getRoleID() == 2 )|| a.getRoleID() == 3 || a.getRoleID() == 4 || a.getRoleID() == 5) {
-                if (url.startsWith("/blog") || url.startsWith("/cblog") || url.startsWith("/searchblog") || url.startsWith("/ProductDetail") | url.startsWith("/CartURL") || url.startsWith("/ProductListURL") || url.startsWith("/contactURL")) {
+                if (url.startsWith("/CartURL") || url.startsWith("/contactURL")) {
                     res.sendRedirect("404");
                 }
             }

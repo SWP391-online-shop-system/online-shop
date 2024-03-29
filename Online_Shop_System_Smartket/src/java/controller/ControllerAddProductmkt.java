@@ -76,6 +76,8 @@ public class ControllerAddProductmkt extends HttpServlet {
     protected String moveAndRenameImage(Part filePart, int categoryId, int imageIndex) throws ServletException, IOException {
         String fileName = Paths.get(filePart.getSubmittedFileName()).getFileName().toString();
         String cateID = convertCate(categoryId);
+
+        // Constructing the new file name with the index
         String newFileName = fileName.substring(0, fileName.lastIndexOf('.')) + "_" + imageIndex + fileName.substring(fileName.lastIndexOf('.'));
         String destinationDirectory = "D:/fpt/Semeter_5/SWP391/Project_GitHub/Online_Shop_System_Smartket/web/images/product" + cateID;
         File directory = new File(destinationDirectory);

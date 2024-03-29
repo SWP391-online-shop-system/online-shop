@@ -193,7 +193,7 @@
                                         <textarea id="id" name="comment" rows="4" cols="10" class="form-control mr-3" placeholder="Tạo bình luận"></textarea></div>
                                     <input style="    margin-top: -20px;
                                            margin-left: 390px;" type="submit" class="btn btn-success" value="Gửi">
-                            </form>
+                                    </form>
                                     <div
                                         class="commented-section mt-2">
                                         <%
@@ -201,7 +201,8 @@
                                    while(rs.next()) {
                                         %>
                                         <div class="d-flex flex-row align-items-center commented-user" style="margin-top: 7%;">
-                                            <div><img style="width: 50px;" class="img-fluid img-responsive rounded-circle mr-2" src="images/user/<%=rs.getString("UserImage")%>"> </div>
+                                            <div><img style="width: 50px;
+                                                      HEIGHT: 48px;" class="img-fluid img-responsive rounded-circle mr-2" src="images/user/<%=rs.getString("UserImage")%>"> </div>
                                             <h5 class="mr-2"><%=rs.getString("LastName")%> <%=rs.getString("FirstName")%></h5>
                                             <span class="dot mb-1"></span>
                                             <span class="mb-1 ml-2" style="margin-top: 4px;"><i class="fas fa-calendar-alt"></i> <%=rs.getString("CommentDate")%></span>

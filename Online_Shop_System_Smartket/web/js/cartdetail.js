@@ -174,11 +174,21 @@ function checkOut() {
         success: function (response) {
             if (response === "1") {
                 window.location.href = "contactURL";
-            } else {
+            } 
+            else if (response === "0"){
                 swal.fire({
                     icon: 'error',
                     title: 'Không thành công!',
                     text: 'Chọn sản phẩm để thực hiện đặt hàng',
+                    showConfirmButton: false,
+                    timer: 1000
+                });
+            }
+             else if (response === "2"){
+                swal.fire({
+                    icon: 'error',
+                    title: 'Không thành công!',
+                    text: 'Sản phẩm đã vượt quá số lượng',
                     showConfirmButton: false,
                     timer: 1000
                 });

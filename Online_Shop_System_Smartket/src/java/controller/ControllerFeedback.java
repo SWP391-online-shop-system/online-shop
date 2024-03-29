@@ -104,7 +104,7 @@ public class ControllerFeedback extends HttpServlet {
                         photo1.write(realFileName1);
                     }
                     String msgFeedback = request.getParameter("msg");
-                    String SRate = request.getParameter("rate");
+                    String SRate = request.getParameter("rating3");
                     if (SRate == null) {
                         SRate = "1";
                     }

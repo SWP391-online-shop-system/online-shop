@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+r<!DOCTYPE html>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page import="java.sql.ResultSet"%>
@@ -213,6 +213,9 @@
                 background: orange;
                 width: 90%;
                 margin-left: 38px;
+            }
+            .step i{
+                margin-top: 13px;
             }
         </style>
     </head>
@@ -683,10 +686,12 @@
                             <%DAOReceiver daoRece = new DAOReceiver();
                                 String email = daoRece.getEmailById(rsOrderGroup.getInt("OrderID"));%>
                             <a href="CartcontactOTPVerify?email=<%=email%>&oid=<%=rsOrderGroup.getInt("OrderID")%>" class="btn btn-warning btn-lg" style="float: right;
+                               float: right;
                                margin-right: 232px;
-                               margin-bottom: -30px;
-                               margin-top: 7px;
-                               position: relative;background: #ff6535;">Xác nhận đơn</a><br><br>
+                               margin-bottom: -47px !important;
+                               margin-top: 45px;
+                               position: relative;
+                               background: #ff6535;">Xác nhận đơn</a><br><br>
                             <%}%>
                             <a style="margin-left: 681px;" href="OrderInformationURL?OrderID=<%=rsOrderGroup.getInt("OrderID")%>" class="btn btn-success btn-lg" data-abc="true">Xem chi tiết đơn hàng <i class="fa fa-chevron-right"></i></a>
                         </div>

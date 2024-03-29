@@ -89,6 +89,9 @@ function addNewAdd() {
                     showConfirmButton: false,
                     timer: 1500
                 });
+                setTimeout(function () {
+                        window.location.href = "contactURL?update=show";
+                    }, 600);
                 var modalBody = document.querySelector('#DS .modal-body');
                 modalBody.innerHTML += response;
 //                $("#page-top").html(response);
@@ -109,43 +112,134 @@ function validateInput(input) {
         input.classList.remove('is-valid');
     }
 }
-function showOneAdd(addId) {
-    $('#DS').modal('hide');
+function showOneAdd(element) {
+//    $('#DS').modal('hide');
+    var inputContent = element.parentNode.querySelector('input');
     $.ajax({
         type: "POST",
         url: "contactURL",
-        data: {service: "showOneAdd", addId: addId},
+        data: {service: "showOneAdd", addId: inputContent.value},
         success: function (response) {
-            console.log(response);
+            $('#update').modal('show');
+            $('#updateContent').html(response);
+            getRenderCity();
         },
         error: function (xhr, status, error) {
             // Xử lý lỗi
             console.error(xhr.responseText);
         }
     });
-    $('#update').modal('show');
 }
-//function updateAddress() {
-//    var city = document.getElementById("city").value;
-//    var district = document.getElementById("district").value;
-//    var ward = document.getElementById("ward").value;
-//    var addressDetail = city + ', ' + district + ', ' + ward;
-//    document.getElementById("exampleInputPassword1").value = addressDetail;
-//}
-var citis1 = document.getElementById("city1");
-var districts1 = document.getElementById("district1");
-var wards1 = document.getElementById("ward1");
-var Parameter1 = {
-    url: "https://raw.githubusercontent.com/kenzouno1/DiaGioiHanhChinhVN/master/data.json",
-    method: "GET",
-    responseType: "json"
-};
-var promise1 = axios(Parameter1);
-promise1.then(function (result) {
-    renderCity1(result.data);
-});
+function deleteAdd(element) {
+    console.log("js in");
+    var inputContent = element.parentNode.querySelector('input');
+    swal.fire({
+        title: 'Bạn có chắc chắn?',
+        text: "Bạn có muốn tiếp tục không?",
+        icon: 'question',
+        showCancelButton: true,
+        confirmButtonText: 'Có',
+        cancelButtonText: 'Không'
+    }).then((result) => {
+        if (result.isConfirmed) {
+            console.log("yes");
+            $.ajax({
+                type: "POST",
+                url: "contactURL",
+                data: {service: "deleteAdd", addId: inputContent.value},
+                success: function (response) {
+                    swal.fire({
+                        icon: 'success',
+                        title: 'Thành công!',
+                        text: 'Xóa địa chỉ thành công',
+                        showConfirmButton: false,
+                        timer: 1500
+                    });
+                    setTimeout(function () {
+                        window.location.href = "contactURL?update=show";
+                    }, 500);
+//            $('#update').modal('show');
+//            $('#updateContent').html(response);
+                },
+                error: function (xhr, status, error) {
+                    console.error(xhr.responseText);
+                }
+            });
+        } else if (result.dismiss === swal.DismissReason.cancel) {
+            console.log("no");
+        }
+    });
+}
+function updateAddress() {
+    var id = document.getElementById("addIdUpdate").value;
+    var name = document.getElementById("updateName").value;
+    var phone = document.getElementById("updatePhone").value;
+    var email = document.getElementById("updateEmail").value;
+    var gender_check = document.querySelector('input[name="updategender"]:checked');
+    var city = document.getElementById("city1").value;
+    var district = document.getElementById("district1").value;
+    var ward = document.getElementById("ward1").value;
+    var addressDetail = document.getElementById("updateAddressDetail").value;
+    console.log(id);
+    console.log(name);
+    console.log(phone);
+    console.log(email);
+    console.log(gender_check);
+    console.log(city);
+    console.log(district);
+    console.log(ward);
+    console.log(addressDetail);
+    if (name === "" || phone === "" || email === "" || city === "" || district === "" || ward === "" || addressDetail === "" || gender_check === null) {
+        swal.fire({
+            icon: 'error',
+            title: 'Không thành công!',
+            text: 'Vui lòng điền đầy đủ thông tin',
+            showConfirmButton: false,
+            timer: 1500
+        });
+    } else {
+        var gender = document.querySelector('input[name="updategender"]:checked').value;
+        $.ajax({
+            type: "POST",
+            url: "contactURL",
+            data: {service: "updateAdd", addId: id, name: name, phone: phone, email: email, gender: gender, city: city, district: district, ward: ward, addressDetail: addressDetail},
+            success: function (response) {
+
+                swal.fire({
+                    icon: 'success',
+                    title: 'Thành công!',
+                    text: 'Cập nhật địa chỉ thành công',
+                    showConfirmButton: false,
+                    timer: 1500
+                });
+                setTimeout(function () {
+                    window.location.href = "contactURL?update=show";
+                }, 500);
+            },
+            error: function (xhr, status, error) {
+                // Xử lý lỗi
+                console.error(xhr.responseText);
+            }
+        });
+    }
+}
+function getRenderCity() {
+    var Parameter1 = {
+        url: "https://raw.githubusercontent.com/kenzouno1/DiaGioiHanhChinhVN/master/data.json",
+        method: "GET",
+        responseType: "json"
+    };
+    var promise1 = axios(Parameter1);
+    promise1.then(function (result) {
+        renderCity1(result.data);
+    });
+}
 
 function renderCity1(data) {
+    var citis1 = document.getElementById("city1");
+    var districts1 = document.getElementById("district1");
+    var wards1 = document.getElementById("ward1");
+    console.log("resndercity");
     for (const x of data) {
 //        citis.options[citis.options.length] = new Option(x.Name, x.Id);
         var opt = document.createElement('option');
@@ -208,3 +302,46 @@ document.getElementById("formUpdate").addEventListener("submit", function (event
         $('#DS').modal('show');
     }
 });
+function saveAdd() {
+    var defaultAdd = document.querySelectorAll(".defaultAdd");
+    var service = "saveAdd";
+    var addId = null;
+
+    defaultAdd.forEach(function (input) {
+        if (input.checked) {
+            addId = input.value;
+        }
+    });
+    if (addId === null) {
+        swal.fire({
+            icon: 'error',
+            title: 'Thất bại',
+            text: 'Bạn cần chọn địa chỉ',
+            showConfirmButton: false,
+            timer: 1500
+        });
+    } else {
+        $.ajax({
+            type: "POST",
+            url: "/Smartket/contactURL",
+            data: {service: service, addId: addId},
+            success: function (response) {
+                swal.fire({
+                    icon: 'success',
+                    title: 'Thành công!',
+                    text: 'Chọn địa chỉ thành công',
+                    showConfirmButton: false,
+                    timer: 1500
+                });
+                setTimeout(function () {
+                    window.location.href = "contactURL";
+                }, 1000);
+
+            },
+            error: function (xhr, status, error) {
+                // Xử lý lỗi
+                console.error(xhr.responseText);
+            }
+        });
+    }
+}

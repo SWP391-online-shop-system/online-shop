@@ -96,7 +96,7 @@ public class ControllerLogin extends HttpServlet {
                         break;
                     case 4:
                         //sale manager
-                        response.sendRedirect("saleDashBoardURL");
+                        response.sendRedirect("saleManagerOrderListURL");
                         break;
                     default:
                         response.sendRedirect("HomePageURL");
