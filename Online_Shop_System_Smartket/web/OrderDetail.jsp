@@ -211,28 +211,29 @@
                                 <%
     // Iterate through each status in rs3
     while (rs3.next()) {
-        int statusId = rs3.getInt(1);
-        String statusName = rs3.getString(2);
-        int selectedStatusId = rs.getInt("StatusID");
-        boolean isSelected = selectedStatusId == statusId;
-        boolean isDisabled = (selectedStatusId == 2 && (statusId == 1 || statusId == 4 || statusId == 5)) ||
-                             (selectedStatusId == 3 && (statusId == 1 || statusId == 2)) ||
-                             (selectedStatusId == 5 && (statusId == 1 || statusId == 2));
+    int statusId = rs3.getInt(1);
+    String statusName = rs3.getString(2);
+    int selectedStatusId = rs.getInt("StatusID");
+    boolean isSelected = selectedStatusId == statusId;
+    boolean isDisabled = (selectedStatusId == 2 && (statusId == 1 || statusId == 4 || statusId == 5)) ||
+                         (selectedStatusId == 3 && (statusId == 1 || statusId == 2)) ||
+                         (selectedStatusId == 5 && (statusId == 1 || statusId == 2 || statusId == 4));
 
-        // Generate <option> element
-        if (isSelected) {
-            out.println("<option value=\"" + statusId + "\" selected>" + statusName + "</option>");
-        } else {
-            out.print("<option value=\"" + statusId + "\"");
-            if (isDisabled) {
-                out.print(" disabled");
-            }
-            out.println(">" + statusName + "</option>");
+    // Kiểm tra trạng thái đã chọn có phải là 5 không
+    boolean isStatusFive = selectedStatusId == 5;
+
+    // Generate <option> element
+    if (isSelected) {
+        out.println("<option value=\"" + statusId + "\" selected>" + statusName + "</option>");
+    } else {
+        out.print("<option value=\"" + statusId + "\"");
+        if (isDisabled || isStatusFive) { // Thêm điều kiện kiểm tra trạng thái đã chọn là 5
+            out.print(" disabled");
         }
+        out.println(">" + statusName + "</option>");
     }
+}
                                 %>
-
-
                             </select>
                         </form>
                     </div>
@@ -352,24 +353,25 @@
         double totalPricePerUnit = (rs2.getDouble("UnitPrice") * (100 - rs2.getDouble("Discount")) / 100) * rs2.getInt("QuantityPerUnit");
                                 %>
                                 <tr>
-                                    <td><%=rs2.getString("ProductName")%></td>
-                                    <td><img style="width: 100px" src="<%= rs2.getString("ProductURLShow") %>"/></td>
-                                    <td><%=rs2.getString("CategoryName")%></td>
-                                    <td><%=df.format(rs2.getDouble("UnitPrice"))%>đ</td>
-                                    <td><%=rs2.getInt("QuantityPerUnit")%></td>
-                                    <td><%=df.format(rs2.getInt("Discount"))%>%</td>
-                                    <td><%=df.format(totalPricePerUnit)%>đ</td>
-                                </tr>
-                                <% 
-                                        }
-                                    } catch (SQLException ex) {
-                                        ex.printStackTrace();
+                            <td><%=rs2.getString("ProductName")%></td>
+                            <td><img style="width: 100px" src="<%= rs2.getString("ProductURLShow") %>"/></td>
+                            <td><%=rs2.getString("CategoryName")%></td>
+                            <td><%=df.format(rs2.getDouble("UnitPrice"))%>đ</td>
+                            <td name="QuantityPerUnit"><%=rs2.getInt("QuantityPerUnit")%></td>
+                            <td><%=df.format(rs2.getInt("Discount"))%>%</td>
+                            <td><%=df.format(totalPricePerUnit)%>đ</td>
+                            <input type="hidden" name="SaleID" value="<%=rs2.getInt("SaleID")%>">
+                            </tr>
+                            <% 
                                     }
-                                } else {
-                                    // Handle null ResultSet
-                                    out.println("<tr><td colspan='11'>No data available</td></tr>");
+                                } catch (SQLException ex) {
+                                    ex.printStackTrace();
                                 }
-                                %>
+                            } else {
+                                // Handle null ResultSet
+                                out.println("<tr><td colspan='11'>No data available</td></tr>");
+                            }
+                            %>
                             </tbody>
                         </table>
                     </div>
