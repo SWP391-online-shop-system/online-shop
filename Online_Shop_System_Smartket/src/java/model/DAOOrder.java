@@ -76,10 +76,44 @@ public class DAOOrder extends DBConnect {
             pre.setInt(1, orderID);
             n = pre.executeUpdate();
         } catch (SQLException ex) {
-            Logger.getLogger(DAOCart.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(DAOOrder.class.getName()).log(Level.SEVERE, null, ex);
         }
         return n;
     }
+
+    public int updateOrderQuantity(int SaleID) {
+        int n = 0;
+        String sql = "UPDATE `online_shop_system`.`sale`\n"
+                + "SET `OrderQuantity` = `OrderQuantity` - 1\n"
+                + "WHERE `SaleID` = ?;";
+        try {
+            PreparedStatement pre = conn.prepareStatement(sql);
+            pre.setInt(1, SaleID);
+            n = pre.executeUpdate();
+        } catch (SQLException ex) {
+            Logger.getLogger(DAOOrder.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return n;
+    }
+
+    public int updateProduct(int UnitInStock, int orderID) {
+    int n = 0;
+    String sql = "UPDATE `online_shop_system`.`product`\n"
+                + "SET\n"
+                + "`UnitInStock` = `UnitInStock` + ?\n"
+                + "WHERE `ProductID` IN (SELECT od.ProductID FROM OrderDetail od WHERE od.OrderID = ?)";
+    try {
+        PreparedStatement pre = conn.prepareStatement(sql);
+        pre.setInt(1, UnitInStock);
+        pre.setInt(2, orderID);
+        n = pre.executeUpdate();
+    } catch (SQLException ex) {
+        Logger.getLogger(DAOOrder.class.getName()).log(Level.SEVERE, null, ex);
+    }
+    return n;
+}
+
+
 
     public int updateStatus(int orderId) {
         int n = 0;
@@ -203,7 +237,8 @@ public class DAOOrder extends DBConnect {
         }
         return 0;
     }
-        public int getQuantityOfOrder(int orderId, int productId) {
+
+    public int getQuantityOfOrder(int orderId, int productId) {
         String sql = "SELECT * FROM online_shop_system.orderdetail where OrderID =? and ProductID = ?;";
         int quantity = 0;
         try {
@@ -212,7 +247,7 @@ public class DAOOrder extends DBConnect {
             st.setInt(2, productId);
             ResultSet rs = st.executeQuery();
             while (rs.next()) {
-                quantity= rs.getInt("QuantityPerUnit");
+                quantity = rs.getInt("QuantityPerUnit");
             }
         } catch (SQLException e) {
         }
