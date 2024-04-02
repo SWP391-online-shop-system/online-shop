@@ -58,19 +58,20 @@ public class ControllerFeedback extends HttpServlet {
         request.setAttribute("CategoryResult", rsCategory);
         HttpSession session = request.getSession();
         User user = (User) session.getAttribute("account");
-        int OrderID = 0;
+
         int isFeedBack = 0;
         if (user == null) {
             response.sendRedirect("HomePageURL");
         } else {
+            String ordID = request.getParameter("orderID");
+            request.setAttribute("ordID", ordID);
             String service = request.getParameter("service");
             String pID = request.getParameter("ProductID");
             int ProductID = Integer.parseInt(pID);
             try {
                 ResultSet rsDetail = dao.getData("select * from OrderDetail as detail "
-                        + "join `Order` as ord on detail.OrderID = ord.OrderID where UserID = " + user.getUserID() + " and ProductID =" + ProductID);
+                        + "join `Order` as ord on detail.OrderID = ord.OrderID where UserID = " + user.getUserID() + " and ProductID =" + ProductID + " and ord.orderID=" + ordID);
                 if (rsDetail.next()) {
-                    OrderID = rsDetail.getInt("OrderID");
                     isFeedBack = rsDetail.getInt("isFeedBack");
                     if (rsDetail.getInt("isFeedBack") == 1) {
                         request.getRequestDispatcher("ProductDetailURL?ProductID=" + ProductID).forward(request, response);
@@ -89,6 +90,8 @@ public class ControllerFeedback extends HttpServlet {
 
             if (service.equals("upload")) {
                 if (isFeedBack == 0) {
+                    String st_OrderID = request.getParameter("ordID");
+                    int OrderID = Integer.parseInt(st_OrderID);
                     Part photo1 = request.getPart("feedbackImg");
                     String feedbackImg = getSubmittedFileName(photo1);
                     System.out.println("215615415165165" + feedbackImg);
@@ -114,7 +117,7 @@ public class ControllerFeedback extends HttpServlet {
                     DAODetail.updateIsFeedBack(OrderID, ProductID, 1);
                 }
                 try {
-                    Thread.sleep(5000);
+                    Thread.sleep(3500);
                 } catch (InterruptedException ex) {
                     Logger.getLogger(ControllerAddPost.class.getName()).log(Level.SEVERE, null, ex);
                 }

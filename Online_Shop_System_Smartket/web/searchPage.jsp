@@ -44,6 +44,8 @@
         <link rel="stylesheet" href="css/css_productList/style.css" type="text/css">
         <link rel="stylesheet" href="css/css_footer/footer.css" type="text/css">
         <script src="https://kit.fontawesome.com/ac74b86ade.js" crossorigin="anonymous"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
         <style>
             a{
                 color: black;
@@ -376,9 +378,9 @@
                                                     <%
                                                     User testU = (User)session.getAttribute("account");
                                                     if(testU==null){%>
-                                                    <a onclick="alertOpenCart();" class="add-cart" style="left: 12px;">+ Thêm vào giỏ</a><a style="margin-left: 136px;" href="#">Mua ngay</a>
+                                                    <a onclick="alertOpenCart();" class="add-cart" style="left: 12px;">+ Thêm vào giỏ</a><a style="margin-left: 136px;" href="ProductDetailURL?ProductID=<%=rsHotPro.getInt(1)%>">Mua ngay</a>
                                                     <%}else{%>
-                                                    <a href="CartURL?service=addcart&pid=<%=rsHotPro.getInt(1)%>&quan=1" class="add-cart" style="left: 12px;">+ Thêm vào giỏ</a><a style="margin-left: 136px;" href="#">Mua ngay</a>
+                                                    <a onclick="addToCart(<%=rsHotPro.getInt("ProductID")%>)" class="add-cart" style="left: 12px;">+ Thêm vào giỏ</a><a style="margin-left: 136px;" href="ProductDetailURL?ProductID=<%=rsHotPro.getInt(1)%>">Mua ngay</a>
                                                     <%}%>
                                                     <div style="display: flex;">
                                                         <div class="rating" style="margin-left: 30px;">
@@ -603,9 +605,9 @@
                                         <h6><%=rsPaging.getString("ProductName")%></h6>
                                         <% User testU2 = (User)session.getAttribute("account");
                                         if(testU2 == null){%>
-                                        <a onclick="alertOpenCart();"class="add-cart">+ Thêm vào giỏ</a><a style="margin-left: 136px;" href="#">Mua ngay</a>
+                                        <a onclick="alertOpenCart();"class="add-cart">+ Thêm vào giỏ</a><a style="margin-left: 136px;" href="ProductDetailURL?ProductID=<%=rsPaging.getInt(1)%>">Mua ngay</a>
                                         <%}else{%>
-                                        <a href="CartURL?service=addcart&pid=<%=rsPaging.getInt(1)%>&quan=1" class="add-cart">+ Thêm vào giỏ</a><a style="margin-left: 136px;" href="#">Mua ngay</a>
+                                        <a href="#" onclick="addToCart(<%=rsPaging.getInt(1)%>)"  class="add-cart">+ Thêm vào giỏ</a><a style="margin-left: 136px;" href="ProductDetailURL?ProductID=<%=rsPaging.getInt(1)%>">Mua ngay</a>
                                         <%}%>
                                         <div style="display: flex;">
                                             <div class="rating">
@@ -726,6 +728,8 @@
             </div>
         </div>
         <!-- Js Plugins -->
+        <script type="text/javascript" src="js/cartdetail.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10" type="text/javascript"></script>
         <script src="js/searchPrice.js"></script>
     </body>
 

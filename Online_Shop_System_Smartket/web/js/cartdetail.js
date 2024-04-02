@@ -201,6 +201,7 @@ function checkOut() {
     });
 }
 function addToCart(pId) {
+    console.log("aaaaaaaaaaa");
     $.ajax({
         type: "POST",
         url: "CartURL",

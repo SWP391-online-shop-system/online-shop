@@ -88,7 +88,7 @@ public class DAOProduct extends DBConnect {
                 + "?,\n"
                 + "?,\n"
                 + "?,\n"
-                + "?,\n"
+                + "now(),\n"
                 + "?,\n"
                 + "?,\n"
                 + "?)";

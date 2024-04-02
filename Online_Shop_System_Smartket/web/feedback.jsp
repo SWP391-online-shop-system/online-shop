@@ -612,6 +612,7 @@
                         </div> 
                         <form id="myForm" action="feedback" method="post" enctype="multipart/form-data">
                             <input type="hidden" name="service" value="upload"/>
+                            <input type="hidden" name="ordID" value="${ordID}"/>
                             <input type="hidden" name="ProductID" value="<%=rsProduct.getInt("ProductID")%>"/>
                             <div class="form-group">
                                 <label>Ảnh đính kèm</label>

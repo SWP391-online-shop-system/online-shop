@@ -504,11 +504,16 @@
                                     <input type="hidden" name="service" value="upload"/>
                                     <input type="hidden" name="UserID" value="${sessionScope.account.userID}"/>
                                     <div class="custom-file">
-                                        <input type="file" name="file" class="custom-file-input" id="customFile">
+                                        <input type="file" name="file" class="custom-file-input" style="margin-left: 73px;" id="customFile">
                                         <label class="custom-file-label" style="width: 220px;margin-left: 75px;margin-top: -8px;" for="customFile">
                                             <div style="width: 122px;background: #f4f4f4;">cập nhật avatar</div>
                                         </label>
-                                        <button class="btn-submitform" type="submit">Lưu ảnh</button>
+                                        <div style="display: flex;
+                                             margin-left: 133px;">
+                                            <button class="btn-submitform" type="submit">Lưu ảnh</button>
+                                            <a href="ChangeuserinfoURL?UserID=${sessionScope.account.userID}" style="    flex: 0 0 40%;
+                                               margin-top: 20px;"><i class="fa-solid fa-spinner"></i></a>
+                                        </div>
                                 </form>
                             </div>
                         </div>
@@ -780,7 +785,7 @@
                                            id="registerPasswordConfirm" name="repass" placeholder="Nhập lại mật khẩu" required class="form-control"
                                            minlength="6" maxlength="15"
                                            title="Mật khẩu phải chứa từ 6 đến 15 ký tự" 
-                                           oninvalid="this.setCustomValidity('Vui lòng điền thông tin này')" 
+                                           oninvalid="this.setCustomValidity('Mật khẩu phải chứa từ 6 đến 15 ký tự')" 
                                            oninput="setCustomValidity(''); validateInput(this);validatePasswordMatch(this)">
                                     <div class="invalid-feedback" style="padding-right: 94px;" id="passwordMismatch">
                                         Mật khẩu không khớp

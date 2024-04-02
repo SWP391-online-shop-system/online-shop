@@ -245,8 +245,8 @@
                                 <div class="form-element">
                                     <label for="registerPassword">Mật khẩu</label>
                                     <input type="password" name="rpass" placeholder="Nhập mật khẩu" required
-                                           minlength="6" title="Mật khẩu phải chứa từ 6 đến 8 ký tự" 
-                                           oninvalid="this.setCustomValidity('Vui lòng điền thông tin này')" 
+                                           minlength="6" title="Mật khẩu phải chứa từ 6 đến 15 ký tự" maxlength="15"
+                                           oninvalid="this.setCustomValidity('Mật khẩu phải chứa từ 6 đến 15 ký tự')" 
                                            oninput="setCustomValidity('')">
                                 </div>
                                 <div class="form-element">
@@ -693,9 +693,9 @@
                                         <h6><%=rsNewProduct.getString("ProductName")%></h6>
                                         <%User testus = (User)session.getAttribute("account");
                                             if(testus==null) {%>
-                                        <a onclick="alertOpenCart();" class="add-cart"style="">+ Thêm vào giỏ</a><a style="margin-left: 166px;" href="#">Mua ngay</a>
+                                        <a onclick="alertOpenCart();" class="add-cart"style="">+ Thêm vào giỏ</a><a style="margin-left: 166px;" href="ProductDetailURL?ProductID=<%=rsNewProduct.getInt("ProductID")%>">Mua ngay</a>
                                         <%}else{%>
-                                        <a onclick="addToCart(<%=rsNewProduct.getInt(1)%>)" href="#" class="add-cart"style="margin-left: 29px;">+ Thêm vào giỏ</a><a style="margin-left: 166px;" href="#">Mua ngay</a>
+                                        <a onclick="addToCart(<%=rsNewProduct.getInt(1)%>)" href="#" class="add-cart"style="margin-left: 29px;">+ Thêm vào giỏ</a><a style="margin-left: 166px;" href="ProductDetailURL?ProductID=<%=rsNewProduct.getInt("ProductID")%>">Mua ngay</a>
                                         <%}%>
                                         <div style="display: flex;">
                                             <div class="rating">
@@ -752,10 +752,10 @@
                                         <div class="product__item__text"style="text-align: center;">
                                             <h6><%=rsFeatureProduct.getString("ProductName")%></h6>
                                             <c:if test="${sessionScope.account==null}">
-                                                <a onclick="alertOpenCart();" class="add-cart"style="">+ Thêm vào giỏ</a><a style="margin-left: 136px;" href="#">Mua ngay</a>
+                                                <a onclick="alertOpenCart();" class="add-cart"style="">+ Thêm vào giỏ</a><a style="margin-left: 136px;" href="ProductDetailURL?ProductID=<%=rsFeatureProduct.getInt("ProductID")%>">Mua ngay</a>
                                             </c:if>
                                             <c:if test="${sessionScope.account!=null}">
-                                                <a href="#" onclick="addToCart(<%=rsFeatureProduct.getInt("ProductID")%>)" class="add-cart"style="">+ Thêm vào giỏ</a><a style="margin-left: 136px;" href="#">Mua ngay</a>
+                                                <a href="#" onclick="addToCart(<%=rsFeatureProduct.getInt("ProductID")%>)" class="add-cart"style="">+ Thêm vào giỏ</a><a style="margin-left: 136px;" href="ProductDetailURL?ProductID=<%=rsFeatureProduct.getInt("ProductID")%>">Mua ngay</a>
                                             </c:if>
                                             <div style="display: flex;">
                                                 <div class="rating">

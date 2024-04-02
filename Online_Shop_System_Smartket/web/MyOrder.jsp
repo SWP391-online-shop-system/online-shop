@@ -644,7 +644,7 @@ r<!DOCTYPE html>
                             <article class="card">
                                 <div class="card-body row">
 
-                                    <div class="col"> <strong>Bao gồm:</strong> <br><strong><%=productName%></strong><br/><%=countProduct==-1?"":" và "+countProduct+" sản phẩm khác "%></div>
+                                    <div class="col"> <strong>Bao gồm:</strong> <br><strong><%=productName%></strong><br/><%=countProduct==0?"":" và "+countProduct+" sản phẩm khác "%></div>
                                     <div class="col"> <strong>Thời gian đặt hàng:</strong>  <br><%=rsOrderGroup.getString("OrderDate")%></div>
                                     <div class="col"> <strong>Tổng giá trị đơn</strong> <br> <%=df.format(rsOrderGroup.getDouble("TotalPrice"))%>đ </div>
                                     <div class="col"> <strong>Trạng thái:</strong> <br><%=statusName%></div>
@@ -685,7 +685,7 @@ r<!DOCTYPE html>
                             <%if(statusName.equals("Chờ xác nhận")){%>
                             <%DAOReceiver daoRece = new DAOReceiver();
                                 String email = daoRece.getEmailById(rsOrderGroup.getInt("OrderID"));%>
-                            <a href="CartcontactOTPVerify?email=<%=email%>&oid=<%=rsOrderGroup.getInt("OrderID")%>" class="btn btn-warning btn-lg" style="float: right;
+                            <a href="CartcontactOTPVerify?service=sendOTP&email=<%=email%>&oid=<%=rsOrderGroup.getInt("OrderID")%>" class="btn btn-warning btn-lg" style="float: right;
                                float: right;
                                margin-right: 232px;
                                margin-bottom: -47px !important;

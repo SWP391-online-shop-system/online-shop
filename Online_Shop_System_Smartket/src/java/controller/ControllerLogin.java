@@ -75,10 +75,15 @@ public class ControllerLogin extends HttpServlet {
                 request.getRequestDispatcher("HomePageURL").forward(request, response);
             } else if (user.isUserStatus() == 0) {
                 request.setAttribute("activeLogin", "active");
-                message = "Tài khoản của bạn chưa xác thực";
+                message = "Tài khoản của bạn chưa được xác thực";
                 request.setAttribute("message", message);
                 request.getRequestDispatcher("HomePageURL").forward(request, response);
-            } else {
+            } else if (user.isUserStatus() == 2) {
+                request.setAttribute("activeLogin", "active");
+                message = "Tài khoản của bạn đang bị cấm";
+                request.setAttribute("message", message);
+                request.getRequestDispatcher("HomePageURL").forward(request, response);
+            }else {
                 dao.updateLastLogin(user.getUserID());
                 session.setAttribute("account", user);
                 switch (user.getRoleID()) {

@@ -31,7 +31,7 @@
         <div id="wrapper">
             <!-- Sidebar -->
             <ul class="navbar-nav sidebar sidebar-light accordion" id="accordionSidebar">
-                <a class="sidebar-brand d-flex align-items-center justify-content-center" href="MarketingDashBoardURL">
+                <a class="sidebar-brand d-flex align-items-center justify-content-center" href="HomePageURL">
                     <div class="sidebar-brand-icon">
                         <img style="height: 91px;
                              width: 133px;
@@ -219,11 +219,11 @@
                                         </div>
                                         <div class="modal-body">  
                                             <div class="form-element form-group">                                              
-                                                <label for="registerEmail">Loại</label>                                               
+                                                <label for="registerEmail">Tên</label>                                               
                                                 <input type="text" name="settingname1" placeholder="Nhập Loại" required class="form-control">
                                             </div>
                                             <div class="form-element form-group">                                              
-                                                <label for="registerEmail">Giá trị</label>                                               
+                                                <label for="registerEmail">Loại </label>                                               
                                                 <input type="text" name="settingvalue1" placeholder="Nhập Giá trị" required class="form-control">
                                             </div>
 

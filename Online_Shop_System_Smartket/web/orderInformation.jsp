@@ -632,9 +632,9 @@
                                                 </div>
                                                 <div class="small text-muted" style="color: black;">Giá tiền:&nbsp;<%=df.format(rsOrderDetail.getDouble("UnitPrice"))%>đ<span class="mx-2" style="margin-left: 0px !important;margin-right: 0px !important;">|</span> Số lượng:&nbsp;<%=rsOrderDetail.getInt("QuantityPerUnit")%> <span class="mx-2"style="margin-left: -2px !important;margin-right: -2px !important;">|
                                                     </span> Tổng tiền:&nbsp;<%=df.format(rsOrderDetail.getDouble("UnitPrice")*rsOrderDetail.getInt("QuantityPerUnit"))%>đ
-                                                    <%if(getOrder.getStatusID() == 4 || rsOrderDetail.getInt("isFeedback") == 0) {%>
+                                                    <%if(getOrder.getStatusID() == 4 && rsOrderDetail.getInt("isFeedback") == 0) {%>
                                                     <button class="btn-rebuy" style="width: 88px;margin-top: -6px;">
-                                                        <a href="feedback?service=gofeedback&ProductID=<%=product.getProductID()%>" style="color: white">  phản hồi</a>
+                                                        <a href="feedback?service=gofeedback&ProductID=<%=product.getProductID()%>&orderID=<%=rsOrderDetail.getInt("orderID")%>" style="color: white">phản hồi</a>
                                                     </button>
                                                     <%}else{%>
                                                     <button id="blocka" class="btn-rebuy" style="width: 88px;margin-top: -6px; background: grey">

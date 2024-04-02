@@ -78,7 +78,7 @@ public class ControllerCustomerDetail extends HttpServlet {
                     status = Integer.parseInt(status_raw);
                 }
                 ResultSet rs = dao.getData("SELECT * FROM `user` where userID = " + cusID);
-                ResultSet log = dao.getData("SELECT * FROM loghistory as log join `user` as u on log.UserId = u.UserID where u.UserId = " + cusID + " order by updateAt desc ");
+                ResultSet log = dao.getData("SELECT * FROM loghistory as log join user as u on log.ID = u.UserID where u.UserId = "+cusID+" order by updateAt desc ");
                 request.setAttribute("data", rs);
                 request.setAttribute("log", log);
                 request.setAttribute("status", status);
@@ -94,20 +94,19 @@ public class ControllerCustomerDetail extends HttpServlet {
                     int n = dao.updateStatus(cusId, 2);
                     status = 2;
                     purpose = "đã vô hiệu hóa";
-                }
-                else {
+                } else {
                     int a = dao.updateStatus(cusId, 1);
                     status = 1;
                     purpose = "đã kích hoạt";
                 }
-                Log logger = new Log(cusId, updateBy, purpose);
+                Log logger = new Log(cusId, 2, "Cập nhật", updateBy, purpose);
                 daoLog.insertLog(logger);
                 ResultSet rs = dao.getData("SELECT * FROM `user` where userID = " + cusID);
-                ResultSet log = dao.getData("SELECT * FROM loghistory as log join `user` as u on log.UserId = u.UserID where u.UserId = " + cusID + " order by updateAt desc ");
+                ResultSet log = dao.getData("SELECT * FROM loghistory as log join user as u on log.ID = u.UserID where u.UserId = "+cusID+" order by updateAt desc ");
                 request.setAttribute("data", rs);
                 request.setAttribute("log", log);
                 request.setAttribute("status", status);
-                request.getRequestDispatcher("customerdetails.jsp").forward(request, response);
+                //request.getRequestDispatcher("customerdetails.jsp").forward(request, response);
             }
         }
     }

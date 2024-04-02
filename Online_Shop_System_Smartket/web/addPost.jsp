@@ -158,7 +158,7 @@
                                             </div>
                                             <div class="form-group">
                                                 <label>Nội dung</label>
-                                                <textarea name="content" class="form-control" required></textarea>
+                                                <textarea name="content" class="form-control" minlength="150" required></textarea>
                                             </div>
                                             <div class="form-group">
                                                 <label>Trạng thái</label>
@@ -179,7 +179,12 @@
                         </div>
 
                     </div>
-
+                    <script src="vendor/jquery/jquery.min.js"></script>
+                    <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+                    <script src="vendor/jquery-easing/jquery.easing.min.js"></script>
+                    <script src="vendor/datatables/jquery.dataTables.min.js"></script>
+                    <script src="vendor/datatables/dataTables.bootstrap4.min.js"></script>
+                    <script src="js/manager.js" type="text/javascript"></script>
                     <script>
                         document.getElementById('author-img-input').addEventListener('change', function (e) {
                             var reader = new FileReader();
@@ -220,13 +225,5 @@
                     <a class="scroll-to-top rounded" href="#page-top">
                         <i class="fas fa-angle-up"></i>
                     </a>
-                    <script src="vendor/jquery/jquery.min.js"></script>
-                    <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-                    <script src="vendor/jquery-easing/jquery.easing.min.js"></script>
-                    <!--        <script src="js_marketing/ruang-admin.min.js"></script>
-                            <script src="js_marketing/demo/chart-area-demo.js"></script>  -->
-                    <script src="vendor/datatables/jquery.dataTables.min.js"></script>
-                    <script src="vendor/datatables/dataTables.bootstrap4.min.js"></script>
-                    <script src="js/manager.js" type="text/javascript"></script>
                     </body>
                     </html>

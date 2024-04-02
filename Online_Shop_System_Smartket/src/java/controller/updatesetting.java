@@ -71,6 +71,7 @@ public class updatesetting extends HttpServlet {
         Setting Setting1 = dao.getaSlider("select * from Setting where SettingID = " + request.getParameter("updatesettingid"));
         int n = dao.updateSetting(Setting1, request.getParameter("updateset"));
         String statuscate = "false";
+        String statuscate1 = "false";
         if (request.getParameter("updateset").equals("0")) {
             statuscate = "true";
         }
@@ -78,7 +79,7 @@ public class updatesetting extends HttpServlet {
             int m = dao.updateCate(Setting1, statuscate);
         }
         if (Setting1.getSettingValue().equals("2")) {
-            int m = dao.updateSetting(Setting1, statuscate);
+            int m = dao.updatePro(Setting1, statuscate);
         }
         response.sendRedirect("settinglist");
 

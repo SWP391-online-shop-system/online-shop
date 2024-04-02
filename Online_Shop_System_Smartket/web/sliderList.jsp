@@ -79,7 +79,7 @@
         <div id="wrapper">
             <!-- Sidebar -->
             <ul class="navbar-nav sidebar sidebar-light accordion" id="accordionSidebar">
-                <a class="sidebar-brand d-flex align-items-center justify-content-center" href="http://localhost:8080/Smartket/HomePageURL">
+                <a class="sidebar-brand d-flex align-items-center justify-content-center" href="HomePageURL">
                     <div class="sidebar-brand-icon">
                         <img style="height: 91px;
                              width: 133px;
@@ -165,7 +165,7 @@
                         <div class="d-sm-flex align-items-center justify-content-between mb-4">
                             <h1 class="h3 mb-0 text-gray-800">Danh sách Slider </h1>
                             <ol class="breadcrumb">
-                                <li class="breadcrumb-item"><a href="http://localhost:8080/Smartket/HomePageURL">Trang chủ</a></li>
+                                <li class="breadcrumb-item"><a href="HomePageURL">Trang chủ</a></li>
                                 <!--<li class="breadcrumb-item">Tables</li>-->
                                 <li class="breadcrumb-item active" aria-current="page">Slider</li>
                             </ol>
@@ -192,6 +192,7 @@
                                                         <div style="padding-top: 3px;">Trạng thái</div>
                                                         <select class="form-control" name="statusfilter" onchange="this.form.submit()">
                                                             <option value="">Trạng thái</option>
+                                                            <option value="tatca" <c:if test="${fn:contains(requestScope.statusfilter,'tatca')}">selected</c:if>>Tất cả</option>
                                                             <option value="true" <c:if test="${fn:contains(requestScope.statusfilter,'true')}">selected</c:if>>Hoạt động</option>
                                                             <option value="false" <c:if test="${fn:contains(requestScope.statusfilter,'false')}">selected</c:if>>Vô hiệu hóa</option>
                                                             </select>
@@ -215,7 +216,7 @@
                                                         <td>${s.sliderID}</td>
                                                         <td>${s.userID}</td>
                                                         <td id="imageonclick"><img  style="height: 91px;width: 133px;" src="images/slider/${s.sliderImage}" alt="alt"/></td>
-                                                        <td><a href="${s.sliderLink}">${s.sliderLink}</a></td>
+                                                        <td>${s.sliderLink}</td>
                                                         <td>${s.createDate.substring(0,10)}</td> 
                                                         <td><c:choose>
                                                                 <c:when test="${!s.sliderStatus}"> 

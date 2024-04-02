@@ -250,7 +250,7 @@
                                                 <%DAOUser dao = new DAOUser();
                                                 User mkt = dao.getUserByUserID(log.getInt("UpdateBy"));%>
                                                 <p><%=countLog%>. Nhân viên <%=mkt.getFirstName()+" "+mkt.getLastName()%> 
-                                                    đã <%=log.getString(4)%> <%=log.getString("FirstName")+" "+log.getString("LastName")%> vào <%=log.getString(3)%></p>
+                                                     <%=log.getString("purpose")%> <%=log.getString("FirstName")+" "+log.getString("LastName")%> vào <%=log.getString("updateAt")%></p>
                                                     <%}log.close();%>
                                             </div>                                         
                                         </div>
@@ -273,8 +273,8 @@
                     type: 'GET',
                     data: {status: status, uid: uid, service: "changeStatus"},
                     success: function (data) {
-                        $("#page-top").html(data);
-
+                        //$("#page-top").html(data);
+                        location.reload();
                     },
                     error: function (xhr, status, error) {
                         // Handle error if needed

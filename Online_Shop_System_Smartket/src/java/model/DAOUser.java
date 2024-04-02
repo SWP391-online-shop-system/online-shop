@@ -72,6 +72,7 @@ public class DAOUser extends DBConnect {
                 + "`UserStatus`,\n"
                 + "`ReportTo`,\n"
                 + "`RoleID`,\n"
+                + "`UserImage`,\n" 
                 + "`CreateDate`)\n" // Include CreateDate column in the query
                 + "VALUES\n"
                 + "(?,\n"
@@ -81,6 +82,7 @@ public class DAOUser extends DBConnect {
                 + "0,\n"
                 + "1,\n"
                 + "1,\n"
+                + "'default_avatar.jpg',\n"
                 + "now())"; // Use CURRENT_TIMESTAMP to set the current timestamp
         try {
             PreparedStatement pre = conn.prepareStatement(sql);

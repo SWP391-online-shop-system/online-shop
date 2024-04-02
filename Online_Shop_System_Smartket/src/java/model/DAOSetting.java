@@ -125,7 +125,7 @@ public class DAOSetting extends DBConnect {
 
     public int updatePro(Setting setting, String a) {
         int n = 0;
-        String sql = "UPDATE `online_shop_system`.`pro`\n"
+        String sql = "UPDATE `online_shop_system`.`product`\n"
                 + "SET\n"
                 + "`ProductStatus` =" + a + "\n"
                 + "WHERE `ProductID` = ?";

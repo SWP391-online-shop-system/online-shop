@@ -104,7 +104,7 @@ public class ControllerSearchPage extends HttpServlet {
                                 endPage++;
                             }
                             request.setAttribute("endPage", endPage);
-                            ResultSet rsPaging = dao.getData("select * from product as p join ProductImage as pi on p.ProductID = pi.ProductID join Categories as c on p.CategoryID = c.CategoryID where p.ProductStatus = 0 and pi.ProductURL = pi.ProductURLShow and p.UnitPrice between " + minValue + " and " + maxValue + " \n"
+                            ResultSet rsPaging = dao.getData("select * from product as p join ProductImage as pi on p.ProductID = pi.ProductID join Categories as c on p.CategoryID = c.CategoryID where pi.ProductURL = pi.ProductURLShow and p.ProductStatus = 0 and p.UnitPrice between " + minValue + " and " + maxValue + " \n"
                                     + " and p.ProductName like N'%" + keyWord + "%' or c.CategoryName like N'%" + keyWord + "%' order by " + filterChoice + " limit 12 offset " + ((index - 1) * 12));
                             request.setAttribute("rsPaging", rsPaging);
                             request.setAttribute("index", index);

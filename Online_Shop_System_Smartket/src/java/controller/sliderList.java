@@ -80,6 +80,10 @@ public class sliderList extends HttpServlet {
         if (statusfilter.equalsIgnoreCase("false")) {
             sliderlist = dao.getSlider("select * from slider where SliderStatus=1");
             session.setAttribute("sliderlist", sliderlist);
+        }
+        if (statusfilter.equalsIgnoreCase("tatca")) {
+            sliderlist = dao.getSlider("select * from slider ");
+            session.setAttribute("sliderlist", sliderlist);
         }}
 
         request.getRequestDispatcher("sliderList.jsp").forward(request, response);

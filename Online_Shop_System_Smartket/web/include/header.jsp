@@ -167,8 +167,8 @@
                         <div class="form-element">
                             <label for="registerPassword">Mật khẩu</label>
                             <input type="password" name="rpass" placeholder="Nhập mật khẩu" required
-                                   minlength="6" title="Mật khẩu phải chứa từ 6 đến 8 ký tự" 
-                                   oninvalid="this.setCustomValidity('Vui lòng điền thông tin này')" 
+                                   minlength="6" title="Mật khẩu phải chứa từ 6 đến 15 ký tự" max ="15" 
+                                   oninvalid="this.setCustomValidity('Mật khẩu phải chứa từ 6 đến 15 ký tự')" 
                                    oninput="setCustomValidity('')">
                         </div>
                         <div class="form-element">

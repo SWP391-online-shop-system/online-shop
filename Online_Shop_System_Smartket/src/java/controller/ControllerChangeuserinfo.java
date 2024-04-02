@@ -18,6 +18,7 @@ import java.io.File;
 import java.sql.ResultSet;
 import view.User;
 import model.DAOUser;
+import model.EncodeSHA;
 
 /**
  *
@@ -25,7 +26,7 @@ import model.DAOUser;
  */
 @WebServlet(name = "changeuserinfo", urlPatterns = {"/ChangeuserinfoURL"})
 @MultipartConfig(
-        fileSizeThreshold = 1024 * 1024 * 1, // 1 MB
+        fileSizeThreshold = 1024 * 1024 * 3, // 1 MB
         maxFileSize = 1024 * 1024 * 10, // 10 MB
         maxRequestSize = 1024 * 1024 * 100 // 100 MB
 )
@@ -115,11 +116,11 @@ public class ControllerChangeuserinfo extends HttpServlet {
             String path = "images/user/" + result;
             String realFileName = getServletContext().getRealPath(path);
             String realFileName1 = realFileName.replace("\\build", "");
-            File file = new File(realFileName1);
-//            file.delete();
+            System.out.println("real = "+realFileName +"real1 = "+realFileName1);
             filePart.write(realFileName1);
-            int n =0;
-            n= daoU.updateUserImage(UserID, result);
+            filePart.write(realFileName);
+            int n = 0;
+            n = daoU.updateUserImage(UserID, result);
             use.setUserImage(result);
             session.setAttribute("account", use);
             if (n > 0) {
@@ -128,28 +129,29 @@ public class ControllerChangeuserinfo extends HttpServlet {
                 mess = null;
             }
             request.setAttribute("mess", mess);
-              try {
-                   Thread.sleep(3000); 
+            try {
+                Thread.sleep(2000);
                 request.getRequestDispatcher("profileUser.jsp").forward(request, response);
-              } catch (InterruptedException e) {
-                   e.printStackTrace();
-               }
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
         }
         if (service.equals("changepassword")) {
+
             String messa = "";
             String oldPassword = request.getParameter("oldPass");
+            String passwordEncode = EncodeSHA.transFer(oldPassword);
             String newPassword = request.getParameter("repass");
             HttpSession session = request.getSession();
             User use = (User) session.getAttribute("account");
             DAOUser dao = new DAOUser();
-            User checkOldpassword = dao.check(use.getEmail(), oldPassword);
+            User checkOldpassword = dao.check(use.getEmail(), passwordEncode);
             if (checkOldpassword == null) {
                 messa = "Nhập sai mật khẩu cũ!!";
                 request.setAttribute("messa", messa);
                 request.getRequestDispatcher("profileUser.jsp").forward(request, response);
             } else {
-                //   use.setPassword(newPassword);
-                dao.updatepassword(use.getUserID(), newPassword);
+                dao.updatepassword(use.getUserID(), EncodeSHA.transFer(newPassword));
                 messa = "Thay đổi mật khẩu thành công";
                 request.setAttribute("messa", messa);
                 request.getRequestDispatcher("profileUser.jsp").forward(request, response);

@@ -50,7 +50,6 @@ public class ControllerCartCompletion extends HttpServlet {
             HttpSession session = request.getSession();
             DAOProduct daoProduct = new DAOProduct();
             DAOOrder daoOrder = new DAOOrder();
-            DAOProduct daoProduct = new DAOProduct();
             DAOCart daoCart = new DAOCart();
             DAOReceiver daoRece = new DAOReceiver();
             DAOOrderDetails daoDetail = new DAOOrderDetails();
@@ -86,7 +85,7 @@ public class ControllerCartCompletion extends HttpServlet {
             Double totalPrice = Double.parseDouble(totalPrice_str);
             Order orders = new Order(userID, saleId, quantity, totalPrice, 1);
             int orderID = daoOrder.insertOrderByPreparedReturnId(orders);
-            System.out.println("orderId"+orderID);
+            System.out.println("orderId" + orderID);
             String QrPath = "https://img.vietqr.io/image/BIDV-0398707242-compact2.png?amount=" + totalPrice + "&addInfo=Smartket " + orderID + "&accountName=Smartket";
             daoOrder.updateQrImage(QrPath, orderID);
             String addId = request.getParameter("addId");
@@ -122,19 +121,19 @@ public class ControllerCartCompletion extends HttpServlet {
                     if (Arrays.asList(productId).contains(String.valueOf(listCart.getInt("ProductID")))) {
                         OrderDetails details = new OrderDetails(listCart.getInt("ProductID"), orderID, listCart.getInt("Quantity"), listCart.getInt("UnitPrice"), listCart.getInt("UnitDiscount"), false);
                         daoDetail.insertOrderDetailsByPrepared(details);
-                        
+
                     }
                 }
                 listCart.close();
             } catch (SQLException e) {
             }
-            
+
             for (String o : productId) {
                 int proIdDelete = Integer.parseInt(o);
                 Product product = daoProduct.getProductById(proIdDelete);
                 int unitInstock = product.getUnitInStock();
                 int quantityOfOrder = daoOrder.getQuantityOfOrder(orderID, proIdDelete);
-                daoProduct.updateUnitInStock(proIdDelete, unitInstock-quantityOfOrder);
+                daoProduct.updateUnitInStock(proIdDelete, unitInstock - quantityOfOrder);
                 daoCart.deleteCart(userID, proIdDelete);
             }
             response.sendRedirect("CartcontactOTPVerify?service=sendOTP&email=" + email + "&oid=" + orderID);
