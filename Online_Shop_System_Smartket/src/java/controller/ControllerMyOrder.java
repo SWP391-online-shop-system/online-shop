@@ -65,9 +65,6 @@ public class ControllerMyOrder extends HttpServlet {
                 ResultSet rsOrderGroup = daoOrd.getData("SELECT * FROM `order` as o\n"
                         + "JOIN `OrderDetail` as od ON o.orderID = od.orderID\n"
                         + "where o.UserID = " + UserID + " group BY o.orderID limit " + pagingindex + ", 2");
-                System.out.println("sql = SELECT * FROM `order` as o\n"
-                        + "JOIN `OrderDetail` as od ON o.orderID = od.orderID\n"
-                        + "where o.UserID = " + UserID + " group BY o.orderID limit " + pagingindex + ", 2");
                 int count = daoOrd.getTotalOrderOfUser(UserID);
                 int endPage = count / 2;
                 if (count % 2 != 0) {

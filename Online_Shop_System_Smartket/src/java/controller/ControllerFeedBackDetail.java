@@ -76,7 +76,7 @@ public class ControllerFeedBackDetail extends HttpServlet {
             if (service == null || service.equals("")) {
                 service = "";
             }
-            int updateBy = oldUser.getUserID(); // nhan vien
+            int updateBy = oldUser.getUserID(); 
             DAOFeedBack daoF = new DAOFeedBack();
             DAOUser daoU = new DAOUser();
             DAOLog daoLog = new DAOLog();

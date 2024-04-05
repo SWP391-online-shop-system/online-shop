@@ -62,7 +62,7 @@ public class ControllerBankingInfo extends HttpServlet {
             }
             String email = getEmail(orderId);
             DAOMail daoMail = new DAOMail();
-            daoMail.scheduleEmailSendingOrder(email, orderId);
+            daoMail.scheduleEmailSending(email, orderId);
 //            sendEmailOrder(email, orderId);
             request.setAttribute("QrPath", QrPath);
             request.getRequestDispatcher("bankingInfo.jsp").forward(request, response);

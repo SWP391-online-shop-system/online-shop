@@ -60,15 +60,6 @@ public class DAOMail extends DBConnect {
     }
     private final ScheduledExecutorService schedulerOrder = Executors.newScheduledThreadPool(1);
 
-    public void scheduleEmailSendingOrder(String emailTo, int orderId) {
-        // Đặt độ trễ là 30 giây
-        long delay = 5;
-        schedulerOrder.schedule(() -> {
-            // Call your method to send email here and pass the parameters
-            sendEmailOrder(emailTo, orderId);
-        }, delay, TimeUnit.SECONDS);
-    }
-
     public void sendEmailOrder(String emailTo, int orderId) {
         String emailFrom = "smartketfpt@gmail.com";
         String password = "hvdw qdeh rbvg ahox";

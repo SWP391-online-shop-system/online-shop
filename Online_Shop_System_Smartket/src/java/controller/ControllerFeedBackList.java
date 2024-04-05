@@ -60,15 +60,12 @@ public class ControllerFeedBackList extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        DAOFeedBack daoF = new DAOFeedBack();
-//        String service = request.getParameter("service");
-        String status_raw = (request.getParameter("status"));
-        String ProductID_raw = (request.getParameter("ProductID"));
-        String ProductRate_raw = (request.getParameter("ProductRate"));
+        DAOFeedBack daoFeedBack = new DAOFeedBack();
         ResultSet rsFeedBack;
-        int status = 0;
-        int productID = 0;
-        int feedBackRate = 0;
+        String status_raw = request.getParameter("status");
+        String ProductID_raw = request.getParameter("ProductID");
+        String ProductRate_raw = request.getParameter("ProductRate");
+        int status = 0, productID = 0, feedBackRate = 0;
         String sql = "select * from FeedBack";
         if (status_raw != null && !status_raw.equals("")) {
             status = Integer.parseInt(status_raw);
@@ -98,8 +95,8 @@ public class ControllerFeedBackList extends HttpServlet {
                 sql += " FeedbackRate = " + ProductRate_raw;
             }
         }
-        rsFeedBack = daoF.getData(sql);
-        ResultSet rsProductSelect= daoF.getData("select ProductID from FeedBack group by ProductID;");
+        rsFeedBack = daoFeedBack.getData(sql);
+        ResultSet rsProductSelect = daoFeedBack.getData("select ProductID from FeedBack group by ProductID;");
         request.setAttribute("rsFeedBack", rsFeedBack);
         request.setAttribute("status", status);
         request.setAttribute("rsProductSelect", rsProductSelect);
